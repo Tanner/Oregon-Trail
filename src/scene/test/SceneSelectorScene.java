@@ -166,7 +166,7 @@ public class SceneSelectorScene extends Scene {
 			for(Person.Skill skill : personSkill) {
 				person.addSkill(skill);
 			}
-			Wheel wheel = new Wheel(1);
+			Wheel wheel = new Wheel();
 			wheel.decreaseStatus(random.nextInt(100));
 			person.addToInventory(wheel);
 

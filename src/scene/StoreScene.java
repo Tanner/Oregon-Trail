@@ -291,7 +291,7 @@ public class StoreScene extends Scene {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		storeInventory[currentItem].setMax(tempInv.get(currentItem).getNumberOf());
+		storeInventory[currentItem].setMax(tempInv.get(currentItem).size());
 	}
 	
 	/**
