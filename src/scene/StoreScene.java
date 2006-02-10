@@ -1,7 +1,7 @@
 package scene;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 import model.*;
 import model.item.*;
@@ -43,45 +43,53 @@ public class StoreScene extends Scene {
 	
 	String tempDescription = "This is an item description.\nIt is a good item, maybe a sonic screwdriver.\n\nYep.";
 	Inventory inv;
-	ArrayList<Item> tempInv;
+	ArrayList<PriorityQueue<Item>> tempInv;
 	Party p;
 	
 	public StoreScene (Party p) {
 		this.p = p;
-		inv = new Inventory(16,10000);
-		inv.addItem(new Apple());
-		inv.addItem(new Bread());
-		inv.addItem(new Bullet());
-		inv.addItem(new Gun());
-		inv.addItem(new Meat());
-		inv.addItem(new SonicScrewdriver());
-		inv.addItem(new Wheel());
-		inv.addItem(new Wagon());
-		Item i = new Apple();
-		i.decreaseStatus(10);
-		inv.addItem(i);
-		i = new Bread();
-		i.decreaseStatus(10);
-		inv.addItem(i);
-		i = new Bullet();
-		i.decreaseStatus(10);
-		inv.addItem(i);
-		i = new Gun();
-		i.decreaseStatus(10);
-		inv.addItem(i);
-		i = new Meat();
-		i.decreaseStatus(10);
-		inv.addItem(i);
-		i = new SonicScrewdriver();
-		i.decreaseStatus(10);
-		inv.addItem(i);
-		i = new Wheel();
-		i.decreaseStatus(10);
-		inv.addItem(i);
-		i = new Apple();
-		i.decreaseStatus(10);
-		inv.addItem(i);
-		tempInv = inv.getItems();
+		inv = new Inventory(8,10000);
+		ArrayList<Item> itemToAdd = new ArrayList<Item>();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Apple());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Bread());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Bullet());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Gun());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Meat());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new SonicScrewdriver());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Wagon());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Wheel());
+		}
+		inv.addItem(itemToAdd);
+		tempInv = inv.getSlots();
 	}
 	
 	@Override
@@ -89,7 +97,6 @@ public class StoreScene extends Scene {
 		super.init(container, game);
 		
 		createComponents();
-		createModals();
 		
 		storeInventoryButtons.addAsGrid(storeInventory, mainLayer.getPosition(ReferencePoint.TopLeft), 4, 4, 0, 0, PADDING, PADDING);
 		mainLayer.add(storeInventoryButtons, mainLayer.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, PADDING, PADDING);
@@ -175,14 +182,20 @@ public class StoreScene extends Scene {
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		
 		//Create grid of store inventory buttons
-		storeInventory = new CountingButton[16];
-		for (int i = 0; i < storeInventory.length; i++) {
-			tempLabel = new Label(container, fieldFont, Color.white, tempInv.get(i).getName());
-			storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
-			storeInventory[i].setMax(tempInv.get(i).size());
-			storeInventory[i].setCount(tempInv.get(i).size());
-			storeInventory[i].setCountUpOnLeftClick(false);
-			storeInventory[i].addListener(new InventoryListener(i));
+		storeInventory = new CountingButton[inv.getCurrentSize()];
+		int currentButton = 0;
+		int i = 0;
+		while ( i < inv.getMaxSize()) {
+			if ( tempInv.get(i).size() != 0) {
+				tempLabel = new Label(container, fieldFont, Color.white, tempInv.get(i).peek().getName());
+				storeInventory[currentButton] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
+				storeInventory[currentButton].setMax(tempInv.get(i).size());
+				storeInventory[currentButton].setCount(tempInv.get(i).size());
+				storeInventory[currentButton].setCountUpOnLeftClick(false);
+				storeInventory[currentButton].addListener(new InventoryListener(i));
+				currentButton++;
+			}
+			i++;
 		}
 		storeInventoryButtons = new Panel(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, INVENTORY_BUTTON_HEIGHT * 4 + PADDING * 3);
 		
@@ -229,12 +242,13 @@ public class StoreScene extends Scene {
 	}
 	
 	private void createModals() {
-		ArrayList<Person> person = p.getPartyMembers();
-		String[] names = new String[5];
-		for (int i = 0; i < names.length - 1; i++) {
-			names[i] = person.get(i).getName();
+		int itemCount = storeInventory[currentItem].getMax() - storeInventory[currentItem].getCount();
+		ArrayList<Item> buyList = inv.removeItem(currentItem, itemCount);
+		ArrayList<Inventoried> buyers = p.canGetItem(buyList);
+		String[] names = new String[buyers.size()];
+		for (int i = 0; i < names.length; i++) {
+			names[i] = buyers.get(i).getName();
 		}
-		names[4] = p.getVehicle().getName();
 		SegmentedControl choosePlayer = new SegmentedControl(container, 400, 200, 3, 2, 20, 1, names);
 		buyModal = new Modal(container, this, "Choose who will buy this item", choosePlayer, "Buy", "Cancel");
 	}
@@ -246,7 +260,7 @@ public class StoreScene extends Scene {
 	 * @param index The index of the item you wish to display information on
 	 */
 	private void updateLabels(int index) {
-		Item tempItem = tempInv.get(index);
+		Item tempItem = tempInv.get(index).peek();
 		int count = storeInventory[index].getMax() - storeInventory[index].getCount();
 		itemDescription[0].setText(tempItem.getName());
 		itemDescription[1].setText(tempItem.getDescription());
@@ -277,20 +291,16 @@ public class StoreScene extends Scene {
 	}
 	
 	public void makePurchase() {
-		Item i = tempInv.get(currentItem);
 		int itemCount = storeInventory[currentItem].getMax() - storeInventory[currentItem].getCount();
-		int totalCost = itemCount*i.getCost();
-		try {
-
-			if ( p.getMoney() >= totalCost && vehicle.addToInventory(newItem) ) {
-				i.decreaseStack(itemCount);
-				p.setMoney(p.getMoney()-totalCost);
-				partyMoney.setText("Party's Money: $" + p.getMoney());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		ArrayList<Item> buyList = inv.removeItem(currentItem, itemCount);
+		ArrayList<Inventoried> buyers = p.canGetItem(buyList);
+		if ( buyers != null ) {
+				p.buyItemForInventory(buyList, buyers.get(0));
+				storeInventory[currentItem].setMax(tempInv.get(currentItem).size());
 		}
-		storeInventory[currentItem].setMax(tempInv.get(currentItem).size());
+		else {
+			inv.addItem(buyList);
+		}
 	}
 	
 	/**
@@ -304,8 +314,9 @@ public class StoreScene extends Scene {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventory, StoreScene.this);
 			}
 			else if ( source == buyButton) {
+				createModals();
 				showModal(buyModal);
-				makePurchase();
+				//makePurchase();
 			} else {
 				if ( currentItem != -1) {
 					storeInventory[currentItem].setCount(storeInventory[currentItem].getMax());

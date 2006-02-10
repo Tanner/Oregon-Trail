@@ -25,7 +25,6 @@ public final class ConstantStore {
 		GUN,
 		MEAT,
 		SONIC,
-		VEHICLE,
 		WAGON,
 		WHEEL,
 	}
