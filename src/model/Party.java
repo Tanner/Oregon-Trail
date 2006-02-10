@@ -53,10 +53,14 @@ public class Party {
 		Logger.log("Current pace is: " + currentPace + " and current rations is: " + currentRations, Level.INFO);
 	}
 	
-	public boolean buyItemForInventory(Item item, int quantity, Person person) {
-		if (money > item.getCost() * quantity && person.canGetItem(item, quantity)) {
-			person.addToInventory(item);
-			money -= item.getCost() * quantity;
+	public boolean buyItemForInventory(ArrayList<Item> items, Person person) {
+		int cost = 0;
+		for(Item item : items) {
+			cost += item.getCost();
+		}
+		if (money > cost && person.canGetItem(items)) {
+			person.addItemToInventory(items);
+			money -= cost;
 			return true;
 		} else {
 			return false;

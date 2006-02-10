@@ -1,25 +1,31 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
+import core.ConstantStore;
 import core.Logger;
 
 /**
- * Inventory with an ArrayList that holds all of the items in the inventory.
+ * Inventory with an ArrayList that holds all the arrayLists of items in the inventory.
  */
 public class Inventory {
-
-	private ArrayList<Item> items;
+	private ArrayList<PriorityQueue<Item>> slots;
 	private final int MAX_SIZE;
 	private final double MAX_WEIGHT;
-	
+	private int currentSize;
+
 	/**
 	 * Inventory starts out empty.
 	 */
 	public Inventory(int maxSize, double maxWeight) {
 		this.MAX_SIZE = maxSize;
 		this.MAX_WEIGHT = maxWeight;
-		this.items = new ArrayList<Item>();		
+		this.slots = new ArrayList<PriorityQueue<Item>>(ConstantStore.ITEM_TYPES.values().length);
+		for(int i = 0; i < ConstantStore.ITEM_TYPES.values().length; i++) {
+			slots.add(new PriorityQueue<Item>());
+		}
+		this.currentSize = 0;
 	}
 	
 	/**
@@ -31,11 +37,19 @@ public class Inventory {
 	}
 	
 	/**
-	 * Returns the items in inventory.
-	 * @return The items in the inventory.
+	 * Returns the slots in inventory.
+	 * @return The slots in the inventory.
 	 */
-	public ArrayList<Item> getItems() {
-		return items;
+	public ArrayList<PriorityQueue<Item>> getSlots() {
+		return slots;
+	}
+	
+	/**
+	 * Returns the current size of the inventory (number of item queues with contents)
+	 * @return The size of the inventory
+	 */
+	public int getCurrentSize() {
+		return currentSize;
 	}
 	
 	/**
@@ -44,142 +58,77 @@ public class Inventory {
 	 */
 	public double getWeight() {
 		double weight = 0;
-		for(Item item : items) {
-			weight += item.getWeight();
+		for(PriorityQueue<Item> slot : slots) {
+			for(Item item : slot) {
+				weight += item.getWeight();
+			}
 		}
 		return weight;
 	}
-	
+
 	/**
-	 * Adds the specified item to the inventory if weight and size allows.
-	 * @param item The item to be added.
-	 * @return True if the method succeeded, false if the add isn't possible.
+	 * Determines if the inventory can handle the addition
+	 * @param itemsToAdd The list of items to add.
+	 * @return True if successful
 	 */
-	public boolean addItem(Item item) {
-		boolean contains = false;
-		int indexOf = -1;
-		boolean allContainedStackable = true;
-		for(Item containedItem : items) {
-			if (containedItem.getClass() == item.getClass()) {
-				if(!containedItem.isStackable()) {
-					allContainedStackable = false;
-				}
-				contains = true;
-				indexOf = items.indexOf(containedItem);
-			}
+	public boolean canAddItems(ArrayList<Item> itemsToAdd) {
+		int itemType = itemsToAdd.get(0).getTypeIndex();
+		double weight = 0;
+		for(Item item : itemsToAdd) {
+			weight += item.getWeight();
 		}
-		if(getWeight() + (item.getStackWeight()) > MAX_WEIGHT) {
-			//Item addition would exceeded max weight
-			Logger.log("The inventory has max weight: " + MAX_WEIGHT + 
-					" and the addition of " + item.getName() + " would increase the weight to " + 
-					(getWeight() + item.getStackWeight()), Logger.Level.INFO);
+		if(getWeight() + weight > MAX_WEIGHT) {
+			Logger.log("Not enough weight capacity", Logger.Level.INFO);
 			return false;
-		} else if((!contains && items.size() == MAX_SIZE) || (contains && !allContainedStackable && items.size() == MAX_SIZE)) {
-			// Item doesn't offend max weight and isn't already contained but would overflow inventory bins
-			Logger.log("The inventory has max capacity: " + MAX_SIZE + 
-					" and currently has " + items.size() + " items.", Logger.Level.INFO);
+		} else if (currentSize == MAX_SIZE && slots.get(itemType).size() == 0) {
+			Logger.log("Not enough slots open", Logger.Level.INFO);
 			return false;
-		} else if (contains && (items.get(indexOf).isStackable() && item.isStackable()) ){
-			// Item doesn't offend max weight and is already present in inventory and both the item added and current item are stackable
-			if(!items.get(indexOf).increaseStack(item.getNumberOf())) {
-				// IncreaseStack failed
-				Logger.log("Could not add item", Logger.Level.INFO);
-				return false;
-			} else {
-				// Successfully added item
-				Logger.log(items.get(indexOf).getName() + " was added successfully.  Stack is now " + items.get(indexOf).getNumberOf(), Logger.Level.INFO);
-				return true;
-			}
 		} else {
-			//One or the other is not stackable, but there is room available, or the item doesn't already exist and there is room
-			items.add(item);
-			Logger.log(item.getName() + " was added successfully.", Logger.Level.INFO);
 			return true;
+		}
+	}
+	/**
+	 * Adds the item to the inventory.
+	 * @param item The item to add
+	 * @return True if successful, false otherwise
+	 */
+	public boolean addItem(ArrayList<Item> itemsToAdd) {
+		int itemType = itemsToAdd.get(0).getTypeIndex();		
+		if(canAddItems(itemsToAdd)) {
+			for(Item item : itemsToAdd) {
+				slots.get(itemType).add(item);
+				Logger.log(item.getName() + " added.", Logger.Level.INFO);
+			}
+			return true;
+		} else {
+			Logger.log("Add item failed", Logger.Level.INFO);
+			return false;
 		}
 	}
 
 	/**
-	 * Removes the specified item from the inventory if it exists.
-	 * @param item The item to be removed.
-	 * @return True if the method succeeded, false if the add isn't possible.
-	 */
-	public boolean removeItem(Item item) {
-		boolean contains = false;
-		int indexOf = -1;
-		for(Item containedItem : items) {
-			if (containedItem.getClass() == item.getClass()) {
-				indexOf = items.indexOf(containedItem);
-				contains = true;
+	 * Removes the item from the inventory.
+	 * @param item The item to remove
+	 * @return True if successful, false otherwise
+	 * */
+	public ArrayList<Item> removeItem(int itemType, int quantity) {
+		ArrayList<Item> removedItems = new ArrayList<Item>();
+		if(slots.get(itemType).size() < quantity) {
+			Logger.log("Not enough items to remove", Logger.Level.INFO);
+			removedItems = null;
+		} else {
+			for(int i = 0; i < quantity; i++) {
+				removedItems.add(slots.get(itemType).poll());
 			}
+			Logger.log("Items removed successfully", Logger.Level.INFO);
 		}
-		if(contains) {
-			if(!items.get(indexOf).decreaseStack(item.getNumberOf())) {
-				Logger.log("Could not remove item", Logger.Level.INFO);
-				return false;
-			}
-			else if(items.get(indexOf).getNumberOf() == 0) {
-				items.remove(item);
-			}
-		}
-		else {
-			items.add(item);
-		}
-		Logger.log(item.getName() + " was added successfully.", Logger.Level.INFO);
-		return true;
+		return removedItems;
 	}
-	
 	/**
 	 * Checks to see if the current inventory is full.
 	 * @return True if the inventory is full, false otherwise.
 	 */
 	public boolean isFull() {
-		return (items.size() == MAX_SIZE);
-	}
-	
-	//TODO: Inventory knows when statuses change
-	/**
-	 * Increases the status of a specific item in the inventory
-	 * @param itemIndex The index of the item in inventory
-	 * @param amount The amount to increase the status
-	 * @return true if successful, false otherwise
-	 */
-	public boolean increaseItemStatus(int itemIndex, int amount) {
-		Item item = items.get(itemIndex);
-		if(!item.isStackable()) {
-			//Item is unstackable (meaning it has damage) and it is in a single stack (because it is unstackable)
-			item.increaseStatus(amount);
-			Logger.log(item.getName() + " has its status increased.  Status is now at " + 
-					(item.getConditionPercentage() *100) + "%.", Logger.Level.INFO);
-			if(item.isStackable() && item.getNumberOf() == 1) {
-				//If it's become stackable again and it is in a single stack.
-				this.removeItem(item);
-				this.addItem(item);
-				Logger.log("Restacking " + item.getName(), Logger.Level.INFO);
-			}
-			return true;
-		} else {
-			//Item is stackable, so it cannot be damaged and the status increase must fail.
-			Logger.log("Cannot increase status of stacked item " + item.getName(), Logger.Level.INFO);
-			return false;
-		}
-	}
-	
-	public boolean decreaseItemStatus(int itemIndex, int amount) {
-		Item item = items.get(itemIndex);
-		if(item.getNumberOf() == 1) {
-			//If we have a single item in the stack, it's easy.
-			item.decreaseStatus(amount);
-			if(item.getStatus().getCurrent() == item.getStatus().getMin()) {
-				//If the item has broken.
-				Logger.log("Item status reached min.  Item destroyed.", Logger.Level.INFO);
-				this.removeItem(item);
-			}
-		} else {
-			//Item has a stack of more than one and must be full status.
-			//TODO: FIX THIS
-		}
-		
-		
-		return true;
+		return (slots.size() == MAX_SIZE);
 	}
 }

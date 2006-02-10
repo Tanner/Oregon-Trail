@@ -8,7 +8,7 @@ import core.Logger;
  * Person consists of a list of skills the person is proficient with as well
  * as their name, and what their profession is called.
  */
-public class Person implements Conditioned{
+public class Person implements Conditioned, Inventoried{
 	private Condition skillPoints;
 	private Condition health;
 	private boolean isMale;
@@ -325,8 +325,8 @@ public class Person implements Conditioned{
 	 * @param item The item to be added.
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
-	public boolean addToInventory(Item item) {
-		return inventory.addItem(item);
+	public boolean addItemToInventory(ArrayList<Item> items) {
+		return inventory.addItem(items);
 	}
 	
 	/**
@@ -334,21 +334,26 @@ public class Person implements Conditioned{
 	 * @param item The item to be removed.
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
-	public boolean removeFromInventory(Item item) {
-		return inventory.removeItem(item);
+	public boolean removeItemFromInventory(int itemIndex, int quantity) {
+		if (inventory.removeItem(itemIndex, quantity) != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
 	 * Returns the inventory of the person as an array list.
 	 * @return The inventory in a list.
 	 */
-	public ArrayList<Item> getInventoryAsList() {
-		ArrayList<Item> itemList = new ArrayList<Item>();
-		for(Item item : inventory.getItems()) {
-			itemList.add(item);
-		}
-		return itemList;		
-	}
+	//TODO: Figure out what we want from this
+//	public ArrayList<Item> getInventoryAsList() {
+//		ArrayList<Item> itemList = new ArrayList<Item>();
+//		for(Item item : inventory.getItems()) {
+//			itemList.add(item);
+//		}
+//		return itemList;		
+//	}
 	
 	/**
 	 * Returns the health condition for status bar.
@@ -363,25 +368,7 @@ public class Person implements Conditioned{
 		return health.getPercentage();
 	}
 	
-	public boolean canGetItem(Item item, int quantity) {
-		ArrayList<Item> items = inventory.getItems();
-		boolean contains = false;
-		boolean allContainedStackable = true;
-		for(Item containedItem : items) {
-			if (containedItem.getClass() == item.getClass()) {
-				if(!containedItem.isStackable()) {
-					allContainedStackable = false;
-				}
-				contains = true;
-			}
-		}
-		if ((inventory.getWeight() + (item.getWeight() * quantity) > MAX_INVENTORY_WEIGHT) || 
-				(!contains && items.size() == inventory.getMaxSize()) || 
-				(contains && !allContainedStackable && items.size() == inventory.getMaxSize())) {
-			return false;
-		} else {
-			return true;
-		}
-		
+	public boolean canGetItem(ArrayList<Item> items) {
+		return inventory.canAddItems(items);
 	}
 }

@@ -8,6 +8,7 @@ import model.*;
 import model.item.*;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
@@ -38,6 +39,10 @@ public class SceneSelectorScene extends Scene {
 	
 	private Player player;
 	
+	/**
+	 * creates the scene which selects the scene by which the player can select the scene they wish this scene to select 
+	 * @param player
+	 */
 	public SceneSelectorScene(Player player) {
 		this.player = player;
 	}
@@ -48,7 +53,7 @@ public class SceneSelectorScene extends Scene {
 				
 		buttons = new ArrayList<Button>();
 		
-		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		String[] labels = { "Main Menu", "Party Creation", "Town", "Store", "Party Inventory", "Components", "Remove Party", "Add Party" };
 		
 		int rows = (int)Math.ceil(Math.sqrt(labels.length));
@@ -113,6 +118,11 @@ public class SceneSelectorScene extends Scene {
 		mainLayer.setAcceptingInput(false);
 	}
 	
+	/**
+	 * they are buttons with something to say.  we listen to them.
+	 * @author NULL&&void
+	 *
+	 */
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
@@ -167,19 +177,24 @@ public class SceneSelectorScene extends Scene {
 				person.addSkill(skill);
 			}
 			Wheel wheel = new Wheel();
+			ArrayList<Item> itemsToAdd = new ArrayList<Item>();
 			wheel.decreaseStatus(random.nextInt(100));
-			person.addToInventory(wheel);
+			itemsToAdd.add(wheel);
+			person.addItemToInventory(itemsToAdd);
 
-			SonicScrewdriver sonic = new SonicScrewdriver(10 - people.indexOf(person));
-			person.addToInventory(sonic);
-			person.removeFromInventory(new SonicScrewdriver(3));
-			person.addToInventory(new SonicScrewdriver(2));
+			SonicScrewdriver sonic = new SonicScrewdriver();
+			itemsToAdd.clear();
+			itemsToAdd.add(sonic);
+			person.addItemToInventory(itemsToAdd);
+			person.addItemToInventory(itemsToAdd);
 			
-			Bread bread = new Bread(1);
-			person.addToInventory(bread);
+			person.removeItemFromInventory(sonic.getTypeIndex(), 1);
 			
-			Apple apple = new Apple(1);
-			person.addToInventory(apple);
+//			Bread bread = new Bread(1);
+//			person.addToInventory(bread);
+//			
+//			Apple apple = new Apple(1);
+//			person.addToInventory(apple);
 		}
 		
 		Vehicle vehicle = new Wagon();

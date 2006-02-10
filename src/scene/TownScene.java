@@ -4,6 +4,7 @@ import model.Party;
 import model.Person;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -16,10 +17,18 @@ import component.Positionable;
 
 import core.*;
 
-
+/**
+ * the scene which represents a town
+ * @author NULL&&void
+ *
+ */
 public class TownScene extends Scene {
 	public static final SceneID ID = SceneID.Town;
-
+	
+	/**
+	 * builds town scene
+	 * @param party where/who the action is
+	 */
 	public TownScene(Party party) {
 		for (Person p : party.getPartyMembers()) {
 			Logger.log(p.getName() + ", the " + p.getProfession() + ", entered the town.", Logger.Level.INFO);
@@ -30,8 +39,8 @@ public class TownScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		UnicodeFont h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
-		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
+		Font h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
+		Font h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
 		
 		Label titleLabel = new Label(container, h1, Color.white, "Town");
 		Label subtitleLabel = new Label(container, h2, Color.white, "Press Enter to Go to Store");

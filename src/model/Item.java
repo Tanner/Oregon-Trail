@@ -1,5 +1,6 @@
 package model;
 
+import core.ConstantStore;
 import model.Condition;
 
 /**
@@ -15,7 +16,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	private double weight; //This is the individual unit weight
 	private boolean isStackable = true;
 	private int baseCost;
-	
+	private ConstantStore.ITEM_TYPES type;
 	/**
 	 * 
 	 * Creates a new item with a name, description, status, and weight.
@@ -25,13 +26,15 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @param weight The item's weight
 	 * @param numberOf The number of items in the stack
 	 * @param baseCost The base cost of the item
+	 * @param type The type of the item
 	 */
-	public Item(String name, String description, Condition status, double weight, int baseCost) {
+	public Item(String name, String description, Condition status, double weight, int baseCost, ConstantStore.ITEM_TYPES type) {
 		this.name = name;
 		this.description = description;
 		this.status = status;
-		this.weight = weight;;
+		this.weight = weight;
 		this.baseCost = baseCost;
+		this.type = type;
 	}
 
 	/**
@@ -122,5 +125,9 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 			return -1;
 		else 
 			return 1;
+	}
+	
+	public int getTypeIndex() {
+		return type.ordinal();
 	}
 }

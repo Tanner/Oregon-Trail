@@ -172,8 +172,7 @@ public class StoreScene extends Scene {
 	 */
 	private void createComponents() {
 		Label tempLabel;
-		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
-		UnicodeFont bigFieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.BIG_FIELD);
+		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		
 		//Create grid of store inventory buttons
 		storeInventory = new CountingButton[16];
@@ -192,13 +191,13 @@ public class StoreScene extends Scene {
 		partyMoney.setAlignment(Label.Alignment.Center);
 		
 		//Create cancel & inventory buttons
-		tempLabel = new Label(container, bigFieldFont, Color.white, "Cancel");
+		tempLabel = new Label(container, fieldFont, Color.white, "Cancel");
 		cancelButton = new Button(container, BUTTON_WIDTH,BUTTON_HEIGHT,tempLabel);
 		cancelButton.addListener(new ButtonListener());
-		tempLabel = new Label(container, bigFieldFont, Color.white, "Inventory");
+		tempLabel = new Label(container, fieldFont, Color.white, "Inventory");
 		inventoryButton = new Button(container, BUTTON_WIDTH,BUTTON_HEIGHT,tempLabel);
 		inventoryButton.addListener(new ButtonListener());
-		tempLabel = new Label(container, bigFieldFont, Color.white, "Clear");
+		tempLabel = new Label(container, fieldFont, Color.white, "Clear");
 
 		
 		//Create item description text labels
@@ -223,7 +222,7 @@ public class StoreScene extends Scene {
 		clearButton = new Button(container, BUTTON_WIDTH,BUTTON_HEIGHT,tempLabel);
 		clearButton.addListener(new ButtonListener());
 		clearButton.setDisabled(true);
-		tempLabel = new Label(container, bigFieldFont, Color.white, "Buy");
+		tempLabel = new Label(container, fieldFont, Color.white, "Buy");
 		buyButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		buyButton.addListener(new ButtonListener());
 		buyButton.setDisabled(true);
