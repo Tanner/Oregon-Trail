@@ -7,4 +7,5 @@ public interface Inventoried {
 	
 	public boolean addItemToInventory(ArrayList<Item> itemsToAdd);
 	public boolean removeItemFromInventory(int itemIndex, int quantity);
+	public boolean canGetItem(ArrayList<Item> itemsToAdd);
 }

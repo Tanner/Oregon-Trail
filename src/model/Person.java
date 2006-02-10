@@ -368,6 +368,11 @@ public class Person implements Conditioned, Inventoried{
 		return health.getPercentage();
 	}
 	
+	/**
+	 * Returns whether or not the item addition is possible.
+	 * @param The items to test the possibility of adding.
+	 * @return True if possible.
+	 */
 	public boolean canGetItem(ArrayList<Item> items) {
 		return inventory.canAddItems(items);
 	}
