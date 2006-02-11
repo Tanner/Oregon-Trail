@@ -139,8 +139,25 @@ public class Inventory {
 		return removedItems;
 	}
 	
+	/**
+	 * Removes the item from the inventory and gives it back as an arrayList
+	 * @param itemType The type of item to remove
+	 * @param quantity The number of the item to remvove
+	 * @return The removed items.
+	 */
 	public ArrayList<Item> removeItem(Item.ITEM_TYPE itemType, int quantity) {
-		return removeItem(itemType.ordinal(), quantity);
+		ArrayList<Item> removedItems = new ArrayList<Item>();
+		int itemIndex = itemType.ordinal();
+		if(slots.get(itemIndex).size() < quantity) {
+			Logger.log("Not enough items to remove", Logger.Level.INFO);
+			removedItems = null;
+		} else {
+			for(int i = 0; i < quantity; i++) {
+				removedItems.add(slots.get(itemIndex).poll());
+			}
+			Logger.log("Items removed successfully", Logger.Level.INFO);
+		}
+		return removedItems;
 	}
 	/**
 	 * Checks to see if the current inventory is full.
@@ -150,10 +167,20 @@ public class Inventory {
 		return (slots.size() == MAX_SIZE);
 	}
 	
+	/**
+	 * Returns the number of a specific type of item in the inventory
+	 * @param itemType The item type queried
+	 * @return The number of that item type.
+	 */
 	public int getNumberOf(Item.ITEM_TYPE itemType) {
 		return slots.get(itemType.ordinal()).size();
 	}
 	
+	/**
+	 * 
+	 * @param itemType
+	 * @return
+	 */
 	public Condition getConditionOf(Item.ITEM_TYPE itemType) {
 		return getNumberOf(itemType) != 0 ? slots.get(itemType.ordinal()).peek().getStatus() : null;
 	}
