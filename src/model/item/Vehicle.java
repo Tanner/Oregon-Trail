@@ -95,7 +95,18 @@ public abstract class Vehicle extends Item implements Inventoried{
 		return cargo.canAddItems(itemType, numberOf);
 	}
 	
+	@Override
 	public int getMaxSize() {
 		return MAX_INVENTORY_SIZE;
+	}
+	
+	@Override
+	public double getMaxWeight() {
+		return MAX_INVENTORY_WEIGHT;
+	}
+	
+	@Override
+	public double getWeight() {
+		return cargo.getWeight();
 	}
 }

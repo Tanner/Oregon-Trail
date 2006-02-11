@@ -44,4 +44,16 @@ public interface Inventoried {
 	 * @return The max size.
 	 */
 	public int getMaxSize();
+	
+	/**
+	 * Returns the current carried weight
+	 * @return The current carried weight
+	 */
+	public double getWeight();
+	
+	/**
+	 * Returns the max weight of the inventory
+	 * @return The max weight
+	 */
+	public double getMaxWeight();
 }

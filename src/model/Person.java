@@ -345,19 +345,6 @@ public class Person implements Conditioned, Inventoried{
 	}
 	
 	/**
-	 * Returns the inventory of the person as an array list.
-	 * @return The inventory in a list.
-	 */
-	//TODO: Figure out what we want from this
-//	public ArrayList<Item> getInventoryAsList() {
-//		ArrayList<Item> itemList = new ArrayList<Item>();
-//		for(Item item : inventory.getItems()) {
-//			itemList.add(item);
-//		}
-//		return itemList;		
-//	}
-	
-	/**
 	 * Returns the health condition for status bar.
 	 * @return The condition 'health'
 	 */
@@ -382,5 +369,15 @@ public class Person implements Conditioned, Inventoried{
 	@Override
 	public int getMaxSize() {
 		return MAX_INVENTORY_SIZE;
+	}
+	
+	@Override
+	public double getMaxWeight() {
+		return MAX_INVENTORY_WEIGHT;
+	}
+	
+	@Override
+	public double getWeight() {
+		return inventory.getWeight();
 	}
 }
