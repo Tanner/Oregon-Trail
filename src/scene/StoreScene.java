@@ -119,7 +119,6 @@ public class StoreScene extends Scene {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		System.out.println( (hoverItem != null ) ? hoverItem.getName() : "");
 		//Re-enable all buttons if currently selected item's quantity goes back to 0
 		if ( currentItem != null && storeInventory[getButtonIndex(currentItem)].getCount() == storeInventory[getButtonIndex(currentItem)].getMax()) {
 			currentItem = null;
@@ -132,7 +131,6 @@ public class StoreScene extends Scene {
 		}
 		//Don't do anything if there is no hovering/item selection
 		if ( hoverItem == null && currentItem == null ) {
-			//updateLabels(-1);
 			return;
 		//Display information for the item currently being hovered over
 		} else if ( hoverItem != null && getButtonIndex(hoverItem) != getButtonIndex(currentItem) ) {
@@ -185,7 +183,7 @@ public class StoreScene extends Scene {
 		storeInventory = new CountingButton[inventorySlots.size()];
 		for (int i = 0; i < inventorySlots.size(); i++) {
 			Item.ITEM_TYPE currentType = inventorySlots.get(i);
-			buttonMap.add(currentItem);
+			buttonMap.add(currentType);
 			tempLabel = new Label(container, fieldFont, Color.white, currentType.getName());
 			storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
 			storeInventory[i].setMax(inv.getNumberOf(currentType));
@@ -193,7 +191,6 @@ public class StoreScene extends Scene {
 			storeInventory[i].setCountUpOnLeftClick(false);
 			storeInventory[i].addListener(new InventoryListener(currentType));
 		}
-		
 		storeInventoryButtons = new Panel(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, INVENTORY_BUTTON_HEIGHT * 4 + PADDING * 3);
 		
 		//Create money label
@@ -217,7 +214,7 @@ public class StoreScene extends Scene {
 		int textPanelLabelWidth = textPanelWidth - PADDING*2;
 		itemDescription[0] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[0].setAlignment(Label.Alignment.Center);
-		itemDescription[1] = new Label(container, textPanelLabelWidth, 135, fieldFont, Color.white, tempDescription);
+		itemDescription[1] = new Label(container, textPanelLabelWidth, 135, fieldFont, Color.white, "");
 		itemDescription[1].setAlignment(Label.Alignment.Center);
 		itemDescription[1].setVerticalAlignment(Label.VerticalAlignment.Top);
 		itemDescription[2] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
@@ -238,19 +235,6 @@ public class StoreScene extends Scene {
 		buyButton.setDisabled(true);
 	}
 	
-	private void createModals() {
-		int itemCount = storeInventory[currentItem].getMax() - storeInventory[currentItem].getCount();
-		ArrayList<Item> buyList = inv.removeItem(currentItem, itemCount);
-		ArrayList<Inventoried> buyers = p.canGetItem(buyList);
-		inv.addItem(buyList);
-		String[] names = new String[buyers.size()];
-		for (int i = 0; i < names.length; i++) {
-			names[i] = buyers.get(i).getName();
-		}
-		SegmentedControl choosePlayer = new SegmentedControl(container, 400, 200, 3, 2, 20, true, 1, names);
-		buyModal = new Modal(container, this, "Choose who will buy this item", choosePlayer, "Buy", "Cancel");
-	}
-	
 	/**
 	 * Update all the side labels on the store to reflect the current
 	 * active item.
@@ -258,7 +242,7 @@ public class StoreScene extends Scene {
 	 * @param index The index of the item you wish to display information on
 	 */
 	private void updateLabels(Item.ITEM_TYPE currentItem) {
-		if (currentItem != null && getButtonIndex(currentItem) != -1 ) {
+		if (currentItem != null ) {
 			int count = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
 			itemDescription[0].setText(currentItem.getName());
 			itemDescription[1].setText(currentItem.getDescription());
@@ -272,15 +256,21 @@ public class StoreScene extends Scene {
 	
 	public void makePurchase() {
 		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
-		ArrayList<Item> buyList = inv.removeItem(currentItem, itemCount);
-		ArrayList<Inventoried> buyers = p.canGetItem(buyList);
+		ArrayList<Inventoried> buyers = p.canGetItem(currentItem, itemCount);
 		if ( buyers != null ) {
-				p.buyItemForInventory(buyList, buyers.get(0));
-				storeInventory[getButtonIndex(currentItem)].setMax(tempInv.get(currentItem).size());
+			ArrayList<Item> boughtItems = inv.removeItem(currentItem, itemCount);
+			String[] names = new String[buyers.size()];
+			for (int i = 0; i < names.length; i++) {
+				names[i] = buyers.get(i).getName();
+			}
+			SegmentedControl choosePlayer = new SegmentedControl(container, 400, 200, 3, 2, 20, true, 1, names);
+			buyModal = new Modal(container, this, "Choose who will buy this item", choosePlayer, "Buy", "Cancel");
+			p.buyItemForInventory(boughtItems, buyers.get(0));
+			storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
 		}
-		else {
-			inv.addItem(buyList);
-		}
+		
+
+
 	}
 	
 	private int getButtonIndex(Item.ITEM_TYPE item) {
@@ -302,9 +292,8 @@ public class StoreScene extends Scene {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventory, StoreScene.this);
 			}
 			else if ( source == buyButton) {
-				createModals();
+				makePurchase();
 				showModal(buyModal);
-				//makePurchase();
 			} else {
 				if ( currentItem != null) {
 					storeInventory[getButtonIndex(currentItem)].setCount(storeInventory[getButtonIndex(currentItem)].getMax());
