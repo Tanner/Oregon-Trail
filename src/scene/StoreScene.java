@@ -39,6 +39,10 @@ public class StoreScene extends Scene {
 	private Label[] itemDescription;
 	private Label partyMoney;
 	private Modal buyModal;
+	private Modal failedBuyModal;
+	
+	private ArrayList<Item> currentPurchase;
+	private ArrayList<Inventoried> currentBuyers;
 	
 	private Item.ITEM_TYPE currentItem = null;
 	private Item.ITEM_TYPE hoverItem = null;
@@ -254,23 +258,22 @@ public class StoreScene extends Scene {
 		}
 	}
 	
-	public void makePurchase() {
+	public boolean makePurchase() {
 		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
-		ArrayList<Inventoried> buyers = p.canGetItem(currentItem, itemCount);
-		if ( buyers != null ) {
-			ArrayList<Item> boughtItems = inv.removeItem(currentItem, itemCount);
-			String[] names = new String[buyers.size()];
+		currentBuyers = p.canGetItem(currentItem, itemCount);
+		if ( currentBuyers.size() != 0 ) {
+			currentPurchase = inv.removeItem(currentItem, itemCount);
+			String[] names = new String[currentBuyers.size()];
 			for (int i = 0; i < names.length; i++) {
-				names[i] = buyers.get(i).getName();
+				names[i] = currentBuyers.get(i).getName();
 			}
 			SegmentedControl choosePlayer = new SegmentedControl(container, 400, 200, 3, 2, 20, true, 1, names);
 			buyModal = new Modal(container, this, "Choose who will buy this item", choosePlayer, "Buy", "Cancel");
-			p.buyItemForInventory(boughtItems, buyers.get(0));
-			storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
+			return true;
+		} else {
+			failedBuyModal = new Modal(container, this, "It doesn't seem like you can purchase that!", "Ok");
+			return false;
 		}
-		
-
-
 	}
 	
 	private int getButtonIndex(Item.ITEM_TYPE item) {
@@ -292,8 +295,11 @@ public class StoreScene extends Scene {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, StoreScene.this);
 			}
 			else if ( source == buyButton) {
-				makePurchase();
-				showModal(buyModal);
+				boolean success = makePurchase();
+				if (success)
+					showModal(buyModal);
+				else
+					showModal(failedBuyModal);		
 			} else {
 				if ( currentItem != null) {
 					storeInventory[getButtonIndex(currentItem)].setCount(storeInventory[getButtonIndex(currentItem)].getMax());
@@ -317,6 +323,21 @@ public class StoreScene extends Scene {
 		public void componentActivated(AbstractComponent source) {
 			if ( currentItem == null || storeInventory[getButtonIndex(item)].getCount() == 0)
 				currentItem = item;
+		}
+	}
+
+	@Override
+	public void dismissModal(Modal modal, boolean cancelled) {
+		super.dismissModal(modal, cancelled);
+		if ( modal == buyModal ) {
+			if ( cancelled )
+				inv.addItem(currentPurchase);
+			else {
+				int[] buyer = buyModal.getSegmentedControl().getSelection();
+				p.buyItemForInventory(currentPurchase, currentBuyers.get(buyer[0]));
+				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
+				partyMoney.setText("Party's Money: $ " + p.getMoney());
+			}
 		}
 	}
 }

@@ -342,7 +342,7 @@ public class PartyCreationScene extends Scene {
 	
 	@Override
 	public void dismissModal(Modal modal, boolean cancelled) {
-		super.dismissModal(modal);
+		super.dismissModal(modal, cancelled);
 		
 		if (!cancelled) {
 			if (modal == professionModal) {
