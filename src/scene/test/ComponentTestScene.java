@@ -65,10 +65,10 @@ public class ComponentTestScene extends Scene {
 		}	
 
 		segment = new SegmentedControl(container,500,100,4,3,0,4,strs);
-
 		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		int[] num = {2,3};
 		segment.setPermanent(num);
+		segment.setDisabled(new int[]{5});
 		
 		Label longLabel = new Label(container, 400, 125, fieldFont, Color.white, "Hello my name is jeremy.\n\nI am a really cool guy and stuff and I made a multiline label.\nOr did I?");
 		longLabel.setAlignment(Alignment.Center);
