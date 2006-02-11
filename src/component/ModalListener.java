@@ -6,7 +6,8 @@ package component;
 public interface ModalListener {
 	/**
 	 * Dismiss the modal.
-	 * @param modal The modal to be dismissed.
+	 * @param modal The modal to be dismissed
+	 * @param cancelled If the modal was cancelled
 	 */
-	public void dismissModal(Modal modal);
+	public void dismissModal(Modal modal, boolean cancelled);
 }

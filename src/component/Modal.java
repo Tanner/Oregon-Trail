@@ -123,7 +123,7 @@ public class Modal extends Component {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ENTER) {
-			listener.dismissModal(Modal.this);
+			listener.dismissModal(Modal.this, true);
 		}
 	}
 	
@@ -141,7 +141,11 @@ public class Modal extends Component {
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent source) {
-			listener.dismissModal(Modal.this);
+			boolean cancelled = false;
+			if (source == dismissButton) {
+				cancelled = true;
+			}
+			listener.dismissModal(Modal.this, cancelled);
 		} 
 		
 	}
