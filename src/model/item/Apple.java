@@ -12,6 +12,8 @@ public class Apple extends Item {
 	public Apple() {
 		super(ConstantStore.get("ITEMS", "APPLE_NAME"), 
 			  ConstantStore.get("ITEMS", "APPLE_DESCRIPTION"), new Condition(100),
-			  1.5, 2, Item.ITEM_TYPES.APPLE);
+			  Double.parseDouble(ConstantStore.get("ITEMS", "APPLE_WEIGHT")),
+			  Integer.parseInt(ConstantStore.get("ITEMS", "APPLE_COST")),
+			  Item.ITEM_TYPES.APPLE);
 	}
 }

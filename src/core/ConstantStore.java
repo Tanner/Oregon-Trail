@@ -60,18 +60,36 @@ public final class ConstantStore {
 		Map<String, String> itemMap = new HashMap<String, String>();
 		itemMap.put("WHEEL_NAME", "Wheel");
 		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
-		itemMap.put("SONIC_SCREWDRIVER_NAME", "Sonic");
-		itemMap.put("SONIC_SCREWDRIVER_DESCRIPTION", "Weeeweeeveeeeweee");
+		itemMap.put("WHEEL_WEIGHT", "5");
+		itemMap.put("WHEEL_COST", "75");
+		itemMap.put("SONIC_NAME", "Sonic");
+		itemMap.put("SONIC_DESCRIPTION", "Weeeweeeveeeeweee");
+		itemMap.put("SONIC_WEIGHT", "0.5");
+		itemMap.put("SONIC_COST", "100");
 		itemMap.put("APPLE_NAME", "Apple");
 		itemMap.put("APPLE_DESCRIPTION", "Its an Apple.");
+		itemMap.put("APPLE_WEIGHT", "1.5");
+		itemMap.put("APPLE_COST", "2");
 		itemMap.put("BREAD_NAME", "Bread");
 		itemMap.put("BREAD_DESCRIPTION", "Its the finest bread ever.");
+		itemMap.put("BREAD_WEIGHT", "1.0");
+		itemMap.put("BREAD_COST", "4");
 		itemMap.put("GUN_NAME", "Gun");
 		itemMap.put("GUN_DESCRIPTION", "Bang! Bang bang bang!");
+		itemMap.put("GUN_WEIGHT", "5.0");
+		itemMap.put("GUN_COST", "50");
 		itemMap.put("BULLET_NAME", "Bullet");
 		itemMap.put("BULLET_DESCRIPTION", "For a gun.");
+		itemMap.put("BULLET_WEIGHT", "0.25");
+		itemMap.put("BULLET_COST", "2");
 		itemMap.put("MEAT_NAME", "Meat");
 		itemMap.put("MEAT_DESCRIPTION", "Food noms - ohm nom nom.");
+		itemMap.put("MEAT_WEIGHT", "25");
+		itemMap.put("MEAT_COST", "75");
+		itemMap.put("WAGON_NAME", "Wagon");
+		itemMap.put("WAGON_DESCRIPTION", "This is a trusty wooden wagon.");
+		itemMap.put("WAGON_WEIGHT", "200");
+		itemMap.put("WAGON_COST", "2000");
 		literalMap.put("ITEMS", itemMap);
 		
 		// General

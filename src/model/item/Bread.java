@@ -12,6 +12,8 @@ public class Bread extends Item {
 	public Bread() {
 		super(ConstantStore.get("ITEMS", "BREAD_NAME"), 
 			  ConstantStore.get("ITEMS", "BREAD_DESCRIPTION"), new Condition(100), 
-			  1.0, 4, Item.ITEM_TYPES.BREAD);
+			  Double.parseDouble(ConstantStore.get("ITEMS", "BREAD_WEIGHT")),
+			  Integer.parseInt(ConstantStore.get("ITEMS", "BREAD_COST")),
+			  Item.ITEM_TYPES.BREAD);
 	}
 }
