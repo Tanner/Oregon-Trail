@@ -151,7 +151,7 @@ public class StoreScene extends Scene {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
-			GameDirector.sharedSceneDelegate().sceneDidEnd(this);
+			GameDirector.sharedSceneListener().sceneDidEnd(this);
 		}
 	}
 	
@@ -176,7 +176,7 @@ public class StoreScene extends Scene {
 	 */
 	private void createComponents() {
 		Label tempLabel;
-		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
 		ArrayList<Item.ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
 		buttonMap = new ArrayList<Item.ITEM_TYPE>();
@@ -287,9 +287,9 @@ public class StoreScene extends Scene {
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
 			if ( source == cancelButton ) {
-				GameDirector.sharedSceneDelegate().sceneDidEnd(StoreScene.this);
+				GameDirector.sharedSceneListener().sceneDidEnd(StoreScene.this);
 			} else if ( source == inventoryButton ) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventory, StoreScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, StoreScene.this);
 			}
 			else if ( source == buyButton) {
 				makePurchase();

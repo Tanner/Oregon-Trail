@@ -64,7 +64,7 @@ public class PartyInventoryScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
-		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
 		ArrayList<Person> members = party.getPartyMembers();
 		Vehicle vehicle = party.getVehicle();
@@ -140,7 +140,7 @@ public class PartyInventoryScene extends Scene {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			if (component == closeButton) {
-				GameDirector.sharedSceneDelegate().sceneDidEnd(PartyInventoryScene.this);
+				GameDirector.sharedSceneListener().sceneDidEnd(PartyInventoryScene.this);
 			}
 		}
 	}

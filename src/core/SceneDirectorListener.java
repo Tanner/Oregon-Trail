@@ -1,10 +1,10 @@
 package core;
 
 /**
- * Provides interface between scenes and the game director
+ * An interface between the scene director and the game director.
  */
 
-public interface SceneDirectorDelegate {
+public interface SceneDirectorListener {
 	/**
 	 * Message that the scene director has initialized its starting scenes.
 	 */

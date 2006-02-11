@@ -10,12 +10,10 @@ import scene.test.*;
 import model.*;
 
 /**
- * The class responsible for the logical progression of the game
- * 
- * @author NULL&void
+ * Directs the logical functionality of the game. Sets everything in motion.
  */
 
-public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
+public class GameDirector implements SceneListener, SceneDirectorListener {
 	public static boolean DEBUG_MODE = false;
 	
 	private static GameDirector sharedDirector;
@@ -44,7 +42,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	 * Singleton Design pattern. Returns the single instance of game director object that drives the game, for the scenes to interact with.
 	 * @return handle of game director for scene to interact with
 	 */
-	public static SceneDelegate sharedSceneDelegate() {
+	public static SceneListener sharedSceneListener() {
 		if (sharedDirector == null) {
 			sharedDirector = new GameDirector();
 		}
@@ -57,7 +55,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	 * Singleton Design pattern. Returns the single instance of the game director that drives the game, for the scene director to interact with.
 	 * @return handle of game director for scene director to interact with
 	 */
-	public static SceneDirectorDelegate sharedSceneDirectorDelegate() {
+	public static SceneDirectorListener sharedSceneDirectorListener() {
 		if (sharedDirector == null) {
 			sharedDirector = new GameDirector();
 		}
