@@ -163,14 +163,16 @@ public class StoreScene extends Scene {
 	}
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		for (int i = 0; i < storeInventory.length; i++) {
-			if ( ((Rectangle)storeInventory[i].getArea()).contains(newx,newy) )
-			{ 
-				hoverItem = getItemFromButtonIndex(i);
-				return;
+		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {
+			for (int i = 0; i < storeInventory.length; i++) {
+				if ( ((Rectangle)storeInventory[i].getArea()).contains(newx,newy) )
+				{ 
+					hoverItem = getItemFromButtonIndex(i);
+					return;
+				}
 			}
+			hoverItem = null;
 		}
-		hoverItem = null;
 	}
 	
 	/**
@@ -258,7 +260,7 @@ public class StoreScene extends Scene {
 	
 	public boolean makePurchase() {
 		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
-		currentBuyers = p.canGetItem(currentItem, itemCount);
+		currentBuyers = p.canGetItem(currentItem, itemCount);			
 		if ( currentBuyers.size() != 0 ) {
 			currentPurchase = inv.removeItem(currentItem, itemCount);
 			String[] names = new String[currentBuyers.size()];
@@ -293,6 +295,14 @@ public class StoreScene extends Scene {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, StoreScene.this);
 			}
 			else if ( source == buyButton) {
+				if ( currentItem == Item.ITEM_TYPE.WAGON && p.getVehicle() == null ) {
+					if ( p.getMoney() > currentItem.getCost() ) {
+						p.setVehicle(new Wagon());
+						inv.removeItem(currentItem, 1);
+						updateLabels(currentItem);
+					}
+					return;
+				}
 				boolean success = makePurchase();
 				if (success)
 					showModal(buyModal);
