@@ -1,9 +1,6 @@
 package component;
 
-import java.util.PriorityQueue;
-
 import model.Condition;
-import model.Item;
 import model.Item.ITEM_TYPE;
 
 import org.newdawn.slick.Color;
@@ -15,7 +12,6 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.Label.Alignment;
-import component.Label.VerticalAlignment;
 
 public class SlotConditionGroup extends Component {
 	private static final int ITEM_BUTTON_HEIGHT = 40;

@@ -1,12 +1,8 @@
 package component;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
-
 import model.Condition;
 import model.Inventoried;
-import model.Inventory;
 import model.Item;
 import model.Item.ITEM_TYPE;
 import model.Person;
@@ -19,7 +15,6 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 
 import component.Positionable.ReferencePoint;
-import core.Logger;
 
 public class OwnerInventoryButtons {
 	private static final int ITEM_BUTTON_WIDTH = 80;

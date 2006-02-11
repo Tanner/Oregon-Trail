@@ -2,8 +2,6 @@ package model.item;
 
 import java.util.ArrayList;
 
-import core.ConstantStore;
-
 import model.Condition;
 import model.Inventoried;
 import model.Inventory;

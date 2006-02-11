@@ -1,10 +1,7 @@
 package scene;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import model.Inventory;
-import model.Item;
 import model.Party;
 import model.Person;
 import model.item.Vehicle;
@@ -13,15 +10,11 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Button;
-import component.Component;
-import component.ConditionBar;
-import component.CountingButton;
 import component.Label;
 import component.OwnerInventoryButtons;
 import component.Panel;

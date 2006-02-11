@@ -1,8 +1,6 @@
 package scene;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.PriorityQueue;
 
 import model.*;
 import model.item.*;
