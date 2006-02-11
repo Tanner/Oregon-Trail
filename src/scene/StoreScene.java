@@ -1,6 +1,7 @@
 package scene;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 
 import model.*;
@@ -32,18 +33,18 @@ public class StoreScene extends Scene {
 	private final Color TEXT_PANEL_COLOR = new Color(0x679FD2);
 		
 	private CountingButton[] storeInventory;
+	private ArrayList<Item.ITEM_TYPE> buttonMap;
 	private Panel storeInventoryButtons, textPanel;
 	private Button cancelButton, clearButton, inventoryButton, buyButton;
 	private Label[] itemDescription;
 	private Label partyMoney;
 	private Modal buyModal;
 	
-	private int currentItem = -1;
-	private int hoverItem = -1;
+	private Item.ITEM_TYPE currentItem = null;
+	private Item.ITEM_TYPE hoverItem = null;
 	
 	String tempDescription = "This is an item description.\nIt is a good item, maybe a sonic screwdriver.\n\nYep.";
 	Inventory inv;
-	ArrayList<PriorityQueue<Item>> tempInv;
 	Party p;
 	
 	public StoreScene (Party p) {
@@ -89,7 +90,6 @@ public class StoreScene extends Scene {
 			itemToAdd.add(new Wheel());
 		}
 		inv.addItem(itemToAdd);
-		tempInv = inv.getSlots();
 	}
 	
 	@Override
@@ -119,10 +119,10 @@ public class StoreScene extends Scene {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+		System.out.println( (hoverItem != null ) ? hoverItem.getName() : "");
 		//Re-enable all buttons if currently selected item's quantity goes back to 0
-		if ( currentItem != -1 && storeInventory[currentItem].getCount() == storeInventory[currentItem].getMax()) {
-			currentItem = -1;
+		if ( currentItem != null && storeInventory[getButtonIndex(currentItem)].getCount() == storeInventory[getButtonIndex(currentItem)].getMax()) {
+			currentItem = null;
 			buyButton.setDisabled(true);
 			clearButton.setDisabled(true);
 			for (int i = 0; i < storeInventory.length; i++) {
@@ -131,11 +131,11 @@ public class StoreScene extends Scene {
 			return;
 		}
 		//Don't do anything if there is no hovering/item selection
-		if ( hoverItem == -1 && currentItem == -1 ) {
+		if ( hoverItem == null && currentItem == null ) {
 			//updateLabels(-1);
 			return;
 		//Display information for the item currently being hovered over
-		} else if ( hoverItem != -1 && hoverItem != currentItem ) {
+		} else if ( hoverItem != null && getButtonIndex(hoverItem) != getButtonIndex(currentItem) ) {
 			updateLabels(hoverItem);
 		//Display information for currently selected item, as well as disable
 		//all other buttons.
@@ -144,7 +144,7 @@ public class StoreScene extends Scene {
 			clearButton.setDisabled(false);
 			updateLabels(currentItem);
 			for (int i = 0; i < storeInventory.length; i++) {
-				if ( i != currentItem )
+				if ( i != getButtonIndex(currentItem) )
 					storeInventory[i].setDisabled(true);
 			}	
 		}
@@ -161,17 +161,16 @@ public class StoreScene extends Scene {
 	public int getID() {
 		return ID.ordinal();
 	}
-	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		for (int i = 0; i < storeInventory.length; i++) {
-			if ( contains(storeInventory[i], newx, newy) )
+			if ( ((Rectangle)storeInventory[i].getArea()).contains(newx,newy) )
 			{ 
-				hoverItem = i;
+				hoverItem = getItemFromButtonIndex(i);
 				return;
 			}
 		}
-		hoverItem = -1;
+		hoverItem = null;
 	}
 	
 	/**
@@ -181,22 +180,20 @@ public class StoreScene extends Scene {
 		Label tempLabel;
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		
-		//Create grid of store inventory buttons
-		storeInventory = new CountingButton[inv.getCurrentSize()];
-		int currentButton = 0;
-		int i = 0;
-		while ( i < inv.getMaxSize()) {
-			if ( tempInv.get(i).size() != 0) {
-				tempLabel = new Label(container, fieldFont, Color.white, tempInv.get(i).peek().getName());
-				storeInventory[currentButton] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
-				storeInventory[currentButton].setMax(tempInv.get(i).size());
-				storeInventory[currentButton].setCount(tempInv.get(i).size());
-				storeInventory[currentButton].setCountUpOnLeftClick(false);
-				storeInventory[currentButton].addListener(new InventoryListener(i));
-				currentButton++;
-			}
-			i++;
+		ArrayList<Item.ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
+		buttonMap = new ArrayList<Item.ITEM_TYPE>();
+		storeInventory = new CountingButton[inventorySlots.size()];
+		for (int i = 0; i < inventorySlots.size(); i++) {
+			Item.ITEM_TYPE currentType = inventorySlots.get(i);
+			buttonMap.add(currentItem);
+			tempLabel = new Label(container, fieldFont, Color.white, currentType.getName());
+			storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
+			storeInventory[i].setMax(inv.getNumberOf(currentType));
+			storeInventory[i].setCount(inv.getNumberOf(currentType));
+			storeInventory[i].setCountUpOnLeftClick(false);
+			storeInventory[i].addListener(new InventoryListener(currentType));
 		}
+		
 		storeInventoryButtons = new Panel(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, INVENTORY_BUTTON_HEIGHT * 4 + PADDING * 3);
 		
 		//Create money label
@@ -228,7 +225,7 @@ public class StoreScene extends Scene {
 		itemDescription[4] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[5] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[6] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
-		updateLabels(0);
+		updateLabels(currentItem);
 		textPanel = new Panel(container, textPanelWidth, storeInventoryButtons.getHeight(), TEXT_PANEL_COLOR);
 		
 		//Create clear & buy button
@@ -245,6 +242,7 @@ public class StoreScene extends Scene {
 		int itemCount = storeInventory[currentItem].getMax() - storeInventory[currentItem].getCount();
 		ArrayList<Item> buyList = inv.removeItem(currentItem, itemCount);
 		ArrayList<Inventoried> buyers = p.canGetItem(buyList);
+		inv.addItem(buyList);
 		String[] names = new String[buyers.size()];
 		for (int i = 0; i < names.length; i++) {
 			names[i] = buyers.get(i).getName();
@@ -259,48 +257,38 @@ public class StoreScene extends Scene {
 	 * 
 	 * @param index The index of the item you wish to display information on
 	 */
-	private void updateLabels(int index) {
-		Item tempItem = tempInv.get(index).peek();
-		int count = storeInventory[index].getMax() - storeInventory[index].getCount();
-		itemDescription[0].setText(tempItem.getName());
-		itemDescription[1].setText(tempItem.getDescription());
-		itemDescription[2].setText("Weight: " + tempItem.getWeight() + " lbs");
-		itemDescription[3].setText("Cost: $" + tempItem.getCost());
-		itemDescription[4].setText("Quantity: " + count);
-		itemDescription[5].setText("Total Weight: " + count*tempItem.getWeight());
-		itemDescription[6].setText("Total Cost: $" + count*tempItem.getCost());
-	}
-	
-	/**
-	 * Check to see if a component contains a certain x and y coordinate
-	 * in its bounds.  Used for mouse-over effect.
-	 * 
-	 * @param c The component to check 
-	 * @param x The x coordinate to check
-	 * @param y The y coordinate to check
-	 * @return
-	 */
-	private boolean contains(Component c,  int x, int y) {
-		int leftx = c.getX();
-		int rightx = c.getWidth()+leftx;
-		int topy = c.getY();
-		int bottomy = c.getHeight() + topy;
-		if ( x >= leftx && x <= rightx && y >= topy && y <= bottomy)
-			return true;
-		return false;
+	private void updateLabels(Item.ITEM_TYPE currentItem) {
+		if (currentItem != null && getButtonIndex(currentItem) != -1 ) {
+			int count = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
+			itemDescription[0].setText(currentItem.getName());
+			itemDescription[1].setText(currentItem.getDescription());
+			itemDescription[2].setText("Weight: " + currentItem.getWeight() + " lbs");
+			itemDescription[3].setText("Cost: $" + currentItem.getCost());
+			itemDescription[4].setText("Quantity: " + count);
+			itemDescription[5].setText("Total Weight: " + count*currentItem.getWeight());
+			itemDescription[6].setText("Total Cost: $" + count*currentItem.getCost());
+		}
 	}
 	
 	public void makePurchase() {
-		int itemCount = storeInventory[currentItem].getMax() - storeInventory[currentItem].getCount();
+		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
 		ArrayList<Item> buyList = inv.removeItem(currentItem, itemCount);
 		ArrayList<Inventoried> buyers = p.canGetItem(buyList);
 		if ( buyers != null ) {
 				p.buyItemForInventory(buyList, buyers.get(0));
-				storeInventory[currentItem].setMax(tempInv.get(currentItem).size());
+				storeInventory[getButtonIndex(currentItem)].setMax(tempInv.get(currentItem).size());
 		}
 		else {
 			inv.addItem(buyList);
 		}
+	}
+	
+	private int getButtonIndex(Item.ITEM_TYPE item) {
+		return buttonMap.indexOf(item);
+	}
+	
+	private Item.ITEM_TYPE getItemFromButtonIndex(int index) {
+		return buttonMap.get(index);
 	}
 	
 	/**
@@ -318,8 +306,8 @@ public class StoreScene extends Scene {
 				showModal(buyModal);
 				//makePurchase();
 			} else {
-				if ( currentItem != -1) {
-					storeInventory[currentItem].setCount(storeInventory[currentItem].getMax());
+				if ( currentItem != null) {
+					storeInventory[getButtonIndex(currentItem)].setCount(storeInventory[getButtonIndex(currentItem)].getMax());
 					updateLabels(currentItem);
 				}
 			}
@@ -331,15 +319,15 @@ public class StoreScene extends Scene {
 	 */
 	private class InventoryListener implements ComponentListener {
 		
-		private int ordinal;
+		private Item.ITEM_TYPE item;
 		
-		public InventoryListener(int ordinal) {
-			this.ordinal = ordinal;
+		public InventoryListener(Item.ITEM_TYPE item) {
+			this.item = item;
 		}
 		
 		public void componentActivated(AbstractComponent source) {
-			if ( currentItem == -1 || storeInventory[currentItem].getCount() == 0)
-				currentItem = ordinal;
+			if ( currentItem == null || storeInventory[getButtonIndex(item)].getCount() == 0)
+				currentItem = item;
 		}
 	}
 }
