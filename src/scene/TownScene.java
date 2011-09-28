@@ -23,12 +23,12 @@ public class TownScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		mario = new Entity("Mario", container);
-		mario.addComponent(new FlippableImageRenderComponent("MarioRender", "/resources/mario.png"));
+		mario.setRenderComponent(new FlippableImageRenderComponent("MarioRender", "resources/mario.png"));
 		mario.addComponent(new LeftRightMovement("MarioMovement"));
 		mario.setPosition(new Vector2f(0, container.getHeight() - mario.getHeight()));
 		
 		luigi = new Entity("Luigi", container);
-		luigi.addComponent(new FlippableImageRenderComponent("LuigiRender", "/resources/luigi.png"));
+		luigi.setRenderComponent(new FlippableImageRenderComponent("LuigiRender", "resources/luigi.png"));
 		luigi.addComponent(new LeftRightMovement("LuigiMovement"));
 		luigi.setPosition(new Vector2f(200, container.getHeight() - luigi.getHeight()));
 	}

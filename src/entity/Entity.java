@@ -13,7 +13,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Entity implements MouseListener {
 	private String id;
-	private GameContainer container;
 
 	private Vector2f position;
 	private float scale;
@@ -22,29 +21,48 @@ public class Entity implements MouseListener {
 
 	private RenderComponent renderComponent;
 	private List<Component> components;
+	private Queue<AnimationComponent> animationComponents;
+	
+	Input input;
 
 	public Entity(String id, GameContainer container) {
 		this.id = id;
-		this.container = container;
 
 		components = new ArrayList<Component>();
+		animationComponents = new LinkedList<AnimationComponent>();
 
 		position = new Vector2f(0, 0);
 		scale = 1;
 		rotation = 0;
 		xDirection = 0;
 		
-		Input input = container.getInput();
+		input = container.getInput();
 		input.addMouseListener(this);
 	}
 
-	public void addComponent(Component component) {
-		if (RenderComponent.class.isInstance(component)) {
-			renderComponent = (RenderComponent) component;
-		}
-
+	public void setRenderComponent(RenderComponent component) {
+		this.renderComponent = component;
 		component.setOwnerEntity(this);
+	}
+	
+	public void addComponent(Component component) {
+		if (component instanceof RenderComponent) {
+			setRenderComponent((RenderComponent)component);
+			return;
+		}
+		
+		if (component instanceof AnimationComponent) {
+			addAnimationComponent((AnimationComponent)component);
+			return;
+		}
+		
 		components.add(component);
+		component.setOwnerEntity(this);
+	}
+	
+	public void addAnimationComponent(AnimationComponent component) {
+		animationComponents.add(component);
+		component.setOwnerEntity(this);
 	}
 
 	public Component getComponent(String id) {
@@ -114,8 +132,14 @@ public class Entity implements MouseListener {
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) {
+		renderComponent.update(container, game, delta);
+		
 		for (Component component : components) {
 			component.update(container, game, delta);
+		}
+		
+		if (!animationComponents.isEmpty()) {
+			animationComponents.peek().update(container, game, delta);
 		}
 	}
 
@@ -124,18 +148,16 @@ public class Entity implements MouseListener {
 			renderComponent.render(container, game, g);
 		}
 	}
-
-	@Override
-	public void inputEnded() {
-		// TODO Auto-generated method stub
-		
+	
+	public void animationDidStop(AnimationComponent animationComponent) {
+		animationComponents.remove(animationComponent);
 	}
 
 	@Override
-	public void inputStarted() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void inputEnded() { }
+
+	@Override
+	public void inputStarted() { }
 
 	@Override
 	public boolean isAcceptingInput() {
@@ -143,46 +165,27 @@ public class Entity implements MouseListener {
 	}
 
 	@Override
-	public void setInput(Input arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setInput(Input arg0) { }
 
 	@Override
 	public void mouseClicked(int button, int x, int y, int clickCount) {
 		if (getBounds().contains(x, y)) {
-			scale = (scale >= 2) ? 1 : 2;
-			position.y = container.getHeight() - this.getHeight();
+			addAnimationComponent(new PowerUpAnimation());
 		}
 	}
 
 	@Override
-	public void mouseDragged(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseDragged(int arg0, int arg1, int arg2, int arg3) { }
 
 	@Override
-	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) { }
 
 	@Override
-	public void mousePressed(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(int arg0, int arg1, int arg2) { }
 
 	@Override
-	public void mouseReleased(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(int arg0, int arg1, int arg2) { 	}
 
 	@Override
-	public void mouseWheelMoved(int arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseWheelMoved(int arg0) { }
 }
