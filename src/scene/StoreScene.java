@@ -25,7 +25,7 @@ public class StoreScene extends Scene {
 		UnicodeFont h1Font = GameDirector.sharedDirector().getFontManager().getFont(FontManager.FontID.H1);
 		UnicodeFont h2Font = GameDirector.sharedDirector().getFontManager().getFont(FontManager.FontID.H2);
 		
-		String title = "Store Scene";
+		String title = "STORE Scene";
 		h1Font.drawString((container.getWidth() - h1Font.getWidth(title)) / 2,
 				container.getHeight()/2 - h1Font.getAscent(),
 				title,
