@@ -42,7 +42,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	public void start() {
 		try {
 			container = new AppGameContainer(sceneDirector);
-			container.setDisplayMode(1024, 768, false);
+			container.setDisplayMode(720, 480, false);
 			container.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
