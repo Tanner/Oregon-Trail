@@ -55,7 +55,7 @@ public class SceneDirector extends StateBasedGame {
 		MainMenuScene mainMenu = new MainMenuScene();
 		addState(mainMenu);
 		
-		GameDirector.sharedDirector().sceneDirectorReady();
+		GameDirector.sharedSceneDirectorDelegate().sceneDirectorReady();
 	}
 	
 	public void keyPressed(int key, char c) {

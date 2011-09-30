@@ -15,8 +15,8 @@ public class MainMenuScene extends Scene {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		UnicodeFont h1Font = GameDirector.sharedDirector().getFontManager().getFont(FontManager.FontID.H1);
-		UnicodeFont h2Font = GameDirector.sharedDirector().getFontManager().getFont(FontManager.FontID.H2);
+		UnicodeFont h1Font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
+		UnicodeFont h2Font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
 
 		String title = "Oregon Trail";
 		h1Font.drawString((container.getWidth() - h1Font.getWidth(title)) / 2,
@@ -38,7 +38,7 @@ public class MainMenuScene extends Scene {
 
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ENTER) {
-			GameDirector.sharedDirector().requestScene(SceneID.TownScene);
+			GameDirector.sharedSceneDelegate().requestScene(SceneID.TownScene);
 		}
 	}
 }

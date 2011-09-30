@@ -23,7 +23,15 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		 sceneDirector = new SceneDirector("Oregon Trail");
 	}
 	
-	public static GameDirector sharedDirector() {
+	public static SceneDelegate sharedSceneDelegate() {
+		if (sharedDirector == null) {
+			sharedDirector = new GameDirector();
+		}
+		
+		return sharedDirector;
+	}
+	
+	public static SceneDirectorDelegate sharedSceneDirectorDelegate() {
 		if (sharedDirector == null) {
 			sharedDirector = new GameDirector();
 		}
