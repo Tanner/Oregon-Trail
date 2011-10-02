@@ -45,6 +45,8 @@ public class Sprite extends AbstractComponent {
 		} else {
 			currentAnimation = rightAnimation;
 		}
+		
+		currentAnimation.update(delta);
 	}
 
 	public int getHeight() {
