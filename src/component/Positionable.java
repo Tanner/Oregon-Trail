@@ -18,7 +18,9 @@ public interface Positionable {
 	 * @param y New Y
 	 * @param referencePoint Reference point in which to set the new position
 	 */
-	public void setPosition(int x, int y, ReferencePoint referencePoint);
+	public void setPosition(Vector2f location, ReferencePoint referencePoint);
+	
+	public void setPosition(Vector2f location, ReferencePoint referencePoint, int xOffset, int yOffset);
 	
 	/**
 	 * Get the position of a component in relation to the given reference point.

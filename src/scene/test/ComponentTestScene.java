@@ -27,7 +27,7 @@ public class ComponentTestScene extends Scene {
 			throws SlickException {
 		super.init(container, game);
 		
-		this.layout = new GridLayout(container, 2, 4);
+		mainLayer.setLayout(new GridLayout(container, 2, 4));
 		
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		Font h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
@@ -50,24 +50,23 @@ public class ComponentTestScene extends Scene {
 			playerLabels[i] = new Label(container, 60 + 160*i, 100, fieldFont, Color.white, "Player " + (i+1) );
 		
 		for ( Label l : playerLabels )
-			add(l);
+			mainLayer.add(l);
 		
-		add(playerSpinner);
-		add(playerSpinner2);
+		mainLayer.add(playerSpinner);
+		mainLayer.add(playerSpinner2);
 	}
 
-	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException {
-		g.setColor(new Color(0x003e84));
-		g.fillRect(0, 0, container.getWidth(), container.getHeight());
-		g.setColor(new Color(255,255,255));
-		testField.render(container,g);
-		testButton.render(container,g);
-		titleLabel.render(container, g);
-		myButton.render(container, g);
-		super.render(container, game, g);
-	}
+//	@Override
+//	public void render(GameContainer container, StateBasedGame game, Graphics g)
+//			throws SlickException {
+//		g.setColor(new Color(0x003e84));
+//		g.fillRect(0, 0, container.getWidth(), container.getHeight());
+//		g.setColor(new Color(255,255,255));
+//		testField.render(container,g);
+//		testButton.render(container,g);
+//		titleLabel.render(container, g);
+//		super.render(container, game, g);
+//	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)

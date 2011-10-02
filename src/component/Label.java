@@ -38,6 +38,19 @@ public class Label extends Component {
 		this.height = font.getLineHeight();
 	}
 	
+	public Label(GUIContext context, Font font, Color c, String text) {
+		super(context);
+		
+		this.x = 0;
+		this.y = 0;
+		this.font = font;
+		this.c = c;
+		this.text = text;
+		this.width = font.getWidth(text);
+		this.height = font.getLineHeight();
+	}
+	
+	
 	/**
 	 * Creates a label that is initially empty.
 	 * 

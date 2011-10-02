@@ -38,7 +38,7 @@ public class GridLayout extends Layout {
 	public void setComponentLocation(Component component) {
 		Cell cell = getCellForIndex(componentsAdded);
 		Vector2f cellCenter = cell.getCenter();
-		component.setPosition((int)cellCenter.x, (int)cellCenter.y, ReferencePoint.CenterCenter);
+		component.setPosition(cellCenter, ReferencePoint.CenterCenter);
 		
 		componentsAdded++;
 	}

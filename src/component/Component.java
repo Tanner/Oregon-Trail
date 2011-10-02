@@ -19,7 +19,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	@Override
-	public void setPosition(int x, int y, ReferencePoint referencePoint) {
+	public void setPosition(Vector2f location, ReferencePoint referencePoint) {
+		int x = (int) location.x;
+		int y = (int) location.y;
+		
 		switch (referencePoint) {
 			case TopLeft:
 				setLocation(x, y);
@@ -49,6 +52,12 @@ public abstract class Component extends AbstractComponent implements Positionabl
 				setLocation(x - getWidth(), y - getHeight());
 				break;
 		}
+	}
+	
+	public void setPosition(Vector2f location, ReferencePoint referencePoint, int xOffset, int yOffset) {
+		Vector2f offsetLocation = new Vector2f(location.x + xOffset, location.y + yOffset);
+		
+		setPosition(offsetLocation, referencePoint);
 	}
 	
 	@Override

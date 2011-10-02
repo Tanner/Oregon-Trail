@@ -30,29 +30,29 @@ public class TownScene extends Scene {
 		luigi.setLocation(200, container.getHeight() - luigi.getHeight());
 	}
 
-	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		g.setColor(new Color(0x003e84));
-		g.fillRect(0, 0, container.getWidth(), container.getHeight());
-		
-		UnicodeFont h1Font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
-		UnicodeFont h2Font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
-
-		String title = "Town Scene";
-		h1Font.drawString((container.getWidth() - h1Font.getWidth(title)) / 2,
-				container.getHeight()/2 - h1Font.getAscent(),
-				title,
-				Color.white);
-		
-		String instruction = "Press Enter to Enter Store";
-		h2Font.drawString((container.getWidth() - h2Font.getWidth(instruction)) / 2,
-				container.getHeight()/2 + h1Font.getAscent(),
-				instruction,
-				Color.white);
-		
-		mario.render(container, g);
-		luigi.render(container, g);
-	}
+//	@Override
+//	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+//		g.setColor(new Color(0x003e84));
+//		g.fillRect(0, 0, container.getWidth(), container.getHeight());
+//		
+//		UnicodeFont h1Font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
+//		UnicodeFont h2Font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
+//
+//		String title = "Town Scene";
+//		h1Font.drawString((container.getWidth() - h1Font.getWidth(title)) / 2,
+//				container.getHeight()/2 - h1Font.getAscent(),
+//				title,
+//				Color.white);
+//		
+//		String instruction = "Press Enter to Enter Store";
+//		h2Font.drawString((container.getWidth() - h2Font.getWidth(instruction)) / 2,
+//				container.getHeight()/2 + h1Font.getAscent(),
+//				instruction,
+//				Color.white);
+//		
+//		mario.render(container, g);
+//		luigi.render(container, g);
+//	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
