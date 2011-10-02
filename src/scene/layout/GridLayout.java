@@ -20,7 +20,7 @@ public class GridLayout extends Layout {
 
 		this.colWidth = (container.getWidth() - (PADDING*colCount)) / colCount;
 		int colHeight = (container.getHeight() - (PADDING*rowCount)) / rowCount;
-				
+		
 		this.rows = new Row[rowCount];
 		int y = PADDING;
 		for (int i = 0; i < rows.length; i++) {
@@ -38,6 +38,8 @@ public class GridLayout extends Layout {
 	public void setComponentLocation(Component component) {
 		Cell cell = getCellForIndex(componentsAdded);
 		Vector2f cellCenter = cell.getCenter();
+		component.setWidth(cell.width);
+		component.setHeight(cell.height);
 		component.setPosition(cellCenter, ReferencePoint.CenterCenter);
 		
 		componentsAdded++;

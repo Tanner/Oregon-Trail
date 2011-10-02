@@ -3,14 +3,17 @@ package component;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
 
 public class Background extends Component {
-	protected int x, y, width, height;
+	protected Vector2f location;
+	protected int width, height;
 	protected Color backgroundColor;
 	
 	public Background(GUIContext container) {
 		super(container);
+		this.location = new Vector2f(0, 0);
 		this.width = container.getWidth();
 		this.height = container.getHeight();
 	}
@@ -32,24 +35,25 @@ public class Background extends Component {
 
 	@Override
 	public int getX() {
-		return x;
+		return (int) location.x;
 	}
 
 	@Override
 	public int getY() {
-		return y;
+		return (int) location.y;
 	}
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
 		g.setColor(backgroundColor);
-		g.fillRect(0, 0, width, height);
+		g.fillRect(location.x, location.y, width, height);
 	}
 
 	@Override
 	public void setLocation(int x, int y) {
-		this.x = x;
-		this.y = y;
+		if (location != null) {
+			location.set(x, y);
+		}
 	}
 
 	@Override
