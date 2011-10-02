@@ -48,11 +48,18 @@ public class SceneSelectorScene extends Scene {
 		Label townLabel = new Label(container, h2, Color.white, "Town");
 		Button townButton = new Button(container, townLabel, new Vector2f(0, 0));
 		buttons.add(townButton);
+		Label storeLabel = new Label(container, h2, Color.white, "Store");
+		Button storeButton = new Button(container, storeLabel, new Vector2f(0, 0));
+		buttons.add(storeButton);
+		Label componentsLabel = new Label(container, h2, Color.white, "Components");
+		Button componentsButton = new Button(container, componentsLabel, new Vector2f(0, 0));
+		buttons.add(componentsButton);
 		
 		buttonListener = new ButtonListener();
 		
-		mainLayer.add(mainMenuButton);
-		mainLayer.add(townButton);
+		for (Button b : buttons) {
+			mainLayer.add(b);
+		}
 		
 		backgroundLayer.add(new Background(container, Color.blue));
 		
@@ -90,6 +97,10 @@ public class SceneSelectorScene extends Scene {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.MainMenu);
 			} else if (component == buttons.get(1)) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.TownScene);
+			} else if (component == buttons.get(2)) {
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.StoreScene);
+			} else if (component == buttons.get(3)) {
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTestScene);
 			}
 			
 		}
