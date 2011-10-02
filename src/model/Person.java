@@ -47,7 +47,7 @@ public class Person {
 		
 		skillList += " and " + skillPoints + " skill points remaining.";
 				
-		Logger.log(name + " was created successfully as a " + profession.getName(), Logger.Level.INFO);
+		Logger.log(name + " is a " + profession.getName(), Logger.Level.INFO);
 		Logger.log(skillList, Logger.Level.INFO);
 	}
 	

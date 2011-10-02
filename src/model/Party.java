@@ -31,7 +31,7 @@ public class Party {
 		this.money = 0;
 		this.currentPace = pace;
 		this.currentRations = rations;
-		String partyCreationLog = "Party created successfully with " + members.length + " members: ";
+		String partyCreationLog = members.length + " members were created successfully: ";
 		for (Person person: party){
 			this.money += (int)(baseMoney / person.getProfession().getMoneyDivider());
 			partyCreationLog += person.getName() + " ";

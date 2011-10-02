@@ -19,7 +19,9 @@ public class Game {
 		Person person1 = new Person("Frank", Person.Profession.BAKER);
 		Person person2 = new Person("Bob", Person.Profession.GUNSMITH, Person.Skill.BLACKSMITHING);
 		this.player = new Player(new Party(Pace.GRUELING, Rations.BAREBONES, person1, person2));
-		Logger.log("Game was created successfully", Logger.Level.INFO);
+		if(player != null){
+			Logger.log("Player was created successfully", Logger.Level.INFO);
+		}
 	}
 	
 	/**

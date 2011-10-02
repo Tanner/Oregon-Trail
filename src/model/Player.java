@@ -24,7 +24,9 @@ public class Player {
 	 */
 	public Player(Party party) {
 		this.party = party;
-		Logger.log("Player was created successfully with premade party", Logger.Level.INFO);
+		if(party != null){
+			Logger.log("Party successfully attached to player", Logger.Level.INFO);
+		}
 	}
 	
 	/**

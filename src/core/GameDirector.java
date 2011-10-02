@@ -112,6 +112,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	  Main
 	  ----------------------*/
 	public static void main(String[] args) {
+		Logger.log("-----------------NEW GAME STARTED-----------------", Logger.Level.INFO);
 		GameDirector gameDirector = new GameDirector();
 		gameDirector.start();
 	}
