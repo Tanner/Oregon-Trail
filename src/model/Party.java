@@ -5,7 +5,11 @@ package model;
  * @author George Johnston
  */
 public class Party {
+	
 	private Person[] members;
+	private int money;
+	private Pace currentPace;
+	private Rations currentRations;
 	
 	/**
 	 * If party is created before members, this constructor is used.
@@ -28,5 +32,33 @@ public class Party {
 	 */
 	public Person[] getPartyMembers() {
 		return this.members;
+	}
+	
+	public int getMoney(){
+		return this.money;
+	}
+	
+	public void setMoney(int money){
+		this.money = money;
+	}
+	
+	public enum Pace{
+		STEADY,
+		STRENUOUS,
+		GRUELING;
+	}
+	
+	public Pace getPace(){
+		return currentPace;
+	}
+	
+	public enum Rations{
+		FILLING,
+		MEAGER,
+		BAREBONES;
+	}
+	
+	public Rations getRations(){
+		return currentRations;
 	}
 }

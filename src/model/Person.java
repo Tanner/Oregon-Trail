@@ -68,29 +68,31 @@ public class Person {
 	 * @author George Johnston
 	 */
 	public enum Skill {
-		MEDICAL (50),
-		RIVERWORK (50),
-		SHARPSHOOTING (50),
-		BLACKSMITHING (40),
-		CARPENTRY (40),
-		FARMING (40),
-		TRACKING (30),
-		BOTANY (20),
-		COMMERCE (20),
-		COOKING (20),
-		MUSICAL (10),
-		SEWING (10),
-		SPANISH (10),
-		NONE (0);
+		MEDICAL (50, "Medical"),
+		RIVERWORK (50, "Riverwork"),
+		SHARPSHOOTING (50, "Sharpshooting"),
+		BLACKSMITHING (40, "Blacksmithing"),
+		CARPENTRY (40, "Carpentry"),
+		FARMING (40, "Farming"),
+		TRACKING (30, "Tracking"),
+		BOTANY (20, "Botany"),
+		COMMERCE (20, "Commerce"),
+		COOKING (20, "Cooking"),
+		MUSICAL (10, "Musical"),
+		SEWING (10, "Sewing"),
+		SPANISH (10, "Spanish"),
+		NONE (0, "");
 		
 		private final int cost;
+		private final String name;
 		
 		/**
 		 * Sets the cost of the skill as designated
 		 * @param cost The cost of the skill (defined above)
 		 */
-		Skill(int cost) {
+		Skill(int cost, String name) {
 			this.cost = cost;
+			this.name = name;
 		}
 		
 		/**
@@ -100,6 +102,10 @@ public class Person {
 		public int getCost() {
 			return cost;
 		}
+		
+		public String getName(){
+			return name;
+		}
 	}
 	
 	/**
@@ -108,43 +114,45 @@ public class Person {
 	 * @author George Johnston
 	 */
 	public static enum Profession {
-		BANKER (1, Skill.COMMERCE),
-		DOCTOR (1.2f, Skill.MEDICAL),
-		MERCHANT (1.4f, Skill.COMMERCE),
-		PHARMACIST (1.6f, Skill.MEDICAL),
-		WAINWRIGHT (1.8f, Skill.CARPENTRY),
-		GUNSMITH (2, Skill.SHARPSHOOTING),
-		BLACKSMITH (2.2f, Skill.BLACKSMITHING),
-		MASON (2.4f, Skill.CARPENTRY),
-		WHEELWRIGHT (2.6f, Skill.CARPENTRY),
-		CARPENTER (2.8f, Skill.CARPENTRY),
-		SADDLEMAKER (3, Skill.FARMING),
-		BRICKMAKER (3.2f, Skill.CARPENTRY),
-		PROSPECTOR (3.4f, Skill.RIVERWORK),
-		TRAPPER (3.6f, Skill.TRACKING),
-		SURVEYOR (3.8f, Skill.RIVERWORK),
-		SHOEMAKER (4, Skill.SEWING),
-		JOURNALIST (4.1f, Skill.NONE),
-		PRINTER (4.2f, Skill.COMMERCE),
-		BUTCHER (4.3f, Skill.COOKING),
-		BAKER (4.4f, Skill.COOKING),
-		TAILOR (4.5f, Skill.SEWING),
-		FARMER (4.5f, Skill.FARMING),
-		PASTOR (4.6f, Skill.NONE),
-		ARTIST (4.8f, Skill.MUSICAL),
-		TEACHER (5, Skill.NONE);
+		BANKER (1, Skill.COMMERCE, "Banker"),
+		DOCTOR (1.2f, Skill.MEDICAL, "Doctor"),
+		MERCHANT (1.4f, Skill.COMMERCE, "Merchant"),
+		PHARMACIST (1.6f, Skill.MEDICAL, "Pharmacist"),
+		WAINWRIGHT (1.8f, Skill.CARPENTRY, "Wainwright"),
+		GUNSMITH (2, Skill.SHARPSHOOTING, "Gunsmith"),
+		BLACKSMITH (2.2f, Skill.BLACKSMITHING, "Blacksmith"),
+		MASON (2.4f, Skill.CARPENTRY, "Mason"),
+		WHEELWRIGHT (2.6f, Skill.CARPENTRY, "Wheelwright"),
+		CARPENTER (2.8f, Skill.CARPENTRY, "Carpenter"),
+		SADDLEMAKER (3, Skill.FARMING, "Saddlemaker"),
+		BRICKMAKER (3.2f, Skill.CARPENTRY, "Brickmaker"),
+		PROSPECTOR (3.4f, Skill.RIVERWORK, "Prospector"),
+		TRAPPER (3.6f, Skill.TRACKING, "Trapper"),
+		SURVEYOR (3.8f, Skill.RIVERWORK, "Surveyor"),
+		SHOEMAKER (4, Skill.SEWING, "Shoemaker"),
+		JOURNALIST (4.1f, Skill.NONE, "Journalist"),
+		PRINTER (4.2f, Skill.COMMERCE, "Printer"),
+		BUTCHER (4.3f, Skill.COOKING, "Butcher"),
+		BAKER (4.4f, Skill.COOKING, "Baker"),
+		TAILOR (4.5f, Skill.SEWING, "Tailor"),
+		FARMER (4.5f, Skill.FARMING, "Farmer"),
+		PASTOR (4.6f, Skill.NONE, "Pastor"),
+		ARTIST (4.8f, Skill.MUSICAL, "Artist"),
+		TEACHER (5, Skill.NONE, "Teacher");
 		
 		private final float moneyMultiplier;
 		private final Skill startingSkill;
+		private final String name;
 		
 		/**
 		 * Assigns money multiplier and starting skill to each profession
 		 * @param moneyMultiplier Gold divided by and score multiplied by this 
 		 * @param startSkill Skill the profession starts with
 		 */
-		Profession(float moneyMultiplier, Skill startSkill) {
+		Profession(float moneyMultiplier, Skill startingSkill, String name) {
 			this.moneyMultiplier = moneyMultiplier;
-			this.startingSkill = startSkill;
+			this.startingSkill = startingSkill;
+			this.name = name;
 		}
 		
 		/**
@@ -161,6 +169,10 @@ public class Person {
 		 */
 		public Skill getStartingSkill() {
 			return startingSkill;
+		}
+		
+		public String getName(){
+			return name;
 		}
 	}
 }
