@@ -15,21 +15,21 @@ public class Button extends Component {
 	
 	private final static int PADDING = 10;
 	
-	public Button(GUIContext container, Label label, int x, int y, int width, int height) {
+	public Button(GUIContext container, Label label, Vector2f position, int width, int height) {
 		super(container);
 		
 		this.label = label;
-		label.setLocation(x + PADDING, y + PADDING);
+		label.setLocation((int)position.getX() + PADDING, (int)position.getY() + PADDING);
 		
-		position = new Vector2f(x, y);
+		this.position = position;
 		this.width = width + 2 * PADDING;
 		this.height = height + 2 * PADDING;
 		
 		buttonColor = Color.gray;
 	}
 	
-	public Button(GUIContext container, Label label, int x, int y) {
-		this(container, label, x, y, label.getWidth(), label.getHeight());
+	public Button(GUIContext container, Label label, Vector2f position) {
+		this(container, label, position, label.getWidth(), label.getHeight());
 	}
 
 	@Override
