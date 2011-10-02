@@ -8,6 +8,11 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
 
+/**
+ * A component that is a Button.
+ * 
+ * @author Tanner Smith
+ */
 public class Button extends Component {
 	private Label label;
 	private Vector2f position;
@@ -19,6 +24,14 @@ public class Button extends Component {
 	
 	private final static int PADDING = 10;
 	
+	/**
+	 * Creates a button.
+	 * @param container Container for the  button
+	 * @param label Label for the button
+	 * @param position Position of the button
+	 * @param width Width of the button
+	 * @param height Height of the button
+	 */
 	public Button(GUIContext container, Label label, Vector2f position, int width, int height) {
 		super(container);
 		
@@ -33,6 +46,12 @@ public class Button extends Component {
 		buttonColor = Color.gray;
 	}
 	
+	/**
+	 * Creates a button.
+	 * @param container Container for the button
+	 * @param label Label for the button
+	 * @param position Position of the button
+	 */
 	public Button(GUIContext container, Label label, Vector2f position) {
 		this(container, label, position, label.getWidth(), label.getHeight());
 	}
@@ -88,6 +107,10 @@ public class Button extends Component {
 		}
 	}
 	
+	/**
+	 * Sets the color of the button's background.
+	 * @param color New color for the button
+	 */
 	public void setButtonColor(Color color) {
 		buttonColor = color;
 	}
