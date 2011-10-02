@@ -4,6 +4,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.gui.*;
 import org.newdawn.slick.state.*;
 
+import scene.layout.GridLayout;
+
 import component.*;
 
 import core.*;
@@ -15,39 +17,50 @@ public class ButtonScene extends Scene {
 	private MouseOverArea testButton;
 	private Label[] playerLabels;
 	private Label titleLabel;
-	private Spinner playerSpinner;
+	private Spinner playerSpinner, playerSpinner2;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
+		super.init(container, game);
+		
+		this.layout = new GridLayout(container, 2, 4);
 		
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		Font h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
+		
 		playerSpinner = new Spinner(container, 400, 400, fieldFont, Color.white,
-				new Image("resources/up.png"), new Image("resources/down.png"), "Player 1",
+				new Image("resources/up.png"), new Image("resources/down.png"), false, "Player 1",
 				"Player 2", "Player 3", "Player 4");
+		
+		playerSpinner2 = new Spinner(container, 400, 200, fieldFont, Color.white,
+				new Image("resources/up.png"), new Image("resources/down.png"), true, "1", "20", "30", "100");
+		
 		testField = new TextField(container, fieldFont, 40, 400, 300, 20);
 		testButton = new MouseOverArea(container, new Image("resources/button.png"), 600, 400, new ButtonListener() );
 		titleLabel = new Label(container, 50, 20, h1, Color.white,"Button Scene");
 		playerLabels = new Label[4];
+		
 		for (int i = 0; i < playerLabels.length; i++)
 			playerLabels[i] = new Label(container, 60 + 160*i, 100, fieldFont, Color.white, "Player " + (i+1) );
 		
+		for ( Label l : playerLabels )
+			add(l);
+		
+		add(playerSpinner);
+		add(playerSpinner2);
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.setColor(new Color(10, 10, 200));
+		g.setColor(new Color(0x003e84));
 		g.fillRect(0, 0, container.getWidth(), container.getHeight());
 		g.setColor(new Color(255,255,255));
-		testField.render(container, g);
-		testButton.render(container, g);
+		testField.render(container,g);
+		testButton.render(container,g);
 		titleLabel.render(container, g);
-		playerSpinner.render(container, g);
-		for ( Label l : playerLabels )
-			l.render(container, g);
-		
+		super.render(container, game, g);
 	}
 
 	@Override
@@ -59,7 +72,7 @@ public class ButtonScene extends Scene {
 	
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			playerLabels[playerSpinner.getState()].setText(testField.getText());
+			playerLabels[playerSpinner.getState()].setText(testField.getText() + playerSpinner2.getState());
 		}
 	}
 
