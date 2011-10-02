@@ -51,4 +51,14 @@ public class Background extends Component {
 		this.x = x;
 		this.y = y;
 	}
+
+	@Override
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	@Override
+	public void setHeight(int height) {
+		this.height = height;
+	}
 }

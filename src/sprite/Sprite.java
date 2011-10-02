@@ -172,4 +172,14 @@ public class Sprite extends Component {
 	public void setDirectionFacing(DirectionFacing xDirection) {
 		this.xDirection = xDirection;
 	}
+
+	@Override
+	public void setWidth(int width) {
+		// TODO
+	}
+
+	@Override
+	public void setHeight(int height) {
+		// TODO
+	}
 }

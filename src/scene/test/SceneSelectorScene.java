@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Background;
@@ -29,7 +30,7 @@ public class SceneSelectorScene extends Scene {
 		
 		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
 		Label mainMenuLabel = new Label(container, 0, 0, h2, Color.white, "Main Menu");
-		Button mainMenuSceneButton = new Button(container, mainMenuLabel, 0, 0);
+		Button mainMenuSceneButton = new Button(container, mainMenuLabel, new Vector2f(0, 0));
 		
 		mainLayer.add(mainMenuSceneButton);
 		

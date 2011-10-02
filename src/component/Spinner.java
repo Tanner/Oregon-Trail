@@ -130,4 +130,14 @@ public class Spinner extends Component {
 			label.setText(fields[state]);
 		}
 	}
+
+	@Override
+	public void setWidth(int width) {
+		// TODO
+	}
+
+	@Override
+	public void setHeight(int height) {
+		// TODO
+	}
 }

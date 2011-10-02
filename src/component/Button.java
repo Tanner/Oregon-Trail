@@ -89,4 +89,14 @@ public class Button extends Component {
 	public void setButtonColor(Color color) {
 		buttonColor = color;
 	}
+
+	@Override
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	@Override
+	public void setHeight(int height) {
+		this.height = height;
+	}
 }
