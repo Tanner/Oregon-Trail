@@ -82,6 +82,14 @@ public class Label extends Component {
 		this.width = font.getWidth(text);
 		this.height = font.getLineHeight();
 	}
+	
+	/**
+	 * Get the text of this label.
+	 * @return Label's text
+	 */
+	public String getText() {
+		return text;
+	}
 
 	@Override
 	public int getHeight() {
@@ -121,5 +129,13 @@ public class Label extends Component {
 	@Override
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	
+	/**
+	 * Changes the color of the label.
+	 * @param color New color
+	 */
+	public void setColor(Color color) {
+		c = color;
 	}
 }
