@@ -10,11 +10,13 @@ public class MainMenuScene extends Scene {
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		
+		super.init(container, game);
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		super.render(container, game, g);
+		
 		UnicodeFont h1Font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
 		UnicodeFont h2Font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
 
@@ -38,7 +40,7 @@ public class MainMenuScene extends Scene {
 
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ENTER) {
-			GameDirector.sharedSceneDelegate().requestScene(SceneID.TownScene);
+			GameDirector.sharedSceneDelegate().requestScene(SceneID.GridLayoutTestScene);
 		}
 	}
 }

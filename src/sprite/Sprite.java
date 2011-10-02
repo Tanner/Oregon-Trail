@@ -11,7 +11,9 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Sprite extends AbstractComponent {
+import component.Component;
+
+public class Sprite extends Component {
 	private Animation leftAnimation;
 	private Animation rightAnimation;
 	private Animation currentAnimation;

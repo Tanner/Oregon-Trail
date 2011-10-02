@@ -1,14 +1,12 @@
 package scene.layout;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.gui.AbstractComponent;
 
-import scene.Scene;
+import component.Component;
 
-public class GridLayout {
+
+public class GridLayout extends Layout {
 	private static final int PADDING = 20;
 	
 	private Row[] rows;
@@ -19,13 +17,13 @@ public class GridLayout {
 	public GridLayout(GameContainer container, int rowCount, int colCount) {
 		this.colCount = colCount;
 
-		this.colWidth = container.getWidth() - (PADDING*colCount) / colCount;
-		int colHeight = container.getHeight() - (PADDING*rowCount) / rowCount;
+		this.colWidth = (container.getWidth() - (PADDING*colCount)) / colCount;
+		int colHeight = (container.getHeight() - (PADDING*rowCount)) / rowCount;
 				
 		this.rows = new Row[rowCount];
 		int y = PADDING;
-		for (Row r : this.rows) {
-			r = new Row(y, colHeight, colCount);
+		for (int i = 0; i < rows.length; i++) {
+			rows[i] = new Row(y, colHeight, colCount);
 			y += colHeight+PADDING;
 		}
 		
@@ -36,9 +34,10 @@ public class GridLayout {
 		return colWidth;
 	}
 	
-	public void setComponentLocation(AbstractComponent component) {
+	public void setComponentLocation(Component component) {
 		Cell cell = getCellForIndex(componentsAdded);
-		component.setLocation((int)cell.location.x, (int)cell.location.y);
+		Vector2f cellCenter = cell.getCenter();
+		component.setCenter((int)cellCenter.x, (int)cellCenter.y);
 		
 		componentsAdded++;
 	}
@@ -55,8 +54,8 @@ public class GridLayout {
 			this.height = height;
 			this.cells = new Cell[colCount];
 			int x = PADDING;
-			for (Cell c : this.cells) {
-				c = new Cell(x, y, colWidth, height);
+			for (int i = 0; i < cells.length ;i++) {
+				cells[i] = new Cell(x, y, colWidth, height);
 				x += colWidth+PADDING;
 			}
 		}
@@ -64,15 +63,17 @@ public class GridLayout {
 	
 	private class Cell {
 		private	 Vector2f location;
-		private Vector2f size;
+		private int width;
+		private int height;
 		
 		public Cell(int x, int y, int width, int height) {
 			this.location = new Vector2f(x, y);
-			this.size = new Vector2f(width, height);
+			this.width = width;
+			this.height = height;
 		}
 		
-		public Vector2f getLocation() {
-			return location;
+		public Vector2f getCenter() {
+			return new Vector2f(location.x + width/2, location.y + height/2); 
 		}
 	}
 }
