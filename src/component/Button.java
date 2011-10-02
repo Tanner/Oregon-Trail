@@ -1,5 +1,6 @@
 package component;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
@@ -10,6 +11,7 @@ public class Button extends Component {
 	private Vector2f position;
 	private int width;
 	private int height;
+	private Color buttonColor;
 	
 	private final static int PADDING = 10;
 	
@@ -22,6 +24,8 @@ public class Button extends Component {
 		position = new Vector2f(x, y);
 		this.width = width + 2 * PADDING;
 		this.height = height + 2 * PADDING;
+		
+		buttonColor = Color.gray;
 	}
 	
 	public Button(GUIContext container, Label label, int x, int y) {
@@ -50,6 +54,9 @@ public class Button extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
+		g.setColor(buttonColor);
+		g.fillRect(position.getX(), position.getY(), width, height);
+		
 		label.render(container, g);
 	}
 
@@ -60,5 +67,9 @@ public class Button extends Component {
 		} else {
 			position.set(x, y);
 		}
+	}
+	
+	public void setButtonColor(Color color) {
+		buttonColor = color;
 	}
 }
