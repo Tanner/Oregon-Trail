@@ -13,6 +13,7 @@ public class Person {
 	private int skillPoints = 120;
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
 	private String name;
+	private Profession profession;
 	
 	/**
 	 * Constructor
@@ -24,6 +25,7 @@ public class Person {
 	public Person(String name, Profession profession, Skill ... skills) {
 		
 		this.name = name;
+		this.profession = profession;
 		
 		for (Skill skill: skills) {
 			if(!this.skills.contains(skill)) {
@@ -60,6 +62,10 @@ public class Person {
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	public Profession getProfession(){
+		return profession;
 	}
 	
 	/**

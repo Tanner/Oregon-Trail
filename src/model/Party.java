@@ -10,6 +10,7 @@ public class Party {
 	private int money;
 	private Pace currentPace;
 	private Rations currentRations;
+	private final static float baseMoney = 1600f;
 	
 	/**
 	 * If party is created before members, this constructor is used.
@@ -24,6 +25,10 @@ public class Party {
 	 */
 	public Party(Person ... party) {
 		this.members = party.clone();
+		this.money = 0;
+		for (Person person: party){
+			this.money += (int)(baseMoney / person.getProfession().getMoneyMultiplier());
+		}
 	}
 	
 	/**
