@@ -59,11 +59,7 @@ public class Sprite extends Component {
 		this(container, new Animation(new Image[]{rightImage}, 1), new Animation(new Image[]{leftImage}, 1));
 	}
 	
-	/**
-	 * Renders a Sprite with the current animation.
-	 * @param container Container displaying the component
-	 * @param g Graphics object
-	 */
+	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
 		currentAnimation.draw(position.getX(), position.getY());
 	}
@@ -84,34 +80,22 @@ public class Sprite extends Component {
 		currentAnimation.update(delta);
 	}
 
-	/**
-	 * Get the height.
-	 * @return Height of the Sprite in accordance with the scale factor
-	 */
+	@Override
 	public int getHeight() {
 		return (int)(scale * currentAnimation.getHeight());
 	}
 
-	/**
-	 * Get the width.
-	 * @return Width of the Sprite in accordance with the scale factor.
-	 */
+	@Override
 	public int getWidth() {
 		return (int)(scale *currentAnimation.getWidth());
 	}
 
-	/**
-	 * Get the X position.
-	 * @return X position of the Sprite
-	 */
+	@Override
 	public int getX() {
 		return (int)position.getX();
 	}
 
-	/**
-	 * Get the Y position.
-	 * @return Y position of the Sprite
-	 */
+	@Override
 	public int getY() {
 		return (int)position.getY();
 	}
@@ -148,11 +132,7 @@ public class Sprite extends Component {
 		return new Rectangle(position.x, position.y, getWidth(), getHeight());
 	}
 	
-	/**
-	 * Set the location of the Sprite
-	 * @param x New X location
-	 * @param y New Y location
-	 */
+	@Override
 	public void setLocation(int x, int y) {
 		if (position == null) {
 			position = new Vector2f(x, y);
