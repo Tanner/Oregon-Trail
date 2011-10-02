@@ -38,6 +38,14 @@ public class Label extends Component {
 		this.height = font.getLineHeight();
 	}
 	
+	/**
+	 * Creates a label to be drawn on the screen.
+	 * 
+	 * @param context The game container
+	 * @param font Font the text will be drawn in
+	 * @param c Color of the text
+	 * @param text The text to draw
+	 */
 	public Label(GUIContext context, Font font, Color c, String text) {
 		super(context);
 		
