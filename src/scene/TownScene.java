@@ -9,6 +9,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.Background;
+import component.Label;
+import component.Positionable;
+
 import core.*;
 import sprite.*;
 
@@ -23,6 +27,15 @@ public class TownScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
+		UnicodeFont h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
+		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
+		
+		Label titleLabel = new Label(container, h1, Color.white, "Town");
+		Label subtitleLabel = new Label(container, h2, Color.white, "Press Enter to Go to Store");
+		
+		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter);
+		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 20);
+		
 		Image marioImage = new Image("resources/mario.png");
 		mario = new Sprite(container, marioImage, marioImage.getFlippedCopy(true, false));
 		mario.setLocation(0, container.getHeight() - mario.getHeight());
@@ -33,32 +46,10 @@ public class TownScene extends Scene {
 		
 		mainLayer.add(mario);
 		mainLayer.add(luigi);
+		
+		backgroundLayer.add(new Background(container, new Color(0x003e84)));
 	}
-
-//	@Override
-//	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-//		g.setColor(new Color(0x003e84));
-//		g.fillRect(0, 0, container.getWidth(), container.getHeight());
-//		
-//		UnicodeFont h1Font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
-//		UnicodeFont h2Font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
-//
-//		String title = "Town Scene";
-//		h1Font.drawString((container.getWidth() - h1Font.getWidth(title)) / 2,
-//				container.getHeight()/2 - h1Font.getAscent(),
-//				title,
-//				Color.white);
-//		
-//		String instruction = "Press Enter to Enter Store";
-//		h2Font.drawString((container.getWidth() - h2Font.getWidth(instruction)) / 2,
-//				container.getHeight()/2 + h1Font.getAscent(),
-//				instruction,
-//				Color.white);
-//		
-//		mario.render(container, g);
-//		luigi.render(container, g);
-//	}
-
+	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		mario.update(container, game, delta);
@@ -75,5 +66,4 @@ public class TownScene extends Scene {
 	public int getID() {
 		return ID.ordinal();
 	}
-
 }

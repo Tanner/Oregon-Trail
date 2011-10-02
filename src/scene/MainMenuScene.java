@@ -10,6 +10,7 @@ import core.*;
 
 
 public class MainMenuScene extends Scene {
+	public static final SceneID ID = SceneID.MainMenu;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -34,5 +35,10 @@ public class MainMenuScene extends Scene {
 		if (key == Input.KEY_ENTER) {
 			GameDirector.sharedSceneDelegate().requestScene(SceneID.TownScene);
 		}
+	}
+	
+	@Override
+	public int getID() {
+		return ID.ordinal();
 	}
 }

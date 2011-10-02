@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import scene.Scene;
+import scene.SceneID;
 import component.Background;
 import component.Label;
 import core.FontManager;
@@ -16,6 +17,7 @@ import scene.layout.GridLayout;
 import sprite.Sprite;
 
 public class GridLayoutTestScene extends Scene {
+	public static final SceneID ID = SceneID.GridLayoutTestScene;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -41,5 +43,10 @@ public class GridLayoutTestScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		
+	}
+	
+	@Override
+	public int getID() {
+		return ID.ordinal();
 	}
 }

@@ -8,7 +8,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 
 public abstract class Scene extends BasicGameState {
-	public static SceneID ID = SceneID.Default;
 	protected SceneLayer backgroundLayer;
 	protected SceneLayer mainLayer;
 	protected SceneLayer hudLayer;
@@ -40,7 +39,5 @@ public abstract class Scene extends BasicGameState {
 	}
 	
 	@Override
-	public int getID() {
-		return ID.ordinal();
-	}
+	public abstract int getID();
 }

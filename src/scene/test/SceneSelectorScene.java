@@ -1,9 +1,7 @@
 package scene.test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -30,6 +28,8 @@ import scene.layout.GridLayout;
  * @author Tanner Smith
  */
 public class SceneSelectorScene extends Scene {
+	public static final SceneID ID = SceneID.SceneSelectorScene;
+
 	private ButtonListener buttonListener;
 	private List<Button> buttons;
 	
@@ -104,5 +104,10 @@ public class SceneSelectorScene extends Scene {
 			}
 			
 		}
+	}
+
+	@Override
+	public int getID() {
+		return ID.ordinal();
 	}
 }
