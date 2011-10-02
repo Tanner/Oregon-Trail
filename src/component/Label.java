@@ -79,8 +79,6 @@ public class Label extends Component {
 	 */
 	public void setText(String text) {
 		this.text = text;
-		this.width = font.getWidth(text);
-		this.height = font.getLineHeight();
 	}
 	
 	/**
