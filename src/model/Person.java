@@ -146,17 +146,17 @@ public class Person {
 		ARTIST (4.8f, Skill.MUSICAL, "Artist"),
 		TEACHER (5, Skill.NONE, "Teacher");
 		
-		private final float moneyMultiplier;
+		private final float moneyDivider;
 		private final Skill startingSkill;
 		private final String name;
 		
 		/**
 		 * Assigns money multiplier and starting skill to each profession
-		 * @param moneyMultiplier Gold divided by and score multiplied by this 
+		 * @param moneyDivider Gold divided by and score multiplied by this 
 		 * @param startSkill Skill the profession starts with
 		 */
-		Profession(float moneyMultiplier, Skill startingSkill, String name) {
-			this.moneyMultiplier = moneyMultiplier;
+		Profession(float moneyDivider, Skill startingSkill, String name) {
+			this.moneyDivider = moneyDivider;
 			this.startingSkill = startingSkill;
 			this.name = name;
 		}
@@ -165,8 +165,8 @@ public class Person {
 		 * Returns the multiplier
 		 * @return Multiplier
 		 */
-		public float getMoneyMultiplier() {
-			return moneyMultiplier;
+		public float getMoneyDivider() {
+			return moneyDivider;
 		}
 		
 		/**

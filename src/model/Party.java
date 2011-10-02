@@ -27,7 +27,7 @@ public class Party {
 		this.members = party.clone();
 		this.money = 0;
 		for (Person person: party){
-			this.money += (int)(baseMoney / person.getProfession().getMoneyMultiplier());
+			this.money += (int)(baseMoney / person.getProfession().getMoneyDivider());
 		}
 	}
 	
@@ -57,6 +57,10 @@ public class Party {
 		return currentPace;
 	}
 	
+	public void setPace(Pace pace){
+		this.currentPace = pace;
+	}
+	
 	public enum Rations{
 		FILLING,
 		MEAGER,
@@ -65,5 +69,9 @@ public class Party {
 	
 	public Rations getRations(){
 		return currentRations;
+	}
+	
+	public void setRations(Rations rations){
+		this.currentRations = rations;
 	}
 }
