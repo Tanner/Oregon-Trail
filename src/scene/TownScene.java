@@ -21,6 +21,8 @@ public class TownScene extends Scene {
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		super.init(container, game);
+		
 		Image marioImage = new Image("resources/mario.png");
 		mario = new Sprite(container, marioImage, marioImage.getFlippedCopy(true, false));
 		mario.setLocation(0, container.getHeight() - mario.getHeight());
@@ -28,6 +30,9 @@ public class TownScene extends Scene {
 		Image luigiImage = new Image("resources/luigi.png");
 		luigi = new Sprite(container, luigiImage, luigiImage.getFlippedCopy(true, false));
 		luigi.setLocation(200, container.getHeight() - luigi.getHeight());
+		
+		mainLayer.add(mario);
+		mainLayer.add(luigi);
 	}
 
 //	@Override
