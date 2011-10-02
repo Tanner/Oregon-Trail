@@ -4,6 +4,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
@@ -17,7 +18,7 @@ public class Sprite extends AbstractComponent {
 	private float rotation;
 	private float scale;
 	
-	private enum DirectionFacing { LEFT, RIGHT }
+	public static enum DirectionFacing { LEFT, RIGHT }
 	private DirectionFacing xDirection = DirectionFacing.LEFT;
 	
 	public Sprite(GUIContext container, Animation rightAnimation, Animation leftAnimation) {
@@ -47,11 +48,11 @@ public class Sprite extends AbstractComponent {
 	}
 
 	public int getHeight() {
-		return currentAnimation.getHeight();
+		return (int)(scale * currentAnimation.getHeight());
 	}
 
 	public int getWidth() {
-		return currentAnimation.getWidth();
+		return (int)(scale *currentAnimation.getWidth());
 	}
 
 	public int getX() {
@@ -66,8 +67,16 @@ public class Sprite extends AbstractComponent {
 		return rotation;
 	}
 	
+	public DirectionFacing getDirectionFacing() {
+		return xDirection;
+	}
+	
 	public float getScale() {
 		return scale;
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(position.x, position.y, getWidth(), getHeight());
 	}
 	
 	public void setLocation(int x, int y) {
@@ -84,5 +93,9 @@ public class Sprite extends AbstractComponent {
 	
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
+	}
+	
+	public void setDirectionFacing(DirectionFacing xDirection) {
+		this.xDirection = xDirection;
 	}
 }
