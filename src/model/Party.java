@@ -31,10 +31,12 @@ public class Party {
 		this.money = 0;
 		this.currentPace = pace;
 		this.currentRations = rations;
+		String partyCreationLog = "Party created successfully with " + members.length + " members: ";
 		for (Person person: party){
 			this.money += (int)(baseMoney / person.getProfession().getMoneyDivider());
+			partyCreationLog += person.getName() + " ";
 		}
-		Logger.log("Party created successfully with " + members.length + " members: ", Logger.Level.INFO);
+		Logger.log(partyCreationLog, Logger.Level.INFO);
 		Logger.log("Party starting money is: " + money, Logger.Level.INFO);
 		Logger.log("Current pace is: " + currentPace + " and current rations is: " + currentRations, Level.INFO);
 	}
