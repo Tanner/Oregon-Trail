@@ -71,6 +71,15 @@ public class Label extends Component {
 		this(context, position, font, c, "");
 	}
 	
+	@Override
+	public void render(GUIContext context, Graphics g) throws SlickException {
+		String renderText = text;
+		while (font.getWidth(renderText) > width) {
+			renderText = text.substring(0, renderText.length()-1);
+		}
+		font.drawString(position.getX(), position.getY(), renderText, c);
+	}
+	
 	/**
 	 * Updates the label with new text, and calculates new width
 	 * and height based on that text.
@@ -107,15 +116,6 @@ public class Label extends Component {
 	@Override
 	public int getY() {
 		return (int)position.getY();
-	}
-
-	@Override
-	public void render(GUIContext context, Graphics g) throws SlickException {
-		String renderText = text;
-		while (font.getWidth(renderText) > width) {
-			renderText = text.substring(0, renderText.length()-1);
-		}
-		font.drawString(position.getX(), position.getY(), renderText, c);
 	}
 
 	@Override
