@@ -5,6 +5,7 @@ public enum SceneID {
 	MainMenu,
 	StoreScene,
 	TownScene,
+	SceneSelectorScene,
 	ComponentTestScene,
 	GridLayoutTestScene
 }
