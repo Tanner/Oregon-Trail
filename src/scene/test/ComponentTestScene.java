@@ -66,7 +66,7 @@ public class ComponentTestScene extends Scene {
 	
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			playerLabels[playerSpinner.getState()].setText(testField.getText() + playerSpinner2.getState());
+//			playerLabels[playerSpinner.getState()].setText(testField.getText() + playerSpinner2.getState());
 		}
 	}
 }
