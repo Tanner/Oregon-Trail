@@ -17,6 +17,7 @@ public class ComponentTestScene extends Scene {
 	public static SceneID ID = SceneID.ComponentTestScene;
 	private TextField testField;
 	private MouseOverArea testButton;
+	private Button myButton;
 	private Label[] playerLabels;
 	private Label titleLabel;
 	private Spinner playerSpinner, playerSpinner2;
@@ -43,6 +44,8 @@ public class ComponentTestScene extends Scene {
 		titleLabel = new Label(container, 50, 20, h1, Color.white,"Button Scene");
 		playerLabels = new Label[4];
 		
+		myButton = new Button(container, new Label(container, 10, 10, fieldFont, Color.white, "my button"), 200, 200);
+		
 		for (int i = 0; i < playerLabels.length; i++)
 			playerLabels[i] = new Label(container, 60 + 160*i, 100, fieldFont, Color.white, "Player " + (i+1) );
 		
@@ -62,6 +65,7 @@ public class ComponentTestScene extends Scene {
 		testField.render(container,g);
 		testButton.render(container,g);
 		titleLabel.render(container, g);
+		myButton.render(container, g);
 		super.render(container, game, g);
 	}
 
