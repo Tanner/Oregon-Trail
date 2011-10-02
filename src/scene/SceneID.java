@@ -4,5 +4,6 @@ public enum SceneID {
 	Default,
 	MainMenu,
 	StoreScene,
-	TownScene
+	TownScene,
+	ButtonScene
 }
