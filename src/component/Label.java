@@ -1,5 +1,6 @@
 package component;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.*;
 
@@ -12,7 +13,7 @@ import org.newdawn.slick.gui.*;
 public class Label extends Component {
 	private String text;
 	private Font font;
-	private int x, y;
+	private Vector2f position;
 	private Color c;
 	private int width, height;
 	
@@ -26,11 +27,10 @@ public class Label extends Component {
 	 * @param c	Color of the text
 	 * @param text The text to draw
 	 */
-	public Label(GUIContext context, int x, int y, Font font, Color c, String text) {
+	public Label(GUIContext context, Vector2f position, Font font, Color c, String text) {
 		super(context);
 		
-		this.x = x;
-		this.y = y;
+		this.position = position;
 		this.font = font;
 		this.c = c;
 		this.text = text;
@@ -41,8 +41,7 @@ public class Label extends Component {
 	public Label(GUIContext context, Font font, Color c, String text) {
 		super(context);
 		
-		this.x = 0;
-		this.y = 0;
+		this.position = new Vector2f(0, 0);
 		this.font = font;
 		this.c = c;
 		this.text = text;
@@ -60,8 +59,8 @@ public class Label extends Component {
 	 * @param font Font the text will be drawn in
 	 * @param c	Color of the text
 	 */
-	public Label(GUIContext context, int x, int y, Font font, Color c) {
-		this(context, x, y, font, c, "");
+	public Label(GUIContext context, Vector2f position, Font font, Color c) {
+		this(context, position, font, c, "");
 	}
 	
 	/**
@@ -88,23 +87,22 @@ public class Label extends Component {
 
 	@Override
 	public int getX() {
-		return x;
+		return (int)position.getX();
 	}
 
 	@Override
 	public int getY() {
-		return y;
+		return (int)position.getY();
 	}
 
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
-		font.drawString(x, y, text, c);
+		font.drawString(position.getX(), position.getY(), text, c);
 		
 	}
 
 	@Override
 	public void setLocation(int x, int y) {
-		this.x = x;
-		this.y = y;
+		position.set(x, y);
 	}
 }
