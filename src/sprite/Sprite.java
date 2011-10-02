@@ -27,6 +27,7 @@ public class Sprite extends AbstractComponent {
 		this.leftAnimation = leftAnimation;
 		
 		xDirection = DirectionFacing.LEFT;
+		currentAnimation = leftAnimation;
 		
 		position = new Vector2f(0, 0);
 		scale = 1;
