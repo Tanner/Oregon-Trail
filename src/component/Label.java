@@ -65,17 +65,6 @@ public class Label extends Component {
 	}
 	
 	/**
-	 * Creates a label with no position.
-	 * @param context The game container
-	 * @param font Font the text will be drawn in
-	 * @param c Color of the text
-	 * @param text The text to draw
-	 */
-	public Label(GUIContext context, Font font, Color c, String text) {
-		this(context, 0, 0, font, c, text);
-	}
-	
-	/**
 	 * Updates the label with new text, and calculates new width
 	 * and height based on that text.
 	 * 
