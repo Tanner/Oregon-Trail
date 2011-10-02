@@ -5,7 +5,7 @@ import org.newdawn.slick.SlickException;
 
 import scene.*;
 
-
+import model.*;
 
 public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	private static GameDirector sharedDirector;
@@ -14,13 +14,17 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	
 	private SceneDirector sceneDirector;
 	private AppGameContainer container;
-		
+	
+	private Game game;
+	
 	private GameDirector() {
 		 sharedDirector = this;
 		 
 		 fontManager = new FontManager();
 
 		 sceneDirector = new SceneDirector("Oregon Trail");
+		 
+		 game = new Game();
 	}
 	
 	public static SceneDelegate sharedSceneDelegate() {
@@ -47,6 +51,10 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Game getGame() {
+		return game;
 	}
 	
 	public AppGameContainer getContainer() {
