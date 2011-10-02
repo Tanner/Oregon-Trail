@@ -9,6 +9,6 @@
 ## Members
 * Tanner Smith
 * Ryan Ashcraft
-* John Turner test
+* John Turner 
 * George Johnston
 * Jeremy Grebner
