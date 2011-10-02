@@ -17,9 +17,9 @@ public class GridLayout extends Layout {
 	
 	public GridLayout(GameContainer container, int rowCount, int colCount) {
 		this.colCount = colCount;
-
-		this.colWidth = (container.getWidth() - (PADDING*colCount)) / colCount;
-		int colHeight = (container.getHeight() - (PADDING*rowCount)) / rowCount;
+		
+		this.colWidth = ((container.getWidth() - PADDING*2) - (PADDING*(colCount-1))) / colCount;
+		int colHeight = ((container.getHeight() - PADDING*2) - (PADDING*(rowCount-1))) / rowCount;
 		
 		this.rows = new Row[rowCount];
 		int y = PADDING;
