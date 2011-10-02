@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 
 import component.Component;
+import component.Positionable.ReferencePoint;
 
 
 public class GridLayout extends Layout {
@@ -37,7 +38,7 @@ public class GridLayout extends Layout {
 	public void setComponentLocation(Component component) {
 		Cell cell = getCellForIndex(componentsAdded);
 		Vector2f cellCenter = cell.getCenter();
-		component.setCenter((int)cellCenter.x, (int)cellCenter.y);
+		component.setPosition((int)cellCenter.x, (int)cellCenter.y, ReferencePoint.CenterCenter);
 		
 		componentsAdded++;
 	}
