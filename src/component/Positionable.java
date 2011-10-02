@@ -12,6 +12,18 @@ public interface Positionable {
 		TopLeft, TopCenter, TopRight, CenterLeft, CenterCenter, CenterRight, BottomLeft, BottomCenter, BottomRight
 	}
 	
+	/**
+	 * Sets the position of a component in relation to the given reference point.
+	 * @param x New X
+	 * @param y New Y
+	 * @param referencePoint Reference point in which to set the new position
+	 */
 	public void setPosition(int x, int y, ReferencePoint referencePoint);
+	
+	/**
+	 * Get the position of a component in relation to the given reference point.
+	 * @param referencePoint Reference point in which to get the position
+	 * @return Position of the component
+	 */
 	public Vector2f getPosition(ReferencePoint referencePoint);
 }

@@ -4,13 +4,21 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 
-import scene.Scene.ReferencePoint;
-
+/**
+ * An abstract class for a component.
+ * 
+ * @author Tanner Smith
+ */
 public abstract class Component extends AbstractComponent implements Positionable {
+	/**
+	 * Constructs a component.
+	 * @param container Container the component resides in
+	 */
 	public Component(GUIContext container) {
 		super(container);
 	}
 	
+	@Override
 	public void setPosition(int x, int y, ReferencePoint referencePoint) {
 		switch (referencePoint) {
 			case TopLeft:
@@ -43,6 +51,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 	}
 	
+	@Override
 	public Vector2f getPosition(ReferencePoint referencePoint) {
 		int x = getX();
 		int y = getY();
