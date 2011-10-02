@@ -3,6 +3,7 @@ package sprite;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
@@ -33,6 +34,10 @@ public class Sprite extends AbstractComponent {
 		position = new Vector2f(0, 0);
 		scale = 1;
 		rotation = 0;
+	}
+	
+	public Sprite(GUIContext container, Image rightImage, Image leftImage) {
+		this(container, new Animation(new Image[]{rightImage}, 1), new Animation(new Image[]{leftImage}, 1));
 	}
 	
 	public void render(GUIContext container, Graphics g) throws SlickException {
