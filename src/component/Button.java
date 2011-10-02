@@ -3,6 +3,8 @@ package component;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
 
@@ -12,6 +14,8 @@ public class Button extends Component {
 	private int width;
 	private int height;
 	private Color buttonColor;
+	private boolean over;
+	private Shape area;
 	
 	private final static int PADDING = 10;
 	
@@ -23,6 +27,8 @@ public class Button extends Component {
 		
 		this.width = width + 2 * PADDING;
 		this.height = height + 2 * PADDING;
+		
+		area = new Rectangle(position.getX(), position.getY(), this.width, this.height);
 		
 		buttonColor = Color.gray;
 	}
@@ -37,6 +43,16 @@ public class Button extends Component {
 		g.fillRect(position.getX(), position.getY(), width, height);
 		
 		label.render(container, g);
+	}
+	
+	/**
+	 * @see org.newdawn.slick.util.InputAdapter#mouseReleased(int, int, int)
+	 */
+	public void mouseReleased(int button, int mx, int my) {
+		over = area.contains(mx, my);
+		if (button == 0 && over) {
+			notifyListeners();
+		}
 	}
 
 	@Override
