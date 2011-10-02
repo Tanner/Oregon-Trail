@@ -8,11 +8,13 @@ import org.newdawn.slick.font.effects.ColorEffect;
 public class FontManager {
 	public enum FontID {
 		H1,
-		H2
+		H2,
+		FIELD
 	}
 	
 	private UnicodeFont h1;
 	private UnicodeFont h2;
+	private UnicodeFont fieldFont;
 	
 	public void init() {
 		try {
@@ -27,6 +29,12 @@ public class FontManager {
 			h2.addGlyphs(glyphsToAdd);
 			h2.getEffects().add(new ColorEffect());
 			h2.loadGlyphs();
+			
+			fieldFont = new UnicodeFont("resources/LVDCGO.ttf", 12, true, false);
+			fieldFont.addGlyphs(glyphsToAdd);
+			fieldFont.getEffects().add(new ColorEffect());
+			fieldFont.loadGlyphs();
+			
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -38,6 +46,8 @@ public class FontManager {
 			return h1;
 		case H2:
 			return h2;
+		case FIELD:
+			return fieldFont;
 		}
 		
 		return null;
