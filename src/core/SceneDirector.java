@@ -7,6 +7,7 @@ import org.newdawn.slick.state.*;
 import org.newdawn.slick.state.transition.* ;
 
 import scene.*;
+import scene.test.SceneSelectorScene;
 
 
 public class SceneDirector extends StateBasedGame {
@@ -52,8 +53,8 @@ public class SceneDirector extends StateBasedGame {
 	public void initStatesList(GameContainer container) throws SlickException {
 		this.container = container;
 		
-		MainMenuScene mainMenu = new MainMenuScene();
-		addState(mainMenu);
+		SceneSelectorScene selectorScene = new SceneSelectorScene();
+		addState(selectorScene);
 		
 		GameDirector.sharedSceneDirectorDelegate().sceneDirectorReady();
 	}
