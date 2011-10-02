@@ -11,26 +11,24 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import core.*;
-import entity.*;
+import sprite.*;
 
 
 public class TownScene extends Scene {
 	public static final SceneID ID = SceneID.TownScene;
 	
-	private Entity mario;
-	private Entity luigi;
+	private Sprite mario;
+	private Sprite luigi;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		mario = new Entity("Mario", container);
-		mario.setRenderComponent(new FlippableImageRenderComponent("MarioRender", "resources/mario.png"));
-		mario.addComponent(new LeftRightMovement("MarioMovement"));
-		mario.setPosition(new Vector2f(0, container.getHeight() - mario.getHeight()));
+		Image marioImage = new Image("resources/mario.png");
+		mario = new Sprite(container, marioImage, marioImage.getFlippedCopy(true, false));
+		mario.setLocation(0, container.getHeight() - mario.getHeight());
 		
-		luigi = new Entity("Luigi", container);
-		luigi.setRenderComponent(new FlippableImageRenderComponent("LuigiRender", "resources/luigi.png"));
-		luigi.addComponent(new LeftRightMovement("LuigiMovement"));
-		luigi.setPosition(new Vector2f(200, container.getHeight() - luigi.getHeight()));
+		Image luigiImage = new Image("resources/luigi.png");
+		luigi = new Sprite(container, luigiImage, luigiImage.getFlippedCopy(true, false));
+		luigi.setLocation(200, container.getHeight() - luigi.getHeight());
 	}
 
 	@Override
@@ -53,8 +51,8 @@ public class TownScene extends Scene {
 				instruction,
 				Color.white);
 		
-		mario.render(container, game, g);
-		luigi.render(container, game, g);
+		mario.render(container, g);
+		luigi.render(container, g);
 	}
 
 	@Override
