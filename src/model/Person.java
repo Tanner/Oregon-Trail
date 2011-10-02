@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import core.Logger;
+
 /**
  * Person consists of a list of skills the person is proficient with as well
  * as their name, and what their profession is called. Potentially more, but not
@@ -26,18 +28,27 @@ public class Person {
 		
 		this.name = name;
 		this.profession = profession;
+		String skillList = name + " has skills: ";
+		
+		if (!this.skills.contains(profession.getStartingSkill())) {
+			this.skills.add(profession.getStartingSkill());
+			this.skillPoints -= profession.getStartingSkill().getCost();
+			
+			skillList += profession.getStartingSkill();
+		}
 		
 		for (Skill skill: skills) {
 			if(!this.skills.contains(skill)) {
 				this.skills.add(skill);
 				this.skillPoints -= skill.getCost();
+				skillList += ", " + skill;
 			}
 		}
 		
-		if (!this.skills.contains(profession.getStartingSkill())) {
-			this.skills.add(profession.getStartingSkill());
-			this.skillPoints -= profession.getStartingSkill().getCost();
-		}
+		
+				
+		Logger.log(name + " was created successfully as a " + profession.getName(), Logger.Level.INFO);
+		Logger.log(skillList, Logger.Level.INFO);
 	}
 	
 	/**

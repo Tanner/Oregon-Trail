@@ -1,5 +1,8 @@
 package model;
 
+import core.Logger;
+import core.Logger.Level;
+
 /**
  * Party class that contains an array of persons that are members.
  * @author George Johnston
@@ -23,12 +26,17 @@ public class Party {
 	 * If people are present before party is created, this constructor is used
 	 * @param party Array of people to be initialized into party
 	 */
-	public Party(Person ... party) {
+	public Party(Pace pace, Rations rations, Person ... party) {
 		this.members = party.clone();
 		this.money = 0;
+		this.currentPace = pace;
+		this.currentRations = rations;
 		for (Person person: party){
 			this.money += (int)(baseMoney / person.getProfession().getMoneyDivider());
 		}
+		Logger.log("Party created successfully with " + members.length + " members: ", Logger.Level.INFO);
+		Logger.log("Party starting money is: " + money, Logger.Level.INFO);
+		Logger.log("Current pace is: " + currentPace + " and current rations is: " + currentRations, Level.INFO);
 	}
 	
 	/**

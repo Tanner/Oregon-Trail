@@ -1,5 +1,7 @@
 package model;
 
+import core.Logger;
+
 /**
  * Player class contains party.  Can be passed or set manually.
  * 
@@ -22,6 +24,7 @@ public class Player {
 	 */
 	public Player(Party party) {
 		this.party = party;
+		Logger.log("Player was created successfully with premade party", Logger.Level.INFO);
 	}
 	
 	/**
