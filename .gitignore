@@ -1,4 +1,6 @@
 *.class
+*.DS_STORE
+log.txt
 
 # Package Files #
 *.jar
