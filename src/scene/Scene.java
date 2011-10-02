@@ -29,7 +29,19 @@ public abstract class Scene extends BasicGameState {
 	}
 
 	public abstract void update(GameContainer container, StateBasedGame game, int delta) throws SlickException;
+	
+	public void start() {
 		
+	}
+	
+	public void pause() {
+		
+	}
+	
+	public void stop() {
+		
+	}
+	
 	@Override
 	public int getID() {
 		return ID.ordinal();

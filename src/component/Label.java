@@ -106,7 +106,6 @@ public class Label extends Component {
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
 		font.drawString(position.getX(), position.getY(), text, c);
-		
 	}
 
 	@Override

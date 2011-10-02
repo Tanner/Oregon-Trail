@@ -20,7 +20,6 @@ public class Button extends Component {
 	private int height;
 	private Color buttonColor;
 	private boolean over;
-	private Shape area;
 	
 	private final static int PADDING = 10;
 	
@@ -40,10 +39,10 @@ public class Button extends Component {
 		
 		this.width = width + 2 * PADDING;
 		this.height = height + 2 * PADDING;
-		
-		area = new Rectangle(position.getX(), position.getY(), this.width, this.height);
-		
+				
 		buttonColor = Color.gray;
+		
+		container.getInput().addMouseListener(this);
 	}
 	
 	/**
@@ -68,12 +67,16 @@ public class Button extends Component {
 	 * @see org.newdawn.slick.util.InputAdapter#mouseReleased(int, int, int)
 	 */
 	public void mouseReleased(int button, int mx, int my) {
-		over = area.contains(mx, my);
+		over = getArea().contains(mx, my);
 		if (button == 0 && over) {
 			notifyListeners();
 		}
 	}
 
+	public Shape getArea() {
+		return new Rectangle(position.getX(), position.getY(), this.width, this.height);
+	}
+	
 	@Override
 	public int getHeight() {
 		return height;

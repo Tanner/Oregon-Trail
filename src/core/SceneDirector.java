@@ -22,6 +22,10 @@ public class SceneDirector extends StateBasedGame {
 	}
 
 	public void pushScene(Scene scene, boolean animated) {
+		if (scenes.size() > 0) {
+			scenes.peek().pause();
+		}
+		
 		scenes.push(scene);
 		addState(scene);
 		try {
@@ -35,10 +39,13 @@ public class SceneDirector extends StateBasedGame {
 		} else {
 			enterState(scenes.peek().getID());
 		}
+		
+		scenes.peek().start();
 	}
 	
 	public void popScene(boolean animated) {
 		if (scenes.size() > 1) {
+			scenes.peek().stop();
 			scenes.pop();
 		
 			if (animated) {
@@ -47,6 +54,8 @@ public class SceneDirector extends StateBasedGame {
 				enterState(scenes.peek().getID());
 			}
 		}
+
+		scenes.peek().start();
 	}
 	
 	@Override
@@ -54,6 +63,7 @@ public class SceneDirector extends StateBasedGame {
 		this.container = container;
 		
 		SceneSelectorScene selectorScene = new SceneSelectorScene();
+		scenes.add(selectorScene);
 		addState(selectorScene);
 		
 		GameDirector.sharedSceneDirectorDelegate().sceneDirectorReady();
