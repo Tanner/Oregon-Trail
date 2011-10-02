@@ -68,8 +68,8 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 			return new TownScene();
 		case StoreScene:
 			return new StoreScene();
-		case ButtonScene:
-			return new ButtonScene();
+		case ComponentTestScene:
+			return new ComponentTestScene();
 		case GridLayoutTestScene:
 			return new GridLayoutTestScene();
 		}

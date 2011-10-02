@@ -12,9 +12,9 @@ import component.*;
 
 import core.*;
 
-public class ButtonScene extends Scene {
+public class ComponentTestScene extends Scene {
 	
-	public static SceneID ID = SceneID.ButtonScene;
+	public static SceneID ID = SceneID.ComponentTestScene;
 	private TextField testField;
 	private MouseOverArea testButton;
 	private Label[] playerLabels;
