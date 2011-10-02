@@ -58,7 +58,11 @@ public class Logger {
 				
 				Date now = new Date();
 				String date = new SimpleDateFormat("MM/dd/yyyy H:m:s:S z").format(now);
-				out.write(level.getName()+" - "+date+" - "+message+"\n");
+				
+				String output = level.getName()+" - "+date+" - "+message+"\n";
+				
+				out.write(output);
+				System.out.print(output);
 				
 				out.close();
 			} catch (Exception e) {
