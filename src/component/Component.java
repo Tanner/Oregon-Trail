@@ -88,4 +88,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		
 		return null;
 	}
+	
+	public abstract void setWidth(int width);
+	public abstract void setHeight(int height);
 }
