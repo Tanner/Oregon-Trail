@@ -1,6 +1,7 @@
 package scene.test;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 import org.newdawn.slick.state.*;
 
@@ -44,7 +45,7 @@ public class ComponentTestScene extends Scene {
 		titleLabel = new Label(container, 50, 20, h1, Color.white,"Button Scene");
 		playerLabels = new Label[4];
 		
-		myButton = new Button(container, new Label(container, 10, 10, fieldFont, Color.white, "my button"), 200, 200);
+		myButton = new Button(container, new Label(container, 10, 10, fieldFont, Color.white, "my button"), new Vector2f(200, 200));
 		
 		for (int i = 0; i < playerLabels.length; i++)
 			playerLabels[i] = new Label(container, 60 + 160*i, 100, fieldFont, Color.white, "Player " + (i+1) );
