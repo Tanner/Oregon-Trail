@@ -15,7 +15,6 @@ import component.*;
 import core.*;
 
 public class ComponentTestScene extends Scene {
-	
 	public static SceneID ID = SceneID.ComponentTestScene;
 	private TextField textField;
 	private Button button;
@@ -45,21 +44,6 @@ public class ComponentTestScene extends Scene {
 		
 		label = new Label(container, h1, Color.white, "Label");
 		mainLayer.add(label);
-		
-//		Spinner playerSpinner = new Spinner(container, 400, 400, fieldFont, Color.white, new Image("resources/up.png"), new Image("resources/down.png"), false, "Player 1", "Player 2", "Player 3", "Player 4");
-//		mainLayer.add(playerSpinner);
-//		
-//		Spinner playerSpinner2 = new Spinner(container, 400, 200, fieldFont, Color.white, new Image("resources/up.png"), new Image("resources/down.png"), true, "1", "20", "30", "100");
-//		mainLayer.add(playerSpinner2);
-//		
-//		Label[] playerLabels = new Label[4];
-//		for (int i = 0; i < playerLabels.length; i++) {
-//			playerLabels[i] = new Label(container, new Vector2f(60 + 160*i, 100), fieldFont, Color.white, "Player " + (i+1) );
-//			mainLayer.add(playerLabels[i]);
-//		}
-//		
-//		for ( Label l : playerLabels )
-//			mainLayer.add(l);
 	}
 
 	@Override
@@ -70,7 +54,6 @@ public class ComponentTestScene extends Scene {
 	
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-//			playerLabels[playerSpinner.getState()].setText(testField.getText() + playerSpinner2.getState());
 			label.setText("Button!");
 		}
 	}
