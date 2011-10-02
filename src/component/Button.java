@@ -83,7 +83,9 @@ public class Button extends Component {
 			position.set(x, y);
 		}
 
-		label.setLocation(x + PADDING, y + PADDING);
+		if (label != null) {
+			label.setLocation(x + PADDING, y + PADDING);
+		}
 	}
 	
 	public void setButtonColor(Color color) {
