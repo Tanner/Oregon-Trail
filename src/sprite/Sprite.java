@@ -33,6 +33,18 @@ public class Sprite extends AbstractComponent {
 		scale = 1;
 		rotation = 0;
 	}
+	
+	public void render(GUIContext container, Graphics g) throws SlickException {
+		currentAnimation.draw(position.getX(), position.getY());
+	}
+	
+	public void update(GameContainer container, StateBasedGame game, int delta) {
+		if (xDirection == DirectionFacing.LEFT) {
+			currentAnimation = leftAnimation;
+		} else {
+			currentAnimation = rightAnimation;
+		}
+	}
 
 	public int getHeight() {
 		return currentAnimation.getHeight();
@@ -49,17 +61,13 @@ public class Sprite extends AbstractComponent {
 	public int getY() {
 		return (int)position.getY();
 	}
-
-	public void render(GUIContext container, Graphics g) throws SlickException {
-		currentAnimation.draw(position.getX(), position.getY());
+	
+	public float getRotation() {
+		return rotation;
 	}
 	
-	public void update(GameContainer container, StateBasedGame game, int delta) {
-		if (xDirection == DirectionFacing.LEFT) {
-			currentAnimation = leftAnimation;
-		} else {
-			currentAnimation = rightAnimation;
-		}
+	public float getScale() {
+		return scale;
 	}
 	
 	public void setLocation(int x, int y) {
@@ -68,5 +76,13 @@ public class Sprite extends AbstractComponent {
 	
 	public void setLocation(float x, float y) {
 		position.set(x, y);
+	}
+	
+	public void setScale(float scale) {
+		this.scale = scale;
+	}
+	
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
 	}
 }
