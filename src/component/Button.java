@@ -58,7 +58,7 @@ public class Button extends Component {
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
 		g.setColor(buttonColor);
-		g.fillRect(position.getX(), position.getY(), width, height);
+		g.fillRect(position.x, position.y, width, height);
 		
 		label.render(container, g);
 	}

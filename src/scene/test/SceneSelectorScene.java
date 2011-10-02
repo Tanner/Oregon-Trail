@@ -1,5 +1,10 @@
 package scene.test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -26,7 +31,7 @@ import scene.layout.GridLayout;
  */
 public class SceneSelectorScene extends Scene {
 	private ButtonListener buttonListener;
-	private Button mainMenuButton;
+	private List<Button> buttons;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -34,13 +39,20 @@ public class SceneSelectorScene extends Scene {
 		
 		mainLayer.setLayout(new GridLayout(container, 4, 4));
 		
+		buttons = new ArrayList<Button>();
+		
 		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
 		Label mainMenuLabel = new Label(container, h2, Color.white, "Main\nMenu");
-		mainMenuButton = new Button(container, mainMenuLabel, new Vector2f(0, 0));
+		Button mainMenuButton = new Button(container, mainMenuLabel, new Vector2f(0, 0));
+		buttons.add(mainMenuButton);
+		Label townLabel = new Label(container, h2, Color.white, "Town");
+		Button townButton = new Button(container, townLabel, new Vector2f(0, 0));
+		buttons.add(townButton);
 		
 		buttonListener = new ButtonListener();
 		
 		mainLayer.add(mainMenuButton);
+		mainLayer.add(townButton);
 		
 		backgroundLayer.add(new Background(container, Color.blue));
 		
@@ -53,24 +65,33 @@ public class SceneSelectorScene extends Scene {
 	}
 	
 	public void start() {
-		mainMenuButton.addListener(buttonListener);
+		for (Button b : buttons) {
+			b.addListener(buttonListener);
+		}
 	}
 	
 	public void pause() {
-		mainMenuButton.removeListener(buttonListener);
+		for (Button b : buttons) {
+			b.removeListener(buttonListener);
+		}
 	}
 	
 	public void end() {
-		mainMenuButton.removeListener(buttonListener);
+		for (Button b : buttons) {
+			b.removeListener(buttonListener);
+		}
 	}
 	
 	private class ButtonListener implements ComponentListener {
 
 		@Override
 		public void componentActivated(AbstractComponent component) {
-			if (component == mainMenuButton) {
+			if (component == buttons.get(0)) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.MainMenu);
+			} else if (component == buttons.get(1)) {
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.TownScene);
 			}
+			
 		}
 	}
 }
