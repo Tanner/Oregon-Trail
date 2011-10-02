@@ -87,7 +87,11 @@ public class Sprite extends AbstractComponent {
 	}
 	
 	public void setLocation(int x, int y) {
-		position.set(x, y);
+		if (position == null) {
+			position = new Vector2f(x, y);
+		} else {
+			position.set(x, y);
+		}
 	}
 	
 	public void setLocation(float x, float y) {
