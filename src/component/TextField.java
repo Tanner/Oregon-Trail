@@ -82,11 +82,13 @@ public class TextField extends Component {
 	@Override
 	public void setWidth(int width) {
 		this.width = width;
+		label.setWidth(width);
 	}
 
 	@Override
 	public void setHeight(int height) {
 		this.height = height;
+		label.setHeight(height);
 	}
 
 	@Override
