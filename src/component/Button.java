@@ -19,9 +19,8 @@ public class Button extends Component {
 		super(container);
 		
 		this.label = label;
-		label.setLocation((int)position.getX() + PADDING, (int)position.getY() + PADDING);
+		setLocation((int)position.getX(), (int)position.getY());
 		
-		this.position = position;
 		this.width = width + 2 * PADDING;
 		this.height = height + 2 * PADDING;
 		
@@ -67,6 +66,8 @@ public class Button extends Component {
 		} else {
 			position.set(x, y);
 		}
+
+		label.setLocation(x + PADDING, y + PADDING);
 	}
 	
 	public void setButtonColor(Color color) {
