@@ -33,6 +33,14 @@ public class Button extends Component {
 	}
 
 	@Override
+	public void render(GUIContext container, Graphics g) throws SlickException {
+		g.setColor(buttonColor);
+		g.fillRect(position.getX(), position.getY(), width, height);
+		
+		label.render(container, g);
+	}
+
+	@Override
 	public int getHeight() {
 		return height;
 	}
@@ -51,15 +59,7 @@ public class Button extends Component {
 	public int getY() {
 		return (int)position.getY();
 	}
-
-	@Override
-	public void render(GUIContext container, Graphics g) throws SlickException {
-		g.setColor(buttonColor);
-		g.fillRect(position.getX(), position.getY(), width, height);
-		
-		label.render(container, g);
-	}
-
+	
 	@Override
 	public void setLocation(int x, int y) {
 		if (position == null) {
