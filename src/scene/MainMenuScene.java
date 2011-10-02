@@ -40,7 +40,7 @@ public class MainMenuScene extends Scene {
 
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ENTER) {
-			GameDirector.sharedSceneDelegate().requestScene(SceneID.GridLayoutTestScene);
+			GameDirector.sharedSceneDelegate().requestScene(SceneID.TownScene);
 		}
 	}
 }
