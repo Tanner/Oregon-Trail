@@ -11,13 +11,17 @@ public class Button extends Component {
 	private int width;
 	private int height;
 	
+	private final static int PADDING = 10;
+	
 	public Button(GUIContext container, Label label, int x, int y, int width, int height) {
 		super(container);
 		
 		this.label = label;
+		label.setLocation(x + PADDING, y + PADDING);
+		
 		position = new Vector2f(x, y);
-		this.width = width;
-		this.height = height;
+		this.width = width + 2 * PADDING;
+		this.height = height + 2 * PADDING;
 	}
 	
 	public Button(GUIContext container, Label label, int x, int y) {
@@ -46,7 +50,6 @@ public class Button extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
-		g.drawRect(position.getX(), position.getY(), width, height);
 		label.render(container, g);
 	}
 
