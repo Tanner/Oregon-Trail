@@ -44,6 +44,30 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	public Vector2f getPosition(ReferencePoint referencePoint) {
+		int x = getX();
+		int y = getY();
+		
+		switch (referencePoint) {
+			case TopLeft:
+				return new Vector2f(x, y);
+			case TopCenter:
+				return new Vector2f(x + getWidth() / 2, y);
+			case TopRight:
+				return new Vector2f(x + getWidth(), y);
+			case CenterLeft:
+				return new Vector2f(x, y + getHeight() / 2);
+			case CenterCenter:
+				return new Vector2f(x + getWidth() / 2, y + getHeight() / 2);
+			case CenterRight:
+				return new Vector2f(x + getWidth(), y + getHeight() / 2);
+			case BottomLeft:
+				return new Vector2f(x, y + getHeight());
+			case BottomCenter:
+				return new Vector2f(x + getWidth() / 2, y + getHeight());
+			case BottomRight:
+				return new Vector2f(x + getWidth(), y + getHeight());
+		}
+		
 		return null;
 	}
 }
