@@ -3,37 +3,32 @@ package model;
 /**
  * Player class contains party.  Can be passed or set manually.
  * 
- * 
- * @author George
- *
+ * @author George Johnston
  */
 public class Player {
-	
 	private Party party;
 	
 	/**
-	 * Constructor for unknown current party.  Should be used at creation of 
+	 * Constructor for unknown current party. Should be used at creation of 
 	 * game before party create scene
-	 * 
 	 */
-	Player(){
+	public Player() {
 		this.party = null;
 	}
 	
 	/**
-	 * Party already created.  Don't know when we'll use this, but maybe for load/save
+	 * Party already created. Don't know when we'll use this, but maybe for load/save
 	 * @param party An already existant party
-	 * 
 	 */
-	Player(Party party){
+	public Player(Party party) {
 		this.party = party;
 	}
 	
 	/**
-	 * Returns the player's party.  GameDirector calls this a bunch
+	 * Returns the player's party. GameDirector calls this a bunch
 	 * @return The party for scenes to mess with
 	 */
-	public Party getParty(){
+	public Party getParty() {
 		return this.party;
 	}
 	
@@ -41,8 +36,7 @@ public class Player {
 	 * Enables scenes like partyCreationScene to give the player a party.
 	 * @param party Party for the player to own.
 	 */
-	public void setParty(Party party){
+	public void setParty(Party party) {
 		this.party = party;
 	}
-	
 }

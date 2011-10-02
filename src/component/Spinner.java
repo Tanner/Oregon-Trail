@@ -3,17 +3,15 @@ package component;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.*;
 
-
 /**
  * A Spinner component that allows the user to select specific choices.
  * Scrolls up or down through a list of options that each represent
  * a specific ordinal value.  Does not allow the user to go below/above
  * the 0/MAX_STATE values.
  * 
- * @author Jeremy
+ * @author Jeremy Grebner
  */
 public class Spinner extends Component {
-	
 	//The padding between the buttons and the text
 	private final int PADDING = 20;
 	private final int MAX_STATE;
@@ -26,7 +24,6 @@ public class Spinner extends Component {
 	
 	private MouseOverArea upButton, downButton;
 	private ButtonListener listener;
-	
 	
 	/**
 	 * Creates a new Spinner.  Note if you pass in true before the list of Strings,
@@ -45,6 +42,7 @@ public class Spinner extends Component {
 	 */
 	public Spinner(GUIContext context, int x, int y, Font font, Color c, Image up, Image down, boolean treatAsNumbers, String ... fields) {
 		super(context);
+		
 		state = 0;
 		MAX_STATE = fields.length - 1;
 		this.x = x;
@@ -52,10 +50,14 @@ public class Spinner extends Component {
 		this.fields = fields;
 		this.font = font;
 		this.treatAsNumbers = treatAsNumbers;
+		
 		listener = new ButtonListener();
+		
 		System.out.println("About to make buttons in constructor");
+		
 		upButton = new MouseOverArea(context, up, x, y, listener);
 		downButton = new MouseOverArea(context, down, x, y + upButton.getHeight(), listener);
+		
 		int textY = (upButton.getHeight()*2-font.getLineHeight()) / 2;
 		label = new Label(context, x + upButton.getWidth() + PADDING, y + textY, font, c, fields[0]);
 	}
@@ -116,14 +118,13 @@ public class Spinner extends Component {
 	 * A listener that checks if an up/down button was pressed,
 	 * and updates the spinner's state.
 	 * 
-	 * @author Jeremy
+	 * @author Jeremy Grebner
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
 			if (source == upButton) {
 				state = (state == MAX_STATE) ? state : state + 1;
-			}
-			else {
+			} else {
 				state = (state == 0) ? 0 : state - 1;
 			}
 			label.setText(fields[state]);

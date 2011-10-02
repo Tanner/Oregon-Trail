@@ -3,10 +3,9 @@ package model;
 /**
  * Holds all game data
  * 
- * @author George
+ * @author George Johnston
  */
 public class Game {
-
 	private Player player;
 	
 	/**
@@ -23,5 +22,4 @@ public class Game {
 	public Player getPlayer() {
 		return this.player;
 	}
-	
 }

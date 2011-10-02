@@ -1,17 +1,15 @@
 package model;
 
 import java.util.ArrayList;
+
 /**
- * 
  * Person consists of a list of skills the person is proficient with as well
- * as their name, and what their profession is called.  Potentially more, but not
+ * as their name, and what their profession is called. Potentially more, but not
  * right now
  * 
- * @author George
- *
+ * @author George Johnston
  */
 public class Person {
-	
 	private int skillPoints = 120;
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
 	private String name;
@@ -23,18 +21,18 @@ public class Person {
 	 * @param profession The person's profession
 	 * @param skills The list of skills selected during person creation
 	 */
-	Person(String name, Profession profession, Skill ... skills){
+	public Person(String name, Profession profession, Skill ... skills) {
 		
 		this.name = name;
 		
-		for (Skill skill: skills){
-			if(!this.skills.contains(skill)){
+		for (Skill skill: skills) {
+			if(!this.skills.contains(skill)) {
 				this.skills.add(skill);
 				this.skillPoints -= skill.getCost();
 			}
 		}
 		
-		if(!this.skills.contains(profession.getStartingSkill())){
+		if (!this.skills.contains(profession.getStartingSkill())) {
 			this.skills.add(profession.getStartingSkill());
 			this.skillPoints -= profession.getStartingSkill().getCost();
 		}
@@ -44,7 +42,7 @@ public class Person {
 	 * Gets remaining skill points for consideration during skill adding
 	 * @return Remaining skill points
 	 */
-	public int getSkillPoints(){
+	public int getSkillPoints() {
 		return skillPoints;
 	}
 	
@@ -52,7 +50,7 @@ public class Person {
 	 * Gets the list of skills a person has.
 	 * @return The list of skills
 	 */
-	public ArrayList<Skill> getSkills(){
+	public ArrayList<Skill> getSkills() {
 		return skills;
 	}
 	
@@ -60,15 +58,14 @@ public class Person {
 	 * I FORGOT MY NAME!
 	 * @return Person's name
 	 */
-	public String getName(){
+	public String getName() {
 		return name;
 	}
 	
 	/**
 	 * Skills named and with skill point cost.
 	 * 
-	 * @author George
-	 *
+	 * @author George Johnston
 	 */
 	public enum Skill {
 		MEDICAL (50),
@@ -92,7 +89,7 @@ public class Person {
 		 * Sets the cost of the skill as designated
 		 * @param cost The cost of the skill (defined above)
 		 */
-		Skill(int cost){
+		Skill(int cost) {
 			this.cost = cost;
 		}
 		
@@ -100,7 +97,7 @@ public class Person {
 		 * Returns the cost of a skill
 		 * @return The cost
 		 */
-		public int getCost(){
+		public int getCost() {
 			return cost;
 		}
 	}
@@ -108,8 +105,7 @@ public class Person {
 	/**
 	 * Professions with their gold/score multiplier and starting skill
 	 * 
-	 * @author George
-	 *
+	 * @author George Johnston
 	 */
 	public static enum Profession {
 		BANKER (1, Skill.COMMERCE),
@@ -146,7 +142,7 @@ public class Person {
 		 * @param moneyMultiplier Gold divided by and score multiplied by this 
 		 * @param startSkill Skill the profession starts with
 		 */
-		Profession(float moneyMultiplier, Skill startSkill){
+		Profession(float moneyMultiplier, Skill startSkill) {
 			this.moneyMultiplier = moneyMultiplier;
 			this.startingSkill = startSkill;
 		}
@@ -155,7 +151,7 @@ public class Person {
 		 * Returns the multiplier
 		 * @return Multiplier
 		 */
-		public float getMoneyMultiplier(){
+		public float getMoneyMultiplier() {
 			return moneyMultiplier;
 		}
 		
@@ -163,7 +159,7 @@ public class Person {
 		 * Returns starting skill
 		 * @return Starting skill
 		 */
-		public Skill getStartingSkill(){
+		public Skill getStartingSkill() {
 			return startingSkill;
 		}
 	}

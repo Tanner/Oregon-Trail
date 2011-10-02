@@ -10,13 +10,11 @@ import org.newdawn.slick.gui.*;
  * @author Jeremy Grebner
  */
 public class Label extends Component {
-	
 	private String text;
 	private Font font;
 	private int x, y;
 	private Color c;
 	private int width, height;
-	
 	
 	/**
 	 * Creates a label to be drawn on the screen.
@@ -30,6 +28,7 @@ public class Label extends Component {
 	 */
 	public Label(GUIContext context, int x, int y, Font font, Color c, String text) {
 		super(context);
+		
 		this.x = x;
 		this.y = y;
 		this.font = font;
@@ -49,9 +48,8 @@ public class Label extends Component {
 	 * @param c	Color of the text
 	 */
 	public Label(GUIContext context, int x, int y, Font font, Color c) {
-		this(context,x,y,font,c,"");
+		this(context, x, y, font, c, "");
 	}
-	
 	
 	/**
 	 * Updates the label with new text, and calculates new width

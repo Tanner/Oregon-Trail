@@ -4,7 +4,6 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 
 public abstract class Component extends AbstractComponent {
-
 	public Component(GUIContext container) {
 		super(container);
 	}
