@@ -1,9 +1,11 @@
-package scene;
+package scene.test;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.*;
 import org.newdawn.slick.state.*;
 
+import scene.Scene;
+import scene.SceneID;
 import scene.layout.GridLayout;
 
 import component.*;

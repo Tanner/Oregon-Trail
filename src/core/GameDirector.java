@@ -4,6 +4,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import scene.*;
+import scene.test.*;
 
 import model.*;
 

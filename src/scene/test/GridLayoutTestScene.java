@@ -1,4 +1,4 @@
-package scene;
+package scene.test;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -6,6 +6,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import scene.Scene;
 import scene.layout.GridLayout;
 import sprite.Sprite;
 
