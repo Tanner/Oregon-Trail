@@ -3,15 +3,19 @@ package model;
 import java.util.ArrayList;
 
 public class Person {
+	
 	private int skillPoints = 120;
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
+	private String name;
 	
-	
-	Person(Profession profession, Skill ... skills){
-		for (int i = 0; i < skills.length; i++){
-			if(!this.skills.contains(skills[i])){
-				this.skills.add(skills[i]);
-				this.skillPoints -= skills[i].getCost();
+	Person(Profession profession, String name, Skill ... skills){
+		
+		this.name = name;
+		
+		for (Skill skill: skills){
+			if(!this.skills.contains(skill)){
+				this.skills.add(skill);
+				this.skillPoints -= skill.getCost();
 			}
 		}
 		
@@ -19,6 +23,18 @@ public class Person {
 			this.skills.add(profession.getStartingSkill());
 			this.skillPoints -= profession.getStartingSkill().getCost();
 		}
+	}
+	
+	public int getSkillPoints(){
+		return skillPoints;
+	}
+	
+	public ArrayList<Skill> getSkills(){
+		return skills;
+	}
+	
+	public String getName(){
+		return name;
 	}
 	
 	public enum Skill {
