@@ -46,11 +46,16 @@ public class Button extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
-		// TODO Auto-generated method stub
+		g.drawRect(position.getX(), position.getY(), width, height);
+		label.render(container, g);
 	}
 
 	@Override
 	public void setLocation(int x, int y) {
-		position.set(x, y);
+		if (position == null) {
+			position = new Vector2f(x, y);
+		} else {
+			position.set(x, y);
+		}
 	}
 }
