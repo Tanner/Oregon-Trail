@@ -20,6 +20,10 @@ public abstract class Scene extends BasicGameState {
 	protected List<Component> components;
 	protected Layout layout;
 	
+	public enum ReferencePoint {
+		TopLeft, TopCenter, TopRight, CenterLeft, CenterCenter, CenterRight, BottomLeft, BottomCenter, BottomRight
+	}
+	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		components = new ArrayList<Component>();
 	}
@@ -35,6 +39,40 @@ public abstract class Scene extends BasicGameState {
 	public void add(Component component) {
 		if (layout != null) {
 			layout.setComponentLocation(component);
+		}
+		
+		components.add(component);
+	}
+	
+	public void add(Component component, int x, int y, ReferencePoint referencePoint) {
+		switch (referencePoint) {
+		case TopLeft:
+			component.setLocation(x, y);
+			break;
+		case TopCenter:
+			component.setLocation(x - component.getWidth()/2, y);
+			break;
+		case TopRight:
+			component.setLocation(x - component.getWidth(), y);
+			break;
+		case CenterLeft:
+			component.setLocation(x, y - component.getHeight()/2);
+			break;
+		case CenterCenter:
+			component.setLocation(x - component.getWidth()/2, y - component.getHeight()/2);
+			break;
+		case CenterRight:
+			component.setLocation(x - component.getWidth(), y - component.getHeight()/2);
+			break;
+		case BottomLeft:
+			component.setLocation(x, y - component.getHeight());
+			break;
+		case BottomCenter:
+			component.setLocation(x - component.getWidth()/2, y - component.getHeight());
+			break;
+		case BottomRight:
+			component.setLocation(x - component.getWidth(), y - component.getHeight());
+			break;
 		}
 		
 		components.add(component);
