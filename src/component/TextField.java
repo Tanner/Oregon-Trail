@@ -33,6 +33,7 @@ public class TextField extends Component {
 	public TextField(GUIContext container, Font font, Vector2f position, int width, int height) {
 		super(container);
 		
+		fieldColor = Color.gray;
 		label = new Label(container, new Vector2f(0, 0), font, Color.white);
 		
 		this.width = width + 2 * PADDING;
