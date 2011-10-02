@@ -42,13 +42,13 @@ public class ComponentTestScene extends Scene {
 		
 		testField = new TextField(container, fieldFont, 40, 400, 300, 20);
 		testButton = new MouseOverArea(container, new Image("resources/button.png"), 600, 400, new ButtonListener() );
-		titleLabel = new Label(container, 50, 20, h1, Color.white,"Button Scene");
+		titleLabel = new Label(container, new Vector2f(50, 20), h1, Color.white,"Button Scene");
 		playerLabels = new Label[4];
 		
-		myButton = new Button(container, new Label(container, 10, 10, fieldFont, Color.white, "my button"), new Vector2f(200, 200));
+		myButton = new Button(container, new Label(container, new Vector2f(10, 10), fieldFont, Color.white, "my button"), new Vector2f(200, 200));
 		
 		for (int i = 0; i < playerLabels.length; i++)
-			playerLabels[i] = new Label(container, 60 + 160*i, 100, fieldFont, Color.white, "Player " + (i+1) );
+			playerLabels[i] = new Label(container, new Vector2f(60 + 160*i, 100), fieldFont, Color.white, "Player " + (i+1) );
 		
 		for ( Label l : playerLabels )
 			mainLayer.add(l);

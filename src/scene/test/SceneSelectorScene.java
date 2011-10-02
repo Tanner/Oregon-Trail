@@ -29,7 +29,7 @@ public class SceneSelectorScene extends Scene {
 		mainLayer.setLayout(new GridLayout(container, 4, 4));
 		
 		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
-		Label mainMenuLabel = new Label(container, 0, 0, h2, Color.white, "Main Menu");
+		Label mainMenuLabel = new Label(container, h2, Color.white, "Main Menu");
 		Button mainMenuSceneButton = new Button(container, mainMenuLabel, new Vector2f(0, 0));
 		
 		mainLayer.add(mainMenuSceneButton);

@@ -1,7 +1,7 @@
 package component;
 
-import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
 /**
@@ -103,6 +103,16 @@ public class Label extends Component {
 
 	@Override
 	public void setLocation(int x, int y) {
-		position.set(x, y);
+		position = new Vector2f(x, y);
+	}
+
+	@Override
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	@Override
+	public void setHeight(int height) {
+		this.height = height;
 	}
 }

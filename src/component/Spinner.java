@@ -1,6 +1,7 @@
 package component;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
 /**
@@ -59,7 +60,7 @@ public class Spinner extends Component {
 		downButton = new MouseOverArea(context, down, x, y + upButton.getHeight(), listener);
 		
 		int textY = (upButton.getHeight()*2-font.getLineHeight()) / 2;
-		label = new Label(context, x + upButton.getWidth() + PADDING, y + textY, font, c, fields[0]);
+		label = new Label(context, new Vector2f(x + upButton.getWidth() + PADDING, y + textY), font, c, fields[0]);
 	}
 	
 	/**
