@@ -14,6 +14,11 @@ import component.*;
 
 import core.*;
 
+/**
+ * Scene where all components are tested.
+ * 
+ * @author Tanner Smith
+ */
 public class ComponentTestScene extends Scene {
 	public static final SceneID ID = SceneID.ComponentTestScene;
 	
