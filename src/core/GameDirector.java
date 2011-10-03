@@ -102,6 +102,11 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		return fontManager;
 	}
 	
+	@Override
+	public void showSceneSelector() {
+		sceneDirector.replaceStackWithScene(sceneForSceneID(SceneID.SceneSelector));
+	}
+	
 	/*----------------------
 	  SceneDirectorDelegate
 	  ----------------------*/

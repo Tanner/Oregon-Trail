@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.geom.Vector2f;
@@ -93,7 +94,6 @@ public class SceneSelectorScene extends Scene {
 	}
 	
 	private class ButtonListener implements ComponentListener {
-
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			if (component == buttons.get(0)) {
