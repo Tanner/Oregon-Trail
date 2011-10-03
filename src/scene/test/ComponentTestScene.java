@@ -26,6 +26,7 @@ public class ComponentTestScene extends Scene {
 	private TextField textField;
 	private Button button;
 	private Label label;
+	private Spinner spinner;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {

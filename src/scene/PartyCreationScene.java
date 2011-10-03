@@ -51,10 +51,21 @@ public class PartyCreationScene extends Scene {
 				buttonWidth,
 				150);
 		mainLayer.add(fourthPersonButton, thirdPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
+		fourthPersonButton.setVisible(false);
 		
 		TextField firstPersonNameTextField = new TextField(container, fieldFont, buttonWidth, 40);
 		mainLayer.add(firstPersonNameTextField, firstPersonButton.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
-				
+		
+		TextField secondPersonNameTextField = new TextField(container, fieldFont, buttonWidth, 40);
+		mainLayer.add(secondPersonNameTextField, secondPersonButton.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+		
+		TextField thirdPersonNameTextField = new TextField(container, fieldFont, buttonWidth, 40);
+		mainLayer.add(thirdPersonNameTextField, thirdPersonButton.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+		
+		TextField fourthPersonNameTextField = new TextField(container, fieldFont, buttonWidth, 40);
+		mainLayer.add(fourthPersonNameTextField, fourthPersonButton.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+		fourthPersonNameTextField.setVisible(false);
+		
 		backgroundLayer.add(new Background(container, new Color(0xa00008)));
 	}
 	

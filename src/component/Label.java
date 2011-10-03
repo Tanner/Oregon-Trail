@@ -36,7 +36,6 @@ public class Label extends Component {
 		this.height = font.getLineHeight();
 	}
 	
-	
 	/**
 	 * Creates a label that is initially empty.
 	 * 
@@ -49,7 +48,13 @@ public class Label extends Component {
 	}
 	
 	@Override
-	public void render(GUIContext context, Graphics g) throws SlickException {
+	public void render(GUIContext container, Graphics g) throws SlickException {
+		if (!visible) {
+			return;
+		}
+		
+		super.render(container, g);
+		
 //		g.setColor(Color.orange);
 //		g.fillRect(getX(), getY(), getWidth(), getHeight());
 		

@@ -60,6 +60,12 @@ public class Button extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
+		if (!visible) {
+			return;
+		}
+		
+		super.render(container, g);
+		
 		if (active) {
 			g.setColor(buttonActiveColor);
 		} else {
@@ -72,6 +78,10 @@ public class Button extends Component {
 	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		if (!visible) {
+			return;
+		}
+		
 		over = getArea().contains(newx, newy);
 	}
 	
@@ -84,7 +94,6 @@ public class Button extends Component {
 	
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
-		over = getArea().contains(mx, my);
 		if (button == 0 && over) {
 			notifyListeners();
 			input.consumeEvent();

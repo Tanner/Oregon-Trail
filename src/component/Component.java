@@ -1,5 +1,7 @@
 package component;
 
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
@@ -10,12 +12,23 @@ import org.newdawn.slick.gui.GUIContext;
  * @author Tanner Smith
  */
 public abstract class Component extends AbstractComponent implements Positionable {
+	protected boolean visible; 
+	
 	/**
 	 * Constructs a component.
 	 * @param container Container the component resides in
 	 */
 	public Component(GUIContext container) {
 		super(container);
+		visible = true;
+	}
+	
+	public void render(GUIContext context, Graphics g) throws SlickException {
+
+	}
+	
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 	
 	@Override
