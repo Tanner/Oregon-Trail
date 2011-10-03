@@ -88,9 +88,9 @@ public class TextField extends Component {
 	 */
 	public boolean isAcceptedCharacter(char c) {
 		if (acceptedCharacters == AcceptedCharacters.LETTERS) {
-			return Character.isLetter(c);
+			return Character.isLetter(c) || c == ' ';
 		} else if (acceptedCharacters == AcceptedCharacters.LETTERS_NUMBERS) {
-			return Character.isLetterOrDigit(c);
+			return Character.isLetterOrDigit(c) || c == ' ';
 		} else if (acceptedCharacters == AcceptedCharacters.NUMBERS) {
 			return Character.isDigit(c);
 		}
