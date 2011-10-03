@@ -28,17 +28,18 @@ public class Person {
 	 * @param profession The person's profession
 	 * @param skills The list of skills selected during person creation
 	 */
-	public Person(String name, Profession profession, Skill ... skills) {
+	public Person(String name, Profession profession, ArrayList<Skill> skills) {
 		
 		this.name = name;
 		this.profession = profession;
 		String skillList = name + " has skills: ";
 		
-		if (!this.skills.contains(profession.getStartingSkill())) {
+		if (!this.skills.contains(profession.getStartingSkill()) && profession.getStartingSkill() != Skill.NONE) {
 			this.skills.add(profession.getStartingSkill());
 			this.skillPoints -= profession.getStartingSkill().getCost();
 			
 			skillList += profession.getStartingSkill();
+			this.skillPoints += profession.getStartingSkill().getCost();
 		}
 		
 		for (Skill skill: skills) {

@@ -34,6 +34,8 @@ public class Party {
 		String partyCreationLog = members.length + " members were created successfully: ";
 		for (Person person: party){
 			this.money += (int)(baseMoney / person.getProfession().getMoneyDivider());
+			Logger.log(person.getName()+ " as a " + person.getProfession() + " brings " + 
+					(int)(baseMoney / person.getProfession().getMoneyDivider()) + " to the party.", Logger.Level.INFO);
 			partyCreationLog += person.getName() + " ";
 		}
 		Logger.log(partyCreationLog, Logger.Level.INFO);
