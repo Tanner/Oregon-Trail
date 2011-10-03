@@ -29,16 +29,25 @@ public abstract class Scene extends BasicGameState {
 	@Override
 	public abstract void update(GameContainer container, StateBasedGame game, int delta) throws SlickException;
 	
+	/**
+	 * Things to do when the Scene is started.
+	 */
 	public void start() {
-		
+		return;
 	}
 	
+	/**
+	 * Things to do when the Scene is paused.
+	 */
 	public void pause() {
-		
+		return;
 	}
 	
+	/**
+	 * Things to do when the Scene is stopped.
+	 */
 	public void stop() {
-		
+		return;
 	}
 	
 	@Override
