@@ -17,6 +17,10 @@ public class Person {
 	private String name;
 	private Profession profession;
 	
+	
+	public Person(String name){
+		this.name = name;
+	}
 	/**
 	 * Constructor
 	 * 
@@ -57,6 +61,39 @@ public class Person {
 	 */
 	public int getSkillPoints() {
 		return skillPoints;
+	}
+	
+	public boolean addNewSkill(Skill newSkill){
+		if (this.skills.contains(newSkill) || this.skillPoints < newSkill.getCost()){
+			if(this.skills.contains(newSkill)){
+				Logger.log(this.name + " already has skill " + newSkill.getName(), Logger.Level.ERROR);
+			}
+			if(this.skillPoints < newSkill.getCost()) {
+				Logger.log(this.name + " has " + this.skillPoints + " and skill " + newSkill.getName() + " costs " + newSkill.getCost() + " points.", Logger.Level.ERROR);
+			}
+			return false;
+		}
+		else {
+			this.skills.add(newSkill);
+			this.skillPoints -= newSkill.getCost();
+			Logger.log(this.name + " gained skill " + newSkill.getName(), Logger.Level.INFO);
+			return true;
+		}
+	}
+	
+	public boolean setProfession(Profession profession) {
+		//This will only happen during party creation when the skills haven't been chosen yet.
+		if(this.profession == null) {
+			this.profession = profession;
+			this.skills.add(profession.getStartingSkill());
+			this.skillPoints -= profession.getStartingSkill().getCost();
+			Logger.log(this.name + " became a " + this.profession, Logger.Level.INFO);
+			return true;
+		}
+		else {
+			Logger.log("This needs to be implemented", Logger.Level.WARNING);
+			return false;
+		}
 	}
 	
 	/**
