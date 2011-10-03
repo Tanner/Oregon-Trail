@@ -34,7 +34,7 @@ public class TownScene extends Scene {
 		Label subtitleLabel = new Label(container, h2, Color.white, "Press Enter to Go to Store");
 		
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter);
-		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 20);
+		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 10);
 		
 		Image marioImage = new Image("resources/mario.png");
 		mario = new Sprite(container, marioImage, marioImage.getFlippedCopy(true, false));
@@ -48,8 +48,6 @@ public class TownScene extends Scene {
 		mainLayer.add(luigi);
 		
 		backgroundLayer.add(new Background(container, new Color(0x003e84)));
-		
-		container.getInput().addKeyListener(this);
 	}
 	
 	@Override
@@ -61,14 +59,6 @@ public class TownScene extends Scene {
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ENTER) {
 			GameDirector.sharedSceneDelegate().requestScene(SceneID.Store);
-		}
-	}
-	
-	public void keyDown(int key, char c) {
-		if (key == Input.KEY_LEFT) {
-			mainLayer.setLocation(mainLayer.getX()-2, mainLayer.getY());
-		} else if (key == Input.KEY_RIGHT) {
-			mainLayer.setLocation(mainLayer.getX()+2, mainLayer.getY());
 		}
 	}
 
