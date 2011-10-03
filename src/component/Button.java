@@ -90,9 +90,9 @@ public class Button extends Component {
 		if (button == 0 && over) {
 			notifyListeners();
 			input.consumeEvent();
-		} else {
-			active = false;
 		}
+		
+		active = false;
 	}
 
 	/**
