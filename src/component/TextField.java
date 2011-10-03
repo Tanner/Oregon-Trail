@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
@@ -19,6 +20,7 @@ public class TextField extends Component {
 	private int width;
 	private int height;
 	private Color fieldColor;
+	private boolean over;
 	
 	private final static int PADDING = 10;
 	
@@ -48,6 +50,24 @@ public class TextField extends Component {
 		g.fillRect(position.getX(), position.getY(), width, height);
 		
 		label.render(container, g);
+	}
+	
+	public void keyReleased(int key, char c) {
+		if (hasFocus()) {
+			label.setText(label.getText() + c);
+		}
+	}
+	
+	public void mouseReleased(int button, int x, int y) {		
+		over = getArea().contains(x, y);
+		if (over) {
+			setFocus(true);
+			input.consumeEvent();
+		}
+	}
+	
+	public Shape getArea() {
+		return new Rectangle(position.getX(), position.getY(), this.width, this.height);
 	}
 	
 	/**
