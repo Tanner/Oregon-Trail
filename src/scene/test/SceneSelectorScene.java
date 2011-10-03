@@ -43,19 +43,19 @@ public class SceneSelectorScene extends Scene {
 		
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		Label mainMenuLabel = new Label(container, fieldFont, Color.white, "Main Menu");
-		Button mainMenuButton = new Button(container, mainMenuLabel, new Vector2f(0, 0));
+		Button mainMenuButton = new Button(container, mainMenuLabel);
 		buttons.add(mainMenuButton);
 		Label partyCreationLabel = new Label(container, fieldFont, Color.white, "Party Creation");
-		Button partyCreationButton = new Button(container, partyCreationLabel, new Vector2f(0, 0));
+		Button partyCreationButton = new Button(container, partyCreationLabel);
 		buttons.add(partyCreationButton);
 		Label townLabel = new Label(container, fieldFont, Color.white, "Town");
-		Button townButton = new Button(container, townLabel, new Vector2f(0, 0));
+		Button townButton = new Button(container, townLabel);
 		buttons.add(townButton);
 		Label storeLabel = new Label(container, fieldFont, Color.white, "Store");
-		Button storeButton = new Button(container, storeLabel, new Vector2f(0, 0));
+		Button storeButton = new Button(container, storeLabel);
 		buttons.add(storeButton);
 		Label componentsLabel = new Label(container, fieldFont, Color.white, "Components");
-		Button componentsButton = new Button(container, componentsLabel, new Vector2f(0, 0));
+		Button componentsButton = new Button(container, componentsLabel);
 		buttons.add(componentsButton);
 		
 		buttonListener = new ButtonListener();
@@ -81,11 +81,15 @@ public class SceneSelectorScene extends Scene {
 	}
 	
 	public void pause() {
-
+		for (Button b : buttons) {
+			b.removeListener(buttonListener);
+		}
 	}
 	
 	public void end() {
-
+		for (Button b : buttons) {
+			b.removeListener(buttonListener);
+		}
 	}
 	
 	private class ButtonListener implements ComponentListener {

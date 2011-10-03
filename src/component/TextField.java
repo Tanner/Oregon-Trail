@@ -34,18 +34,17 @@ public class TextField extends Component {
 	 * Constructs a new TextField
 	 * @param container Container which holds the text field
 	 * @param font Font for the text
-	 * @param position Position of the text field
 	 * @param width Width of the text field
 	 * @param height Height of the text field
 	 */
-	public TextField(GUIContext container, Font font, Vector2f position, int width, int height) {
+	public TextField(GUIContext container, Font font, int width, int height) {
 		super(container);
 		
 		fieldColor = Color.gray;
 		label = new Label(container, new Vector2f(0, 0), font, Color.white);
 		
-		this.width = width + 2 * PADDING;
-		this.height = height + 2 * PADDING;
+		setWidth(width);
+		setHeight(height);
 		
 		setLocation((int)position.getX(), (int)position.getY());
 	}
@@ -140,7 +139,7 @@ public class TextField extends Component {
 		}
 
 		if (label != null) {
-			label.setLocation(x + PADDING, y + PADDING);
+			label.setPosition(this.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
 		}
 	}
 
@@ -148,12 +147,13 @@ public class TextField extends Component {
 	public void setWidth(int width) {
 		this.width = width;
 		label.setWidth(width - 2 * PADDING);
+		
+		System.out.println("label width " + label.getWidth());
 	}
 
 	@Override
 	public void setHeight(int height) {
 		this.height = height;
-		label.setHeight(height - 2 *PADDING);
 	}
 
 	@Override

@@ -29,11 +29,10 @@ public class Button extends Component {
 	 * Creates a button.
 	 * @param container Container for the  button
 	 * @param label Label for the button
-	 * @param position Position of the button
 	 * @param width Width of the button
 	 * @param height Height of the button
 	 */
-	public Button(GUIContext container, Label label, Vector2f position, int width, int height) {
+	public Button(GUIContext container, Label label, int width, int height) {
 		super(container);
 		
 		this.label = label;
@@ -41,7 +40,7 @@ public class Button extends Component {
 		this.width = width;
 		this.height = height;
 
-		setLocation((int)position.getX(), (int)position.getY());
+//		setLocation((int)position.getX(), (int)position.getY());
 				
 		buttonColor = Color.gray;
 		buttonActiveColor = Color.darkGray;
@@ -55,8 +54,8 @@ public class Button extends Component {
 	 * @param label Label for the button
 	 * @param position Position of the button
 	 */
-	public Button(GUIContext container, Label label, Vector2f position) {
-		this(container, label, position, label.getWidth(), label.getHeight());
+	public Button(GUIContext container, Label label) {
+		this(container, label, label.getWidth(), label.getHeight());
 	}
 
 	@Override
