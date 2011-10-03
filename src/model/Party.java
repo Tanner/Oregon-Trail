@@ -39,10 +39,6 @@ public class Party {
 			Logger.log(person.getName()+ " as a " + person.getProfession() + " brings " + 
 					person.getProfession().getMoney() + " to the party.", Logger.Level.INFO);
 
-			this.money += (int)(BASE_MONEY / person.getProfession().getMoney());
-			Logger.log(person.getName()+ " as a " + person.getProfession() + " brings " + 
-					(int)(BASE_MONEY / person.getProfession().getMoney()) + " to the party.", Logger.Level.INFO);
-
 			partyCreationLog += person.getName() + " ";
 		}
 		Logger.log(partyCreationLog, Logger.Level.INFO);
