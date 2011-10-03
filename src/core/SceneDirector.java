@@ -62,9 +62,9 @@ public class SceneDirector extends StateBasedGame {
 	public void initStatesList(GameContainer container) throws SlickException {
 		this.container = container;
 		
-		SceneSelectorScene selectorScene = new SceneSelectorScene();
-		scenes.add(selectorScene);
-		addState(selectorScene);
+		MainMenuScene mainMenu = new MainMenuScene();
+		scenes.add(mainMenu);
+		addState(mainMenu);
 		
 		GameDirector.sharedSceneDirectorDelegate().sceneDirectorReady();
 	}
@@ -88,6 +88,10 @@ public class SceneDirector extends StateBasedGame {
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		if (c == '+') {
+			GameDirector.sharedSceneDelegate().requestScene(SceneID.SceneSelector);
 		}
 	}
 }
