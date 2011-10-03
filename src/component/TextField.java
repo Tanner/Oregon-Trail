@@ -66,7 +66,10 @@ public class TextField extends Component {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (hasFocus()) {
-			if (key == Input.KEY_BACK && label.getText().length() >= 1) {
+			if (key == Input.KEY_ENTER) {
+				setFocus(false);
+				notifyListeners();
+			} else if (key == Input.KEY_BACK && label.getText().length() >= 1) {
 				Logger.log("Deleting last character", Logger.Level.INFO);
 				
 				label.setText(label.getText().substring(0, label.getText().length() - 1));
