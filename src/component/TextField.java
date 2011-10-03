@@ -87,7 +87,7 @@ public class TextField extends Component {
 	}
 	
 	@Override
-	public void mouseReleased(int button, int x, int y) {		
+	public void mouseReleased(int button, int x, int y) {
 		if (over) {
 			setFocus(true);
 			input.consumeEvent();

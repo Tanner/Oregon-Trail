@@ -65,7 +65,7 @@ public class GridLayout extends Layout {
 	}
 	
 	private class Cell {
-		private	 Vector2f location;
+		private Vector2f location;
 		private int width;
 		private int height;
 		

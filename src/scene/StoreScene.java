@@ -17,7 +17,7 @@ import core.*;
 public class StoreScene extends Scene {
 	public static final SceneID ID = SceneID.Store;
 	
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {		
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
 		UnicodeFont h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
