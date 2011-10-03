@@ -21,8 +21,11 @@ public class Game {
 	public Game() {
 		Random r = new Random();
 		ArrayList<Person.Skill> person1Skill = new ArrayList<Person.Skill>();
-		ArrayList<Person.Skill> person2Skill = new ArrayList<Person.Skill>();
 		
+		Person person1 = new Person("Alice");
+		person1.setProfession(Person.Profession.values()[r.nextInt(Person.Profession.values().length)]);
+		person1.setProfession(Person.Profession.values()[r.nextInt(Person.Profession.values().length)]);
+		person1.setProfession(Person.Profession.values()[r.nextInt(Person.Profession.values().length)]);
 		int skillPoints = 0;
 		for (Person.Skill tempSkill = Person.Skill.values()[r.nextInt(Person.Skill.values().length)];
 			tempSkill != Person.Skill.NONE && person1Skill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120; 
@@ -32,19 +35,23 @@ public class Game {
 				skillPoints += tempSkill.getCost();
 			}
 		}
-		skillPoints = 0;
-		for (Person.Skill tempSkill = Person.Skill.values()[r.nextInt(Person.Skill.values().length)];
-		tempSkill != Person.Skill.NONE && person2Skill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120;
-		tempSkill = Person.Skill.values()[r.nextInt(Person.Skill.values().length)]) {
-		if(!person2Skill.contains(tempSkill)){
-			person2Skill.add(tempSkill);
-			skillPoints += tempSkill.getCost();
+		for(Person.Skill skill : person1Skill) {
+			person1.addNewSkill(skill);
 		}
-	}
+		for (Person.Skill tempSkill = Person.Skill.values()[r.nextInt(Person.Skill.values().length)];
+		tempSkill != Person.Skill.NONE && person1Skill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120; 
+		tempSkill = Person.Skill.values()[r.nextInt(Person.Skill.values().length)]) {
+			if(!person1Skill.contains(tempSkill)){
+				person1Skill.add(tempSkill);
+				skillPoints += tempSkill.getCost();
+			}
+		}
+		for(Person.Skill skill : person1Skill) {
+		person1.addNewSkill(skill);
+		}
 		
-		Person person1 = new Person("Frank", Person.Profession.values()[r.nextInt(Person.Profession.values().length)], person1Skill);
-		Person person2 = new Person("Bob", Person.Profession.values()[r.nextInt(Person.Profession.values().length)], person2Skill);
-		this.player = new Player(new Party(Pace.GRUELING, Rations.BAREBONES, person1, person2));
+		
+		this.player = new Player(new Party(Pace.GRUELING, Rations.BAREBONES, person1/*, person2*/));
 		if(player != null){
 			Logger.log("Player was created successfully", Logger.Level.INFO);
 		}

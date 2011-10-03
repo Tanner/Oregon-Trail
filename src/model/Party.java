@@ -14,7 +14,6 @@ public class Party {
 	private Pace currentPace;
 	private Rations currentRations;
 	
-	private static final float BASE_MONEY = 1600f;
 	
 	/**
 	 * If party is created before members, this constructor is used.

@@ -1,5 +1,17 @@
 package model;
 
+/*
+TO-DO List:
+Skillpoints to Condition
+getters/setters/max/min/percent for condition
+Remove skill method
+Gender availability
+setName?
+change profession wipes (clear skill tree, reset skill points)
+add/remove single skill
+set party with full party
+*/
+
 import java.util.ArrayList;
 
 import core.Logger;
@@ -68,10 +80,10 @@ public class Person {
 	public boolean addNewSkill(Skill newSkill){
 		if (this.skills.contains(newSkill) || this.skillPoints < newSkill.getCost()){
 			if(this.skills.contains(newSkill)){
-				Logger.log(this.name + " already has skill " + newSkill.getName(), Logger.Level.ERROR);
+				Logger.log(this.name + " already has skill " + newSkill.getName(), Logger.Level.INFO);
 			}
 			if(this.skillPoints < newSkill.getCost()) {
-				Logger.log(this.name + " has " + this.skillPoints + " and skill " + newSkill.getName() + " costs " + newSkill.getCost() + " points.", Logger.Level.ERROR);
+				Logger.log(this.name + " has " + this.skillPoints + " skill points and skill " + newSkill.getName() + " costs " + newSkill.getCost() + " points.", Logger.Level.INFO);
 			}
 			return false;
 		}
@@ -92,8 +104,21 @@ public class Person {
 			Logger.log(this.name + " became a " + this.profession, Logger.Level.INFO);
 			return true;
 		}
+		if(this.profession == profession) {
+			Logger.log(this.name + " is already a " + profession, Logger.Level.INFO);
+			return false;
+		}
+		else if (this.profession != profession) {
+			this.skills.remove(this.profession.getStartingSkill());
+			this.skillPoints += this.profession.getStartingSkill().getCost();
+			this.addNewSkill(profession.getStartingSkill());
+			this.profession = profession;
+	
+			Logger.log(this.name + " changed to a " + this.profession, Logger.Level.INFO);
+			return true;
+		}
 		else {
-			Logger.log("This needs to be implemented", Logger.Level.WARNING);
+			Logger.log("Don't know what happened", Logger.Level.INFO);
 			return false;
 		}
 	}
