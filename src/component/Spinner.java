@@ -23,7 +23,7 @@ public class Spinner extends Component {
 	private Font font;
 	private boolean treatAsNumbers;
 	
-	private MouseOverArea upButton, downButton;
+	private Button upButton, downButton;
 	private ButtonListener listener;
 	
 	/**
@@ -39,7 +39,7 @@ public class Spinner extends Component {
 	 * @param treatAsNumbers Instead of returning the ordinal of a state, returns the value of the field parsed to an int
 	 * @param fields A variable length list of Strings that will be displayed for each state (first String is state 0)
 	 */
-	public Spinner(GUIContext context, Font font, Color c, Image up, Image down, boolean treatAsNumbers, String ... fields) {
+	public Spinner(GUIContext context, Font font, Color c, int width, int height, boolean treatAsNumbers, String ... fields) {
 		super(context);
 		
 		state = 0;
@@ -52,10 +52,14 @@ public class Spinner extends Component {
 		
 		System.out.println("About to make buttons in constructor");
 		
-		upButton = new MouseOverArea(context, up, x, y, listener);
-		downButton = new MouseOverArea(context, down, x, y + upButton.getHeight(), listener);
+		Label upLabel = new Label(context, font, c, "Up");
+		Label downLabel = new Label(context, font, c, "Down");
+		upButton = new Button(context, upLabel, 10, 10);
+		downButton = new Button(context, downLabel, 10, 10 + upButton.getHeight());
+		listener = new ButtonListener();
+		upButton.addListener(listener);
+		downButton.addListener(listener);
 		
-		int textY = (upButton.getHeight()*2-font.getLineHeight()) / 2;
 		label = new Label(context, font, c, fields[0]);
 	}
 	
