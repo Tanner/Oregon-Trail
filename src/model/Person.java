@@ -16,6 +16,7 @@ public class Person {
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
 	private String name;
 	private Profession profession;
+	private final static float baseMoney = 1600f;
 	
 	
 	public Person(String name){
@@ -204,7 +205,7 @@ public class Person {
 		 * @param moneyDivider Gold divided by and score multiplied by this 
 		 * @param startSkill Skill the profession starts with
 		 */
-		Profession(float moneyDivider, Skill startingSkill, String name) {
+		private Profession(float moneyDivider, Skill startingSkill, String name) {
 			this.moneyDivider = moneyDivider;
 			this.startingSkill = startingSkill;
 			this.name = name;
@@ -214,8 +215,8 @@ public class Person {
 		 * Returns the multiplier
 		 * @return Multiplier
 		 */
-		public float getMoneyDivider() {
-			return moneyDivider;
+		public int getMoney() {
+			return (int)(baseMoney / moneyDivider);
 		}
 		
 		/**

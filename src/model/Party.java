@@ -13,7 +13,6 @@ public class Party {
 	private int money;
 	private Pace currentPace;
 	private Rations currentRations;
-	private final static float baseMoney = 1600f;
 	
 	/**
 	 * If party is created before members, this constructor is used.
@@ -33,9 +32,9 @@ public class Party {
 		this.currentRations = rations;
 		String partyCreationLog = members.length + " members were created successfully: ";
 		for (Person person: party){
-			this.money += (int)(baseMoney / person.getProfession().getMoneyDivider());
+			this.money += person.getProfession().getMoney();
 			Logger.log(person.getName()+ " as a " + person.getProfession() + " brings " + 
-					(int)(baseMoney / person.getProfession().getMoneyDivider()) + " to the party.", Logger.Level.INFO);
+					person.getProfession().getMoney() + " to the party.", Logger.Level.INFO);
 			partyCreationLog += person.getName() + " ";
 		}
 		Logger.log(partyCreationLog, Logger.Level.INFO);
