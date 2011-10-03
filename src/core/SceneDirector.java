@@ -14,12 +14,24 @@ public class SceneDirector extends StateBasedGame {
 	
 	private Stack<Scene> scenes;
 	
+	/**
+	 * Construct a {@code SceneDirector} object with a title for the window.
+	 * 
+	 * @param name Title of the window
+	 */
 	public SceneDirector(String name) {
 		super(name);
 		
 		scenes = new Stack<Scene>();
 	}
 
+	/**
+	 * Push a {@code Scene} on the stack. Present the {@code Scene} with an animated
+	 * transition if animated is {@code true}.
+	 * 
+	 * @param scene {@code Scene} to present
+	 * @param animated Boolean value whether to animate transition
+	 */
 	public void pushScene(Scene scene, boolean animated) {
 		if (scenes.size() > 0) {
 			scenes.peek().pause();
@@ -42,6 +54,12 @@ public class SceneDirector extends StateBasedGame {
 		scenes.peek().start();
 	}
 	
+	/**
+	 * Pop the top {@code Scene} on the stack. Present the next {@code Scene} on the stack.
+	 * Animate transition if animated is {@code true}.
+	 * 
+	 * @param animated Boolean value whether to animate transition
+	 */
 	public void popScene(boolean animated) {
 		if (scenes.size() > 1) {
 			scenes.peek().stop();
@@ -57,6 +75,11 @@ public class SceneDirector extends StateBasedGame {
 		scenes.peek().start();
 	}
 	
+	/**
+	 * Remove all {@code Scene} objects on the stack and add a new {@code Scene}.
+	 * 
+	 * @param scene Scene to be added after
+	 */
 	public void replaceStackWithScene(Scene scene) {
 		scenes.removeAllElements();
 		pushScene(scene, false);
@@ -84,9 +107,7 @@ public class SceneDirector extends StateBasedGame {
 		} else {
 			fullScreenKeyComboPressed = (key == Input.KEY_F11);
 		}
-		
-//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		
+				
 		if (fullScreenKeyComboPressed) {
 			try {
 				container.setFullscreen(!container.isFullscreen());
