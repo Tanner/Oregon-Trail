@@ -87,6 +87,7 @@ public class Button extends Component {
 		over = getArea().contains(mx, my);
 		if (button == 0 && over) {
 			notifyListeners();
+			input.consumeEvent();
 		} else {
 			active = false;
 		}

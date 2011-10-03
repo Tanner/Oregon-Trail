@@ -81,15 +81,11 @@ public class SceneSelectorScene extends Scene {
 	}
 	
 	public void pause() {
-		for (Button b : buttons) {
-			b.removeListener(buttonListener);
-		}
+
 	}
 	
 	public void end() {
-		for (Button b : buttons) {
-			b.removeListener(buttonListener);
-		}
+
 	}
 	
 	private class ButtonListener implements ComponentListener {
@@ -107,7 +103,6 @@ public class SceneSelectorScene extends Scene {
 			} else if (component == buttons.get(4)) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTest);
 			}
-			
 		}
 	}
 
