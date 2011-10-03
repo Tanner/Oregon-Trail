@@ -22,6 +22,9 @@ public class TextField extends Component {
 	private Color fieldColor;
 	private boolean over;
 	
+	public enum AcceptedCharacters { LETTERS, LETTERS_NUMBERS, NUMBERS };
+	private AcceptedCharacters acceptedCharacters = AcceptedCharacters.LETTERS;
+	
 	private final static int PADDING = 10;
 	
 	/**
@@ -55,7 +58,9 @@ public class TextField extends Component {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (hasFocus()) {
-			label.setText(label.getText() + c);
+			if (isAcceptedCharacter(c)) {
+				label.setText(label.getText() + c);
+			}
 		}
 	}
 	
@@ -69,11 +74,36 @@ public class TextField extends Component {
 	}
 	
 	/**
+	 * Test to see if a given character is marked as accepted.
+	 * @param c Character to test
+	 * @return Whether or not the character is allowed to be typed
+	 */
+	public boolean isAcceptedCharacter(char c) {
+		if (acceptedCharacters == AcceptedCharacters.LETTERS) {
+			return Character.isLetter(c);
+		} else if (acceptedCharacters == AcceptedCharacters.LETTERS_NUMBERS) {
+			return Character.isLetterOrDigit(c);
+		} else if (acceptedCharacters == AcceptedCharacters.NUMBERS) {
+			return Character.isDigit(c);
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Get the area of this component.
 	 * @return Shape of this component
 	 */
 	public Shape getArea() {
 		return new Rectangle(position.getX(), position.getY(), this.width, this.height);
+	}
+	
+	/**
+	 * Set the accepted characters for this text field.
+	 * @param acceptedCharacters New accepted characters
+	 */
+	public void setAcceptedCharacters(AcceptedCharacters acceptedCharacters) {
+		this.acceptedCharacters = acceptedCharacters;
 	}
 	
 	/**
