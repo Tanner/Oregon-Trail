@@ -8,17 +8,20 @@ import org.newdawn.slick.state.StateBasedGame;
 
 
 public abstract class Scene extends BasicGameState {
+	protected GameContainer container;
 	protected SceneLayer backgroundLayer;
 	protected SceneLayer mainLayer;
 	protected SceneLayer hudLayer;
-	protected SceneLayer modalLayer;
+	protected ModalSceneLayer modalLayer;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		this.container = container;
+		
 		backgroundLayer = new SceneLayer(container);
 		mainLayer = new SceneLayer(container);
 		hudLayer = new SceneLayer(container);
-		modalLayer = new SceneLayer(container);
+		modalLayer = new ModalSceneLayer(container);
 	}
 
 	@Override

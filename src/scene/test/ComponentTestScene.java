@@ -68,6 +68,7 @@ public class ComponentTestScene extends Scene {
 		public void componentActivated(AbstractComponent source) {
 			label.setText("TextField has \""+textField.getText()+"\"");
 			spinnerLabel.setText("Spinner has \"" + spinner.getText() + "\"");
+			modalLayer.add(new Background(container, new Color(0.0f, 0.0f, 0.0f, 0.25f)));
 		}
 	}
 
