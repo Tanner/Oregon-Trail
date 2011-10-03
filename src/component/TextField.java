@@ -23,6 +23,7 @@ public class TextField extends Component {
 	private int width;
 	private int height;
 	private Color fieldColor;
+	private Color fieldFocusColor;
 	private boolean over;
 	
 	public enum AcceptedCharacters { LETTERS, LETTERS_NUMBERS, NUMBERS };
@@ -41,6 +42,7 @@ public class TextField extends Component {
 		super(container);
 		
 		fieldColor = Color.gray;
+		fieldFocusColor = Color.darkGray;
 		label = new Label(container, new Vector2f(0, 0), font, Color.white);
 		
 		setWidth(width);
@@ -51,7 +53,11 @@ public class TextField extends Component {
 	
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
-		g.setColor(fieldColor);
+		if (this.hasFocus()) {
+			g.setColor(fieldFocusColor);
+		} else {
+			g.setColor(fieldColor);
+		}
 		g.fillRect(position.getX(), position.getY(), width, height);
 		
 		label.render(container, g);
@@ -73,8 +79,12 @@ public class TextField extends Component {
 	}
 	
 	@Override
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		over = getArea().contains(newx, newy);
+	}
+	
+	@Override
 	public void mouseReleased(int button, int x, int y) {		
-		over = getArea().contains(x, y);
 		if (over) {
 			setFocus(true);
 			input.consumeEvent();
@@ -120,6 +130,10 @@ public class TextField extends Component {
 	 */
 	public void setFieldColor(Color color) {
 		fieldColor = color;
+	}
+	
+	public void setFieldFocusColor(Color color) {
+		fieldFocusColor = color;
 	}
 	
 	/**
