@@ -42,7 +42,7 @@ public class SceneSelectorScene extends Scene {
 		buttons = new ArrayList<Button>();
 		
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
-		Label mainMenuLabel = new Label(container, fieldFont, Color.white, "Main\nMenu");
+		Label mainMenuLabel = new Label(container, fieldFont, Color.white, "Main Menu");
 		Button mainMenuButton = new Button(container, mainMenuLabel, new Vector2f(0, 0));
 		buttons.add(mainMenuButton);
 		Label partyCreationLabel = new Label(container, fieldFont, Color.white, "Party\nCreation");
