@@ -37,6 +37,7 @@ public class ComponentTestScene extends Scene {
 		mainLayer.add(textFieldLabel);
 		
 		textField = new TextField(container, fieldFont, 300, 40);
+		textField.addListener(new ButtonListener());
 		mainLayer.add(textField, textFieldLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft);
 		
 		Label buttonLabel = new Label(container, new Vector2f(50, 20), fieldFont, Color.white, "Button");
