@@ -47,18 +47,17 @@ public class ComponentTestScene extends Scene {
 		mainLayer.add(button, buttonLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft);
 		
 		label = new Label(container, fieldFont, Color.white, "Label");
-		mainLayer.add(label, button.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft);
+		mainLayer.add(label, button.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		// TODO Auto-generated method stub
-
 	}
 	
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			label.setText("B"+(int)(Math.random() * 100));
+			label.setText("TextField has \""+textField.getText()+"\"");
 		}
 	}
 	
