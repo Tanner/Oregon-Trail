@@ -52,12 +52,14 @@ public class TextField extends Component {
 		label.render(container, g);
 	}
 	
+	@Override
 	public void keyReleased(int key, char c) {
 		if (hasFocus()) {
 			label.setText(label.getText() + c);
 		}
 	}
 	
+	@Override
 	public void mouseReleased(int button, int x, int y) {		
 		over = getArea().contains(x, y);
 		if (over) {
@@ -66,6 +68,10 @@ public class TextField extends Component {
 		}
 	}
 	
+	/**
+	 * Get the area of this component.
+	 * @return Shape of this component
+	 */
 	public Shape getArea() {
 		return new Rectangle(position.getX(), position.getY(), this.width, this.height);
 	}

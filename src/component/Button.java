@@ -70,10 +70,12 @@ public class Button extends Component {
 		label.render(container, g);
 	}
 	
+	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		over = getArea().contains(newx, newy);
 	}
 	
+	@Override
 	public void mousePressed(int button, int mx, int my) {
 		if (over) {
 			active = true;
@@ -93,6 +95,10 @@ public class Button extends Component {
 		}
 	}
 
+	/**
+	 * Get the area of this component.
+	 * @return Shape of this component
+	 */
 	public Shape getArea() {
 		return new Rectangle(position.getX(), position.getY(), this.width, this.height);
 	}
