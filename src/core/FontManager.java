@@ -4,7 +4,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 
-
+/**
+ * Manages fonts for use in the game.
+ * @author Ryan Ashcraft
+ */
 public class FontManager {
 	public enum FontID {
 		H1,
@@ -16,6 +19,9 @@ public class FontManager {
 	private UnicodeFont h2;
 	private UnicodeFont fieldFont;
 	
+	/**
+	 * Initializes everything for use.
+	 */
 	public void init() {
 		try {
 			String glyphsToAdd = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890- .!\"'";
@@ -40,6 +46,11 @@ public class FontManager {
 		}
 	}
 	
+	/**
+	 * Get the font for the ID.
+	 * @param id Requested font ID
+	 * @return Font
+	 */
 	public UnicodeFont getFont(FontID id) {
 		switch(id) {
 		case H1:
