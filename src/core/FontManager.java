@@ -19,18 +19,18 @@ public class FontManager {
 	public void init() {
 		try {
 			String glyphsToAdd = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890- .!";
-			h1 = new UnicodeFont("resources/LVDCGO.ttf", 36, true, false);
+			h1 = new UnicodeFont("resources/8bitoperator_jve.ttf", 42, true, false);
 //			h1.addAsciiGlyphs();
 			h1.addGlyphs(glyphsToAdd);
 			h1.getEffects().add(new ColorEffect());
 			h1.loadGlyphs();
 			
-			h2 = new UnicodeFont("resources/LVDCGO.ttf", 18, true, false);
+			h2 = new UnicodeFont("resources/8bitoperator_jve.ttf", 32, true, false);
 			h2.addGlyphs(glyphsToAdd);
 			h2.getEffects().add(new ColorEffect());
 			h2.loadGlyphs();
 			
-			fieldFont = new UnicodeFont("resources/LVDCGO.ttf", 12, true, false);
+			fieldFont = new UnicodeFont("resources/8bitoperator_jve.ttf", 24, true, false);
 			fieldFont.addGlyphs(glyphsToAdd);
 			fieldFont.getEffects().add(new ColorEffect());
 			fieldFont.loadGlyphs();

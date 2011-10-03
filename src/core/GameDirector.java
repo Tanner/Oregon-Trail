@@ -66,15 +66,17 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		switch (id) {
 		case MainMenu:
 			return new MainMenuScene();
-		case TownScene:
+		case PartyCreation:
+			return new PartyCreationScene();
+		case Town:
 			return new TownScene();
-		case StoreScene:
+		case Store:
 			return new StoreScene();
-		case SceneSelectorScene:
+		case SceneSelector:
 			return new SceneSelectorScene();
-		case ComponentTestScene:
+		case ComponentTest:
 			return new ComponentTestScene();
-		case GridLayoutTestScene:
+		case GridLayoutTest:
 			return new GridLayoutTestScene();
 		}
 		

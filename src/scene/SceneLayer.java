@@ -30,6 +30,8 @@ public class SceneLayer extends Component {
 	}
 	
 	public void render(GUIContext container, Graphics g) throws SlickException {
+		g.translate(location.x, location.y);
+
 		for (Component component : components) {
 			component.render(container, g);
 		}

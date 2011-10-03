@@ -3,9 +3,10 @@ package scene;
 public enum SceneID {
 	Default,
 	MainMenu,
-	StoreScene,
-	TownScene,
-	SceneSelectorScene,
-	ComponentTestScene,
-	GridLayoutTestScene
+	PartyCreation,
+	Store,
+	Town,
+	SceneSelector,
+	ComponentTest,
+	GridLayoutTest
 }

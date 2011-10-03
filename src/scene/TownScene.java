@@ -18,7 +18,7 @@ import sprite.*;
 
 
 public class TownScene extends Scene {
-	public static final SceneID ID = SceneID.TownScene;
+	public static final SceneID ID = SceneID.Town;
 	
 	private Sprite mario;
 	private Sprite luigi;
@@ -48,6 +48,8 @@ public class TownScene extends Scene {
 		mainLayer.add(luigi);
 		
 		backgroundLayer.add(new Background(container, new Color(0x003e84)));
+		
+		container.getInput().addKeyListener(this);
 	}
 	
 	@Override
@@ -57,8 +59,16 @@ public class TownScene extends Scene {
 	}
 	
 	public void keyReleased(int key, char c) {
-		if(key == Input.KEY_ENTER) {
-			GameDirector.sharedSceneDelegate().requestScene(SceneID.StoreScene);
+		if (key == Input.KEY_ENTER) {
+			GameDirector.sharedSceneDelegate().requestScene(SceneID.Store);
+		}
+	}
+	
+	public void keyDown(int key, char c) {
+		if (key == Input.KEY_LEFT) {
+			mainLayer.setLocation(mainLayer.getX()-2, mainLayer.getY());
+		} else if (key == Input.KEY_RIGHT) {
+			mainLayer.setLocation(mainLayer.getX()+2, mainLayer.getY());
 		}
 	}
 

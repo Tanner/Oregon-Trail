@@ -28,7 +28,7 @@ import scene.layout.GridLayout;
  * @author Tanner Smith
  */
 public class SceneSelectorScene extends Scene {
-	public static final SceneID ID = SceneID.SceneSelectorScene;
+	public static final SceneID ID = SceneID.SceneSelector;
 
 	private ButtonListener buttonListener;
 	private List<Button> buttons;
@@ -41,17 +41,20 @@ public class SceneSelectorScene extends Scene {
 		
 		buttons = new ArrayList<Button>();
 		
-		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
-		Label mainMenuLabel = new Label(container, h2, Color.white, "Main\nMenu");
+		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		Label mainMenuLabel = new Label(container, fieldFont, Color.white, "Main\nMenu");
 		Button mainMenuButton = new Button(container, mainMenuLabel, new Vector2f(0, 0));
 		buttons.add(mainMenuButton);
-		Label townLabel = new Label(container, h2, Color.white, "Town");
+		Label partyCreationLabel = new Label(container, fieldFont, Color.white, "Party\nCreation");
+		Button partyCreationButton = new Button(container, partyCreationLabel, new Vector2f(0, 0));
+		buttons.add(partyCreationButton);
+		Label townLabel = new Label(container, fieldFont, Color.white, "Town");
 		Button townButton = new Button(container, townLabel, new Vector2f(0, 0));
 		buttons.add(townButton);
-		Label storeLabel = new Label(container, h2, Color.white, "Store");
+		Label storeLabel = new Label(container, fieldFont, Color.white, "Store");
 		Button storeButton = new Button(container, storeLabel, new Vector2f(0, 0));
 		buttons.add(storeButton);
-		Label componentsLabel = new Label(container, h2, Color.white, "Components");
+		Label componentsLabel = new Label(container, fieldFont, Color.white, "Components");
 		Button componentsButton = new Button(container, componentsLabel, new Vector2f(0, 0));
 		buttons.add(componentsButton);
 		
@@ -61,7 +64,7 @@ public class SceneSelectorScene extends Scene {
 			mainLayer.add(b);
 		}
 		
-		backgroundLayer.add(new Background(container, Color.blue));
+		backgroundLayer.add(new Background(container, Color.black));
 		
 		start();
 	}
@@ -96,11 +99,13 @@ public class SceneSelectorScene extends Scene {
 			if (component == buttons.get(0)) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.MainMenu);
 			} else if (component == buttons.get(1)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.TownScene);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyCreation);
 			} else if (component == buttons.get(2)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.StoreScene);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.Town);
 			} else if (component == buttons.get(3)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTestScene);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.Store);
+			} else if (component == buttons.get(4)) {
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTest);
 			}
 			
 		}

@@ -20,7 +20,7 @@ import core.*;
  * @author Tanner Smith
  */
 public class ComponentTestScene extends Scene {
-	public static final SceneID ID = SceneID.ComponentTestScene;
+	public static final SceneID ID = SceneID.ComponentTest;
 	
 	private TextField textField;
 	private Button button;

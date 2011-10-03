@@ -17,7 +17,7 @@ import scene.layout.GridLayout;
 import sprite.Sprite;
 
 public class GridLayoutTestScene extends Scene {
-	public static final SceneID ID = SceneID.GridLayoutTestScene;
+	public static final SceneID ID = SceneID.GridLayoutTest;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
