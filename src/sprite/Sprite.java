@@ -175,11 +175,11 @@ public class Sprite extends Component {
 
 	@Override
 	public void setWidth(int width) {
-		// TODO
+		return;
 	}
 
 	@Override
 	public void setHeight(int height) {
-		// TODO
+		return;
 	}
 }

@@ -23,7 +23,7 @@ public class Button extends Component {
 	private boolean over;
 	private boolean active;
 	
-	private final static int PADDING = 10;
+	private static final int PADDING = 10;
 	
 	/**
 	 * Creates a button.
@@ -82,9 +82,7 @@ public class Button extends Component {
 		}
 	}
 	
-	/**
-	 * @see org.newdawn.slick.util.InputAdapter#mouseReleased(int, int, int)
-	 */
+	@Override
 	public void mouseReleased(int button, int mx, int my) {
 		over = getArea().contains(mx, my);
 		if (button == 0 && over) {

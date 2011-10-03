@@ -73,6 +73,7 @@ public class SceneDirector extends StateBasedGame {
 		GameDirector.sharedSceneDirectorDelegate().sceneDirectorReady();
 	}
 	
+	@Override
 	public void keyPressed(int key, char c) {
 		Input input = container.getInput();
 		

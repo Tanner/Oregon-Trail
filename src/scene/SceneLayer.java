@@ -28,7 +28,8 @@ public class SceneLayer extends Component {
 		this.width = container.getWidth();
 		this.height = container.getHeight();
 	}
-	
+
+	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
 		g.translate(location.x, location.y);
 
@@ -60,15 +61,18 @@ public class SceneLayer extends Component {
 	public void setLayout(Layout layout) {
 		this.layout = layout;
 	}
-	
+
+	@Override
 	public void setLocation(int x, int y) {
 		this.location = new Vector2f(x, y);
 	}
-	
+
+	@Override
 	public int getWidth() {
 		return width;
 	}
-	
+
+	@Override
 	public int getHeight() {
 		return height;
 	}

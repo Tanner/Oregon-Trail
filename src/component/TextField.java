@@ -29,7 +29,7 @@ public class TextField extends Component {
 	public enum AcceptedCharacters { LETTERS, LETTERS_NUMBERS, NUMBERS };
 	private AcceptedCharacters acceptedCharacters = AcceptedCharacters.LETTERS;
 	
-	private final static int PADDING = 10;
+	private static final int PADDING = 10;
 	
 	/**
 	 * Constructs a new TextField

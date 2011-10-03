@@ -74,20 +74,23 @@ public class SceneSelectorScene extends Scene {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
 	}
-	
+
+	@Override
 	public void start() {
 		for (Button b : buttons) {
 			b.addListener(buttonListener);
 		}
 	}
-	
+
+	@Override
 	public void pause() {
 		for (Button b : buttons) {
 			b.removeListener(buttonListener);
 		}
 	}
-	
-	public void end() {
+
+	@Override
+	public void stop() {
 		for (Button b : buttons) {
 			b.removeListener(buttonListener);
 		}

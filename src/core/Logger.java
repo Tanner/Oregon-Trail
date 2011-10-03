@@ -65,6 +65,7 @@ public class Logger {
 				System.out.print(output);
 				
 				out.close();
+				fstream.close();
 			} catch (Exception e) {
 				System.err.println("Logger could not log message: " + e.getMessage());
 			}

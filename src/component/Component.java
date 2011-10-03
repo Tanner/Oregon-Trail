@@ -54,6 +54,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 	}
 	
+	@Override
 	public void setPosition(Vector2f location, ReferencePoint referencePoint, int xOffset, int yOffset) {
 		Vector2f offsetLocation = new Vector2f(location.x + xOffset, location.y + yOffset);
 		

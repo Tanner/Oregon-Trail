@@ -55,7 +55,8 @@ public class TownScene extends Scene {
 		mario.update(container, game, delta);
 		luigi.update(container, game, delta);
 	}
-	
+
+	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ENTER) {
 			GameDirector.sharedSceneDelegate().requestScene(SceneID.Store);

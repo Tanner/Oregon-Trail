@@ -14,7 +14,7 @@ import org.newdawn.slick.gui.*;
  */
 public class Spinner extends Component {
 	//The padding between the buttons and the text
-	private final int PADDING = 20;
+	private static final int PADDING = 20;
 	private final int MAX_STATE;
 	private String[] fields;
 	private Label label;

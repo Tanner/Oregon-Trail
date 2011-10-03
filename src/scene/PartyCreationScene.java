@@ -16,9 +16,10 @@ import core.FontManager;
 import core.GameDirector;
 
 public class PartyCreationScene extends Scene {
-	public final static SceneID ID = SceneID.PartyCreation;
-	private final static int PADDING = 20;
-	
+	public static final SceneID ID = SceneID.PartyCreation;
+	private static final int PADDING = 20;
+
+	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
