@@ -57,7 +57,7 @@ public class Logger {
 				BufferedWriter out = new BufferedWriter(fstream);
 				
 				Date now = new Date();
-				String date = new SimpleDateFormat("MM/dd/yyyy H:m:s:S z").format(now);
+				String date = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss:SSS z").format(now);
 				
 				String output = level.getName()+" - "+date+" - "+message+"\n";
 				
