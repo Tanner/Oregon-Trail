@@ -13,16 +13,20 @@ import org.newdawn.slick.gui.*;
  * @author Jeremy Grebner
  */
 public class Spinner extends Component {
-	//The padding between the buttons and the text
-	private static final int PADDING = 20;
+	private final double PADDING = 1.25;
 	private final int MAX_STATE;
+	
+	private int width, height;
+	private Vector2f position;
+	
 	private String[] fields;
 	private Label label;
 	private int state;
-	private int x, y;
-	private Font font;
+	
+	
 	private boolean treatAsNumbers;
 	
+	private Font font;
 	private Button upButton, downButton;
 	private ButtonListener listener;
 	
@@ -34,8 +38,8 @@ public class Spinner extends Component {
 	 * @param context The game container
 	 * @param font The font of the Spinner label
 	 * @param c The color of the Spinner label
-	 * @param up The image for the up button
-	 * @param down The image for the down button
+	 * @param width The width of the spinner
+	 * @param height The height of the spinner
 	 * @param treatAsNumbers Instead of returning the ordinal of a state, returns the value of the field parsed to an int
 	 * @param fields A variable length list of Strings that will be displayed for each state (first String is state 0)
 	 */
@@ -47,6 +51,8 @@ public class Spinner extends Component {
 		this.fields = fields;
 		this.font = font;
 		this.treatAsNumbers = treatAsNumbers;
+		this.width = width;
+		this.height = height;
 		
 		listener = new ButtonListener();
 		
@@ -54,12 +60,12 @@ public class Spinner extends Component {
 		
 		Label upLabel = new Label(context, font, c, "Up");
 		Label downLabel = new Label(context, font, c, "Down");
-		upButton = new Button(context, upLabel, 10, 10);
-		downButton = new Button(context, downLabel, 10, 10 + upButton.getHeight());
+		int butWidth = (int)(font.getWidth("Down")*PADDING);
+		upButton = new Button(context, upLabel, butWidth, (int)(font.getLineHeight()*PADDING));
+		downButton = new Button(context, downLabel, butWidth, (int)(font.getLineHeight()*PADDING));
 		listener = new ButtonListener();
 		upButton.addListener(listener);
 		downButton.addListener(listener);
-		
 		label = new Label(context, font, c, fields[0]);
 	}
 	
@@ -75,31 +81,35 @@ public class Spinner extends Component {
 	public int getState() {
 		return (!treatAsNumbers) ? state : Integer.parseInt(fields[state]);
 	}
+	
+	public String getText() {
+		return fields[state];
+	}
 
 	@Override
 	public int getHeight() {
-		return upButton.getHeight() * 2;
+		return height;
 	}
 
 	@Override
 	public int getWidth() {
-		return upButton.getWidth() + PADDING + font.getWidth(fields[state]);
+		return width;
 	}
 
 	@Override
 	public int getX() {
-		return x;
+		return (int) position.getX();
 	}
 
 	@Override
 	public int getY() {
-		return y;
+		return (int) position.getY();
 	}
 
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
 		g.setColor(Color.gray);
-		g.fillRect(getX(), getY(), getWidth(), getHeight());
+		g.fillRect(position.x, position.y, width, height);
 		label.render(context, g);
 		upButton.render(context, g);
 		downButton.render(context, g);
@@ -107,13 +117,16 @@ public class Spinner extends Component {
 
 	@Override
 	public void setLocation(int x, int y) {
-		this.x = x;
-		this.y = y;
+		if (position == null)
+			position = new Vector2f(x,y);
+		else
+			position.set(x,y);
 		if (upButton != null ) {
-			upButton.setLocation(x, y);
-			downButton.setLocation(x, y + upButton.getHeight());
-			int textY = (upButton.getHeight()*2-font.getLineHeight()) / 2;
-			label.setLocation(x + upButton.getWidth() + PADDING, y + textY);
+			upButton.setPosition(this.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft);
+			downButton.setPosition(this.getPosition(ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft);
+			//Sets the label text to be in the center of the textbox
+			label.setPosition(upButton.getPosition(ReferencePoint.BottomRight), Positionable.ReferencePoint.CenterLeft,
+					(width - upButton.getWidth() - font.getWidth(fields[state])) / 2,0);
 		}
 	}
 	
@@ -125,12 +138,15 @@ public class Spinner extends Component {
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			if (source == upButton) {
+				
+			if (source == upButton)
 				state = (state == MAX_STATE) ? state : state + 1;
-			} else {
+			else 
 				state = (state == 0) ? 0 : state - 1;
-			}
+			
 			label.setText(fields[state]);
+			label.setPosition(upButton.getPosition(ReferencePoint.BottomRight), Positionable.ReferencePoint.CenterLeft,
+					(width - upButton.getWidth() - font.getWidth(fields[state])) / 2,0);
 		}
 	}
 

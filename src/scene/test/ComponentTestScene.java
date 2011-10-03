@@ -25,7 +25,7 @@ public class ComponentTestScene extends Scene {
 	
 	private TextField textField;
 	private Button button;
-	private Label label;
+	private Label label, spinnerLabel;
 	private Spinner spinner;
 	
 	@Override
@@ -50,6 +50,13 @@ public class ComponentTestScene extends Scene {
 		
 		label = new Label(container, fieldFont, Color.white, "Label");
 		mainLayer.add(label, button.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+	
+		spinner = new Spinner(container,fieldFont, Color.white, 300, 50, false, "Hello","There","Encyclopedia");
+		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BottomLeft),Positionable.ReferencePoint.TopLeft, 0, PADDING);
+	
+		spinnerLabel = new Label(container, fieldFont, Color.white, "Label");
+		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.CenterRight), Positionable.ReferencePoint.CenterLeft,PADDING,0);
+
 	}
 
 	@Override
@@ -60,8 +67,10 @@ public class ComponentTestScene extends Scene {
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
 			label.setText("TextField has \""+textField.getText()+"\"");
+			spinnerLabel.setText("Spinner has \"" + spinner.getText() + "\"");
 		}
 	}
+
 	
 	@Override
 	public int getID() {
