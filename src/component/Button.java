@@ -37,10 +37,11 @@ public class Button extends Component {
 		super(container);
 		
 		this.label = label;
-		setLocation((int)position.getX(), (int)position.getY());
 		
-		this.width = width + 2 * PADDING;
-		this.height = height + 2 * PADDING;
+		this.width = width;
+		this.height = height;
+
+		setLocation((int)position.getX(), (int)position.getY());
 				
 		buttonColor = Color.gray;
 		buttonActiveColor = Color.darkGray;
@@ -132,7 +133,7 @@ public class Button extends Component {
 		}
 
 		if (label != null) {
-			label.setLocation(x + PADDING, y + PADDING);
+			label.setPosition(this.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
 		}
 	}
 	
@@ -157,6 +158,5 @@ public class Button extends Component {
 	@Override
 	public void setHeight(int height) {
 		this.height = height;
-		label.setHeight(height - 2 * PADDING);
 	}
 }

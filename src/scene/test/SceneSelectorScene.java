@@ -45,7 +45,7 @@ public class SceneSelectorScene extends Scene {
 		Label mainMenuLabel = new Label(container, fieldFont, Color.white, "Main Menu");
 		Button mainMenuButton = new Button(container, mainMenuLabel, new Vector2f(0, 0));
 		buttons.add(mainMenuButton);
-		Label partyCreationLabel = new Label(container, fieldFont, Color.white, "Party\nCreation");
+		Label partyCreationLabel = new Label(container, fieldFont, Color.white, "Party Creation");
 		Button partyCreationButton = new Button(container, partyCreationLabel, new Vector2f(0, 0));
 		buttons.add(partyCreationButton);
 		Label townLabel = new Label(container, fieldFont, Color.white, "Town");

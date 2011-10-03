@@ -73,11 +73,14 @@ public class Label extends Component {
 	
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
+//		g.setColor(Color.orange);
+//		g.fillRect(getX(), getY(), getWidth(), getHeight());
+		
 		String renderText = text;
 		while (font.getWidth(renderText) > width) {
 			renderText = text.substring(0, renderText.length()-1);
 		}
-		font.drawString(position.getX(), position.getY(), renderText, c);
+		font.drawString((width - font.getWidth(renderText)) / 2 + position.getX(), position.getY(), renderText, c);
 	}
 	
 	/**
@@ -120,7 +123,9 @@ public class Label extends Component {
 
 	@Override
 	public void setLocation(int x, int y) {
-		position = new Vector2f(x, y);
+		if (font != null) {
+			position = new Vector2f(x, y);
+		}
 	}
 
 	@Override
