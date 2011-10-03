@@ -19,7 +19,9 @@ public class Button extends Component {
 	private int width;
 	private int height;
 	private Color buttonColor;
+	private Color buttonActiveColor;
 	private boolean over;
+	private boolean active;
 	
 	private final static int PADDING = 10;
 	
@@ -41,6 +43,7 @@ public class Button extends Component {
 		this.height = height + 2 * PADDING;
 				
 		buttonColor = Color.gray;
+		buttonActiveColor = Color.darkGray;
 		
 		container.getInput().addMouseListener(this);
 	}
@@ -57,10 +60,24 @@ public class Button extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
-		g.setColor(buttonColor);
+		if (active) {
+			g.setColor(buttonActiveColor);
+		} else {
+			g.setColor(buttonColor);
+		}
 		g.fillRect(position.x, position.y, width, height);
 		
 		label.render(container, g);
+	}
+	
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		over = getArea().contains(newx, newy);
+	}
+	
+	public void mousePressed(int button, int mx, int my) {
+		if (over) {
+			active = true;
+		}
 	}
 	
 	/**
@@ -70,6 +87,8 @@ public class Button extends Component {
 		over = getArea().contains(mx, my);
 		if (button == 0 && over) {
 			notifyListeners();
+		} else {
+			active = false;
 		}
 	}
 
@@ -116,6 +135,10 @@ public class Button extends Component {
 	 */
 	public void setButtonColor(Color color) {
 		buttonColor = color;
+	}
+	
+	public void setButtonActiveColor(Color color) {
+		buttonActiveColor = color;
 	}
 
 	@Override
