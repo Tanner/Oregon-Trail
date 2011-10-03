@@ -100,7 +100,7 @@ public class Spinner extends Component {
 	public void render(GUIContext context, Graphics g) throws SlickException {
 		label.render(context, g);
 		upButton.render(context, g);
-		downButton.render(context,g);
+		downButton.render(context, g);
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class Spinner extends Component {
 		this.x = x;
 		this.y = y;
 		if (upButton != null ) {
-			upButton.setLocation(x,y);
+			upButton.setLocation(x, y);
 			downButton.setLocation(x, y + upButton.getHeight());
 			int textY = (upButton.getHeight()*2-font.getLineHeight()) / 2;
 			label.setLocation(x + upButton.getWidth() + PADDING, y + textY);

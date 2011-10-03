@@ -33,7 +33,7 @@ public class ComponentTestScene extends Scene {
 				
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 
-		Label textFieldLabel = new Label(container, new Vector2f(PADDING, PADDING), fieldFont, Color.white,"Text Field");
+		Label textFieldLabel = new Label(container, new Vector2f(PADDING, PADDING), fieldFont, Color.white, "Text Field");
 		mainLayer.add(textFieldLabel);
 		
 		textField = new TextField(container, fieldFont, 300, 40);

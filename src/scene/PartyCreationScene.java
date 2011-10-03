@@ -28,7 +28,7 @@ public class PartyCreationScene extends Scene {
 		int buttonheight = 150;
 
 		Button firstPersonButton = new Button(container,
-				new Label(container, fieldFont,Color.white, "New Player"),
+				new Label(container, fieldFont, Color.white, "New Player"),
 				buttonWidth,
 				150);
 		mainLayer.add(firstPersonButton, mainLayer.getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, PADDING, PADDING);
@@ -46,7 +46,7 @@ public class PartyCreationScene extends Scene {
 		mainLayer.add(thirdPersonButton, secondPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
 		
 		Button fourthPersonButton = new Button(container,
-				new Label(container,fieldFont, Color.white, "New Player"),
+				new Label(container, fieldFont, Color.white, "New Player"),
 				buttonWidth,
 				150);
 		mainLayer.add(fourthPersonButton, thirdPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
