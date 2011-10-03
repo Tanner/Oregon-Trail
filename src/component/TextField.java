@@ -3,11 +3,14 @@ package component;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
+
+import core.Logger;
 
 /**
  * Textfield Component that lets the user enter in text
@@ -58,7 +61,13 @@ public class TextField extends Component {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (hasFocus()) {
-			if (isAcceptedCharacter(c)) {
+			if (key == Input.KEY_BACK && label.getText().length() >= 1) {
+				Logger.log("Deleting last character", Logger.Level.INFO);
+				
+				label.setText(label.getText().substring(0, label.getText().length() - 1));
+			} else if (isAcceptedCharacter(c)) {
+				Logger.log("Key pressed is accepted", Logger.Level.INFO);
+				
 				label.setText(label.getText() + c);
 			}
 		}
