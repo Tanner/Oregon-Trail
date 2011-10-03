@@ -16,28 +16,7 @@ public class Label extends Component {
 	private Vector2f position;
 	private Color c;
 	private int width, height;
-	
-	/**
-	 * Creates a label to be drawn on the screen.
-	 * 
-	 * @param context The game container
-	 * @param x	far left x coordinate
-	 * @param y top y component
-	 * @param font Font the text will be drawn in
-	 * @param c	Color of the text
-	 * @param text The text to draw
-	 */
-	public Label(GUIContext context, Vector2f position, Font font, Color c, String text) {
-		super(context);
-		
-		this.position = position;
-		this.font = font;
-		this.c = c;
-		this.text = text;
-		this.width = font.getWidth(text);
-		this.height = font.getLineHeight();
-	}
-	
+
 	/**
 	 * Creates a label to be drawn on the screen.
 	 * 
@@ -62,13 +41,11 @@ public class Label extends Component {
 	 * Creates a label that is initially empty.
 	 * 
 	 * @param context The game container
-	 * @param x	far left x coordinate
-	 * @param y top y component
 	 * @param font Font the text will be drawn in
 	 * @param c	Color of the text
 	 */
-	public Label(GUIContext context, Vector2f position, Font font, Color c) {
-		this(context, position, font, c, "");
+	public Label(GUIContext context, Font font, Color c) {
+		this(context, font, c, "");
 	}
 	
 	@Override
@@ -96,7 +73,8 @@ public class Label extends Component {
 	
 	/**
 	 * Get the text of this label.
-	 * @return Label's text
+	 * 
+	 * @return Label's current text
 	 */
 	public String getText() {
 		return text;
