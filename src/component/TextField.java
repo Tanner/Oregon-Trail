@@ -108,7 +108,7 @@ public class TextField extends Component {
 
 	@Override
 	public int getY() {
-		return (int)position.getX();
+		return (int)position.getY();
 	}
 	
 	/**
