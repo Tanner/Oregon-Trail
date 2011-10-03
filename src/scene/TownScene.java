@@ -33,8 +33,8 @@ public class TownScene extends Scene {
 		Label titleLabel = new Label(container, h1, Color.white, "Town");
 		Label subtitleLabel = new Label(container, h2, Color.white, "Press Enter to Go to Store");
 		
-		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter);
-		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 10);
+		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);
+		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 5);
 		
 		Image marioImage = new Image("resources/mario.png");
 		mario = new Sprite(container, marioImage, marioImage.getFlippedCopy(true, false));

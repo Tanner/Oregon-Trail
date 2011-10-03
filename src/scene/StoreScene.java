@@ -26,8 +26,8 @@ public class StoreScene extends Scene {
 		Label titleLabel = new Label(container, h1, Color.white, "Store");
 		Label subtitleLabel = new Label(container, h2, Color.white, "Press Escape to Leave");
 		
-		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter);
-		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 20);
+		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);
+		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 5);
 		
 		backgroundLayer.add(new Background(container, new Color(0xa55e00)));
 	}
