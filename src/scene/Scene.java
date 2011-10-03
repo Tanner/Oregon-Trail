@@ -11,12 +11,14 @@ public abstract class Scene extends BasicGameState {
 	protected SceneLayer backgroundLayer;
 	protected SceneLayer mainLayer;
 	protected SceneLayer hudLayer;
+	protected SceneLayer modalLayer;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		backgroundLayer = new SceneLayer(container);
 		mainLayer = new SceneLayer(container);
 		hudLayer = new SceneLayer(container);
+		modalLayer = new SceneLayer(container);
 	}
 
 	@Override
@@ -24,6 +26,7 @@ public abstract class Scene extends BasicGameState {
 		backgroundLayer.render(container, g);
 		mainLayer.render(container, g);
 		hudLayer.render(container, g);
+		modalLayer.render(container, g);
 	}
 
 	@Override
