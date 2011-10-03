@@ -33,14 +33,14 @@ public class ComponentTestScene extends Scene {
 				
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 
-		Label textFieldLabel = new Label(container, new Vector2f(PADDING, PADDING), fieldFont, Color.white, "Text Field");
-		mainLayer.add(textFieldLabel);
+		Label textFieldLabel = new Label(container, fieldFont, Color.white, "Text Field");
+		mainLayer.add(textFieldLabel, mainLayer.getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, PADDING, PADDING);
 		
 		textField = new TextField(container, fieldFont, 300, 40);
 		textField.addListener(new ButtonListener());
 		mainLayer.add(textField, textFieldLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft);
 		
-		Label buttonLabel = new Label(container, new Vector2f(50, 20), fieldFont, Color.white, "Button");
+		Label buttonLabel = new Label(container, fieldFont, Color.white, "Button");
 		mainLayer.add(buttonLabel, textField.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		
 		button = new Button(container, new Label(container, fieldFont, Color.white, "my button"), 300, 40);
