@@ -4,7 +4,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Background;
@@ -50,8 +49,8 @@ public class PartyCreationScene extends Scene {
 				new Label(container, fieldFont, Color.white, "New Player"),
 				buttonWidth,
 				150);
+		fourthPersonButton.setDisabled(true);
 		mainLayer.add(fourthPersonButton, thirdPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
-		fourthPersonButton.setVisible(false);
 		
 		TextField firstPersonNameTextField = new TextField(container, fieldFont, buttonWidth, 40);
 		mainLayer.add(firstPersonNameTextField, firstPersonButton.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
@@ -64,7 +63,6 @@ public class PartyCreationScene extends Scene {
 		
 		TextField fourthPersonNameTextField = new TextField(container, fieldFont, buttonWidth, 40);
 		mainLayer.add(fourthPersonNameTextField, fourthPersonButton.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
-		fourthPersonNameTextField.setVisible(false);
 		
 		backgroundLayer.add(new Background(container, new Color(0xa00008)));
 	}

@@ -22,6 +22,7 @@ public class Button extends Component {
 	private Color buttonActiveColor;
 	private boolean over;
 	private boolean active;
+	private boolean disabled;
 	
 	private static final int PADDING = 10;
 	
@@ -66,7 +67,7 @@ public class Button extends Component {
 		
 		super.render(container, g);
 		
-		if (active) {
+		if (active || disabled) {
 			g.setColor(buttonActiveColor);
 		} else {
 			g.setColor(buttonColor);
@@ -78,7 +79,7 @@ public class Button extends Component {
 	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		if (!visible) {
+		if (!visible || disabled) {
 			return;
 		}
 		
@@ -164,5 +165,9 @@ public class Button extends Component {
 	@Override
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 }

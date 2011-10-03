@@ -25,6 +25,7 @@ public class TextField extends Component {
 	private Color fieldColor;
 	private Color fieldFocusColor;
 	private boolean over;
+	private boolean disabled;
 	
 	public enum AcceptedCharacters { LETTERS, LETTERS_NUMBERS, NUMBERS };
 	private AcceptedCharacters acceptedCharacters = AcceptedCharacters.LETTERS;
@@ -59,7 +60,7 @@ public class TextField extends Component {
 		
 		super.render(container, g);
 		
-		if (this.hasFocus()) {
+		if (this.hasFocus() || disabled) {
 			g.setColor(fieldFocusColor);
 		} else {
 			g.setColor(fieldColor);
@@ -89,7 +90,7 @@ public class TextField extends Component {
 	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		if (!visible) {
+		if (!visible || disabled) {
 			return;
 		}
 		
