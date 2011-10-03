@@ -21,6 +21,7 @@ import core.*;
  */
 public class ComponentTestScene extends Scene {
 	public static final SceneID ID = SceneID.ComponentTest;
+	private static final int PADDING = 20;
 	
 	private TextField textField;
 	private Button button;
@@ -29,38 +30,35 @@ public class ComponentTestScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		
-		mainLayer.setLayout(new GridLayout(container, 2, 4));
-		
+				
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
-		Font h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
 
-		Label textFieldLabel = new Label(container, new Vector2f(50, 20), fieldFont, Color.white,"Text Field");
-		mainLayer.add(textFieldLabel);
+		Label textFieldLabel = new Label(container, fieldFont, Color.white, "Text Field");
+		mainLayer.add(textFieldLabel, mainLayer.getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, PADDING, PADDING);
 		
-		textField = new TextField(container, fieldFont, new Vector2f(40, 400), 300, 20);
-		mainLayer.add(textField);
+		textField = new TextField(container, fieldFont, 300, 40);
+		textField.addListener(new ButtonListener());
+		mainLayer.add(textField, textFieldLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft);
 		
-		Label buttonLabel = new Label(container, new Vector2f(50, 20), fieldFont, Color.white, "Button");
-		mainLayer.add(buttonLabel);
+		Label buttonLabel = new Label(container, fieldFont, Color.white, "Button");
+		mainLayer.add(buttonLabel, textField.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		
-		button = new Button(container, new Label(container, fieldFont, Color.white, "my button"), new Vector2f(600, 400));
+		button = new Button(container, new Label(container, fieldFont, Color.white, "my button"), 300, 40);
 		button.addListener(new ButtonListener());
-		mainLayer.add(button);
+		mainLayer.add(button, buttonLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft);
 		
 		label = new Label(container, fieldFont, Color.white, "Label");
-		mainLayer.add(label);
+		mainLayer.add(label, button.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		// TODO Auto-generated method stub
-
 	}
 	
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			label.setText("B"+(int)(Math.random() * 100));
+			label.setText("TextField has \""+textField.getText()+"\"");
 		}
 	}
 	

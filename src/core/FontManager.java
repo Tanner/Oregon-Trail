@@ -18,7 +18,7 @@ public class FontManager {
 	
 	public void init() {
 		try {
-			String glyphsToAdd = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890- .!";
+			String glyphsToAdd = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890- .!\"'";
 			h1 = new UnicodeFont("resources/ARCADEPI.ttf", 36, true, false);
 //			h1.addAsciiGlyphs();
 			h1.addGlyphs(glyphsToAdd);

@@ -11,13 +11,15 @@ import component.Background;
 import component.Button;
 import component.Label;
 import component.Positionable;
+import component.TextField;
 import core.FontManager;
 import core.GameDirector;
 
 public class PartyCreationScene extends Scene {
-	public final static SceneID ID = SceneID.PartyCreation;
-	private final static int PADDING = 20;
-	
+	public static final SceneID ID = SceneID.PartyCreation;
+	private static final int PADDING = 20;
+
+	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
@@ -26,21 +28,32 @@ public class PartyCreationScene extends Scene {
 		int buttonWidth = (container.getWidth() - PADDING * (buttonCount + 1)) / buttonCount;
 		int buttonheight = 150;
 
-		Label firstPersonLabel = new Label(container, fieldFont, Color.white, "New Player");
-		Button firstPersonButton = new Button(container, firstPersonLabel, new Vector2f(PADDING, PADDING), buttonWidth, 150);
-		mainLayer.add(firstPersonButton);
+		Button firstPersonButton = new Button(container,
+				new Label(container, fieldFont, Color.white, "New Player"),
+				buttonWidth,
+				150);
+		mainLayer.add(firstPersonButton, mainLayer.getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, PADDING, PADDING);
 		
-		Label secondPersonLabel = new Label(container, fieldFont, Color.white, "New Player");
-		Button secondPersonButton = new Button(container, secondPersonLabel, new Vector2f(PADDING, PADDING), buttonWidth, 150);
+		Button secondPersonButton = new Button(container,
+				new Label(container, fieldFont, Color.white, "New Player"),
+				buttonWidth,
+				150);
 		mainLayer.add(secondPersonButton, firstPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
 		
-		Label thirdPersonLabel = new Label(container, fieldFont, Color.white, "New Player");
-		Button thirdPersonButton = new Button(container, thirdPersonLabel, new Vector2f(PADDING, PADDING), buttonWidth, 150);
+		Button thirdPersonButton = new Button(container,
+				new Label(container, fieldFont, Color.white, "New Player"),
+				buttonWidth,
+				150);
 		mainLayer.add(thirdPersonButton, secondPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
 		
-		Label fourthPersonLabel = new Label(container, fieldFont, Color.white, "New Player");
-		Button fourthPersonButton = new Button(container, fourthPersonLabel, new Vector2f(PADDING, PADDING), buttonWidth, 150);
+		Button fourthPersonButton = new Button(container,
+				new Label(container, fieldFont, Color.white, "New Player"),
+				buttonWidth,
+				150);
 		mainLayer.add(fourthPersonButton, thirdPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
+		
+		TextField firstPersonNameTextField = new TextField(container, fieldFont, buttonWidth, 40);
+		mainLayer.add(firstPersonNameTextField, firstPersonButton.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 				
 		backgroundLayer.add(new Background(container, new Color(0xa00008)));
 	}

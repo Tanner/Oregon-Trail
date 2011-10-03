@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.geom.Vector2f;
@@ -43,19 +44,19 @@ public class SceneSelectorScene extends Scene {
 		
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		Label mainMenuLabel = new Label(container, fieldFont, Color.white, "Main Menu");
-		Button mainMenuButton = new Button(container, mainMenuLabel, new Vector2f(0, 0));
+		Button mainMenuButton = new Button(container, mainMenuLabel);
 		buttons.add(mainMenuButton);
 		Label partyCreationLabel = new Label(container, fieldFont, Color.white, "Party Creation");
-		Button partyCreationButton = new Button(container, partyCreationLabel, new Vector2f(0, 0));
+		Button partyCreationButton = new Button(container, partyCreationLabel);
 		buttons.add(partyCreationButton);
 		Label townLabel = new Label(container, fieldFont, Color.white, "Town");
-		Button townButton = new Button(container, townLabel, new Vector2f(0, 0));
+		Button townButton = new Button(container, townLabel);
 		buttons.add(townButton);
 		Label storeLabel = new Label(container, fieldFont, Color.white, "Store");
-		Button storeButton = new Button(container, storeLabel, new Vector2f(0, 0));
+		Button storeButton = new Button(container, storeLabel);
 		buttons.add(storeButton);
 		Label componentsLabel = new Label(container, fieldFont, Color.white, "Components");
-		Button componentsButton = new Button(container, componentsLabel, new Vector2f(0, 0));
+		Button componentsButton = new Button(container, componentsLabel);
 		buttons.add(componentsButton);
 		
 		buttonListener = new ButtonListener();
@@ -73,23 +74,29 @@ public class SceneSelectorScene extends Scene {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
 	}
-	
+
+	@Override
 	public void start() {
 		for (Button b : buttons) {
 			b.addListener(buttonListener);
 		}
 	}
-	
+
+	@Override
 	public void pause() {
-
+		for (Button b : buttons) {
+			b.removeListener(buttonListener);
+		}
 	}
-	
-	public void end() {
 
+	@Override
+	public void stop() {
+		for (Button b : buttons) {
+			b.removeListener(buttonListener);
+		}
 	}
 	
 	private class ButtonListener implements ComponentListener {
-
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			if (component == buttons.get(0)) {

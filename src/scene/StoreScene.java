@@ -16,8 +16,9 @@ import core.*;
 
 public class StoreScene extends Scene {
 	public static final SceneID ID = SceneID.Store;
-	
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {		
+
+	@Override
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
 		UnicodeFont h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
@@ -32,10 +33,12 @@ public class StoreScene extends Scene {
 		backgroundLayer.add(new Background(container, new Color(0xa55e00)));
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+		return;
 	}
-	
+
+	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
 			GameDirector.sharedSceneDelegate().sceneDidEnd(this);
