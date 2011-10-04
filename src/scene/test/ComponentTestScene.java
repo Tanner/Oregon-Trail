@@ -55,7 +55,7 @@ public class ComponentTestScene extends Scene {
 		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BottomLeft),Positionable.ReferencePoint.TopLeft, 0, PADDING);
 	
 		spinnerLabel = new Label(container, fieldFont, Color.white, "Label");
-		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.CenterRight), Positionable.ReferencePoint.CenterLeft,PADDING,0);
+		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 
 	}
 

@@ -40,9 +40,7 @@ public class Button extends Component {
 		
 		this.width = width;
 		this.height = height;
-
-//		setLocation((int)position.getX(), (int)position.getY());
-				
+		
 		buttonColor = Color.gray;
 		buttonActiveColor = Color.darkGray;
 		
@@ -79,7 +77,7 @@ public class Button extends Component {
 	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		if (!visible || disabled) {
+		if (!visible) {
 			return;
 		}
 		
@@ -95,7 +93,7 @@ public class Button extends Component {
 	
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
-		if (button == 0 && over) {
+		if (button == 0 && over && !disabled) {
 			notifyListeners();
 			input.consumeEvent();
 		}
