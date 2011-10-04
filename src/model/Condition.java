@@ -71,7 +71,7 @@ public class Condition {
 			return true;
 		}
 		else {
-			current+= amount;
+			current += amount;
 			return true;
 		}
 	}
@@ -92,7 +92,7 @@ public class Condition {
 			return true;
 		}
 		else {
-			current-= amount;
+			current -= amount;
 			return true;
 		}
 	}
