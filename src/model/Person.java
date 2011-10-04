@@ -3,7 +3,6 @@ package model;
 /*
 TO-DO List:
 Skillpoints to Condition
-getters/setters/max/min/percent for condition
 Remove skill method
 Gender availability
 setName?
@@ -24,97 +23,39 @@ import core.Logger;
  * @author George Johnston
  */
 public class Person {
-	private int skillPoints = 120;
+	private Condition skillPoints;
+	private boolean isMale;
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
 	private String name;
 	private Profession profession;
 	private final static float baseMoney = 1600f;
 	
-	
+	/**
+	 * Person creation should be done this way always - name first, then profession and skills are added.
+	 * @param name
+	 */
 	public Person(String name){
 		this.name = name;
-	}
-	/**
-	 * Constructor
-	 * 
-	 * @param name The name of the person
-	 * @param profession The person's profession
-	 * @param skills The list of skills selected during person creation
-	 */
-	public Person(String name, Profession profession, ArrayList<Skill> skills) {
-		
-		this.name = name;
-		this.profession = profession;
-		String skillList = name + " has skills: ";
-		
-		if (!this.skills.contains(profession.getStartingSkill()) && profession.getStartingSkill() != Skill.NONE) {
-			this.skills.add(profession.getStartingSkill());
-			this.skillPoints -= profession.getStartingSkill().getCost();
-			
-			skillList += profession.getStartingSkill();
-			this.skillPoints += profession.getStartingSkill().getCost();
-		}
-		
-		for (Skill skill: skills) {
-			if(!this.skills.contains(skill)) {
-				this.skills.add(skill);
-				this.skillPoints -= skill.getCost();
-				skillList += ", " + skill;
-			}
-		}
-		
-		skillList += " and " + skillPoints + " skill points remaining.";
-				
-		Logger.log(name + " is a " + profession.getName(), Logger.Level.INFO);
-		Logger.log(skillList, Logger.Level.INFO);
-	}
-	
-	/**
-	 * Gets remaining skill points for consideration during skill adding
-	 * @return Remaining skill points
-	 */
-	public int getSkillPoints() {
-		return skillPoints;
-	}
-	
-	public boolean addNewSkill(Skill newSkill){
-		if (this.skills.contains(newSkill) || this.skillPoints < newSkill.getCost()){
-			if(this.skills.contains(newSkill)){
-				Logger.log(this.name + " already has skill " + newSkill.getName(), Logger.Level.INFO);
-			}
-			if(this.skillPoints < newSkill.getCost()) {
-				Logger.log(this.name + " has " + this.skillPoints + " skill points and skill " + newSkill.getName() + " costs " + newSkill.getCost() + " points.", Logger.Level.INFO);
-			}
-			return false;
-		}
-		else {
-			this.skills.add(newSkill);
-			this.skillPoints -= newSkill.getCost();
-			Logger.log(this.name + " gained skill " + newSkill.getName(), Logger.Level.INFO);
-			return true;
-		}
+		this.skillPoints = new Condition(0, 120, 120);
 	}
 	
 	public boolean setProfession(Profession profession) {
 		//This will only happen during party creation when the skills haven't been chosen yet.
 		if(this.profession == null) {
 			this.profession = profession;
-			this.skills.add(profession.getStartingSkill());
-			this.skillPoints -= profession.getStartingSkill().getCost();
 			Logger.log(this.name + " became a " + this.profession, Logger.Level.INFO);
+			addSkill(profession.getStartingSkill());
 			return true;
 		}
-		if(this.profession == profession) {
+		else if(this.profession == profession) {
 			Logger.log(this.name + " is already a " + profession, Logger.Level.INFO);
 			return false;
 		}
 		else if (this.profession != profession) {
-			this.skills.remove(this.profession.getStartingSkill());
-			this.skillPoints += this.profession.getStartingSkill().getCost();
-			this.addNewSkill(profession.getStartingSkill());
-			this.profession = profession;
-	
-			Logger.log(this.name + " changed to a " + this.profession, Logger.Level.INFO);
+			this.skills.clear();
+			Logger.log(this.name + " stopped being a " + this.profession + " and loses all current skills", Logger.Level.INFO);
+			this.profession = null;
+			setProfession(profession);
 			return true;
 		}
 		else {
@@ -122,7 +63,41 @@ public class Person {
 			return false;
 		}
 	}
+
+	/**
+	 * Gets remaining skill points for consideration during skill adding
+	 * @return Remaining skill points
+	 */
+	public int getSkillPoints() {
+		return skillPoints.getCurrent();
+	}
 	
+	public boolean addSkill(Skill newSkill){
+		if(skills.contains(newSkill)) {
+			Logger.log(this.name + " already has the skill " + newSkill, Logger.Level.INFO);
+			return false;
+		}
+		else if(newSkill == this.profession.getStartingSkill()) {
+			skills.add(newSkill);
+			Logger.log("As a " + this.profession + " " + this.name + " gains the skill " + newSkill, Logger.Level.INFO);
+			return true;
+		}
+		else {
+			if(skillPoints.getCurrent() < newSkill.getCost()) {
+				Logger.log(this.name + " does not have enough skill points.  Current skill points: " + skillPoints.getCurrent() + " Cost of new skill: " + newSkill.getCost(), Logger.Level.INFO);
+			}
+			else {
+				skillPoints.decrease(newSkill.getCost());
+				skills.add(newSkill);
+				Logger.log(this.name + " gained the skill " + newSkill, Logger.Level.INFO);
+				Logger.log(this.name + " has " + skillPoints.getCurrent() + " skill points remaning.", Logger.Level.INFO);
+				return true;
+			}
+		}
+		return true;
+	}
+	
+		
 	/**
 	 * Gets the list of skills a person has.
 	 * @return The list of skills

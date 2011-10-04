@@ -49,7 +49,7 @@ public class Condition {
 			Logger.log("Not an decrement", Logger.Level.INFO);
 			return false;
 		}
-		else if(current + amount > max) {
+		else if(current - amount < min) {
 			current = min;
 			Logger.log("Decrement exceeded min - set to min", Logger.Level.INFO);
 			return true;

@@ -35,7 +35,7 @@ public class Party {
 		for (Person person: party){
 			
 			this.money += person.getProfession().getMoney();
-			Logger.log(person.getName()+ " as a " + person.getProfession() + " brings " + 
+			Logger.log(person.getName()+ " as a " + person.getProfession() + " brings $" + 
 					person.getProfession().getMoney() + " to the party.", Logger.Level.INFO);
 
 			partyCreationLog += person.getName() + " ";

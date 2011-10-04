@@ -26,6 +26,7 @@ public class Game {
 		person1.setProfession(Person.Profession.values()[r.nextInt(Person.Profession.values().length)]);
 		person1.setProfession(Person.Profession.values()[r.nextInt(Person.Profession.values().length)]);
 		person1.setProfession(Person.Profession.values()[r.nextInt(Person.Profession.values().length)]);
+		
 		int skillPoints = 0;
 		for (Person.Skill tempSkill = Person.Skill.values()[r.nextInt(Person.Skill.values().length)];
 			tempSkill != Person.Skill.NONE && person1Skill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120; 
@@ -36,7 +37,7 @@ public class Game {
 			}
 		}
 		for(Person.Skill skill : person1Skill) {
-			person1.addNewSkill(skill);
+			person1.addSkill(skill);
 		}
 		Logger.log("First set of skills", Logger.Level.INFO);
 		person1Skill.clear();
@@ -50,7 +51,7 @@ public class Game {
 			}
 		}
 		for(Person.Skill skill : person1Skill) {
-			person1.addNewSkill(skill);
+			person1.addSkill(skill);
 		}
 		
 		
