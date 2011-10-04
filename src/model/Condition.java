@@ -30,12 +30,12 @@ public class Condition {
 	
 	public boolean increase(int amount) {
 		if(amount <= 0) {
-			Logger.log("Not an increment", Logger.Level.INFO);
+			Logger.log("Not an increment", Logger.Level.ERROR);
 			return false;
 		}
 		else if(current + amount > max) {
 			current = max;
-			Logger.log("Increment exceeded max - set to max", Logger.Level.INFO);
+			Logger.log("Increment exceeded max - set to max", Logger.Level.WARNING);
 			return true;
 		}
 		else {
@@ -46,12 +46,12 @@ public class Condition {
 	
 	public boolean decrease (int amount) {
 		if(amount <= 0) {
-			Logger.log("Not an decrement", Logger.Level.INFO);
+			Logger.log("Not an decrement", Logger.Level.ERROR);
 			return false;
 		}
 		else if(current - amount < min) {
 			current = min;
-			Logger.log("Decrement exceeded min - set to min", Logger.Level.INFO);
+			Logger.log("Decrement exceeded min - set to min", Logger.Level.WARNING);
 			return true;
 		}
 		else {
