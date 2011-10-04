@@ -56,10 +56,12 @@ public class Spinner extends Component {
 		
 		listener = new ButtonListener();
 
-		int butWidth = (int)(font.getWidth("Down") * PADDING);
-		upButton = new Button(context, new Label(context, font, c, "Up"), butWidth, getHeight()/2);
-		downButton = new Button(context, new Label(context, font, c, "Down"), butWidth, getHeight()/2);
-
+		Label upLabel = new Label(context, font, c, "Up");
+		Label downLabel = new Label(context, font, c, "Down");
+		int butWidth = (int)(font.getWidth("Down")*PADDING);
+		upButton = new Button(context, upLabel, butWidth, height/2);
+		downButton = new Button(context, downLabel, butWidth,height/2);
+		
 		listener = new ButtonListener();
 		upButton.addListener(listener);
 		downButton.addListener(listener);
@@ -82,6 +84,11 @@ public class Spinner extends Component {
 		return (!treatAsNumbers) ? state : Integer.parseInt(fields[state]);
 	}
 	
+	/**
+	 * Gets the text representation of the current state of the Spinner.
+	 * 
+	 * @return the current state in String form
+	 */
 	public String getText() {
 		return fields[state];
 	}
