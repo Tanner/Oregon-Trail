@@ -18,8 +18,9 @@ public class Logger {
 	public static enum Level {
 		NONE (0, "NONE"),
 		INFO (1, "INFO"),
-		WARNING (2, "WARNING"),
-		ERROR (3, "ERROR");
+		DEBUG (2, "DEBUG"),
+		WARNING (3, "WARNING"),
+		ERROR (4, "ERROR");
 		
 		private int level;
 		private String name = null;
