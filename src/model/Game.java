@@ -38,6 +38,9 @@ public class Game {
 		for(Person.Skill skill : person1Skill) {
 			person1.addNewSkill(skill);
 		}
+		Logger.log("First set of skills", Logger.Level.INFO);
+		person1Skill.clear();
+		
 		for (Person.Skill tempSkill = Person.Skill.values()[r.nextInt(Person.Skill.values().length)];
 		tempSkill != Person.Skill.NONE && person1Skill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120; 
 		tempSkill = Person.Skill.values()[r.nextInt(Person.Skill.values().length)]) {
@@ -47,7 +50,7 @@ public class Game {
 			}
 		}
 		for(Person.Skill skill : person1Skill) {
-		person1.addNewSkill(skill);
+			person1.addNewSkill(skill);
 		}
 		
 		
