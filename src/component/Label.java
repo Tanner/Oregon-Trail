@@ -4,6 +4,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
+import sun.tools.jstat.Alignment;
+
 /**
  * A label class to draw text on screen.  Uses
  * Font's drawString method to accomplish this.
@@ -11,11 +13,17 @@ import org.newdawn.slick.gui.*;
  * @author Jeremy Grebner
  */
 public class Label extends Component {
+	public enum Alignment {
+		Center,
+		Left
+	}
+	
 	private String text;
 	private Font font;
 	private Vector2f position;
 	private Color c;
 	private int width, height;
+	private Alignment alignment;
 
 	/**
 	 * Creates a label to be drawn on the screen.
@@ -25,15 +33,21 @@ public class Label extends Component {
 	 * @param c Color of the text
 	 * @param text The text to draw
 	 */
-	public Label(GUIContext context, Font font, Color c, String text) {
+	public Label(GUIContext context, Font font, Color c, String text, int width) {
 		super(context);
 		
 		this.position = new Vector2f(0, 0);
 		this.font = font;
 		this.c = c;
 		this.text = text;
-		this.width = font.getWidth(text);
+		this.width = width;
 		this.height = font.getLineHeight();
+		
+		alignment = Alignment.Left;
+	}
+	
+	public Label(GUIContext context, Font font, Color c, String text) {
+		this(context, font, c, text, font.getWidth(text));
 	}
 	
 	/**
@@ -43,8 +57,8 @@ public class Label extends Component {
 	 * @param font Font the text will be drawn in
 	 * @param c	Color of the text
 	 */
-	public Label(GUIContext context, Font font, Color c) {
-		this(context, font, c, "");
+	public Label(GUIContext context, Font font, Color c, int width) {
+		this(context, font, c, "", width);
 	}
 	
 	@Override
@@ -55,14 +69,22 @@ public class Label extends Component {
 		
 		super.render(container, g);
 		
-//		g.setColor(Color.orange);
-//		g.fillRect(getX(), getY(), getWidth(), getHeight());
+		g.setClip(getX(), getY(), getWidth(), getHeight());
+		
+//		g.setColor(Color.yellow);
+//		g.fillRect(getX(), getY(), width, height);
 		
 		String renderText = text;
 		while (font.getWidth(renderText) > width) {
 			renderText = text.substring(0, renderText.length()-1);
 		}
-		font.drawString((width - font.getWidth(renderText)) / 2 + position.getX(), position.getY(), renderText, c);
+		if (alignment == Alignment.Center) {
+			font.drawString(position.getX() + (width - font.getWidth(renderText)) / 2, position.getY(), renderText, c);
+		} else if (alignment == Alignment.Left){
+			font.drawString(position.getX(), position.getY(), renderText, c);
+		}
+		
+		g.clearClip();
 	}
 	
 	/**
@@ -73,7 +95,6 @@ public class Label extends Component {
 	 */
 	public void setText(String text) {
 		this.text = text;
-		setWidth(font.getWidth(text));
 	}
 	
 	/**
@@ -128,5 +149,9 @@ public class Label extends Component {
 	 */
 	public void setColor(Color color) {
 		c = color;
+	}
+	
+	public void setAlignment(Alignment alignment) {
+		this.alignment = alignment;
 	}
 }

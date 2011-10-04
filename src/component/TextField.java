@@ -44,7 +44,7 @@ public class TextField extends Component {
 		
 		fieldColor = Color.gray;
 		fieldFocusColor = Color.darkGray;
-		label = new Label(container, font, Color.white);
+		label = new Label(container, font, Color.white, width);
 		
 		setWidth(width);
 		setHeight(height);

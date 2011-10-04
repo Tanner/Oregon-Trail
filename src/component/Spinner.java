@@ -66,7 +66,7 @@ public class Spinner extends Component {
 		upButton.addListener(listener);
 		downButton.addListener(listener);
 		
-		label = new Label(context, font, c, fields[0]);
+		label = new Label(context, font, c, fields[0], width - butWidth);
 		
 		refreshState();
 	}

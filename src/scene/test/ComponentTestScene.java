@@ -34,7 +34,7 @@ public class ComponentTestScene extends Scene {
 				
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 
-		Label textFieldLabel = new Label(container, fieldFont, Color.white, "Text Field");
+		Label textFieldLabel = new Label(container, fieldFont, Color.white, "Text Field", 300);
 		mainLayer.add(textFieldLabel, mainLayer.getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, PADDING, PADDING);
 		
 		textField = new TextField(container, fieldFont, 300, 40);
@@ -48,13 +48,13 @@ public class ComponentTestScene extends Scene {
 		button.addListener(new ButtonListener());
 		mainLayer.add(button, buttonLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft);
 		
-		label = new Label(container, fieldFont, Color.white, "Label");
+		label = new Label(container, fieldFont, Color.white, "Label", 300);
 		mainLayer.add(label, button.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 	
 		spinner = new Spinner(container,fieldFont, Color.white, 300, 50, false, "Hello","There","Encyclopedia");
 		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BottomLeft),Positionable.ReferencePoint.TopLeft, 0, PADDING);
 	
-		spinnerLabel = new Label(container, fieldFont, Color.white, "Label");
+		spinnerLabel = new Label(container, fieldFont, Color.white, "Label", 300);
 		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 
 	}

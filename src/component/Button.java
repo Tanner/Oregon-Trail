@@ -37,6 +37,7 @@ public class Button extends Component {
 		super(container);
 		
 		this.label = label;
+		label.setAlignment(Label.Alignment.Center);
 		
 		this.width = width;
 		this.height = height;

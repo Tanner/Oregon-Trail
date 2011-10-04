@@ -31,7 +31,7 @@ public class GridLayoutTestScene extends Scene {
 		Image luigiImage = new Image("resources/luigi.png");
 		Sprite luigi = new Sprite(container, luigiImage, luigiImage.getFlippedCopy(true, false));
 		
-		Label label = new Label(container, GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1), Color.white, "foo");
+		Label label = new Label(container, GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1), Color.white, "foo", mainLayer.getWidth() - 20);
 		
 		mainLayer.add(label);
 		mainLayer.add(mario);
