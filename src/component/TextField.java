@@ -77,11 +77,11 @@ public class TextField extends Component {
 				setFocus(false);
 				notifyListeners();
 			} else if (key == Input.KEY_BACK && label.getText().length() >= 1) {
-				Logger.log("Deleting last character", Logger.Level.INFO);
+				Logger.log("Deleting last character", Logger.Level.DEBUG);
 				
 				label.setText(label.getText().substring(0, label.getText().length() - 1));
 			} else if (isAcceptedCharacter(c)) {
-				Logger.log("Key pressed is accepted", Logger.Level.INFO);
+				Logger.log("Key pressed is accepted", Logger.Level.DEBUG);
 				
 				label.setText(label.getText() + c);
 			}
@@ -175,8 +175,6 @@ public class TextField extends Component {
 	public void setWidth(int width) {
 		this.width = width;
 		label.setWidth(width - 2 * PADDING);
-		
-		System.out.println("label width " + label.getWidth());
 	}
 
 	@Override

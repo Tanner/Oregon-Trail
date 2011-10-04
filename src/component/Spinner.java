@@ -55,18 +55,20 @@ public class Spinner extends Component {
 		this.height = height;
 		
 		listener = new ButtonListener();
-		
-		System.out.println("About to make buttons in constructor");
-		
+
 		Label upLabel = new Label(context, font, c, "Up");
 		Label downLabel = new Label(context, font, c, "Down");
 		int butWidth = (int)(font.getWidth("Down")*PADDING);
 		upButton = new Button(context, upLabel, butWidth, height/2);
 		downButton = new Button(context, downLabel, butWidth,height/2);
+		
 		listener = new ButtonListener();
 		upButton.addListener(listener);
 		downButton.addListener(listener);
+		
 		label = new Label(context, font, c, fields[0]);
+		
+		refreshState();
 	}
 	
 	/**
@@ -113,11 +115,33 @@ public class Spinner extends Component {
 
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
+		if (!visible) {
+			return;
+		}
+		
 		g.setColor(Color.gray);
 		g.fillRect(position.x, position.y, width, height);
 		label.render(context, g);
 		upButton.render(context, g);
 		downButton.render(context, g);
+	}
+	
+	private void refreshState() {
+		label.setText(fields[state]);
+		label.setPosition(upButton.getPosition(ReferencePoint.BottomRight),
+				Positionable.ReferencePoint.CenterLeft,
+				(width - upButton.getWidth() - font.getWidth(fields[state])) / 2,0);
+		
+		if (state == 0) {
+			upButton.setDisabled(false);
+			downButton.setDisabled(true);
+		} else if (state == MAX_STATE) {
+			upButton.setDisabled(true);
+			downButton.setDisabled(false);
+		} else {
+			upButton.setDisabled(false);
+			downButton.setDisabled(false);
+		}
 	}
 
 	@Override
@@ -130,7 +154,8 @@ public class Spinner extends Component {
 			upButton.setPosition(this.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft);
 			downButton.setPosition(this.getPosition(ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft);
 			//Sets the label text to be in the center of the textbox
-			label.setPosition(upButton.getPosition(ReferencePoint.BottomRight), Positionable.ReferencePoint.CenterLeft,
+			label.setPosition(upButton.getPosition(ReferencePoint.BottomRight),
+					Positionable.ReferencePoint.CenterLeft,
 					(width - upButton.getWidth() - font.getWidth(fields[state])) / 2,0);
 		}
 	}
@@ -143,15 +168,13 @@ public class Spinner extends Component {
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-				
-			if (source == upButton)
+			if (source == upButton) {
 				state = (state == MAX_STATE) ? state : state + 1;
-			else 
+			} else {
 				state = (state == 0) ? 0 : state - 1;
+			}
 			
-			label.setText(fields[state]);
-			label.setPosition(upButton.getPosition(ReferencePoint.BottomRight), Positionable.ReferencePoint.CenterLeft,
-					(width - upButton.getWidth() - font.getWidth(fields[state])) / 2,0);
+			refreshState();
 		}
 	}
 
