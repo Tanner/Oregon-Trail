@@ -60,33 +60,39 @@ public class PartyCreationScene extends Scene {
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
 			
 			personNameTextFields[i] = new TextField(container, fieldFont, buttonWidth, regularButtonHeight);
+			personNameTextFields[i].addListener(new ButtonListener());
+			personNameTextFields[i].setVisible(false);
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 			
 			personProfessionButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Profession"), buttonWidth, regularButtonHeight);
 			personProfessionButtons[i].addListener(new ButtonListener());
+			personProfessionButtons[i].setVisible(false);
 			mainLayer.add(personProfessionButtons[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
 			personMoneyLabels[i] = new Label(container, fieldFont, Color.white, "$0", buttonWidth);
 			personMoneyLabels[i].setAlignment(Alignment.Center);
+			personMoneyLabels[i].setVisible(false);
 			mainLayer.add(personMoneyLabels[i], personProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
 			personSkillOneButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Skill 1"), buttonWidth, regularButtonHeight);
 			personSkillOneButtons[i].addListener(new ButtonListener());
+			personSkillOneButtons[i].setVisible(false);
 			mainLayer.add(personSkillOneButtons[i], personMoneyLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
 			personSkillTwoButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Skill 2"), buttonWidth, regularButtonHeight);
 			personSkillTwoButtons[i].addListener(new ButtonListener());
+			personSkillTwoButtons[i].setVisible(false);
 			mainLayer.add(personSkillTwoButtons[i], personSkillOneButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
 			personSkillThreeButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Skill 3"), buttonWidth, regularButtonHeight);
 			personSkillThreeButtons[i].addListener(new ButtonListener());
+			personSkillThreeButtons[i].setVisible(false);
 			mainLayer.add(personSkillThreeButtons[i], personSkillTwoButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		}
 		
 		String[] rationLabels = new String[3];
 		for (int i = 0; i < Party.Rations.values().length; i++) {
 			rationLabels[i] = Party.Rations.values()[i].toString();
-			System.out.println(rationLabels[i]);
 		}
 		
 		rationsSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, regularButtonHeight, 1, rationLabels.length, 1, rationLabels);
@@ -120,8 +126,34 @@ public class PartyCreationScene extends Scene {
 			}	
 			SegmentedControl sc = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 3, 3, strs);
 			
-			showModal(new Modal(container, PartyCreationScene.this, "Button Pushed!", sc, "Confirm", "Cancel"));
-			Logger.log(""+source, Logger.Level.INFO);
+			for (int i = 0; i < NUM_PEOPLE; i++) {
+				if (source == newPersonButtons[i]) {
+					personNameTextFields[i].setVisible(true);
+					return;
+				}
+				
+				if (source == personNameTextFields[i]) {
+					showModal(new Modal(container, PartyCreationScene.this, "You want to select a profession, eh?", "Confirm", "Deny"));
+					personProfessionButtons[i].setVisible(true);
+					return;
+				}
+				
+				if (source == personProfessionButtons[i]) {
+					personMoneyLabels[i].setVisible(true);
+					personSkillOneButtons[i].setVisible(true);
+					personSkillTwoButtons[i].setVisible(true);
+					personSkillThreeButtons[i].setVisible(true);
+					return;
+				}
+				
+				if (source == personSkillOneButtons[i] || source == personSkillTwoButtons[i] || source == personSkillThreeButtons[i]) {
+					showModal(new Modal(container, PartyCreationScene.this, "You want to select a skill, eh?", "Confirm", "Deny"));
+				}
+			}
+			
+			if (source == confirmButton) {
+				Logger.log("Confirm button pushed", Logger.Level.DEBUG);
+			}
 		}
 	}
 }
