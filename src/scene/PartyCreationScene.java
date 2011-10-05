@@ -1,5 +1,7 @@
 package scene;
 
+import model.Party;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -80,8 +82,13 @@ public class PartyCreationScene extends Scene {
 			mainLayer.add(personSkillThreeButtons[i], personSkillTwoButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		}
 		
-		String[] rationLabels = {"Kitty", "Kitty", "Kitty"};
-		rationsSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, regularButtonHeight, rationLabels);
+		String[] rationLabels = new String[3];
+		for (int i = 0; i < Party.Rations.values().length; i++) {
+			rationLabels[i] = Party.Rations.values()[i].toString();
+			System.out.println(rationLabels[i]);
+		}
+		
+		rationsSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, regularButtonHeight, 1, rationLabels.length, 1, rationLabels);
 		mainLayer.add(rationsSegmentedControl, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
 		
 		confirmButton = new Button(container, new Label(container, fieldFont, Color.white, "Confirm"), buttonWidth, regularButtonHeight);
