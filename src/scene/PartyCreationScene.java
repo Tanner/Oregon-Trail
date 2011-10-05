@@ -104,8 +104,9 @@ public class PartyCreationScene extends Scene {
 			mainLayer.add(personSkillThreeButtons[i], personSkillTwoButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		}
 		
-		String[] rationLabels = new String[3];
-		for (int i = 0; i < Party.Rations.values().length; i++) {
+		int numOfRations = Party.Rations.values().length;
+		String[] rationLabels = new String[numOfRations];
+		for (int i = 0; i < numOfRations; i++) {
 			rationLabels[i] = Party.Rations.values()[i].toString();
 		}
 		
