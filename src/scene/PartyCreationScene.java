@@ -113,14 +113,17 @@ public class PartyCreationScene extends Scene {
 			}
 		}
 		
+		Label rationsLabel = new Label(container, fieldFont, Color.white, "Rations:");
+		rationsLabel.setHeight(regularButtonHeight);
+		mainLayer.add(rationsLabel, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
+		
 		int numOfRations = Party.Rations.values().length;
 		String[] rationLabels = new String[numOfRations];
 		for (int i = 0; i < numOfRations; i++) {
 			rationLabels[i] = Party.Rations.values()[i].toString();
 		}
-		
 		rationsSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, buttonWidth * 2 + PADDING, regularButtonHeight, 1, rationLabels.length, 0, 1, rationLabels);
-		mainLayer.add(rationsSegmentedControl, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
+		mainLayer.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
 		
 		confirmButton = new Button(container, new Label(container, fieldFont, Color.white, "Confirm"), buttonWidth, regularButtonHeight);
 		confirmButton.addListener(new ButtonListener());
