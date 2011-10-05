@@ -287,16 +287,21 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personNameTextFields[i]) {
-					people.add(i, new Person(personNameTextFields[i].getText()));
-
-					// Moves the delete button to the latest person created
-					for (int j = 0; j < people.size() - 1; j++) {
-						personDeleteButtons[j].setVisible(false);
+					if(people.size() < i + 1) {
+						people.add(i, new Person(personNameTextFields[i].getText()));
+	
+						// Moves the delete button to the latest person created
+						for (int j = 0; j < people.size() - 1; j++) {
+							personDeleteButtons[j].setVisible(false);
+						}
+						personDeleteButtons[people.size() - 1].setVisible(true);
+						
+						personChangeProfessionButtons[i].setVisible(true);
+						personProfessionLabels[i].setVisible(true);
 					}
-					personDeleteButtons[people.size() - 1].setVisible(true);
-					
-					personChangeProfessionButtons[i].setVisible(true);
-					personProfessionLabels[i].setVisible(true);
+					else {
+						people.get(i).setName(personNameTextFields[i].getText());
+					}
 				}
 				
 				if (source == personChangeProfessionButtons[i]) {
@@ -329,10 +334,8 @@ public class PartyCreationScene extends Scene {
 			enableNextPersonField();
 			
 			if (source == confirmButton) {
-				//TODO: get game passed in from game director
 				//TODO: Show dialog box if persons don't have a profession
 				
-				Player player = new Player();
 				pace = Pace.values()[paceSegmentedControl.getState()[0]];
 				rations = Rations.values()[rationsSegmentedControl.getState()[0]];
 				player.setParty(new Party(pace, rations, people));
