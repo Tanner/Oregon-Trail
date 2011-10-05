@@ -238,7 +238,7 @@ public class PartyCreationScene extends Scene {
 			personDeleteButtons[col - 1].setVisible(true);
 		}
 		
-		if (col < NUM_PEOPLE) {
+		if (col < NUM_PEOPLE - 1) {
 			personNameTextFields[col + 1].setVisible(false);
 		}
 	}
