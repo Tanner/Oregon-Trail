@@ -44,14 +44,14 @@ public class Modal extends Component {
 		Button okButton = new Button(container, new Label(container, fieldFont, Color.white, submitButtonString), 200, 40);
 		okButton.addListener(new ButtonListener());
 		
-		this.height = PADDING*2 + messageLabel.getHeight() + okButton.getHeight() + PADDING;
+		this.height = PADDING*2 + messageLabel.getHeight() + okButton.getHeight();
 		location = new Vector2f(MARGIN, (container.getHeight() - height) / 2);
 
 		add(okButton, getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.BottomCenter, 0, -PADDING);
 		add(messageLabel, getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);		
 	}
 	
-	public Modal(GUIContext container, Scene scene, String message, String submitButtonString, String cancelButtonString) {
+	public Modal(GUIContext container, Scene scene, String message, Component component, String submitButtonString, String cancelButtonString) {
 		this(container);
 		
 		this.scene = scene;
@@ -71,10 +71,11 @@ public class Modal extends Component {
 		Button cancelButton = new Button(container, new Label(container, fieldFont, Color.white, cancelButtonString), (width - PADDING*2) / 2 - PADDING, 40);
 		cancelButton.addListener(buttonListener);
 		
-		this.height = PADDING*2 + messageLabel.getHeight() + submitButton.getHeight() + PADDING;
+		this.height = PADDING*4 + messageLabel.getHeight() + component.getHeight() + submitButton.getHeight();
 		location = new Vector2f(MARGIN, (container.getHeight() - height) / 2);
-
+		
 		add(messageLabel, getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+		add(component, messageLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, PADDING);
 		add(cancelButton, getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft, PADDING, -PADDING);
 		add(submitButton, getPosition(Positionable.ReferencePoint.BottomRight), Positionable.ReferencePoint.BottomRight, -PADDING, -PADDING);
 	}

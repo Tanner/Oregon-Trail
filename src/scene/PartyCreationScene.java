@@ -1,6 +1,7 @@
 package scene;
 
 import model.Party;
+import model.Person;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -111,7 +112,15 @@ public class PartyCreationScene extends Scene {
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent source) {
-			showModal(new Modal(container, PartyCreationScene.this, "Button Pushed!", "YAY"));
+			UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+			Person.Skill[] arr = Person.Skill.values();
+			String[] strs = new String[arr.length - 1];
+			for (int i = 0; i < strs.length; i++) {
+				strs[i] = arr[i].getName();
+			}	
+			SegmentedControl sc = new SegmentedControl(container, fieldFont, Color.white,400,100,5,3,3,strs);
+			
+			showModal(new Modal(container, PartyCreationScene.this, "Button Pushed!", sc, "Confirm", "Cancel"));
 			Logger.log(""+source, Logger.Level.INFO);
 		}
 	}
