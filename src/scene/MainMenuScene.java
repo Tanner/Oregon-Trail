@@ -20,8 +20,8 @@ public class MainMenuScene extends Scene {
 		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
 		
 		//Label titleLabel = new Label(container, h1, Color.white, "Oregon Trail");
-		Label titleLabel = new Label(container, h1, Color.white, LIT_MAP.get("OT_TITLE"));
-		Label subtitleLabel = new Label(container, h2, Color.white, "Press Enter to Start");
+		Label titleLabel = new Label(container, h1, Color.white, LIT_MAP.get("MM_TITLE"));
+		Label subtitleLabel = new Label(container, h2, Color.white, LIT_MAP.get("MM_PRESS_ENTER"));
 		
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);
 		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 5);

@@ -12,6 +12,7 @@ import component.Label;
 import component.Positionable;
 
 import core.*;
+import static core.ConstantStore.LIT_MAP;
 
 
 public class StoreScene extends Scene {
@@ -24,8 +25,8 @@ public class StoreScene extends Scene {
 		UnicodeFont h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
 		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
 		
-		Label titleLabel = new Label(container, h1, Color.white, "Store");
-		Label subtitleLabel = new Label(container, h2, Color.white, "Press Escape to Leave");
+		Label titleLabel = new Label(container, h1, Color.white, LIT_MAP.get("STS_STORE"));
+		Label subtitleLabel = new Label(container, h2, Color.white, LIT_MAP.get("STS_PRESS_ESCAPE"));
 		
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);
 		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 5);

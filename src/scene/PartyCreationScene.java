@@ -25,6 +25,7 @@ import component.TextField;
 import core.FontManager;
 import core.GameDirector;
 import core.Logger;
+import static core.ConstantStore.LIT_MAP;
 
 public class PartyCreationScene extends Scene {
 	public static final SceneID ID = SceneID.PartyCreation;
@@ -73,7 +74,7 @@ public class PartyCreationScene extends Scene {
 			ReferencePoint newPersonButtonReferencePoint = (i == 0) ? ReferencePoint.TopLeft :ReferencePoint.TopRight;
 			int newPersonButtonPaddingY = (i == 0) ? PADDING : 0;
 			
-			newPersonButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "New Player"), buttonWidth, newPersonButtonHeight);
+			newPersonButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_NEW_PLAYER")), buttonWidth, newPersonButtonHeight);
 			newPersonButtons[i].setRoundedCorners(true);
 			newPersonButtons[i].addListener(new ButtonListener());
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
@@ -84,7 +85,7 @@ public class PartyCreationScene extends Scene {
 			personNameTextFields[i].setVisible(false);
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 			
-			personProfessionButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Profession"), buttonWidth, regularButtonHeight);
+			personProfessionButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_PROFESSION")), buttonWidth, regularButtonHeight);
 			personProfessionButtons[i].setRoundedCorners(true);
 			personProfessionButtons[i].addListener(new ButtonListener());
 			personProfessionButtons[i].setVisible(false);
@@ -95,7 +96,7 @@ public class PartyCreationScene extends Scene {
 			personMoneyLabels[i].setVisible(false);
 			mainLayer.add(personMoneyLabels[i], personProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
-			personChangeSkillButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Change Skill"), buttonWidth, regularButtonHeight);
+			personChangeSkillButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_CHANGE_SKILL")), buttonWidth, regularButtonHeight);
 			personChangeSkillButtons[i].setTopLeftRoundedCorner(true);
 			personChangeSkillButtons[i].setTopRightRoundedCorner(true);
 			personChangeSkillButtons[i].addListener(new ButtonListener());
@@ -108,7 +109,7 @@ public class PartyCreationScene extends Scene {
 					skillLabelReferenceObject = personSkillLabels[i][j - 1];
 				}
 				
-				personSkillLabels[i][j] = new Label(container, fieldFont, Color.white, "Skill "+j, buttonWidth);
+				personSkillLabels[i][j] = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_SKILL") +j, buttonWidth);
 				personSkillLabels[i][j].setHeight(regularButtonHeight);
 				personSkillLabels[i][j].setBackgroundColor(Color.darkGray);
 				personSkillLabels[i][j].setVisible(false);
@@ -118,7 +119,7 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		// Ration Selection
-		Label rationsLabel = new Label(container, fieldFont, Color.white, "Rations:");
+		Label rationsLabel = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_RATIONS_LIT"));
 		rationsLabel.setHeight(regularButtonHeight);
 		mainLayer.add(rationsLabel, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
 		
@@ -131,7 +132,7 @@ public class PartyCreationScene extends Scene {
 		mainLayer.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
 		
 		// Pace Selection
-		Label paceLabel = new Label(container, fieldFont, Color.white, "Pace:");
+		Label paceLabel = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_PACE_LIT"));
 		paceLabel.setHeight(regularButtonHeight);
 		mainLayer.add(paceLabel, rationsLabel.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
 		
@@ -144,7 +145,7 @@ public class PartyCreationScene extends Scene {
 		mainLayer.add(paceSegmentedControl, rationsSegmentedControl.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
 		
 		//Confirm Button
-		confirmButton = new Button(container, new Label(container, fieldFont, Color.white, "Confirm"), buttonWidth, regularButtonHeight);
+		confirmButton = new Button(container, new Label(container, fieldFont, Color.white,  LIT_MAP.get("OT_CONFIRM")), buttonWidth, regularButtonHeight);
 		confirmButton.setRoundedCorners(true);
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
@@ -193,7 +194,7 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personProfessionButtons[i]) {
-					showModal(new Modal(container, PartyCreationScene.this, "You want to select a profession, eh?", professionSegmentedControl, "Confirm", "Cancel"));
+					showModal(new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), professionSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL")));
 					personMoneyLabels[i].setVisible(true);
 					
 					personChangeSkillButtons[i].setVisible(true);
@@ -204,7 +205,7 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personChangeSkillButtons[i]) {
-					showModal(new Modal(container, PartyCreationScene.this, "You want to select a skill, eh?", skillSegmentedControl, "Confirm", "Cancel"));
+					showModal(new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), skillSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL")));
 				}
 			}
 			
