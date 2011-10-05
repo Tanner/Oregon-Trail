@@ -27,13 +27,18 @@ public class Person {
 	
 	/**
 	 * Person creation should be done this way always - name first, then profession and skills are added.
-	 * @param name
+	 * @param name 
 	 */
 	public Person(String name){
 		this.name = name;
 		this.skillPoints = new Condition(0, 120, 120);
 	}
 	
+	/**
+	 * Establish this party member's profession
+	 * @param profession the desired profession
+	 * @return successful completion of operation
+	 */
 	public boolean setProfession(Profession profession) {
 		//This will only happen during party creation when the skills haven't been chosen yet.
 		if(this.profession == null) {
@@ -67,6 +72,11 @@ public class Person {
 		return skillPoints.getCurrent();
 	}
 	
+	/**
+	 * Adds a skill to this person's skill set
+	 * @param newSkill skill to be added
+	 * @return successful completion of this operation
+	 */
 	public boolean addSkill(Skill newSkill){
 		if(skills.contains(newSkill)) {
 			Logger.log(this.name + " already has the skill " + newSkill, Logger.Level.INFO);
@@ -92,7 +102,11 @@ public class Person {
 		return true;
 	}
 	
-		
+	/**
+	 * Removes skill from person's skill set	
+	 * @param oldSkill skill to be removed
+	 * @return Successful completion of operation
+	 */
 	public boolean removeSkill(Skill oldSkill) {
 		if (!this.skills.contains(oldSkill)) {
 			Logger.log("Cannot remove a skill that isn't already known.", Logger.Level.INFO);
@@ -125,6 +139,10 @@ public class Person {
 		return name;
 	}
 	
+	/**
+	 * Profession of person in party
+	 * @return Person's profession
+	 */
 	public Profession getProfession(){
 		return profession;
 	}
@@ -170,6 +188,10 @@ public class Person {
 			return cost;
 		}
 		
+		/**
+		 * Return the name of a skill
+		 * @return The skill name
+		 */
 		public String getName(){
 			return name;
 		}
@@ -238,14 +260,28 @@ public class Person {
 			return startingSkill;
 		}
 		
+		/**
+		 * Returns the profession's name
+		 * @return Profession's name
+		 */
 		public String getName(){
 			return name;
 		}
 	}
 	
+	/**
+	 * Sets the gender of the person
+	 * @param isMale Whether this Person is male or not
+	 */
+	
 	public void setIsMale(boolean isMale) {
 		this.isMale = isMale;
 	}
+	
+	/**
+	 * Returns this person's gender
+	 * @return Whether or not this Person is male
+	 */
 	
 	public boolean getIsMale() {
 		return isMale;
