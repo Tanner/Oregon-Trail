@@ -31,6 +31,7 @@ public class PartyCreationScene extends Scene {
 	
 	private static final int PADDING = 20;
 	private static final int NUM_PEOPLE = 4;
+	private static final int NUM_SKILLS = 3;
 	private static final int newPersonButtonHeight = 100;
 	private static final int regularButtonHeight = 30;
 	
@@ -38,9 +39,8 @@ public class PartyCreationScene extends Scene {
 	private TextField personNameTextFields[] = new TextField[NUM_PEOPLE];
 	private Button personProfessionButtons[] = new Button[NUM_PEOPLE];
 	private Label personMoneyLabels[] = new Label[NUM_PEOPLE];
-	private Button personSkillOneButtons[] = new Button[NUM_PEOPLE];
-	private Button personSkillTwoButtons[] = new Button[NUM_PEOPLE];
-	private Button personSkillThreeButtons[] = new Button[NUM_PEOPLE];
+	private Button personChangeSkillButtons[] = new Button[NUM_PEOPLE];
+	private Label personSkillLabels[][] = new Label[NUM_PEOPLE][NUM_SKILLS];
 	
 	private Button confirmButton;
 	private SegmentedControl rationsSegmentedControl, professionSegmentedControl, skillSegmentedControl;
@@ -59,14 +59,14 @@ public class PartyCreationScene extends Scene {
 		for (int i = 0; i < numOfProfessions; i++) {
 			professionLabels[i] = Person.Profession.values()[i].toString();
 		}
-		professionSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 5, 1, professionLabels);
+		professionSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 5, 5, 1, professionLabels);
 		
 		int numOfSkills = Person.Skill.values().length - 1;
 		String[] skillLabels = new String[numOfSkills];
 		for (int i = 0; i < numOfSkills; i++) {
 			skillLabels[i] = Person.Skill.values()[i].getName();
 		}	
-		skillSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 3, 3, skillLabels);
+		skillSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 3, 5, 3, skillLabels);
 		
 		for (int i = 0; i < newPersonButtons.length; i++) {
 			Positionable newPersonButton = (i == 0) ? mainLayer : newPersonButtons[i - 1];
@@ -93,20 +93,24 @@ public class PartyCreationScene extends Scene {
 			personMoneyLabels[i].setVisible(false);
 			mainLayer.add(personMoneyLabels[i], personProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
-			personSkillOneButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Skill 1"), buttonWidth, regularButtonHeight);
-			personSkillOneButtons[i].addListener(new ButtonListener());
-			personSkillOneButtons[i].setVisible(false);
-			mainLayer.add(personSkillOneButtons[i], personMoneyLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			personChangeSkillButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Change Skill"), buttonWidth, regularButtonHeight);
+			personChangeSkillButtons[i].addListener(new ButtonListener());
+			personChangeSkillButtons[i].setVisible(false);
+			mainLayer.add(personChangeSkillButtons[i], personMoneyLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
-			personSkillTwoButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Skill 2"), buttonWidth, regularButtonHeight);
-			personSkillTwoButtons[i].addListener(new ButtonListener());
-			personSkillTwoButtons[i].setVisible(false);
-			mainLayer.add(personSkillTwoButtons[i], personSkillOneButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
-			
-			personSkillThreeButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Skill 3"), buttonWidth, regularButtonHeight);
-			personSkillThreeButtons[i].addListener(new ButtonListener());
-			personSkillThreeButtons[i].setVisible(false);
-			mainLayer.add(personSkillThreeButtons[i], personSkillTwoButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			Positionable skillLabelReferenceObject = personChangeSkillButtons[i];
+			for (int j = 0; j < personSkillLabels[i].length; j++) {
+				if (j != 0) {
+					skillLabelReferenceObject = personSkillLabels[i][j - 1];
+				}
+				
+				personSkillLabels[i][j] = new Label(container, fieldFont, Color.white, "Skill "+j, buttonWidth);
+				personSkillLabels[i][j].setHeight(regularButtonHeight);
+				personSkillLabels[i][j].setBackgroundColor(Color.gray);
+				personSkillLabels[i][j].setVisible(false);
+				personSkillLabels[i][j].setAlignment(Alignment.Center);
+				mainLayer.add(personSkillLabels[i][j], skillLabelReferenceObject.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
+			}
 		}
 		
 		int numOfRations = Party.Rations.values().length;
@@ -115,7 +119,7 @@ public class PartyCreationScene extends Scene {
 			rationLabels[i] = Party.Rations.values()[i].toString();
 		}
 		
-		rationsSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, regularButtonHeight, 1, rationLabels.length, 1, rationLabels);
+		rationsSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, buttonWidth * 2 + PADDING, regularButtonHeight, 1, rationLabels.length, 0, 1, rationLabels);
 		mainLayer.add(rationsSegmentedControl, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
 		
 		confirmButton = new Button(container, new Label(container, fieldFont, Color.white, "Confirm"), buttonWidth, regularButtonHeight);
@@ -166,13 +170,15 @@ public class PartyCreationScene extends Scene {
 				if (source == personProfessionButtons[i]) {
 					showModal(new Modal(container, PartyCreationScene.this, "You want to select a profession, eh?", professionSegmentedControl, "Confirm", "Cancel"));
 					personMoneyLabels[i].setVisible(true);
-					personSkillOneButtons[i].setVisible(true);
-					personSkillTwoButtons[i].setVisible(true);
-					personSkillThreeButtons[i].setVisible(true);
+					
+					personChangeSkillButtons[i].setVisible(true);
+					for (int j = 0; j < personSkillLabels[i].length; j++) {
+						personSkillLabels[i][j].setVisible(true);
+					}
 					return;
 				}
 				
-				if (source == personSkillOneButtons[i] || source == personSkillTwoButtons[i] || source == personSkillThreeButtons[i]) {
+				if (source == personChangeSkillButtons[i]) {
 					showModal(new Modal(container, PartyCreationScene.this, "You want to select a skill, eh?", skillSegmentedControl, "Confirm", "Cancel"));
 				}
 			}

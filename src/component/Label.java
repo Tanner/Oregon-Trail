@@ -20,6 +20,7 @@ public class Label extends Component {
 	private Font font;
 	private Vector2f position;
 	private Color c;
+	private Color backgroundColor;
 	private int width, height;
 	private Alignment alignment;
 	private boolean clip;
@@ -82,20 +83,27 @@ public class Label extends Component {
 		
 		g.setClip(getX(), getY(), getWidth(), getHeight());
 		
-//		g.setColor(Color.yellow);
-//		g.fillRect(getX(), getY(), width, height);
+		if (backgroundColor != null) {
+			g.setColor(backgroundColor);
+			g.fillRect(getX(), getY(), width, height);
+		}
 		
 		String renderText = text;
 		while (font.getWidth(renderText) > width) {
 			renderText = text.substring(0, renderText.length()-1);
 		}
+		
 		if (alignment == Alignment.Center) {
-			font.drawString(position.getX() + (width - font.getWidth(renderText)) / 2, position.getY(), renderText, c);
+			font.drawString(position.getX() + (width - font.getWidth(renderText)) / 2, position.getY() + (height - font.getLineHeight()) / 2, renderText, c);
 		} else if (alignment == Alignment.Left){
-			font.drawString(position.getX(), position.getY(), renderText, c);
+			font.drawString(position.getX(), position.getY() + (height - font.getLineHeight()) / 2, renderText, c);
 		}
 		
 		g.clearClip();
+	}
+	
+	public void setBackgroundColor(Color color) {
+		backgroundColor = color;
 	}
 	
 	/**

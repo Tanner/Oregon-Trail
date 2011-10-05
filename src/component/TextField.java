@@ -75,13 +75,8 @@ public class TextField extends Component {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (hasFocus()) {
-			if (key == Input.KEY_ENTER) {
-				if (label.getText().length() == 0) {
-					label.setText(placeholderText);
-				}
-				
+			if (key == Input.KEY_ENTER) {				
 				setFocus(false);
-				notifyListeners();
 			} else if (key == Input.KEY_BACK && label.getText().length() >= 1) {
 				Logger.log("Deleting last character", Logger.Level.DEBUG);
 				
@@ -106,7 +101,7 @@ public class TextField extends Component {
 	@Override
 	public void mouseReleased(int button, int x, int y) {
 		if (over) {
-			if (label.getText().equals(placeholderText)) {
+			if (isEmpty()) {
 				label.setText("");
 			}
 			
@@ -118,9 +113,17 @@ public class TextField extends Component {
 	public void setPlaceholderText(String text) {
 		placeholderText = text;
 		
-		if (label.getText().length() == 0) {
+		if (isEmpty()) {
 			label.setText(placeholderText);
 		}
+	}
+	
+	public boolean isEmpty() {
+		if (label.getText().length() <= 0 || label.getText().equals(placeholderText)) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -138,6 +141,18 @@ public class TextField extends Component {
 		}
 		
 		return false;
+	}
+	
+	public void setFocus(boolean focus) {
+		if (!focus && hasFocus()) {
+			if (isEmpty()) {
+				label.setText(placeholderText);
+			} else {
+				notifyListeners();
+			}
+		}
+		
+		super.setFocus(focus);
 	}
 	
 	/**
