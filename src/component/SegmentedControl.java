@@ -92,10 +92,36 @@ public class SegmentedControl extends Component {
 		}
 	}
 	
+	
+	/**
+	 * Clear the state of the SegmentedController.
+	 * Sets button selection back to default if only 1 button is allowed to be
+	 * changed.  Otherwise, clear all selections.
+	 */
+	public void clear() {
+		selection.clear();
+		for (Button b : buttons)
+			b.setButtonColor(Color.gray);
+		if ( MAX_SELECTED == 1) {
+			buttons[0].setButtonColor(Color.darkGray);
+			selection.add(0);
+		}
+	}
+	
+	/**
+	 * Change the font used by each button on the SegmentedController.
+	 * 
+	 * @param f The new font to set.
+	 */
 	public void setFont(Font f) {
 		font = f;	
 	}
 	
+	/**
+	 * Change the font color used by each button on the SegmentedController.
+	 * 
+	 * @param c The new color to set.
+	 */
 	public void setColor(Color c) {
 		color = c;
 	}
