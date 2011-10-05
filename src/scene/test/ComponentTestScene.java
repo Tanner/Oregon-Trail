@@ -1,5 +1,7 @@
 package scene.test;
 
+import model.Person;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
@@ -11,7 +13,7 @@ import scene.SceneID;
 import scene.layout.GridLayout;
 
 import component.*;
-
+import java.util.*;
 import core.*;
 
 /**
@@ -22,7 +24,7 @@ import core.*;
 public class ComponentTestScene extends Scene {
 	public static final SceneID ID = SceneID.ComponentTest;
 	private static final int PADDING = 20;
-	
+
 	private TextField textField;
 	private Button button;
 	private Label label, spinnerLabel;
@@ -57,15 +59,18 @@ public class ComponentTestScene extends Scene {
 	
 		spinnerLabel = new Label(container, fieldFont, Color.white, "Label");
 		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
-		
-		segment = new SegmentedControl(container, fieldFont, Color.white,400,40,"1","2","3","4","Poop");
+		Person.Skill[] arr = Person.Skill.values();
+		String[] strs = new String[arr.length - 1];
+		for (int i = 0; i < strs.length; i++) {
+			strs[i] = arr[i].getName();
+		}	
+		segment = new SegmentedControl(container, fieldFont, Color.white,400,100,5,3,3,strs);
 		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		// TODO Auto-generated method stub
 	}
 	
 	private class ButtonListener implements ComponentListener {
