@@ -16,6 +16,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
+import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Background;
@@ -348,9 +349,9 @@ public class PartyCreationScene extends Scene {
 			enableNextPersonField();
 			
 			if (source == confirmButton) {
-				//TODO: Show dialog box if persons don't have a profession
 				for (Person person : people) {
 					if (person.getProfession() == null) {
+						showModal(new Modal(container, PartyCreationScene.this, "Error - Not all party members have professions selected.", "Ok"));
 						Logger.log("Not all party members have professions selected", Logger.Level.INFO);
 						return;
 					}
