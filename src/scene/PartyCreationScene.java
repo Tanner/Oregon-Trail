@@ -118,7 +118,7 @@ public class PartyCreationScene extends Scene {
 			for (int i = 0; i < strs.length; i++) {
 				strs[i] = arr[i].getName();
 			}	
-			SegmentedControl sc = new SegmentedControl(container, fieldFont, Color.white,400,100,5,3,3,strs);
+			SegmentedControl sc = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 3, 3, strs);
 			
 			showModal(new Modal(container, PartyCreationScene.this, "Button Pushed!", sc, "Confirm", "Cancel"));
 			Logger.log(""+source, Logger.Level.INFO);

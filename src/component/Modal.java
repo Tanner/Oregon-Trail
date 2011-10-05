@@ -44,7 +44,7 @@ public class Modal extends Component {
 		Button okButton = new Button(container, new Label(container, fieldFont, Color.white, submitButtonString), 200, 40);
 		okButton.addListener(new ButtonListener());
 		
-		this.height = PADDING*2 + messageLabel.getHeight() + okButton.getHeight();
+		this.height = PADDING*3 + messageLabel.getHeight() + okButton.getHeight();
 		location = new Vector2f(MARGIN, (container.getHeight() - height) / 2);
 
 		add(okButton, getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.BottomCenter, 0, -PADDING);
@@ -73,6 +73,8 @@ public class Modal extends Component {
 		
 		this.height = PADDING*4 + messageLabel.getHeight() + component.getHeight() + submitButton.getHeight();
 		location = new Vector2f(MARGIN, (container.getHeight() - height) / 2);
+		
+		component.setWidth(width - PADDING*2);
 		
 		add(messageLabel, getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		add(component, messageLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, PADDING);

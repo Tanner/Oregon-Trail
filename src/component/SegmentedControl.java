@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class SegmentedControl extends Component {
 	
-	private final int PADDING = 3;
+	private final int PADDING = 5;
 	private final int STATES;
 	private final int MAX_SELECTED;
 	
@@ -45,25 +45,22 @@ public class SegmentedControl extends Component {
 		this.rows = rows;
 		this.cols = cols;
 
-		int horizPaddingAmt = (cols - 1) * PADDING;
-		int vertPaddingAmt = (rows - 1) * PADDING;
-		height -= vertPaddingAmt;
-		width -= horizPaddingAmt;
-		this.colWidth = (int) ((double)width/cols);
-		this.rowHeight =  (int) ((double)height/rows);
-		this.height = rowHeight * rows + vertPaddingAmt;
-		this.width = colWidth * cols + horizPaddingAmt;
-	
 		STATES = labels.length;
 		MAX_SELECTED = maxSelected;
 		buttons = new Button[STATES];
-		selection = new ArrayList<Integer>();	
+		selection = new ArrayList<Integer>();
+
+		this.rowHeight =  (int) ((double)height/rows);
+		this.colWidth = (int) ((double)width/cols);
 		
 		for (int i = 0; i < STATES; i++) {
 			Label current = new Label(context, font, c, labels[i]);
 			buttons[i] = new Button(context, current, colWidth, rowHeight);
 			buttons[i].addListener(new SegmentListener(i));
 		}
+		
+		setWidth(width);
+		setHeight(height);
 		
 		if (MAX_SELECTED == 1) {
 			buttons[0].setDisabled(true);
@@ -94,14 +91,28 @@ public class SegmentedControl extends Component {
 	
 	@Override
 	public void setWidth(int width) {
-		// TODO Auto-generated method stub
+		int horizPaddingAmt = (cols - 1) * PADDING;
+		width -= horizPaddingAmt;
+		
+		this.colWidth = (int) ((double)width/cols);
+		this.width = colWidth * cols + horizPaddingAmt;
 
+		for (Button b : buttons) {
+			b.setWidth(colWidth);
+		}
 	}
 
 	@Override
 	public void setHeight(int height) {
-		// TODO Auto-generated method stub
-
+		int vertPaddingAmt = (rows - 1) * PADDING;
+		height -= vertPaddingAmt;
+		
+		this.rowHeight =  (int) ((double)height/rows);
+		this.height = rowHeight * rows + vertPaddingAmt;
+		
+		for (Button b : buttons) {
+			b.setHeight(rowHeight);
+		}
 	}
 
 	@Override
