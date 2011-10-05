@@ -349,6 +349,11 @@ public class PartyCreationScene extends Scene {
 			enableNextPersonField();
 			
 			if (source == confirmButton) {
+				if (people.size() == 0) {
+					showModal(new Modal(container, PartyCreationScene.this, "Error - No party members.", "Ok"));
+					return;
+				}
+				
 				for (Person person : people) {
 					if (person.getProfession() == null) {
 						showModal(new Modal(container, PartyCreationScene.this, "Error - Not all party members have professions selected.", "Ok"));
