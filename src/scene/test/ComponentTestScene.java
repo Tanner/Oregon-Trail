@@ -27,6 +27,7 @@ public class ComponentTestScene extends Scene {
 	private Button button;
 	private Label label, spinnerLabel;
 	private Spinner spinner;
+	private SegmentedControl segment;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -56,7 +57,10 @@ public class ComponentTestScene extends Scene {
 	
 		spinnerLabel = new Label(container, fieldFont, Color.white, "Label", 300);
 		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
-
+		
+		segment = new SegmentedControl(container, fieldFont, Color.white,400,40,"1","2","3","4","Poop");
+		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+		
 	}
 
 	@Override
