@@ -19,6 +19,10 @@ import java.util.*;
  * @author Jeremy
  * @version 10/04/2011
  */
+/**
+ * @author Computer
+ *
+ */
 public class SegmentedControl extends Component {
 	
 	private int margin;
@@ -85,13 +89,32 @@ public class SegmentedControl extends Component {
 		}
 	}
 	
+	/**
+	 * Make sure buttons are all their correct color
+	 */
 	public void updateButtons() {
 		for (int i = 0; i < STATES; i++) {
-			buttons[i].setFont(font);
-			buttons[i].setLabelColor(color);
+			if ( selection.contains(i) )
+				buttons[i].setButtonColor(Color.darkGray);
 		}
+		if ( MAX_SELECTED == 1)
+			buttons[selection.get(0)].setDisabled(true);
 	}
 	
+	
+	/**
+	 * This method allows you to set which buttons are selected in the current
+	 * SegmentedControl.  The correct use of this is to get the selection array
+	 * from getSelection(), and pass it back in to this method.
+	 * 
+	 * @param selection An array of selections to set on the SegmentedControl
+	 */
+	public void setSelection(int[] selection) {
+		this.selection.clear();
+		for (int i : selection )
+			this.selection.add(i);
+		updateButtons();
+	}
 	
 	/**
 	 * Clear the state of the SegmentedController.
@@ -100,10 +123,12 @@ public class SegmentedControl extends Component {
 	 */
 	public void clear() {
 		selection.clear();
-		for (Button b : buttons)
+		for (Button b : buttons) {
 			b.setButtonColor(Color.gray);
+			b.setDisabled(false);
+		}
 		if ( MAX_SELECTED == 1) {
-			buttons[0].setButtonColor(Color.darkGray);
+			buttons[0].setDisabled(true);
 			selection.add(0);
 		}
 	}
@@ -114,7 +139,9 @@ public class SegmentedControl extends Component {
 	 * @param f The new font to set.
 	 */
 	public void setFont(Font f) {
-		font = f;	
+		font = f;
+		for (Button b : buttons)
+			b.setFont(font);
 	}
 	
 	/**
@@ -124,6 +151,8 @@ public class SegmentedControl extends Component {
 	 */
 	public void setColor(Color c) {
 		color = c;
+		for (Button b : buttons)
+			b.setLabelColor(color);
 	}
 
 	/**
@@ -133,7 +162,7 @@ public class SegmentedControl extends Component {
 	 * 
 	 * @return the current position of the clicked button
 	 */
-	public int[] getState() {
+	public int[] getSelection() {
 		if (MAX_SELECTED > 1) {
 			int[] returnStates = new int[selection.size()];
 			for ( int i = 0; i < selection.size(); i++)

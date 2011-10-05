@@ -333,8 +333,8 @@ public class PartyCreationScene extends Scene {
 				//TODO: Show dialog box if persons don't have a profession
 				
 				Player player = new Player();
-				pace = Pace.values()[paceSegmentedControl.getState()[0]];
-				rations = Rations.values()[rationsSegmentedControl.getState()[0]];
+				pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
+				rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
 				player.setParty(new Party(pace, rations, people));
 				
 				Logger.log("Confirm button pushed", Logger.Level.DEBUG);
