@@ -4,6 +4,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
+import core.FontManager;
+import core.GameDirector;
 import core.Logger;
 
 import java.util.*;
@@ -19,15 +21,19 @@ import java.util.*;
  */
 public class SegmentedControl extends Component {
 	
-//	private final int PADDING = 5;
+	private int margin;
+	private Font font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+	private Color color = Color.white;
+	
 	private final int STATES;
 	private final int MAX_SELECTED;
 	
+	
 	private int rows, cols, rowHeight, colWidth;
 	private int height, width;
-	private int margin;
 	private Vector2f position;
 	
+	private String[] labels;
 	
 	private ArrayList<Integer> selection;
 	private Button[] buttons;
@@ -48,23 +54,19 @@ public class SegmentedControl extends Component {
 	 * @param maxSelected The maximum number of selected buttons at a time
 	 * @param labels The labels for each segmented button.
 	 */
-	public SegmentedControl(GUIContext context, Font font, Color c, int width, int height, int rows, int cols, int padding, int maxSelected, String ... labels) {
+	public SegmentedControl(GUIContext context, int width, int height, int rows, int cols, int margin, int maxSelected, String ... labels) {
 		super(context);
 		
 		this.rows = rows;
 		this.cols = cols;
-		this.margin = padding;
-
+		this.margin = margin;
+		this.labels = labels;
 		STATES = labels.length;
 		MAX_SELECTED = maxSelected;
 		buttons = new Button[STATES];
 		selection = new ArrayList<Integer>();
 		
-		for (int i = 0; i < STATES; i++) {
-			Label current = new Label(context, font, c, labels[i]);
-			buttons[i] = new Button(context, current, colWidth, rowHeight);
-			buttons[i].addListener(new SegmentListener(i));
-		}
+		generateButtons(context);
 		
 		setWidth(width);
 		setHeight(height);
@@ -75,6 +77,28 @@ public class SegmentedControl extends Component {
 		}
 	}
 	
+	public void generateButtons(GUIContext context) {
+		for (int i = 0; i < STATES; i++) {
+			Label current = new Label(context, font, color, labels[i]);
+			buttons[i] = new Button(context, current, colWidth, rowHeight);
+			buttons[i].addListener(new SegmentListener(i));
+		}
+	}
+	
+	public void updateButtons() {
+		for (int i = 0; i < STATES; i++) {
+			buttons[i].setFont(font);
+			buttons[i].setLabelColor(color);
+		}
+	}
+	
+	public void setFont(Font f) {
+		font = f;	
+	}
+	
+	public void setColor(Color c) {
+		color = c;
+	}
 
 	/**
 	 * Returns the current state of the segmented controller.  This value
@@ -159,12 +183,24 @@ public class SegmentedControl extends Component {
 		else
 			position.set(x,y);
 		
+		boolean roundedCorners = (margin == 0) ? true : false;
+		
 		if (buttons != null ) {
 			buttons[0].setPosition(this.getPosition(Positionable.ReferencePoint.TopLeft),
 					Positionable.ReferencePoint.TopLeft, 0, 0);
+			buttons[0].setTopLeftRoundedCorner(roundedCorners);
+			if (rows == 1) {
+				buttons[0].setBottomLeftRoundedCorner(roundedCorners);
+			}
 			for (int i = 1; i < cols; i++) {
 				buttons[i].setPosition(buttons[i-1].getPosition(Positionable.ReferencePoint.TopRight),
 						Positionable.ReferencePoint.TopLeft, margin, 0);
+				if (i == cols - 1) {
+					buttons[i].setTopRightRoundedCorner(roundedCorners);
+					if (rows == 1) {
+						buttons[i].setBottomRightRoundedCorner(roundedCorners);
+					}
+				}
 			}
 			OuterLoop:
 			for (int i = 1; i < rows; i++) {
@@ -173,6 +209,9 @@ public class SegmentedControl extends Component {
 						break OuterLoop;
 					buttons[parsePosition(i,j)].setPosition(buttons[parsePosition(i-1,j)].getPosition(Positionable.ReferencePoint.BottomLeft),
 						Positionable.ReferencePoint.TopLeft, 0, margin);
+					if (i == rows-1 && j == cols-1) {
+						buttons[parsePosition(i, j)].setBottomRightRoundedCorner(roundedCorners);
+					}
 				}
 			}
 		}

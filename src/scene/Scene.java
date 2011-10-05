@@ -49,7 +49,13 @@ public abstract class Scene extends BasicGameState {
 		modalLayer.setVisible(true);
 	}
 	
-	public void closeModal(Modal modal) {
+	public void resignModal(Modal modal, int[] segmentedControlResults) {
+		dismissModal(modal);
+		
+		// subclass should handle results
+	}
+	
+	public void dismissModal(Modal modal) {
 		// Make Modal invisible and set accepting input to false before removing it!
 		modalLayer.setVisible(false);
 		modalLayer.setAcceptingInput(false);

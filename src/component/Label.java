@@ -106,6 +106,10 @@ public class Label extends Component {
 		backgroundColor = color;
 	}
 	
+	public void setFont(Font font) {
+		this.font = font;
+	}
+	
 	/**
 	 * Updates the label with new text, and calculates new width
 	 * and height based on that text.

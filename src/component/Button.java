@@ -1,6 +1,7 @@
 package component;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -32,6 +33,7 @@ public class Button extends Component {
 	private int bottomLeftCornerRadius;
 	private int topRightCornerRadius;
 	private int bottomRightCornerRadius;
+	private boolean beveled;
 		
 	/**
 	 * Creates a button.
@@ -51,6 +53,8 @@ public class Button extends Component {
 		
 		buttonColor = Color.gray;
 		buttonActiveColor = Color.darkGray;
+		
+		beveled = true;
 		
 		container.getInput().addMouseListener(this);
 	}
@@ -90,7 +94,7 @@ public class Button extends Component {
 				height - CORNER_RADIUS * 2);
 		
 		// top bar
-		if (topLeftCornerRadius > 0 && topRightCornerRadius > 0) {
+		if (beveled) {
 			g.setColor(brightColor);
 		} else {
 			g.setColor(color);
@@ -101,7 +105,7 @@ public class Button extends Component {
 				CORNER_RADIUS);
 				
 		// bottom bar
-		if (bottomLeftCornerRadius > 0 && bottomRightCornerRadius > 0) {
+		if (beveled) {
 			g.setColor(darkColor);
 		} else {
 			g.setColor(color);
@@ -112,7 +116,7 @@ public class Button extends Component {
 				CORNER_RADIUS);
 				
 		// left bar
-		if (topLeftCornerRadius > 0 && bottomLeftCornerRadius > 0) {
+		if (beveled) {
 			g.setColor(brightColor);
 		} else {
 			g.setColor(color);
@@ -123,8 +127,8 @@ public class Button extends Component {
 				height - topLeftCornerRadius - bottomLeftCornerRadius);
 		
 		// right bar
-		if (topRightCornerRadius > 0 && bottomRightCornerRadius > 0) {
-			g.setColor(brightColor);
+		if (beveled) {
+			g.setColor(darkColor);
 		} else {
 			g.setColor(color);
 		}
@@ -222,6 +226,14 @@ public class Button extends Component {
 	public void setButtonActiveColor(Color color) {
 		buttonActiveColor = color;
 	}
+	
+	public void setFont(Font font) {
+		label.setFont(font);
+	}
+	
+	public void setLabelColor(Color color) {
+		label.setColor(color);
+	}
 
 	@Override
 	public void setWidth(int width) {
@@ -275,5 +287,9 @@ public class Button extends Component {
 		} else {
 			this.bottomRightCornerRadius = 0;
 		}
+	}
+	
+	public void setBeveled(boolean beveled) {
+		this.beveled = beveled;
 	}
 }
