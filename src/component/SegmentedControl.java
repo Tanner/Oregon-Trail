@@ -6,8 +6,11 @@ import org.newdawn.slick.gui.*;
 
 import java.util.*;
 /**
- * A component with multiple buttons.  Only one button is allowed to be
- * set at a time.  The current button stands for the 
+ * A component with multiple buttons.  Has two functionalities:many buttons,
+ * where only one can be selected at a time, or 0 to some specified number
+ * can be selected at a time.  The current button(s) selected stands is returned
+ * to the user in the form of an int array, with the numbers corresponding
+ * to the index of the String array passed into the constructor.
  * 
  * @author Jeremy
  * @version 10/04/2011
@@ -37,6 +40,9 @@ public class SegmentedControl extends Component {
 	 * @param c The color of the label on the buttons
 	 * @param width The width of the entire controller.
 	 * @param height The height of the entire controller.
+	 * @param rows The number of desired rows the controller will have.
+	 * @param cols The number of desired columns the controller will have
+	 * @param maxSelected The maximum number of selected buttons at a time
 	 * @param labels The labels for each segmented button.
 	 */
 	public SegmentedControl(GUIContext context, Font font, Color c, int width, int height, int rows, int cols, int maxSelected, String ... labels) {
@@ -49,9 +55,6 @@ public class SegmentedControl extends Component {
 		MAX_SELECTED = maxSelected;
 		buttons = new Button[STATES];
 		selection = new ArrayList<Integer>();
-
-		this.rowHeight =  (int) ((double)height/rows);
-		this.colWidth = (int) ((double)width/cols);
 		
 		for (int i = 0; i < STATES; i++) {
 			Label current = new Label(context, font, c, labels[i]);
@@ -163,7 +166,8 @@ public class SegmentedControl extends Component {
 			OuterLoop:
 			for (int i = 1; i < rows; i++) {
 				for (int j = 0; j < cols; j++) {
-					if (parsePosition(i,j) >= STATES) break OuterLoop;
+					if (parsePosition(i,j) >= STATES) 
+						break OuterLoop;
 					buttons[parsePosition(i,j)].setPosition(buttons[parsePosition(i-1,j)].getPosition(Positionable.ReferencePoint.BottomLeft),
 						Positionable.ReferencePoint.TopLeft, 0, PADDING);
 				}
