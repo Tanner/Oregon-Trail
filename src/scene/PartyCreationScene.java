@@ -15,6 +15,7 @@ import component.Label.Alignment;
 import component.Modal;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
+import component.SegmentedControl;
 import component.TextField;
 import core.FontManager;
 import core.GameDirector;
@@ -37,6 +38,7 @@ public class PartyCreationScene extends Scene {
 	private Button personSkillThreeButtons[] = new Button[NUM_PEOPLE];
 	
 	private Button confirmButton;
+	private SegmentedControl rationsSegmentedControl;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -77,6 +79,10 @@ public class PartyCreationScene extends Scene {
 			personSkillThreeButtons[i].addListener(new ButtonListener());
 			mainLayer.add(personSkillThreeButtons[i], personSkillTwoButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		}
+		
+		String[] rationLabels = {"Kitty", "Kitty", "Kitty"};
+		rationsSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, regularButtonHeight, rationLabels);
+		mainLayer.add(rationsSegmentedControl, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
 		
 		confirmButton = new Button(container, new Label(container, fieldFont, Color.white, "Confirm"), buttonWidth, regularButtonHeight);
 		confirmButton.addListener(new ButtonListener());
