@@ -48,9 +48,12 @@ public abstract class Scene extends BasicGameState {
 	}
 	
 	public void closeModal(Modal modal) {
+		// Make Modal invisible and set accepting input to false before removing it!
+		modalLayer.setVisible(false);
+		modalLayer.setAcceptingInput(false);
+		
 		modalLayer.remove(modal);
 		
-		modalLayer.setVisible(false);
 		backgroundLayer.setAcceptingInput(true);
 		mainLayer.setAcceptingInput(true);
 		hudLayer.setAcceptingInput(true);
