@@ -2,6 +2,7 @@ package component;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
@@ -17,6 +18,7 @@ public class Background extends Component {
 	protected Vector2f location;
 	protected int width, height;
 	protected Color backgroundColor;
+	protected Image backgroundImage;
 	
 	/**
 	 * Constructor for Background object 
@@ -39,6 +41,11 @@ public class Background extends Component {
 	public Background(GUIContext container, Color backgroundColor) {
 		this(container);
 		this.backgroundColor = backgroundColor;
+	}
+	
+	public Background(GUIContext container, Image backgroundImage) {
+		this(container);
+		this.backgroundImage = backgroundImage;
 	}
 	
 	public Background(GUIContext container, Color backgroundColor, int width, int height) {
@@ -94,8 +101,13 @@ public class Background extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
-		g.setColor(backgroundColor);
-		g.fillRect(location.x, location.y, width, height);
+		if (backgroundColor != null) {
+			g.setColor(backgroundColor);
+			g.fillRect(location.x, location.y, width, height);
+		}
+		if (backgroundImage != null) {
+			g.drawImage(backgroundImage, getX(), getY());
+		}
 	}
 
 	/**
