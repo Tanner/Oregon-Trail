@@ -1,5 +1,7 @@
 package scene;
 
+import java.util.ArrayList;
+
 import model.Party;
 import model.Person;
 
@@ -42,6 +44,8 @@ public class PartyCreationScene extends Scene {
 	
 	private Button confirmButton;
 	private SegmentedControl rationsSegmentedControl, professionSegmentedControl, skillSegmentedControl;
+	
+	private ArrayList<Person> people = new ArrayList<Person>();
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -118,11 +122,13 @@ public class PartyCreationScene extends Scene {
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
 		backgroundLayer.add(new Background(container, new Color(0xa00008)));
+		
+		enableNextPersonField();
 	}
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+		return;
 	}
 
 	@Override
@@ -130,9 +136,21 @@ public class PartyCreationScene extends Scene {
 		return ID.ordinal();
 	}
 	
+	private void enableNextPersonField() {
+		for (int i = 0; i < NUM_PEOPLE; i++) {
+			if (i <= people.size()) {
+				newPersonButtons[i].setDisabled(false);
+			} else {
+				newPersonButtons[i].setDisabled(true);
+			}
+		}
+	}
+	
 	private class ButtonListener implements ComponentListener {
 		@Override
-		public void componentActivated(AbstractComponent source) {			
+		public void componentActivated(AbstractComponent source) {
+			enableNextPersonField();
+			
 			for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
 					personNameTextFields[i].setVisible(true);
