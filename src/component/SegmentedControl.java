@@ -19,12 +19,13 @@ import java.util.*;
  */
 public class SegmentedControl extends Component {
 	
-	private final int PADDING = 5;
+//	private final int PADDING = 5;
 	private final int STATES;
 	private final int MAX_SELECTED;
 	
 	private int rows, cols, rowHeight, colWidth;
 	private int height, width;
+	private int margin;
 	private Vector2f position;
 	
 	
@@ -47,11 +48,12 @@ public class SegmentedControl extends Component {
 	 * @param maxSelected The maximum number of selected buttons at a time
 	 * @param labels The labels for each segmented button.
 	 */
-	public SegmentedControl(GUIContext context, Font font, Color c, int width, int height, int rows, int cols, int maxSelected, String ... labels) {
+	public SegmentedControl(GUIContext context, Font font, Color c, int width, int height, int rows, int cols, int padding, int maxSelected, String ... labels) {
 		super(context);
 		
 		this.rows = rows;
 		this.cols = cols;
+		this.margin = padding;
 
 		STATES = labels.length;
 		MAX_SELECTED = maxSelected;
@@ -96,7 +98,7 @@ public class SegmentedControl extends Component {
 	
 	@Override
 	public void setWidth(int width) {
-		int horizPaddingAmt = (cols - 1) * PADDING;
+		int horizPaddingAmt = (cols - 1) * margin;
 		width -= horizPaddingAmt;
 		
 		this.colWidth = (int) ((double)width/cols);
@@ -109,7 +111,7 @@ public class SegmentedControl extends Component {
 
 	@Override
 	public void setHeight(int height) {
-		int vertPaddingAmt = (rows - 1) * PADDING;
+		int vertPaddingAmt = (rows - 1) * margin;
 		height -= vertPaddingAmt;
 		
 		this.rowHeight =  (int) ((double)height/rows);
@@ -163,7 +165,7 @@ public class SegmentedControl extends Component {
 					Positionable.ReferencePoint.TopLeft, 0, 0);
 			for (int i = 1; i < cols; i++) {
 				buttons[i].setPosition(buttons[i-1].getPosition(Positionable.ReferencePoint.TopRight),
-						Positionable.ReferencePoint.TopLeft, PADDING, 0);
+						Positionable.ReferencePoint.TopLeft, margin, 0);
 			}
 			OuterLoop:
 			for (int i = 1; i < rows; i++) {
@@ -171,7 +173,7 @@ public class SegmentedControl extends Component {
 					if (parsePosition(i,j) >= STATES) 
 						break OuterLoop;
 					buttons[parsePosition(i,j)].setPosition(buttons[parsePosition(i-1,j)].getPosition(Positionable.ReferencePoint.BottomLeft),
-						Positionable.ReferencePoint.TopLeft, 0, PADDING);
+						Positionable.ReferencePoint.TopLeft, 0, margin);
 				}
 			}
 		}
