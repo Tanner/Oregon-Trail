@@ -2,11 +2,6 @@ package model;
 
 /*
 TO-DO List:
-Skillpoints to Condition
-Remove skill method
-Gender availability
-setName?
-change profession wipes (clear skill tree, reset skill points)
 add/remove single skill
 set party with full party
 */
@@ -53,7 +48,7 @@ public class Person {
 		}
 		else if (this.profession != profession) {
 			this.skills.clear();
-			Logger.log(this.name + " stopped being a " + this.profession + " and loses all current skills", Logger.Level.INFO);
+			Logger.log(this.name + " stopped being a " + this.profession + " and lost all current skills", Logger.Level.INFO);
 			this.profession = null;
 			setProfession(profession);
 			return true;
@@ -98,6 +93,22 @@ public class Person {
 	}
 	
 		
+	public boolean removeSkill(Skill oldSkill) {
+		if (!this.skills.contains(oldSkill)) {
+			Logger.log("Cannot remove a skill that isn't already known.", Logger.Level.INFO);
+			return false;
+		}
+		else if (this.profession.getStartingSkill() == oldSkill) {
+			Logger.log("Cannot remove profession's starting skill", Logger.Level.INFO);
+			return false;
+		}
+		else {
+			this.skills.remove(oldSkill);
+			this.skillPoints.increase(oldSkill.getCost());
+			return true;
+		}
+	}
+	
 	/**
 	 * Gets the list of skills a person has.
 	 * @return The list of skills
@@ -230,5 +241,13 @@ public class Person {
 		public String getName(){
 			return name;
 		}
+	}
+	
+	public void setIsMale(boolean isMale) {
+		this.isMale = isMale;
+	}
+	
+	public boolean getIsMale() {
+		return isMale;
 	}
 }
