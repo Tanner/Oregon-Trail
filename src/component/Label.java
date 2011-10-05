@@ -4,8 +4,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
-import sun.tools.jstat.Alignment;
-
 /**
  * A label class to draw text on screen.  Uses
  * Font's drawString method to accomplish this.
