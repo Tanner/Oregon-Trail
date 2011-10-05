@@ -124,7 +124,7 @@ public class PartyCreationScene extends Scene {
 					skillLabelReferenceObject = personSkillLabels[i][j - 1];
 				}
 				
-				personSkillLabels[i][j] = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_SKILL") +j, buttonWidth);
+				personSkillLabels[i][j] = new Label(container, fieldFont, Color.white, "", buttonWidth);
 				personSkillLabels[i][j].setHeight(regularButtonHeight);
 				personSkillLabels[i][j].setBackgroundColor(Color.darkGray);
 				personSkillLabels[i][j].setVisible(false);
@@ -241,14 +241,22 @@ public class PartyCreationScene extends Scene {
 		if(modal == professionModal) {
 			personMoneyLabels[0].setText("$" + Person.Profession.values()[segmentedControlResults[0]].getMoney());
 			people.get(0).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
+			for(int j = 0; j < 3; j++) {
+				personSkillLabels[0][j].setText("");
+			}
+			//TODO: setText for buttons
+			//personProfessionButtons[0].setText(people.get(0).getProfession().getName());	
 		}
 		else if (modal == skillModal) {
-			int j = 0;
 			people.get(0).clearSkills();
-			for(int index : segmentedControlResults) {
-				people.get(0).addSkill(Skill.values()[index]);
-				personSkillLabels[0][j].setText(people.get(0).getSkills().get(j).getName());
-				j++;
+			for(int j = 0; j < 3; j++) {
+				if(segmentedControlResults.length >= j + 1) {
+					people.get(0).addSkill(Skill.values()[segmentedControlResults[j]]);
+					personSkillLabels[0][j].setText(people.get(0).getSkills().get(j).getName());
+				}
+				else {
+					personSkillLabels[0][j].setText("");
+				}
 			}
 		}
 	}
