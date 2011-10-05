@@ -110,9 +110,18 @@ public class Party {
 	 */
 	
 	public enum Rations{
-		FILLING,
-		MEAGER,
-		BAREBONES;
+		FILLING ("Filling"),
+		MEAGER ("Meager"),
+		BAREBONES ("Barebones");
+		
+		private final String name;
+		private Rations(String name) {
+			this.name = name;
+		}
+		
+		public String toString() {
+			return this.name;
+		}
 	}
 	
 	/**
