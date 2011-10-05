@@ -155,11 +155,13 @@ public class Person {
 	 * @return Person's name
 	 */
 	public String getName() {
+		Logger.log(name + "was created", Logger.Level.INFO);
 		return name;
 	}
 	
 	public void setName(String name) {
 		this.name = name;
+		Logger.log("Name changed to " + name, Logger.Level.INFO);
 	}
 	
 	/**
