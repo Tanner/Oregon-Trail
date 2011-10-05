@@ -133,12 +133,12 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personNameTextFields[i]) {
-					showModal(new Modal(container, PartyCreationScene.this, "You want to select a profession, eh?", "Confirm"));
 					personProfessionButtons[i].setVisible(true);
 					return;
 				}
 				
 				if (source == personProfessionButtons[i]) {
+					showModal(new Modal(container, PartyCreationScene.this, "You want to select a profession, eh?", "Confirm"));
 					personMoneyLabels[i].setVisible(true);
 					personSkillOneButtons[i].setVisible(true);
 					personSkillTwoButtons[i].setVisible(true);
