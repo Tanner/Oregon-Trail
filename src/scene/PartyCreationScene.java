@@ -47,7 +47,8 @@ public class PartyCreationScene extends Scene {
 	private Button newPersonButtons[] = new Button[NUM_PEOPLE];
 	private Button personDeleteButtons[] = new Button[NUM_PEOPLE];
 	private TextField personNameTextFields[] = new TextField[NUM_PEOPLE];
-	private Button personProfessionButtons[] = new Button[NUM_PEOPLE];
+	private Button personChangeProfessionButtons[] = new Button[NUM_PEOPLE];
+	private Label personProfessionLabels[] = new Label[NUM_PEOPLE];
 	private Label personMoneyLabels[] = new Label[NUM_PEOPLE];
 	private Button personChangeSkillButtons[] = new Button[NUM_PEOPLE];
 	private Label personSkillLabels[][] = new Label[NUM_PEOPLE][NUM_SKILLS];
@@ -102,16 +103,24 @@ public class PartyCreationScene extends Scene {
 			personNameTextFields[i].setVisible(false);
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 			
-			personProfessionButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_PROFESSION")), buttonWidth, regularButtonHeight);
-			personProfessionButtons[i].setRoundedCorners(true);
-			personProfessionButtons[i].addListener(new ButtonListener());
-			personProfessionButtons[i].setVisible(false);
-			mainLayer.add(personProfessionButtons[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			personChangeProfessionButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_PROFESSION")), buttonWidth, regularButtonHeight);
+			personChangeProfessionButtons[i].setTopLeftRoundedCorner(true);
+			personChangeProfessionButtons[i].setTopRightRoundedCorner(true);
+			personChangeProfessionButtons[i].addListener(new ButtonListener());
+			personChangeProfessionButtons[i].setVisible(false);
+			mainLayer.add(personChangeProfessionButtons[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			
+			personProfessionLabels[i] = new Label(container, fieldFont, Color.white, "No Profession", buttonWidth);
+			personProfessionLabels[i].setHeight(regularButtonHeight);
+			personProfessionLabels[i].setBackgroundColor(Color.darkGray);
+			personProfessionLabels[i].setVisible(false);
+			personProfessionLabels[i].setAlignment(Alignment.Center);
+			mainLayer.add(personProfessionLabels[i], personChangeProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
 			
 			personMoneyLabels[i] = new Label(container, fieldFont, Color.white, "$0", buttonWidth);
 			personMoneyLabels[i].setAlignment(Alignment.Center);
 			personMoneyLabels[i].setVisible(false);
-			mainLayer.add(personMoneyLabels[i], personProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			mainLayer.add(personMoneyLabels[i], personProfessionLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
 			personChangeSkillButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_CHANGE_SKILL")), buttonWidth, regularButtonHeight);
 			personChangeSkillButtons[i].setTopLeftRoundedCorner(true);
@@ -210,7 +219,8 @@ public class PartyCreationScene extends Scene {
 	private void hidePersonColumn(int col) {
 		personDeleteButtons[col].setVisible(false);
 		personNameTextFields[col].setVisible(false);
-		personProfessionButtons[col].setVisible(false);
+		personChangeProfessionButtons[col].setVisible(false);
+		personProfessionLabels[col].setVisible(false);
 		personMoneyLabels[col].setVisible(false);
 		personChangeSkillButtons[col].setVisible(false);
 		for (int j = 0; j < personSkillLabels[col].length; j++) {
@@ -246,8 +256,7 @@ public class PartyCreationScene extends Scene {
 			for(int j = 0; j < 3; j++) {
 				personSkillLabels[0][j].setText("");
 			}
-			//TODO: setText for buttons
-			//personProfessionButtons[0].setText(people.get(0).getProfession().getName());	
+			personProfessionLabels[0].setText(people.get(0).getProfession().getName());
 		}
 		else if (modal == skillModal) {
 			people.get(0).clearSkills();
@@ -280,10 +289,11 @@ public class PartyCreationScene extends Scene {
 					}
 					personDeleteButtons[people.size() - 1].setVisible(true);
 					
-					personProfessionButtons[i].setVisible(true);
+					personChangeProfessionButtons[i].setVisible(true);
+					personProfessionLabels[i].setVisible(true);
 				}
 				
-				if (source == personProfessionButtons[i]) {
+				if (source == personChangeProfessionButtons[i]) {
 					professionModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), professionSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
 					currentPersonModifying = i;
 					
