@@ -63,6 +63,8 @@ public class PartyCreationScene extends Scene {
 	private Rations rations;
 	private Pace pace;
 	
+	private int currentPersonModifying;
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
@@ -283,6 +285,7 @@ public class PartyCreationScene extends Scene {
 				
 				if (source == personProfessionButtons[i]) {
 					professionModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), professionSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
+					currentPersonModifying = i;
 					
 					showModal(professionModal);
 					personMoneyLabels[i].setVisible(true);
@@ -295,6 +298,8 @@ public class PartyCreationScene extends Scene {
 				
 				if (source == personChangeSkillButtons[i]) {
 					skillModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), skillSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
+					currentPersonModifying = i;
+					
 					showModal(skillModal);
 				}
 				
