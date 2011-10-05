@@ -30,32 +30,18 @@ public class PartyCreationScene extends Scene {
 		int buttonWidth = (container.getWidth() - PADDING * (buttonCount + 1)) / buttonCount;
 		int buttonheight = 150;
 
-		// Background
-		backgroundLayer.add(new Background(container, new Color(0xa00008)));
-		
-		// New Player Buttons
-		Button firstPersonButton = new Button(container,
-				new Label(container, fieldFont, Color.white, "New Player"),
-				buttonWidth,
-				150);
+		Button firstPersonButton = new Button(container, new Label(container, fieldFont, Color.white, "New Player"), buttonWidth, 150);
+		firstPersonButton.addListener(new NewPlayerButtonListener());
 		mainLayer.add(firstPersonButton, mainLayer.getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, PADDING, PADDING);
 		
-		Button secondPersonButton = new Button(container,
-				new Label(container, fieldFont, Color.white, "New Player"),
-				buttonWidth,
-				150);
+		Button secondPersonButton = new Button(container, new Label(container, fieldFont, Color.white, "New Player"), buttonWidth, 150);
 		mainLayer.add(secondPersonButton, firstPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
 		
-		Button thirdPersonButton = new Button(container,
-				new Label(container, fieldFont, Color.white, "New Player"),
-				buttonWidth,
-				150);
+		Button thirdPersonButton = new Button(container, new Label(container, fieldFont, Color.white, "New Player"), buttonWidth, 150);
 		mainLayer.add(thirdPersonButton, secondPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
 		
-		Button fourthPersonButton = new Button(container,
-				new Label(container, fieldFont, Color.white, "New Player"),
-				buttonWidth,
-				150);
+		Button fourthPersonButton = new Button(container, new Label(container, fieldFont, Color.white, "New Player"), buttonWidth, 150);
+		fourthPersonButton.setDisabled(true);
 		mainLayer.add(fourthPersonButton, thirdPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
 		
 		firstPersonButton.addListener(new NewPlayerButtonListener());
