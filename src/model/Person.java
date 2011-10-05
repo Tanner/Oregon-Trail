@@ -90,7 +90,7 @@ public class Person {
 		}
 		else {
 			if(skillPoints.getCurrent() < newSkill.getCost()) {
-				Logger.log(this.name + " does not have enough skill points.  Current skill points: " + skillPoints.getCurrent() + " Cost of new skill: " + newSkill.getCost(), Logger.Level.INFO);
+				Logger.log(this.name + " does not have enough skill points to obtain " + newSkill + ".  Current skill points: " + skillPoints.getCurrent() + " Cost of new skill: " + newSkill.getCost(), Logger.Level.INFO);
 			}
 			else {
 				skillPoints.decrease(newSkill.getCost());

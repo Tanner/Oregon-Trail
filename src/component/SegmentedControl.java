@@ -4,6 +4,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
+import core.Logger;
+
 import java.util.*;
 /**
  * A component with multiple buttons.  Has two functionalities:many buttons,
@@ -172,6 +174,14 @@ public class SegmentedControl extends Component {
 						Positionable.ReferencePoint.TopLeft, 0, PADDING);
 				}
 			}
+		}
+	}
+	
+	public void setAcceptingInput(boolean acceptingInput) {
+		super.setAcceptingInput(acceptingInput);
+		
+		for (Button b : buttons) {
+			b.setAcceptingInput(acceptingInput);
 		}
 	}
 	

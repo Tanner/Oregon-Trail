@@ -2,6 +2,9 @@ package core;
 
 import java.util.Stack;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.state.transition.* ;
@@ -110,6 +113,15 @@ public class SceneDirector extends StateBasedGame {
 				
 		if (fullScreenKeyComboPressed) {
 			try {
+				try {
+					DisplayMode[] dms = Display.getAvailableDisplayModes();
+					for (DisplayMode m : dms) {
+						Logger.log(m.toString(), Logger.Level.DEBUG);
+					}
+				} catch (LWJGLException e) {
+					e.printStackTrace();
+				}
+				
 				container.setFullscreen(!container.isFullscreen());
 			} catch (SlickException e) {
 				e.printStackTrace();

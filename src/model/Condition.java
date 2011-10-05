@@ -83,7 +83,7 @@ public class Condition {
 	 */
 	public boolean decrease (int amount) {
 		if(amount <= 0) {
-			Logger.log("Not an decrement", Logger.Level.ERROR);
+			Logger.log("Not a decrement", Logger.Level.ERROR);
 			return false;
 		}
 		else if(current - amount < min) {

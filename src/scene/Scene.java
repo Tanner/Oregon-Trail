@@ -41,17 +41,18 @@ public abstract class Scene extends BasicGameState {
 	public void showModal(Modal modal) {
 		modalLayer.add(modal);
 		
-		modalLayer.setVisible(true);
 		backgroundLayer.setAcceptingInput(false);
 		mainLayer.setAcceptingInput(false);
 		hudLayer.setAcceptingInput(false);
+		
+		modalLayer.setAcceptingInput(true);
+		modalLayer.setVisible(true);
 	}
 	
 	public void closeModal(Modal modal) {
 		// Make Modal invisible and set accepting input to false before removing it!
 		modalLayer.setVisible(false);
 		modalLayer.setAcceptingInput(false);
-		
 		modalLayer.remove(modal);
 		
 		backgroundLayer.setAcceptingInput(true);
@@ -63,21 +64,24 @@ public abstract class Scene extends BasicGameState {
 	 * Things to do when the Scene is started.
 	 */
 	public void start() {
-		return;
+		mainLayer.setAcceptingInput(true);
+		modalLayer.setAcceptingInput(true);
 	}
 	
 	/**
 	 * Things to do when the Scene is paused.
 	 */
 	public void pause() {
-		return;
+		mainLayer.setAcceptingInput(false);
+		modalLayer.setAcceptingInput(false);
 	}
 	
 	/**
 	 * Things to do when the Scene is stopped.
 	 */
 	public void stop() {
-		return;
+		mainLayer.setAcceptingInput(false);
+		modalLayer.setAcceptingInput(false);
 	}
 	
 	@Override

@@ -13,6 +13,7 @@ import scene.Scene;
 
 import core.FontManager;
 import core.GameDirector;
+import core.Logger;
 
 public class Modal extends Component {
 	private static final int MARGIN = 50;

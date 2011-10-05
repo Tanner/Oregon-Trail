@@ -1,5 +1,7 @@
 package scene;
 
+import java.util.ArrayList;
+
 import model.Party;
 import model.Person;
 
@@ -43,6 +45,8 @@ public class PartyCreationScene extends Scene {
 	private Button confirmButton;
 	private SegmentedControl rationsSegmentedControl, professionSegmentedControl, skillSegmentedControl;
 	
+	private ArrayList<Person> people = new ArrayList<Person>();
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
@@ -74,6 +78,7 @@ public class PartyCreationScene extends Scene {
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
 			
 			personNameTextFields[i] = new TextField(container, fieldFont, buttonWidth, regularButtonHeight);
+			personNameTextFields[i].setPlaceholderText("Name");
 			personNameTextFields[i].addListener(new ButtonListener());
 			personNameTextFields[i].setVisible(false);
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
@@ -104,8 +109,9 @@ public class PartyCreationScene extends Scene {
 			mainLayer.add(personSkillThreeButtons[i], personSkillTwoButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		}
 		
-		String[] rationLabels = new String[3];
-		for (int i = 0; i < Party.Rations.values().length; i++) {
+		int numOfRations = Party.Rations.values().length;
+		String[] rationLabels = new String[numOfRations];
+		for (int i = 0; i < numOfRations; i++) {
 			rationLabels[i] = Party.Rations.values()[i].toString();
 		}
 		
@@ -117,11 +123,13 @@ public class PartyCreationScene extends Scene {
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
 		backgroundLayer.add(new Background(container, new Color(0xa00008)));
+		
+		enableNextPersonField();
 	}
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+		return;
 	}
 
 	@Override
@@ -129,9 +137,21 @@ public class PartyCreationScene extends Scene {
 		return ID.ordinal();
 	}
 	
+	private void enableNextPersonField() {
+		for (int i = 0; i < NUM_PEOPLE; i++) {
+			if (i <= people.size()) {
+				newPersonButtons[i].setDisabled(false);
+			} else {
+				newPersonButtons[i].setDisabled(true);
+			}
+		}
+	}
+	
 	private class ButtonListener implements ComponentListener {
 		@Override
-		public void componentActivated(AbstractComponent source) {			
+		public void componentActivated(AbstractComponent source) {
+			enableNextPersonField();
+			
 			for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
 					personNameTextFields[i].setVisible(true);

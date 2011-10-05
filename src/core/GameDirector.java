@@ -1,5 +1,8 @@
 package core;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
@@ -47,7 +50,8 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	public void start() {
 		try {
 			container = new AppGameContainer(sceneDirector);
-			container.setDisplayMode(720, 480, false);
+			container.setDisplayMode(1024, 576, false);
+			container.setShowFPS(false);
 			container.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
