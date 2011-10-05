@@ -16,6 +16,9 @@ import core.Logger;
  * @author Tanner Smith
  */
 public class Button extends Component {
+	private static final int PADDING = 10;
+	private static final int CORNER_RADIUS = 2;
+	
 	private Label label;
 	private Vector2f position;
 	private int width;
@@ -25,9 +28,11 @@ public class Button extends Component {
 	private boolean over;
 	private boolean active;
 	private boolean disabled;
-	
-	private static final int PADDING = 10;
-	
+	private int topLeftCornerRadius;
+	private int bottomLeftCornerRadius;
+	private int topRightCornerRadius;
+	private int bottomRightCornerRadius;
+		
 	/**
 	 * Creates a button.
 	 * @param container Container for the  button
@@ -68,12 +73,65 @@ public class Button extends Component {
 		
 		super.render(container, g);
 		
+		Color color;
 		if (active || disabled) {
-			g.setColor(buttonActiveColor);
+			color = buttonActiveColor;
 		} else {
-			g.setColor(buttonColor);
+			color = buttonColor;
 		}
-		g.fillRect(position.x, position.y, width, height);
+		Color brightColor = color.brighter(0.1f);
+		Color darkColor = color.darker(0.2f);		
+
+		g.setColor(color);
+		// inner rect
+		g.fillRect(getX() + CORNER_RADIUS,
+				getY() + CORNER_RADIUS,
+				width - CORNER_RADIUS * 2,
+				height - CORNER_RADIUS * 2);
+		
+		// top bar
+		if (topLeftCornerRadius > 0 && topRightCornerRadius > 0) {
+			g.setColor(brightColor);
+		} else {
+			g.setColor(color);
+		}
+		g.fillRect(getX() + topLeftCornerRadius,
+				getY(),
+				width - topLeftCornerRadius - topRightCornerRadius,
+				CORNER_RADIUS);
+				
+		// bottom bar
+		if (bottomLeftCornerRadius > 0 && bottomRightCornerRadius > 0) {
+			g.setColor(darkColor);
+		} else {
+			g.setColor(color);
+		}
+		g.fillRect(getX() + bottomLeftCornerRadius,
+				getY() + height - CORNER_RADIUS,
+				width - bottomLeftCornerRadius - bottomRightCornerRadius,
+				CORNER_RADIUS);
+				
+		// left bar
+		if (topLeftCornerRadius > 0 && bottomLeftCornerRadius > 0) {
+			g.setColor(brightColor);
+		} else {
+			g.setColor(color);
+		}
+		g.fillRect(getX(),
+				getY() + topLeftCornerRadius,
+				CORNER_RADIUS,
+				height - topLeftCornerRadius - bottomLeftCornerRadius);
+		
+		// right bar
+		if (topRightCornerRadius > 0 && bottomRightCornerRadius > 0) {
+			g.setColor(brightColor);
+		} else {
+			g.setColor(color);
+		}
+		g.fillRect(getX() + width - CORNER_RADIUS,
+				getY() + topRightCornerRadius,
+				CORNER_RADIUS,
+				height - topRightCornerRadius - bottomRightCornerRadius);
 		
 		label.render(container, g);
 	}
@@ -178,5 +236,44 @@ public class Button extends Component {
 	
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
+	}
+	
+	public void setRoundedCorners(boolean rounded) {
+		setTopLeftRoundedCorner(rounded);
+		setBottomLeftRoundedCorner(rounded);
+		setTopRightRoundedCorner(rounded);
+		setBottomRightRoundedCorner(rounded);
+	}
+	
+	public void setTopLeftRoundedCorner(boolean rounded) {
+		if (rounded) {
+			this.topLeftCornerRadius = CORNER_RADIUS;
+		} else {
+			this.topLeftCornerRadius = 0;
+		}
+	}
+	
+	public void setBottomLeftRoundedCorner(boolean rounded) {
+		if (rounded) {
+			this.bottomLeftCornerRadius = CORNER_RADIUS;
+		} else {
+			this.bottomLeftCornerRadius = 0;
+		}
+	}
+	
+	public void setTopRightRoundedCorner(boolean rounded) {
+		if (rounded) {
+			this.topRightCornerRadius = CORNER_RADIUS;
+		} else {
+			this.topRightCornerRadius = 0;
+		}
+	}
+	
+	public void setBottomRightRoundedCorner(boolean rounded) {
+		if (rounded) {
+			this.bottomRightCornerRadius = CORNER_RADIUS;
+		} else {
+			this.bottomRightCornerRadius = 0;
+		}
 	}
 }
