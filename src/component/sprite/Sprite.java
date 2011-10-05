@@ -1,4 +1,4 @@
-package sprite;
+package component.sprite;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;

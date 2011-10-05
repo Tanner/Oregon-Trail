@@ -12,9 +12,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.Background;
 import component.Label;
 import component.Positionable;
+import component.sprite.*;
 
 import core.*;
-import sprite.*;
 
 
 public class TownScene extends Scene {
