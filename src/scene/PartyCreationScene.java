@@ -237,6 +237,10 @@ public class PartyCreationScene extends Scene {
 		if (col > 0) {
 			personDeleteButtons[col - 1].setVisible(true);
 		}
+		
+		if (col < NUM_PEOPLE - 1) {
+			personNameTextFields[col + 1].setVisible(false);
+		}
 	}
 	
 	/**
@@ -247,9 +251,6 @@ public class PartyCreationScene extends Scene {
 		people.remove(col);
 		
 		personNameTextFields[col].clear();
-		
-		rationsSegmentedControl.clear();
-		professionSegmentedControl.clear();
 		//TODO: Clear other things when deleted
 	}
 	
@@ -287,19 +288,25 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personNameTextFields[i]) {
-					people.add(i, new Person(personNameTextFields[i].getText()));
-
-					// Moves the delete button to the latest person created
-					for (int j = 0; j < people.size() - 1; j++) {
-						personDeleteButtons[j].setVisible(false);
+					if(people.size() < i + 1) {
+						people.add(i, new Person(personNameTextFields[i].getText()));
+	
+						// Moves the delete button to the latest person created
+						for (int j = 0; j < people.size() - 1; j++) {
+							personDeleteButtons[j].setVisible(false);
+						}
+						personDeleteButtons[people.size() - 1].setVisible(true);
+						
+						personChangeProfessionButtons[i].setVisible(true);
+						personProfessionLabels[i].setVisible(true);
 					}
-					personDeleteButtons[people.size() - 1].setVisible(true);
-					
-					personChangeProfessionButtons[i].setVisible(true);
-					personProfessionLabels[i].setVisible(true);
+					else {
+						people.get(i).setName(personNameTextFields[i].getText());
+					}
 				}
 				
 				if (source == personChangeProfessionButtons[i]) {
+					professionSegmentedControl.clear();
 					professionModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), professionSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
 					currentPersonModifying = i;
 					
@@ -313,6 +320,7 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personChangeSkillButtons[i]) {
+					skillSegmentedControl.clear();
 					skillModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), skillSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
 					currentPersonModifying = i;
 					
@@ -329,10 +337,13 @@ public class PartyCreationScene extends Scene {
 			enableNextPersonField();
 			
 			if (source == confirmButton) {
-				//TODO: get game passed in from game director
 				//TODO: Show dialog box if persons don't have a profession
-				
-				Player player = new Player();
+				for (Person person : people) {
+					if (person.getProfession() == null) {
+						Logger.log("Not all party members have professions selected", Logger.Level.INFO);
+						return;
+					}
+				}
 				pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
 				rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
 				player.setParty(new Party(pace, rations, people));
