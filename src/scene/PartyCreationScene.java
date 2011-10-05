@@ -314,10 +314,13 @@ public class PartyCreationScene extends Scene {
 			
 			if (source == confirmButton) {
 				//TODO: get game passed in from game director
+				//TODO: Show dialog box if persons don't have a profession
+				
 				Player player = new Player();
 				pace = Pace.values()[paceSegmentedControl.getState()[0]];
 				rations = Rations.values()[rationsSegmentedControl.getState()[0]];
 				player.setParty(new Party(pace, rations, people));
+				
 				Logger.log("Confirm button pushed", Logger.Level.DEBUG);
 			}
 		}
