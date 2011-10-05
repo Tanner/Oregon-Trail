@@ -82,9 +82,18 @@ public class Party {
 	 */
 	
 	public enum Pace{
-		STEADY,
-		STRENUOUS,
-		GRUELING;
+		STEADY ("Steady"),
+		STRENUOUS ("Strenuous"),
+		GRUELING ("Grueling");
+		
+		private final String name;
+		private Pace(String name) {
+			this.name = name;
+		}
+		
+		public String toString() {
+			return this.name;
+		}
 	}
 	
 	/**
