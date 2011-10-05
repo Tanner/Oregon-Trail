@@ -1,10 +1,15 @@
 package component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
+
+import component.Positionable.ReferencePoint;
 
 /**
  * An abstract class for a component.
@@ -12,7 +17,9 @@ import org.newdawn.slick.gui.GUIContext;
  * @author Tanner Smith
  */
 public abstract class Component extends AbstractComponent implements Positionable {
-	protected boolean visible; 
+	protected boolean visible;
+	
+	protected List<Component> components;
 	
 	/**
 	 * Constructs a component.
@@ -20,15 +27,36 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 */
 	public Component(GUIContext container) {
 		super(container);
+		
+		components = new ArrayList<Component>();
+		
 		visible = true;
 	}
 	
 	public void render(GUIContext context, Graphics g) throws SlickException {
-
+		for (Component component : components) {
+			component.render(container, g);
+		}
 	}
 	
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+	
+	public void add(Component component, Vector2f location, ReferencePoint referencePoint) {
+		component.setPosition(location, referencePoint, 0, 0);
+		
+		components.add(component);
+	}
+	
+	public void add(Component component, Vector2f location, ReferencePoint referencePoint, int xOffset, int yOffset) {
+		component.setPosition(location, referencePoint, xOffset, yOffset);
+		
+		components.add(component);
+	}
+	
+	public void remove(Component component) {
+		components.remove(component);
 	}
 	
 	@Override
@@ -105,4 +133,12 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	public abstract void setWidth(int width);
 	public abstract void setHeight(int height);
+	
+	public void setAcceptingInput(boolean acceptingInput) {
+		super.setAcceptingInput(acceptingInput);
+		
+		for (Component c : components) {
+			c.setAcceptingInput(acceptingInput);
+		}
+	}
 }

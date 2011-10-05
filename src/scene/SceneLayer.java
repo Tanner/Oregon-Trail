@@ -19,41 +19,25 @@ public class SceneLayer extends Component {
 	private int width;
 	private int height;
 	
-	protected List<Component> components;
 	protected Layout layout;
 	
 	public SceneLayer(GUIContext container) {
 		super(container);
-		components = new ArrayList<Component>();
 		this.width = container.getWidth();
 		this.height = container.getHeight();
 	}
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
+		super.render(container, g);
+		
 		g.translate(location.x, location.y);
-
-		for (Component component : components) {
-			component.render(container, g);
-		}
 	}
 	
 	public void add(Component component) {
 		if (layout != null) {
 			layout.setComponentLocation(component);
 		}
-		
-		components.add(component);
-	}
-	
-	public void add(Component component, Vector2f location, ReferencePoint referencePoint) {
-		component.setPosition(location, referencePoint, 0, 0);
-		
-		components.add(component);
-	}
-	
-	public void add(Component component, Vector2f location, ReferencePoint referencePoint, int xOffset, int yOffset) {
-		component.setPosition(location, referencePoint, xOffset, yOffset);
 		
 		components.add(component);
 	}

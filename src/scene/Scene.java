@@ -6,6 +6,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.Modal;
+
 
 public abstract class Scene extends BasicGameState {
 	protected GameContainer container;
@@ -22,6 +24,7 @@ public abstract class Scene extends BasicGameState {
 		mainLayer = new SceneLayer(container);
 		hudLayer = new SceneLayer(container);
 		modalLayer = new ModalSceneLayer(container);
+		modalLayer.setVisible(false);
 	}
 
 	@Override
@@ -34,6 +37,24 @@ public abstract class Scene extends BasicGameState {
 
 	@Override
 	public abstract void update(GameContainer container, StateBasedGame game, int delta) throws SlickException;
+	
+	public void showModal(Modal modal) {
+		modalLayer.add(modal);
+		
+		modalLayer.setVisible(true);
+		backgroundLayer.setAcceptingInput(false);
+		mainLayer.setAcceptingInput(false);
+		hudLayer.setAcceptingInput(false);
+	}
+	
+	public void closeModal(Modal modal) {
+		modalLayer.remove(modal);
+		
+		modalLayer.setVisible(false);
+		backgroundLayer.setAcceptingInput(true);
+		mainLayer.setAcceptingInput(true);
+		hudLayer.setAcceptingInput(true);
+	}
 	
 	/**
 	 * Things to do when the Scene is started.

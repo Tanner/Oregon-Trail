@@ -4,11 +4,14 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.gui.AbstractComponent;
+import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Background;
 import component.Button;
 import component.Label;
+import component.Modal;
 import component.Positionable;
 import component.TextField;
 import core.FontManager;
@@ -27,6 +30,10 @@ public class PartyCreationScene extends Scene {
 		int buttonWidth = (container.getWidth() - PADDING * (buttonCount + 1)) / buttonCount;
 		int buttonheight = 150;
 
+		// Background
+		backgroundLayer.add(new Background(container, new Color(0xa00008)));
+		
+		// New Player Buttons
 		Button firstPersonButton = new Button(container,
 				new Label(container, fieldFont, Color.white, "New Player"),
 				buttonWidth,
@@ -49,9 +56,11 @@ public class PartyCreationScene extends Scene {
 				new Label(container, fieldFont, Color.white, "New Player"),
 				buttonWidth,
 				150);
-		fourthPersonButton.setDisabled(true);
 		mainLayer.add(fourthPersonButton, thirdPersonButton.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, PADDING, 0);
 		
+		firstPersonButton.addListener(new NewPlayerButtonListener());
+		
+		// Name Text Fields
 		TextField firstPersonNameTextField = new TextField(container, fieldFont, buttonWidth, 40);
 		mainLayer.add(firstPersonNameTextField, firstPersonButton.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		
@@ -63,8 +72,6 @@ public class PartyCreationScene extends Scene {
 		
 		TextField fourthPersonNameTextField = new TextField(container, fieldFont, buttonWidth, 40);
 		mainLayer.add(fourthPersonNameTextField, fourthPersonButton.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
-		
-		backgroundLayer.add(new Background(container, new Color(0xa00008)));
 	}
 	
 	@Override
@@ -75,5 +82,13 @@ public class PartyCreationScene extends Scene {
 	@Override
 	public int getID() {
 		return ID.ordinal();
+	}
+	
+	private class NewPlayerButtonListener implements ComponentListener {
+
+		@Override
+		public void componentActivated(AbstractComponent source) {
+			showModal(new Modal(container, PartyCreationScene.this, "What's your profession?", "Confirm", "Cancel"));
+		}
 	}
 }
