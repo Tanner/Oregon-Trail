@@ -24,6 +24,7 @@ public class Person {
 	private String name;
 	private Profession profession;
 	private final static float baseMoney = 1600f;
+	private final static int baseSkillPoints = 70;
 	
 	/**
 	 * Person creation should be done this way always - name first, then profession and skills are added.
@@ -31,7 +32,7 @@ public class Person {
 	 */
 	public Person(String name){
 		this.name = name;
-		this.skillPoints = new Condition(0, 120, 120);
+		this.skillPoints = new Condition(0, baseSkillPoints, baseSkillPoints);
 	}
 	
 	/**
