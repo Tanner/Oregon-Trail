@@ -10,11 +10,12 @@ import java.util.Map;
  * @author john 
  */
 
-public final class OTConstStore {
+public final class ConstantStore {
 	
-	private OTConstStore(){
+	private ConstantStore(){
 		
 	}
+	
 	/**
 	 * initialize and build literal map used to hold all display literals in game
 	 */
