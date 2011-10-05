@@ -224,6 +224,11 @@ public class PartyCreationScene extends Scene {
 		//TODO: Clear other things when deleted
 	}
 	
+	@Override
+	public void resignModal(Modal modal, int[] segmentedControlResults) {
+		super.resignModal(modal, segmentedControlResults);
+	}
+	
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent source) {			
