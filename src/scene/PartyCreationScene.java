@@ -91,6 +91,7 @@ public class PartyCreationScene extends Scene {
 	private class PersonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent source) {
+			showModal(new Modal(container, PartyCreationScene.this, "Button Pushed!", "YAY"));
 			Logger.log(""+source, Logger.Level.INFO);
 		}
 	}
