@@ -9,6 +9,6 @@
 ## Members
 * Tanner Smith
 * Ryan Ashcraft
-* John Turner tweak
+* John Turner 
 * George Johnston
 * Jeremy Grebner
