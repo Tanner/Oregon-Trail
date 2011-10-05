@@ -10,6 +10,7 @@ import model.Person.Skill;
 import model.Player;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
@@ -44,6 +45,8 @@ public class PartyCreationScene extends Scene {
 	private static final int newPersonButtonHeight = 100;
 	private static final int regularButtonHeight = 30;
 	
+	private Player player;
+	
 	private Button newPersonButtons[] = new Button[NUM_PEOPLE];
 	private Button personDeleteButtons[] = new Button[NUM_PEOPLE];
 	private TextField personNameTextFields[] = new TextField[NUM_PEOPLE];
@@ -65,6 +68,10 @@ public class PartyCreationScene extends Scene {
 	private Pace pace;
 	
 	private int currentPersonModifying;
+	
+	public PartyCreationScene(Player player) {
+		this.player = player;
+	}
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
