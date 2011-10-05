@@ -251,7 +251,10 @@ public class PartyCreationScene extends Scene {
 		people.remove(col);
 		
 		personNameTextFields[col].clear();
-		//TODO: Clear other things when deleted
+		personProfessionLabels[col].setText("No Profession");
+		for(int j = 0; j < 3; j++) {
+			personSkillLabels[col][j].setText("");
+		}
 	}
 	
 	@Override
