@@ -36,7 +36,7 @@ public class FontManager {
 			h2.getEffects().add(new ColorEffect());
 			h2.loadGlyphs();
 			
-			fieldFont = new UnicodeFont("resources/ARCADEPI.ttf", 18, true, false);
+			fieldFont = new UnicodeFont("resources/ARCADEPI.ttf", 15, true, false);
 			fieldFont.addGlyphs(glyphsToAdd);
 			fieldFont.getEffects().add(new ColorEffect());
 			fieldFont.loadGlyphs();
