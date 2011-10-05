@@ -80,7 +80,6 @@ public class TextField extends Component {
 				}
 				
 				setFocus(false);
-				notifyListeners();
 			} else if (key == Input.KEY_BACK && label.getText().length() >= 1) {
 				Logger.log("Deleting last character", Logger.Level.DEBUG);
 				
@@ -137,6 +136,14 @@ public class TextField extends Component {
 		}
 		
 		return false;
+	}
+	
+	public void setFocus(boolean focus) {
+		if (!focus && hasFocus()) {
+			notifyListeners();
+		}
+		
+		super.setFocus(focus);
 	}
 	
 	/**
