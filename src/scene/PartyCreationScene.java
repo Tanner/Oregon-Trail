@@ -133,7 +133,7 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personNameTextFields[i]) {
-					showModal(new Modal(container, PartyCreationScene.this, "You want to select a profession, eh?", "Confirm", "Deny"));
+					showModal(new Modal(container, PartyCreationScene.this, "You want to select a profession, eh?", "Confirm"));
 					personProfessionButtons[i].setVisible(true);
 					return;
 				}
@@ -147,7 +147,7 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personSkillOneButtons[i] || source == personSkillTwoButtons[i] || source == personSkillThreeButtons[i]) {
-					showModal(new Modal(container, PartyCreationScene.this, "You want to select a skill, eh?", "Confirm", "Deny"));
+					showModal(new Modal(container, PartyCreationScene.this, "You want to select a skill, eh?", "Confirm"));
 				}
 			}
 			
