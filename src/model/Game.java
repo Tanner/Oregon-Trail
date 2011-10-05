@@ -21,8 +21,10 @@ public class Game {
 	public Game() {
 		Random r = new Random();
 		ArrayList<Person.Skill> person1Skill = new ArrayList<Person.Skill>();
+		ArrayList<Person> party = new ArrayList<Person>();
 		
 		Person person1 = new Person("Alice");
+		party.add(person1);
 		person1.setProfession(Person.Profession.values()[r.nextInt(Person.Profession.values().length)]);
 		person1.setProfession(Person.Profession.values()[r.nextInt(Person.Profession.values().length)]);
 		person1.setProfession(Person.Profession.values()[r.nextInt(Person.Profession.values().length)]);
@@ -55,7 +57,7 @@ public class Game {
 		}
 		
 		
-		this.player = new Player(new Party(Pace.GRUELING, Rations.BAREBONES, person1/*, person2*/));
+		this.player = new Player(new Party(Pace.GRUELING, Rations.BAREBONES, party));
 		if(player != null){
 			Logger.log("Player was created successfully", Logger.Level.INFO);
 		}

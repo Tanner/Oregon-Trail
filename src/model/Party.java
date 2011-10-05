@@ -28,7 +28,7 @@ public class Party {
 	 * If people are present before party is created, this constructor is used
 	 * @param party Array of people to be initialized into party
 	 */
-	public Party(Pace pace, Rations rations, Person[] party) {
+	public Party(Pace pace, Rations rations, ArrayList<Person> party) {
 		for(Person person : party) {
 			if (person != null) {
 				members.add(person);
