@@ -24,12 +24,15 @@ public class Modal extends Component {
 	private int width;
 	private int height;
 	private Label messageLabel;
+	private Button resignButton;
+	private Button dismissButton;
+	private SegmentedControl segmentedControl;
 
 	public Modal(GUIContext container) {
 		super(container);
 	}
 	
-	public Modal(GUIContext container, Scene scene, String message, String submitButtonString) {
+	public Modal(GUIContext container, Scene scene, String message, String dismissButtonText) {
 		this(container);
 		
 		this.scene = scene;
@@ -42,45 +45,48 @@ public class Modal extends Component {
 		this.messageLabel = new Label(container, fieldFont, Color.white, message, width);
 		messageLabel.setAlignment(Label.Alignment.Center);
 		
-		Button okButton = new Button(container, new Label(container, fieldFont, Color.white, submitButtonString), 200, 40);
-		okButton.addListener(new ButtonListener());
+		dismissButton = new Button(container, new Label(container, fieldFont, Color.white, dismissButtonText), 200, 40);
+		dismissButton.setRoundedCorners(true);
+		dismissButton.addListener(new ButtonListener());
 		
-		this.height = PADDING*3 + messageLabel.getHeight() + okButton.getHeight();
+		this.height = PADDING*3 + messageLabel.getHeight() + dismissButton.getHeight();
 		location = new Vector2f(MARGIN, (container.getHeight() - height) / 2);
 
-		add(okButton, getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.BottomCenter, 0, -PADDING);
-		add(messageLabel, getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);		
+		add(resignButton, getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.BottomCenter, 0, -PADDING);
+		add(dismissButton, getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);		
 	}
 	
-	public Modal(GUIContext container, Scene scene, String message, Component component, String submitButtonString, String cancelButtonString) {
+	public Modal(GUIContext container, Scene scene, String message, SegmentedControl segmentedControl, String submitButtonString, String cancelButtonString) {
 		this(container);
 		
 		this.scene = scene;
-		
+		this.segmentedControl = segmentedControl;
 		this.width = container.getWidth() - MARGIN*2;
 		
 		location = new Vector2f(MARGIN, (width - height) / 2);
 		
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);		
-		this.messageLabel = new Label(container, fieldFont, Color.white, message, width);
+		messageLabel = new Label(container, fieldFont, Color.white, message, width);
 		messageLabel.setAlignment(Label.Alignment.Center);
 		
 		ButtonListener buttonListener = new ButtonListener();
-		Button submitButton = new Button(container, new Label(container, fieldFont, Color.white, submitButtonString), (width - PADDING*2) / 2 - PADDING, 40);
-		submitButton.addListener(buttonListener);
+		resignButton = new Button(container, new Label(container, fieldFont, Color.white, submitButtonString), (width - PADDING*2) / 2 - PADDING, 40);
+		resignButton.setRoundedCorners(true);
+		resignButton.addListener(buttonListener);
 		
-		Button cancelButton = new Button(container, new Label(container, fieldFont, Color.white, cancelButtonString), (width - PADDING*2) / 2 - PADDING, 40);
-		cancelButton.addListener(buttonListener);
+		dismissButton = new Button(container, new Label(container, fieldFont, Color.white, cancelButtonString), (width - PADDING*2) / 2 - PADDING, 40);
+		dismissButton.setRoundedCorners(true);
+		dismissButton.addListener(buttonListener);
 		
-		this.height = PADDING*4 + messageLabel.getHeight() + component.getHeight() + submitButton.getHeight();
+		this.height = PADDING*4 + messageLabel.getHeight() + segmentedControl.getHeight() + resignButton.getHeight();
 		location = new Vector2f(MARGIN, (container.getHeight() - height) / 2);
 		
-		component.setWidth(width - PADDING*2);
+		segmentedControl.setWidth(width - PADDING*2);
 		
 		add(messageLabel, getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
-		add(component, messageLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, PADDING);
-		add(cancelButton, getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft, PADDING, -PADDING);
-		add(submitButton, getPosition(Positionable.ReferencePoint.BottomRight), Positionable.ReferencePoint.BottomRight, -PADDING, -PADDING);
+		add(segmentedControl, messageLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, PADDING);
+		add(dismissButton, getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft, PADDING, -PADDING);
+		add(resignButton, getPosition(Positionable.ReferencePoint.BottomRight), Positionable.ReferencePoint.BottomRight, -PADDING, -PADDING);
 	}
 	
 	public void render(GUIContext context, Graphics g) throws SlickException {
@@ -137,8 +143,12 @@ public class Modal extends Component {
 
 		@Override
 		public void componentActivated(AbstractComponent source) {
-			scene.closeModal(Modal.this);
-		}
+			if (source == resignButton) {
+				scene.resignModal(Modal.this, segmentedControl.getState());
+			} else {
+				scene.dismissModal(Modal.this);
+			}
+		} 
 		
 	}
 }
