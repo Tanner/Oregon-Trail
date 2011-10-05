@@ -33,6 +33,7 @@ public class Person {
 	public Person(String name){
 		this.name = name;
 		this.skillPoints = new Condition(0, baseSkillPoints, 0);
+		Logger.log(name + "was created", Logger.Level.INFO);
 	}
 	
 	/**
@@ -155,7 +156,6 @@ public class Person {
 	 * @return Person's name
 	 */
 	public String getName() {
-		Logger.log(name + "was created", Logger.Level.INFO);
 		return name;
 	}
 	
