@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import core.Logger;
 import core.Logger.Level;
 
@@ -9,7 +11,7 @@ import core.Logger.Level;
  */
 public class Party {
 	
-	private Person[] members;
+	private ArrayList<Person> members = new ArrayList<Person>();
 	private int money;
 	private Pace currentPace;
 	private Rations currentRations;
@@ -26,12 +28,16 @@ public class Party {
 	 * If people are present before party is created, this constructor is used
 	 * @param party Array of people to be initialized into party
 	 */
-	public Party(Pace pace, Rations rations, Person ... party) {
-		this.members = party.clone();
+	public Party(Pace pace, Rations rations, ArrayList<Person> party) {
+		for(Person person : party) {
+			if (person != null) {
+				members.add(person);
+			}
+		}
 		this.money = 0;
 		this.currentPace = pace;
 		this.currentRations = rations;
-		String partyCreationLog = members.length + " members were created successfully: ";
+		String partyCreationLog = members.size() + " members were created successfully: ";
 		for (Person person: party){
 			
 			this.money += person.getProfession().getMoney();
@@ -49,7 +55,7 @@ public class Party {
 	 * Returns an array of Persons present in the party
 	 * @return
 	 */
-	public Person[] getPartyMembers() {
+	public ArrayList<Person> getPartyMembers() {
 		return this.members;
 	}
 	
@@ -104,9 +110,18 @@ public class Party {
 	 */
 	
 	public enum Rations{
-		FILLING,
-		MEAGER,
-		BAREBONES;
+		FILLING ("Filling"),
+		MEAGER ("Meager"),
+		BAREBONES ("Barebones");
+		
+		private final String name;
+		private Rations(String name) {
+			this.name = name;
+		}
+		
+		public String toString() {
+			return this.name;
+		}
 	}
 	
 	/**

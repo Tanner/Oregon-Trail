@@ -41,6 +41,13 @@ public class Background extends Component {
 		this.backgroundColor = backgroundColor;
 	}
 	
+	public Background(GUIContext container, Color backgroundColor, int width, int height) {
+		this(container, backgroundColor);
+		
+		this.width = width;
+		this.height = height;
+	}
+
 	/**
 	 * @return the height of this object
 	 */
