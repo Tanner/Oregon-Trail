@@ -51,7 +51,8 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		try {
 			container = new AppGameContainer(sceneDirector);
 			container.setDisplayMode(1024, 576, false);
-			container.setShowFPS(false);
+			container.setTargetFrameRate(60);
+			container.setShowFPS(true);
 			container.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
