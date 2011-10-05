@@ -12,7 +12,7 @@ public class ModalSceneLayer extends SceneLayer {
 	public ModalSceneLayer(GUIContext container) {
 		super(container);
 		
-		add(new Background(container, new Color(0f, 0f, 0f, 0.25f)));
+		add(new Background(container, new Color(0f, 0f, 0f, 0.45f)));
 	}
 
 	@Override
