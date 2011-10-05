@@ -41,7 +41,7 @@ public class PartyCreationScene extends Scene {
 	private Button personSkillThreeButtons[] = new Button[NUM_PEOPLE];
 	
 	private Button confirmButton;
-	private SegmentedControl rationsSegmentedControl;
+	private SegmentedControl rationsSegmentedControl, professionSegmentedControl, skillSegmentedControl;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -50,6 +50,20 @@ public class PartyCreationScene extends Scene {
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		int buttonWidth = (container.getWidth() - PADDING * (NUM_PEOPLE + 1)) / NUM_PEOPLE;
 
+		int numOfProfessions = Person.Profession.values().length;
+		String[] professionLabels = new String[numOfProfessions];
+		for (int i = 0; i < numOfProfessions; i++) {
+			professionLabels[i] = Person.Profession.values()[i].toString();
+		}
+		professionSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 5, 1, professionLabels);
+		
+		int numOfSkills = Person.Skill.values().length - 1;
+		String[] skillLabels = new String[numOfSkills];
+		for (int i = 0; i < numOfSkills; i++) {
+			skillLabels[i] = Person.Skill.values()[i].getName();
+		}	
+		skillSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 3, 3, skillLabels);
+		
 		for (int i = 0; i < newPersonButtons.length; i++) {
 			Positionable newPersonButton = (i == 0) ? mainLayer : newPersonButtons[i - 1];
 			ReferencePoint newPersonButtonReferencePoint = (i == 0) ? ReferencePoint.TopLeft :ReferencePoint.TopRight;
@@ -117,15 +131,7 @@ public class PartyCreationScene extends Scene {
 	
 	private class ButtonListener implements ComponentListener {
 		@Override
-		public void componentActivated(AbstractComponent source) {
-			UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
-			Person.Skill[] arr = Person.Skill.values();
-			String[] strs = new String[arr.length - 1];
-			for (int i = 0; i < strs.length; i++) {
-				strs[i] = arr[i].getName();
-			}	
-			SegmentedControl sc = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 3, 3, strs);
-			
+		public void componentActivated(AbstractComponent source) {			
 			for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
 					personNameTextFields[i].setVisible(true);
@@ -138,7 +144,7 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personProfessionButtons[i]) {
-					showModal(new Modal(container, PartyCreationScene.this, "You want to select a profession, eh?", "Confirm"));
+					showModal(new Modal(container, PartyCreationScene.this, "You want to select a profession, eh?", professionSegmentedControl, "Confirm", "Cancel"));
 					personMoneyLabels[i].setVisible(true);
 					personSkillOneButtons[i].setVisible(true);
 					personSkillTwoButtons[i].setVisible(true);
@@ -147,7 +153,7 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personSkillOneButtons[i] || source == personSkillTwoButtons[i] || source == personSkillThreeButtons[i]) {
-					showModal(new Modal(container, PartyCreationScene.this, "You want to select a skill, eh?", sc, "Confirm", "Cancel"));
+					showModal(new Modal(container, PartyCreationScene.this, "You want to select a skill, eh?", skillSegmentedControl, "Confirm", "Cancel"));
 				}
 			}
 			
