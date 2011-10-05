@@ -26,6 +26,7 @@ public class TextField extends Component {
 	private Color fieldFocusColor;
 	private boolean over;
 	private boolean disabled;
+	private String placeholderText;
 	
 	public enum AcceptedCharacters { LETTERS, LETTERS_NUMBERS, NUMBERS };
 	private AcceptedCharacters acceptedCharacters = AcceptedCharacters.LETTERS;
@@ -74,6 +75,10 @@ public class TextField extends Component {
 	public void keyReleased(int key, char c) {
 		if (hasFocus()) {
 			if (key == Input.KEY_ENTER) {
+				if (label.getText().length() == 0) {
+					label.setText(placeholderText);
+				}
+				
 				setFocus(false);
 				notifyListeners();
 			} else if (key == Input.KEY_BACK && label.getText().length() >= 1) {
@@ -100,8 +105,20 @@ public class TextField extends Component {
 	@Override
 	public void mouseReleased(int button, int x, int y) {
 		if (over) {
+			if (label.getText().equals(placeholderText)) {
+				label.setText("");
+			}
+			
 			setFocus(true);
 			input.consumeEvent();
+		}
+	}
+	
+	public void setPlaceholderText(String text) {
+		placeholderText = text;
+		
+		if (label.getText().length() == 0) {
+			label.setText(placeholderText);
 		}
 	}
 	
