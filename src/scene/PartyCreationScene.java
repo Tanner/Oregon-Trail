@@ -175,7 +175,7 @@ public class PartyCreationScene extends Scene {
 	}
 	
 	private void enableNextPersonField() {
-		for (int i = 0; i < people.size(); i++) {
+		for (int i = 0; i < NUM_PEOPLE; i++) {
 			if (i == people.size()) {
 				newPersonButtons[i].setDisabled(false);
 			} else {
@@ -195,7 +195,8 @@ public class PartyCreationScene extends Scene {
 				if (source == personNameTextFields[i]) {
 					people.add(i, new Person(personNameTextFields[i].getText()));
 
-					for (int j = 0; j < people.size(); j++) {
+					// Moves the delete button to the latest person created
+					for (int j = 0; j < people.size() - 1; j++) {
 						personDeleteButtons[j].setVisible(false);
 					}
 					personDeleteButtons[people.size() - 1].setVisible(true);
