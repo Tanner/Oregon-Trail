@@ -37,6 +37,7 @@ public class PartyCreationScene extends Scene {
 	private static final int regularButtonHeight = 30;
 	
 	private Button newPersonButtons[] = new Button[NUM_PEOPLE];
+	private Button personDeleteButtons[] = new Button[NUM_PEOPLE];
 	private TextField personNameTextFields[] = new TextField[NUM_PEOPLE];
 	private Button personProfessionButtons[] = new Button[NUM_PEOPLE];
 	private Label personMoneyLabels[] = new Label[NUM_PEOPLE];
@@ -118,6 +119,14 @@ public class PartyCreationScene extends Scene {
 			}
 		}
 		
+		for (int i = 0; i < newPersonButtons.length; i++) {
+			personDeleteButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "X"), 20, regularButtonHeight);
+			personDeleteButtons[i].setVisible(false);
+			personDeleteButtons[i].setRoundedCorners(true);
+			personDeleteButtons[i].addListener(new ButtonListener());
+			mainLayer.add(personDeleteButtons[i], newPersonButtons[i].getPosition(ReferencePoint.TopRight), ReferencePoint.CenterCenter, 0, 0);
+		}
+		
 		// Ration Selection
 		Label rationsLabel = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_RATIONS"));
 		rationsLabel.setHeight(regularButtonHeight);
@@ -166,7 +175,7 @@ public class PartyCreationScene extends Scene {
 	}
 	
 	private void enableNextPersonField() {
-		for (int i = 0; i < NUM_PEOPLE; i++) {
+		for (int i = 0; i < people.size(); i++) {
 			if (i == people.size()) {
 				newPersonButtons[i].setDisabled(false);
 			} else {
@@ -177,20 +186,21 @@ public class PartyCreationScene extends Scene {
 	
 	private class ButtonListener implements ComponentListener {
 		@Override
-		public void componentActivated(AbstractComponent source) {
-			enableNextPersonField();
-			
+		public void componentActivated(AbstractComponent source) {			
 			for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
-					people.add(i, new Person(personNameTextFields[i].getText()));
-					
 					personNameTextFields[i].setVisible(true);
-					return;
 				}
 				
 				if (source == personNameTextFields[i]) {
+					people.add(i, new Person(personNameTextFields[i].getText()));
+
+					for (int j = 0; j < people.size(); j++) {
+						personDeleteButtons[j].setVisible(false);
+					}
+					personDeleteButtons[people.size() - 1].setVisible(true);
+					
 					personProfessionButtons[i].setVisible(true);
-					return;
 				}
 				
 				if (source == personProfessionButtons[i]) {
@@ -201,13 +211,14 @@ public class PartyCreationScene extends Scene {
 					for (int j = 0; j < personSkillLabels[i].length; j++) {
 						personSkillLabels[i][j].setVisible(true);
 					}
-					return;
 				}
 				
 				if (source == personChangeSkillButtons[i]) {
 					showModal(new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), skillSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL")));
 				}
 			}
+			
+			enableNextPersonField();
 			
 			if (source == confirmButton) {
 				Logger.log("Confirm button pushed", Logger.Level.DEBUG);
