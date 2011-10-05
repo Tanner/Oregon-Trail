@@ -45,8 +45,8 @@ public class SegmentedControl extends Component {
 		this.rows = rows;
 		this.cols = cols;
 
-		int horizPaddingAmt = (rows - 1) * PADDING;
-		int vertPaddingAmt = (cols - 1) * PADDING;
+		int horizPaddingAmt = (cols - 1) * PADDING;
+		int vertPaddingAmt = (rows - 1) * PADDING;
 		height -= vertPaddingAmt;
 		width -= horizPaddingAmt;
 		this.colWidth = (int) ((double)width/cols);
