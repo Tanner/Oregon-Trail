@@ -119,7 +119,7 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		// Ration Selection
-		Label rationsLabel = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_RATIONS_LIT"));
+		Label rationsLabel = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_RATIONS"));
 		rationsLabel.setHeight(regularButtonHeight);
 		mainLayer.add(rationsLabel, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
 		
@@ -132,7 +132,7 @@ public class PartyCreationScene extends Scene {
 		mainLayer.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
 		
 		// Pace Selection
-		Label paceLabel = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_PACE_LIT"));
+		Label paceLabel = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_PACE"));
 		paceLabel.setHeight(regularButtonHeight);
 		mainLayer.add(paceLabel, rationsLabel.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
 		
