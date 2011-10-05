@@ -167,9 +167,8 @@ public class TextField extends Component {
 		if (!focus && hasFocus()) {
 			if (isEmpty()) {
 				label.setText(placeholderText);
-			} else {
-				notifyListeners();
 			}
+			notifyListeners();
 		}
 		
 		super.setFocus(focus);
@@ -261,5 +260,13 @@ public class TextField extends Component {
 	 */
 	public String getText() {
 		return label.getText();
+	}
+	
+	/**
+	 * Set the text for the text field.
+	 * @param text Text to be entered
+	 */
+	public void setText(String text) {
+		label.setText(text);
 	}
 }

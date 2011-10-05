@@ -287,10 +287,14 @@ public class PartyCreationScene extends Scene {
 					personNameTextFields[i].setVisible(true);
 				}
 				
-				if (source == personNameTextFields[i]) {
+				if (source == personNameTextFields[i]) {	
 					if(people.size() < i + 1) {
+						if (personNameTextFields[i].isEmpty()) {
+							return;
+						}
+						
 						people.add(i, new Person(personNameTextFields[i].getText()));
-	
+						
 						// Moves the delete button to the latest person created
 						for (int j = 0; j < people.size() - 1; j++) {
 							personDeleteButtons[j].setVisible(false);
@@ -301,6 +305,10 @@ public class PartyCreationScene extends Scene {
 						personProfessionLabels[i].setVisible(true);
 					}
 					else {
+						if (personNameTextFields[i].isEmpty()) {
+							personNameTextFields[i].setText(people.get(i).getName());
+						}
+						
 						people.get(i).setName(personNameTextFields[i].getText());
 					}
 				}
