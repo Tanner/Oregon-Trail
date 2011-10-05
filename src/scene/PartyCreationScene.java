@@ -27,6 +27,10 @@ import core.GameDirector;
 import core.Logger;
 import static core.ConstantStore.LIT_MAP;
 
+/**
+ * The Party Creation Scene
+ * @author Tanner Smith
+ */
 public class PartyCreationScene extends Scene {
 	public static final SceneID ID = SceneID.PartyCreation;
 	
@@ -174,6 +178,9 @@ public class PartyCreationScene extends Scene {
 		return ID.ordinal();
 	}
 	
+	/**
+	 * Enable the next "new person" button
+	 */
 	private void enableNextPersonField() {
 		for (int i = 0; i < NUM_PEOPLE; i++) {
 			if (i == people.size()) {
@@ -182,6 +189,36 @@ public class PartyCreationScene extends Scene {
 				newPersonButtons[i].setDisabled(true);
 			}
 		}
+	}
+	
+	/**
+	 * Hide all the fields for a specific column
+	 * @param col Column we want to hide everything
+	 */
+	private void hidePersonColumn(int col) {
+		personDeleteButtons[col].setVisible(false);
+		personNameTextFields[col].setVisible(false);
+		personProfessionButtons[col].setVisible(false);
+		personMoneyLabels[col].setVisible(false);
+		personChangeSkillButtons[col].setVisible(false);
+		for (int j = 0; j < personSkillLabels[col].length; j++) {
+			personSkillLabels[col][j].setVisible(false);
+		}
+		
+		if (col > 0) {
+			personDeleteButtons[col - 1].setVisible(true);
+		}
+	}
+	
+	/**
+	 * Clear the person's data for a column.
+	 * @param col Column of data we want to remove
+	 */
+	private void clearPersonData(int col) {
+		people.remove(col);
+		
+		personNameTextFields[col].clear();
+		//TODO: Clear other things when deleted
 	}
 	
 	private class ButtonListener implements ComponentListener {
@@ -216,6 +253,12 @@ public class PartyCreationScene extends Scene {
 				
 				if (source == personChangeSkillButtons[i]) {
 					showModal(new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), skillSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL")));
+				}
+				
+				if (source == personDeleteButtons[i]) {
+					//Delete the last created person
+					clearPersonData(i);
+					hidePersonColumn(i);
 				}
 			}
 			

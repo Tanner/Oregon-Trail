@@ -110,6 +110,10 @@ public class TextField extends Component {
 		}
 	}
 	
+	/**
+	 * Set the placeholder text - text when no user input has been given.
+	 * @param text Placeholder text
+	 */
 	public void setPlaceholderText(String text) {
 		placeholderText = text;
 		
@@ -118,6 +122,21 @@ public class TextField extends Component {
 		}
 	}
 	
+	/**
+	 * Clear the textfield of any text and put the placeholder text there is we're supposed to.
+	 */
+	public void clear() {
+		if (placeholderText != null) {
+			label.setText(placeholderText);
+		} else {
+			label.setText("");
+		}
+	}
+	
+	/**
+	 * Returns whether the text field is empty.
+	 * @return Whether the text field is empty or not
+	 */
 	public boolean isEmpty() {
 		if (label.getText().length() <= 0 || label.getText().equals(placeholderText)) {
 			return true;
@@ -143,6 +162,7 @@ public class TextField extends Component {
 		return false;
 	}
 	
+	@Override
 	public void setFocus(boolean focus) {
 		if (!focus && hasFocus()) {
 			if (isEmpty()) {
