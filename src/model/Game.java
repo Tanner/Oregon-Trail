@@ -19,7 +19,7 @@ public class Game {
 	 * Know nothing, make nothing.
 	 */
 	public Game() {
-		Random r = new Random();
+		/*Random r = new Random();
 		ArrayList<Person.Skill> person1Skill = new ArrayList<Person.Skill>();
 		ArrayList<Person> party = new ArrayList<Person>();
 		
@@ -56,8 +56,8 @@ public class Game {
 			person1.addSkill(skill);
 		}
 		
-		
-		this.player = new Player(new Party(Pace.GRUELING, Rations.BAREBONES, party));
+		*/
+		this.player = new Player();
 		if(player != null){
 			Logger.log("Player was created successfully", Logger.Level.INFO);
 		}

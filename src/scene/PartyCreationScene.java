@@ -3,7 +3,11 @@ package scene;
 import java.util.ArrayList;
 
 import model.Party;
+import model.Party.Pace;
+import model.Party.Rations;
 import model.Person;
+import model.Person.Skill;
+import model.Player;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -55,6 +59,9 @@ public class PartyCreationScene extends Scene {
 		
 	private Modal professionModal;
 	private Modal skillModal;
+	
+	private Rations rations;
+	private Pace pace;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -228,13 +235,21 @@ public class PartyCreationScene extends Scene {
 	}
 	
 	@Override
+	//TODO: make work over indexing
 	public void resignModal(Modal modal, int[] segmentedControlResults) {
 		super.resignModal(modal, segmentedControlResults);
 		if(modal == professionModal) {
 			personMoneyLabels[0].setText("$" + Person.Profession.values()[segmentedControlResults[0]].getMoney());
+			people.get(0).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
 		}
 		else if (modal == skillModal) {
-			
+			int j = 0;
+			people.get(0).clearSkills();
+			for(int index : segmentedControlResults) {
+				people.get(0).addSkill(Skill.values()[index]);
+				personSkillLabels[0][j].setText(people.get(0).getSkills().get(j).getName());
+				j++;
+			}
 		}
 	}
 	
@@ -285,6 +300,11 @@ public class PartyCreationScene extends Scene {
 			enableNextPersonField();
 			
 			if (source == confirmButton) {
+				//TODO: get game passed in from game director
+				Player player = new Player();
+				pace = Pace.values()[paceSegmentedControl.getState()[0]];
+				rations = Rations.values()[rationsSegmentedControl.getState()[0]];
+				player.setParty(new Party(pace, rations, people));
 				Logger.log("Confirm button pushed", Logger.Level.DEBUG);
 			}
 		}

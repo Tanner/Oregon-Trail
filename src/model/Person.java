@@ -32,7 +32,7 @@ public class Person {
 	 */
 	public Person(String name){
 		this.name = name;
-		this.skillPoints = new Condition(0, baseSkillPoints, baseSkillPoints);
+		this.skillPoints = new Condition(0, baseSkillPoints, 0);
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class Person {
 		if(this.profession == null) {
 			this.profession = profession;
 			Logger.log(this.name + " became a " + this.profession, Logger.Level.INFO);
-			addSkill(profession.getStartingSkill());
+			//addSkill(profession.getStartingSkill());
 			return true;
 		}
 		else if(this.profession == profession) {
@@ -73,12 +73,12 @@ public class Person {
 		return skillPoints.getCurrent();
 	}
 	
-	/**
-	 * Adds a skill to this person's skill set
-	 * @param newSkill skill to be added
-	 * @return successful completion of this operation
-	 */
-	public boolean addSkill(Skill newSkill){
+	public boolean clearSkills() {
+		skills.clear();
+		return true;
+	}
+	
+	public boolean addSkill(Skill newSkill) {
 		if(skills.contains(newSkill)) {
 			Logger.log(this.name + " already has the skill " + newSkill, Logger.Level.INFO);
 			return false;
@@ -87,6 +87,24 @@ public class Person {
 			skills.add(newSkill);
 			Logger.log("As a " + this.profession + " " + this.name + " gains the skill " + newSkill, Logger.Level.INFO);
 			return true;
+		}
+		else {
+			skills.add(newSkill);
+			Logger.log(this.name + " gained the skill " + newSkill, Logger.Level.INFO);
+			return true;
+		}
+	}
+	
+	
+	/**
+	 * Adds a skill to this person's skill set
+	 * @param newSkill skill to be added
+	 * @return successful completion of this operation
+	 */
+	public boolean buySkill(Skill newSkill){
+		if(skills.contains(newSkill)) {
+			Logger.log(this.name + " already has the skill " + newSkill, Logger.Level.INFO);
+			return false;
 		}
 		else {
 			if(skillPoints.getCurrent() < newSkill.getCost()) {
