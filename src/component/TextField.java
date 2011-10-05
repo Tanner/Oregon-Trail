@@ -71,6 +71,7 @@ public class TextField extends Component {
 		label.render(container, g);
 	}
 	
+	
 	@Override
 	public void keyReleased(int key, char c) {
 		if (hasFocus()) {

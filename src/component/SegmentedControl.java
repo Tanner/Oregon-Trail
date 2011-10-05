@@ -145,7 +145,6 @@ public class SegmentedControl extends Component {
 		if (!visible) {
 			return;
 		}
-		
 		for ( Button b : buttons) {
 			b.render(context, g);
 		}
