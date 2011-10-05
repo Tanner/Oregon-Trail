@@ -212,6 +212,9 @@ public class SegmentedControl extends Component {
 					if (i == rows-1 && j == cols-1) {
 						buttons[parsePosition(i, j)].setBottomRightRoundedCorner(roundedCorners);
 					}
+					if (i == rows-1 && j == 0) {
+						buttons[parsePosition(i, j)].setBottomLeftRoundedCorner(roundedCorners);
+					}
 				}
 			}
 		}

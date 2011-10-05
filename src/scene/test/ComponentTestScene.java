@@ -60,12 +60,12 @@ public class ComponentTestScene extends Scene {
 		spinnerLabel = new Label(container, fieldFont, Color.white, "Label");
 		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		Person.Skill[] arr = Person.Skill.values();
-		String[] strs = new String[arr.length - 1];
+		String[] strs = new String[arr.length - 2];
 		for (int i = 0; i < strs.length; i++) {
 			strs[i] = arr[i].getName();
 		}	
 
-		segment = new SegmentedControl(container,500,100,5,3,3,0,strs);
+		segment = new SegmentedControl(container,500,100,4,3,0,1,strs);
 
 		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		
