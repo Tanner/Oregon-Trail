@@ -147,7 +147,7 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personSkillOneButtons[i] || source == personSkillTwoButtons[i] || source == personSkillThreeButtons[i]) {
-					showModal(new Modal(container, PartyCreationScene.this, "You want to select a skill, eh?", "Confirm"));
+					showModal(new Modal(container, PartyCreationScene.this, "You want to select a skill, eh?", sc, "Confirm", "Cancel"));
 				}
 			}
 			
