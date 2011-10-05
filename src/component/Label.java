@@ -8,7 +8,7 @@ import org.newdawn.slick.gui.*;
  * A label class to draw text on screen.  Uses
  * Font's drawString method to accomplish this.
  * 
- * @author Jeremy Grebner
+ * @author Jeremy
  */
 public class Label extends Component {
 	public enum Alignment {
