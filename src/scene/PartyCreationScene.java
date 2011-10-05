@@ -161,7 +161,7 @@ public class PartyCreationScene extends Scene {
 	
 	private void enableNextPersonField() {
 		for (int i = 0; i < NUM_PEOPLE; i++) {
-			if (i <= people.size()) {
+			if (i == people.size()) {
 				newPersonButtons[i].setDisabled(false);
 			} else {
 				newPersonButtons[i].setDisabled(true);
@@ -176,6 +176,8 @@ public class PartyCreationScene extends Scene {
 			
 			for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
+					people.add(i, new Person(personNameTextFields[i].getText()));
+					
 					personNameTextFields[i].setVisible(true);
 					return;
 				}
