@@ -74,6 +74,7 @@ public class PartyCreationScene extends Scene {
 			int newPersonButtonPaddingY = (i == 0) ? PADDING : 0;
 			
 			newPersonButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "New Player"), buttonWidth, newPersonButtonHeight);
+			newPersonButtons[i].setRoundedCorners(true);
 			newPersonButtons[i].addListener(new ButtonListener());
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
 			
@@ -84,6 +85,7 @@ public class PartyCreationScene extends Scene {
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 			
 			personProfessionButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Profession"), buttonWidth, regularButtonHeight);
+			personProfessionButtons[i].setRoundedCorners(true);
 			personProfessionButtons[i].addListener(new ButtonListener());
 			personProfessionButtons[i].setVisible(false);
 			mainLayer.add(personProfessionButtons[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
@@ -94,6 +96,8 @@ public class PartyCreationScene extends Scene {
 			mainLayer.add(personMoneyLabels[i], personProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
 			personChangeSkillButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "Change Skill"), buttonWidth, regularButtonHeight);
+			personChangeSkillButtons[i].setTopLeftRoundedCorner(true);
+			personChangeSkillButtons[i].setTopRightRoundedCorner(true);
 			personChangeSkillButtons[i].addListener(new ButtonListener());
 			personChangeSkillButtons[i].setVisible(false);
 			mainLayer.add(personChangeSkillButtons[i], personMoneyLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
@@ -106,7 +110,7 @@ public class PartyCreationScene extends Scene {
 				
 				personSkillLabels[i][j] = new Label(container, fieldFont, Color.white, "Skill "+j, buttonWidth);
 				personSkillLabels[i][j].setHeight(regularButtonHeight);
-				personSkillLabels[i][j].setBackgroundColor(Color.gray);
+				personSkillLabels[i][j].setBackgroundColor(Color.darkGray);
 				personSkillLabels[i][j].setVisible(false);
 				personSkillLabels[i][j].setAlignment(Alignment.Center);
 				mainLayer.add(personSkillLabels[i][j], skillLabelReferenceObject.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
@@ -141,6 +145,7 @@ public class PartyCreationScene extends Scene {
 		
 		//Confirm Button
 		confirmButton = new Button(container, new Label(container, fieldFont, Color.white, "Confirm"), buttonWidth, regularButtonHeight);
+		confirmButton.setRoundedCorners(true);
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
