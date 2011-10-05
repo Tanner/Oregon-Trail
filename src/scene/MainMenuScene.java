@@ -2,7 +2,7 @@ package scene;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
-
+import static core.ConstantStore.LIT_MAP;
 import component.Label;
 import component.Positionable;
 
@@ -19,7 +19,8 @@ public class MainMenuScene extends Scene {
 		UnicodeFont h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
 		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
 		
-		Label titleLabel = new Label(container, h1, Color.white, "Oregon Trail");
+		//Label titleLabel = new Label(container, h1, Color.white, "Oregon Trail");
+		Label titleLabel = new Label(container, h1, Color.white, LIT_MAP.get("OT_TITLE"));
 		Label subtitleLabel = new Label(container, h2, Color.white, "Press Enter to Start");
 		
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);

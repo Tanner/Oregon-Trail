@@ -23,7 +23,7 @@ public final class ConstantStore {
 	static{
 		Map<String,String> Literal_Map = new HashMap<String,String>(); 
 		Literal_Map.put("OT_TITLE","Oregon Trail");
-		//add literals here
+		//add gui literals here following above syntax - "<string to call literal>","<string to display>"
 		LIT_MAP = Collections.unmodifiableMap(Literal_Map);
 	}
 	
