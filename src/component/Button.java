@@ -94,7 +94,7 @@ public class Button extends Component {
 	
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
-		if (button == 0 && over && !disabled) {
+		if (button == 0 && over && !disabled && active) {
 			notifyListeners();
 			input.consumeEvent();
 		}
