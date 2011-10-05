@@ -105,6 +105,8 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				personSkillLabels[i][j] = new Label(container, fieldFont, Color.white, "Skill "+j, buttonWidth);
+				personSkillLabels[i][j].setHeight(regularButtonHeight);
+				personSkillLabels[i][j].setBackgroundColor(Color.gray);
 				personSkillLabels[i][j].setVisible(false);
 				personSkillLabels[i][j].setAlignment(Alignment.Center);
 				mainLayer.add(personSkillLabels[i][j], skillLabelReferenceObject.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
