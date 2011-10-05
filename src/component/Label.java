@@ -22,6 +22,7 @@ public class Label extends Component {
 	private Color c;
 	private int width, height;
 	private Alignment alignment;
+	private boolean clip;
 
 	/**
 	 * Creates a label to be drawn on the screen.
@@ -30,6 +31,7 @@ public class Label extends Component {
 	 * @param font Font the text will be drawn in
 	 * @param c Color of the text
 	 * @param text The text to draw
+	 * @param width Width of the label
 	 */
 	public Label(GUIContext context, Font font, Color c, String text, int width) {
 		super(context);
@@ -42,10 +44,20 @@ public class Label extends Component {
 		this.height = font.getLineHeight();
 		
 		alignment = Alignment.Left;
+		clip = true;
 	}
 	
+	/**
+	 * Creates a label to be drawn on the screen.
+	 * 
+	 * @param context The game container
+	 * @param font Font the text will be drawn in
+	 * @param c Color of the text
+	 * @param text The text to draw
+	 */
 	public Label(GUIContext context, Font font, Color c, String text) {
 		this(context, font, c, text, font.getWidth(text));
+		clip = false;
 	}
 	
 	/**
@@ -54,6 +66,7 @@ public class Label extends Component {
 	 * @param context The game container
 	 * @param font Font the text will be drawn in
 	 * @param c	Color of the text
+	 * @param width Width of the label
 	 */
 	public Label(GUIContext context, Font font, Color c, int width) {
 		this(context, font, c, "", width);
@@ -93,6 +106,10 @@ public class Label extends Component {
 	 */
 	public void setText(String text) {
 		this.text = text;
+		
+		if (!clip) {
+			width = font.getWidth(text);
+		}
 	}
 	
 	/**
