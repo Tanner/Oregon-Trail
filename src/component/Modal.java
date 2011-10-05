@@ -52,8 +52,8 @@ public class Modal extends Component {
 		this.height = PADDING*3 + messageLabel.getHeight() + dismissButton.getHeight();
 		location = new Vector2f(MARGIN, (container.getHeight() - height) / 2);
 
-		add(resignButton, getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.BottomCenter, 0, -PADDING);
-		add(dismissButton, getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);		
+		add(messageLabel, getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);		
+		add(dismissButton, getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.BottomCenter, 0, -PADDING);
 	}
 	
 	public Modal(GUIContext container, Scene scene, String message, SegmentedControl segmentedControl, String submitButtonString, String cancelButtonString) {
