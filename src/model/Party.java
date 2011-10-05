@@ -41,7 +41,7 @@ public class Party {
 			partyCreationLog += person.getName() + " ";
 		}
 		Logger.log(partyCreationLog, Logger.Level.INFO);
-		Logger.log("Party starting money is: " + money, Logger.Level.INFO);
+		Logger.log("Party starting money is: $" + money, Logger.Level.INFO);
 		Logger.log("Current pace is: " + currentPace + " and current rations is: " + currentRations, Level.INFO);
 	}
 	
