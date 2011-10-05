@@ -52,6 +52,9 @@ public class PartyCreationScene extends Scene {
 	private SegmentedControl rationsSegmentedControl, professionSegmentedControl, skillSegmentedControl, paceSegmentedControl;
 	
 	private ArrayList<Person> people = new ArrayList<Person>();
+		
+	private Modal professionModal;
+	private Modal skillModal;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -227,6 +230,12 @@ public class PartyCreationScene extends Scene {
 	@Override
 	public void resignModal(Modal modal, int[] segmentedControlResults) {
 		super.resignModal(modal, segmentedControlResults);
+		if(modal == professionModal) {
+			personMoneyLabels[0].setText("$" + Person.Profession.values()[segmentedControlResults[0]].getMoney());
+		}
+		else if (modal == skillModal) {
+			
+		}
 	}
 	
 	private class ButtonListener implements ComponentListener {
@@ -250,7 +259,9 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personProfessionButtons[i]) {
-					showModal(new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), professionSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL")));
+					professionModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), professionSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
+					
+					showModal(professionModal);
 					personMoneyLabels[i].setVisible(true);
 					
 					personChangeSkillButtons[i].setVisible(true);
@@ -260,7 +271,8 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personChangeSkillButtons[i]) {
-					showModal(new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), skillSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL")));
+					skillModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), skillSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
+					showModal(skillModal);
 				}
 				
 				if (source == personDeleteButtons[i]) {
