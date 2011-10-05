@@ -78,6 +78,7 @@ public class PartyCreationScene extends Scene {
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
 			
 			personNameTextFields[i] = new TextField(container, fieldFont, buttonWidth, regularButtonHeight);
+			personNameTextFields[i].setPlaceholderText("Name");
 			personNameTextFields[i].addListener(new ButtonListener());
 			personNameTextFields[i].setVisible(false);
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
