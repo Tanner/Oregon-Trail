@@ -183,12 +183,24 @@ public class SegmentedControl extends Component {
 		else
 			position.set(x,y);
 		
+		boolean roundedCorners = (margin == 0) ? true : false;
+		
 		if (buttons != null ) {
 			buttons[0].setPosition(this.getPosition(Positionable.ReferencePoint.TopLeft),
 					Positionable.ReferencePoint.TopLeft, 0, 0);
+			buttons[0].setTopLeftRoundedCorner(roundedCorners);
+			if (rows == 1) {
+				buttons[0].setBottomLeftRoundedCorner(roundedCorners);
+			}
 			for (int i = 1; i < cols; i++) {
 				buttons[i].setPosition(buttons[i-1].getPosition(Positionable.ReferencePoint.TopRight),
 						Positionable.ReferencePoint.TopLeft, margin, 0);
+				if (i == cols - 1) {
+					buttons[i].setTopRightRoundedCorner(roundedCorners);
+					if (rows == 1) {
+						buttons[i].setBottomRightRoundedCorner(roundedCorners);
+					}
+				}
 			}
 			OuterLoop:
 			for (int i = 1; i < rows; i++) {
@@ -197,6 +209,9 @@ public class SegmentedControl extends Component {
 						break OuterLoop;
 					buttons[parsePosition(i,j)].setPosition(buttons[parsePosition(i-1,j)].getPosition(Positionable.ReferencePoint.BottomLeft),
 						Positionable.ReferencePoint.TopLeft, 0, margin);
+					if (i == rows-1 && j == cols-1) {
+						buttons[parsePosition(i, j)].setBottomRightRoundedCorner(roundedCorners);
+					}
 				}
 			}
 		}
