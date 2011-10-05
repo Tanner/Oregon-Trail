@@ -176,7 +176,7 @@ public class Person {
 		 * Sets the cost of the skill as designated
 		 * @param cost The cost of the skill (defined above)
 		 */
-		Skill(int cost, String name) {
+		private Skill(int cost, String name) {
 			this.cost = cost;
 			this.name = name;
 		}

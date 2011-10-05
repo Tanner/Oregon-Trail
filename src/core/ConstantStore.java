@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.HashMap; 
 import java.util.Map; 
 
-
-
 /**
  * Class to hold constants used by OT game
  * 
@@ -25,34 +23,9 @@ public final class ConstantStore {
 	static{
 		Map<String,String> Literal_Map = new HashMap<String,String>(); 
 		Literal_Map.put("OT_TITLE","Oregon Trail");
-		//add gui literals here following above syntax - "<string to call literal>","<string to display>"
+		//add gui literals here following above syntax - "<string to call literal>". 
 		LIT_MAP = Collections.unmodifiableMap(Literal_Map);
 	}
 	
-	/**
-	 * The possible values of the party's pace
-	 * @author 
-	 *
-	 */
-	
-	public enum Pace{
-		STEADY,
-		STRENUOUS,
-		GRUELING;
-	}
-	
-	/**
-	 * The possible settings of the party's consumption rate
-	 * @author 
-	 *
-	 */
-	
-	public enum Rations{
-		FILLING,
-		MEAGER,
-		BAREBONES;
-	}
-	
-
 
 }

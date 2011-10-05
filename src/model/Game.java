@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static core.ConstantStore.Pace;
-import static core.ConstantStore.Rations;
+import model.Party.Pace;
+import model.Party.Rations;
 import core.Logger;
 
 /**

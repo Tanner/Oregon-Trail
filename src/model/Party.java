@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import static core.ConstantStore.Pace;
-import static core.ConstantStore.Rations;
 import core.Logger;
 import core.Logger.Level;
 
@@ -77,6 +75,17 @@ public class Party {
 		this.money = money;
 	}
 	
+	/**
+	 * The possible values of the party's pace
+	 * @author 
+	 *
+	 */
+	
+	public enum Pace{
+		STEADY,
+		STRENUOUS,
+		GRUELING;
+	}
 	
 	/**
 	 * 
@@ -92,6 +101,18 @@ public class Party {
 	 */
 	public void setPace(Pace pace){
 		this.currentPace = pace;
+	}
+	
+	/**
+	 * The possible settings of the party's consumption rate
+	 * @author 
+	 *
+	 */
+	
+	public enum Rations{
+		FILLING,
+		MEAGER,
+		BAREBONES;
 	}
 	
 	/**
