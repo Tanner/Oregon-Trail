@@ -344,8 +344,8 @@ public class PartyCreationScene extends Scene {
 						return;
 					}
 				}
-				pace = Pace.values()[paceSegmentedControl.getState()[0]];
-				rations = Rations.values()[rationsSegmentedControl.getState()[0]];
+				pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
+				rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
 				player.setParty(new Party(pace, rations, people));
 				
 				Logger.log("Confirm button pushed", Logger.Level.DEBUG);

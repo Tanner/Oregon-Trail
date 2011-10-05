@@ -144,7 +144,7 @@ public class Modal extends Component {
 		@Override
 		public void componentActivated(AbstractComponent source) {
 			if (source == resignButton) {
-				scene.resignModal(Modal.this, segmentedControl.getState());
+				scene.resignModal(Modal.this, segmentedControl.getSelection());
 			} else {
 				scene.dismissModal(Modal.this);
 			}
