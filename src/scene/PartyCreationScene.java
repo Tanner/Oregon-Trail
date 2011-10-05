@@ -247,26 +247,25 @@ public class PartyCreationScene extends Scene {
 	}
 	
 	@Override
-	//TODO: make work over indexing
 	public void resignModal(Modal modal, int[] segmentedControlResults) {
 		super.resignModal(modal, segmentedControlResults);
 		if(modal == professionModal) {
-			personMoneyLabels[0].setText("$" + Person.Profession.values()[segmentedControlResults[0]].getMoney());
-			people.get(0).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
+			personMoneyLabels[currentPersonModifying].setText("$" + Person.Profession.values()[segmentedControlResults[0]].getMoney());
+			people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
 			for(int j = 0; j < 3; j++) {
-				personSkillLabels[0][j].setText("");
+				personSkillLabels[currentPersonModifying][j].setText("");
 			}
-			personProfessionLabels[0].setText(people.get(0).getProfession().getName());
+			personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
 		}
 		else if (modal == skillModal) {
-			people.get(0).clearSkills();
+			people.get(currentPersonModifying).clearSkills();
 			for(int j = 0; j < 3; j++) {
 				if(segmentedControlResults.length >= j + 1) {
-					people.get(0).addSkill(Skill.values()[segmentedControlResults[j]]);
-					personSkillLabels[0][j].setText(people.get(0).getSkills().get(j).getName());
+					people.get(currentPersonModifying).addSkill(Skill.values()[segmentedControlResults[j]]);
+					personSkillLabels[currentPersonModifying][j].setText(people.get(currentPersonModifying).getSkills().get(j).getName());
 				}
 				else {
-					personSkillLabels[0][j].setText("");
+					personSkillLabels[currentPersonModifying][j].setText("");
 				}
 			}
 		}
