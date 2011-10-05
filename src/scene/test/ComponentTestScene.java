@@ -65,7 +65,7 @@ public class ComponentTestScene extends Scene {
 			strs[i] = arr[i].getName();
 		}	
 
-		segment = new SegmentedControl(container, fieldFont, Color.white,500,100,5,3,3,0,strs);
+		segment = new SegmentedControl(container,500,100,5,3,3,0,strs);
 
 		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		

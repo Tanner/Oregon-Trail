@@ -1,6 +1,7 @@
 package component;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -163,6 +164,14 @@ public class Button extends Component {
 	
 	public void setButtonActiveColor(Color color) {
 		buttonActiveColor = color;
+	}
+	
+	public void setFont(Font font) {
+		label.setFont(font);
+	}
+	
+	public void setLabelColor(Color color) {
+		label.setColor(color);
 	}
 
 	@Override

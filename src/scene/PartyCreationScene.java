@@ -59,14 +59,14 @@ public class PartyCreationScene extends Scene {
 		for (int i = 0; i < numOfProfessions; i++) {
 			professionLabels[i] = Person.Profession.values()[i].toString();
 		}
-		professionSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 5, 5, 1, professionLabels);
+		professionSegmentedControl = new SegmentedControl(container, 400, 200, 5, 5, 5, 1, professionLabels);
 		
 		int numOfSkills = Person.Skill.values().length - 1;
 		String[] skillLabels = new String[numOfSkills];
 		for (int i = 0; i < numOfSkills; i++) {
 			skillLabels[i] = Person.Skill.values()[i].getName();
 		}	
-		skillSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, 400, 200, 5, 3, 5, 3, skillLabels);
+		skillSegmentedControl = new SegmentedControl(container, 400, 200, 5, 3, 5, 3, skillLabels);
 		
 		for (int i = 0; i < newPersonButtons.length; i++) {
 			Positionable newPersonButton = (i == 0) ? mainLayer : newPersonButtons[i - 1];
@@ -123,7 +123,7 @@ public class PartyCreationScene extends Scene {
 		for (int i = 0; i < numOfRations; i++) {
 			rationLabels[i] = Party.Rations.values()[i].toString();
 		}
-		rationsSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, buttonWidth * 2 + PADDING, regularButtonHeight, 1, rationLabels.length, 0, 1, rationLabels);
+		rationsSegmentedControl = new SegmentedControl(container, buttonWidth * 2 + PADDING, regularButtonHeight, 1, rationLabels.length, 0, 1, rationLabels);
 		mainLayer.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
 		
 		// Pace Selection
@@ -136,7 +136,7 @@ public class PartyCreationScene extends Scene {
 		for (int i = 0; i < numOfPaces; i++) {
 			paceLabels[i] = Party.Pace.values()[i].toString();
 		}
-		paceSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, buttonWidth * 2 + PADDING, regularButtonHeight, 1, paceLabels.length, 0, 1, paceLabels);
+		paceSegmentedControl = new SegmentedControl(container, buttonWidth * 2 + PADDING, regularButtonHeight, 1, paceLabels.length, 0, 1, paceLabels);
 		mainLayer.add(paceSegmentedControl, rationsSegmentedControl.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
 		
 		//Confirm Button
