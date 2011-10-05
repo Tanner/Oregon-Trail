@@ -94,9 +94,9 @@ public class Label extends Component {
 		}
 		
 		if (alignment == Alignment.Center) {
-			font.drawString(position.getX() + (width - font.getWidth(renderText)) / 2, position.getY() + (height - font.getHeight(renderText)) / 2, renderText, c);
+			font.drawString(position.getX() + (width - font.getWidth(renderText)) / 2, position.getY() + (height - font.getLineHeight()) / 2, renderText, c);
 		} else if (alignment == Alignment.Left){
-			font.drawString(position.getX(), position.getY() + (height - font.getHeight(renderText)) / 2, renderText, c);
+			font.drawString(position.getX(), position.getY() + (height - font.getLineHeight()) / 2, renderText, c);
 		}
 		
 		g.clearClip();
