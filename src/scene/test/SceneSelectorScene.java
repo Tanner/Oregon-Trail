@@ -15,6 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import component.Background;
 import component.Button;
+import component.Component;
 import component.Label;
 import core.FontManager;
 import core.GameDirector;
@@ -77,6 +78,8 @@ public class SceneSelectorScene extends Scene {
 
 	@Override
 	public void start() {
+		super.start();
+		
 		for (Button b : buttons) {
 			b.addListener(buttonListener);
 		}
@@ -84,6 +87,8 @@ public class SceneSelectorScene extends Scene {
 
 	@Override
 	public void pause() {
+		super.pause();
+		
 		for (Button b : buttons) {
 			b.removeListener(buttonListener);
 		}
@@ -91,9 +96,13 @@ public class SceneSelectorScene extends Scene {
 
 	@Override
 	public void stop() {
+		super.stop();
+		
 		for (Button b : buttons) {
 			b.removeListener(buttonListener);
 		}
+		
+		mainLayer.setAcceptingInput(false);
 	}
 	
 	private class ButtonListener implements ComponentListener {

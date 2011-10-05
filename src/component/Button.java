@@ -8,6 +8,8 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
 
+import core.Logger;
+
 /**
  * A component that is a Button.
  * 
@@ -87,19 +89,27 @@ public class Button extends Component {
 	
 	@Override
 	public void mousePressed(int button, int mx, int my) {
-		if (over) {
+		if (!visible || !isAcceptingInput()) {
+			return;
+		}
+		
+		if (button == 0 && over && !disabled) {
 			active = true;
+			input.consumeEvent();
 		}
 	}
 	
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
-		if (button == 0 && over && !disabled && active) {
-			notifyListeners();
-			input.consumeEvent();
+		if (!visible) {
+			return;
 		}
 		
-		active = false;
+ 		if (button == 0 && over && !disabled && active) {
+			notifyListeners();
+			input.consumeEvent();
+			active = false;
+		}
 	}
 
 	/**
