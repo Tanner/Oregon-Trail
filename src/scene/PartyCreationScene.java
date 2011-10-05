@@ -251,9 +251,6 @@ public class PartyCreationScene extends Scene {
 		people.remove(col);
 		
 		personNameTextFields[col].clear();
-		
-		rationsSegmentedControl.clear();
-		professionSegmentedControl.clear();
 		//TODO: Clear other things when deleted
 	}
 	
@@ -309,6 +306,7 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personChangeProfessionButtons[i]) {
+					professionSegmentedControl.clear();
 					professionModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), professionSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
 					currentPersonModifying = i;
 					
@@ -322,6 +320,7 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				if (source == personChangeSkillButtons[i]) {
+					skillSegmentedControl.clear();
 					skillModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), skillSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
 					currentPersonModifying = i;
 					

@@ -72,7 +72,7 @@ public class SegmentedControl extends Component {
 		setHeight(height);
 		
 		if (MAX_SELECTED == 1) {
-			buttons[0].setDisabled(true);
+			buttons[0].setButtonColor(Color.darkGray);
 			selection.add(0);
 		}
 	}
@@ -100,9 +100,10 @@ public class SegmentedControl extends Component {
 	 */
 	public void clear() {
 		selection.clear();
-		for (Button b : buttons)
+		for (Button b : buttons) {
 			b.setButtonColor(Color.gray);
-		if ( MAX_SELECTED == 1) {
+		}
+		if (MAX_SELECTED == 1) {
 			buttons[0].setButtonColor(Color.darkGray);
 			selection.add(0);
 		}
@@ -282,9 +283,9 @@ public class SegmentedControl extends Component {
 				}
 			}
 			else {
-				buttons[selection.remove(0)].setDisabled(false);
+				buttons[selection.remove(0)].setButtonColor(Color.gray);
 				selection.add(ordinal);
-				buttons[ordinal].setDisabled(true);
+				buttons[ordinal].setButtonColor(Color.darkGray);
 			}
 		}
 	}
