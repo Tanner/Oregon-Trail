@@ -218,6 +218,9 @@ public class PartyCreationScene extends Scene {
 		people.remove(col);
 		
 		personNameTextFields[col].clear();
+		
+		rationsSegmentedControl.clear();
+		professionSegmentedControl.clear();
 		//TODO: Clear other things when deleted
 	}
 	
