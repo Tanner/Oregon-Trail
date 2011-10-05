@@ -55,7 +55,7 @@ public class ComponentTestScene extends Scene {
 		spinner = new Spinner(container,fieldFont, Color.white, 300, 50, false, "Hello","There","Encyclopedia");
 		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BottomLeft),Positionable.ReferencePoint.TopLeft, 0, PADDING);
 	
-		spinnerLabel = new Label(container, fieldFont, Color.white, "Label", 300);
+		spinnerLabel = new Label(container, fieldFont, Color.white, "Label");
 		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		
 		segment = new SegmentedControl(container, fieldFont, Color.white,400,40,"1","2","3","4","Poop");

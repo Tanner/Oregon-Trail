@@ -11,10 +11,10 @@ import scene.Scene;
 import scene.SceneID;
 import component.Background;
 import component.Label;
+import component.sprite.*;
 import core.FontManager;
 import core.GameDirector;
 import scene.layout.GridLayout;
-import sprite.Sprite;
 
 public class GridLayoutTestScene extends Scene {
 	public static final SceneID ID = SceneID.GridLayoutTest;

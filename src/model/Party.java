@@ -41,7 +41,7 @@ public class Party {
 			partyCreationLog += person.getName() + " ";
 		}
 		Logger.log(partyCreationLog, Logger.Level.INFO);
-		Logger.log("Party starting money is: " + money, Logger.Level.INFO);
+		Logger.log("Party starting money is: $" + money, Logger.Level.INFO);
 		Logger.log("Current pace is: " + currentPace + " and current rations is: " + currentRations, Level.INFO);
 	}
 	
@@ -53,13 +53,27 @@ public class Party {
 		return this.members;
 	}
 	
+	/**
+	 * Returns the money
+	 * @return the party's money
+	 */
 	public int getMoney(){
 		return this.money;
 	}
 	
+	/**
+	 * Sets the party's money
+	 * @param money
+	 */
 	public void setMoney(int money){
 		this.money = money;
 	}
+	
+	/**
+	 * The possible values of the party's pace
+	 * @author 
+	 *
+	 */
 	
 	public enum Pace{
 		STEADY,
@@ -67,13 +81,27 @@ public class Party {
 		GRUELING;
 	}
 	
+	/**
+	 * 
+	 * @return the party's pace setting
+	 */
 	public Pace getPace(){
 		return currentPace;
 	}
 	
+	/**
+	 * 
+	 * @param pace the party's new pace
+	 */
 	public void setPace(Pace pace){
 		this.currentPace = pace;
 	}
+	
+	/**
+	 * The possible settings of the party's consumption rate
+	 * @author 
+	 *
+	 */
 	
 	public enum Rations{
 		FILLING,
@@ -81,10 +109,18 @@ public class Party {
 		BAREBONES;
 	}
 	
+	/**
+	 * 
+	 * @return the party's current ration consumption rate
+	 */
 	public Rations getRations(){
 		return currentRations;
 	}
 	
+	/**
+	 * 
+	 * @param rations the desired new ration consumption rate
+	 */
 	public void setRations(Rations rations){
 		this.currentRations = rations;
 	}
