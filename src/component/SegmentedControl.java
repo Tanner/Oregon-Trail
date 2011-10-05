@@ -98,7 +98,7 @@ public class SegmentedControl extends Component {
 				buttons[i].setButtonColor(Color.darkGray);
 		}
 		if ( MAX_SELECTED == 1)
-			buttons[selection.get(0)].setDisabled(true);
+			buttons[selection.get(0)].setButtonColor(Color.darkGray);
 	}
 	
 	
@@ -125,10 +125,9 @@ public class SegmentedControl extends Component {
 		selection.clear();
 		for (Button b : buttons) {
 			b.setButtonColor(Color.gray);
-			b.setDisabled(false);
 		}
 		if ( MAX_SELECTED == 1) {
-			buttons[0].setDisabled(true);
+			buttons[0].setButtonColor(Color.darkGray);
 			selection.add(0);
 		}
 	}
