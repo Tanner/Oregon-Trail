@@ -43,7 +43,7 @@ public class PartyCreationScene extends Scene {
 	private Label personSkillLabels[][] = new Label[NUM_PEOPLE][NUM_SKILLS];
 	
 	private Button confirmButton;
-	private SegmentedControl rationsSegmentedControl, professionSegmentedControl, skillSegmentedControl;
+	private SegmentedControl rationsSegmentedControl, professionSegmentedControl, skillSegmentedControl, paceSegmentedControl;
 	
 	private ArrayList<Person> people = new ArrayList<Person>();
 	
@@ -113,6 +113,7 @@ public class PartyCreationScene extends Scene {
 			}
 		}
 		
+		// Ration Selection
 		Label rationsLabel = new Label(container, fieldFont, Color.white, "Rations:");
 		rationsLabel.setHeight(regularButtonHeight);
 		mainLayer.add(rationsLabel, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
@@ -125,6 +126,20 @@ public class PartyCreationScene extends Scene {
 		rationsSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, buttonWidth * 2 + PADDING, regularButtonHeight, 1, rationLabels.length, 0, 1, rationLabels);
 		mainLayer.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
 		
+		// Pace Selection
+		Label paceLabel = new Label(container, fieldFont, Color.white, "Pace:");
+		paceLabel.setHeight(regularButtonHeight);
+		mainLayer.add(paceLabel, rationsLabel.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
+		
+		int numOfPaces = Party.Pace.values().length;
+		String[] paceLabels = new String[numOfRations];
+		for (int i = 0; i < numOfPaces; i++) {
+			paceLabels[i] = Party.Pace.values()[i].toString();
+		}
+		paceSegmentedControl = new SegmentedControl(container, fieldFont, Color.white, buttonWidth * 2 + PADDING, regularButtonHeight, 1, paceLabels.length, 0, 1, paceLabels);
+		mainLayer.add(paceSegmentedControl, rationsSegmentedControl.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
+		
+		//Confirm Button
 		confirmButton = new Button(container, new Label(container, fieldFont, Color.white, "Confirm"), buttonWidth, regularButtonHeight);
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
