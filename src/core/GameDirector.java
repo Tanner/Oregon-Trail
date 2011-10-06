@@ -51,6 +51,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		try {
 			container = new AppGameContainer(sceneDirector);
 			container.setDisplayMode(1024, 576, false);
+			container.setTargetFrameRate(60);
 			container.setShowFPS(false);
 			container.start();
 		} catch (SlickException e) {
@@ -73,7 +74,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		case PartyCreation:
 			return new PartyCreationScene(game.getPlayer());
 		case Town:
-			return new TownScene();
+			return new TownScene(game.getPlayer().getParty());
 		case Store:
 			return new StoreScene();
 		case SceneSelector:

@@ -16,6 +16,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
+import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Background;
@@ -152,9 +153,9 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		for (int i = 0; i < newPersonButtons.length; i++) {
-			personDeleteButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "X"), 20, regularButtonHeight);
+			personDeleteButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "X"), regularButtonHeight, regularButtonHeight);
 			personDeleteButtons[i].setVisible(false);
-			personDeleteButtons[i].setRoundedCorners(true);
+			personDeleteButtons[i].setButtonColor(Color.red);
 			personDeleteButtons[i].addListener(new ButtonListener());
 			mainLayer.add(personDeleteButtons[i], newPersonButtons[i].getPosition(ReferencePoint.TopRight), ReferencePoint.CenterCenter, 0, 0);
 		}
@@ -251,7 +252,10 @@ public class PartyCreationScene extends Scene {
 		people.remove(col);
 		
 		personNameTextFields[col].clear();
-		//TODO: Clear other things when deleted
+		personProfessionLabels[col].setText("No Profession");
+		for(int j = 0; j < 3; j++) {
+			personSkillLabels[col][j].setText("");
+		}
 	}
 	
 	@Override
@@ -264,6 +268,13 @@ public class PartyCreationScene extends Scene {
 				personSkillLabels[currentPersonModifying][j].setText("");
 			}
 			personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
+			
+			personMoneyLabels[currentPersonModifying].setVisible(true);
+			
+			personChangeSkillButtons[currentPersonModifying].setVisible(true);
+			for (int j = 0; j < personSkillLabels[currentPersonModifying].length; j++) {
+				personSkillLabels[currentPersonModifying][j].setVisible(true);
+			}
 		}
 		else if (modal == skillModal) {
 			people.get(currentPersonModifying).clearSkills();
@@ -285,12 +296,18 @@ public class PartyCreationScene extends Scene {
 			for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
 					personNameTextFields[i].setVisible(true);
+					
+					personNameTextFields[i].setFocus(true);
 				}
 				
-				if (source == personNameTextFields[i]) {
+				if (source == personNameTextFields[i]) {	
 					if(people.size() < i + 1) {
+						if (personNameTextFields[i].isEmpty()) {
+							return;
+						}
+						
 						people.add(i, new Person(personNameTextFields[i].getText()));
-	
+						
 						// Moves the delete button to the latest person created
 						for (int j = 0; j < people.size() - 1; j++) {
 							personDeleteButtons[j].setVisible(false);
@@ -301,6 +318,10 @@ public class PartyCreationScene extends Scene {
 						personProfessionLabels[i].setVisible(true);
 					}
 					else {
+						if (personNameTextFields[i].isEmpty()) {
+							personNameTextFields[i].setText(people.get(i).getName());
+						}
+						
 						people.get(i).setName(personNameTextFields[i].getText());
 					}
 				}
@@ -311,12 +332,6 @@ public class PartyCreationScene extends Scene {
 					currentPersonModifying = i;
 					
 					showModal(professionModal);
-					personMoneyLabels[i].setVisible(true);
-					
-					personChangeSkillButtons[i].setVisible(true);
-					for (int j = 0; j < personSkillLabels[i].length; j++) {
-						personSkillLabels[i][j].setVisible(true);
-					}
 				}
 				
 				if (source == personChangeSkillButtons[i]) {
@@ -337,9 +352,14 @@ public class PartyCreationScene extends Scene {
 			enableNextPersonField();
 			
 			if (source == confirmButton) {
-				//TODO: Show dialog box if persons don't have a profession
+				if (people.size() == 0) {
+					showModal(new Modal(container, PartyCreationScene.this, "Error - No party members.", "Ok"));
+					return;
+				}
+				
 				for (Person person : people) {
 					if (person.getProfession() == null) {
+						showModal(new Modal(container, PartyCreationScene.this, "Error - Not all party members have professions selected.", "Ok"));
 						Logger.log("Not all party members have professions selected", Logger.Level.INFO);
 						return;
 					}
@@ -348,7 +368,8 @@ public class PartyCreationScene extends Scene {
 				rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
 				player.setParty(new Party(pace, rations, people));
 				
-				Logger.log("Confirm button pushed", Logger.Level.DEBUG);
+				Logger.log("Confirm button pushed", Logger.Level.INFO);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.Town);
 			}
 		}
 	}

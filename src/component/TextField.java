@@ -75,6 +75,10 @@ public class TextField extends Component {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (hasFocus()) {
+			if (isEmpty()) {
+				label.setText("");
+			}
+			
 			if (key == Input.KEY_ENTER) {				
 				setFocus(false);
 			} else if (key == Input.KEY_BACK && label.getText().length() >= 1) {
@@ -101,10 +105,6 @@ public class TextField extends Component {
 	@Override
 	public void mouseReleased(int button, int x, int y) {
 		if (over) {
-			if (isEmpty()) {
-				label.setText("");
-			}
-			
 			setFocus(true);
 			input.consumeEvent();
 		}
@@ -167,9 +167,8 @@ public class TextField extends Component {
 		if (!focus && hasFocus()) {
 			if (isEmpty()) {
 				label.setText(placeholderText);
-			} else {
-				notifyListeners();
 			}
+			notifyListeners();
 		}
 		
 		super.setFocus(focus);
@@ -261,5 +260,13 @@ public class TextField extends Component {
 	 */
 	public String getText() {
 		return label.getText();
+	}
+	
+	/**
+	 * Set the text for the text field.
+	 * @param text Text to be entered
+	 */
+	public void setText(String text) {
+		label.setText(text);
 	}
 }
