@@ -108,7 +108,7 @@ public class PartyCreationScene extends Scene {
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
 			
 			personNameTextFields[i] = new TextField(container, fieldFont, buttonWidth, regularButtonHeight);
-			personNameTextFields[i].setPlaceholderText("Name");
+			personNameTextFields[i].setPlaceholderText(ConstantStore.get("PARTY_CREATION_SCENE", "NAME_PLACEHOLDER"));
 			personNameTextFields[i].addListener(new ButtonListener());
 			personNameTextFields[i].setVisible(false);
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
@@ -120,14 +120,14 @@ public class PartyCreationScene extends Scene {
 			personChangeProfessionButtons[i].setVisible(false);
 			mainLayer.add(personChangeProfessionButtons[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
-			personProfessionLabels[i] = new Label(container, fieldFont, Color.white, "No Profession", buttonWidth);
+			personProfessionLabels[i] = new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NO_PROFESSION_LABEL"), buttonWidth);
 			personProfessionLabels[i].setHeight(regularButtonHeight);
 			personProfessionLabels[i].setBackgroundColor(Color.darkGray);
 			personProfessionLabels[i].setVisible(false);
 			personProfessionLabels[i].setAlignment(Alignment.Center);
 			mainLayer.add(personProfessionLabels[i], personChangeProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
 			
-			personMoneyLabels[i] = new Label(container, fieldFont, Color.white, "$0", buttonWidth);
+			personMoneyLabels[i] = new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "MONEY_SYMBOL")+"0", buttonWidth);
 			personMoneyLabels[i].setAlignment(Alignment.Center);
 			personMoneyLabels[i].setVisible(false);
 			mainLayer.add(personMoneyLabels[i], personProfessionLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
@@ -155,7 +155,7 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		for (int i = 0; i < newPersonButtons.length; i++) {
-			personDeleteButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "X"), regularButtonHeight, regularButtonHeight);
+			personDeleteButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "DELETE_PERSON_LABEL")), regularButtonHeight, regularButtonHeight);
 			personDeleteButtons[i].setVisible(false);
 			personDeleteButtons[i].setButtonColor(Color.red);
 			personDeleteButtons[i].addListener(new ButtonListener());
@@ -264,7 +264,7 @@ public class PartyCreationScene extends Scene {
 	public void resignModal(Modal modal, int[] segmentedControlResults) {
 		super.resignModal(modal, segmentedControlResults);
 		if(modal == professionModal) {
-			personMoneyLabels[currentPersonModifying].setText("$" + Person.Profession.values()[segmentedControlResults[0]].getMoney());
+			personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
 			people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
 			for(int j = 0; j < 3; j++) {
 				personSkillLabels[currentPersonModifying][j].setText("");
@@ -355,13 +355,13 @@ public class PartyCreationScene extends Scene {
 			
 			if (source == confirmButton) {
 				if (people.size() == 0) {
-					showModal(new Modal(container, PartyCreationScene.this, "Error - No party members.", "Ok"));
+					showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_NO_MEMBERS"), "Ok"));
 					return;
 				}
 				
 				for (Person person : people) {
 					if (person.getProfession() == null) {
-						showModal(new Modal(container, PartyCreationScene.this, "Error - Not all party members have professions selected.", "Ok"));
+						showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_PROFESSIONS"), "Ok"));
 						Logger.log("Not all party members have professions selected", Logger.Level.INFO);
 						return;
 					}
