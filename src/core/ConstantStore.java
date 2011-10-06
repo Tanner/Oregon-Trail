@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashMap; 
 import java.util.Map; 
 
+import org.newdawn.slick.Color;
+
 /**
  * Class to hold constants used by the game
  * 
@@ -34,6 +36,12 @@ public final class ConstantStore {
 		partyCreationScene.put("SKILL_MODAL", "Please select three skills.");
 		partyCreationScene.put("PARTY_CONFIRM", "Confirm");
 		literalMap.put("PARTY_CREATION_SCENE", partyCreationScene);
+		
+		// Colors
+		Map<String, Color> colorMap = new HashMap<String, Color>(); 
+		colorMap.put("INTERACTIVE_NORMAL", new Color(0x80512a));
+		colorMap.put("INTERACTIVE_ACTIVE", new Color(0x9e5e2c));
+		literalMap.put("COLORS", colorMap);
 		
 		// General
 		Map<String, String> general = new HashMap<String, String>();
