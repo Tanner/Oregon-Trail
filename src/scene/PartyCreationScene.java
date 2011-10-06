@@ -12,6 +12,7 @@ import model.Player;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.AbstractComponent;
@@ -193,7 +194,7 @@ public class PartyCreationScene extends Scene {
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
-		backgroundLayer.add(new Background(container, new Color(0xa00008)));
+		backgroundLayer.add(new Background(container, new Image("resources/wood.png")));
 		
 		enableNextPersonField();
 	}
