@@ -39,7 +39,9 @@ public class SegmentedControl extends Component {
 	
 	private String[] labels;
 	
-	private ArrayList<Integer> selection;
+	private boolean[] selection;
+	private int singleSelection;
+	private boolean[] permanent;
 	private Button[] buttons;
 	
 	/**
@@ -68,17 +70,16 @@ public class SegmentedControl extends Component {
 		STATES = labels.length;
 		MAX_SELECTED = maxSelected;
 		buttons = new Button[STATES];
-		selection = new ArrayList<Integer>();
+		selection = new boolean[STATES];
+		permanent = new boolean[STATES];
+		singleSelection = 0;
 		
 		generateButtons(context);
 		
 		setWidth(width);
 		setHeight(height);
 		
-		if (MAX_SELECTED == 1) {
-			buttons[0].setButtonColor(Color.darkGray);
-			selection.add(0);
-		}
+		clear();		
 	}
 	
 	public void generateButtons(GUIContext context) {
@@ -94,11 +95,13 @@ public class SegmentedControl extends Component {
 	 */
 	public void updateButtons() {
 		for (int i = 0; i < STATES; i++) {
-			if ( selection.contains(i) )
+			if ( selection[i] )
 				buttons[i].setButtonColor(Color.darkGray);
+			else
+				buttons[i].setButtonColor(Color.gray);
 		}
 		if ( MAX_SELECTED == 1)
-			buttons[selection.get(0)].setButtonColor(Color.darkGray);
+			buttons[singleSelection].setButtonColor(Color.darkGray);
 	}
 	
 	
@@ -110,10 +113,20 @@ public class SegmentedControl extends Component {
 	 * @param selection An array of selections to set on the SegmentedControl
 	 */
 	public void setSelection(int[] selection) {
-		this.selection.clear();
+		Arrays.fill(this.selection,false);
 		for (int i : selection )
-			this.selection.add(i);
+			this.selection[i] = true;
 		updateButtons();
+	}
+	
+	public void setPermanent(int[] permanent) {
+		if (MAX_SELECTED > 1 ) {
+			Arrays.fill(this.permanent, false);
+			for (int i : permanent ) {
+				this.permanent[i] = true;;
+			}
+			setSelection(permanent);
+		}
 	}
 	
 	/**
@@ -122,13 +135,14 @@ public class SegmentedControl extends Component {
 	 * changed.  Otherwise, clear all selections.
 	 */
 	public void clear() {
-		selection.clear();
+		Arrays.fill(this.selection, false);
+		selection = permanent.clone();
 		for (Button b : buttons) {
 			b.setButtonColor(Color.gray);
 		}
 		if ( MAX_SELECTED == 1) {
-			buttons[0].setButtonColor(Color.darkGray);
-			selection.add(0);
+			singleSelection = 0;
+			buttons[singleSelection].setButtonColor(Color.darkGray);
 		}
 	}
 	
@@ -153,6 +167,15 @@ public class SegmentedControl extends Component {
 		for (Button b : buttons)
 			b.setLabelColor(color);
 	}
+	
+	private int getNumSelected() {
+		int count = 0;
+		for (boolean b: selection) {
+			if ( b )
+				count++;
+		}
+		return count;
+	}
 
 	/**
 	 * Returns the current state of the segmented controller.  This value
@@ -163,13 +186,18 @@ public class SegmentedControl extends Component {
 	 */
 	public int[] getSelection() {
 		if (MAX_SELECTED > 1) {
-			int[] returnStates = new int[selection.size()];
-			for ( int i = 0; i < selection.size(); i++)
-				returnStates[i] = selection.get(i);
+			int[] returnStates = new int[getNumSelected()];
+			int ptr = 0;
+			for ( int i = 0; i < returnStates.length; i++) {
+				while ( !selection[ptr] )
+					ptr++;
+				returnStates[i] = ptr;
+				ptr++;
+			}
 			return returnStates;
 		}
 		else {
-			int[] returnStates = {selection.get(0)};
+			int[] returnStates = {singleSelection};
 			return returnStates;
 		}
 	}
@@ -299,21 +327,22 @@ public class SegmentedControl extends Component {
 		}
 		
 		public void componentActivated(AbstractComponent source) {
-			if (MAX_SELECTED > 1) {
-				if ( selection.contains(new Integer(ordinal)) ) {
-					buttons[ordinal].setButtonColor(Color.gray);
-					selection.remove(new Integer(ordinal));
+			System.out.println("Selected before button press: " + Arrays.toString(getSelection()));
+			if (MAX_SELECTED > 1 && !permanent[ordinal]) {
+				if ( selection[ordinal] )  {
+					System.out.println("Removing " + ordinal);
+					selection[ordinal] = false;
 				}
-				else if (selection.size() < MAX_SELECTED) {
-					buttons[ordinal].setButtonColor(Color.darkGray);
-					selection.add(new Integer(ordinal));
+				else if (getNumSelected() < MAX_SELECTED) {
+					System.out.println("Selecting " + ordinal);
+					selection[ordinal] = true;
 				}
 			}
 			else {
-				buttons[selection.remove(0)].setButtonColor(Color.gray);
-				selection.add(ordinal);
-				buttons[ordinal].setButtonColor(Color.darkGray);
+				singleSelection = ordinal;
 			}
+			updateButtons();
+			System.out.println("Selected after button press: " + Arrays.toString(getSelection()));
 		}
 	}
 }

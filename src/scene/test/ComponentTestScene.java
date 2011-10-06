@@ -65,10 +65,11 @@ public class ComponentTestScene extends Scene {
 			strs[i] = arr[i].getName();
 		}	
 
-		segment = new SegmentedControl(container,500,100,4,3,0,1,strs);
+		segment = new SegmentedControl(container,500,100,4,3,0,4,strs);
 
 		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
-		
+		int[] num = {2,3};
+		segment.setPermanent(num);
 	}
 
 	@Override
