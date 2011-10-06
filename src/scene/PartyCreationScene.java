@@ -308,6 +308,15 @@ public class PartyCreationScene extends Scene {
 							return;
 						}
 						
+						for (Person person : people) {
+							if (person.getName().equalsIgnoreCase(personNameTextFields[i].getText())) {
+								showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_DUP_NAME"), ConstantStore.get("GENERAL", "OK")));
+								
+								personNameTextFields[i].clear();
+								return;
+							}
+						}
+						
 						people.add(i, new Person(personNameTextFields[i].getText()));
 						
 						// Moves the delete button to the latest person created
@@ -355,13 +364,13 @@ public class PartyCreationScene extends Scene {
 			
 			if (source == confirmButton) {
 				if (people.size() == 0) {
-					showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_NO_MEMBERS"), "Ok"));
+					showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_NO_MEMBERS"), ConstantStore.get("GENERAL", "OK")));
 					return;
 				}
 				
 				for (Person person : people) {
 					if (person.getProfession() == null) {
-						showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_PROFESSIONS"), "Ok"));
+						showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_PROFESSIONS"), ConstantStore.get("GENERAL", "OK")));
 						Logger.log("Not all party members have professions selected", Logger.Level.INFO);
 						return;
 					}

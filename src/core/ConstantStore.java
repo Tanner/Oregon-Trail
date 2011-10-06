@@ -42,12 +42,14 @@ public final class ConstantStore {
 		partyCreationScene.put("PARTY_CONFIRM", "Confirm");
 		partyCreationScene.put("ERR_NO_MEMBERS", "Error - No party members.");
 		partyCreationScene.put("ERR_INCOMPLETE_PROFESSIONS", "Error - Not all party members have professions selected.");
+		partyCreationScene.put("ERR_DUP_NAME", "Error - A person already has this name. Please choose another.");
 		literalMap.put("PARTY_CREATION_SCENE", partyCreationScene);
 		
 		// General
 		Map<String, String> general = new HashMap<String, String>();
 		general.put("MONEY_SYMBOL", "$");
 		general.put("CONFIRM", "Confirm");
+		general.put("OK", "Ok");
 		general.put("CANCEL", "Cancel");
 		general.put("PROFESSION", "Profession");
 		literalMap.put("GENERAL", general);
