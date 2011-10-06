@@ -263,10 +263,11 @@ public class PartyCreationScene extends Scene {
 	@Override
 	public void resignModal(Modal modal, int[] segmentedControlResults) {
 		super.resignModal(modal, segmentedControlResults);
-		if(modal == professionModal) {
+		if (modal == professionModal) {
 			personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
 			people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
-			for(int j = 0; j < 3; j++) {
+			
+			for (int j = 0; j < 3; j++) {
 				personSkillLabels[currentPersonModifying][j].setText("");
 			}
 			personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
@@ -277,15 +278,14 @@ public class PartyCreationScene extends Scene {
 			for (int j = 0; j < personSkillLabels[currentPersonModifying].length; j++) {
 				personSkillLabels[currentPersonModifying][j].setVisible(true);
 			}
-		}
-		else if (modal == skillModal) {
+		} else if (modal == skillModal) {
 			people.get(currentPersonModifying).clearSkills();
-			for(int j = 0; j < 3; j++) {
-				if(segmentedControlResults.length >= j + 1) {
+			
+			for (int j = 0; j < 3; j++) {
+				if (segmentedControlResults.length >= j + 1) {
 					people.get(currentPersonModifying).addSkill(Skill.values()[segmentedControlResults[j]]);
 					personSkillLabels[currentPersonModifying][j].setText(people.get(currentPersonModifying).getSkills().get(j).getName());
-				}
-				else {
+				} else {
 					personSkillLabels[currentPersonModifying][j].setText("");
 				}
 			}
