@@ -356,9 +356,11 @@ public class PartyCreationScene extends Scene {
 					skillSegmentedControl.clear();
 					skillModal = new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL"), skillSegmentedControl, ConstantStore.get("GENERAL", "CONFIRM"), ConstantStore.get("GENERAL", "CANCEL"));
 					
-					int[] permanent = new int[1];
-					permanent[0] = people.get(i).getProfession().getStartingSkill().ordinal();
-					skillSegmentedControl.setPermanent(permanent);
+					if(people.get(i).getProfession().getStartingSkill() != Person.Skill.NONE) {
+						int[] permanent = new int[1];
+						permanent[0] = people.get(i).getProfession().getStartingSkill().ordinal();
+						skillSegmentedControl.setPermanent(permanent);
+					}
 					
 					//ArrayList<Skill> currentSkills = people.get(i).getSkills();
 					//int[] currentSkillIndices = new int[currentSkills.size()];
