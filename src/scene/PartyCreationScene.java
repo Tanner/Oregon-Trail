@@ -194,7 +194,7 @@ public class PartyCreationScene extends Scene {
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
-		backgroundLayer.add(new Background(container, new Image("resources/wood.png")));
+		backgroundLayer.add(new Background(container, new Color(0xb40c09)));
 		
 		enableNextPersonField();
 	}
