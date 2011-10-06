@@ -101,32 +101,32 @@ public class SceneDirector extends StateBasedGame {
 	
 	@Override
 	public void keyPressed(int key, char c) {
-		Input input = container.getInput();
-		
-		boolean fullScreenKeyComboPressed;
-		String osName = System.getProperty("os.name");
-		if (osName.startsWith("Mac OS")) {
-			fullScreenKeyComboPressed = (key == Input.KEY_F && input.isKeyDown(Input.KEY_LWIN) && input.isKeyDown(Input.KEY_LSHIFT));
-		} else {
-			fullScreenKeyComboPressed = (key == Input.KEY_F11);
-		}
-				
-		if (fullScreenKeyComboPressed) {
-			try {
-				try {
-					DisplayMode[] dms = Display.getAvailableDisplayModes();
-					for (DisplayMode m : dms) {
-						Logger.log(m.toString(), Logger.Level.DEBUG);
-					}
-				} catch (LWJGLException e) {
-					e.printStackTrace();
-				}
-				
-				container.setFullscreen(!container.isFullscreen());
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
-		}
+//		Input input = container.getInput();
+//		
+//		boolean fullScreenKeyComboPressed;
+//		String osName = System.getProperty("os.name");
+//		if (osName.startsWith("Mac OS")) {
+//			fullScreenKeyComboPressed = (key == Input.KEY_F && input.isKeyDown(Input.KEY_LWIN) && input.isKeyDown(Input.KEY_LSHIFT));
+//		} else {
+//			fullScreenKeyComboPressed = (key == Input.KEY_F11);
+//		}
+//				
+//		if (fullScreenKeyComboPressed) {
+//			try {
+//				try {
+//					DisplayMode[] dms = Display.getAvailableDisplayModes();
+//					for (DisplayMode m : dms) {
+//						Logger.log(m.toString(), Logger.Level.DEBUG);
+//					}
+//				} catch (LWJGLException e) {
+//					e.printStackTrace();
+//				}
+//				
+//				container.setFullscreen(!container.isFullscreen());
+//			} catch (SlickException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
 		if (c == '+') {
 			GameDirector.sharedSceneDelegate().showSceneSelector();
