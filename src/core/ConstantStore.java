@@ -44,6 +44,7 @@ public final class ConstantStore {
 		general.put("CONFIRM", "Confirm");
 		general.put("CANCEL", "Cancel");
 		general.put("PROFESSION", "Profession");
+		literalMap.put("GENERAL", general);
 
 		LITERALS = Collections.unmodifiableMap(literalMap);
 		
