@@ -52,8 +52,8 @@ public class Button extends Component {
 		this.width = width;
 		this.height = height;
 		
-		buttonColor = ConstantStore.COLOR_MAP.get("INTERACTIVE_NORMAL");
-		buttonActiveColor = ConstantStore.COLOR_MAP.get("INTERACTIVE_ACTIVE");
+		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
+		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
 		
 		beveled = true;
 		

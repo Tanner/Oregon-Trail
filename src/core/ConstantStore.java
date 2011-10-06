@@ -15,9 +15,11 @@ public final class ConstantStore {
 	/**
 	 * Initialize and build literal map used to hold all display literals in game
 	 */
-	public static final Map<String, Map> LITERALS;
+	public static final Map<String, Map<String, String>> LITERALS;
+	public static final Map<String, Color> COLORS;
+	
 	static {
-		Map<String, Map> literalMap = new HashMap<String, Map>();
+		Map<String, Map<String, String>> literalMap = new HashMap<String, Map<String, String>>();
 		
 		// Main Menu
 		Map<String, String> mainMenu = new HashMap<String, String>();
@@ -37,12 +39,6 @@ public final class ConstantStore {
 		partyCreationScene.put("PARTY_CONFIRM", "Confirm");
 		literalMap.put("PARTY_CREATION_SCENE", partyCreationScene);
 		
-		// Colors
-		Map<String, Color> colorMap = new HashMap<String, Color>(); 
-		colorMap.put("INTERACTIVE_NORMAL", new Color(0x80512a));
-		colorMap.put("INTERACTIVE_ACTIVE", new Color(0x9e5e2c));
-		literalMap.put("COLORS", colorMap);
-		
 		// General
 		Map<String, String> general = new HashMap<String, String>();
 		general.put("CONFIRM", "Confirm");
@@ -50,6 +46,13 @@ public final class ConstantStore {
 		general.put("PROFESSION", "Profession");
 
 		LITERALS = Collections.unmodifiableMap(literalMap);
+		
+		// Colors
+		Map<String, Color> colorMap = new HashMap<String, Color>(); 
+		colorMap.put("INTERACTIVE_NORMAL", new Color(0x80512a));
+		colorMap.put("INTERACTIVE_ACTIVE", new Color(0x9e5e2c));
+		
+		COLORS = Collections.unmodifiableMap(colorMap);
 	}
 	
 	public static String get(String outer, String inner) {
