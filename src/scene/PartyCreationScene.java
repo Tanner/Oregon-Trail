@@ -296,6 +296,8 @@ public class PartyCreationScene extends Scene {
 			for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
 					personNameTextFields[i].setVisible(true);
+					
+					personNameTextFields[i].setFocus(true);
 				}
 				
 				if (source == personNameTextFields[i]) {	

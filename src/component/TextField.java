@@ -75,6 +75,10 @@ public class TextField extends Component {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (hasFocus()) {
+			if (isEmpty()) {
+				label.setText("");
+			}
+			
 			if (key == Input.KEY_ENTER) {				
 				setFocus(false);
 			} else if (key == Input.KEY_BACK && label.getText().length() >= 1) {
@@ -101,10 +105,6 @@ public class TextField extends Component {
 	@Override
 	public void mouseReleased(int button, int x, int y) {
 		if (over) {
-			if (isEmpty()) {
-				label.setText("");
-			}
-			
 			setFocus(true);
 			input.consumeEvent();
 		}
