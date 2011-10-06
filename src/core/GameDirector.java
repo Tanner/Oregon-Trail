@@ -74,7 +74,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		case PartyCreation:
 			return new PartyCreationScene(game.getPlayer());
 		case Town:
-			return new TownScene();
+			return new TownScene(game.getPlayer().getParty());
 		case Store:
 			return new StoreScene();
 		case SceneSelector:

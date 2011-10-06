@@ -1,8 +1,10 @@
 package scene;
 
+import model.Party;
+import model.Person;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -23,6 +25,12 @@ public class TownScene extends Scene {
 	private Sprite mario;
 	private Sprite luigi;
 
+	public TownScene(Party party) {
+		for (Person p : party.getPartyMembers()) {
+			Logger.log(p.getName() + ", the " + p.getProfession() + ", entered the town.", Logger.Level.INFO);
+		}
+	}
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
@@ -36,24 +44,23 @@ public class TownScene extends Scene {
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);
 		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 5);
 		
-		Image marioImage = new Image("resources/mario.png");
-		mario = new Sprite(container, marioImage, marioImage.getFlippedCopy(true, false));
-		mario.setLocation(0, container.getHeight() - mario.getHeight());
-		
-		Image luigiImage = new Image("resources/luigi.png");
-		luigi = new Sprite(container, luigiImage, luigiImage.getFlippedCopy(true, false));
-		luigi.setLocation(200, container.getHeight() - luigi.getHeight());
-		
-		mainLayer.add(mario);
-		mainLayer.add(luigi);
+//		Image marioImage = new Image("resources/mario.png");
+//		mario = new Sprite(container, marioImage, marioImage.getFlippedCopy(true, false));
+//		mario.setLocation(0, container.getHeight() - mario.getHeight());
+//		
+//		Image luigiImage = new Image("resources/luigi.png");
+//		luigi = new Sprite(container, luigiImage, luigiImage.getFlippedCopy(true, false));
+//		luigi.setLocation(200, container.getHeight() - luigi.getHeight());
+//		
+//		mainLayer.add(mario);
+//		mainLayer.add(luigi);
 		
 		backgroundLayer.add(new Background(container, new Color(0x003e84)));
 	}
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		mario.update(container, game, delta);
-		luigi.update(container, game, delta);
+		
 	}
 
 	@Override

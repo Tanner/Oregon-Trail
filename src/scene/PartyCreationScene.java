@@ -153,9 +153,9 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		for (int i = 0; i < newPersonButtons.length; i++) {
-			personDeleteButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "X"), 20, regularButtonHeight);
+			personDeleteButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, "X"), regularButtonHeight, regularButtonHeight);
 			personDeleteButtons[i].setVisible(false);
-			personDeleteButtons[i].setRoundedCorners(true);
+			personDeleteButtons[i].setButtonColor(Color.red);
 			personDeleteButtons[i].addListener(new ButtonListener());
 			mainLayer.add(personDeleteButtons[i], newPersonButtons[i].getPosition(ReferencePoint.TopRight), ReferencePoint.CenterCenter, 0, 0);
 		}
@@ -365,7 +365,8 @@ public class PartyCreationScene extends Scene {
 				rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
 				player.setParty(new Party(pace, rations, people));
 				
-				Logger.log("Confirm button pushed", Logger.Level.DEBUG);
+				Logger.log("Confirm button pushed", Logger.Level.INFO);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.Town);
 			}
 		}
 	}
