@@ -78,7 +78,7 @@ public class SegmentedControl extends Component {
 		
 		setWidth(width);
 		setHeight(height);
-		
+			
 		clear();		
 	}
 	
