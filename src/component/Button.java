@@ -9,6 +9,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
 
+import core.ConstantStore;
 import core.Logger;
 
 /**
@@ -51,8 +52,8 @@ public class Button extends Component {
 		this.width = width;
 		this.height = height;
 		
-		buttonColor = Color.gray;
-		buttonActiveColor = Color.darkGray;
+		buttonColor = ConstantStore.COLOR_MAP.get("INTERACTIVE_NORMAL");
+		buttonActiveColor = ConstantStore.COLOR_MAP.get("INTERACTIVE_ACTIVE");
 		
 		beveled = true;
 		
