@@ -268,6 +268,13 @@ public class PartyCreationScene extends Scene {
 				personSkillLabels[currentPersonModifying][j].setText("");
 			}
 			personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
+			
+			personMoneyLabels[currentPersonModifying].setVisible(true);
+			
+			personChangeSkillButtons[currentPersonModifying].setVisible(true);
+			for (int j = 0; j < personSkillLabels[currentPersonModifying].length; j++) {
+				personSkillLabels[currentPersonModifying][j].setVisible(true);
+			}
 		}
 		else if (modal == skillModal) {
 			people.get(currentPersonModifying).clearSkills();
@@ -323,12 +330,6 @@ public class PartyCreationScene extends Scene {
 					currentPersonModifying = i;
 					
 					showModal(professionModal);
-					personMoneyLabels[i].setVisible(true);
-					
-					personChangeSkillButtons[i].setVisible(true);
-					for (int j = 0; j < personSkillLabels[i].length; j++) {
-						personSkillLabels[i][j].setVisible(true);
-					}
 				}
 				
 				if (source == personChangeSkillButtons[i]) {
