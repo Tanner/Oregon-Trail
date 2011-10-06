@@ -28,10 +28,11 @@ import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.SegmentedControl;
 import component.TextField;
+import core.ConstantStore;
 import core.FontManager;
 import core.GameDirector;
 import core.Logger;
-import static core.ConstantStore.LIT_MAP;
+import static core.ConstantStore.LITERALS;
 
 /**
  * The Party Creation Scene
@@ -100,7 +101,7 @@ public class PartyCreationScene extends Scene {
 			ReferencePoint newPersonButtonReferencePoint = (i == 0) ? ReferencePoint.TopLeft :ReferencePoint.TopRight;
 			int newPersonButtonPaddingY = (i == 0) ? PADDING : 0;
 			
-			newPersonButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_NEW_PLAYER")), buttonWidth, newPersonButtonHeight);
+			newPersonButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NEW_PLAYER")), buttonWidth, newPersonButtonHeight);
 			newPersonButtons[i].setRoundedCorners(true);
 			newPersonButtons[i].addListener(new ButtonListener());
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
@@ -111,7 +112,7 @@ public class PartyCreationScene extends Scene {
 			personNameTextFields[i].setVisible(false);
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 			
-			personChangeProfessionButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_PROFESSION")), buttonWidth, regularButtonHeight);
+			personChangeProfessionButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_PROFESSION")), buttonWidth, regularButtonHeight);
 			personChangeProfessionButtons[i].setTopLeftRoundedCorner(true);
 			personChangeProfessionButtons[i].setTopRightRoundedCorner(true);
 			personChangeProfessionButtons[i].addListener(new ButtonListener());
@@ -130,7 +131,7 @@ public class PartyCreationScene extends Scene {
 			personMoneyLabels[i].setVisible(false);
 			mainLayer.add(personMoneyLabels[i], personProfessionLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
-			personChangeSkillButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_CHANGE_SKILL")), buttonWidth, regularButtonHeight);
+			personChangeSkillButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_SKILL")), buttonWidth, regularButtonHeight);
 			personChangeSkillButtons[i].setTopLeftRoundedCorner(true);
 			personChangeSkillButtons[i].setTopRightRoundedCorner(true);
 			personChangeSkillButtons[i].addListener(new ButtonListener());
@@ -161,7 +162,7 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		// Ration Selection
-		Label rationsLabel = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_RATIONS"));
+		Label rationsLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "RATIONS_LABEL"));
 		rationsLabel.setHeight(regularButtonHeight);
 		mainLayer.add(rationsLabel, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
 		
@@ -174,7 +175,7 @@ public class PartyCreationScene extends Scene {
 		mainLayer.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
 		
 		// Pace Selection
-		Label paceLabel = new Label(container, fieldFont, Color.white, LIT_MAP.get("OT_PACE"));
+		Label paceLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PACE_LABEL"));
 		paceLabel.setHeight(regularButtonHeight);
 		mainLayer.add(paceLabel, rationsLabel.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
 		
@@ -187,7 +188,7 @@ public class PartyCreationScene extends Scene {
 		mainLayer.add(paceSegmentedControl, rationsSegmentedControl.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
 		
 		//Confirm Button
-		confirmButton = new Button(container, new Label(container, fieldFont, Color.white,  LIT_MAP.get("OT_CONFIRM")), buttonWidth, regularButtonHeight);
+		confirmButton = new Button(container, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PARTY_CONFIRM")), buttonWidth, regularButtonHeight);
 		confirmButton.setRoundedCorners(true);
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
@@ -328,7 +329,7 @@ public class PartyCreationScene extends Scene {
 				
 				if (source == personChangeProfessionButtons[i]) {
 					professionSegmentedControl.clear();
-					professionModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), professionSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
+					professionModal = new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "PROFESSION_MODAL"), professionSegmentedControl, ConstantStore.get("GENERAL", "CONFIRM"), ConstantStore.get("GENERAL", "CANCEL"));
 					currentPersonModifying = i;
 					
 					showModal(professionModal);
@@ -336,7 +337,7 @@ public class PartyCreationScene extends Scene {
 				
 				if (source == personChangeSkillButtons[i]) {
 					skillSegmentedControl.clear();
-					skillModal = new Modal(container, PartyCreationScene.this, LIT_MAP.get("PC_PROMPT"), skillSegmentedControl, LIT_MAP.get("OT_CONFIRM"), LIT_MAP.get("OT_CANCEL"));
+					skillModal = new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL"), skillSegmentedControl, ConstantStore.get("GENERAL", "CONFIRM"), ConstantStore.get("GENERAL", "CANCEL"));
 					currentPersonModifying = i;
 					
 					showModal(skillModal);
