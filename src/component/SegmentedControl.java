@@ -112,6 +112,10 @@ public class SegmentedControl extends Component {
 	 * 
 	 * @param selection An array of selections to set on the SegmentedControl
 	 */
+	//TODO: Need a way to have setSelection and setPermanent together, so we can do something like set
+	//TODO: the selection to the current skills but have the startingSkill be permanent.
+	//TODO: Also need bug fix on setSelection : when setting selection on professionSegmentedControl, 
+	//TODO: option starts selected but cannot be unselected.  May be related to fix of above problem.
 	public void setSelection(int[] selection) {
 		Arrays.fill(this.selection,false);
 		for (int i : selection )

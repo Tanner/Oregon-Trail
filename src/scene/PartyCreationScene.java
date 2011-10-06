@@ -340,6 +340,13 @@ public class PartyCreationScene extends Scene {
 				if (source == personChangeProfessionButtons[i]) {
 					professionSegmentedControl.clear();
 					professionModal = new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "PROFESSION_MODAL"), professionSegmentedControl, ConstantStore.get("GENERAL", "CONFIRM"), ConstantStore.get("GENERAL", "CANCEL"));
+										
+					/*if(people.get(i).getProfession() != null) {
+						int[] currentProfession = new int[1];
+						currentProfession[0] = people.get(i).getProfession().ordinal();
+						professionSegmentedControl.setSelection(currentProfession);
+					}*/
+					
 					currentPersonModifying = i;
 					
 					showModal(professionModal);
@@ -348,6 +355,20 @@ public class PartyCreationScene extends Scene {
 				if (source == personChangeSkillButtons[i]) {
 					skillSegmentedControl.clear();
 					skillModal = new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL"), skillSegmentedControl, ConstantStore.get("GENERAL", "CONFIRM"), ConstantStore.get("GENERAL", "CANCEL"));
+					
+					if(people.get(i).getProfession().getStartingSkill() != Person.Skill.NONE) {
+						int[] permanent = new int[1];
+						permanent[0] = people.get(i).getProfession().getStartingSkill().ordinal();
+						skillSegmentedControl.setPermanent(permanent);
+					}
+					
+					//ArrayList<Skill> currentSkills = people.get(i).getSkills();
+					//int[] currentSkillIndices = new int[currentSkills.size()];
+					//for(int j = 0; j < currentSkillIndices.length; j++) {
+					//	currentSkillIndices[j] = currentSkills.get(j).ordinal();
+					//}
+					
+					//skillSegmentedControl.setSelection(currentSkillIndices);
 					currentPersonModifying = i;
 					
 					showModal(skillModal);
