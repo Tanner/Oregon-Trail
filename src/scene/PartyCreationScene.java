@@ -369,9 +369,15 @@ public class PartyCreationScene extends Scene {
 				
 				if (source == personChangeSkillButtons[i]) {
 					skillSegmentedControl.clear();
+					String skillModalMessage;
+					if (people.get(i).getProfession().getStartingSkill() != Skill.NONE) {
+						skillModalMessage = String.format(ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL_MESSAGE"), people.get(i).getName(), people.get(i).getProfession().getStartingSkill().getName());
+					}  else {
+						skillModalMessage = String.format(ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL_MESSAGE_NO_SKILL"), people.get(i).getName());
+					}
 					skillModal = new Modal(container,
 							PartyCreationScene.this,
-							String.format(ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL"), people.get(i).getName(), people.get(i).getProfession().getStartingSkill().getName()),
+							skillModalMessage,
 							skillSegmentedControl,
 							ConstantStore.get("GENERAL", "CONFIRM"),
 							ConstantStore.get("GENERAL", "CANCEL"));
