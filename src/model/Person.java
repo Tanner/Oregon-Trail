@@ -75,7 +75,12 @@ public class Person {
 	}
 	
 	public boolean clearSkills() {
-		skills.clear();
+		for (int i = skills.size() - 1; i >= 0; i--) {
+			Skill skill = skills.get(i);
+			if (!skill.equals(profession.getStartingSkill())) {
+				skills.remove(skill);
+			}
+		}
 		return true;
 	}
 	
