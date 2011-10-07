@@ -30,7 +30,7 @@ public class SegmentedControl extends Component {
 	private Color color = Color.white;
 	
 	private final int STATES;
-	private final int MAX_SELECTED;
+	private final int maxSelected;
 	
 	
 	private int rows, cols, rowHeight, colWidth;
@@ -68,7 +68,7 @@ public class SegmentedControl extends Component {
 		this.margin = margin;
 		this.labels = labels;
 		STATES = labels.length;
-		MAX_SELECTED = maxSelected;
+		this.maxSelected = maxSelected;
 		buttons = new Button[STATES];
 		selection = new boolean[STATES];
 		permanent = new boolean[STATES];
@@ -95,12 +95,12 @@ public class SegmentedControl extends Component {
 	 */
 	public void updateButtons() {
 		for (int i = 0; i < STATES; i++) {
-			if ( selection[i] )
+			if (permanent[i] || selection[i])
 				buttons[i].setButtonColor(Color.darkGray);
 			else
 				buttons[i].setButtonColor(Color.gray);
 		}
-		if ( MAX_SELECTED == 1)
+		if (maxSelected == 1)
 			buttons[singleSelection].setButtonColor(Color.darkGray);
 	}
 	
@@ -117,17 +117,21 @@ public class SegmentedControl extends Component {
 	//TODO: Also need bug fix on setSelection : when setting selection on professionSegmentedControl, 
 	//TODO: option starts selected but cannot be unselected.  May be related to fix of above problem.
 	public void setSelection(int[] selection) {
-		Arrays.fill(this.selection,false);
-		for (int i : selection )
-			this.selection[i] = true;
+		for (int i : selection) {
+			if (this.permanent[i] != true) {
+				this.selection[i] = true;
+			} else {
+				this.selection[i] = false;
+ 			}
+		}
 		updateButtons();
 	}
 	
 	public void setPermanent(int[] permanent) {
-		if (MAX_SELECTED > 1 ) {
+		if (maxSelected > 1) {
 			Arrays.fill(this.permanent, false);
-			for (int i : permanent ) {
-				this.permanent[i] = true;;
+			for (int i : permanent) {
+				this.permanent[i] = true;
 			}
 			setSelection(permanent);
 		}
@@ -144,7 +148,7 @@ public class SegmentedControl extends Component {
 		for (Button b : buttons) {
 			b.setButtonColor(Color.gray);
 		}
-		if ( MAX_SELECTED == 1) {
+		if ( maxSelected == 1) {
 			singleSelection = 0;
 			buttons[singleSelection].setButtonColor(Color.darkGray);
 		}
@@ -174,9 +178,15 @@ public class SegmentedControl extends Component {
 	
 	private int getNumSelected() {
 		int count = 0;
-		for (boolean b: selection) {
-			if ( b )
+		for (boolean b : selection) {
+			if (b) {
 				count++;
+			}
+		}
+		for (boolean b : permanent) {
+			if (b) {
+				count++;
+			}
 		}
 		return count;
 	}
@@ -189,12 +199,13 @@ public class SegmentedControl extends Component {
 	 * @return the current position of the clicked button
 	 */
 	public int[] getSelection() {
-		if (MAX_SELECTED > 1) {
+		if (maxSelected > 1) {
 			int[] returnStates = new int[getNumSelected()];
 			int ptr = 0;
-			for ( int i = 0; i < returnStates.length; i++) {
-				while ( !selection[ptr] )
+			for (int i = 0; i < returnStates.length; i++) {
+				while (!selection[ptr] && !permanent[ptr]) {
 					ptr++;
+				}
 				returnStates[i] = ptr;
 				ptr++;
 			}
@@ -331,13 +342,13 @@ public class SegmentedControl extends Component {
 		}
 		
 		public void componentActivated(AbstractComponent source) {
-			System.out.println("Selected before button press: " + Arrays.toString(getSelection()));
-			if (MAX_SELECTED > 1 && !permanent[ordinal]) {
-				if ( selection[ordinal] )  {
+			Logger.log("Selected before button press: " + Arrays.toString(getSelection()), Logger.Level.DEBUG);
+			if (maxSelected > 1 && !permanent[ordinal]) {
+				if (selection[ordinal])  {
 					System.out.println("Removing " + ordinal);
 					selection[ordinal] = false;
 				}
-				else if (getNumSelected() < MAX_SELECTED) {
+				else if (getNumSelected() < maxSelected) {
 					System.out.println("Selecting " + ordinal);
 					selection[ordinal] = true;
 				}
@@ -346,7 +357,7 @@ public class SegmentedControl extends Component {
 				singleSelection = ordinal;
 			}
 			updateButtons();
-			System.out.println("Selected after button press: " + Arrays.toString(getSelection()));
+			Logger.log("Selected after button press: " + Arrays.toString(getSelection()), Logger.Level.DEBUG);
 		}
 	}
 }
