@@ -70,11 +70,11 @@ public class Modal extends Component {
 		messageLabel.setAlignment(Label.Alignment.Center);
 		
 		ButtonListener buttonListener = new ButtonListener();
-		resignButton = new Button(container, new Label(container, fieldFont, Color.white, submitButtonString), (width - PADDING*2) / 2 - PADDING, 40);
+		resignButton = new Button(container, new Label(container, fieldFont, Color.white, submitButtonString), (width - PADDING*2) / 2 - PADDING / 2, 40);
 		resignButton.setRoundedCorners(true);
 		resignButton.addListener(buttonListener);
 		
-		dismissButton = new Button(container, new Label(container, fieldFont, Color.white, cancelButtonString), (width - PADDING*2) / 2 - PADDING, 40);
+		dismissButton = new Button(container, new Label(container, fieldFont, Color.white, cancelButtonString), (width - PADDING*2) / 2 - PADDING / 2, 40);
 		dismissButton.setRoundedCorners(true);
 		dismissButton.addListener(buttonListener);
 		

@@ -100,8 +100,6 @@ public class SegmentedControl extends Component {
 			else
 				buttons[i].setButtonColor(Color.gray);
 		}
-
-
 	}
 	
 	
@@ -350,11 +348,11 @@ public class SegmentedControl extends Component {
 			Logger.log("Selected before button press: " + Arrays.toString(getSelection()), Logger.Level.DEBUG);
 			if (maxSelected > 1 && !permanent[ordinal]) {
 				if (selection[ordinal])  {
-					System.out.println("Removing " + ordinal);
+					Logger.log("Segmented control deselecting " + ordinal, Logger.Level.DEBUG);
 					selection[ordinal] = false;
 				}
 				else if (getNumSelected() < maxSelected) {
-					System.out.println("Selecting " + ordinal);
+					Logger.log("Segmented control selecting " + ordinal, Logger.Level.DEBUG);
 					selection[ordinal] = true;
 				}
 			}
