@@ -1,6 +1,6 @@
 package scene;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import model.Party;
 import model.Party.Pace;
@@ -347,12 +347,13 @@ public class PartyCreationScene extends Scene {
 							professionSegmentedControl,
 							ConstantStore.get("GENERAL", "CONFIRM"),
 							ConstantStore.get("GENERAL", "CANCEL"));
-										
+
+					int[] currentProfession = new int[1];
 					if(people.get(i).getProfession() != null) {
-						int[] currentProfession = new int[1];
 						currentProfession[0] = people.get(i).getProfession().ordinal();
-						professionSegmentedControl.setSelection(currentProfession);
 					}
+
+					professionSegmentedControl.setSelection(currentProfession);
 										
 					currentPersonModifying = i;
 					
@@ -367,19 +368,21 @@ public class PartyCreationScene extends Scene {
 							skillSegmentedControl,
 							ConstantStore.get("GENERAL", "CONFIRM"),
 							ConstantStore.get("GENERAL", "CANCEL"));
-					
+					System.out.println(people.get(i).getProfession().getStartingSkill());
 					if(people.get(i).getProfession().getStartingSkill() != Person.Skill.NONE) {
+						System.out.println("Person has default skill");
 						int[] permanent = new int[1];
 						permanent[0] = people.get(i).getProfession().getStartingSkill().ordinal();
 						skillSegmentedControl.setPermanent(permanent);
 					}
 					
 					ArrayList<Skill> currentSkills = people.get(i).getSkills();
+					
 					int[] currentSkillIndices = new int[currentSkills.size()];
 					for(int j = 0; j < currentSkillIndices.length; j++) {
 						currentSkillIndices[j] = currentSkills.get(j).ordinal();
 					}
-					
+					System.out.println(Arrays.toString(currentSkillIndices));
 					skillSegmentedControl.setSelection(currentSkillIndices);
 					currentPersonModifying = i;
 					

@@ -72,7 +72,7 @@ public class SegmentedControl extends Component {
 		buttons = new Button[STATES];
 		selection = new boolean[STATES];
 		permanent = new boolean[STATES];
-		singleSelection = 0;
+		singleSelection = -1;
 		
 		generateButtons(context);
 		
@@ -95,13 +95,13 @@ public class SegmentedControl extends Component {
 	 */
 	public void updateButtons() {
 		for (int i = 0; i < STATES; i++) {
-			if (permanent[i] || selection[i])
+			if (permanent[i] || selection[i] || i == singleSelection)
 				buttons[i].setButtonColor(Color.darkGray);
 			else
 				buttons[i].setButtonColor(Color.gray);
 		}
-		if (maxSelected == 1)
-			buttons[singleSelection].setButtonColor(Color.darkGray);
+
+
 	}
 	
 	
@@ -117,12 +117,17 @@ public class SegmentedControl extends Component {
 	//TODO: Also need bug fix on setSelection : when setting selection on professionSegmentedControl, 
 	//TODO: option starts selected but cannot be unselected.  May be related to fix of above problem.
 	public void setSelection(int[] selection) {
-		for (int i : selection) {
-			if (this.permanent[i] != true) {
-				this.selection[i] = true;
-			} else {
-				this.selection[i] = false;
- 			}
+		if ( selection.length == 1) {
+			singleSelection = selection[0];
+		}
+		else {
+			for (int i : selection) {
+				if (this.permanent[i] != true) {
+					this.selection[i] = true;
+				} else {
+					this.selection[i] = false;
+				}
+			}
 		}
 		updateButtons();
 	}
@@ -135,6 +140,7 @@ public class SegmentedControl extends Component {
 			}
 			setSelection(permanent);
 		}
+		updateButtons();
 	}
 	
 	/**
@@ -144,14 +150,13 @@ public class SegmentedControl extends Component {
 	 */
 	public void clear() {
 		Arrays.fill(this.selection, false);
-		selection = permanent.clone();
-		for (Button b : buttons) {
-			b.setButtonColor(Color.gray);
-		}
+		Arrays.fill(this.permanent, false);
 		if ( maxSelected == 1) {
 			singleSelection = 0;
 			buttons[singleSelection].setButtonColor(Color.darkGray);
 		}
+		else
+			singleSelection = -1;
 	}
 	
 	/**
