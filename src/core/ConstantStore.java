@@ -39,6 +39,7 @@ public final class ConstantStore {
 		partyCreationScene.put("RATIONS_LABEL", "Rations:");
 		partyCreationScene.put("PROFESSION_MODAL", "Please select a profession.");
 		partyCreationScene.put("SKILL_MODAL", "%s inherited the %s skill. Select two more skills.");
+		partyCreationScene.put("EMPTY_SKILL_LABEL", "-");
 		partyCreationScene.put("PARTY_CONFIRM", "Confirm");
 		partyCreationScene.put("ERR_NO_MEMBERS", "Error - No party members.");
 		partyCreationScene.put("ERR_INCOMPLETE_PROFESSIONS", "Error - Not all party members have a profession.");

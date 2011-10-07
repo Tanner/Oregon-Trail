@@ -150,6 +150,7 @@ public class PartyCreationScene extends Scene {
 				personSkillLabels[i][j].setBackgroundColor(Color.darkGray);
 				personSkillLabels[i][j].setVisible(false);
 				personSkillLabels[i][j].setAlignment(Alignment.Center);
+				personSkillLabels[i][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
 				mainLayer.add(personSkillLabels[i][j], skillLabelReferenceObject.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
 			}
 		}
@@ -268,7 +269,7 @@ public class PartyCreationScene extends Scene {
 			people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
 			
 			for (int j = 0; j < 3; j++) {
-				personSkillLabels[currentPersonModifying][j].setText("");
+				personSkillLabels[currentPersonModifying][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
 			}
 			personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
 			
@@ -282,13 +283,18 @@ public class PartyCreationScene extends Scene {
 			personSkillLabels[currentPersonModifying][0].setText(people.get(currentPersonModifying).getProfession().getStartingSkill().getName());
 		} else if (modal == skillModal) {
 			people.get(currentPersonModifying).clearSkills();
-			
+						
 			for (int j = 0; j < 3; j++) {
 				if (segmentedControlResults.length >= j + 1) {
 					people.get(currentPersonModifying).addSkill(Skill.values()[segmentedControlResults[j]]);
+				}
+			}
+			
+			for (int j = 0; j < 3; j++) {
+				if (people.get(currentPersonModifying).getSkills().size() >= j + 1) {
 					personSkillLabels[currentPersonModifying][j].setText(people.get(currentPersonModifying).getSkills().get(j).getName());
 				} else {
-					personSkillLabels[currentPersonModifying][j].setText("");
+					personSkillLabels[currentPersonModifying][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
 				}
 			}
 		}
