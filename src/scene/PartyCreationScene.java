@@ -348,11 +348,11 @@ public class PartyCreationScene extends Scene {
 							ConstantStore.get("GENERAL", "CONFIRM"),
 							ConstantStore.get("GENERAL", "CANCEL"));
 										
-//					if(people.get(i).getProfession() != null) {
-//						int[] currentProfession = new int[1];
-//						currentProfession[0] = people.get(i).getProfession().ordinal();
-//						professionSegmentedControl.setSelection(currentProfession);
-//					}
+					if(people.get(i).getProfession() != null) {
+						int[] currentProfession = new int[1];
+						currentProfession[0] = people.get(i).getProfession().ordinal();
+						professionSegmentedControl.setSelection(currentProfession);
+					}
 										
 					currentPersonModifying = i;
 					
