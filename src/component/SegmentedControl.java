@@ -117,6 +117,7 @@ public class SegmentedControl extends Component {
 	//TODO: Also need bug fix on setSelection : when setting selection on professionSegmentedControl, 
 	//TODO: option starts selected but cannot be unselected.  May be related to fix of above problem.
 	public void setSelection(int[] selection) {
+		Arrays.fill(this.selection, false);
 		for (int i : selection) {
 			if (this.permanent[i] != true) {
 				this.selection[i] = true;
@@ -148,7 +149,7 @@ public class SegmentedControl extends Component {
 		for (Button b : buttons) {
 			b.setButtonColor(Color.gray);
 		}
-		if ( maxSelected == 1) {
+		if (maxSelected == 1) {
 			singleSelection = 0;
 			buttons[singleSelection].setButtonColor(Color.darkGray);
 		}
@@ -345,11 +346,11 @@ public class SegmentedControl extends Component {
 			Logger.log("Selected before button press: " + Arrays.toString(getSelection()), Logger.Level.DEBUG);
 			if (maxSelected > 1 && !permanent[ordinal]) {
 				if (selection[ordinal])  {
-					System.out.println("Removing " + ordinal);
+					Logger.log("Segmented control deselecting " + ordinal, Logger.Level.DEBUG);
 					selection[ordinal] = false;
 				}
 				else if (getNumSelected() < maxSelected) {
-					System.out.println("Selecting " + ordinal);
+					Logger.log("Segmented control selecting " + ordinal, Logger.Level.DEBUG);
 					selection[ordinal] = true;
 				}
 			}
