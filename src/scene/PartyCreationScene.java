@@ -375,10 +375,12 @@ public class PartyCreationScene extends Scene {
 							ConstantStore.get("GENERAL", "CONFIRM"),
 							ConstantStore.get("GENERAL", "CANCEL"));
 					
-					if(people.get(i).getProfession().getStartingSkill() != Person.Skill.NONE) {
+					if (people.get(i).getProfession().getStartingSkill() != Person.Skill.NONE) {
 						int[] permanent = new int[1];
 						permanent[0] = people.get(i).getProfession().getStartingSkill().ordinal();
 						skillSegmentedControl.setPermanent(permanent);
+					} else {
+						skillSegmentedControl.setPermanent(new int[0]);
 					}
 					
 					ArrayList<Skill> currentSkills = people.get(i).getSkills();

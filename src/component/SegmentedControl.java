@@ -94,14 +94,22 @@ public class SegmentedControl extends Component {
 	 * Make sure buttons are all their correct color
 	 */
 	public void updateButtons() {
-		for (int i = 0; i < STATES; i++) {
-			if (permanent[i] || selection[i])
-				buttons[i].setButtonColor(Color.darkGray);
-			else
-				buttons[i].setButtonColor(Color.gray);
+		if (maxSelected > 1) {
+			for (int i = 0; i < STATES; i++) {
+				if (permanent[i] || selection[i])
+					buttons[i].setButtonColor(Color.darkGray);
+				else
+					buttons[i].setButtonColor(Color.gray);
+			}
+		} else {
+			for (int i = 0; i < STATES; i++) {
+				if (i == singleSelection) {
+					buttons[i].setButtonColor(Color.darkGray);
+				} else {
+					buttons[i].setButtonColor(Color.gray);
+				}
+			}
 		}
-		if (maxSelected == 1)
-			buttons[singleSelection].setButtonColor(Color.darkGray);
 	}
 	
 	
@@ -124,6 +132,9 @@ public class SegmentedControl extends Component {
 			} else {
 				this.selection[i] = false;
  			}
+		}
+		if (selection.length == 1) {
+			singleSelection = selection[0];
 		}
 		updateButtons();
 	}
