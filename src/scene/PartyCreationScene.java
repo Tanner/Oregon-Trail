@@ -348,11 +348,11 @@ public class PartyCreationScene extends Scene {
 							ConstantStore.get("GENERAL", "CONFIRM"),
 							ConstantStore.get("GENERAL", "CANCEL"));
 										
-					/*if(people.get(i).getProfession() != null) {
-						int[] currentProfession = new int[1];
-						currentProfession[0] = people.get(i).getProfession().ordinal();
-						professionSegmentedControl.setSelection(currentProfession);
-					}*/
+//					if(people.get(i).getProfession() != null) {
+//						int[] currentProfession = new int[1];
+//						currentProfession[0] = people.get(i).getProfession().ordinal();
+//						professionSegmentedControl.setSelection(currentProfession);
+//					}
 										
 					currentPersonModifying = i;
 					
@@ -408,11 +408,12 @@ public class PartyCreationScene extends Scene {
 						Logger.log("Not all party members have professions selected", Logger.Level.INFO);
 						return;
 					}
-					if (person.getSkills().size() < 3) {
-						showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_SKILLS"), ConstantStore.get("GENERAL", "OK")));
-						Logger.log("Not all party members have 3 skills", Logger.Level.INFO);
-						return;
-					}
+					//This is not an postcondition.  You are not required to have 3 skills.
+//					if (person.getSkills().size() < 3) {
+//						showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_SKILLS"), ConstantStore.get("GENERAL", "OK")));
+//						Logger.log("Not all party members have 3 skills", Logger.Level.INFO);
+//						return;
+//					}
 				}
 				pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
 				rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
