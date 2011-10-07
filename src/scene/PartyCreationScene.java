@@ -381,6 +381,7 @@ public class PartyCreationScene extends Scene {
 					}
 					
 					ArrayList<Skill> currentSkills = people.get(i).getSkills();
+					currentSkills.remove(Person.Skill.NONE);
 					int[] currentSkillIndices = new int[currentSkills.size()];
 					for(int j = 0; j < currentSkillIndices.length; j++) {
 						currentSkillIndices[j] = currentSkills.get(j).ordinal();
