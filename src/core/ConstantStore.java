@@ -32,16 +32,17 @@ public final class ConstantStore {
 		partyCreationScene.put("NEW_PLAYER", "New Player");
 		partyCreationScene.put("NAME_PLACEHOLDER", "Name");
 		partyCreationScene.put("NO_PROFESSION_LABEL", "No Profession");
-		partyCreationScene.put("CHANGE_SKILL", "Change Skill");
+		partyCreationScene.put("CHANGE_SKILL", "Change Skills");
 		partyCreationScene.put("CHANGE_PROFESSION", "Change Profession");
 		partyCreationScene.put("DELETE_PERSON_LABEL", "X");
 		partyCreationScene.put("PACE_LABEL", "Pace:");
 		partyCreationScene.put("RATIONS_LABEL", "Rations:");
 		partyCreationScene.put("PROFESSION_MODAL", "Please select a profession.");
-		partyCreationScene.put("SKILL_MODAL", "Please select three skills.");
+		partyCreationScene.put("SKILL_MODAL", "%s inherited the %s skill. Select two more skills.");
 		partyCreationScene.put("PARTY_CONFIRM", "Confirm");
 		partyCreationScene.put("ERR_NO_MEMBERS", "Error - No party members.");
-		partyCreationScene.put("ERR_INCOMPLETE_PROFESSIONS", "Error - Not all party members have professions selected.");
+		partyCreationScene.put("ERR_INCOMPLETE_PROFESSIONS", "Error - Not all party members have a profession.");
+		partyCreationScene.put("ERR_INCOMPLETE_SKILLS", "Error - Not all party members have 3 skills.");
 		partyCreationScene.put("ERR_DUP_NAME", "Error - A person already has this name. Please choose another.");
 		literalMap.put("PARTY_CREATION_SCENE", partyCreationScene);
 		
