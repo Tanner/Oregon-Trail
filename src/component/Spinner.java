@@ -4,6 +4,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
+import component.Label.Alignment;
+
 /**
  * A Spinner component that allows the user to select specific choices.
  * Scrolls up or down through a list of options that each represent
@@ -27,7 +29,7 @@ public class Spinner extends Component {
 	private boolean treatAsNumbers;
 	
 	private Font font;
-	private Button upButton, downButton;
+	private Button upButton, downButton, labelButton;
 	private ButtonListener listener;
 	
 	/**
@@ -46,8 +48,8 @@ public class Spinner extends Component {
 	public Spinner(GUIContext context, Font font, Color c, int width, int height, boolean treatAsNumbers, String ... fields) {
 		super(context);
 		
-		state = 0;
 		MAX_STATE = fields.length - 1;
+		state = 0;
 		this.fields = fields;
 		this.font = font;
 		this.treatAsNumbers = treatAsNumbers;
@@ -59,14 +61,23 @@ public class Spinner extends Component {
 		Label upLabel = new Label(context, font, c, "Up");
 		Label downLabel = new Label(context, font, c, "Down");
 		int butWidth = (int)(font.getWidth("Down")*PADDING);
+		label = new Label(context, font, c, fields[0], width - butWidth);
+		label.setAlignment(Alignment.Center);
 		upButton = new Button(context, upLabel, butWidth, height/2);
 		downButton = new Button(context, downLabel, butWidth,height/2);
+		labelButton = new Button(context, label, width-butWidth, height);
+		
+		//Set rounded corners, disable the label button and re-color it
+		upButton.setTopLeftRoundedCorner(true);
+		downButton.setBottomLeftRoundedCorner(true);
+		labelButton.setTopRightRoundedCorner(true);
+		labelButton.setBottomRightRoundedCorner(true);
+		labelButton.setDisabled(true);
+		labelButton.setButtonActiveColor(Color.gray);
 		
 		listener = new ButtonListener();
 		upButton.addListener(listener);
 		downButton.addListener(listener);
-		
-		label = new Label(context, font, c, fields[0], width - butWidth);
 		
 		refreshState();
 	}
@@ -118,20 +129,12 @@ public class Spinner extends Component {
 		if (!visible) {
 			return;
 		}
-		
-		g.setColor(Color.gray);
-		g.fillRect(position.x, position.y, width, height);
-		label.render(context, g);
+		labelButton.render(context, g);
 		upButton.render(context, g);
 		downButton.render(context, g);
 	}
 	
 	private void refreshState() {
-		label.setText(fields[state]);
-		label.setPosition(upButton.getPosition(ReferencePoint.BottomRight),
-				Positionable.ReferencePoint.CenterLeft,
-				(width - upButton.getWidth() - font.getWidth(fields[state])) / 2,0);
-		
 		if (state == 0) {
 			upButton.setDisabled(false);
 			downButton.setDisabled(true);
@@ -154,9 +157,8 @@ public class Spinner extends Component {
 			upButton.setPosition(this.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft);
 			downButton.setPosition(this.getPosition(ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft);
 			//Sets the label text to be in the center of the textbox
-			label.setPosition(upButton.getPosition(ReferencePoint.BottomRight),
-					Positionable.ReferencePoint.CenterLeft,
-					(width - upButton.getWidth() - font.getWidth(fields[state])) / 2,0);
+			labelButton.setPosition(upButton.getPosition(ReferencePoint.TopRight),
+					Positionable.ReferencePoint.TopLeft);
 		}
 	}
 	
@@ -173,7 +175,7 @@ public class Spinner extends Component {
 			} else {
 				state = (state == 0) ? 0 : state - 1;
 			}
-			
+			label.setText(fields[state]);
 			refreshState();
 		}
 	}

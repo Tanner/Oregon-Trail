@@ -51,12 +51,11 @@ public class SegmentedControl extends Component {
 	 * Only one button is allowed to be selected at a time.
 	 *  
 	 * @param context The game's GUIContext object
-	 * @param font The color of the label on the button
-	 * @param c The color of the label on the buttons
 	 * @param width The width of the entire controller.
 	 * @param height The height of the entire controller.
 	 * @param rows The number of desired rows the controller will have.
 	 * @param cols The number of desired columns the controller will have
+	 * @param margin The padding between each button
 	 * @param maxSelected The maximum number of selected buttons at a time
 	 * @param labels The labels for each segmented button.
 	 */
@@ -82,6 +81,12 @@ public class SegmentedControl extends Component {
 		clear();		
 	}
 	
+	/**
+	 * Create each button for the SegmentedControl, and add listeners
+	 * to each button.
+	 * 
+	 * @param context The graphics context for the game
+	 */
 	public void generateButtons(GUIContext context) {
 		for (int i = 0; i < STATES; i++) {
 			Label current = new Label(context, font, color, labels[i]);
@@ -91,7 +96,7 @@ public class SegmentedControl extends Component {
 	}
 	
 	/**
-	 * Make sure buttons are all their correct color
+	 * Update all buttons to their current state/color
 	 */
 	public void updateButtons() {
 		for (int i = 0; i < STATES; i++) {
@@ -110,10 +115,6 @@ public class SegmentedControl extends Component {
 	 * 
 	 * @param selection An array of selections to set on the SegmentedControl
 	 */
-	//TODO: Need a way to have setSelection and setPermanent together, so we can do something like set
-	//TODO: the selection to the current skills but have the startingSkill be permanent.
-	//TODO: Also need bug fix on setSelection : when setting selection on professionSegmentedControl, 
-	//TODO: option starts selected but cannot be unselected.  May be related to fix of above problem.
 	public void setSelection(int[] selection) {
 		if ( selection.length == 1) {
 			singleSelection = selection[0];
@@ -130,6 +131,14 @@ public class SegmentedControl extends Component {
 		updateButtons();
 	}
 	
+	/**
+	 * This method will allow multiple buttons to be turned on permanently.  They
+	 * can not be unselected, and they count towards the maximum possible selected
+	 * button count.  Only works if the controller is set to allow more than
+	 * one button selection.
+	 * 
+	 * @param permanent An array of indices to set as permanently selected
+	 */
 	public void setPermanent(int[] permanent) {
 		if (maxSelected > 1) {
 			Arrays.fill(this.permanent, false);
