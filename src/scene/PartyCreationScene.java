@@ -388,6 +388,7 @@ public class PartyCreationScene extends Scene {
 				
 				if (source == personDeleteButtons[i]) {
 					//Delete the last created person
+					Logger.log("Deleting pending Person at index " + i, Logger.Level.INFO);
 					clearPersonData(i);
 					hidePersonColumn(i);
 				}
@@ -409,7 +410,7 @@ public class PartyCreationScene extends Scene {
 					}
 					if (person.getSkills().size() < 3) {
 						showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_SKILLS"), ConstantStore.get("GENERAL", "OK")));
-						Logger.log("Not all party members have 3 skills.", Logger.Level.INFO);
+						Logger.log("Not all party members have 3 skills", Logger.Level.INFO);
 						return;
 					}
 				}
