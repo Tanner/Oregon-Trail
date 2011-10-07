@@ -46,7 +46,7 @@ public class Person {
 		if(this.profession == null) {
 			this.profession = profession;
 			Logger.log(this.name + " became a " + this.profession, Logger.Level.INFO);
-			//addSkill(profession.getStartingSkill());
+			addSkill(profession.getStartingSkill());
 			return true;
 		}
 		else if(this.profession == profession) {
