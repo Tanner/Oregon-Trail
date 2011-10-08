@@ -9,7 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import scene.Scene;
 import scene.SceneID;
-import component.Background;
+import component.Panel;
 import component.Label;
 import component.sprite.*;
 import core.FontManager;
@@ -31,13 +31,17 @@ public class GridLayoutTestScene extends Scene {
 		Image luigiImage = new Image("resources/luigi.png");
 		Sprite luigi = new Sprite(container, luigiImage, luigiImage.getFlippedCopy(true, false));
 		
-		Label label = new Label(container, GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1), Color.white, "foo", mainLayer.getWidth() - 20);
+		Label label = new Label(container,
+				mainLayer.getWidth() - 20,
+				GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1),
+				Color.white,
+				"foo");
 		
 		mainLayer.add(label);
 		mainLayer.add(mario);
 		mainLayer.add(luigi);
 		
-		backgroundLayer.add(new Background(container, Color.blue));
+		backgroundLayer.add(new Panel(container, Color.blue));
 	}
 
 	@Override

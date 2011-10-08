@@ -35,7 +35,7 @@ public class Sprite extends Component {
 	 * @param leftAnimation Animation for when facing left
 	 */
 	public Sprite(GUIContext container, Animation rightAnimation, Animation leftAnimation) {
-		super(container);
+		super(container, rightAnimation.getWidth(), rightAnimation.getHeight());
 		
 		this.rightAnimation = rightAnimation;
 		this.leftAnimation = leftAnimation;
@@ -77,26 +77,6 @@ public class Sprite extends Component {
 		}
 		
 		currentAnimation.update(delta);
-	}
-
-	@Override
-	public int getHeight() {
-		return (int)(scale * currentAnimation.getHeight());
-	}
-
-	@Override
-	public int getWidth() {
-		return (int)(scale *currentAnimation.getWidth());
-	}
-
-	@Override
-	public int getX() {
-		return (int)position.getX();
-	}
-
-	@Override
-	public int getY() {
-		return (int)position.getY();
 	}
 	
 	/**
@@ -171,15 +151,5 @@ public class Sprite extends Component {
 	 */
 	public void setDirectionFacing(DirectionFacing xDirection) {
 		this.xDirection = xDirection;
-	}
-
-	@Override
-	public void setWidth(int width) {
-		return;
-	}
-
-	@Override
-	public void setHeight(int height) {
-		return;
 	}
 }

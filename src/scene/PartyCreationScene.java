@@ -17,7 +17,7 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
-import component.Background;
+import component.Panel;
 import component.Button;
 import component.Label;
 import component.Label.Alignment;
@@ -103,7 +103,7 @@ public class PartyCreationScene extends Scene {
 			newPersonButtons[i].addListener(new ButtonListener());
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
 			
-			personNameTextFields[i] = new TextField(container, fieldFont, buttonWidth, regularButtonHeight);
+			personNameTextFields[i] = new TextField(container, buttonWidth, regularButtonHeight, fieldFont);
 			personNameTextFields[i].setPlaceholderText(ConstantStore.get("PARTY_CREATION_SCENE", "NAME_PLACEHOLDER"));
 			personNameTextFields[i].addListener(new ButtonListener());
 			personNameTextFields[i].setVisible(false);
@@ -116,14 +116,14 @@ public class PartyCreationScene extends Scene {
 			personChangeProfessionButtons[i].setVisible(false);
 			mainLayer.add(personChangeProfessionButtons[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
-			personProfessionLabels[i] = new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NO_PROFESSION_LABEL"), buttonWidth);
+			personProfessionLabels[i] = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NO_PROFESSION_LABEL"));
 			personProfessionLabels[i].setHeight(regularButtonHeight);
 			personProfessionLabels[i].setBackgroundColor(Color.darkGray);
 			personProfessionLabels[i].setVisible(false);
 			personProfessionLabels[i].setAlignment(Alignment.Center);
 			mainLayer.add(personProfessionLabels[i], personChangeProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
 			
-			personMoneyLabels[i] = new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "MONEY_SYMBOL")+"0", buttonWidth);
+			personMoneyLabels[i] = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("GENERAL", "MONEY_SYMBOL")+"0");
 			personMoneyLabels[i].setAlignment(Alignment.Center);
 			personMoneyLabels[i].setVisible(false);
 			mainLayer.add(personMoneyLabels[i], personProfessionLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
@@ -141,7 +141,7 @@ public class PartyCreationScene extends Scene {
 					skillLabelReferenceObject = personSkillLabels[i][j - 1];
 				}
 				
-				personSkillLabels[i][j] = new Label(container, fieldFont, Color.white, "", buttonWidth);
+				personSkillLabels[i][j] = new Label(container, buttonWidth, fieldFont, Color.white, "");
 				personSkillLabels[i][j].setHeight(regularButtonHeight);
 				personSkillLabels[i][j].setBackgroundColor(Color.darkGray);
 				personSkillLabels[i][j].setVisible(false);
@@ -191,7 +191,7 @@ public class PartyCreationScene extends Scene {
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
-		backgroundLayer.add(new Background(container, new Color(0xb40c09)));
+		backgroundLayer.add(new Panel(container, new Color(0xb40c09)));
 		
 		enableNextPersonField();
 	}
@@ -257,12 +257,60 @@ public class PartyCreationScene extends Scene {
 		}
 	}
 	
+	/**
+	 * Process the values from the modal dialog for profession
+	 * @param segmentedControlResults the results of the data entry
+	 */
+	
+	private void resignProfessionModal(int[] segmentedControlResults){
+		personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
+		people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
+		
+		personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
+		
+		personMoneyLabels[currentPersonModifying].setVisible(true);
+		
+		personChangeSkillButtons[currentPersonModifying].setVisible(true);
+		for (int j = 0; j < personSkillLabels[currentPersonModifying].length; j++) {
+			personSkillLabels[currentPersonModifying][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
+			personSkillLabels[currentPersonModifying][j].setVisible(true);
+		}//for 
+		
+		if (people.get(currentPersonModifying).getProfession().getStartingSkill() != Skill.NONE) {
+			personSkillLabels[currentPersonModifying][0].setText(people.get(currentPersonModifying).getProfession().getStartingSkill().getName());
+		}
+	}//resignProfessionModal
+	
+	/**
+	 * Process the values from the modal dialog for Skill selection
+	 * @param segmentedControlResults
+	 */
+		
+	private void resignSkillModal(int[] segmentedControlResults){
+		people.get(currentPersonModifying).clearSkills();
+		
+		for (int j = 0; j < 3; j++) {
+			if (segmentedControlResults.length >= j + 1) {
+				people.get(currentPersonModifying).addSkill(Skill.values()[segmentedControlResults[j]]);
+			}
+		}//for through profession
+		
+		for (int j = 0; j < 3; j++) {
+			if (people.get(currentPersonModifying).getSkills().size() >= j + 1) {
+				personSkillLabels[currentPersonModifying][j].setText(people.get(currentPersonModifying).getSkills().get(j).getName());
+			} else {
+				personSkillLabels[currentPersonModifying][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
+			}//if 
+		}//for 
+	}//resignSkillModal
+	
 	@Override
 	public void resignModal(Modal modal, int[] segmentedControlResults) {
 		super.resignModal(modal, segmentedControlResults);
 		
 		if (modal == professionModal) {
-			personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
+			resignProfessionModal(segmentedControlResults);
+/*			personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
 			people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
 			
 			personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
@@ -278,13 +326,16 @@ public class PartyCreationScene extends Scene {
 			if (people.get(currentPersonModifying).getProfession().getStartingSkill() != Skill.NONE) {
 				personSkillLabels[currentPersonModifying][0].setText(people.get(currentPersonModifying).getProfession().getStartingSkill().getName());
 			}
-		} else if (modal == skillModal) {
-			people.get(currentPersonModifying).clearSkills();
+*/		}//if modal == professionalModal
+		else if (modal == skillModal) {
+			resignSkillModal(segmentedControlResults);
+			
+/*			people.get(currentPersonModifying).clearSkills();
 						
 			for (int j = 0; j < 3; j++) {
 				if (segmentedControlResults.length >= j + 1) {
 					people.get(currentPersonModifying).addSkill(Skill.values()[segmentedControlResults[j]]);
-				}
+				} 
 			}
 			
 			for (int j = 0; j < 3; j++) {
@@ -294,18 +345,25 @@ public class PartyCreationScene extends Scene {
 					personSkillLabels[currentPersonModifying][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
 				}
 			}
-		}
+*/		}//if modal == skillModal
 	}
 	
 	private class ButtonListener implements ComponentListener {
-		@Override
+		
+		private void newPersonButton(int i){
+			personNameTextFields[i].setVisible(true);			
+			personNameTextFields[i].setFocus(true);
+			
+		}
+		
+		@Override		
 		public void componentActivated(AbstractComponent source) {			
 			for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
-					personNameTextFields[i].setVisible(true);
-					
+					newPersonButton(i);
+/*					personNameTextFields[i].setVisible(true);				
 					personNameTextFields[i].setFocus(true);
-				}
+*/				}
 				
 				if (source == personNameTextFields[i]) {	
 					if(people.size() < i + 1) {

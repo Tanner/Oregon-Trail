@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.*;
 
-import component.Background;
+import component.Panel;
 import component.Label;
 import component.Positionable;
 
@@ -29,7 +29,7 @@ public class StoreScene extends Scene {
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);
 		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 5);
 		
-		backgroundLayer.add(new Background(container, new Color(0xa55e00)));
+		backgroundLayer.add(new Panel(container, new Color(0xa55e00)));
 	}
 
 	@Override

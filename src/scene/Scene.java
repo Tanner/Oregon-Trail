@@ -14,7 +14,7 @@ public abstract class Scene extends BasicGameState {
 	protected SceneLayer backgroundLayer;
 	protected SceneLayer mainLayer;
 	protected SceneLayer hudLayer;
-	protected ModalSceneLayer modalLayer;
+	protected SceneLayer modalLayer;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -23,7 +23,7 @@ public abstract class Scene extends BasicGameState {
 		backgroundLayer = new SceneLayer(container);
 		mainLayer = new SceneLayer(container);
 		hudLayer = new SceneLayer(container);
-		modalLayer = new ModalSceneLayer(container);
+		modalLayer = new SceneLayer(container);
 		modalLayer.setVisible(false);
 	}
 
