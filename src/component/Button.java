@@ -19,9 +19,9 @@ public class Button extends Component {
 	private Label label;
 	private Color buttonColor;
 	private Color buttonActiveColor;
-	private boolean over;
-	private boolean active;
-	private boolean disabled;
+	protected boolean over;
+	protected boolean active;
+	protected boolean disabled;
 	private int topLeftCornerRadius;
 	private int bottomLeftCornerRadius;
 	private int topRightCornerRadius;
