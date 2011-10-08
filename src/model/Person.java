@@ -326,4 +326,22 @@ public class Person {
 	public Inventory getInventory() {
 		return inventory;
 	}
+	
+	/**
+	 * Adds the specified item to the inventory if weight and size allows.
+	 * @param item The item to be added.
+	 * @return True if the method succeeded, false if the add isn't possible.
+	 */
+	public boolean addToInventory(Item item) {
+		return inventory.addItem(item);
+	}
+	
+	/**
+	 * Removes the specified item from the inventory if it exists.
+	 * @param item The item to be removed.
+	 * @return True if the method succeeded, false if the add isn't possible.
+	 */
+	public boolean removeFromInventory(Item item) {
+		return inventory.removeItem(item);
+	}
 }

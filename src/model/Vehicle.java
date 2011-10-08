@@ -1,17 +1,16 @@
 package model;
 
-import core.Logger;
-
 public abstract class Vehicle {
 
 	private Condition status;
 	private Inventory cargo;
-	private final double MAX_WEIGHT;
+	private final int MAX_INVENTORY_SIZE = 10;
+	private final double MAX_INVENTORY_WEIGHT;
 	
-	public Vehicle(Condition status, Inventory cargo, double maxWeight) {
-		this.MAX_WEIGHT = maxWeight;
+	public Vehicle(Condition status, double maxWeight) {
+		this.MAX_INVENTORY_WEIGHT = maxWeight;
 		this.status = status;
-		this.cargo = cargo;	
+		this.cargo = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);	
 	}
 	
 	/**
@@ -44,13 +43,7 @@ public abstract class Vehicle {
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
 	public boolean addToInventory(Item item) {
-		if (cargo.getWeight() + item.getStackWeight() > MAX_WEIGHT) {
-			Logger.log("Max weight would be exceeded.", Logger.Level.INFO);
-			return false;
-		}
-		else {
-			return cargo.addItem(item);
-		}
+		return cargo.addItem(item);
 	}
 	
 	/**
