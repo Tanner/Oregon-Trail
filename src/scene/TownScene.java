@@ -11,7 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
-import component.Background;
+import component.Panel;
 import component.Label;
 import component.Positionable;
 import component.sprite.*;
@@ -55,7 +55,7 @@ public class TownScene extends Scene {
 //		mainLayer.add(mario);
 //		mainLayer.add(luigi);
 		
-		backgroundLayer.add(new Background(container, new Color(0x003e84)));
+		backgroundLayer.add(new Panel(container, new Color(0x003e84)));
 	}
 	
 	@Override

@@ -4,13 +4,9 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
 
 import core.ConstantStore;
-import core.Logger;
 
 /**
  * A component that is a Button.
@@ -18,13 +14,9 @@ import core.Logger;
  * @author Tanner Smith
  */
 public class Button extends Component {
-	private static final int PADDING = 10;
 	private static final int CORNER_RADIUS = 2;
 	
 	private Label label;
-	private Vector2f position;
-	private int width;
-	private int height;
 	private Color buttonColor;
 	private Color buttonActiveColor;
 	private boolean over;
@@ -44,13 +36,10 @@ public class Button extends Component {
 	 * @param height Height of the button
 	 */
 	public Button(GUIContext container, Label label, int width, int height) {
-		super(container);
+		super(container, width, height);
 		
 		this.label = label;
 		label.setAlignment(Label.Alignment.Center);
-		
-		this.width = width;
-		this.height = height;
 		
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
@@ -64,7 +53,7 @@ public class Button extends Component {
 	 * Creates a button.
 	 * @param container Container for the button
 	 * @param label Label for the button
-	 * @param position Position of the button
+	 * @param origin Position of the button
 	 */
 	public Button(GUIContext container, Label label) {
 		this(container, label, label.getWidth(), label.getHeight());
@@ -91,8 +80,8 @@ public class Button extends Component {
 		// inner rect
 		g.fillRect(getX() + CORNER_RADIUS,
 				getY() + CORNER_RADIUS,
-				width - CORNER_RADIUS * 2,
-				height - CORNER_RADIUS * 2);
+				getWidth() - CORNER_RADIUS * 2,
+				getHeight() - CORNER_RADIUS * 2);
 		
 		// top bar
 		if (beveled) {
@@ -102,7 +91,7 @@ public class Button extends Component {
 		}
 		g.fillRect(getX() + topLeftCornerRadius,
 				getY(),
-				width - topLeftCornerRadius - topRightCornerRadius,
+				getWidth() - topLeftCornerRadius - topRightCornerRadius,
 				CORNER_RADIUS);
 				
 		// bottom bar
@@ -112,8 +101,8 @@ public class Button extends Component {
 			g.setColor(color);
 		}
 		g.fillRect(getX() + bottomLeftCornerRadius,
-				getY() + height - CORNER_RADIUS,
-				width - bottomLeftCornerRadius - bottomRightCornerRadius,
+				getY() + getHeight() - CORNER_RADIUS,
+				getWidth() - bottomLeftCornerRadius - bottomRightCornerRadius,
 				CORNER_RADIUS);
 				
 		// left bar
@@ -125,7 +114,7 @@ public class Button extends Component {
 		g.fillRect(getX(),
 				getY() + topLeftCornerRadius,
 				CORNER_RADIUS,
-				height - topLeftCornerRadius - bottomLeftCornerRadius);
+				getHeight() - topLeftCornerRadius - bottomLeftCornerRadius);
 		
 		// right bar
 		if (beveled) {
@@ -133,10 +122,10 @@ public class Button extends Component {
 		} else {
 			g.setColor(color);
 		}
-		g.fillRect(getX() + width - CORNER_RADIUS,
+		g.fillRect(getX() + getWidth() - CORNER_RADIUS,
 				getY() + topRightCornerRadius,
 				CORNER_RADIUS,
-				height - topRightCornerRadius - bottomRightCornerRadius);
+				getHeight() - topRightCornerRadius - bottomRightCornerRadius);
 		
 		label.render(container, g);
 	}
@@ -174,42 +163,10 @@ public class Button extends Component {
 			active = false;
 		}
 	}
-
-	/**
-	 * Get the area of this component.
-	 * @return Shape of this component
-	 */
-	public Shape getArea() {
-		return new Rectangle(position.getX(), position.getY(), this.width, this.height);
-	}
-	
-	@Override
-	public int getHeight() {
-		return height;
-	}
-
-	@Override
-	public int getWidth() {
-		return width;
-	}
-
-	@Override
-	public int getX() {
-		return (int)position.getX();
-	}
-
-	@Override
-	public int getY() {
-		return (int)position.getY();
-	}
 	
 	@Override
 	public void setLocation(int x, int y) {
-		if (position == null) {
-			position = new Vector2f(x, y);
-		} else {
-			position.set(x, y);
-		}
+		super.setLocation(x, y);
 
 		if (label != null) {
 			label.setPosition(this.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
@@ -234,17 +191,6 @@ public class Button extends Component {
 	
 	public void setLabelColor(Color color) {
 		label.setColor(color);
-	}
-
-	@Override
-	public void setWidth(int width) {
-		this.width = width;
-		label.setWidth(width - 2 * PADDING);
-	}
-
-	@Override
-	public void setHeight(int height) {
-		this.height = height;
 	}
 	
 	public void setDisabled(boolean disabled) {

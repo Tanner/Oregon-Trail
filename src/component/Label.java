@@ -18,10 +18,8 @@ public class Label extends Component {
 	
 	private String text;
 	private Font font;
-	private Vector2f position;
 	private Color c;
 	private Color backgroundColor;
-	private int width, height;
 	private Alignment alignment;
 	private boolean clip;
 
@@ -34,15 +32,12 @@ public class Label extends Component {
 	 * @param text The text to draw
 	 * @param width Width of the label
 	 */
-	public Label(GUIContext context, Font font, Color c, String text, int width) {
-		super(context);
+	public Label(GUIContext context, int width, Font font, Color c, String text) {
+		super(context, width, font.getLineHeight());
 		
-		this.position = new Vector2f(0, 0);
 		this.font = font;
 		this.c = c;
 		this.text = text;
-		this.width = width;
-		this.height = font.getLineHeight();
 		
 		alignment = Alignment.Left;
 		clip = true;
@@ -57,7 +52,7 @@ public class Label extends Component {
 	 * @param text The text to draw
 	 */
 	public Label(GUIContext context, Font font, Color c, String text) {
-		this(context, font, c, text, font.getWidth(text));
+		this(context, font.getWidth(text), font, c, text);
 		clip = false;
 	}
 	
@@ -69,8 +64,8 @@ public class Label extends Component {
 	 * @param c	Color of the text
 	 * @param width Width of the label
 	 */
-	public Label(GUIContext context, Font font, Color c, int width) {
-		this(context, font, c, "", width);
+	public Label(GUIContext context, int width, Font font, Color c) {
+		this(context, width, font, c, "");
 	}
 	
 	@Override
@@ -85,18 +80,24 @@ public class Label extends Component {
 		
 		if (backgroundColor != null) {
 			g.setColor(backgroundColor);
-			g.fillRect(getX(), getY(), width, height);
+			g.fillRect(getX(), getY(), getWidth(), getHeight());
 		}
 		
 		String renderText = text;
-		while (font.getWidth(renderText) > width) {
+		while (font.getWidth(renderText) > getWidth()) {
 			renderText = text.substring(0, renderText.length()-1);
 		}
 		
 		if (alignment == Alignment.Center) {
-			font.drawString(position.getX() + (width - font.getWidth(renderText)) / 2, position.getY() + (height - font.getLineHeight()) / 2, renderText, c);
+			font.drawString(getX() + (getWidth() - font.getWidth(renderText)) / 2,
+					getY() + (getHeight() - font.getLineHeight()) / 2,
+					renderText,
+					c);
 		} else if (alignment == Alignment.Left){
-			font.drawString(position.getX(), position.getY() + (height - font.getLineHeight()) / 2, renderText, c);
+			font.drawString(getX(),
+					getY() + (getHeight() - font.getLineHeight()) / 2,
+					renderText,
+					c);
 		}
 		
 		g.clearClip();
@@ -118,10 +119,6 @@ public class Label extends Component {
 	 */
 	public void setText(String text) {
 		this.text = text;
-		
-		if (!clip) {
-			width = font.getWidth(text);
-		}
 	}
 	
 	/**
@@ -131,43 +128,6 @@ public class Label extends Component {
 	 */
 	public String getText() {
 		return text;
-	}
-
-	@Override
-	public int getHeight() {
-		return height;
-	}
-
-	@Override
-	public int getWidth() {
-		return width;
-	}
-
-	@Override
-	public int getX() {
-		return (int)position.getX();
-	}
-
-	@Override
-	public int getY() {
-		return (int)position.getY();
-	}
-
-	@Override
-	public void setLocation(int x, int y) {
-		if (font != null) {
-			position = new Vector2f(x, y);
-		}
-	}
-
-	@Override
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	@Override
-	public void setHeight(int height) {
-		this.height = height;
 	}
 	
 	/**
