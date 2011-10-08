@@ -128,6 +128,10 @@ public abstract class Item {
 			Logger.log("Amount to decrease by not positive", Logger.Level.INFO);
 			return false;
 		}
+		else if(amount > numberOf) {
+			Logger.log("Amount to decrease by more than exist", Logger.Level.INFO);
+			return false;
+		}
 		else {
 			Logger.log("Decrement successful", Logger.Level.INFO);
 			return true;
