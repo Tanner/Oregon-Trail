@@ -10,14 +10,11 @@ import model.Person.Skill;
 import model.Player;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
-import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Background;
@@ -33,7 +30,6 @@ import core.ConstantStore;
 import core.FontManager;
 import core.GameDirector;
 import core.Logger;
-import static core.ConstantStore.LITERALS;
 
 /**
  * The Party Creation Scene
