@@ -14,6 +14,7 @@ public class Party {
 	private int money;
 	private Pace currentPace;
 	private Rations currentRations;
+	private Vehicle vehicle;
 	
 	
 	/**
@@ -88,6 +89,22 @@ public class Party {
 	 */
 	public void setMoney(int money){
 		this.money = money;
+	}
+	
+	/**
+	 * Returns the vehicle of the party
+	 * @return The vehicle of the party
+	 */
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
+	
+	/**
+	 * Sets a vehicle as the party vehicle.
+	 * @param vehicle The party vehicle
+	 */
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
 	}
 	
 	/**
