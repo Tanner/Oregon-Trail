@@ -1,5 +1,6 @@
 package model;
 
+import core.Logger;
 import model.Condition;
 
 /**
@@ -12,7 +13,8 @@ public abstract class Item {
 	private String name;
 	private String description;
 	private Condition status;
-	private double weight;
+	private double weight; //This is the individual unit weight
+	private int numberOf;
 	
 	/**
 	 * 
@@ -27,6 +29,23 @@ public abstract class Item {
 		this.description = description;
 		this.status = status;
 		this.weight = weight;
+	}
+	
+	/**
+	 * 
+	 * Creates a new item with a name, description, status, and weight.
+	 * @param name The item's name
+	 * @param description The item's description
+	 * @param status The item's status
+	 * @param weight The item's weight
+	 * @param numberOf The number of items in the stack
+	 */
+	private Item(String name, String description, Condition status, double weight, int numberOf) {
+		this.name = name;
+		this.description = description;
+		this.status = status;
+		this.weight = weight;
+		this.numberOf = numberOf;
 	}
 
 	/**
@@ -76,4 +95,42 @@ public abstract class Item {
 	public double getWeight() {
 		return weight;
 	}	
+	
+	/**
+	 * Returns the weight of the item stack.
+	 * @return The weight of the item stack
+	 */
+	public double getStackWeight() {
+		return weight*(double)numberOf;
+	}	
+	
+	/**
+	 * Returns the number of the item.
+	 * @return The number of the item
+	 */
+	public int getNumberOf() {
+		return numberOf;
+	}
+	
+	public boolean increaseStack(int amount) {
+		if(amount <= 0) {
+			Logger.log("Amount to increase by not positive", Logger.Level.INFO);
+			return false;
+		}
+		else {
+			Logger.log("Increment successful", Logger.Level.INFO);
+			return true;
+		}
+	}
+	
+	public boolean decreaseStack(int amount) {
+		if(amount <= 0) {
+			Logger.log("Amount to decrease by not positive", Logger.Level.INFO);
+			return false;
+		}
+		else {
+			Logger.log("Decrement successful", Logger.Level.INFO);
+			return true;
+		}
+	}
 }

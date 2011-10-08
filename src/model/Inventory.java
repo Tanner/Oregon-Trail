@@ -49,7 +49,7 @@ public class Inventory {
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
 	public boolean addItem(Item item) {
-		if(getWeight() + item.getWeight() > MAX_WEIGHT) {
+		if(getWeight() + (item.getStackWeight()) > MAX_WEIGHT) {
 			Logger.log("The inventory has max weight: " + MAX_WEIGHT + 
 					" and the addition of " + item.getName() + " would increase the weight to " + 
 					(getWeight() + item.getWeight()), Logger.Level.INFO);
@@ -61,7 +61,12 @@ public class Inventory {
 			return false;
 		}
 		else {
-			items.add(item);
+			if(items.contains(item)) {
+				items.get(items.indexOf(item)).increaseStack(item.getNumberOf());
+			}
+			else {
+				items.add(item);
+			}
 			Logger.log(item.getName() + " was added successfully.", Logger.Level.INFO);
 			return true;
 		}
