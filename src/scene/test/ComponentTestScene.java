@@ -70,6 +70,12 @@ public class ComponentTestScene extends Scene {
 		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		int[] num = {2,3};
 		segment.setPermanent(num);
+		
+		Component colLabels[] = new Component[5];
+		for (int i = 0; i < colLabels.length; i ++) {
+			colLabels[i] = new Label(container, fieldFont, Color.white, "Label "+i);
+		}
+		mainLayer.addAsColumn(colLabels, mainLayer.getPosition(Positionable.ReferencePoint.TopCenter), 0, PADDING, 5);
 	}
 
 	@Override

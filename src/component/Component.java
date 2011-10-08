@@ -55,6 +55,15 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		components.add(component);
 	}
 	
+	public void addAsColumn(Component[] components, Vector2f location, int xOffset, int yOffset, int spacing) {
+		for (int i = 0; i < components.length; i++) {
+			add(components[i], location, ReferencePoint.TopLeft, xOffset, yOffset);
+			location.set(location.x, location.y + components[i].getHeight() + yOffset);
+			
+			this.components.add(components[i]);
+		}
+	}
+	
 	public void remove(Component component) {
 		components.remove(component);
 	}
