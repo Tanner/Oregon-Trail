@@ -82,6 +82,9 @@ public class SegmentedControl extends Component {
 	 * @param context The graphics context for the game
 	 */
 	public void generateButtons(GUIContext context) {
+		rowHeight =  (int) ((double)getHeight()/rows);
+		colWidth = (int) ((double)getWidth()/cols);
+		
 		for (int i = 0; i < STATES; i++) {
 			Label current = new Label(context, font, color, labels[i]);
 			buttons[i] = new Button(context, current, colWidth, rowHeight);
@@ -232,9 +235,8 @@ public class SegmentedControl extends Component {
 		if (!visible) {
 			return;
 		}
-		for ( Button b : buttons) {
-			b.render(context, g);
-		}
+		
+		super.render(context, g);
 	}
 	
 	public void setAcceptingInput(boolean acceptingInput) {
