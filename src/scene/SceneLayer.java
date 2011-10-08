@@ -29,7 +29,7 @@ public class SceneLayer extends Component {
 			layout.setComponentLocation(component);
 		}
 		
-		subComponents.add(component);
+		components.add(component);
 	}
 
 	public void setLayout(Layout layout) {
