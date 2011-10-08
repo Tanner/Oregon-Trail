@@ -86,8 +86,11 @@ public class ComponentTestScene extends Scene {
 		}
 		mainLayer.addAsGrid(gridLabels, mainLayer.getPosition(Positionable.ReferencePoint.TopCenter), 3, 3, 0, PADDING, PADDING, PADDING);
 		
-		ToggleButton tb = new ToggleButton(container, new Label(container, fieldFont, Color.white, "Toggle Button"));
+		ToggleButton tb = new ToggleButton(container, new Label(container, fieldFont, Color.white, "Toggle Button"), 200, 40);
 		mainLayer.add(tb, mainLayer.getPosition(Positionable.ReferencePoint.BottomRight), Positionable.ReferencePoint.BottomRight, -PADDING, -PADDING);
+		
+		CountingButton cb = new CountingButton(container, new Label(container, fieldFont, Color.white, "Counting Button"), 200, 40, true);
+		mainLayer.add(cb, tb.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.BottomRight, 0, -PADDING);
 	}
 
 	@Override
