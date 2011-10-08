@@ -13,8 +13,6 @@ import component.Positionable.ReferencePoint;
 
 /**
  * An abstract class for a component.
- * 
- * @author Tanner Smith
  */
 public abstract class Component extends AbstractComponent implements Positionable {
 	protected boolean visible;
@@ -33,28 +31,58 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		visible = true;
 	}
 	
+	/**
+	 * Render the component and its subcomponents to the screen.
+	 * @param context Container the component resides in
+	 */
 	public void render(GUIContext context, Graphics g) throws SlickException {
 		for (Component component : components) {
 			component.render(container, g);
 		}
 	}
 	
+	/**
+	 * Set this component to be visible or invisible.
+	 * @param visible Whether it should be visible (true) or not
+	 */
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
 	
+	/**
+	 * Add this component at a location relative to a reference point.
+	 * @param component Component to add
+	 * @param location Location to add the component at
+	 * @param referencePoint ReferencePoint in the component to set to the location
+	 */
 	public void add(Component component, Vector2f location, ReferencePoint referencePoint) {
 		component.setPosition(location, referencePoint, 0, 0);
 		
 		components.add(component);
 	}
 	
+	/**
+	 * Add this component at a location relative to a reference point.
+	 * @param component Component to add
+	 * @param location Location to add the component at
+	 * @param referencePoint ReferencePoint in the component to set to the location
+	 * @param xOffset X Offset from the location
+	 * @param yOffset Y Offset from the location
+	 */
 	public void add(Component component, Vector2f location, ReferencePoint referencePoint, int xOffset, int yOffset) {
 		component.setPosition(location, referencePoint, xOffset, yOffset);
 		
 		components.add(component);
 	}
 	
+	/**
+	 * Add a set of components in a column with given spacing.
+	 * @param components Components to add
+	 * @param location Location to add the components column at
+	 * @param xOffset X Offset from the location
+	 * @param yOffset Y Offset from the location
+	 * @param spacing Spacing between components in the column
+	 */
 	public void addAsColumn(Component[] components, Vector2f location, int xOffset, int yOffset, int spacing) {
 		for (int i = 0; i < components.length; i++) {
 			add(components[i], location, ReferencePoint.TopLeft, xOffset, yOffset);
@@ -64,6 +92,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 	}
 	
+	/**
+	 * Remove a component from this component.
+	 * @param component Component to remove
+	 */
 	public void remove(Component component) {
 		components.remove(component);
 	}
@@ -140,9 +172,22 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		return null;
 	}
 	
+	/**
+	 * Change the width.
+	 * @param width New width
+	 */
 	public abstract void setWidth(int width);
+	
+	/**
+	 * Change the height.
+	 * @param height New height
+	 */
 	public abstract void setHeight(int height);
 	
+	/**
+	 * Set whether this component is accepting input.
+	 * @param acceptingInput Whether the component is accepting input (true = yes)
+	 */
 	public void setAcceptingInput(boolean acceptingInput) {
 		super.setAcceptingInput(acceptingInput);
 		
