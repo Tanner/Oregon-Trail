@@ -110,10 +110,12 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 */
 	public void addAsRow(Component[] components, Vector2f location, int xOffset, int yOffset, int spacing) {
 		for (int i = 0; i < components.length; i++) {
-			add(components[i], location, ReferencePoint.TopLeft, xOffset, yOffset);
-			location.set(location.x + components[i].getWidth() + spacing, location.y);
-			
-			this.components.add(components[i]);
+			if (components[i] != null) {
+				add(components[i], location, ReferencePoint.TopLeft, xOffset, yOffset);
+				location.set(location.x + components[i].getWidth() + spacing, location.y);
+				
+				this.components.add(components[i]);
+			}
 		}
 	}
 	
@@ -133,7 +135,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		
 		while (startIndex < components.length) {
 			Component[] row = new Component[cols];
-			for (int x = 0; x < row.length; x++) {
+			for (int x = 0; x < row.length && startIndex + x < components.length; x++) {
 				row[x] = components[startIndex + x];
 			}
 			
