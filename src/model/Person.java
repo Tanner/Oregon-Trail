@@ -25,6 +25,9 @@ public class Person {
 	private Profession profession;
 	private final static float baseMoney = 1600f;
 	private final static int baseSkillPoints = 70;
+	private Inventory inventory;
+	private final int MAX_INVENTORY_SIZE = 4;
+	private final double MAX_INVENTORY_WEIGHT = 10;
 	
 	/**
 	 * Person creation should be done this way always - name first, then profession and skills are added.
@@ -34,6 +37,7 @@ public class Person {
 		this.name = name;
 		this.skillPoints = new Condition(0, baseSkillPoints, 0);
 		Logger.log(name + " was created", Logger.Level.INFO);
+		this.inventory = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);
 	}
 	
 	/**
@@ -180,7 +184,6 @@ public class Person {
 	/**
 	 * Skills named and with skill point cost.
 	 * 
-	 * @author George Johnston
 	 */
 	public enum Skill {
 		MEDICAL (50, "Medical"),
@@ -230,7 +233,6 @@ public class Person {
 	/**
 	 * Professions with their gold/score multiplier and starting skill
 	 * 
-	 * @author George Johnston
 	 */
 	public static enum Profession {
 		BANKER (1, Skill.COMMERCE, "Banker"),
@@ -315,5 +317,13 @@ public class Person {
 	
 	public boolean getIsMale() {
 		return isMale;
+	}
+	
+	/**
+	 * Returns the inventory of the person
+	 * @return The inventory of the person
+	 */
+	public Inventory getInventory() {
+		return inventory;
 	}
 }
