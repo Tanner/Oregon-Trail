@@ -75,7 +75,13 @@ public class ComponentTestScene extends Scene {
 		for (int i = 0; i < colLabels.length; i ++) {
 			colLabels[i] = new Label(container, fieldFont, Color.white, "Label "+i);
 		}
-		mainLayer.addAsColumn(colLabels, mainLayer.getPosition(Positionable.ReferencePoint.TopCenter), 0, PADDING, 5);
+		mainLayer.addAsColumn(colLabels, mainLayer.getPosition(Positionable.ReferencePoint.TopCenter), 0, PADDING, PADDING);
+		
+		Component rowLabels[] = new Component[5];
+		for (int i = 0; i < rowLabels.length; i ++) {
+			rowLabels[i] = new Label(container, fieldFont, Color.white, "Label "+i);
+		}
+		mainLayer.addAsRow(rowLabels, colLabels[colLabels.length - 1].getPosition(Positionable.ReferencePoint.TopLeft), 0, colLabels[colLabels.length - 1].getHeight() + PADDING, PADDING);
 	}
 
 	@Override

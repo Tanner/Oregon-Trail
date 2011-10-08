@@ -93,6 +93,23 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	/**
+	 * Add a set of components in a row with given spacing.
+	 * @param components Components to add
+	 * @param location Location to add the components row at
+	 * @param xOffset X Offset from the location
+	 * @param yOffset Y Offset from the location
+	 * @param spacing Spacing between components in the row
+	 */
+	public void addAsRow(Component[] components, Vector2f location, int xOffset, int yOffset, int spacing) {
+		for (int i = 0; i < components.length; i++) {
+			add(components[i], location, ReferencePoint.TopLeft, xOffset, yOffset);
+			location.set(location.x + components[i].getWidth() + spacing, location.y);
+			
+			this.components.add(components[i]);
+		}
+	}
+	
+	/**
 	 * Remove a component from this component.
 	 * @param component Component to remove
 	 */
