@@ -310,42 +310,10 @@ public class PartyCreationScene extends Scene {
 		
 		if (modal == professionModal) {
 			resignProfessionModal(segmentedControlResults);
-/*			personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
-			people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
-			
-			personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
-			
-			personMoneyLabels[currentPersonModifying].setVisible(true);
-			
-			personChangeSkillButtons[currentPersonModifying].setVisible(true);
-			for (int j = 0; j < personSkillLabels[currentPersonModifying].length; j++) {
-				personSkillLabels[currentPersonModifying][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
-				personSkillLabels[currentPersonModifying][j].setVisible(true);
-			}
-			
-			if (people.get(currentPersonModifying).getProfession().getStartingSkill() != Skill.NONE) {
-				personSkillLabels[currentPersonModifying][0].setText(people.get(currentPersonModifying).getProfession().getStartingSkill().getName());
-			}
-*/		}//if modal == professionalModal
+		}//if modal == professionalModal
 		else if (modal == skillModal) {
 			resignSkillModal(segmentedControlResults);
-			
-/*			people.get(currentPersonModifying).clearSkills();
-						
-			for (int j = 0; j < 3; j++) {
-				if (segmentedControlResults.length >= j + 1) {
-					people.get(currentPersonModifying).addSkill(Skill.values()[segmentedControlResults[j]]);
-				} 
-			}
-			
-			for (int j = 0; j < 3; j++) {
-				if (people.get(currentPersonModifying).getSkills().size() >= j + 1) {
-					personSkillLabels[currentPersonModifying][j].setText(people.get(currentPersonModifying).getSkills().get(j).getName());
-				} else {
-					personSkillLabels[currentPersonModifying][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
-				}
-			}
-*/		}//if modal == skillModal
+		}//if modal == skillModal
 	}//resignModal method
 	
 	private class ButtonListener implements ComponentListener {
@@ -473,7 +441,7 @@ public class PartyCreationScene extends Scene {
 		}//personDeleteButton
 		
 		/**
-		 * Breakout method : confirm button pressed - check status of party and set up next scene
+		 * Breakout method : confirm button pressed - check status of party and set up next scene if valid
 		 */
 		
 		public void confirmButton(){
@@ -482,19 +450,14 @@ public class PartyCreationScene extends Scene {
 				return;
 			}
 			
-			for (Person person : people) {
+			for (Person person : people) {//iterate through party memebers
 				if (person.getProfession() == null) {
 					showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_PROFESSIONS"), ConstantStore.get("GENERAL", "OK")));
 					Logger.log("Not all party members have professions selected", Logger.Level.INFO);
 					return;
 				}
-				//This is not a postcondition.  You are not required to have 3 skills.
-//				if (person.getSkills().size() < 3) {
-//					showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_SKILLS"), ConstantStore.get("GENERAL", "OK")));
-//					Logger.log("Not all party members have 3 skills", Logger.Level.INFO);
-//					return;
-//				}
 			}
+			//set initial game values
 			pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
 			rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
 			player.setParty(new Party(pace, rations, people));
@@ -511,147 +474,28 @@ public class PartyCreationScene extends Scene {
 			for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
 					newPersonButton(i);
-/*					personNameTextFields[i].setVisible(true);				
-					personNameTextFields[i].setFocus(true);
-*/				}
-				
+				}
 				else if (source == personNameTextFields[i]) {	
 					retCode = personNameTextField(i);
-					
-/*					if(people.size() < i + 1) {
-						if (personNameTextFields[i].isEmpty()) {
-							return;
-						}
-						
-						for (Person person : people) {
-							if (person.getName().equalsIgnoreCase(personNameTextFields[i].getText())) {
-								showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_DUP_NAME"), ConstantStore.get("GENERAL", "OK")));
-								
-								personNameTextFields[i].clear();
-								return;
-							}
-						}
-						
-						people.add(i, new Person(personNameTextFields[i].getText()));
-						
-						// Moves the delete button to the latest person created
-						for (int j = 0; j < people.size() - 1; j++) {
-							personDeleteButtons[j].setVisible(false);
-						}
-						personDeleteButtons[people.size() - 1].setVisible(true);
-						
-						personChangeProfessionButtons[i].setVisible(true);
-						personProfessionLabels[i].setVisible(true);
-					}
-					else {
-						if (personNameTextFields[i].isEmpty()) {
-							personNameTextFields[i].setText(people.get(i).getName());
-						}
-						
-						people.get(i).setName(personNameTextFields[i].getText());
-					}
-*/				}			
+				}			
 				else if (source == personChangeProfessionButtons[i]) {
 					personChangeProfButton(i);
-/*					professionSegmentedControl.clear();
-					professionModal = new Modal(container,
-							PartyCreationScene.this,
-							ConstantStore.get("PARTY_CREATION_SCENE", "PROFESSION_MODAL"),
-							professionSegmentedControl,
-							ConstantStore.get("GENERAL", "CONFIRM"),
-							ConstantStore.get("GENERAL", "CANCEL"));
-
-					int[] currentProfession = new int[1];
-					if(people.get(i).getProfession() != null) {
-						currentProfession[0] = people.get(i).getProfession().ordinal();
-					}
-
-					professionSegmentedControl.setSelection(currentProfession);
-										
-					currentPersonModifying = i;
-					
-					showModal(professionModal);
-*/				}				
+				}				
 				else if (source == personChangeSkillButtons[i]) {
 					personChangeSkillButton(i);
-					
-/*					skillSegmentedControl.clear();
-					String skillModalMessage;
-					if (people.get(i).getProfession().getStartingSkill() != Skill.NONE) {
-						skillModalMessage = String.format(ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL_MESSAGE"), people.get(i).getName(), people.get(i).getProfession().getStartingSkill().getName());
-					}  else {
-						skillModalMessage = String.format(ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL_MESSAGE_NO_SKILL"), people.get(i).getName());
-					}
-					skillModal = new Modal(container,
-							PartyCreationScene.this,
-							skillModalMessage,
-							skillSegmentedControl,
-							ConstantStore.get("GENERAL", "CONFIRM"),
-							ConstantStore.get("GENERAL", "CANCEL"));
-
-					if (people.get(i).getProfession().getStartingSkill() != Person.Skill.NONE) {
-						int[] permanent = new int[1];
-						permanent[0] = people.get(i).getProfession().getStartingSkill().ordinal();
-						skillSegmentedControl.setPermanent(permanent);
-					} else {
-						skillSegmentedControl.setPermanent(new int[0]);
-					}
-					
-					ArrayList<Skill> currentSkills = people.get(i).getSkills();
-					
-					currentSkills.remove(Person.Skill.NONE);
-					int[] currentSkillIndices = new int[currentSkills.size()];
-					for(int j = 0; j < currentSkillIndices.length; j++) {
-						currentSkillIndices[j] = currentSkills.get(j).ordinal();
-					}
-					System.out.println(Arrays.toString(currentSkillIndices));
-					skillSegmentedControl.setSelection(currentSkillIndices);
-					currentPersonModifying = i;
-					
-					showModal(skillModal);
-*/				}
+				}
 				
 				else if (source == personDeleteButtons[i]) {
 					personDeleteButton(i);
-/*					//Delete the last created person
-					Logger.log("Deleting pending Person at index " + i, Logger.Level.INFO);
-					clearPersonData(i);
-					hidePersonColumn(i);
-*/				}
+				}
 			}//for loop 
 			
 			if (retCode == 0){//personNameTextField had instance of forced return - bypass this code if return was forced
 				enableNextPersonField();
 			}
-			
-			
 			if (source == confirmButton) {
 				confirmButton();
-/*				if (people.size() == 0) {
-					showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_NO_MEMBERS"), ConstantStore.get("GENERAL", "OK")));
-					return;
-				}
-				
-				for (Person person : people) {
-					if (person.getProfession() == null) {
-						showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_PROFESSIONS"), ConstantStore.get("GENERAL", "OK")));
-						Logger.log("Not all party members have professions selected", Logger.Level.INFO);
-						return;
-					}
-					//This is not a postcondition.  You are not required to have 3 skills.
-//					if (person.getSkills().size() < 3) {
-//						showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_SKILLS"), ConstantStore.get("GENERAL", "OK")));
-//						Logger.log("Not all party members have 3 skills", Logger.Level.INFO);
-//						return;
-//					}
-				}
-				pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
-				rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
-				player.setParty(new Party(pace, rations, people));
-				
-				Logger.log("Confirm button pushed", Logger.Level.INFO);
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.Town);
-*/			}
+			}
 		}
 	}
 }
