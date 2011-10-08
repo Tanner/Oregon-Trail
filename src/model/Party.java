@@ -7,7 +7,6 @@ import core.Logger.Level;
 
 /**
  * Party class that contains an array of persons that are members.
- * @author George Johnston
  */
 public class Party {
 	
@@ -58,7 +57,23 @@ public class Party {
 	public ArrayList<Person> getPartyMembers() {
 		return this.members;
 	}
-	
+
+	/**
+	 * Returns an array of the Skills present in the party
+	 * @return
+	 */
+	public ArrayList<Person.Skill> getSkills() {
+		
+		ArrayList<Person.Skill> skillList = new ArrayList<Person.Skill>();
+		for(Person person : members) {
+			for(Person.Skill skill: person.getSkills()) {
+				if(!skillList.contains(skill) && skill != Person.Skill.NONE) {
+					skillList.add(skill);
+				}
+			}
+		}
+		return skillList;
+	}
 	/**
 	 * Returns the money
 	 * @return the party's money
@@ -76,21 +91,28 @@ public class Party {
 	}
 	
 	/**
+	 * 
 	 * The possible values of the party's pace
-	 * @author 
-	 *
 	 */
-	
 	public enum Pace{
 		STEADY ("Steady"),
 		STRENUOUS ("Strenuous"),
 		GRUELING ("Grueling");
 		
 		private final String name;
+		
+		/**
+		 * 
+		 * @param name The name of the pace
+		 */
 		private Pace(String name) {
 			this.name = name;
 		}
 		
+		/**
+		 * 
+		 * @return The string version of the pace
+		 */
 		public String toString() {
 			return this.name;
 		}
@@ -106,28 +128,35 @@ public class Party {
 	
 	/**
 	 * 
-	 * @param pace the party's new pace
+	 * @param pace The party's new pace
 	 */
 	public void setPace(Pace pace){
 		this.currentPace = pace;
 	}
 	
 	/**
+	 * 
 	 * The possible settings of the party's consumption rate
-	 * @author 
-	 *
-	 */
-	
+	 */	
 	public enum Rations{
 		FILLING ("Filling"),
 		MEAGER ("Meager"),
 		BAREBONES ("Barebones");
 		
 		private final String name;
+		
+		/**
+		 * 
+		 * @param name The name of the rations
+		 */
 		private Rations(String name) {
 			this.name = name;
 		}
 		
+		/**
+		 * 
+		 * @return The string version of the rations
+		 */
 		public String toString() {
 			return this.name;
 		}
@@ -135,7 +164,7 @@ public class Party {
 	
 	/**
 	 * 
-	 * @return the party's current ration consumption rate
+	 * @return The party's current ration consumption rate
 	 */
 	public Rations getRations(){
 		return currentRations;
@@ -143,7 +172,7 @@ public class Party {
 	
 	/**
 	 * 
-	 * @param rations the desired new ration consumption rate
+	 * @param rations The desired new ration consumption rate
 	 */
 	public void setRations(Rations rations){
 		this.currentRations = rations;
