@@ -20,7 +20,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
 
-import component.Background;
+import component.Panel;
 import component.Button;
 import component.Label;
 import component.Label.Alignment;
@@ -107,7 +107,7 @@ public class PartyCreationScene extends Scene {
 			newPersonButtons[i].addListener(new ButtonListener());
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
 			
-			personNameTextFields[i] = new TextField(container, fieldFont, buttonWidth, regularButtonHeight);
+			personNameTextFields[i] = new TextField(container, buttonWidth, regularButtonHeight, fieldFont);
 			personNameTextFields[i].setPlaceholderText(ConstantStore.get("PARTY_CREATION_SCENE", "NAME_PLACEHOLDER"));
 			personNameTextFields[i].addListener(new ButtonListener());
 			personNameTextFields[i].setVisible(false);
@@ -120,14 +120,14 @@ public class PartyCreationScene extends Scene {
 			personChangeProfessionButtons[i].setVisible(false);
 			mainLayer.add(personChangeProfessionButtons[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
-			personProfessionLabels[i] = new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NO_PROFESSION_LABEL"), buttonWidth);
+			personProfessionLabels[i] = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NO_PROFESSION_LABEL"));
 			personProfessionLabels[i].setHeight(regularButtonHeight);
 			personProfessionLabels[i].setBackgroundColor(Color.darkGray);
 			personProfessionLabels[i].setVisible(false);
 			personProfessionLabels[i].setAlignment(Alignment.Center);
 			mainLayer.add(personProfessionLabels[i], personChangeProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
 			
-			personMoneyLabels[i] = new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "MONEY_SYMBOL")+"0", buttonWidth);
+			personMoneyLabels[i] = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("GENERAL", "MONEY_SYMBOL")+"0");
 			personMoneyLabels[i].setAlignment(Alignment.Center);
 			personMoneyLabels[i].setVisible(false);
 			mainLayer.add(personMoneyLabels[i], personProfessionLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
@@ -145,7 +145,7 @@ public class PartyCreationScene extends Scene {
 					skillLabelReferenceObject = personSkillLabels[i][j - 1];
 				}
 				
-				personSkillLabels[i][j] = new Label(container, fieldFont, Color.white, "", buttonWidth);
+				personSkillLabels[i][j] = new Label(container, buttonWidth, fieldFont, Color.white, "");
 				personSkillLabels[i][j].setHeight(regularButtonHeight);
 				personSkillLabels[i][j].setBackgroundColor(Color.darkGray);
 				personSkillLabels[i][j].setVisible(false);
@@ -195,7 +195,7 @@ public class PartyCreationScene extends Scene {
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
-		backgroundLayer.add(new Background(container, new Color(0xb40c09)));
+		backgroundLayer.add(new Panel(container, new Color(0xb40c09)));
 		
 		enableNextPersonField();
 	}

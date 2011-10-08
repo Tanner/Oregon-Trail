@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
@@ -17,24 +19,30 @@ import component.Positionable.ReferencePoint;
  * @author Tanner Smith
  */
 public abstract class Component extends AbstractComponent implements Positionable {
+	protected Vector2f origin;
+	private int width;
+	private int height;
+	
+	protected List<Component> subComponents;
 	protected boolean visible;
-	
-	protected List<Component> components;
-	
+		
 	/**
 	 * Constructs a component.
 	 * @param container Container the component resides in
 	 */
-	public Component(GUIContext container) {
+	public Component(GUIContext container, int width, int height) {
 		super(container);
 		
-		components = new ArrayList<Component>();
+		origin= new Vector2f();
+		this.width = width;
+		this.height = height;
 		
+		subComponents = new ArrayList<Component>();
 		visible = true;
 	}
 	
 	public void render(GUIContext context, Graphics g) throws SlickException {
-		for (Component component : components) {
+		for (Component component : subComponents) {
 			component.render(container, g);
 		}
 	}
@@ -46,17 +54,17 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	public void add(Component component, Vector2f location, ReferencePoint referencePoint) {
 		component.setPosition(location, referencePoint, 0, 0);
 		
-		components.add(component);
+		subComponents.add(component);
 	}
 	
 	public void add(Component component, Vector2f location, ReferencePoint referencePoint, int xOffset, int yOffset) {
 		component.setPosition(location, referencePoint, xOffset, yOffset);
 		
-		components.add(component);
+		subComponents.add(component);
 	}
 	
 	public void remove(Component component) {
-		components.remove(component);
+		subComponents.remove(component);
 	}
 	
 	@Override
@@ -131,13 +139,55 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		return null;
 	}
 	
-	public abstract void setWidth(int width);
-	public abstract void setHeight(int height);
+	public final Shape getArea() {
+		return new Rectangle(origin.x, origin.y, this.width, this.height);
+	}
+	
+	public final int getWidth() {
+		return width;
+	}
+	
+	public final void setWidth(int width) {
+		this.width = width;
+	}
+	
+	public final int getHeight() {
+		return height;
+	}
+	
+	public final void setHeight(int height) {
+		this.height = height;
+	}
+	
+	@Override
+	public final int getX() {
+		return (int)origin.getX();
+	}
+
+	@Override
+	public final int getY() {
+		return (int)origin.getY();
+	}
+	
+	public void setLocation(int x, int y) {
+		if (subComponents != null) {
+			for (Component c : subComponents) {
+				c.setLocation(c.getX() + (x - getX()),
+						c.getY() + y - getY());
+			}
+		}
+		
+		if (origin == null) {
+			origin = new Vector2f((int)x, (int)y);
+		} else {
+			origin.set((int)x, (int)y);
+		}
+	}
 	
 	public void setAcceptingInput(boolean acceptingInput) {
 		super.setAcceptingInput(acceptingInput);
 		
-		for (Component c : components) {
+		for (Component c : subComponents) {
 			c.setAcceptingInput(acceptingInput);
 		}
 	}

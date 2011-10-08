@@ -17,10 +17,7 @@ import component.Label.Alignment;
 public class Spinner extends Component {
 	private final double PADDING = 1.25;
 	private final int MAX_STATE;
-	
-	private int width, height;
-	private Vector2f position;
-	
+		
 	private String[] fields;
 	private Label label;
 	private int state;
@@ -28,7 +25,6 @@ public class Spinner extends Component {
 	
 	private boolean treatAsNumbers;
 	
-	private Font font;
 	private Button upButton, downButton, labelButton;
 	private ButtonListener listener;
 	
@@ -45,23 +41,20 @@ public class Spinner extends Component {
 	 * @param treatAsNumbers Instead of returning the ordinal of a state, returns the value of the field parsed to an int
 	 * @param fields A variable length list of Strings that will be displayed for each state (first String is state 0)
 	 */
-	public Spinner(GUIContext context, Font font, Color c, int width, int height, boolean treatAsNumbers, String ... fields) {
-		super(context);
+	public Spinner(GUIContext context, int width, int height, Font font, Color c, boolean treatAsNumbers, String ... fields) {
+		super(context, width, height);
 		
 		MAX_STATE = fields.length - 1;
 		state = 0;
 		this.fields = fields;
-		this.font = font;
 		this.treatAsNumbers = treatAsNumbers;
-		this.width = width;
-		this.height = height;
 		
 		listener = new ButtonListener();
 
 		Label upLabel = new Label(context, font, c, "Up");
 		Label downLabel = new Label(context, font, c, "Down");
 		int butWidth = (int)(font.getWidth("Down")*PADDING);
-		label = new Label(context, font, c, fields[0], width - butWidth);
+		label = new Label(context, width - butWidth, font, c, fields[0]);
 		label.setAlignment(Alignment.Center);
 		upButton = new Button(context, upLabel, butWidth, height/2);
 		downButton = new Button(context, downLabel, butWidth,height/2);
@@ -74,6 +67,12 @@ public class Spinner extends Component {
 		labelButton.setBottomRightRoundedCorner(true);
 		labelButton.setDisabled(true);
 		labelButton.setButtonActiveColor(Color.gray);
+		
+		upButton.setPosition(this.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft);
+		downButton.setPosition(this.getPosition(ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft);
+		//Sets the label text to be in the center of the textbox
+		labelButton.setPosition(upButton.getPosition(ReferencePoint.TopRight),
+				Positionable.ReferencePoint.TopLeft);
 		
 		listener = new ButtonListener();
 		upButton.addListener(listener);
@@ -105,26 +104,6 @@ public class Spinner extends Component {
 	}
 
 	@Override
-	public int getHeight() {
-		return height;
-	}
-
-	@Override
-	public int getWidth() {
-		return width;
-	}
-
-	@Override
-	public int getX() {
-		return (int) position.getX();
-	}
-
-	@Override
-	public int getY() {
-		return (int) position.getY();
-	}
-
-	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
 		if (!visible) {
 			return;
@@ -147,21 +126,6 @@ public class Spinner extends Component {
 		}
 	}
 
-	@Override
-	public void setLocation(int x, int y) {
-		if (position == null)
-			position = new Vector2f(x,y);
-		else
-			position.set(x,y);
-		if (upButton != null ) {
-			upButton.setPosition(this.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft);
-			downButton.setPosition(this.getPosition(ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft);
-			//Sets the label text to be in the center of the textbox
-			labelButton.setPosition(upButton.getPosition(ReferencePoint.TopRight),
-					Positionable.ReferencePoint.TopLeft);
-		}
-	}
-	
 	/**
 	 * A listener that checks if an up/down button was pressed,
 	 * and updates the spinner's state.
@@ -178,15 +142,5 @@ public class Spinner extends Component {
 			label.setText(fields[state]);
 			refreshState();
 		}
-	}
-
-	@Override
-	public void setWidth(int width) {
-		// TODO
-	}
-
-	@Override
-	public void setHeight(int height) {
-		// TODO
 	}
 }

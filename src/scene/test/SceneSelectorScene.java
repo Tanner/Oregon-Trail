@@ -13,7 +13,7 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
-import component.Background;
+import component.Panel;
 import component.Button;
 import component.Component;
 import component.Label;
@@ -66,7 +66,7 @@ public class SceneSelectorScene extends Scene {
 			mainLayer.add(b);
 		}
 		
-		backgroundLayer.add(new Background(container, Color.black));
+		backgroundLayer.add(new Panel(container, Color.black));
 		
 		start();
 	}
