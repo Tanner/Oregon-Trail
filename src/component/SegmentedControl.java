@@ -32,10 +32,7 @@ public class SegmentedControl extends Component {
 	private final int STATES;
 	private final int maxSelected;
 	
-	
 	private int rows, cols, rowHeight, colWidth;
-	private int height, width;
-	private Vector2f position;
 	
 	private String[] labels;
 	
@@ -60,7 +57,7 @@ public class SegmentedControl extends Component {
 	 * @param labels The labels for each segmented button.
 	 */
 	public SegmentedControl(GUIContext context, int width, int height, int rows, int cols, int margin, int maxSelected, String ... labels) {
-		super(context);
+		super(context, width, height);
 		
 		this.rows = rows;
 		this.cols = cols;
@@ -74,9 +71,6 @@ public class SegmentedControl extends Component {
 		singleSelection = -1;
 		
 		generateButtons(context);
-		
-		setWidth(width);
-		setHeight(height);
 			
 		clear();		
 	}
@@ -92,6 +86,40 @@ public class SegmentedControl extends Component {
 			Label current = new Label(context, font, color, labels[i]);
 			buttons[i] = new Button(context, current, colWidth, rowHeight);
 			buttons[i].addListener(new SegmentListener(i));
+		}
+		
+		boolean roundedCorners = (margin == 0) ? true : false;
+		
+		buttons[0].setPosition(this.getPosition(Positionable.ReferencePoint.TopLeft),
+				Positionable.ReferencePoint.TopLeft, 0, 0);
+		buttons[0].setTopLeftRoundedCorner(roundedCorners);
+		if (rows == 1) {
+			buttons[0].setBottomLeftRoundedCorner(roundedCorners);
+		}
+		for (int i = 1; i < cols; i++) {
+			buttons[i].setPosition(buttons[i-1].getPosition(Positionable.ReferencePoint.TopRight),
+					Positionable.ReferencePoint.TopLeft, margin, 0);
+			if (i == cols - 1) {
+				buttons[i].setTopRightRoundedCorner(roundedCorners);
+				if (rows == 1) {
+					buttons[i].setBottomRightRoundedCorner(roundedCorners);
+				}
+			}
+		}
+		OuterLoop:
+		for (int i = 1; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				if (parsePosition(i,j) >= STATES) 
+					break OuterLoop;
+				buttons[parsePosition(i,j)].setPosition(buttons[parsePosition(i-1,j)].getPosition(Positionable.ReferencePoint.BottomLeft),
+					Positionable.ReferencePoint.TopLeft, 0, margin);
+				if (i == rows-1 && j == cols-1) {
+					buttons[parsePosition(i, j)].setBottomRightRoundedCorner(roundedCorners);
+				}
+				if (i == rows-1 && j == 0) {
+					buttons[parsePosition(i, j)].setBottomLeftRoundedCorner(roundedCorners);
+				}
+			}
 		}
 	}
 	
@@ -228,53 +256,7 @@ public class SegmentedControl extends Component {
 			return returnStates;
 		}
 	}
-	
-	@Override
-	public void setWidth(int width) {
-		int horizPaddingAmt = (cols - 1) * margin;
-		width -= horizPaddingAmt;
-		
-		this.colWidth = (int) ((double)width/cols);
-		this.width = colWidth * cols + horizPaddingAmt;
 
-		for (Button b : buttons) {
-			b.setWidth(colWidth);
-		}
-	}
-
-	@Override
-	public void setHeight(int height) {
-		int vertPaddingAmt = (rows - 1) * margin;
-		height -= vertPaddingAmt;
-		
-		this.rowHeight =  (int) ((double)height/rows);
-		this.height = rowHeight * rows + vertPaddingAmt;
-		
-		for (Button b : buttons) {
-			b.setHeight(rowHeight);
-		}
-	}
-
-	@Override
-	public int getHeight() {
-		return height;
-	}
-
-	@Override
-	public int getWidth() {
-		return width;
-	}
-
-	@Override
-	public int getX() {
-		return (int) position.getX();
-	}
-
-	@Override
-	public int getY() {
-		return (int) position.getY();
-	}
-	
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
 		if (!visible) {
@@ -282,50 +264,6 @@ public class SegmentedControl extends Component {
 		}
 		for ( Button b : buttons) {
 			b.render(context, g);
-		}
-	}
-	
-	@Override
-	public void setLocation(int x, int y) {
-		if (position == null)
-			position = new Vector2f(x,y);
-		else
-			position.set(x,y);
-		
-		boolean roundedCorners = (margin == 0) ? true : false;
-		
-		if (buttons != null ) {
-			buttons[0].setPosition(this.getPosition(Positionable.ReferencePoint.TopLeft),
-					Positionable.ReferencePoint.TopLeft, 0, 0);
-			buttons[0].setTopLeftRoundedCorner(roundedCorners);
-			if (rows == 1) {
-				buttons[0].setBottomLeftRoundedCorner(roundedCorners);
-			}
-			for (int i = 1; i < cols; i++) {
-				buttons[i].setPosition(buttons[i-1].getPosition(Positionable.ReferencePoint.TopRight),
-						Positionable.ReferencePoint.TopLeft, margin, 0);
-				if (i == cols - 1) {
-					buttons[i].setTopRightRoundedCorner(roundedCorners);
-					if (rows == 1) {
-						buttons[i].setBottomRightRoundedCorner(roundedCorners);
-					}
-				}
-			}
-			OuterLoop:
-			for (int i = 1; i < rows; i++) {
-				for (int j = 0; j < cols; j++) {
-					if (parsePosition(i,j) >= STATES) 
-						break OuterLoop;
-					buttons[parsePosition(i,j)].setPosition(buttons[parsePosition(i-1,j)].getPosition(Positionable.ReferencePoint.BottomLeft),
-						Positionable.ReferencePoint.TopLeft, 0, margin);
-					if (i == rows-1 && j == cols-1) {
-						buttons[parsePosition(i, j)].setBottomRightRoundedCorner(roundedCorners);
-					}
-					if (i == rows-1 && j == 0) {
-						buttons[parsePosition(i, j)].setBottomLeftRoundedCorner(roundedCorners);
-					}
-				}
-			}
 		}
 	}
 	

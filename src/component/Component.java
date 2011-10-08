@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
@@ -15,19 +17,25 @@ import component.Positionable.ReferencePoint;
  * An abstract class for a component.
  */
 public abstract class Component extends AbstractComponent implements Positionable {
-	protected boolean visible;
+	protected Vector2f origin;
+	private int width;
+	private int height;
 	
 	protected List<Component> components;
-	
+	protected boolean visible;
+		
 	/**
 	 * Constructs a component.
 	 * @param container Container the component resides in
 	 */
-	public Component(GUIContext container) {
+	public Component(GUIContext container, int width, int height) {
 		super(container);
 		
-		components = new ArrayList<Component>();
+		origin= new Vector2f();
+		this.width = width;
+		this.height = height;
 		
+		components = new ArrayList<Component>();
 		visible = true;
 	}
 	
@@ -216,17 +224,50 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		return null;
 	}
 	
-	/**
-	 * Change the width.
-	 * @param width New width
-	 */
-	public abstract void setWidth(int width);
+	public final Shape getArea() {
+		return new Rectangle(origin.x, origin.y, this.width, this.height);
+	}
 	
-	/**
-	 * Change the height.
-	 * @param height New height
-	 */
-	public abstract void setHeight(int height);
+	public final int getWidth() {
+		return width;
+	}
+	
+	public final void setWidth(int width) {
+		this.width = width;
+	}
+	
+	public final int getHeight() {
+		return height;
+	}
+	
+	public final void setHeight(int height) {
+		this.height = height;
+	}
+	
+	@Override
+	public final int getX() {
+		return (int)origin.getX();
+	}
+
+	@Override
+	public final int getY() {
+		return (int)origin.getY();
+	}
+	
+	public void setLocation(int x, int y) {
+		if (components != null) {
+			for (Component c : components) {
+				c.setLocation(c.getX() + (x - getX()),
+						c.getY() + y - getY());
+			}
+		}
+		
+		if (origin == null) {
+			origin = new Vector2f((int)x, (int)y);
+		} else {
+			origin.set((int)x, (int)y);
+		}
+	}
 	
 	/**
 	 * Set whether this component is accepting input.

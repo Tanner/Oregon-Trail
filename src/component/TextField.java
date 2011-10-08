@@ -18,10 +18,9 @@ import core.Logger;
  * @author Tanner Smith
  */
 public class TextField extends Component {
+	private static final int PADDING = 10;
+
 	private Label label;
-	private Vector2f position;
-	private int width;
-	private int height;
 	private Color fieldColor;
 	private Color fieldFocusColor;
 	private boolean over;
@@ -30,9 +29,7 @@ public class TextField extends Component {
 	
 	public enum AcceptedCharacters { LETTERS, LETTERS_NUMBERS, NUMBERS };
 	private AcceptedCharacters acceptedCharacters = AcceptedCharacters.LETTERS;
-	
-	private static final int PADDING = 10;
-	
+		
 	/**
 	 * Constructs a new TextField
 	 * @param container Container which holds the text field
@@ -40,17 +37,13 @@ public class TextField extends Component {
 	 * @param width Width of the text field
 	 * @param height Height of the text field
 	 */
-	public TextField(GUIContext container, Font font, int width, int height) {
-		super(container);
+	public TextField(GUIContext container, int width, int height, Font font) {
+		super(container, width, height);
 		
 		fieldColor = Color.gray;
 		fieldFocusColor = Color.darkGray;
-		label = new Label(container, font, Color.white, width);
-		
-		setWidth(width);
-		setHeight(height);
-		
-		setLocation((int)position.getX(), (int)position.getY());
+		label = new Label(container, width, font, Color.white);
+		add(label, getPosition(Positionable.ReferencePoint.CenterLeft), Positionable.ReferencePoint.CenterLeft, PADDING, 0);
 	}
 	
 	@Override
@@ -59,16 +52,14 @@ public class TextField extends Component {
 			return;
 		}
 		
-		super.render(container, g);
-		
 		if (this.hasFocus() || disabled) {
 			g.setColor(fieldFocusColor);
 		} else {
 			g.setColor(fieldColor);
 		}
-		g.fillRect(position.getX(), position.getY(), width, height);
+		g.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		label.render(container, g);
+		super.render(container, g);
 	}
 	
 	
@@ -174,13 +165,6 @@ public class TextField extends Component {
 		super.setFocus(focus);
 	}
 	
-	/**
-	 * Get the area of this component.
-	 * @return Shape of this component
-	 */
-	public Shape getArea() {
-		return new Rectangle(position.getX(), position.getY(), this.width, this.height);
-	}
 	
 	/**
 	 * Set the accepted characters for this text field.
@@ -208,50 +192,6 @@ public class TextField extends Component {
 	 */
 	public void setTextColor(Color color) {
 		label.setColor(color);
-	}
-	
-	@Override
-	public void setLocation(int x, int y) {
-		if (position == null) {
-			position = new Vector2f(x, y);
-		} else {
-			position.set(x, y);
-		}
-
-		if (label != null) {
-			label.setPosition(this.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
-		}
-	}
-
-	@Override
-	public void setWidth(int width) {
-		this.width = width;
-		label.setWidth(width - 2 * PADDING);
-	}
-
-	@Override
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	@Override
-	public int getHeight() {
-		return height;
-	}
-
-	@Override
-	public int getWidth() {
-		return width;
-	}
-
-	@Override
-	public int getX() {
-		return (int)position.getX();
-	}
-
-	@Override
-	public int getY() {
-		return (int)position.getY();
 	}
 	
 	/**
