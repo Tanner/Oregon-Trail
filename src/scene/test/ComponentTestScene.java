@@ -72,16 +72,22 @@ public class ComponentTestScene extends Scene {
 		segment.setPermanent(num);
 		
 		Component colLabels[] = new Component[5];
-		for (int i = 0; i < colLabels.length; i ++) {
+		for (int i = 0; i < colLabels.length; i++) {
 			colLabels[i] = new Label(container, fieldFont, Color.white, "Label "+i);
 		}
-		mainLayer.addAsColumn(colLabels, mainLayer.getPosition(Positionable.ReferencePoint.TopCenter), 0, PADDING, PADDING);
+		//mainLayer.addAsColumn(colLabels, mainLayer.getPosition(Positionable.ReferencePoint.TopCenter), 0, PADDING, PADDING);
 		
 		Component rowLabels[] = new Component[5];
-		for (int i = 0; i < rowLabels.length; i ++) {
+		for (int i = 0; i < rowLabels.length; i++) {
 			rowLabels[i] = new Label(container, fieldFont, Color.white, "Label "+i);
 		}
-		mainLayer.addAsRow(rowLabels, colLabels[colLabels.length - 1].getPosition(Positionable.ReferencePoint.TopLeft), 0, colLabels[colLabels.length - 1].getHeight() + PADDING, PADDING);
+		//mainLayer.addAsRow(rowLabels, colLabels[colLabels.length - 1].getPosition(Positionable.ReferencePoint.TopLeft), 0, colLabels[colLabels.length - 1].getHeight() + PADDING, PADDING);
+		
+		Component gridLabels[] = new Component[9];
+		for (int i = 0; i < gridLabels.length; i++) {
+			gridLabels[i] = new Label(container, fieldFont, Color.white, "Label "+i);
+		}
+		mainLayer.addAsGrid(gridLabels, mainLayer.getPosition(Positionable.ReferencePoint.TopCenter), 3, 3, 0, PADDING, PADDING, PADDING);
 	}
 
 	@Override

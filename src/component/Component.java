@@ -110,6 +110,33 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	/**
+	 * Add a set of components in a row with given spacing.
+	 * @param components Components to add
+	 * @param location Location to add the components row at
+	 * @param rows Number of rows to have
+	 * @param cols Number of cols to have
+	 * @param xOffset X Offset from the location
+	 * @param yOffset Y Offset from the location
+	 * @param xSpacing X Spacing between components in the row
+	 * @param ySpacing Y Spacing between components in the row
+	 */
+	public void addAsGrid(Component[] components, Vector2f location, int rows, int cols, int xOffset, int yOffset, int xSpacing, int ySpacing) {
+		int startIndex = 0;
+		
+		while (startIndex < components.length) {
+			Component[] row = new Component[cols];
+			for (int x = 0; x < row.length; x++) {
+				row[x] = components[startIndex + x];
+			}
+			
+			addAsRow(row, location.copy(), xOffset, yOffset, xSpacing);
+			
+			location.set(location.x, location.y + components[startIndex].getHeight() + ySpacing);
+			startIndex += cols;
+		}
+	}
+	
+	/**
 	 * Remove a component from this component.
 	 * @param component Component to remove
 	 */
