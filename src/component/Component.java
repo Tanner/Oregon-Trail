@@ -14,7 +14,8 @@ import org.newdawn.slick.gui.GUIContext;
 import component.Positionable.ReferencePoint;
 
 /**
- * An abstract class for a component.
+ * {@code Component} provides basic features for GUI elements with an origin,
+ * width, and height.
  */
 public abstract class Component extends AbstractComponent implements Positionable {
 	protected Vector2f origin;
@@ -26,7 +27,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	private boolean visible;
 		
 	/**
-	 * Constructs a component.
+	 * Constructs a {@code Component} with a width and height.
 	 * @param container Container the component resides in
 	 */
 	public Component(GUIContext container, int width, int height) {
@@ -40,10 +41,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		visible = true;
 	}
 	
-	/**
-	 * Render the component and its subcomponents to the screen.
-	 * @param context Container the component resides in
-	 */
+	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
 		for (Component component : components) {
 			component.render(container, g);
@@ -52,7 +50,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	/**
 	 * Set this component to be visible or invisible.
-	 * @param visible Whether it should be visible (true) or not
+	 * @param visible Enables visibility if {@code true}, disables if {@code false}
 	 */
 	public void setVisible(boolean visible) {
 		this.visible = visible;
@@ -60,9 +58,9 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	/**
 	 * Add this component at a location relative to a reference point.
-	 * @param component Component to add
+	 * @param component {@code Component} to add
 	 * @param location Location to add the component at
-	 * @param referencePoint ReferencePoint in the component to set to the location
+	 * @param referencePoint {@code ReferencePoint} in the component to set to the location
 	 */
 	public void add(Component component, Vector2f location, ReferencePoint referencePoint) {
 		component.setPosition(location, referencePoint, 0, 0);
@@ -72,7 +70,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	/**
 	 * Add this component at a location relative to a reference point.
-	 * @param component Component to add
+	 * @param component {@code Component} to add
 	 * @param location Location to add the component at
 	 * @param referencePoint ReferencePoint in the component to set to the location
 	 * @param xOffset X Offset from the location
@@ -86,7 +84,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	/**
 	 * Add a set of components in a column with given spacing.
-	 * @param components Components to add
+	 * @param components {@code Component}s to add
 	 * @param location Location to add the components column at
 	 * @param xOffset X Offset from the location
 	 * @param yOffset Y Offset from the location
@@ -101,7 +99,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	/**
 	 * Add a set of components in a row with given spacing.
-	 * @param components Components to add
+	 * @param components {@code Component}s to add
 	 * @param location Location to add the components row at
 	 * @param xOffset X Offset from the location
 	 * @param yOffset Y Offset from the location
@@ -118,7 +116,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	/**
 	 * Add a set of components in a row with given spacing.
-	 * @param components Components to add
+	 * @param components {@code Component}s to add
 	 * @param location Location to add the components row at
 	 * @param rows Number of rows to have
 	 * @param cols Number of cols to have
@@ -144,7 +142,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	/**
-	 * Remove a component from this component.
+	 * Remove a {@code Component}.
 	 * @param component Component to remove
 	 */
 	public void remove(Component component) {
@@ -223,22 +221,42 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		return null;
 	}
 	
+	/**
+	 * Return this area with origin, width, and height.
+	 * @return This area's origin, width, and height
+	 */
 	public final Shape getArea() {
 		return new Rectangle(origin.x, origin.y, this.width, this.height);
 	}
 	
+	/**
+	 * Return the width.
+	 * @return The width
+	 */
 	public final int getWidth() {
 		return width;
 	}
 	
+	/**
+	 * Sets the width.
+	 * @param width The new width
+	 */
 	public final void setWidth(int width) {
 		this.width = width;
 	}
 	
+	/**
+	 * Return the height.
+	 * @param height the New
+	 */
 	public final int getHeight() {
 		return height;
 	}
 	
+	/**
+	 * Set the height.
+	 * @param height The new height
+	 */
 	public final void setHeight(int height) {
 		this.height = height;
 	}
@@ -253,6 +271,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		return (int)origin.getY();
 	}
 	
+	@Override
 	public void setLocation(int x, int y) {		
 		if (origin == null) {
 			origin = new Vector2f((int)x, (int)y);
@@ -268,7 +287,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	/**
 	 * Set whether this component is accepting input.
-	 * @param acceptingInput Whether the component is accepting input (true = yes)
+	 * @param acceptingInput Enables input if {@code true}, disables if {@code false}
 	 */
 	public void setAcceptingInput(boolean acceptingInput) {
 		super.setAcceptingInput(acceptingInput);
@@ -278,16 +297,25 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 	}
 	
+	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		super.mouseMoved(oldx, oldy, newx, newy);
 		
 		this.mouseOver = getArea().contains(newx, newy);
 	}
 	
+	/**
+	 * Return if mouse is over.
+	 * @return {@code true} if mouse is over, {@code false} is not
+	 */
 	public boolean isMouseOver() {
 		return mouseOver;
 	}
 	
+	/**
+	 * Return if visible.
+	 * @return {@code true} if visible, {@code false} is not
+	 */
 	public boolean isVisible() {
 		return visible;
 	}
