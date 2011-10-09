@@ -68,11 +68,10 @@ public class Spinner extends Component {
 		labelButton.setDisabled(true);
 		labelButton.setButtonActiveColor(Color.gray);
 		
-		upButton.setPosition(this.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft);
-		downButton.setPosition(this.getPosition(ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft);
+		add(upButton, getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft);
+		add(downButton, this.getPosition(ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft);
 		//Sets the label text to be in the center of the textbox
-		labelButton.setPosition(upButton.getPosition(ReferencePoint.TopRight),
-				Positionable.ReferencePoint.TopLeft);
+		add(labelButton, upButton.getPosition(ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft);
 		
 		listener = new ButtonListener();
 		upButton.addListener(listener);
@@ -108,9 +107,8 @@ public class Spinner extends Component {
 		if (!visible) {
 			return;
 		}
-		labelButton.render(context, g);
-		upButton.render(context, g);
-		downButton.render(context, g);
+		
+		super.render(context, g);
 	}
 	
 	private void refreshState() {
