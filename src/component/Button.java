@@ -6,6 +6,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
+import component.sprite.Sprite;
+
 import core.ConstantStore;
 
 /**
@@ -26,7 +28,21 @@ public class Button extends Component implements Disableable {
 	private int topRightCornerRadius;
 	private int bottomRightCornerRadius;
 	private boolean beveled;
+	
+	public Button(GUIContext container, int width, int height, Sprite sprite, Label label) {
+		super(container, width, height);
 		
+		this.label = label;
+		this.add(label, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
+		
+		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
+		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
+		
+		beveled = true;
+		
+		container.getInput().addMouseListener(this);
+	}
+	
 	/**
 	 * Creates a button.
 	 * @param container Container for the  button
@@ -38,7 +54,7 @@ public class Button extends Component implements Disableable {
 		super(container, width, height);
 		
 		this.label = label;
-		label.setAlignment(Label.Alignment.Center);
+		this.add(label, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
 		
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
@@ -63,9 +79,7 @@ public class Button extends Component implements Disableable {
 		if (!isVisible()) {
 			return;
 		}
-		
-		super.render(container, g);
-		
+				
 		Color color;
 		if (active || disabled) {
 			color = buttonActiveColor;
@@ -126,7 +140,7 @@ public class Button extends Component implements Disableable {
 				CORNER_RADIUS,
 				getHeight() - topRightCornerRadius - bottomRightCornerRadius);
 		
-		label.render(container, g);
+		super.render(container, g);
 	}
 	
 	@Override
