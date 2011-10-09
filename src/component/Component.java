@@ -11,8 +11,6 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 
-import component.Positionable.ReferencePoint;
-
 /**
  * {@code Component} provides basic features for GUI elements with an origin,
  * width, and height.
@@ -30,8 +28,8 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * Constructs a {@code Component} with a width and height.
 	 * @param container Container the component resides in
 	 */
-	public Component(GUIContext container, int width, int height) {
-		super(container);
+	public Component(GUIContext context, int width, int height) {
+		super(context);
 		
 		origin = new Vector2f();
 		this.width = width;
