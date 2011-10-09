@@ -90,6 +90,8 @@ public class ComponentTestScene extends Scene {
 		mainLayer.add(tb, mainLayer.getPosition(Positionable.ReferencePoint.BottomRight), Positionable.ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
 		CountingButton cb = new CountingButton(container, new Label(container, fieldFont, Color.white, "Counting Button"), 200, 40);
+		cb.setMin(0);
+		cb.setMax(10);
 		mainLayer.add(cb, tb.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.BottomRight, 0, -PADDING);
 	}
 

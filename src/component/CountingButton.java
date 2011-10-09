@@ -16,6 +16,8 @@ import core.GameDirector;
  */
 public class CountingButton extends Button {
 	private int count;
+	private int min = 0;
+	private int max = Integer.MAX_VALUE;
 	
 	/**
 	 * Creates a counting button.
@@ -77,13 +79,44 @@ public class CountingButton extends Button {
 			input.consumeEvent();
 			active = false;
 			
-			
-			if (button == 0) {
+			if (button == 0 && count < max) {
 				count++;
-			} else {
+			} else if (button != 0 && count > min && count <= max){
 				count--;
 			}
 		}
+	}
+	
+	/**
+	 * Change the minimum value.
+	 * @param min New min value
+	 */
+	public void setMin(int min) {
+		this.min = min;
+	}
+	
+	/**
+	 * Get the min value.
+	 * @return Min value
+	 */
+	public int getMin() {
+		return min;
+	}
+	
+	/**
+	 * Change the max value.
+	 * @param max New max value
+	 */
+	public void setMax(int max) {
+		this.max = max;
+	}
+	
+	/**
+	 * Get the max value.
+	 * @return Max value
+	 */
+	public int getMax() {
+		return max;
 	}
 	
 	/**
