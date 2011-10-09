@@ -59,7 +59,9 @@ public class Sprite extends Component {
 	}
 	
 	@Override
-	public void render(GUIContext container, Graphics g) throws SlickException {
+	public void render(GUIContext context, Graphics g) throws SlickException {
+		super.render(context, g);
+
 		currentAnimation.draw(position.getX(), position.getY());
 	}
 	
