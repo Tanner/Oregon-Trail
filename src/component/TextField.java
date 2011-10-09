@@ -126,7 +126,7 @@ public class TextField extends Component implements Disableable {
 	 * @return Whether the text field is empty or not
 	 */
 	public boolean isEmpty() {
-		if (label.getText().length() <= 0 || label.getText().equals(placeholderText)) {
+		if (label.getText().trim().length() <= 0 || label.getText().equals(placeholderText)) {
 			return true;
 		}
 		
@@ -196,7 +196,7 @@ public class TextField extends Component implements Disableable {
 	 * @return Text in the text field
 	 */
 	public String getText() {
-		return label.getText();
+		return label.getText().trim();
 	}
 	
 	/**
