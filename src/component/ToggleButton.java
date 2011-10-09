@@ -15,7 +15,7 @@ public class ToggleButton extends Button {
 	 * @param width Width of the button
 	 * @param height Height of the button
 	 */
-	public ToggleButton(GUIContext container, Label label, int width, int height) {
+	public ToggleButton(GUIContext container, int width, int height, Label label) {
 		super(container, width, height, label);
 		
 		disableAutoToggle = false;
