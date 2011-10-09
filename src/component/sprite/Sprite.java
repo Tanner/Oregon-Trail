@@ -14,8 +14,6 @@ import component.Component;
 
 /**
  * This class represents a sprite with an left and right animation.
- * 
- * @author Tanner Smith
  */
 public class Sprite extends Component {
 	private Animation leftAnimation;
