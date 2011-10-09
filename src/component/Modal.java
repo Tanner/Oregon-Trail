@@ -17,10 +17,10 @@ import core.GameDirector;
  */
 public class Modal extends Component {
 	private static final int PADDING = 20;
-	private static final Color overlayColor;
+	private static final Color OVERLAY_COLOR;
 	
 	static {
-		overlayColor = new Color(0f, 0f, 0f, 0.5f);
+		OVERLAY_COLOR = new Color(0f, 0f, 0f, 0.5f);
 	}
 	
 	private ModalListener listener;
@@ -108,20 +108,20 @@ public class Modal extends Component {
 		add(panel, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
 	}
 	
+	@Override
+	public void render(GUIContext context, Graphics g) throws SlickException {
+		g.setColor(OVERLAY_COLOR);
+		g.fillRect(getX(), getY(), getWidth(), getHeight());
+		
+		super.render(context, g);
+	}
+	
 	/**
 	 * Returns the segmented control.
 	 * @return The segmented control
 	 */
 	public SegmentedControl getSegmentedControl() {
 		return segmentedControl;
-	}
-	
-	@Override
-	public void render(GUIContext context, Graphics g) throws SlickException {
-		g.setColor(new Color(0f, 0f, 0f, 0.5f));
-		g.fillRect(getX(), getY(), getWidth(), getHeight());
-		
-		super.render(context, g);
 	}
 
 	/**
