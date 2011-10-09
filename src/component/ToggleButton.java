@@ -6,6 +6,8 @@ import org.newdawn.slick.gui.GUIContext;
  * Toggle Button is a button that holds its state until its clicked again.
  */
 public class ToggleButton extends Button {
+	private boolean disableAutoToggle;
+	
 	/**
 	 * Creates a toglge button.
 	 * @param container Container for the  button
@@ -13,8 +15,10 @@ public class ToggleButton extends Button {
 	 * @param width Width of the button
 	 * @param height Height of the button
 	 */
-	public ToggleButton(GUIContext container, int width, int height, Label label) {
+	public ToggleButton(GUIContext container, Label label, int width, int height) {
 		super(container, width, height, label);
+		
+		disableAutoToggle = false;
 	}
 	
 	/**
@@ -25,6 +29,8 @@ public class ToggleButton extends Button {
 	 */
 	public ToggleButton(GUIContext container, Label label) {
 		super(container, label);
+		
+		disableAutoToggle = false;
 	}
 	
 	@Override
@@ -34,7 +40,12 @@ public class ToggleButton extends Button {
 		}
 		
 		if (button == 0 && isMouseOver() && !disabled) {
-			active = !active;
+			if (!disableAutoToggle) {
+				active = !active;
+			} else {
+				active = true;
+			}
+			
 			input.consumeEvent();
 		}
 	}
@@ -46,9 +57,29 @@ public class ToggleButton extends Button {
 		}
 		
  		if (button == 0 && isMouseOver() && !disabled && active) {
+			if (disableAutoToggle) {
+				active = false;
+			}
+			
 			notifyListeners();
 			input.consumeEvent();
 		}
+	}
+	
+	/**
+	 * Change the value of disable auto toggle.
+	 * @param disableAutoToggle Whether auto toggle will be on or off
+	 */
+	public void setDisableAutoToggle(boolean disableAutoToggle) {
+		this.disableAutoToggle = disableAutoToggle;
+	}
+	
+	/**
+	 * Get the disable auto toggle status.
+	 * @return Auto toggle status
+	 */
+	public boolean getDisableAutoToggle() {
+		return disableAutoToggle;
 	}
 	
 	/**
