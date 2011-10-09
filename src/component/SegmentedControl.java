@@ -82,8 +82,8 @@ public class SegmentedControl extends Component {
 	 * @param context The graphics context for the game
 	 */
 	public void generateButtons(GUIContext context) {
-		rowHeight =  (int) ((double)getHeight()/rows);
-		colWidth = (int) ((double)getWidth()/cols);
+		rowHeight = (getHeight() - (rows + 1) * margin) / rows;
+		colWidth = (getWidth() - (cols + 1) * margin) / cols;
 		
 		for (int i = 0; i < STATES; i++) {
 			Label current = new Label(context, font, color, labels[i]);
@@ -93,7 +93,7 @@ public class SegmentedControl extends Component {
 		
 		boolean roundedCorners = (margin == 0) ? true : false;
 		
-		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TopLeft), rows, cols, 0, 0, 0, 0);
+		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TopLeft), rows, cols, 0, 0, margin, margin);
 	}
 	
 	/**

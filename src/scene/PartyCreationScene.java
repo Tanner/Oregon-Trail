@@ -84,14 +84,14 @@ public class PartyCreationScene extends Scene {
 		for (int i = 0; i < numOfProfessions; i++) {
 			professionLabels[i] = Person.Profession.values()[i].toString();
 		}
-		professionSegmentedControl = new SegmentedControl(container, 400, 200, 5, 5, 5, 1, professionLabels);
+		professionSegmentedControl = new SegmentedControl(container, 800, 200, 5, 5, 5, 1, professionLabels);
 		
 		int numOfSkills = Person.Skill.values().length - 1;
 		String[] skillLabels = new String[numOfSkills];
 		for (int i = 0; i < numOfSkills; i++) {
 			skillLabels[i] = Person.Skill.values()[i].getName();
 		}	
-		skillSegmentedControl = new SegmentedControl(container, 400, 200, 5, 3, 5, 3, skillLabels);
+		skillSegmentedControl = new SegmentedControl(container, 800, 200, 5, 3, 5, 3, skillLabels);
 		
 		for (int i = 0; i < newPersonButtons.length; i++) {
 			Positionable newPersonButton = (i == 0) ? mainLayer : newPersonButtons[i - 1];
