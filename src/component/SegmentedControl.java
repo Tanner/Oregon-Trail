@@ -93,7 +93,7 @@ public class SegmentedControl extends Component {
 		
 		boolean roundedCorners = (margin == 0) ? true : false;
 		
-		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TopLeft), rows, cols, 0, 0, margin, margin);
+		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TopLeft), rows, cols, 0, 0, 0, 0);
 	}
 	
 	/**

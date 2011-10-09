@@ -31,7 +31,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	public Component(GUIContext container, int width, int height) {
 		super(container);
 		
-		origin= new Vector2f();
+		origin = new Vector2f();
 		this.width = width;
 		this.height = height;
 		
@@ -256,17 +256,19 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		return (int)origin.getY();
 	}
 	
-	public void setLocation(int x, int y) {
-		if (components != null) {
-			for (Component c : components) {
-				c.setLocation(c.getX() + (x - getX()),
-						c.getY() + y - getY());
-			}
-		}
-		
+	public void setLocation(int x, int y) {		
 		if (origin == null) {
 			origin = new Vector2f((int)x, (int)y);
 		} else {
+			if (components != null) {
+				for (Component c : components) {
+					if (this instanceof SegmentedControl) {
+						System.out.println("X: " + (c.getX() + x - getX()));
+						System.out.println("Y: " + (c.getY() + y - getY()));
+					}
+					c.setLocation(c.getX() + (x - getX()), c.getY() + (y - getY()));
+				}
+			}
 			origin.set((int)x, (int)y);
 		}
 	}
