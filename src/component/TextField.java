@@ -73,7 +73,7 @@ public class TextField extends Component implements Disableable {
 				Logger.log("Deleting last character", Logger.Level.DEBUG);
 				
 				label.setText(label.getText().substring(0, label.getText().length() - 1));
-			} else if (isAcceptedCharacter(c)) {
+			} else if (isAcceptedCharacter(c) && label.getFontWidth() < label.getWidth() - 1) {
 				Logger.log("Key pressed is accepted", Logger.Level.DEBUG);
 				
 				label.setText(label.getText() + c);

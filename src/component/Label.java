@@ -115,6 +115,14 @@ public class Label extends Component {
 	public void setFont(Font font) {
 		this.font = font;
 	}
+
+	/**
+	 * Get the width for the current font.
+	 * @return Width of the label using the current font
+	 */
+	public float getFontWidth() {
+		return font.getWidth(text);
+	}
 	
 	/**
 	 * Set the text.
