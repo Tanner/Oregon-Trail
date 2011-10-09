@@ -59,12 +59,20 @@ public class CountingButton extends Button {
 	
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
-		super.mouseReleased(button, mx, my);
+		if (!visible) {
+			return;
+		}
 		
-		if (countUp) {
-			count++;
-		} else {
-			count--;
+ 		if (button == 0 && over && !disabled && active) {
+			notifyListeners();
+			input.consumeEvent();
+			active = false;
+			
+			if (countUp) {
+				count++;
+			} else {
+				count--;
+			}
 		}
 	}
 	
