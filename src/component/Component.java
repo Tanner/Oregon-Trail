@@ -22,7 +22,8 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	private int height;
 	
 	protected List<Component> components;
-	protected boolean visible;
+	private boolean mouseOver;
+	private boolean visible;
 		
 	/**
 	 * Constructs a component.
@@ -275,5 +276,19 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		for (Component c : components) {
 			c.setAcceptingInput(acceptingInput);
 		}
+	}
+	
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		super.mouseMoved(oldx, oldy, newx, newy);
+		
+		this.mouseOver = getArea().contains(newx, newy);
+	}
+	
+	public boolean isMouseOver() {
+		return mouseOver;
+	}
+	
+	public boolean isVisible() {
+		return visible;
 	}
 }

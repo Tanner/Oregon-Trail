@@ -13,13 +13,12 @@ import core.ConstantStore;
  * 
  * @author Tanner Smith
  */
-public class Button extends Component {
+public class Button extends Component implements Disableable {
 	private static final int CORNER_RADIUS = 2;
 	
 	private Label label;
 	private Color buttonColor;
 	private Color buttonActiveColor;
-	protected boolean over;
 	protected boolean active;
 	protected boolean disabled;
 	private int topLeftCornerRadius;
@@ -61,7 +60,7 @@ public class Button extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
-		if (!visible) {
+		if (!isVisible()) {
 			return;
 		}
 		
@@ -132,20 +131,20 @@ public class Button extends Component {
 	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		if (!visible) {
+		if (!isVisible()) {
 			return;
 		}
 		
-		over = getArea().contains(newx, newy);
+		super.mouseMoved(oldx, oldy, newx, newy);
 	}
 	
 	@Override
 	public void mousePressed(int button, int mx, int my) {
-		if (!visible || !isAcceptingInput()) {
+		if (!isVisible() || !isAcceptingInput()) {
 			return;
 		}
 		
-		if (button == 0 && over && !disabled) {
+		if (button == 0 && isMouseOver() && !disabled) {
 			active = true;
 			input.consumeEvent();
 		}
@@ -153,11 +152,11 @@ public class Button extends Component {
 	
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
-		if (!visible) {
+		if (!isVisible()) {
 			return;
 		}
 		
- 		if (button == 0 && over && !disabled && active) {
+ 		if (button == 0 && isMouseOver() && !disabled && active) {
 			notifyListeners();
 			input.consumeEvent();
 			active = false;
@@ -195,6 +194,11 @@ public class Button extends Component {
 	
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
+	}
+	
+	@Override
+	public boolean isDisabled() {
+		return disabled;
 	}
 	
 	public void setRoundedCorners(boolean rounded) {

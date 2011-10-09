@@ -17,13 +17,12 @@ import core.Logger;
  * 
  * @author Tanner Smith
  */
-public class TextField extends Component {
+public class TextField extends Component implements Disableable {
 	private static final int PADDING = 10;
 
 	private Label label;
 	private Color fieldColor;
 	private Color fieldFocusColor;
-	private boolean over;
 	private boolean disabled;
 	private String placeholderText;
 	
@@ -48,7 +47,7 @@ public class TextField extends Component {
 	
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
-		if (!visible) {
+		if (!isVisible()) {
 			return;
 		}
 		
@@ -86,16 +85,16 @@ public class TextField extends Component {
 	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		if (!visible || disabled) {
+		if (!isVisible() || disabled) {
 			return;
 		}
 		
-		over = getArea().contains(newx, newy);
+		super.mouseMoved(oldx, oldy, newx, newy);
 	}
 	
 	@Override
 	public void mouseReleased(int button, int x, int y) {
-		if (over) {
+		if (isMouseOver()) {
 			setFocus(true);
 			input.consumeEvent();
 		}
@@ -208,5 +207,15 @@ public class TextField extends Component {
 	 */
 	public void setText(String text) {
 		label.setText(text);
+	}
+
+	@Override
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	@Override
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 }

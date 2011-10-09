@@ -16,7 +16,8 @@ import core.GameDirector;
  */
 public class CountingButton extends Button {
 	private int count;
-	private boolean countUp;
+	private int min = 0;
+	private int max = Integer.MAX_VALUE;
 	
 	/**
 	 * Creates a counting button.
@@ -25,10 +26,9 @@ public class CountingButton extends Button {
 	 * @param width Width of the button
 	 * @param height Height of the button
 	 */
-	public CountingButton(GUIContext container, Label label, int width, int height, boolean countUp) {
+	public CountingButton(GUIContext container, Label label, int width, int height) {
 		super(container, label, width, height);
 		
-		this.countUp = countUp;
 		count = 0;
 	}
 
@@ -38,10 +38,9 @@ public class CountingButton extends Button {
 	 * @param label Label for the button
 	 * @param origin Position of the button
 	 */
-	public CountingButton(GUIContext container, Label label, boolean countUp) {
+	public CountingButton(GUIContext container, Label label) {
 		super(container, label);
 		
-		this.countUp = countUp;
 		count = 0;
 	}
 	
@@ -58,22 +57,66 @@ public class CountingButton extends Button {
 	}
 	
 	@Override
-	public void mouseReleased(int button, int mx, int my) {
-		if (!visible) {
+	public void mousePressed(int button, int mx, int my) {
+		if (!isVisible() || !isAcceptingInput()) {
 			return;
 		}
 		
- 		if (button == 0 && over && !disabled && active) {
+		if (isMouseOver() && !disabled) {
+			active = true;
+			input.consumeEvent();
+		}
+	}
+	
+	@Override
+	public void mouseReleased(int button, int mx, int my) {
+		if (!isVisible()) {
+			return;
+		}
+		
+ 		if (isMouseOver() && !disabled && active) {
 			notifyListeners();
 			input.consumeEvent();
 			active = false;
 			
-			if (countUp) {
+			if (button == 0 && count < max) {
 				count++;
-			} else {
+			} else if (button != 0 && count > min && count <= max){
 				count--;
 			}
 		}
+	}
+	
+	/**
+	 * Change the minimum value.
+	 * @param min New min value
+	 */
+	public void setMin(int min) {
+		this.min = min;
+	}
+	
+	/**
+	 * Get the min value.
+	 * @return Min value
+	 */
+	public int getMin() {
+		return min;
+	}
+	
+	/**
+	 * Change the max value.
+	 * @param max New max value
+	 */
+	public void setMax(int max) {
+		this.max = max;
+	}
+	
+	/**
+	 * Get the max value.
+	 * @return Max value
+	 */
+	public int getMax() {
+		return max;
 	}
 	
 	/**

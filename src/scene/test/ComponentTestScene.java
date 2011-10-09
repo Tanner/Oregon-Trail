@@ -54,7 +54,7 @@ public class ComponentTestScene extends Scene {
 		spinner = new Spinner(container, 300, 50, fieldFont, Color.white, false, "Hello","There","Encyclopedia");
 		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BottomLeft),Positionable.ReferencePoint.TopLeft, 0, PADDING);
 	
-		spinnerLabel = new Label(container, fieldFont, Color.white, "Label");
+		spinnerLabel = new Label(container, 300, fieldFont, Color.white, "Label");
 		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		Person.Skill[] arr = Person.Skill.values();
 		String[] strs = new String[arr.length - 2];
@@ -89,7 +89,9 @@ public class ComponentTestScene extends Scene {
 		ToggleButton tb = new ToggleButton(container, new Label(container, fieldFont, Color.white, "Toggle Button"), 200, 40);
 		mainLayer.add(tb, mainLayer.getPosition(Positionable.ReferencePoint.BottomRight), Positionable.ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
-		CountingButton cb = new CountingButton(container, new Label(container, fieldFont, Color.white, "Counting Button"), 200, 40, true);
+		CountingButton cb = new CountingButton(container, new Label(container, fieldFont, Color.white, "Counting Button"), 200, 40);
+		cb.setMin(0);
+		cb.setMax(10);
 		mainLayer.add(cb, tb.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.BottomRight, 0, -PADDING);
 	}
 

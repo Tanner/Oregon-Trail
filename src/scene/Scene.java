@@ -7,9 +7,10 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Modal;
+import component.ModalListener;
 
 
-public abstract class Scene extends BasicGameState {
+public abstract class Scene extends BasicGameState implements ModalListener {
 	protected GameContainer container;
 	protected SceneLayer backgroundLayer;
 	protected SceneLayer mainLayer;
@@ -47,12 +48,6 @@ public abstract class Scene extends BasicGameState {
 		
 		modalLayer.setAcceptingInput(true);
 		modalLayer.setVisible(true);
-	}
-	
-	public void resignModal(Modal modal, int[] segmentedControlResults) {
-		dismissModal(modal);
-		
-		// subclass should handle results
 	}
 	
 	public void dismissModal(Modal modal) {
