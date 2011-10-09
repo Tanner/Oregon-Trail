@@ -77,6 +77,22 @@ public class Condition {
 	}
 	
 	/**
+	 * Returns the min value.
+	 * @return The min value
+	 */
+	public int getMin() {
+		return this.min;
+	}
+	
+	/**
+	 * Returns the max value.
+	 * @return The max value
+	 */
+	public int getMax() {
+		return this.max;
+	}
+	
+	/**
 	 * Decrease the current value by a desired amount.
 	 * @param amount Amount to decrease the current value
 	 * @return Success status (true for success, false for fail)
