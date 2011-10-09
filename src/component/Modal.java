@@ -13,6 +13,11 @@ import core.GameDirector;
 
 public class Modal extends Component {
 	private static final int PADDING = 20;
+	private static final Color overlayColor;
+	
+	static {
+		overlayColor = new Color(0f, 0f, 0f, 0.5f);
+	}
 	
 	private ModalListener listener;
 	private Panel panel;
@@ -21,11 +26,11 @@ public class Modal extends Component {
 	private Button dismissButton;
 	private SegmentedControl segmentedControl;
 	
-	public Modal(GUIContext container, ModalListener listener, String message, String dismissButtonText) {
-		super(container, container.getWidth(), container.getHeight());
+	public Modal(GUIContext context, ModalListener listener, String message, String dismissButtonText) {
+		super(context, context.getWidth(), context.getHeight());
 		
 		this.listener = listener;
-		
+				
 		int messageWidth = 700;
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);		
 		this.messageLabel = new Label(container, messageWidth, fieldFont, Color.white, message);
@@ -87,7 +92,10 @@ public class Modal extends Component {
 		return segmentedControl;
 	}
 	
-	public void render(GUIContext context, Graphics g) throws SlickException {		
+	public void render(GUIContext context, Graphics g) throws SlickException {
+		g.setColor(new Color(0f, 0f, 0f, 0.5f));
+		g.fillRect(getX(), getY(), getWidth(), getHeight());
+		
 		super.render(context, g);
 	}
 
