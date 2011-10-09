@@ -29,11 +29,11 @@ public class ToggleButton extends Button {
 	
 	@Override
 	public void mousePressed(int button, int mx, int my) {
-		if (!visible || !isAcceptingInput()) {
+		if (!isVisible() || !isAcceptingInput()) {
 			return;
 		}
 		
-		if (button == 0 && over && !disabled) {
+		if (button == 0 && isMouseOver() && !disabled) {
 			active = !active;
 			input.consumeEvent();
 		}
@@ -41,11 +41,11 @@ public class ToggleButton extends Button {
 	
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
-		if (!visible) {
+		if (!isVisible()) {
 			return;
 		}
 		
- 		if (button == 0 && over && !disabled && active) {
+ 		if (button == 0 && isMouseOver() && !disabled && active) {
 			notifyListeners();
 			input.consumeEvent();
 		}

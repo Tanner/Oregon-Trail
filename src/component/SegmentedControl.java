@@ -232,7 +232,7 @@ public class SegmentedControl extends Component {
 
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
-		if (!visible) {
+		if (!isVisible()) {
 			return;
 		}
 		
@@ -245,15 +245,6 @@ public class SegmentedControl extends Component {
 		for (Button b : buttons) {
 			b.setAcceptingInput(acceptingInput);
 		}
-	}
-	
-	/**
-	 * @param i the row number
-	 * @param j the column number
-	 * @return The single array index given a row and column
-	 */
-	private int parsePosition(int row, int col) {
-		return  row*cols + col;
 	}
 	
 	private class SegmentListener implements ComponentListener {

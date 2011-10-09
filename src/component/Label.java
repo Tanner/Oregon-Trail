@@ -70,7 +70,7 @@ public class Label extends Component {
 	
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
-		if (!visible) {
+		if (!isVisible()) {
 			return;
 		}
 		

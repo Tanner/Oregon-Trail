@@ -58,11 +58,11 @@ public class CountingButton extends Button {
 	
 	@Override
 	public void mousePressed(int button, int mx, int my) {
-		if (!visible || !isAcceptingInput()) {
+		if (!isVisible() || !isAcceptingInput()) {
 			return;
 		}
 		
-		if (over && !disabled) {
+		if (isMouseOver() && !disabled) {
 			active = true;
 			input.consumeEvent();
 		}
@@ -70,11 +70,11 @@ public class CountingButton extends Button {
 	
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
-		if (!visible) {
+		if (!isVisible()) {
 			return;
 		}
 		
- 		if (over && !disabled && active) {
+ 		if (isMouseOver() && !disabled && active) {
 			notifyListeners();
 			input.consumeEvent();
 			active = false;

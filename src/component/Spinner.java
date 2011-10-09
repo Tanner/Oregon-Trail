@@ -104,7 +104,7 @@ public class Spinner extends Component {
 
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
-		if (!visible) {
+		if (!isVisible()) {
 			return;
 		}
 		
