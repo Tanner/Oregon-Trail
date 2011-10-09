@@ -87,7 +87,7 @@ public class SegmentedControl extends Component {
 		
 		for (int i = 0; i < STATES; i++) {
 			Label current = new Label(context, font, color, labels[i]);
-			buttons[i] = new Button(context, current, colWidth, rowHeight);
+			buttons[i] = new Button(context, colWidth, rowHeight, current);
 			buttons[i].addListener(new SegmentListener(i));
 		}
 		

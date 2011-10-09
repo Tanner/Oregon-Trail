@@ -56,9 +56,9 @@ public class Spinner extends Component {
 		int butWidth = (int)(font.getWidth("Down")*PADDING);
 		label = new Label(context, width - butWidth, font, c, fields[0]);
 		label.setAlignment(Alignment.Center);
-		upButton = new Button(context, upLabel, butWidth, height/2);
-		downButton = new Button(context, downLabel, butWidth,height/2);
-		labelButton = new Button(context, label, width-butWidth, height);
+		upButton = new Button(context, butWidth, height/2, upLabel);
+		downButton = new Button(context, butWidth, height/2, downLabel);
+		labelButton = new Button(context, width-butWidth, height, label);
 		
 		//Set rounded corners, disable the label button and re-color it
 		upButton.setTopLeftRoundedCorner(true);

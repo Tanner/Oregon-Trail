@@ -98,7 +98,7 @@ public class PartyCreationScene extends Scene {
 			ReferencePoint newPersonButtonReferencePoint = (i == 0) ? ReferencePoint.TopLeft :ReferencePoint.TopRight;
 			int newPersonButtonPaddingY = (i == 0) ? PADDING : 0;
 			
-			newPersonButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NEW_PLAYER")), buttonWidth, newPersonButtonHeight);
+			newPersonButtons[i] = new Button(container, buttonWidth, newPersonButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NEW_PLAYER")));
 			newPersonButtons[i].setRoundedCorners(true);
 			newPersonButtons[i].addListener(new ButtonListener());
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
@@ -109,7 +109,7 @@ public class PartyCreationScene extends Scene {
 			personNameTextFields[i].setVisible(false);
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 			
-			personChangeProfessionButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_PROFESSION")), buttonWidth, regularButtonHeight);
+			personChangeProfessionButtons[i] = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_PROFESSION")));
 			personChangeProfessionButtons[i].setTopLeftRoundedCorner(true);
 			personChangeProfessionButtons[i].setTopRightRoundedCorner(true);
 			personChangeProfessionButtons[i].addListener(new ButtonListener());
@@ -128,7 +128,7 @@ public class PartyCreationScene extends Scene {
 			personMoneyLabels[i].setVisible(false);
 			mainLayer.add(personMoneyLabels[i], personProfessionLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
-			personChangeSkillButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_SKILL")), buttonWidth, regularButtonHeight);
+			personChangeSkillButtons[i] = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_SKILL")));
 			personChangeSkillButtons[i].setTopLeftRoundedCorner(true);
 			personChangeSkillButtons[i].setTopRightRoundedCorner(true);
 			personChangeSkillButtons[i].addListener(new ButtonListener());
@@ -152,7 +152,7 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		for (int i = 0; i < newPersonButtons.length; i++) {
-			personDeleteButtons[i] = new Button(container, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "DELETE_PERSON_LABEL")), regularButtonHeight, regularButtonHeight);
+			personDeleteButtons[i] = new Button(container, regularButtonHeight, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "DELETE_PERSON_LABEL")));
 			personDeleteButtons[i].setVisible(false);
 			personDeleteButtons[i].setButtonColor(Color.red);
 			personDeleteButtons[i].addListener(new ButtonListener());
@@ -186,7 +186,7 @@ public class PartyCreationScene extends Scene {
 		mainLayer.add(paceSegmentedControl, rationsSegmentedControl.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
 		
 		//Confirm Button
-		confirmButton = new Button(container, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PARTY_CONFIRM")), buttonWidth, regularButtonHeight);
+		confirmButton = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PARTY_CONFIRM")));
 		confirmButton.setRoundedCorners(true);
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);

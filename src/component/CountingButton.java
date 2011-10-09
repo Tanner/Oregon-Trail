@@ -27,7 +27,7 @@ public class CountingButton extends Button {
 	 * @param height Height of the button
 	 */
 	public CountingButton(GUIContext container, Label label, int width, int height) {
-		super(container, label, width, height);
+		super(container, width, height, label);
 		
 		count = 0;
 	}

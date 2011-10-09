@@ -44,7 +44,7 @@ public class ComponentTestScene extends Scene {
 		Label buttonLabel = new Label(container, fieldFont, Color.white, "Button");
 		mainLayer.add(buttonLabel, textField.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		
-		button = new Button(container, new Label(container, fieldFont, Color.white, "my button"), 300, 40);
+		button = new Button(container, 300, 40, new Label(container, fieldFont, Color.white, "my button"));
 		button.addListener(new ButtonListener());
 		mainLayer.add(button, buttonLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft);
 		

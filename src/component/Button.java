@@ -34,7 +34,7 @@ public class Button extends Component implements Disableable {
 	 * @param width Width of the button
 	 * @param height Height of the button
 	 */
-	public Button(GUIContext container, Label label, int width, int height) {
+	public Button(GUIContext container, int width, int height, Label label) {
 		super(container, width, height);
 		
 		this.label = label;
@@ -55,7 +55,7 @@ public class Button extends Component implements Disableable {
 	 * @param origin Position of the button
 	 */
 	public Button(GUIContext container, Label label) {
-		this(container, label, label.getWidth(), label.getHeight());
+		this(container, label.getWidth(), label.getHeight(), label);
 	}
 
 	@Override

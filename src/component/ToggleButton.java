@@ -14,7 +14,7 @@ public class ToggleButton extends Button {
 	 * @param height Height of the button
 	 */
 	public ToggleButton(GUIContext container, Label label, int width, int height) {
-		super(container, label, width, height);
+		super(container, width, height, label);
 	}
 	
 	/**

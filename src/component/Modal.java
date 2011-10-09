@@ -36,7 +36,7 @@ public class Modal extends Component {
 		
 		int buttonWidth = 200;
 		int buttonHeight = 40;
-		dismissButton = new Button(container, new Label(container, fieldFont, Color.white, dismissButtonText), buttonWidth, buttonHeight);
+		dismissButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, dismissButtonText));
 		dismissButton.setRoundedCorners(true);
 		dismissButton.addListener(new ButtonListener());
 		
@@ -65,11 +65,11 @@ public class Modal extends Component {
 		ButtonListener buttonListener = new ButtonListener();
 		int buttonWidth = 200;
 		int buttonHeight = 40;
-		resignButton = new Button(container, new Label(container, fieldFont, Color.white, submitButtonString), buttonWidth, buttonHeight);
+		resignButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, submitButtonString));
 		resignButton.setRoundedCorners(true);
 		resignButton.addListener(buttonListener);
 		
-		dismissButton = new Button(container, new Label(container, fieldFont, Color.white, cancelButtonString), buttonWidth, buttonHeight);
+		dismissButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, cancelButtonString));
 		dismissButton.setRoundedCorners(true);
 		dismissButton.addListener(buttonListener);		
 		
