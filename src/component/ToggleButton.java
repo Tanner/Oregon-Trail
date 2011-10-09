@@ -50,4 +50,20 @@ public class ToggleButton extends Button {
 			input.consumeEvent();
 		}
 	}
+	
+	/**
+	 * Return the button's active status.
+	 * @return If the button is active or not
+	 */
+	public boolean getActive() {
+		return active;
+	}
+	
+	/**
+	 * Change whether this button is active or not.
+	 * @param active New active state
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
