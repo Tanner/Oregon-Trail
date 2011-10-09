@@ -24,11 +24,8 @@ public abstract class Item {
 	 * @param status The item's status
 	 * @param weight The item's weight
 	 */
-	private Item(String name, String description, Condition status, double weight) {
-		this.name = name;
-		this.description = description;
-		this.status = status;
-		this.weight = weight;
+	public Item(String name, String description, Condition status, double weight) {
+		this(name, description, status, weight, 1);
 	}
 	
 	/**
@@ -40,7 +37,7 @@ public abstract class Item {
 	 * @param weight The item's weight
 	 * @param numberOf The number of items in the stack
 	 */
-	private Item(String name, String description, Condition status, double weight, int numberOf) {
+	public Item(String name, String description, Condition status, double weight, int numberOf) {
 		this.name = name;
 		this.description = description;
 		this.status = status;

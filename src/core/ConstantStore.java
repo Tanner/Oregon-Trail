@@ -65,6 +65,12 @@ public final class ConstantStore {
 		colorMap.put("INTERACTIVE_ACTIVE", Color.darkGray);
 		
 		COLORS = Collections.unmodifiableMap(colorMap);
+		
+		// Items
+		Map<String, String> itemMap = new HashMap<String, String>();
+		itemMap.put("WHEEL_NAME", "Wheel");
+		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
+		literalMap.put("ITEMS", itemMap);
 	}
 	
 	public static String get(String outer, String inner) {
