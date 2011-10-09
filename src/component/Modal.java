@@ -8,13 +8,10 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
-import scene.Scene;
-
 import core.FontManager;
 import core.GameDirector;
 
 public class Modal extends Component {
-	private static final int MARGIN = 50;
 	private static final int PADDING = 20;
 	
 	private ModalListener listener;
