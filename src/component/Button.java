@@ -29,7 +29,7 @@ public class Button extends Component implements Disableable {
 	private boolean beveled;
 	
 	/**
-	 * Constructor that takes in a width, a height, a {@code Sprite}, and a {@code Label}.
+	 * Constructs a {@code Button} with a width, a height, a {@code Sprite}, and a {@code Label}.
 	 * @param context The GUI context
 	 * @param width	Width of the button
 	 * @param height Height of the button
@@ -51,7 +51,7 @@ public class Button extends Component implements Disableable {
 	}
 	
 	/**
-	 * Constructor that takes in a width, a height, and a {@code Label}.
+	 * Constructs a {@code Button} with a width, a height, and a {@code Label}.
 	 * @param context The GUI context
 	 * @param width Width of the button
 	 * @param height Height of the button
@@ -72,7 +72,7 @@ public class Button extends Component implements Disableable {
 	}
 	
 	/**
-	 * Constructor that takes in a {@code Label}.
+	 * Constructs a {@code Button} with a {@code Label}.
 	 * @param context THe GUI context
 	 * @param label Label for the button
 	 */
