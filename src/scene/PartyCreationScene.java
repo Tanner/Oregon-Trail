@@ -305,13 +305,15 @@ public class PartyCreationScene extends Scene {
 	}//resignSkillModal
 	
 	@Override
-	public void resignModal(Modal modal, int[] segmentedControlResults) {
-		super.resignModal(modal, segmentedControlResults);
+	public void dismissModal(Modal modal) {
+		super.dismissModal(modal);
 		
 		if (modal == professionModal) {
+			int[] segmentedControlResults = modal.getSegmentedControl().getSelection();
 			resignProfessionModal(segmentedControlResults);
 		}//if modal == professionalModal
 		else if (modal == skillModal) {
+			int[] segmentedControlResults = modal.getSegmentedControl().getSelection();
 			resignSkillModal(segmentedControlResults);
 		}//if modal == skillModal
 	}//resignModal method

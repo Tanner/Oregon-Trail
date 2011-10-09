@@ -17,17 +17,17 @@ public class Modal extends Component {
 	private static final int MARGIN = 50;
 	private static final int PADDING = 20;
 	
-	private Scene scene;
+	private ModalListener listener;
 	private Panel panel;
 	private Label messageLabel;
 	private Button resignButton;
 	private Button dismissButton;
 	private SegmentedControl segmentedControl;
 	
-	public Modal(GUIContext container, Scene scene, String message, String dismissButtonText) {
+	public Modal(GUIContext container, ModalListener listener, String message, String dismissButtonText) {
 		super(container, container.getWidth(), container.getHeight());
 		
-		this.scene = scene;
+		this.listener = listener;
 		
 		int messageWidth = 700;
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);		
@@ -51,10 +51,10 @@ public class Modal extends Component {
 		add(panel, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
 	}
 	
-	public Modal(GUIContext container, Scene scene, String message, SegmentedControl segmentedControl, String submitButtonString, String cancelButtonString) {
+	public Modal(GUIContext container, ModalListener listener, String message, SegmentedControl segmentedControl, String submitButtonString, String cancelButtonString) {
 		super(container, container.getWidth(), container.getHeight());
 		
-		this.scene = scene;
+		this.listener = listener;
 		this.segmentedControl = segmentedControl;
 				
 		int messageWidth = 700;
@@ -86,6 +86,10 @@ public class Modal extends Component {
 		add(panel, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
 	}
 	
+	public SegmentedControl getSegmentedControl() {
+		return segmentedControl;
+	}
+	
 	public void render(GUIContext context, Graphics g) throws SlickException {		
 		super.render(context, g);
 	}
@@ -94,11 +98,7 @@ public class Modal extends Component {
 
 		@Override
 		public void componentActivated(AbstractComponent source) {
-			if (source == resignButton) {
-				scene.resignModal(Modal.this, segmentedControl.getSelection());
-			} else {
-				scene.dismissModal(Modal.this);
-			}
+			listener.dismissModal(Modal.this);
 		} 
 		
 	}
