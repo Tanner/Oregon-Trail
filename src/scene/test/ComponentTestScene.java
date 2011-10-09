@@ -54,7 +54,7 @@ public class ComponentTestScene extends Scene {
 		spinner = new Spinner(container, 300, 50, fieldFont, Color.white, false, "Hello","There","Encyclopedia");
 		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BottomLeft),Positionable.ReferencePoint.TopLeft, 0, PADDING);
 	
-		spinnerLabel = new Label(container, fieldFont, Color.white, "Label");
+		spinnerLabel = new Label(container, 300, fieldFont, Color.white, "Label");
 		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		Person.Skill[] arr = Person.Skill.values();
 		String[] strs = new String[arr.length - 2];
