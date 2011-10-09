@@ -95,8 +95,6 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		for (int i = 0; i < components.length; i++) {
 			add(components[i], location, ReferencePoint.TopLeft, xOffset, yOffset);
 			location.set(location.x, location.y + components[i].getHeight() + spacing);
-			
-			this.components.add(components[i]);
 		}
 	}
 	
@@ -113,8 +111,6 @@ public abstract class Component extends AbstractComponent implements Positionabl
 			if (components[i] != null) {
 				add(components[i], location, ReferencePoint.TopLeft, xOffset, yOffset);
 				location.set(location.x + components[i].getWidth() + spacing, location.y);
-				
-				this.components.add(components[i]);
 			}
 		}
 	}
@@ -262,10 +258,6 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		} else {
 			if (components != null) {
 				for (Component c : components) {
-					if (this instanceof SegmentedControl) {
-						System.out.println("X: " + (c.getX() + x - getX()));
-						System.out.println("Y: " + (c.getY() + y - getY()));
-					}
 					c.setLocation(c.getX() + (x - getX()), c.getY() + (y - getY()));
 				}
 			}
