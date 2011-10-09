@@ -8,10 +8,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
 
 /**
- * This class holds basic graphic utilities
- * 
- * @author 
- *
+ * This class holds basic graphic utilities.
  */
 
 public class Panel extends Component {

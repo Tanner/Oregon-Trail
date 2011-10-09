@@ -1,6 +1,7 @@
 package component;
 
 import org.newdawn.slick.*;
+
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
@@ -9,19 +10,13 @@ import core.GameDirector;
 import core.Logger;
 
 import java.util.*;
+
 /**
  * A component with multiple buttons.  Has two functionalities:many buttons,
  * where only one can be selected at a time, or 0 to some specified number
  * can be selected at a time.  The current button(s) selected stands is returned
  * to the user in the form of an int array, with the numbers corresponding
  * to the index of the String array passed into the constructor.
- * 
- * @author Jeremy
- * @version 10/04/2011
- */
-/**
- * @author Computer
- *
  */
 public class SegmentedControl extends Component {
 	
@@ -39,7 +34,7 @@ public class SegmentedControl extends Component {
 	private boolean[] selection;
 	private int singleSelection;
 	private boolean[] permanent;
-	private Button[] buttons;
+	private ToggleButton[] buttons;
 	
 	/**
 	 * Create a new SegmentedControl with a given font, color, width, height.
@@ -65,7 +60,7 @@ public class SegmentedControl extends Component {
 		this.labels = labels;
 		STATES = labels.length;
 		this.maxSelected = maxSelected;
-		buttons = new Button[STATES];
+		buttons = new ToggleButton[STATES];
 		selection = new boolean[STATES];
 		permanent = new boolean[STATES];
 		singleSelection = -1;
@@ -87,7 +82,9 @@ public class SegmentedControl extends Component {
 		
 		for (int i = 0; i < STATES; i++) {
 			Label current = new Label(context, font, color, labels[i]);
-			buttons[i] = new Button(context, colWidth, rowHeight, current);
+			
+			buttons[i] = new ToggleButton(context, colWidth, rowHeight, current);
+			buttons[i].setDisableAutoToggle(true);
 			buttons[i].addListener(new SegmentListener(i));
 		}
 		
@@ -101,10 +98,11 @@ public class SegmentedControl extends Component {
 	 */
 	public void updateButtons() {
 		for (int i = 0; i < STATES; i++) {
-			if (permanent[i] || selection[i] || i == singleSelection)
-				buttons[i].setButtonColor(Color.darkGray);
-			else
-				buttons[i].setButtonColor(Color.gray);
+			if (permanent[i] || selection[i] || i == singleSelection) {
+				buttons[i].setActive(true);
+			} else {
+				buttons[i].setActive(false);
+			}
 		}
 	}
 	
@@ -119,8 +117,7 @@ public class SegmentedControl extends Component {
 	public void setSelection(int[] selection) {
 		if ( selection.length == 1) {
 			singleSelection = selection[0];
-		}
-		else {
+		} else {
 			for (int i : selection) {
 				if (this.permanent[i] != true) {
 					this.selection[i] = true;
@@ -159,12 +156,12 @@ public class SegmentedControl extends Component {
 	public void clear() {
 		Arrays.fill(this.selection, false);
 		Arrays.fill(this.permanent, false);
-		if ( maxSelected == 1) {
+		if (maxSelected == 1) {
 			singleSelection = 0;
-			buttons[singleSelection].setButtonColor(Color.darkGray);
-		}
-		else
+			buttons[singleSelection].setActive(true);
+		} else {
 			singleSelection = -1;
+		}
 	}
 	
 	/**

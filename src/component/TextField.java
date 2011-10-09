@@ -14,8 +14,6 @@ import core.Logger;
 
 /**
  * Textfield Component that lets the user enter in text
- * 
- * @author Tanner Smith
  */
 public class TextField extends Component implements Disableable {
 	private static final int PADDING = 10;
@@ -41,7 +39,7 @@ public class TextField extends Component implements Disableable {
 		
 		fieldColor = Color.gray;
 		fieldFocusColor = Color.darkGray;
-		label = new Label(container, width, font, Color.white);
+		label = new Label(container, width - PADDING * 2, font, Color.white);
 		add(label, getPosition(Positionable.ReferencePoint.CenterLeft), Positionable.ReferencePoint.CenterLeft, PADDING, 0);
 	}
 	
@@ -75,7 +73,7 @@ public class TextField extends Component implements Disableable {
 				Logger.log("Deleting last character", Logger.Level.DEBUG);
 				
 				label.setText(label.getText().substring(0, label.getText().length() - 1));
-			} else if (isAcceptedCharacter(c)) {
+			} else if (isAcceptedCharacter(c) && label.getFontWidth() < label.getWidth() - 1) {
 				Logger.log("Key pressed is accepted", Logger.Level.DEBUG);
 				
 				label.setText(label.getText() + c);
@@ -128,7 +126,7 @@ public class TextField extends Component implements Disableable {
 	 * @return Whether the text field is empty or not
 	 */
 	public boolean isEmpty() {
-		if (label.getText().length() <= 0 || label.getText().equals(placeholderText)) {
+		if (label.getText().trim().length() <= 0 || label.getText().equals(placeholderText)) {
 			return true;
 		}
 		
@@ -198,7 +196,7 @@ public class TextField extends Component implements Disableable {
 	 * @return Text in the text field
 	 */
 	public String getText() {
-		return label.getText();
+		return label.getText().trim();
 	}
 	
 	/**
