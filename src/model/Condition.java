@@ -52,7 +52,7 @@ public class Condition {
 	 * @return Ratio of the current value to the maximum value
 	 */
 	public double getPercentage() {
-		return ((double) current) / max;
+		return (double)(current - min) / (double)(max - min);
 	}
 	
 	/**

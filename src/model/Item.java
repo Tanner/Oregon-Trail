@@ -8,7 +8,7 @@ import model.Condition;
  * An item contains it's own condition as well as a name, description, and weight.  The only modifiable aspect
  * is weight.
  */
-public abstract class Item {
+public abstract class Item implements Conditioned{
 
 	private String name;
 	private String description;
@@ -67,6 +67,11 @@ public abstract class Item {
 	 */
 	public int getStatus() {
 		return status.getCurrent();
+	}
+	
+	@Override
+	public double getConditionPercentage() {
+		return status.getPercentage();
 	}
 
 	/**

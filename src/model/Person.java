@@ -17,8 +17,9 @@ import core.Logger;
  * 
  * @author George Johnston
  */
-public class Person {
+public class Person implements Conditioned{
 	private Condition skillPoints;
+	private Condition health;
 	private boolean isMale;
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
 	private String name;
@@ -36,6 +37,7 @@ public class Person {
 	public Person(String name){
 		this.name = name;
 		this.skillPoints = new Condition(0, baseSkillPoints, 0);
+		this.health = new Condition(100);
 		Logger.log(name + " was created", Logger.Level.INFO);
 		this.inventory = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);
 	}
@@ -343,5 +345,10 @@ public class Person {
 	 */
 	public boolean removeFromInventory(Item item) {
 		return inventory.removeItem(item);
+	}
+	
+	@Override
+	public double getConditionPercentage() {
+		return health.getPercentage();
 	}
 }
