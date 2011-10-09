@@ -89,7 +89,7 @@ public class ComponentTestScene extends Scene {
 		ToggleButton tb = new ToggleButton(container, new Label(container, fieldFont, Color.white, "Toggle Button"), 200, 40);
 		mainLayer.add(tb, mainLayer.getPosition(Positionable.ReferencePoint.BottomRight), Positionable.ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
-		CountingButton cb = new CountingButton(container, new Label(container, fieldFont, Color.white, "Counting Button"), 200, 40, true);
+		CountingButton cb = new CountingButton(container, new Label(container, fieldFont, Color.white, "Counting Button"), 200, 40);
 		mainLayer.add(cb, tb.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.BottomRight, 0, -PADDING);
 	}
 

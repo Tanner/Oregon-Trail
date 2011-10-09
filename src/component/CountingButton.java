@@ -16,7 +16,6 @@ import core.GameDirector;
  */
 public class CountingButton extends Button {
 	private int count;
-	private boolean countUp;
 	
 	/**
 	 * Creates a counting button.
@@ -25,10 +24,9 @@ public class CountingButton extends Button {
 	 * @param width Width of the button
 	 * @param height Height of the button
 	 */
-	public CountingButton(GUIContext container, Label label, int width, int height, boolean countUp) {
+	public CountingButton(GUIContext container, Label label, int width, int height) {
 		super(container, label, width, height);
 		
-		this.countUp = countUp;
 		count = 0;
 	}
 
@@ -38,10 +36,9 @@ public class CountingButton extends Button {
 	 * @param label Label for the button
 	 * @param origin Position of the button
 	 */
-	public CountingButton(GUIContext container, Label label, boolean countUp) {
+	public CountingButton(GUIContext container, Label label) {
 		super(container, label);
 		
-		this.countUp = countUp;
 		count = 0;
 	}
 	
@@ -58,17 +55,30 @@ public class CountingButton extends Button {
 	}
 	
 	@Override
+	public void mousePressed(int button, int mx, int my) {
+		if (!visible || !isAcceptingInput()) {
+			return;
+		}
+		
+		if (over && !disabled) {
+			active = true;
+			input.consumeEvent();
+		}
+	}
+	
+	@Override
 	public void mouseReleased(int button, int mx, int my) {
 		if (!visible) {
 			return;
 		}
 		
- 		if (button == 0 && over && !disabled && active) {
+ 		if (over && !disabled && active) {
 			notifyListeners();
 			input.consumeEvent();
 			active = false;
 			
-			if (countUp) {
+			
+			if (button == 0) {
 				count++;
 			} else {
 				count--;
