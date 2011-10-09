@@ -11,9 +11,8 @@ import component.sprite.Sprite;
 import core.ConstantStore;
 
 /**
- * A component that is a Button.
- * 
- * @author Tanner Smith
+ * {@code Button} inherits from {@code Component} to extend features that provides necessary
+ * functionality to behave like a button.
  */
 public class Button extends Component implements Disableable {
 	private static final int CORNER_RADIUS = 2;
@@ -29,8 +28,16 @@ public class Button extends Component implements Disableable {
 	private int bottomRightCornerRadius;
 	private boolean beveled;
 	
-	public Button(GUIContext container, int width, int height, Sprite sprite, Label label) {
-		super(container, width, height);
+	/**
+	 * Constructor that takes in a width, a height, a {@code Sprite}, and a {@code Label}.
+	 * @param context The GUI context
+	 * @param width	Width of the button
+	 * @param height Height of the button
+	 * @param sprite Sprite for the button
+	 * @param label Label for the button
+	 */
+	public Button(GUIContext context, int width, int height, Sprite sprite, Label label) {
+		super(context, width, height);
 		
 		this.label = label;
 		this.add(label, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
@@ -44,14 +51,14 @@ public class Button extends Component implements Disableable {
 	}
 	
 	/**
-	 * Creates a button.
-	 * @param container Container for the  button
-	 * @param label Label for the button
+	 * Constructor that takes in a width, a height, and a {@code Label}.
+	 * @param context The GUI context
 	 * @param width Width of the button
 	 * @param height Height of the button
+	 * @param label Label for the button
 	 */
-	public Button(GUIContext container, int width, int height, Label label) {
-		super(container, width, height);
+	public Button(GUIContext context, int width, int height, Label label) {
+		super(context, width, height);
 		
 		this.label = label;
 		this.add(label, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
@@ -65,10 +72,9 @@ public class Button extends Component implements Disableable {
 	}
 	
 	/**
-	 * Creates a button.
-	 * @param container Container for the button
+	 * Constructor that takes in a {@code Label}.
+	 * @param context THe GUI context
 	 * @param label Label for the button
-	 * @param origin Position of the button
 	 */
 	public Button(GUIContext container, Label label) {
 		this(container, label.getWidth(), label.getHeight(), label);
@@ -194,27 +200,34 @@ public class Button extends Component implements Disableable {
 		buttonColor = color;
 	}
 	
+	/**
+	 * Sets the color of the button's background for the active state.
+	 * @param color New color for the button in the active state
+	 */
 	public void setButtonActiveColor(Color color) {
 		buttonActiveColor = color;
 	}
 	
+	/**
+	 * Sets the font of the label.
+	 * @param font The new font for the label
+	 */
 	public void setFont(Font font) {
 		label.setFont(font);
 	}
 	
+	/**
+	 * Sets the color of the label.
+	 * @param color The new color for the label
+	 */
 	public void setLabelColor(Color color) {
 		label.setColor(color);
 	}
 	
-	public void setDisabled(boolean disabled) {
-		this.disabled = disabled;
-	}
-	
-	@Override
-	public boolean isDisabled() {
-		return disabled;
-	}
-	
+	/**
+	 * Enable/disable rounded corners.
+	 * @param rounded Enables rounded corners if {@code true}, disables if {@code false}
+	 */
 	public void setRoundedCorners(boolean rounded) {
 		setTopLeftRoundedCorner(rounded);
 		setBottomLeftRoundedCorner(rounded);
@@ -222,6 +235,10 @@ public class Button extends Component implements Disableable {
 		setBottomRightRoundedCorner(rounded);
 	}
 	
+	/**
+	 * Enable/disable top-left rounded corner.
+	 * @param rounded Enables top-left rounded corner if {@code true}, disables if {@code false}
+	 */
 	public void setTopLeftRoundedCorner(boolean rounded) {
 		if (rounded) {
 			this.topLeftCornerRadius = CORNER_RADIUS;
@@ -230,6 +247,10 @@ public class Button extends Component implements Disableable {
 		}
 	}
 	
+	/**
+	 * Enable/disable bottom-left rounded corner.
+	 * @param rounded Enables bottom-left rounded corner if {@code true}, disables if {@code false}
+	 */
 	public void setBottomLeftRoundedCorner(boolean rounded) {
 		if (rounded) {
 			this.bottomLeftCornerRadius = CORNER_RADIUS;
@@ -238,6 +259,10 @@ public class Button extends Component implements Disableable {
 		}
 	}
 	
+	/**
+	 * Enable/disable top-right rounded corner.
+	 * @param rounded Enables top-right rounded corner if {@code true}, disables if {@code false}
+	 */
 	public void setTopRightRoundedCorner(boolean rounded) {
 		if (rounded) {
 			this.topRightCornerRadius = CORNER_RADIUS;
@@ -246,6 +271,10 @@ public class Button extends Component implements Disableable {
 		}
 	}
 	
+	/**
+	 * Enable/disable bottom-right rounded corner.
+	 * @param rounded Enables bottom-right rounded corner if {@code true}, disables if {@code false}
+	 */
 	public void setBottomRightRoundedCorner(boolean rounded) {
 		if (rounded) {
 			this.bottomRightCornerRadius = CORNER_RADIUS;
@@ -254,7 +283,21 @@ public class Button extends Component implements Disableable {
 		}
 	}
 	
+	/**
+	 * Enable/disable a beveled appearance.
+	 * @param beveled Enables beveled appearance if {@code true}, disables if {@code false}
+	 */
 	public void setBeveled(boolean beveled) {
 		this.beveled = beveled;
+	}
+	
+	@Override
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+	
+	@Override
+	public boolean isDisabled() {
+		return disabled;
 	}
 }
