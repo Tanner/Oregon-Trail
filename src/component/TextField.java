@@ -39,7 +39,7 @@ public class TextField extends Component implements Disableable {
 		
 		fieldColor = Color.gray;
 		fieldFocusColor = Color.darkGray;
-		label = new Label(container, width, font, Color.white);
+		label = new Label(container, width - PADDING * 2, font, Color.white);
 		add(label, getPosition(Positionable.ReferencePoint.CenterLeft), Positionable.ReferencePoint.CenterLeft, PADDING, 0);
 	}
 	
