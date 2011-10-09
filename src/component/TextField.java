@@ -14,8 +14,6 @@ import core.Logger;
 
 /**
  * Textfield Component that lets the user enter in text
- * 
- * @author Tanner Smith
  */
 public class TextField extends Component implements Disableable {
 	private static final int PADDING = 10;

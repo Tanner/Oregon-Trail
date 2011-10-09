@@ -11,8 +11,6 @@ import component.Label.Alignment;
  * Scrolls up or down through a list of options that each represent
  * a specific ordinal value.  Does not allow the user to go below/above
  * the 0/MAX_STATE values.
- * 
- * @author Jeremy Grebner
  */
 public class Spinner extends Component {
 	private final double PADDING = 1.25;
