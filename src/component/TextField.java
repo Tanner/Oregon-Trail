@@ -17,7 +17,7 @@ import core.Logger;
  * 
  * @author Tanner Smith
  */
-public class TextField extends Component {
+public class TextField extends Component implements Disableable {
 	private static final int PADDING = 10;
 
 	private Label label;
@@ -208,5 +208,15 @@ public class TextField extends Component {
 	 */
 	public void setText(String text) {
 		label.setText(text);
+	}
+
+	@Override
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	@Override
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 }

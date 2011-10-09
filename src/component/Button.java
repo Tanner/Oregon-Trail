@@ -13,7 +13,7 @@ import core.ConstantStore;
  * 
  * @author Tanner Smith
  */
-public class Button extends Component {
+public class Button extends Component implements Disableable {
 	private static final int CORNER_RADIUS = 2;
 	
 	private Label label;
@@ -195,6 +195,11 @@ public class Button extends Component {
 	
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
+	}
+	
+	@Override
+	public boolean isDisabled() {
+		return disabled;
 	}
 	
 	public void setRoundedCorners(boolean rounded) {
