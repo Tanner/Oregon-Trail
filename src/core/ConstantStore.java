@@ -53,6 +53,25 @@ public final class ConstantStore {
 		partyInventoryScene.put("TRANSFER", "Transfer");
 		literalMap.put("PARTY_INVENTORY_SCENE", partyInventoryScene);
 		
+		// Items
+		// Items
+		Map<String, String> itemMap = new HashMap<String, String>();
+		itemMap.put("WHEEL_NAME", "Wheel");
+		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
+		itemMap.put("SONIC_SCREWDRIVER_NAME", "Sonic");
+		itemMap.put("SONIC_SCREWDRIVER_DESCRIPTION", "Weeeweeeveeeeweee");
+		itemMap.put("APPLE_NAME", "Apple");
+		itemMap.put("APPLE_DESCRIPTION", "Its an Apple.");
+		itemMap.put("BREAD_NAME", "Bread");
+		itemMap.put("BREAD_DESCRIPTION", "Its the finest bread ever.");
+		itemMap.put("GUN_NAME", "Gun");
+		itemMap.put("GUN_DESCRIPTION", "Bang! Bang bang bang!");
+		itemMap.put("BULLET_NAME", "Bullet");
+		itemMap.put("BULLET_DESCRIPTION", "For a gun.");
+		itemMap.put("MEAT_NAME", "Meat");
+		itemMap.put("MEAT_DESCRIPTION", "Food noms - ohm nom nom.");
+		literalMap.put("ITEMS", itemMap);
+		
 		// General
 		Map<String, String> general = new HashMap<String, String>();
 		general.put("MONEY_SYMBOL", "$");
@@ -75,24 +94,6 @@ public final class ConstantStore {
 		colorMap.put("INTERACTIVE_BORDER_FOCUS_LIGHT", Color.white.darker(0.5f));
 
 		COLORS = Collections.unmodifiableMap(colorMap);
-		
-		// Items
-		Map<String, String> itemMap = new HashMap<String, String>();
-		itemMap.put("WHEEL_NAME", "Wheel");
-		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
-		itemMap.put("SONIC_SCREWDRIVER_NAME", "Sonic");
-		itemMap.put("SONIC_SCREWDRIVER_DESCRIPTION", "Weeeweeeveeeeweee");
-		itemMap.put("APPLE_NAME", "Apple");
-		itemMap.put("APPLE_DESCRIPTION", "Its an Apple.");
-		itemMap.put("BREAD_NAME", "Bread");
-		itemMap.put("BREAD_DESCRIPTION", "Its the finest bread ever.");
-		itemMap.put("GUN_NAME", "Gun");
-		itemMap.put("GUN_DESCRIPTION", "Bang! Bang bang bang!");
-		itemMap.put("BULLET_NAME", "Bullet");
-		itemMap.put("BULLET_DESCRIPTION", "For a gun.");
-		itemMap.put("MEAT_NAME", "Meat");
-		itemMap.put("MEAT_DESCRIPTION", "Food noms - ohm nom nom.");
-		literalMap.put("ITEMS", itemMap);
 	}
 	
 	public static String get(String outer, String inner) {
