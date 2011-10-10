@@ -5,7 +5,7 @@ public enum SceneID {
 	MainMenu,
 	PartyCreation,
 	Store,
-	PartyInventoryScene,
+	PartyInventory,
 	Town,
 	SceneSelector,
 	ComponentTest,
