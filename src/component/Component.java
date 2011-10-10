@@ -19,9 +19,18 @@ import core.GameDirector;
  * width, and height.
  */
 public abstract class Component extends AbstractComponent implements Positionable {
+	private static final int CORNER_RADIUS = 2;
+	
 	protected Vector2f origin;
 	private int width;
 	private int height;
+	
+	private Color backgroundColor;
+	private int topLeftCornerRadius;
+	private int bottomLeftCornerRadius;
+	private int topRightCornerRadius;
+	private int bottomRightCornerRadius;
+	private boolean beveled;
 	
 	protected List<Component> components;
 	private boolean mouseOver;
@@ -44,6 +53,67 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
+		if (backgroundColor != null) {
+			g.setColor(backgroundColor);
+			if (!beveled) {
+				g.fillRect(getX(), getY(), getWidth(), getHeight());
+			} else {
+				Color brightColor = backgroundColor.brighter(0.1f);
+				Color darkColor = backgroundColor.darker(0.2f);		
+	
+				g.setColor(backgroundColor);
+				// inner rect
+				g.fillRect(getX() + CORNER_RADIUS,
+						getY() + CORNER_RADIUS,
+						getWidth() - CORNER_RADIUS * 2,
+						getHeight() - CORNER_RADIUS * 2);
+				
+				// top bar
+				if (beveled) {
+					g.setColor(brightColor);
+				} else {
+					g.setColor(backgroundColor);
+				}
+				g.fillRect(getX() + topLeftCornerRadius,
+						getY(),
+						getWidth() - topLeftCornerRadius - topRightCornerRadius,
+						CORNER_RADIUS);
+						
+				// bottom bar
+				if (beveled) {
+					g.setColor(darkColor);
+				} else {
+					g.setColor(backgroundColor);
+				}
+				g.fillRect(getX() + bottomLeftCornerRadius,
+						getY() + getHeight() - CORNER_RADIUS,
+						getWidth() - bottomLeftCornerRadius - bottomRightCornerRadius,
+						CORNER_RADIUS);
+						
+				// left bar
+				if (beveled) {
+					g.setColor(brightColor);
+				} else {
+					g.setColor(backgroundColor);
+				}
+				g.fillRect(getX(),
+						getY() + topLeftCornerRadius,
+						CORNER_RADIUS,
+						getHeight() - topLeftCornerRadius - bottomLeftCornerRadius);
+				
+				// right bar
+				if (beveled) {
+					g.setColor(darkColor);
+				} else {
+					g.setColor(backgroundColor);
+				}
+				g.fillRect(getX() + getWidth() - CORNER_RADIUS,
+						getY() + topRightCornerRadius,
+						CORNER_RADIUS,
+						getHeight() - topRightCornerRadius - bottomRightCornerRadius);
+			}
+		}
+		
 		if (GameDirector.DEBUG_MODE) {
 			g.setColor(Color.red);
 			g.drawRect(getX(), getY(), getWidth(), getHeight());
@@ -228,6 +298,81 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	/**
+	 * Set the background color.
+	 * @param color The new background color
+	 */
+	public void setBackgroundColor(Color color) {
+		this.backgroundColor = color;
+	}
+	
+	/**
+	 * Enable/disable rounded corners.
+	 * @param rounded Enables rounded corners if {@code true}, disables if {@code false}
+	 */
+	public void setRoundedCorners(boolean rounded) {
+		setTopLeftRoundedCorner(rounded);
+		setBottomLeftRoundedCorner(rounded);
+		setTopRightRoundedCorner(rounded);
+		setBottomRightRoundedCorner(rounded);
+	}
+	
+	/**
+	 * Enable/disable top-left rounded corner.
+	 * @param rounded Enables top-left rounded corner if {@code true}, disables if {@code false}
+	 */
+	public void setTopLeftRoundedCorner(boolean rounded) {
+		if (rounded) {
+			this.topLeftCornerRadius = CORNER_RADIUS;
+		} else {
+			this.topLeftCornerRadius = 0;
+		}
+	}
+	
+	/**
+	 * Enable/disable bottom-left rounded corner.
+	 * @param rounded Enables bottom-left rounded corner if {@code true}, disables if {@code false}
+	 */
+	public void setBottomLeftRoundedCorner(boolean rounded) {
+		if (rounded) {
+			this.bottomLeftCornerRadius = CORNER_RADIUS;
+		} else {
+			this.bottomLeftCornerRadius = 0;
+		}
+	}
+	
+	/**
+	 * Enable/disable top-right rounded corner.
+	 * @param rounded Enables top-right rounded corner if {@code true}, disables if {@code false}
+	 */
+	public void setTopRightRoundedCorner(boolean rounded) {
+		if (rounded) {
+			this.topRightCornerRadius = CORNER_RADIUS;
+		} else {
+			this.topRightCornerRadius = 0;
+		}
+	}
+	
+	/**
+	 * Enable/disable bottom-right rounded corner.
+	 * @param rounded Enables bottom-right rounded corner if {@code true}, disables if {@code false}
+	 */
+	public void setBottomRightRoundedCorner(boolean rounded) {
+		if (rounded) {
+			this.bottomRightCornerRadius = CORNER_RADIUS;
+		} else {
+			this.bottomRightCornerRadius = 0;
+		}
+	}
+	
+	/**
+	 * Enable/disable a beveled appearance.
+	 * @param beveled Enables beveled appearance if {@code true}, disables if {@code false}
+	 */
+	public void setBeveled(boolean beveled) {
+		this.beveled = beveled;
+	}
+	
+	/**
 	 * Return this area with origin, width, and height.
 	 * @return This area's origin, width, and height
 	 */
@@ -244,27 +389,11 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	/**
-	 * Sets the width.
-	 * @param width The new width
-	 */
-	private final void setWidth(int width) {
-		this.width = width;
-	}
-	
-	/**
 	 * Return the height.
 	 * @param height the New
 	 */
 	public final int getHeight() {
 		return height;
-	}
-	
-	/**
-	 * Set the height.
-	 * @param height The new height
-	 */
-	private final void setHeight(int height) {
-		this.height = height;
 	}
 	
 	@Override

@@ -21,7 +21,6 @@ public class Spinner extends Component {
 	private Label label;
 	private int state;
 	
-	
 	private boolean treatAsNumbers;
 	
 	private Button upButton, downButton, labelButton;
