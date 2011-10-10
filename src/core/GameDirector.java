@@ -12,6 +12,8 @@ import scene.test.*;
 import model.*;
 
 public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
+	public static final boolean DEBUG_MODE = false;
+	
 	private static GameDirector sharedDirector;
 	
 	private FontManager fontManager;
