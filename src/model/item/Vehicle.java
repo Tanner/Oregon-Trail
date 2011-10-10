@@ -43,6 +43,14 @@ public abstract class Vehicle extends Item{
 	}
 	
 	/**
+	 * Returns the inventory of the vehicle
+	 * @return The inventory of the vehicle
+	 */
+	public Inventory getInventory() {
+		return cargo;
+	}
+	
+	/**
 	 * Adds the specified item to the inventory if weight and size allows.
 	 * @param item The item to be added.
 	 * @return True if the method succeeded, false if the add isn't possible.
