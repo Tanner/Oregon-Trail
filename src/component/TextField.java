@@ -13,7 +13,8 @@ import org.newdawn.slick.gui.GUIContext;
 import core.Logger;
 
 /**
- * Textfield Component that lets the user enter in text
+ * {@code Textfield} inherits from {@code Component} to extend features
+ * that let the user enter in text.
  */
 public class TextField extends Component implements Disableable {
 	private static final int PADDING = 10;
@@ -28,7 +29,7 @@ public class TextField extends Component implements Disableable {
 	private AcceptedCharacters acceptedCharacters = AcceptedCharacters.LETTERS;
 		
 	/**
-	 * Constructs a new TextField
+	 * Constructs a {@code TextField} with a font, width, and height.
 	 * @param container Container which holds the text field
 	 * @param font Font for the text
 	 * @param width Width of the text field
@@ -99,7 +100,7 @@ public class TextField extends Component implements Disableable {
 	}
 	
 	/**
-	 * Set the placeholder text - text when no user input has been given.
+	 * Set the placeholder text (text when no user input has been given).
 	 * @param text Placeholder text
 	 */
 	public void setPlaceholderText(String text) {
