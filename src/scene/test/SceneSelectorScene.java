@@ -175,7 +175,9 @@ public class SceneSelectorScene extends Scene {
 		
 		Vehicle vehicle = new Wagon();
 		for (int i = 0; i < vehicle.getInventory().getMaxSize(); i++) {
-			vehicle.addToInventory(new SonicScrewdriver(1));
+			Item sonic = new SonicScrewdriver(1);
+			sonic.decreaseStatus(random.nextInt(100));
+			vehicle.addToInventory(sonic);
 		}
 		
 		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];
