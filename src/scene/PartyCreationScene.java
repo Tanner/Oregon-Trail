@@ -236,14 +236,9 @@ public class PartyCreationScene extends Scene {
 	private void hidePersonColumn(int col) {
 		personDeleteButtons[col].setVisible(false);
 		personNameTextFields[col].setVisible(false);
-		personChangeProfessionButtons[col].setVisible(false);
-		personProfessionLabels[col].setVisible(false);
+		personProfessionPanel[col].setVisible(false);
 		personMoneyLabels[col].setVisible(false);
-		personChangeSkillButtons[col].setVisible(false);
-		
-		for (int j = 0; j < personSkillLabels[col].length; j++) {
-			personSkillLabels[col][j].setVisible(false);
-		}
+		personSkillPanel[col].setVisible(false);
 		
 		if (col > 0) {
 			personDeleteButtons[col - 1].setVisible(true);
