@@ -95,6 +95,7 @@ public class PartyInventoryScene extends Scene {
 				
 				CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, item.getName()));
 				button.setCountUpOnLeftClick(false);
+				button.setMax(item.getNumberOf());
 				button.setCount(item.getNumberOf());
 				
 				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item.getStatus());
