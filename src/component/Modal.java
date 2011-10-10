@@ -7,6 +7,7 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
+import org.newdawn.slick.Input;
 
 import core.FontManager;
 import core.GameDirector;
@@ -116,6 +117,13 @@ public class Modal extends Component {
 		super.render(context, g);
 	}
 	
+	@Override
+	public void keyReleased(int key, char c) {
+		if (key == Input.KEY_ENTER) {
+			listener.dismissModal(Modal.this);
+		}
+	}
+	
 	/**
 	 * Returns the segmented control.
 	 * @return The segmented control
@@ -128,7 +136,6 @@ public class Modal extends Component {
 	 * Listener for the buttons of {@code Modal}.
 	 */
 	private class ButtonListener implements ComponentListener {
-
 		@Override
 		public void componentActivated(AbstractComponent source) {
 			listener.dismissModal(Modal.this);
