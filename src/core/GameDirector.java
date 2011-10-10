@@ -78,7 +78,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		case Store:
 			return new StoreScene();
 		case PartyInventory:
-			return new PartyInventoryScene();
+			return new PartyInventoryScene(game.getPlayer().getParty());
 		case SceneSelector:
 			return new SceneSelectorScene(game.getPlayer());
 		case ComponentTest:
@@ -119,14 +119,14 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 			// Last scene was Store Scene
 			if (id == SceneID.PartyInventory) {
 				// Requested Party Inventory Scene
-				newScene = new PartyInventoryScene();	
+				newScene = new PartyInventoryScene(game.getPlayer().getParty());
 			}
 		} else if (lastScene instanceof SceneSelectorScene) {
 			// Last scene was Scene Selector Scene
 			newScene =  sceneForSceneID(id);
 		} else if (id == SceneID.PartyInventory) {
 			// Requested Party Inventory Scene
-			newScene = new PartyInventoryScene();
+			newScene = new PartyInventoryScene(game.getPlayer().getParty());
 		}
 		
 		if (newScene != null) {

@@ -27,6 +27,16 @@ public class Panel extends Component {
 	}
 	
 	/**
+	 * Constructs a {@code Panel} with a width and height.
+	 * @param context The GUI context
+	 * @param width The width
+	 * @param height The height
+	 */
+	public Panel(GUIContext context, int width, int height) {
+		super(context, width, height);
+	}
+	
+	/**
 	 * Constructs a {@code Panel} with a and background color.
 	 * @param context The GUI context
 	 * @param backgroundColor A background color
