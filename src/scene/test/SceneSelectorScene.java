@@ -44,18 +44,27 @@ public class SceneSelectorScene extends Scene {
 		buttons = new ArrayList<Button>();
 		
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		
 		Label mainMenuLabel = new Label(container, fieldFont, Color.white, "Main Menu");
 		Button mainMenuButton = new Button(container, mainMenuLabel);
 		buttons.add(mainMenuButton);
+		
 		Label partyCreationLabel = new Label(container, fieldFont, Color.white, "Party Creation");
 		Button partyCreationButton = new Button(container, partyCreationLabel);
 		buttons.add(partyCreationButton);
+		
 		Label townLabel = new Label(container, fieldFont, Color.white, "Town");
 		Button townButton = new Button(container, townLabel);
 		buttons.add(townButton);
+		
 		Label storeLabel = new Label(container, fieldFont, Color.white, "Store");
 		Button storeButton = new Button(container, storeLabel);
 		buttons.add(storeButton);
+		
+		Label partyInventorySceneLabel = new Label(container, fieldFont, Color.white, "Party Inventory Scene");
+		Button partyInventorySceneButton = new Button(container, partyInventorySceneLabel);
+		buttons.add(partyInventorySceneButton);
+		
 		Label componentsLabel = new Label(container, fieldFont, Color.white, "Components");
 		Button componentsButton = new Button(container, componentsLabel);
 		buttons.add(componentsButton);
@@ -73,7 +82,7 @@ public class SceneSelectorScene extends Scene {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-
+		return;
 	}
 
 	@Override
@@ -117,6 +126,8 @@ public class SceneSelectorScene extends Scene {
 			} else if (component == buttons.get(3)) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.Store);
 			} else if (component == buttons.get(4)) {
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventoryScene);
+			} else if (component == buttons.get(5)) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTest);
 			}
 		}
