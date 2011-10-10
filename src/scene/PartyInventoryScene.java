@@ -13,6 +13,8 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.gui.AbstractComponent;
+import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Button;
@@ -23,6 +25,7 @@ import component.Panel;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
 
+import core.ConstantStore;
 import core.FontManager;
 import core.GameDirector;
 
@@ -37,6 +40,8 @@ public class PartyInventoryScene extends Scene {
 	private static final int CONDITION_BAR_PADDING = 4;
 	
 	private Party party;
+	
+	private Button closeButton;
 	
 	public PartyInventoryScene(Party party) {
 		this.party = party;
@@ -107,6 +112,10 @@ public class PartyInventoryScene extends Scene {
 		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1);
 		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
+		closeButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CLOSE")));
+		closeButton.addListener(new ButtonListener());
+		mainLayer.add(closeButton, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
+		
 		backgroundLayer.add(new Panel(container, new Color(0x3b2d59)));
 	}
 	
@@ -118,5 +127,14 @@ public class PartyInventoryScene extends Scene {
 	@Override
 	public int getID() {
 		return ID.ordinal();
+	}
+	
+	private class ButtonListener implements ComponentListener {
+		@Override
+		public void componentActivated(AbstractComponent component) {
+			if (component == closeButton) {
+				GameDirector.sharedSceneDelegate().sceneDidEnd(PartyInventoryScene.this);
+			}
+		}
 	}
 }

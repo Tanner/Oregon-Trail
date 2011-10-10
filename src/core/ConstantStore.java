@@ -54,6 +54,7 @@ public final class ConstantStore {
 		general.put("CONFIRM", "Confirm");
 		general.put("OK", "Ok");
 		general.put("CANCEL", "Cancel");
+		general.put("CLOSE", "Close");
 		general.put("PROFESSION", "Profession");
 		literalMap.put("GENERAL", general);
 
