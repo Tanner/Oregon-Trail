@@ -49,7 +49,7 @@ public class PartyInventoryScene extends Scene {
 		
 		ArrayList<Panel> personPanels = new ArrayList<Panel>();
 		for (Person person : members) {
-			List<Item> inventory = person.getInventory().getItems();
+			List<Item> inventory = person.getInventoryAsList();
 			
 			int width = ((ITEM_BUTTON_WIDTH + PADDING) * inventory.size()) + fieldFont.getWidth(person.getName());
 			Panel panel = new Panel(container, width, ITEM_BUTTON_HEIGHT + ITEM_CONDITION_BAR_HEIGHT);
