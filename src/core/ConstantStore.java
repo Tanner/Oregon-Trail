@@ -48,6 +48,11 @@ public final class ConstantStore {
 		partyCreationScene.put("ERR_DUP_NAME", "Error - A person already has this name. Please choose another.");
 		literalMap.put("PARTY_CREATION_SCENE", partyCreationScene);
 		
+		// Party Inventory Scene
+		Map<String, String> partyInventoryScene = new HashMap<String, String>();
+		partyInventoryScene.put("TRANSFER", "Transfer");
+		literalMap.put("PARTY_INVENTORY_SCENE", partyInventoryScene);
+		
 		// General
 		Map<String, String> general = new HashMap<String, String>();
 		general.put("MONEY_SYMBOL", "$");

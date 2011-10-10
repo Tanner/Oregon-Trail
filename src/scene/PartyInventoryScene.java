@@ -44,7 +44,7 @@ public class PartyInventoryScene extends Scene {
 	
 	private Party party;
 	
-	private Button closeButton;
+	private Button closeButton, transferButton;
 	
 	public PartyInventoryScene(Party party) {
 		this.party = party;
@@ -152,6 +152,11 @@ public class PartyInventoryScene extends Scene {
 		closeButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CLOSE")));
 		closeButton.addListener(new ButtonListener());
 		mainLayer.add(closeButton, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
+		
+		// Transfer button
+		transferButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER")));
+		transferButton.addListener(new ButtonListener());
+		mainLayer.add(transferButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
 		backgroundLayer.add(new Panel(container, new Color(0x3b2d59)));
 	}
