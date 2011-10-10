@@ -28,9 +28,7 @@ import scene.Scene;
 import scene.SceneID;
 
 /**
- * Be able to switch to any scene from this scene.
- * 
- * @author Tanner Smith
+ * Scene to start another scene.
  */
 public class SceneSelectorScene extends Scene {
 	public static final SceneID ID = SceneID.SceneSelector;
