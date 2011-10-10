@@ -57,10 +57,12 @@ public class Label extends Component {
 		this.font = font;
 		this.c = c;
 		this.text = text;
-		lines = new ArrayList<String>();
-		lines.add(0, text);
 		alignment = Alignment.Left;
 		clip = true;
+		lines = new ArrayList<String>();
+		parseLines();
+		
+		
 	}
 	
 	/**
@@ -178,6 +180,7 @@ public class Label extends Component {
 	 */
 	public void setText(String text) {
 		this.text = text;
+		parseLines();
 	}
 	
 	/**
