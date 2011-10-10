@@ -72,18 +72,9 @@ public class PartyInventoryScene extends Scene {
 			personPanelsArray[personPanels.indexOf(panel)] = panel;
 		}
 		
-		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopCenter), (int)(members.size() / 2), 2, PADDING, PADDING, PADDING, PADDING);
+		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), 2, PADDING, PADDING, PADDING, PADDING);
 		
-		UnicodeFont h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
-		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
-		
-		Label titleLabel = new Label(container, h1, Color.white, "Party Inventory Scene");
-		Label subtitleLabel = new Label(container, h2, Color.white, "Press escape to go back");
-		
-		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);
-		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 5);
-		
-		backgroundLayer.add(new Panel(container, new Color(0xc4aeca)));
+		backgroundLayer.add(new Panel(container, new Color(0x3b2d59)));
 	}
 	
 	@Override
