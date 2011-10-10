@@ -19,7 +19,7 @@ import core.GameDirector;
  * width, and height.
  */
 public abstract class Component extends AbstractComponent implements Positionable {
-	private static final int CORNER_RADIUS = 2;
+	private static final int CORNER_RADIUS = 4;
 	
 	protected Vector2f origin;
 	private int width;
@@ -60,7 +60,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 			} else {
 				Color brightColor = backgroundColor.brighter(0.1f);
 				Color darkColor = backgroundColor.darker(0.2f);		
-	
+				
 				g.setColor(backgroundColor);
 				// inner rect
 				g.fillRect(getX() + CORNER_RADIUS,
@@ -111,6 +111,13 @@ public abstract class Component extends AbstractComponent implements Positionabl
 						getY() + topRightCornerRadius,
 						CORNER_RADIUS,
 						getHeight() - topRightCornerRadius - bottomRightCornerRadius);
+				
+				// border
+				if (beveled) {
+					g.setColor(Color.black); // TODO
+				}
+				g.setLineWidth(2);
+				g.drawRect(getX(), getY(), getWidth(), getHeight());
 			}
 		}
 		
