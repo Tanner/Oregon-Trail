@@ -14,6 +14,7 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
@@ -95,7 +96,7 @@ public class PartyInventoryScene extends Scene {
 			for (int i = 0; i < inventory.size(); i++) {
 				Item item = inventory.get(i);
 				
-				lastPositionReference = createItemButton(item, lastPositionReference, fieldFont, panel);
+				lastPositionReference = createItemButton(item, lastPositionReference.getPosition(ReferencePoint.TopRight), fieldFont, panel, PADDING);
 			}
 			
 			personPanels.add(panel);
@@ -109,27 +110,43 @@ public class PartyInventoryScene extends Scene {
 		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1);
 		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
-		// Create Vehicle inventories (if one exists)	
-		List<Item> vehicleItems = vehicle.getInventory().getItems();
-		Panel panel = new Panel(container, panelWidth, panelHeight);
-
+		// Create Vehicle inventories (if one exists)
 		Label wagonLabel = new Label(container, nameLabelWidth, panelHeight, fieldFont, Color.white, vehicle.getName());
-		panel.add(wagonLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 		
-		Positionable lastPositionReference = wagonLabel;
-		for (int i = 0; i < vehicleItems.size(); i++) {
-			Item item = vehicleItems.get(i);
-			
-			lastPositionReference = createItemButton(item, lastPositionReference, fieldFont, panel);
-		}
-		
+		// Add the vehicle label to the last left handed side person label
 		int lastOddIndex = personPanels.size() - 1;
 		if (lastOddIndex % 2 != 0) {
 			lastOddIndex--;
 		}
 		Positionable locationReference = personPanels.get(lastOddIndex);
 		
-		mainLayer.add(panel, locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+		mainLayer.add(wagonLabel, locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+		
+		// Now make all the item condition bar buttons things
+		List<Item> vehicleItems = vehicle.getInventory().getItems();
+		
+		ArrayList<Panel> vehicleItemPanels = new ArrayList<Panel>();
+		
+		for (int i = 0; i < vehicleItems.size(); i++) {
+			Item item = vehicleItems.get(i);
+
+			Panel itemPanel = new Panel(container, ITEM_BUTTON_WIDTH, panelHeight);
+			
+			createItemButton(item, itemPanel.getPosition(ReferencePoint.TopLeft), fieldFont, itemPanel, 0);
+			
+			vehicleItemPanels.add(itemPanel);
+		}
+		
+		// Now add the grid of all the item buttons
+		Component[] vehicleItemPanelsArray = new Component[vehicleItemPanels.size()];
+		for (Panel panel : vehicleItemPanels) {
+			vehicleItemPanelsArray[vehicleItemPanels.indexOf(panel)] = panel;
+		}
+		
+		int numRows = 3;
+		int numCols = 8;
+		
+		mainLayer.addAsGrid(vehicleItemPanelsArray, wagonLabel.getPosition(ReferencePoint.TopRight), numRows, numCols, PADDING, 0, PADDING, PADDING);
 		
 		// Close button
 		closeButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CLOSE")));
@@ -149,7 +166,7 @@ public class PartyInventoryScene extends Scene {
 		return ID.ordinal();
 	}
 	
-	public Button createItemButton(Item item, Positionable locationReference, Font font, Panel panel) {	
+	public Button createItemButton(Item item, Vector2f position, Font font, Panel panel, int offset) {	
 		CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, font, Color.white, item.getName()));
 		button.setCountUpOnLeftClick(false);
 		button.setMax(item.getNumberOf());
@@ -157,7 +174,7 @@ public class PartyInventoryScene extends Scene {
 		
 		ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item.getStatus());
 		
-		panel.add(button, locationReference.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
+		panel.add(button, position, ReferencePoint.TopLeft, offset, 0);
 		panel.add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, CONDITION_BAR_PADDING);
 		
 		return button;
