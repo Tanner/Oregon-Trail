@@ -63,8 +63,16 @@ public class PartyInventoryScene extends Scene {
 				
 				lastPositionReference = button;
 			}
+			
+			personPanels.add(panel);
 		}
-		mainLayer.addAsGrid((Component[])personPanels.toArray(), mainLayer.getPosition(ReferencePoint.TopCenter), (int)(members.size() / 2), 2, PADDING, PADDING, PADDING, PADDING);
+		
+		Component[] personPanelsArray = new Component[personPanels.size()];
+		for (Panel panel : personPanels) {
+			personPanelsArray[personPanels.indexOf(panel)] = panel;
+		}
+		
+		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopCenter), (int)(members.size() / 2), 2, PADDING, PADDING, PADDING, PADDING);
 		
 		UnicodeFont h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
 		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
