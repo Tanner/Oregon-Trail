@@ -1,8 +1,5 @@
 package core;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
@@ -12,7 +9,7 @@ import scene.test.*;
 import model.*;
 
 public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
-	public static final boolean DEBUG_MODE = false;
+	public static boolean DEBUG_MODE = false;
 	
 	private static GameDirector sharedDirector;
 	

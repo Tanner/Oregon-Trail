@@ -127,6 +127,8 @@ public class SceneDirector extends StateBasedGame {
 		
 		if (c == '+') {
 			GameDirector.sharedSceneDelegate().showSceneSelector();
+		} else if (c == '-') {
+			GameDirector.DEBUG_MODE = !GameDirector.DEBUG_MODE;
 		}
 	}
 }
