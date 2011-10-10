@@ -1,5 +1,11 @@
 package scene;
 
+import java.util.ArrayList;
+
+import model.Inventory;
+import model.Item;
+import model.Party;
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 import org.newdawn.slick.gui.*;
@@ -36,6 +42,10 @@ public class StoreScene extends Scene {
 	private int hoverItem = -1;
 	
 	String tempDescription = "This is an item description.\nIt is a good item, maybe a sonic screwdriver.\n\nYep.";
+	ArrayList<Item> tempInv;
+	public StoreScene (Party p) {
+		tempInv = p.getVehicle().getInventory().getItems();
+	}
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -130,7 +140,7 @@ public class StoreScene extends Scene {
 		//Create grid of store inventory buttons
 		storeInventory = new CountingButton[16];
 		for (int i = 0; i < storeInventory.length; i++) {
-			tempLabel = new Label(container, fieldFont, Color.white, "Item " + i);
+			tempLabel = new Label(container, fieldFont, Color.white, tempInv.get(i%10).getName());
 			storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
 			storeInventory[i].addListener(new InventoryListener(i));
 		}
@@ -155,16 +165,17 @@ public class StoreScene extends Scene {
 		
 		int textPanelWidth = mainLayer.getWidth() - (int) storeInventoryButtons.getPosition(ReferencePoint.TopRight).getX() - PADDING - WIDE_PADDING*2;
 		int textPanelLabelWidth = textPanelWidth - PADDING*2;
-		itemDescription[0] = new Label(container, textPanelLabelWidth, fieldFont, Color.white, "Item Name");
+		itemDescription[0] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[0].setAlignment(Label.Alignment.Center);
 		itemDescription[1] = new Label(container, textPanelLabelWidth, 135, fieldFont, Color.white, tempDescription);
 		itemDescription[1].setAlignment(Label.Alignment.Center);
 		itemDescription[1].setVerticalAlignment(Label.VerticalAlignment.Top);
-		itemDescription[2] = new Label(container, textPanelLabelWidth, fieldFont, Color.white, "Weight: 10 lbs");
-		itemDescription[3] = new Label(container, textPanelLabelWidth, fieldFont, Color.white, "Cost: $10.00");
-		itemDescription[4] = new Label(container, textPanelLabelWidth, fieldFont, Color.white, "Quantity: 2");
-		itemDescription[5] = new Label(container, textPanelLabelWidth, fieldFont, Color.white, "Total Weight: 20 lbs");
-		itemDescription[6] = new Label(container, textPanelLabelWidth, fieldFont, Color.white, "Total Cost: $20.00");
+		itemDescription[2] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
+		itemDescription[3] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
+		itemDescription[4] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
+		itemDescription[5] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
+		itemDescription[6] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
+		updateLabels(0);
 		textPanel = new Panel(container, textPanelWidth, storeInventoryButtons.getHeight(), TEXT_PANEL_COLOR);
 		
 		//Create clear & buy button
@@ -183,13 +194,17 @@ public class StoreScene extends Scene {
 	 * @param index The index of the item you wish to display information on
 	 */
 	private void updateLabels(int index) {
+		//Debug: remove this later
+		index = index % 10;
+		Item tempItem = tempInv.get(index);
+		
 		int count = storeInventory[index].getCount();
-		itemDescription[0].setText("Item " + index);
-		itemDescription[1].setText("This is place holder text for " + index + " item number.\n\nThis will hold a funny story eventually.");
-		itemDescription[2].setText("Weight: " + index + " lbs");
+		itemDescription[0].setText(tempItem.getName());
+		itemDescription[1].setText(tempItem.getDescription());
+		itemDescription[2].setText("Weight: " + tempItem.getWeight() + " lbs");
 		itemDescription[3].setText("Cost: $" + index + ".00");
 		itemDescription[4].setText("Quantity: " + count);
-		itemDescription[5].setText("Total Weight: " + count*index);
+		itemDescription[5].setText("Total Weight: " + count*tempItem.getWeight());
 		itemDescription[6].setText("Total Cost: $" + count*index);
 	}
 	

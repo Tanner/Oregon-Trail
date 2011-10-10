@@ -75,7 +75,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		case Town:
 			return new TownScene(game.getPlayer().getParty());
 		case Store:
-			return new StoreScene();
+			return new StoreScene(game.getPlayer().getParty());
 		case PartyInventory:
 			return new PartyInventoryScene(game.getPlayer().getParty());
 		case SceneSelector:
@@ -112,7 +112,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 			// Last scene was Town Scene
 			if (id == SceneID.Store) {
 				// Requested Store Scene
-				newScene = new StoreScene();	
+				newScene = new StoreScene(game.getPlayer().getParty());	
 			}
 		} else if (lastScene instanceof StoreScene) {
 			// Last scene was Store Scene

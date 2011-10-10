@@ -53,6 +53,14 @@ public final class ConstantStore {
 		partyInventoryScene.put("TRANSFER", "Transfer");
 		literalMap.put("PARTY_INVENTORY_SCENE", partyInventoryScene);
 		
+		// Items
+		Map<String, String> itemMap = new HashMap<String, String>();
+		itemMap.put("WHEEL_NAME", "Wheel");
+		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
+		itemMap.put("SONIC_SCREWDRIVER_NAME", "Sonic");
+		itemMap.put("SONIC_SCREWDRIVER_DESCRIPTION", "Weeeweeeveeeeweee");
+		literalMap.put("ITEMS", itemMap);
+		
 		// General
 		Map<String, String> general = new HashMap<String, String>();
 		general.put("MONEY_SYMBOL", "$");
@@ -75,14 +83,6 @@ public final class ConstantStore {
 		colorMap.put("INTERACTIVE_BORDER_FOCUS_LIGHT", Color.white.darker(0.5f));
 
 		COLORS = Collections.unmodifiableMap(colorMap);
-		
-		// Items
-		Map<String, String> itemMap = new HashMap<String, String>();
-		itemMap.put("WHEEL_NAME", "Wheel");
-		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
-		itemMap.put("SONIC_SCREWDRIVER_NAME", "Sonic");
-		itemMap.put("SONIC_SCREWDRIVER_DESCRIPTION", "Weeeweeeveeeeweee");
-		literalMap.put("ITEMS", itemMap);
 	}
 	
 	public static String get(String outer, String inner) {
