@@ -16,6 +16,7 @@ public abstract class Item implements Conditioned{
 	private double weight; //This is the individual unit weight
 	private int numberOf;
 	private boolean isStackable = true;
+	private int baseCost;
 	
 	/**
 	 * 
@@ -25,8 +26,8 @@ public abstract class Item implements Conditioned{
 	 * @param status The item's status
 	 * @param weight The item's weight
 	 */
-	public Item(String name, String description, Condition status, double weight) {
-		this(name, description, status, weight, 1);
+	public Item(String name, String description, Condition status, double weight, int baseCost) {
+		this(name, description, status, weight, baseCost, 1);
 	}
 	
 	/**
@@ -38,12 +39,13 @@ public abstract class Item implements Conditioned{
 	 * @param weight The item's weight
 	 * @param numberOf The number of items in the stack
 	 */
-	public Item(String name, String description, Condition status, double weight, int numberOf) {
+	public Item(String name, String description, Condition status, double weight, int baseCost, int numberOf) {
 		this.name = name;
 		this.description = description;
 		this.status = status;
 		this.weight = weight;
 		this.numberOf = numberOf;
+		this.baseCost = baseCost;
 	}
 
 	/**
@@ -62,6 +64,22 @@ public abstract class Item implements Conditioned{
 		return description;
 	}
 
+	/**
+	 * Returns the base cost of the item.
+	 * @return The base cost of the item
+	 */
+	public int getCost() {
+		return baseCost;
+	}
+	
+	/**
+	 * Returns the cost of the full item stack.
+	 * @return The cost of the item stack
+	 */
+	public int getStackCost() {
+		return baseCost*numberOf;
+	}
+	
 	/**
 	 * Returns the current condition of the item.
 	 * @return The current condition of the item.
@@ -93,7 +111,7 @@ public abstract class Item implements Conditioned{
 	 */
 	public boolean decreaseStatus(int amount) {
 		boolean returned = status.decrease(amount);
-		if (status.getCurrent() == status.getMin()) {
+		if (status.getCurrent() < status.getMax()) {
 			this.isStackable = false;
 		}
 		return returned;
@@ -134,6 +152,7 @@ public abstract class Item implements Conditioned{
 			return false;
 		}
 		else {
+			numberOf += amount;
 			Logger.log("Increment successful", Logger.Level.INFO);
 			return true;
 		}

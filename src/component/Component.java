@@ -352,10 +352,18 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		this.beveled = bevelType;
 	}
 	
+	/**
+	 * Set the bevel width.
+	 * @param width The new bevel width
+	 */
 	public void setBevelWidth(int width) {
 		this.bevelWidth = width;
 	}
 	
+	/**
+	 * Set the border width of all sides.
+	 * @param width The new border width of all sides
+	 */
 	public void setBorderWidth(int width) {
 		setTopBorderWidth(width);
 		setRightBorderWidth(width);
@@ -363,22 +371,42 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		setLeftBorderWidth(width);
 	}
 	
+	/**
+	 * Set the bottom border width.
+	 * @param width The new top border width
+	 */
 	public void setTopBorderWidth(int width) {
 		this.topBorderWidth = width;
 	}
 	
+	/**
+	 * Set the right border width.
+	 * @param width The new right border width
+	 */
 	public void setRightBorderWidth(int width) {
 		this.rightBorderWidth = width;
 	}
 	
+	/**
+	 * Set the bottom border width.
+	 * @param width The new bottom border width
+	 */
 	public void setBottomBorderWidth(int width) {
 		this.bottomBorderWidth = width;
 	}
 	
+	/**
+	 * Set the left border width.
+	 * @param width The new left border width
+	 */
 	public void setLeftBorderWidth(int width) {
 		this.leftBorderWidth = width;
 	}
 	
+	/**
+	 * Set the border color.
+	 * @param color The new color
+	 */
 	public void setBorderColor(Color color) {
 		this.borderColor = color;
 	}

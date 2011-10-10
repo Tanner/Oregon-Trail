@@ -5,6 +5,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
 import component.Label.Alignment;
+import core.ConstantStore;
 
 /**
  * {@code Spinner} inherits from {@code Component} to extend features that
@@ -51,20 +52,20 @@ public class Spinner extends Component {
 		Label upLabel = new Label(context, font, c, "Up");
 		Label downLabel = new Label(context, font, c, "Down");
 		int butWidth = (int)(font.getWidth("Down")*PADDING);
-		label = new Label(context, width - butWidth, font, c, fields[0]);
+		label = new Label(context, width - butWidth, height, font, c, fields[0]);
+		label.setBackgroundColor(ConstantStore.COLORS.get("INTERACTIVE_NORMAL"));
+		label.setBorderWidth(2);
+		label.setLeftBorderWidth(0);
+		label.setBorderColor(ConstantStore.COLORS.get("INTERACTIVE_BORDER_DARK"));
 		label.setAlignment(Alignment.Center);
 		upButton = new Button(context, butWidth, height/2, upLabel);
-		downButton = new Button(context, butWidth, height/2, downLabel);
-		labelButton = new Button(context, width-butWidth, height, label);
-		
-		//Set rounded corners, disable the label button and re-color it
-		labelButton.setDisabled(true);
-		labelButton.setButtonActiveColor(Color.gray);
+		upButton.setBottomBorderWidth(0);
+		downButton = new Button(context, butWidth, height/2 + 1, downLabel);	// add one to height because has bottom border
 		
 		add(upButton, getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft);
 		add(downButton, this.getPosition(ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft);
 		//Sets the label text to be in the center of the textbox
-		add(labelButton, upButton.getPosition(ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft);
+		add(label, upButton.getPosition(ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft);
 		
 		listener = new ButtonListener();
 		upButton.addListener(listener);

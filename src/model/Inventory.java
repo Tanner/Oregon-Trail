@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import core.Logger;
 
 /**
- * 
  * Inventory with an ArrayList that holds all of the items in the inventory.
  */
-//TODO: Fix inventory so that it'll actually work with subclassed items.
 public class Inventory {
 
 	private ArrayList<Item> items;
@@ -58,26 +56,38 @@ public class Inventory {
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
 	public boolean addItem(Item item) {
+		boolean contains = false;
+		int indexOf = -1;
+		boolean allContainedStackable = true;
+		for(Item containedItem : items) {
+			if (containedItem.getClass() == item.getClass()) {
+				if(!containedItem.isStackable()) {
+					allContainedStackable = false;
+				}
+				contains = true;
+				indexOf = items.indexOf(containedItem);
+			}
+		}
 		if(getWeight() + (item.getStackWeight()) > MAX_WEIGHT) {
 			//Item addition would exceeded max weight
 			Logger.log("The inventory has max weight: " + MAX_WEIGHT + 
 					" and the addition of " + item.getName() + " would increase the weight to " + 
 					(getWeight() + item.getStackWeight()), Logger.Level.INFO);
 			return false;
-		} else if(!items.contains(item) && items.size() == MAX_SIZE) {
+		} else if((!contains && items.size() == MAX_SIZE) || (contains && !allContainedStackable && items.size() == MAX_SIZE)) {
 			// Item doesn't offend max weight and isn't already contained but would overflow inventory bins
 			Logger.log("The inventory has max capacity: " + MAX_SIZE + 
 					" and currently has " + items.size() + " items.", Logger.Level.INFO);
 			return false;
-		} else if(items.contains(item) && (items.get(items.indexOf(item)).isStackable() && item.isStackable()) ){
+		} else if(contains && (items.get(indexOf).isStackable() && item.isStackable()) ){
 			// Item doesn't offend max weight and is already present in inventory and both the item added and current item are stackable
-			if(!items.get(items.indexOf(item)).increaseStack(item.getNumberOf())) {
+			if(!items.get(indexOf).increaseStack(item.getNumberOf())) {
 				// IncreaseStack failed
 				Logger.log("Could not add item", Logger.Level.INFO);
 				return false;
 			} else {
 				// Successfully added item
-				Logger.log(item.getName() + " was added successfully.", Logger.Level.INFO);
+				Logger.log(items.get(indexOf).getName() + " was added successfully.  Stack is now " + items.get(indexOf).getNumberOf(), Logger.Level.INFO);
 				return true;
 			}
 		} else {
@@ -94,12 +104,20 @@ public class Inventory {
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
 	public boolean removeItem(Item item) {
-		if(items.contains(item)) {
-			if(!items.get(items.indexOf(item)).decreaseStack(item.getNumberOf())) {
+		boolean contains = false;
+		int indexOf = -1;
+		for(Item containedItem : items) {
+			if (containedItem.getClass() == item.getClass()) {
+				indexOf = items.indexOf(containedItem);
+				contains = true;
+			}
+		}
+		if(contains) {
+			if(!items.get(indexOf).decreaseStack(item.getNumberOf())) {
 				Logger.log("Could not remove item", Logger.Level.INFO);
 				return false;
 			}
-			else if(items.get(items.indexOf(item)).getNumberOf() == 0) {
+			else if(items.get(indexOf).getNumberOf() == 0) {
 				items.remove(item);
 			}
 		}

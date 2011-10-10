@@ -65,8 +65,8 @@ public class CountingButton extends Button {
 			return;
 		}
 		
-		if (isMouseOver() && !disabled) {
-			active = true;
+		if (isMouseOver() && !isDisabled()) {
+			setActive(true);
 			input.consumeEvent();
 		}
 	}
@@ -77,10 +77,10 @@ public class CountingButton extends Button {
 			return;
 		}
 		
- 		if (isMouseOver() && !disabled && active) {
+ 		if (isMouseOver() && !isDisabled() && isActive()) {
 			notifyListeners();
 			input.consumeEvent();
-			active = false;
+			setActive(false);
 			
 			if (button == 0 && countUpOnLeftClick && count < max) {
 				count++;

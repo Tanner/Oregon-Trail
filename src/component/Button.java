@@ -22,8 +22,8 @@ public class Button extends Component implements Disableable {
 	private Color buttonDisabledColor;
 	private Color buttonBorderColor;
 	
-	protected boolean active;
-	protected boolean disabled;
+	private boolean active;
+	private boolean disabled;
 	
 	/**
 	 * Constructs a {@code Button} with a width, a height, a {@code Sprite}, and a {@code Label}.

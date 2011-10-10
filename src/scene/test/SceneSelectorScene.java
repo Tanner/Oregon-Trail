@@ -168,9 +168,18 @@ public class SceneSelectorScene extends Scene {
 			}
 			Wheel wheel = new Wheel(1);
 			wheel.decreaseStatus(random.nextInt(100));
-			SonicScrewdriver sonic = new SonicScrewdriver(10 - people.indexOf(person));
 			person.addToInventory(wheel);
+
+			SonicScrewdriver sonic = new SonicScrewdriver(10 - people.indexOf(person));
 			person.addToInventory(sonic);
+			person.removeFromInventory(new SonicScrewdriver(3));
+			person.addToInventory(new SonicScrewdriver(2));
+			
+			Bread bread = new Bread(1);
+			person.addToInventory(bread);
+			
+			Apple apple = new Apple(1);
+			person.addToInventory(apple);
 		}
 		
 		Vehicle vehicle = new Wagon();
@@ -178,6 +187,10 @@ public class SceneSelectorScene extends Scene {
 			Item sonic = new SonicScrewdriver(1);
 			sonic.decreaseStatus(random.nextInt(100));
 			vehicle.addToInventory(sonic);
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			vehicle.addToInventory(new SonicScrewdriver(i));
 		}
 		
 		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];

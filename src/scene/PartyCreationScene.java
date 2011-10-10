@@ -236,14 +236,9 @@ public class PartyCreationScene extends Scene {
 	private void hidePersonColumn(int col) {
 		personDeleteButtons[col].setVisible(false);
 		personNameTextFields[col].setVisible(false);
-		personChangeProfessionButtons[col].setVisible(false);
-		personProfessionLabels[col].setVisible(false);
+		personProfessionPanel[col].setVisible(false);
 		personMoneyLabels[col].setVisible(false);
-		personChangeSkillButtons[col].setVisible(false);
-		
-		for (int j = 0; j < personSkillLabels[col].length; j++) {
-			personSkillLabels[col][j].setVisible(false);
-		}
+		personSkillPanel[col].setVisible(false);
 		
 		if (col > 0) {
 			personDeleteButtons[col - 1].setVisible(true);
@@ -483,8 +478,13 @@ public class PartyCreationScene extends Scene {
 		@Override		
 		public void componentActivated(AbstractComponent source) {		
 			int retCode = 0;
-			
-			for (int i = 0; i < NUM_PEOPLE; i++) {
+			int i = 0;
+			//for loop needed to be modified to a while to handle the retcode returned from personNameTextField
+			//originally method code resided here and had a return in it which broke this loop.  now
+			//that it has been broken out from here, the retCode needs to be able to break loop to maintain
+			//old functionality
+			while ((i < NUM_PEOPLE) && (retCode == 0)){
+			//for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
 					newPersonButton(i);
 				} else if (source == personNameTextFields[i]) {	
@@ -496,6 +496,7 @@ public class PartyCreationScene extends Scene {
 				} else if (source == personDeleteButtons[i]) {
 					personDeleteButton(i);
 				}
+				i++;
 			}
 			
 			if (retCode == 0){

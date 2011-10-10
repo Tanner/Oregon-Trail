@@ -53,6 +53,12 @@ public class Party {
 		Logger.log("Current pace is: " + currentPace + " and current rations is: " + currentRations, Level.INFO);
 	}
 	
+	public boolean buyItemForInventory(Item item, Person person) {
+		if (money > item.getStackCost()) {
+			
+		}
+		return true;
+	}
 	/**
 	 * Returns an array of Persons present in the party
 	 * @return

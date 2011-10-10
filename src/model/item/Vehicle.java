@@ -11,8 +11,8 @@ public abstract class Vehicle extends Item{
 	private final int MAX_INVENTORY_SIZE = 10;
 	private final double MAX_INVENTORY_WEIGHT;
 	
-	public Vehicle(String name, String description, Condition status, double maxWeight, double weight) {
-		super(name, description, status, weight);
+	public Vehicle(String name, String description, Condition status, double maxWeight, double weight, int cost) {
+		super(name, description, status, weight, cost);
 		this.MAX_INVENTORY_WEIGHT = maxWeight;
 		this.status = status;
 		this.cargo = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);	

@@ -104,6 +104,8 @@ public class ComponentTestScene extends Scene {
 		
 		ConditionBar conditionBar = new ConditionBar(container, 200, 40, new Condition(0, 10, 0));
 		mainLayer.add(conditionBar, cb.getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.BottomLeft, 0, -PADDING);
+		
+		backgroundLayer.add(new Panel(container, Color.blue));
 	}
 
 	@Override
