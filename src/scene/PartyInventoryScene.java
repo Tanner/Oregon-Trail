@@ -56,8 +56,8 @@ public class PartyInventoryScene extends Scene {
 		
 		ArrayList<Person> members = party.getPartyMembers();
 		
+		// Create a grid of all the party members and their inventories
 		int nameLabelWidth = 0;
-		int nameWidth = 0;
 		int maxInventorySize = 0;
 		for (Person person : members) {
 			Inventory inventory = person.getInventory();
@@ -69,11 +69,6 @@ public class PartyInventoryScene extends Scene {
 			int newWidth = fieldFont.getWidth(person.getName());
 			if (nameLabelWidth < newWidth) {
 				nameLabelWidth = newWidth;
-			}
-			
-			int newNameWidth = fieldFont.getWidth(person.getName());
-			if (nameWidth < newNameWidth) {
-				nameWidth = newNameWidth;
 			}
 		}
 		
