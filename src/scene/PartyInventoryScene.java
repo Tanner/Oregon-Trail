@@ -30,6 +30,7 @@ public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
 	private static final int PADDING = 20;
 	
+	private static final int NUM_COLS = 2;
 	private static final int ITEM_BUTTON_WIDTH = 80;
 	private static final int ITEM_BUTTON_HEIGHT = 40;
 	private static final int ITEM_CONDITION_BAR_HEIGHT = 5;
@@ -83,7 +84,9 @@ public class PartyInventoryScene extends Scene {
 			panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 			
 			Positionable lastPositionReference = nameLabel;
-			for (Item item : inventory) {
+			for (int i = 0; i < inventory.size(); i++) {
+				Item item = inventory.get(i);
+				
 				Button button = new Button(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, item.getName()));
 				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item.getStatus());
 				
@@ -101,7 +104,8 @@ public class PartyInventoryScene extends Scene {
 			personPanelsArray[personPanels.indexOf(panel)] = panel;
 		}
 		
-		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), 2, PADDING, PADDING, PADDING, PADDING);
+		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1);
+		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
 		backgroundLayer.add(new Panel(container, new Color(0x3b2d59)));
 	}
