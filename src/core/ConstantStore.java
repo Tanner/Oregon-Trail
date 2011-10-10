@@ -63,7 +63,8 @@ public final class ConstantStore {
 		Map<String, Color> colorMap = new HashMap<String, Color>(); 
 		colorMap.put("INTERACTIVE_NORMAL", Color.gray);
 		colorMap.put("INTERACTIVE_ACTIVE", Color.darkGray);
-		
+		colorMap.put("INTERACTIVE_DISABLED", Color.darkGray);
+
 		COLORS = Collections.unmodifiableMap(colorMap);
 		
 		// Items
