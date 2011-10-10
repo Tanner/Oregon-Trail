@@ -239,7 +239,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * Sets the width.
 	 * @param width The new width
 	 */
-	public final void setWidth(int width) {
+	private final void setWidth(int width) {
 		this.width = width;
 	}
 	
@@ -255,7 +255,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * Set the height.
 	 * @param height The new height
 	 */
-	public final void setHeight(int height) {
+	private final void setHeight(int height) {
 		this.height = height;
 	}
 	

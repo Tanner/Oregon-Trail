@@ -38,8 +38,8 @@ public class GridLayout extends Layout {
 	public void setComponentLocation(Component component) {
 		Cell cell = getCellForIndex(componentsAdded);
 		Vector2f cellCenter = cell.getCenter();
-		component.setWidth(cell.width);
-		component.setHeight(cell.height);
+		//component.setWidth(cell.width);
+		//component.setHeight(cell.height);
 		component.setPosition(cellCenter, ReferencePoint.CenterCenter);
 		
 		componentsAdded++;

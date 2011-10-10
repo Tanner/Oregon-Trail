@@ -3,7 +3,6 @@ package component;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.*;
 import java.util.*;
-import java.util.regex.*;
 
 /**
  * {@code Label} inherits from {@code Component} to extend features that provide
@@ -105,15 +104,15 @@ public class Label extends Component {
 			g.setColor(backgroundColor);
 			g.fillRect(getX(), getY(), getWidth(), getHeight());
 		}
-		
+		int startY = getY() + (getHeight() - (lines.size()*font.getLineHeight())) / 2;
 		for (int i = 0; i < lines.size(); i++) {
 			if (alignment == Alignment.Center) {
 				font.drawString(getX() + (getWidth() - font.getWidth(lines.get(i))) / 2,
-						getY() + (font.getLineHeight())*i,
+						startY + (font.getLineHeight())*i,
 						lines.get(i), c);
 			} else if (alignment == Alignment.Left){
 				font.drawString(getX(),
-						getY() + (font.getLineHeight())*i,
+						startY + (font.getLineHeight())*i,
 						lines.get(i), c);
 			}
 		}
@@ -180,6 +179,7 @@ public class Label extends Component {
 	 */
 	public void setText(String text) {
 		this.text = text;
+		this.lines.clear();
 		parseLines();
 	}
 	

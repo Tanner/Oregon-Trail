@@ -119,8 +119,7 @@ public class PartyCreationScene extends Scene {
 			personChangeProfessionButtons[i].setVisible(false);
 			mainLayer.add(personChangeProfessionButtons[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
-			personProfessionLabels[i] = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NO_PROFESSION_LABEL"));
-			personProfessionLabels[i].setHeight(regularButtonHeight);
+			personProfessionLabels[i] = new Label(container, buttonWidth, regularButtonHeight, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NO_PROFESSION_LABEL"));
 			personProfessionLabels[i].setBackgroundColor(Color.darkGray);
 			personProfessionLabels[i].setVisible(false);
 			personProfessionLabels[i].setAlignment(Alignment.Center);
@@ -145,7 +144,6 @@ public class PartyCreationScene extends Scene {
 				}
 				
 				personSkillLabels[i][j] = new Label(container, buttonWidth, fieldFont, Color.white, "");
-				personSkillLabels[i][j].setHeight(regularButtonHeight);
 				personSkillLabels[i][j].setBackgroundColor(Color.darkGray);
 				personSkillLabels[i][j].setVisible(false);
 				personSkillLabels[i][j].setAlignment(Alignment.Center);
@@ -165,7 +163,6 @@ public class PartyCreationScene extends Scene {
 		
 		// Ration Selection
 		Label rationsLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "RATIONS_LABEL"));
-		rationsLabel.setHeight(regularButtonHeight);
 		mainLayer.add(rationsLabel, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
 		
 		int numOfRations = Party.Rations.values().length;
@@ -178,7 +175,6 @@ public class PartyCreationScene extends Scene {
 		
 		// Pace Selection
 		Label paceLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PACE_LABEL"));
-		paceLabel.setHeight(regularButtonHeight);
 		mainLayer.add(paceLabel, rationsLabel.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
 		
 		int numOfPaces = Party.Pace.values().length;
