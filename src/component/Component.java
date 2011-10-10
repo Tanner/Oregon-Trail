@@ -19,7 +19,11 @@ import core.GameDirector;
  * width, and height.
  */
 public abstract class Component extends AbstractComponent implements Positionable {
-	private static final int CORNER_RADIUS = 4;
+	public static enum BevelType {
+		None,
+		In,
+		Out
+	}
 	
 	protected Vector2f origin;
 	private int width;
@@ -30,7 +34,11 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	private int bottomLeftCornerRadius;
 	private int topRightCornerRadius;
 	private int bottomRightCornerRadius;
-	private boolean beveled;
+	private BevelType beveled;
+	private int bevelWidth;
+	
+	private Color borderColor;
+	private int borderWidth;
 	
 	protected List<Component> components;
 	private boolean mouseOver;
@@ -53,9 +61,11 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
+		g.setClip((Rectangle) getArea());
+		
 		if (backgroundColor != null) {
 			g.setColor(backgroundColor);
-			if (!beveled) {
+			if (beveled == BevelType.None) {
 				g.fillRect(getX(), getY(), getWidth(), getHeight());
 			} else {
 				Color brightColor = backgroundColor.brighter(0.1f);
@@ -63,71 +73,75 @@ public abstract class Component extends AbstractComponent implements Positionabl
 				
 				g.setColor(backgroundColor);
 				// inner rect
-				g.fillRect(getX() + CORNER_RADIUS,
-						getY() + CORNER_RADIUS,
-						getWidth() - CORNER_RADIUS * 2,
-						getHeight() - CORNER_RADIUS * 2);
+				g.fillRect(getX() + bevelWidth,
+						getY() + bevelWidth,
+						getWidth() - bevelWidth * 2,
+						getHeight() - bevelWidth * 2);
 				
 				// top bar
-				if (beveled) {
+				if (beveled == BevelType.Out) {
 					g.setColor(brightColor);
-				} else {
-					g.setColor(backgroundColor);
+				} else if (beveled == BevelType.In) {
+					g.setColor(darkColor);
 				}
-				g.fillRect(getX() + topLeftCornerRadius,
-						getY(),
-						getWidth() - topLeftCornerRadius - topRightCornerRadius,
-						CORNER_RADIUS);
+				g.fillRect(getX() + topLeftCornerRadius + borderWidth,
+						getY() + borderWidth,
+						getWidth() - topLeftCornerRadius - topRightCornerRadius - borderWidth * 2,
+						bevelWidth);
 						
 				// bottom bar
-				if (beveled) {
+				if (beveled == BevelType.Out) {
 					g.setColor(darkColor);
-				} else {
-					g.setColor(backgroundColor);
+				} else if (beveled == BevelType.In) {
+					g.setColor(brightColor);
 				}
-				g.fillRect(getX() + bottomLeftCornerRadius,
-						getY() + getHeight() - CORNER_RADIUS,
-						getWidth() - bottomLeftCornerRadius - bottomRightCornerRadius,
-						CORNER_RADIUS);
+				g.fillRect(getX() + bottomLeftCornerRadius + borderWidth,
+						getY() + getHeight() - bevelWidth - borderWidth,
+						getWidth() - bottomLeftCornerRadius - bottomRightCornerRadius - borderWidth * 2,
+						bevelWidth);
 						
 				// left bar
-				if (beveled) {
+				if (beveled == BevelType.Out) {
 					g.setColor(brightColor);
-				} else {
-					g.setColor(backgroundColor);
+				} else if (beveled == BevelType.In) {
+					g.setColor(darkColor);
 				}
-				g.fillRect(getX(),
-						getY() + topLeftCornerRadius,
-						CORNER_RADIUS,
-						getHeight() - topLeftCornerRadius - bottomLeftCornerRadius);
+				g.fillRect(getX() + borderWidth,
+						getY() + topLeftCornerRadius + borderWidth,
+						bevelWidth,
+						getHeight() - topLeftCornerRadius - bottomLeftCornerRadius - borderWidth * 2);
 				
 				// right bar
-				if (beveled) {
+				if (beveled == BevelType.Out) {
 					g.setColor(darkColor);
-				} else {
-					g.setColor(backgroundColor);
+				} else if (beveled == BevelType.In) {
+					g.setColor(brightColor);
 				}
-				g.fillRect(getX() + getWidth() - CORNER_RADIUS,
-						getY() + topRightCornerRadius,
-						CORNER_RADIUS,
-						getHeight() - topRightCornerRadius - bottomRightCornerRadius);
-				
-				// border
-				if (beveled) {
-					g.setColor(Color.black); // TODO
-				}
-				g.setLineWidth(2);
-				g.drawRect(getX(), getY(), getWidth(), getHeight());
+				g.fillRect(getX() + getWidth() - bevelWidth - borderWidth,
+						getY() + topRightCornerRadius + borderWidth,
+						bevelWidth,
+						getHeight() - topRightCornerRadius - bottomRightCornerRadius - borderWidth * 2);
 			}
-		}
-		
-		if (GameDirector.DEBUG_MODE) {
-			g.setColor(Color.red);
-			g.drawRect(getX(), getY(), getWidth(), getHeight());
 		}
 		
 		for (Component component : components) {
 			component.render(container, g);
+		}
+		
+		g.setClip((Rectangle) getArea());
+				
+		// border
+		if (borderWidth > 0) {
+			g.setColor(borderColor);
+			g.setLineWidth(borderWidth);
+			g.drawRect(getX() + borderWidth / 2, getY(), getWidth() - borderWidth, getHeight() - borderWidth);
+		}
+		
+		g.clearClip();
+		
+		if (GameDirector.DEBUG_MODE) {
+			g.setColor(Color.red);
+			g.drawRect(getX(), getY(), getWidth(), getHeight());
 		}
 	}
 	
@@ -329,7 +343,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 */
 	public void setTopLeftRoundedCorner(boolean rounded) {
 		if (rounded) {
-			this.topLeftCornerRadius = CORNER_RADIUS;
+			this.topLeftCornerRadius = bevelWidth;
 		} else {
 			this.topLeftCornerRadius = 0;
 		}
@@ -341,7 +355,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 */
 	public void setBottomLeftRoundedCorner(boolean rounded) {
 		if (rounded) {
-			this.bottomLeftCornerRadius = CORNER_RADIUS;
+			this.bottomLeftCornerRadius = bevelWidth;
 		} else {
 			this.bottomLeftCornerRadius = 0;
 		}
@@ -353,7 +367,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 */
 	public void setTopRightRoundedCorner(boolean rounded) {
 		if (rounded) {
-			this.topRightCornerRadius = CORNER_RADIUS;
+			this.topRightCornerRadius = bevelWidth;
 		} else {
 			this.topRightCornerRadius = 0;
 		}
@@ -365,7 +379,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 */
 	public void setBottomRightRoundedCorner(boolean rounded) {
 		if (rounded) {
-			this.bottomRightCornerRadius = CORNER_RADIUS;
+			this.bottomRightCornerRadius = bevelWidth;
 		} else {
 			this.bottomRightCornerRadius = 0;
 		}
@@ -375,8 +389,20 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * Enable/disable a beveled appearance.
 	 * @param beveled Enables beveled appearance if {@code true}, disables if {@code false}
 	 */
-	public void setBeveled(boolean beveled) {
-		this.beveled = beveled;
+	public void setBevel(BevelType bevelType) {
+		this.beveled = bevelType;
+	}
+	
+	public void setBevelWidth(int width) {
+		this.bevelWidth = width;
+	}
+	
+	public void setBorderWidth(int width) {
+		this.borderWidth = width;
+	}
+	
+	public void setBorderColor(Color color) {
+		this.borderColor = color;
 	}
 	
 	/**
