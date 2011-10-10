@@ -68,6 +68,10 @@ public class Panel extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
+		if (!isVisible()) {
+			return;
+		}
+		
 		super.render(container, g);
 		
 		if (backgroundImage != null) {
