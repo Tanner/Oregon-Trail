@@ -77,7 +77,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 			return new TownScene(game.getPlayer().getParty());
 		case Store:
 			return new StoreScene();
-		case PartyInventoryScene:
+		case PartyInventory:
 			return new PartyInventoryScene();
 		case SceneSelector:
 			return new SceneSelectorScene(game.getPlayer());
@@ -95,8 +95,46 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	  ----------------------*/
 	@Override
 	public void requestScene(SceneID id, Scene lastScene) {
-		Scene newScene = sceneForSceneID(id);
-		sceneDirector.pushScene(newScene, true);
+		Scene newScene = null;
+		if (id == SceneID.SceneSelector) {
+			// Requested scene selector
+			newScene = new SceneSelectorScene(game.getPlayer());
+		} else if (lastScene instanceof MainMenuScene) {
+			// Last scene was Main Menu Scene
+			if (id == SceneID.PartyCreation) {
+				// Requested Party Creation Scene
+				newScene = new PartyCreationScene(game.getPlayer());
+			}
+		} else if (lastScene instanceof PartyCreationScene) {
+			// Last scene was Party Creation Scene
+			if (id == SceneID.Town) {
+				// Requested Town Scene
+				newScene = new TownScene(game.getPlayer().getParty());
+			}
+		} else if (lastScene instanceof TownScene) {
+			// Last scene was Town Scene
+			if (id == SceneID.Store) {
+				// Requested Store Scene
+				newScene = new StoreScene();	
+			}
+		} else if (lastScene instanceof StoreScene) {
+			// Last scene was Store Scene
+			if (id == SceneID.PartyInventory) {
+				// Requested Party Inventory Scene
+				newScene = new PartyInventoryScene();	
+			}
+		} else if (lastScene instanceof SceneSelectorScene) {
+			// Last scene was Scene Selector Scene
+			newScene =  sceneForSceneID(id);
+		} else if (id == SceneID.PartyInventory) {
+			// Requested Party Inventory Scene
+			newScene = new PartyInventoryScene();
+		}
+		
+		if (newScene != null) {
+			// If scene was actually created
+			sceneDirector.pushScene(newScene, true);
+		}
 	}
 	
 	@Override
