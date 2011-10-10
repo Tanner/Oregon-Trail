@@ -27,6 +27,8 @@ public class StoreScene extends Scene {
 	private Label[] itemDescription;
 	String tempDescription = "This is an item description.\nIt is a good item, maybe a sonic screwdriver.\n\nYep.";
 	
+	private int currentItem = 0;
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
@@ -61,7 +63,6 @@ public class StoreScene extends Scene {
 		for (int i = 0; i < storeInventory.length; i++) {
 			tempLabel = new Label(container, fieldFont, Color.white, "Item " + i);
 			storeInventory[i] = new CountingButton(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
-			storeInventory[i].addListener(new InventoryListener(i));
 		}
 		storeInventoryButtons = new Panel(container, BUTTON_WIDTH * 4 + PADDING * 3, BUTTON_HEIGHT * 4 + PADDING * 3);
 		
@@ -99,7 +100,7 @@ public class StoreScene extends Scene {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		return;
+		updateLabels(currentItem);
 	}
 
 	@Override
@@ -124,22 +125,11 @@ public class StoreScene extends Scene {
 		}
 	}
 	
-	private class InventoryListener implements ComponentListener {
-		private int ordinal;
-		public InventoryListener(int ordinal) {
-			this.ordinal = ordinal;
-		}
-		public void componentActivated(AbstractComponent source) {
-			updateLabels(ordinal);
-		}
-	}
-	
-	
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		for (int i = 0; i < storeInventory.length; i++) {
 			if ( contains(storeInventory[i], newx, newy) )
 			{ 
-				updateLabels(i);
+				currentItem = i;
 				break;
 			}
 		}
