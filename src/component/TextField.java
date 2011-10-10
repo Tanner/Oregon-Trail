@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
 
+import core.ConstantStore;
 import core.Logger;
 
 /**
@@ -22,6 +23,9 @@ public class TextField extends Component implements Disableable {
 	private Label label;
 	private Color fieldColor;
 	private Color fieldFocusColor;
+	private Color fieldBorderColor;
+	private Color fieldFocusBorderColor;
+	
 	private boolean disabled;
 	private String placeholderText;
 	
@@ -38,10 +42,14 @@ public class TextField extends Component implements Disableable {
 	public TextField(GUIContext container, int width, int height, Font font) {
 		super(container, width, height);
 		
-		fieldColor = Color.gray;
-		fieldFocusColor = Color.darkGray;
+		fieldColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
+		fieldFocusColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
+		fieldBorderColor = ConstantStore.COLORS.get("INTERACTIVE_BORDER_LIGHT");
+		fieldFocusBorderColor = ConstantStore.COLORS.get("INTERACTIVE_BORDER_FOCUS_LIGHT");
 		
 		setBackgroundColor(fieldColor);
+		setBorderColor(Color.white);
+		setBorderWidth(2);
 		
 		label = new Label(container, width - PADDING * 2, font, Color.white);
 		add(label, getPosition(Positionable.ReferencePoint.CenterLeft), Positionable.ReferencePoint.CenterLeft, PADDING, 0);
@@ -159,8 +167,10 @@ public class TextField extends Component implements Disableable {
 		
 		if (focus) {
 			setBackgroundColor(fieldFocusColor);
+			setBorderColor(fieldFocusBorderColor);
 		} else {
 			setBackgroundColor(fieldColor);
+			setBorderColor(fieldBorderColor);
 		}
 		
 		super.setFocus(focus);
