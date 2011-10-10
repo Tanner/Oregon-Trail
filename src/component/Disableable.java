@@ -1,7 +1,7 @@
 package component;
 
 /**
- * {@code Disableable} can be implemented by classes that can be disabled.
+ * Interface that can be implemented by classes that can be disabled.
  */
 public interface Disableable {
 	/**

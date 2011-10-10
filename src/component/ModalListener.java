@@ -1,7 +1,7 @@
 package component;
 
 /**
- * {@code ModalListener} can be implemented by classes that listen for {@code Modal} events.
+ * Interface that can be implemented by classes that listen for {@code Modal} events.
  */
 public interface ModalListener {
 	/**
