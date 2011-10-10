@@ -66,8 +66,8 @@ public abstract class Item implements Conditioned{
 	 * Returns the current condition of the item.
 	 * @return The current condition of the item.
 	 */
-	public int getStatus() {
-		return status.getCurrent();
+	public Condition getStatus() {
+		return status;
 	}
 	
 	@Override
