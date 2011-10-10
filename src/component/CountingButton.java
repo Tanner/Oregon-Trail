@@ -18,6 +18,7 @@ public class CountingButton extends Button {
 	private int count;
 	private int min = 0;
 	private int max = Integer.MAX_VALUE;
+	private boolean countUpOnLeftClick;
 	
 	/**
 	 * Constructs a {@code CountingButton} with a width and height.
@@ -30,6 +31,7 @@ public class CountingButton extends Button {
 		super(context, width, height, label);
 		
 		count = 0;
+		countUpOnLeftClick = true;
 	}
 
 	/**
@@ -42,6 +44,7 @@ public class CountingButton extends Button {
 		super(container, label);
 		
 		count = 0;
+		countUpOnLeftClick = true;
 	}
 	
 	@Override
@@ -79,14 +82,34 @@ public class CountingButton extends Button {
 			input.consumeEvent();
 			active = false;
 			
-			if (button == 0 && count < max) {
+			if (button == 0 && countUpOnLeftClick && count < max) {
 				count++;
-			} else if (button != 0 && count > min && count <= max){
+			} else if (button != 0 && countUpOnLeftClick && count > min) {
 				count--;
+			} else if (button == 0 && !countUpOnLeftClick && count > min) {
+				count--;
+			} else if (button != 0 && !countUpOnLeftClick && count < max) {
+				count++;
 			}
 		}
 	}
 	
+	/**
+	 * Return whether to count up on left click.
+	 * @return Counting up on left click
+	 */
+	public boolean isCountUpOnLeftClick() {
+		return countUpOnLeftClick;
+	}
+
+	/**
+	 * Change whether to count up on left click.
+	 * @param countUpOnLeftClick New value
+	 */
+	public void setCountUpOnLeftClick(boolean countUpOnLeftClick) {
+		this.countUpOnLeftClick = countUpOnLeftClick;
+	}
+
 	/**
 	 * Change the minimum value.
 	 * @param min New min value
