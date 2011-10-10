@@ -165,7 +165,6 @@ public class SceneSelectorScene extends Scene {
 	public Party makeRandomParty() {
 		
 		Random random = new Random();
-		ArrayList<Person.Skill> person1Skill = new ArrayList<Person.Skill>();
 		ArrayList<Person> people = new ArrayList<Person>();
 		
 		people.add(new Person("Alice"));
@@ -174,18 +173,19 @@ public class SceneSelectorScene extends Scene {
 		people.add(new Person("Diane"));
 		
 		for(Person person : people) {
+			ArrayList<Person.Skill> personSkill = new ArrayList<Person.Skill>();
 			person.setProfession(Person.Profession.values()[random.nextInt(Person.Profession.values().length)]);
 	
 			int skillPoints = 0;
 			for (Person.Skill tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];
-			tempSkill != Person.Skill.NONE && person1Skill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120; 
+			tempSkill != Person.Skill.NONE && personSkill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120; 
 			tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)]) {
-				if(!person1Skill.contains(tempSkill)){
-					person1Skill.add(tempSkill);
+				if(!personSkill.contains(tempSkill)){
+					personSkill.add(tempSkill);
 					skillPoints += tempSkill.getCost();
 				}
 			}
-			for(Person.Skill skill : person1Skill) {
+			for(Person.Skill skill : personSkill) {
 				person.addSkill(skill);
 			}
 		}
