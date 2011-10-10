@@ -1,21 +1,12 @@
 package model;
 
-/*
-TO-DO List:
-add/remove single skill
-set party with full party
-*/
-
 import java.util.ArrayList;
 
 import core.Logger;
 
 /**
  * Person consists of a list of skills the person is proficient with as well
- * as their name, and what their profession is called. Potentially more, but not
- * right now
- * 
- * @author George Johnston
+ * as their name, and what their profession is called.
  */
 public class Person implements Conditioned{
 	private Condition skillPoints;
@@ -345,6 +336,14 @@ public class Person implements Conditioned{
 	 */
 	public boolean removeFromInventory(Item item) {
 		return inventory.removeItem(item);
+	}
+	
+	public ArrayList<Item> getInventoryAsList() {
+		ArrayList<Item> itemList = new ArrayList<Item>();
+		for(Item item : inventory.getItems()) {
+			itemList.add(item);
+		}
+		return itemList;		
 	}
 	
 	@Override
