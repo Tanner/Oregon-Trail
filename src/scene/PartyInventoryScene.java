@@ -48,14 +48,19 @@ public class PartyInventoryScene extends Scene {
 		
 		ArrayList<Person> members = party.getPartyMembers();
 		
-		int width = 0;
+		int nameLabelWidth = 0;
+		int panelWidth = 0;
 		for (Person person : members) {
 			List<Item> inventory = person.getInventoryAsList();
 			
-			int newWidth = ((ITEM_BUTTON_WIDTH + PADDING) * inventory.size()) + fieldFont.getWidth(person.getName());
+			int newWidth = fieldFont.getWidth(person.getName());
+			if (nameLabelWidth < newWidth) {
+				nameLabelWidth = newWidth;
+			}
 			
-			if (newWidth > width) {
-				width = newWidth;
+			int newPanelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * inventory.size()) + fieldFont.getWidth(person.getName());
+			if (panelWidth < newPanelWidth) {
+				panelWidth = newPanelWidth;
 			}
 		}
 		
@@ -63,17 +68,18 @@ public class PartyInventoryScene extends Scene {
 		for (Person person : members) {
 			List<Item> inventory = person.getInventoryAsList();
 			
-			Panel panel = new Panel(container, width, ITEM_BUTTON_HEIGHT + ITEM_CONDITION_BAR_HEIGHT);
+			int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
+			Panel panel = new Panel(container, panelWidth, panelHeight);
 			
-			Label nameLabel = new Label(container, fieldFont, Color.white, person.getName());
-			panel.add(nameLabel, panel.getPosition(ReferencePoint.CenterLeft), ReferencePoint.CenterLeft, 0, 0);
+			Label nameLabel = new Label(container, nameLabelWidth, panelHeight, fieldFont, Color.white, person.getName());
+			panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 			
 			Positionable lastPositionReference = nameLabel;
 			for (Item item : inventory) {
 				Button button = new Button(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, item.getName()));
 				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item.getStatus());
 				
-				panel.add(button, lastPositionReference.getPosition(ReferencePoint.CenterRight), ReferencePoint.CenterLeft, PADDING, 0);
+				panel.add(button, lastPositionReference.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
 				panel.add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, CONDITION_BAR_PADDING);
 				
 				lastPositionReference = button;
