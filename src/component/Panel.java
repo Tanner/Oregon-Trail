@@ -4,48 +4,58 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
 
 /**
- * This class holds basic graphic utilities.
+ * {@code Panel} inherits from {@code Component} to draw a background color or image.
  */
-
 public class Panel extends Component {
 	protected Color backgroundColor;
 	protected Image backgroundImage;
 	
-	public Panel(GUIContext container, int width, int height, Color backgroundColor) {
-		super(container, width, height);
+	/**
+	 * Constructs a {@code Panel} with a width, height, and background color.
+	 * @param context The GUI context
+	 * @param width The width
+	 * @param height The height
+	 * @param backgroundColor A background color
+	 */
+	public Panel(GUIContext context, int width, int height, Color backgroundColor) {
+		super(context, width, height);
 		
 		this.backgroundColor = backgroundColor;
 	}
 	
-	public Panel(GUIContext container, Color backgroundColor) {
-		this(container, container.getWidth(), container.getHeight(), backgroundColor);
+	/**
+	 * Constructs a {@code Panel} with a and background color.
+	 * @param context The GUI context
+	 * @param backgroundColor A background color
+	 */
+	public Panel(GUIContext context, Color backgroundColor) {
+		this(context, context.getWidth(), context.getHeight(), backgroundColor);
 	}
 	
-	public Panel(GUIContext container, int width, int height, Image backgroundImage) {
-		super(container, width, height);
+	/**
+	 * Constructs a {@code Panel} with a width, height, and background image.
+	 * @param context The GUI context
+	 * @param width The width
+	 * @param height The height
+	 * @param backgroundImage A background image
+	 */
+	public Panel(GUIContext context, int width, int height, Image backgroundImage) {
+		super(context, width, height);
 		
 		this.backgroundImage = backgroundImage;
 	}
 	
-	public Panel(GUIContext container, Image backgroundImage) {
-		this(container, container.getWidth(), container.getHeight(), backgroundImage);
-	}
-	
-	public Panel(GUIContext container, Color backgroundColor, int width, int height) {
-		this(container, backgroundColor);
-	}
-	
 	/**
-	 * This method will draw the object
-	 * 
-	 * @param container
-	 * @param g
-	 * @throws SlickException
+	 * Constructs a {@code Panel} with a background image.
+	 * @param context The GUI context
+	 * @param backgroundImage A background image
 	 */
+	public Panel(GUIContext context, Image backgroundImage) {
+		this(context, context.getWidth(), context.getHeight(), backgroundImage);
+	}
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
