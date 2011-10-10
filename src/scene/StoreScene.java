@@ -5,6 +5,7 @@ import org.newdawn.slick.geom.*;
 import org.newdawn.slick.gui.*;
 import org.newdawn.slick.state.*;
 import component.*;
+import component.Component.BevelType;
 import component.Positionable.ReferencePoint;
 import core.*;
 
@@ -165,17 +166,14 @@ public class StoreScene extends Scene {
 		itemDescription[5] = new Label(container, textPanelLabelWidth, fieldFont, Color.white, "Total Weight: 20 lbs");
 		itemDescription[6] = new Label(container, textPanelLabelWidth, fieldFont, Color.white, "Total Cost: $20.00");
 		textPanel = new Panel(container, textPanelWidth, storeInventoryButtons.getHeight(), TEXT_PANEL_COLOR);
-		textPanel.setBeveled(true);
 		
 		//Create clear & buy button
 		clearButton = new Button(container, BUTTON_WIDTH,BUTTON_HEIGHT,tempLabel);
 		clearButton.addListener(new ButtonListener());
 		clearButton.setDisabled(true);
-		clearButton.setRoundedCorners(true);
 		tempLabel = new Label(container, h2, Color.white, "Buy");
 		buyButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		buyButton.setDisabled(true);
-		buyButton.setRoundedCorners(true);
 	}
 	
 	/**
