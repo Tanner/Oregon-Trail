@@ -19,7 +19,7 @@ public class Condition {
 	public Condition(int min, int max, int current) {
 		this.min = min;
 		this.max = max;
-		this.current = max;
+		this.current = current;
 	}
 	
 	/**

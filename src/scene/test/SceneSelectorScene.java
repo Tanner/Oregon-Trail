@@ -166,6 +166,7 @@ public class SceneSelectorScene extends Scene {
 				person.addSkill(skill);
 			}
 			Wheel wheel = new Wheel(1);
+			wheel.decreaseStatus(random.nextInt(100));
 			SonicScrewdriver sonic = new SonicScrewdriver(10 - people.indexOf(person));
 			person.addToInventory(wheel);
 			person.addToInventory(sonic);

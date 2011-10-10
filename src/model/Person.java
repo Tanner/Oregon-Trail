@@ -346,6 +346,10 @@ public class Person implements Conditioned{
 		return itemList;		
 	}
 	
+	public Condition getHealth() {
+		return health;
+	}
+	
 	@Override
 	public double getConditionPercentage() {
 		return health.getPercentage();
