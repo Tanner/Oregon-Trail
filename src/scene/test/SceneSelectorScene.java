@@ -2,7 +2,11 @@ package scene.test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import model.Party;
+import model.Party.Pace;
+import model.Person;
 import model.Player;
 
 import org.newdawn.slick.Color;
@@ -21,6 +25,7 @@ import component.Component;
 import component.Label;
 import core.FontManager;
 import core.GameDirector;
+import core.Logger;
 
 import scene.Scene;
 import scene.SceneID;
@@ -146,11 +151,50 @@ public class SceneSelectorScene extends Scene {
 			} else if (component == buttons.get(5)) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTest);
 			} else if (component == buttons.get(6)) {
-				
+				player.setParty(null);
 			} else if (component == buttons.get(7)) {
-				
+				player.setParty(makeRandomParty());
 			}
 		}
+	}
+	
+	/**
+	 * Makes a random party for the set party button.
+	 * @return The random party
+	 */
+	public Party makeRandomParty() {
+		
+		Random random = new Random();
+		ArrayList<Person.Skill> person1Skill = new ArrayList<Person.Skill>();
+		ArrayList<Person> people = new ArrayList<Person>();
+		
+		people.add(new Person("Alice"));
+		people.add(new Person("Bob"));
+		people.add(new Person("Carl"));
+		people.add(new Person("Diane"));
+		
+		for(Person person : people) {
+			person.setProfession(Person.Profession.values()[random.nextInt(Person.Profession.values().length)]);
+	
+			int skillPoints = 0;
+			for (Person.Skill tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];
+			tempSkill != Person.Skill.NONE && person1Skill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120; 
+			tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)]) {
+				if(!person1Skill.contains(tempSkill)){
+					person1Skill.add(tempSkill);
+					skillPoints += tempSkill.getCost();
+				}
+			}
+			for(Person.Skill skill : person1Skill) {
+				person.addSkill(skill);
+			}
+		}
+		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];
+		Party.Rations rations = Party.Rations.values()[random.nextInt(Party.Rations.values().length)];
+		
+		Party party = new Party(pace, rations, people);
+		
+		return party;
 	}
 
 	@Override
