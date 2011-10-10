@@ -1,5 +1,6 @@
 package scene.test;
 
+import model.Condition;
 import model.Person;
 
 import org.newdawn.slick.*;
@@ -100,6 +101,9 @@ public class ComponentTestScene extends Scene {
 		cb.setMin(0);
 		cb.setMax(10);
 		mainLayer.add(cb, tb.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.BottomRight, 0, -PADDING);
+		
+		ConditionBar conditionBar = new ConditionBar(container, 200, 40, new Condition(0, 10, 0));
+		mainLayer.add(conditionBar, cb.getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.BottomLeft, 0, -PADDING);
 	}
 
 	@Override

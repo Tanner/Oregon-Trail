@@ -29,9 +29,10 @@ public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
 	private static final int PADDING = 20;
 	
-	private static final int ITEM_BUTTON_WIDTH = 40;
-	private static final int ITEM_BUTTON_HEIGHT = 20;
+	private static final int ITEM_BUTTON_WIDTH = 80;
+	private static final int ITEM_BUTTON_HEIGHT = 40;
 	private static final int ITEM_CONDITION_BAR_HEIGHT = 5;
+	private static final int CONDITION_BAR_PADDING = 4;
 	
 	private Party party;
 	
@@ -63,7 +64,7 @@ public class PartyInventoryScene extends Scene {
 				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item);
 				
 				panel.add(button, lastPositionReference.getPosition(ReferencePoint.CenterRight), ReferencePoint.CenterLeft, PADDING, 0);
-				panel.add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, 0);
+				panel.add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, CONDITION_BAR_PADDING);
 				
 				lastPositionReference = button;
 			}
