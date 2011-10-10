@@ -20,16 +20,13 @@ import java.util.*;
  */
 public class SegmentedControl extends Component {
 	
-	private int margin;
 	private Font font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 	private Color color = Color.white;
 	
 	private final int STATES;
 	private final int maxSelected;
 	
-	private int rows, cols, rowHeight, colWidth;
-	
-	private String[] labels;
+	private int rowHeight, colWidth;
 	
 	private boolean[] selection;
 	private int singleSelection;
@@ -54,10 +51,6 @@ public class SegmentedControl extends Component {
 	public SegmentedControl(GUIContext context, int width, int height, int rows, int cols, int margin, int maxSelected, String ... labels) {
 		super(context, width, height);
 		
-		this.rows = rows;
-		this.cols = cols;
-		this.margin = margin;
-		this.labels = labels;
 		STATES = labels.length;
 		this.maxSelected = maxSelected;
 		buttons = new ToggleButton[STATES];
