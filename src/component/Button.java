@@ -16,9 +16,12 @@ import core.ConstantStore;
  */
 public class Button extends Component implements Disableable {	
 	private Label label;
+	
 	private Color buttonColor;
 	private Color buttonActiveColor;
 	private Color buttonDisabledColor;
+	private Color buttonBorderColor;
+	
 	protected boolean active;
 	protected boolean disabled;
 	
@@ -41,9 +44,13 @@ public class Button extends Component implements Disableable {
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
 		buttonDisabledColor = ConstantStore.COLORS.get("INTERACTIVE_DISABLED");
+		buttonBorderColor = ConstantStore.COLORS.get("INTERACTIVE_BORDER_DARK");
 		
 		setBackgroundColor(buttonColor);
-		setBeveled(true);
+		setBevel(BevelType.Out);
+		setBevelWidth(2);
+		setBorderColor(buttonBorderColor);
+		setBorderWidth(2);
 		
 		container.getInput().addMouseListener(this);
 	}
@@ -66,7 +73,10 @@ public class Button extends Component implements Disableable {
 		buttonDisabledColor = ConstantStore.COLORS.get("INTERACTIVE_DISABLED");
 		
 		setBackgroundColor(buttonColor);
-		setBeveled(true);
+		setBevel(BevelType.Out);
+		setBevelWidth(3);
+		setBorderColor(Color.black);
+		setBorderWidth(2);
 		
 		container.getInput().addMouseListener(this);
 	}
@@ -183,11 +193,14 @@ public class Button extends Component implements Disableable {
 		
 		if (disabled) {
 			setBackgroundColor(buttonDisabledColor);
+			setBevel(BevelType.None);
 		} else {
 			if (isActive()) {
 				setBackgroundColor(buttonActiveColor);
+				setBevel(BevelType.In);
 			} else {
 				setBackgroundColor(buttonColor);
+				setBevel(BevelType.Out);
 			}
 		}
 	}
@@ -214,8 +227,10 @@ public class Button extends Component implements Disableable {
 		this.active = active;
 		if (active) {
 			setBackgroundColor(buttonActiveColor);
+			setBevel(BevelType.In);
 		} else {
 			setBackgroundColor(buttonColor);
+			setBevel(BevelType.Out);
 		}
 	}
 }
