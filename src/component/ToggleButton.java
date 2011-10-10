@@ -38,9 +38,9 @@ public class ToggleButton extends Button {
 			return;
 		}
 		
-		if (button == 0 && isMouseOver() && !disabled) {
+		if (button == 0 && isMouseOver() && !isDisabled()) {
 			if (!disableAutoToggle) {
-				setActive(!active);
+				setActive(!isActive());
 			} else {
 				setActive(true);
 			}
@@ -55,7 +55,7 @@ public class ToggleButton extends Button {
 			return;
 		}
 		
- 		if (button == 0 && isMouseOver() && !disabled && active) {
+ 		if (button == 0 && isMouseOver() && !isDisabled() && isActive()) {
 			if (disableAutoToggle) {
 				setActive(false);
 			}
