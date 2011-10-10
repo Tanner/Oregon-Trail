@@ -41,6 +41,7 @@ public class PartyInventoryScene extends Scene {
 	private static final int ITEM_BUTTON_HEIGHT = 40;
 	private static final int ITEM_CONDITION_BAR_HEIGHT = 5;
 	private static final int CONDITION_BAR_PADDING = 4;
+	private static final int NAME_PADDING = 10;
 	
 	private Party party;
 	
@@ -62,7 +63,6 @@ public class PartyInventoryScene extends Scene {
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		
 		// Create a grid of all the party members and their inventories
-		int nameLabelWidth = 0;
 		int maxInventorySize = 0;
 		for (Person person : members) {
 			Inventory inventory = person.getInventory();
@@ -70,34 +70,35 @@ public class PartyInventoryScene extends Scene {
 			if (maxInventorySize < inventory.getMaxSize()) {
 				maxInventorySize = inventory.getMaxSize();
 			}
-			
-			int newWidth = fieldFont.getWidth(person.getName());
-			if (nameLabelWidth < newWidth) {
-				nameLabelWidth = newWidth;
-			}
 		}
 		
-		int newWidth = fieldFont.getWidth(vehicle.getName());
-		if (nameLabelWidth < newWidth) {
-			nameLabelWidth = newWidth;
-		}
-		
-		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize) + nameLabelWidth;
+		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize);
 		
 		ArrayList<Panel> personPanels = new ArrayList<Panel>();
 		for (Person person : members) {
 			List<Item> inventory = person.getInventoryAsList();
-			Panel panel = new Panel(container, panelWidth, panelHeight);
+			Panel itemPanel = new Panel(container, panelWidth, panelHeight);
 			
-			Label nameLabel = new Label(container, nameLabelWidth, panelHeight, fieldFont, Color.white, person.getName());
-			panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
-			
-			Positionable lastPositionReference = nameLabel;
+			Positionable lastPositionReference = itemPanel;
 			for (int i = 0; i < inventory.size(); i++) {
 				Item item = inventory.get(i);
 				
-				lastPositionReference = createItemButton(item, lastPositionReference.getPosition(ReferencePoint.TopRight), fieldFont, panel, PADDING);
+				Vector2f position = lastPositionReference.getPosition(ReferencePoint.TopRight);
+				int padding = PADDING;
+				
+				if (i == 0) {
+					position = lastPositionReference.getPosition(ReferencePoint.TopLeft);
+					padding = 0;
+				}
+				
+				lastPositionReference = createItemButton(item, position, fieldFont, itemPanel, padding);
 			}
+			
+			Label nameLabel = new Label(container, fieldFont, Color.white, person.getName());			
+			Panel panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int)nameLabel.getFontHeight());
+			
+			panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
+			panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
 			
 			personPanels.add(panel);
 		}
@@ -111,7 +112,7 @@ public class PartyInventoryScene extends Scene {
 		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
 		// Create Vehicle inventories (if one exists)
-		Label wagonLabel = new Label(container, nameLabelWidth, panelHeight, fieldFont, Color.white, vehicle.getName());
+		Label wagonLabel = new Label(container, fieldFont, Color.white, vehicle.getName());
 		
 		// Add the vehicle label to the last left handed side person label
 		int lastOddIndex = personPanels.size() - 1;
