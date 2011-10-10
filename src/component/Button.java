@@ -39,8 +39,10 @@ public class Button extends Component implements Disableable {
 	public Button(GUIContext context, int width, int height, Sprite sprite, Label label) {
 		super(context, width, height);
 		
+		add(sprite, getPosition(Positionable.ReferencePoint.TopCenter), Positionable.ReferencePoint.TopCenter);
+		
 		this.label = label;
-		this.add(label, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
+		add(label, getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.BottomCenter);
 		
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
