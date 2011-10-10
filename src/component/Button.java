@@ -31,10 +31,10 @@ public class Button extends Component implements Disableable {
 	/**
 	 * Constructs a {@code Button} with a width, a height, a {@code Sprite}, and a {@code Label}.
 	 * @param context The GUI context
-	 * @param width	Width of the button
-	 * @param height Height of the button
-	 * @param sprite Sprite for the button
-	 * @param label Label for the button
+	 * @param width The width
+	 * @param height The height
+	 * @param sprite A sprite
+	 * @param label A label
 	 */
 	public Button(GUIContext context, int width, int height, Sprite sprite, Label label) {
 		super(context, width, height);
@@ -53,9 +53,9 @@ public class Button extends Component implements Disableable {
 	/**
 	 * Constructs a {@code Button} with a width, a height, and a {@code Label}.
 	 * @param context The GUI context
-	 * @param width Width of the button
-	 * @param height Height of the button
-	 * @param label Label for the button
+	 * @param width The width
+	 * @param height The height
+	 * @param label A label
 	 */
 	public Button(GUIContext context, int width, int height, Label label) {
 		super(context, width, height);
@@ -73,8 +73,8 @@ public class Button extends Component implements Disableable {
 	
 	/**
 	 * Constructs a {@code Button} with a {@code Label}.
-	 * @param context THe GUI context
-	 * @param label Label for the button
+	 * @param context The GUI context
+	 * @param label A label
 	 */
 	public Button(GUIContext container, Label label) {
 		this(container, label.getWidth(), label.getHeight(), label);
