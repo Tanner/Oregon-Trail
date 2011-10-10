@@ -465,10 +465,6 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 */
 	public void setAcceptingInput(boolean acceptingInput) {
 		super.setAcceptingInput(acceptingInput);
-		
-		for (Component c : components) {
-			c.setAcceptingInput(acceptingInput);
-		}
 	}
 	
 	@Override

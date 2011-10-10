@@ -122,7 +122,7 @@ public class Button extends Component implements Disableable {
 	
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
-		if (!isVisible()) {
+		if (!isVisible() || !isAcceptingInput()) {
 			return;
 		}
 		
