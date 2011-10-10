@@ -13,8 +13,13 @@ import org.newdawn.slick.gui.GUIContext;
  */
 public class ConditionBar extends Component {
 	private Condition condition;
-	private Color barColor;
-	private Color backgroundColor;
+	
+	private double warningLevel = 0.50;
+	private double dangerLevel = 0.25;
+	
+	private Color normalColor;
+	private Color warningColor;
+	private Color dangerColor;
 	
 	/**
 	 * Constructs a new {@code ConditionBar} with a {@code GUIContext}, width, height, and a {@code Conditioned}.
@@ -28,8 +33,11 @@ public class ConditionBar extends Component {
 		
 		this.condition = condition;
 		
-		barColor = Color.green;
-		backgroundColor = Color.gray;
+		normalColor = Color.green;
+		warningColor = Color.yellow;
+		dangerColor = Color.red;
+		
+		setBackgroundColor(Color.gray);
 	}
 	
 	@Override
@@ -40,42 +48,15 @@ public class ConditionBar extends Component {
 		
 		super.render(context, g);
 		
-		g.setColor(backgroundColor);
-		g.fillRect(getX(), getY(), getWidth(), getHeight());
+		double percentage = condition.getPercentage();
+		Color barColor = normalColor;
+		if (percentage < dangerLevel) {
+			barColor = dangerColor;
+		} else if (percentage < warningLevel) {
+			barColor = warningColor;
+		}
 		
 		g.setColor(barColor);
-		g.fillRect(getX(), getY(), (float)(getWidth() * condition.getPercentage()), getHeight());
-	}
-
-	/**
-	 * Get the color of the bar.
-	 * @return Bar color
-	 */
-	public Color getBarColor() {
-		return barColor;
-	}
-
-	/**
-	 * Change the bar color.
-	 * @param barColor The new bar color
-	 */
-	public void setBarColor(Color barColor) {
-		this.barColor = barColor;
-	}
-
-	/**
-	 * Get the color of the background.
-	 * @return Background color
-	 */
-	public Color getBackgroundColor() {
-		return backgroundColor;
-	}
-
-	/**
-	 * Change the background color.
-	 * @param backgroundColor The new background color
-	 */
-	public void setBackgroundColor(Color backgroundColor) {
-		this.backgroundColor = backgroundColor;
+		g.fillRect(getX(), getY(), (float)(getWidth() * percentage), getHeight());
 	}
 }
