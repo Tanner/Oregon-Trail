@@ -9,26 +9,25 @@ public class ToggleButton extends Button {
 	private boolean disableAutoToggle;
 	
 	/**
-	 * Creates a toglge button.
-	 * @param container Container for the  button
-	 * @param label Label for the button
-	 * @param width Width of the button
-	 * @param height Height of the button
+	 * Creates a {@code ToggleButton} with a label, width, and height.
+	 * @param container The GUI context
+	 * @param width The width
+	 * @param height The height
+	 * @param label A label
 	 */
-	public ToggleButton(GUIContext container, int width, int height, Label label) {
-		super(container, width, height, label);
+	public ToggleButton(GUIContext context, int width, int height, Label label) {
+		super(context, width, height, label);
 		
 		disableAutoToggle = false;
 	}
 	
 	/**
-	 * Creates a button.
-	 * @param container Container for the button
-	 * @param label Label for the button
-	 * @param origin Position of the button
+	 * Creates a {@code ToggleButton} with a label.
+	 * @param context The GUI context
+	 * @param label A label
 	 */
-	public ToggleButton(GUIContext container, Label label) {
-		super(container, label);
+	public ToggleButton(GUIContext context, Label label) {
+		super(context, label);
 		
 		disableAutoToggle = false;
 	}
@@ -67,7 +66,7 @@ public class ToggleButton extends Button {
 	}
 	
 	/**
-	 * Change the value of disable auto toggle.
+	 * Change the value to disable auto toggle.
 	 * @param disableAutoToggle Whether auto toggle will be on or off
 	 */
 	public void setDisableAutoToggle(boolean disableAutoToggle) {
