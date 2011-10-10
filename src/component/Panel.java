@@ -10,8 +10,17 @@ import org.newdawn.slick.gui.GUIContext;
  * {@code Panel} inherits from {@code Component} to draw a background color or image.
  */
 public class Panel extends Component {
-	protected Color backgroundColor;
 	protected Image backgroundImage;
+	
+	/**
+	 * Constructs a {@code Panel} with a width and height.
+	 * @param context The GUI context
+	 * @param width The width
+	 * @param height The height
+	 */
+	public Panel(GUIContext context, int width, int height) {
+		super(context, width, height);
+	}
 	
 	/**
 	 * Constructs a {@code Panel} with a width, height, and background color.
@@ -23,17 +32,7 @@ public class Panel extends Component {
 	public Panel(GUIContext context, int width, int height, Color backgroundColor) {
 		super(context, width, height);
 		
-		this.backgroundColor = backgroundColor;
-	}
-	
-	/**
-	 * Constructs a {@code Panel} with a width and height.
-	 * @param context The GUI context
-	 * @param width The width
-	 * @param height The height
-	 */
-	public Panel(GUIContext context, int width, int height) {
-		super(context, width, height);
+		setBackgroundColor(backgroundColor);
 	}
 	
 	/**
@@ -69,14 +68,10 @@ public class Panel extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
-		if (backgroundColor != null) {
-			g.setColor(backgroundColor);
-			g.fillRect(getX(), getY(), getWidth(), getHeight());
-		}
+		super.render(container, g);
+		
 		if (backgroundImage != null) {
 			g.drawImage(backgroundImage, getX(), getY());
 		}
-		
-		super.render(container, g);
 	}
 }
