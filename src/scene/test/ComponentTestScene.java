@@ -69,7 +69,7 @@ public class ComponentTestScene extends Scene {
 		int[] num = {2,3};
 		segment.setPermanent(num);
 		
-		Label longLabel = new Label(container, 400, 105, fieldFont, Color.white, "Hello my name is jeremy.\n\nI am a really cool guy and stuff and I made a multiline label.\nOr did I?");
+		Label longLabel = new Label(container, 400, 125, fieldFont, Color.white, "Hello my name is jeremy.\n\nI am a really cool guy and stuff and I made a multiline label.\nOr did I?");
 		longLabel.setAlignment(Alignment.Center);
 		longLabel.setColor(Color.black);
 		longLabel.setBackgroundColor(Color.lightGray);
