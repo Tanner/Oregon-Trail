@@ -7,12 +7,22 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
+import org.newdawn.slick.Input;
 
 import core.FontManager;
 import core.GameDirector;
 
+/**
+ * {@code Modal} inherits from {@code Component} to extend features that provide
+ * functionality to act like a modal that gets input from the user.
+ */
 public class Modal extends Component {
 	private static final int PADDING = 20;
+	private static final Color OVERLAY_COLOR;
+	
+	static {
+		OVERLAY_COLOR = new Color(0f, 0f, 0f, 0.5f);
+	}
 	
 	private ModalListener listener;
 	private Panel panel;
@@ -21,11 +31,18 @@ public class Modal extends Component {
 	private Button dismissButton;
 	private SegmentedControl segmentedControl;
 	
-	public Modal(GUIContext container, ModalListener listener, String message, String dismissButtonText) {
-		super(container, container.getWidth(), container.getHeight());
+	/**
+	 * Constructs a {@code Modal} with a listener, message, and text for the dismiss button.
+	 * @param context The GUI context
+	 * @param listener The listener
+	 * @param message The text for the message
+	 * @param dismissButtonText The text for the dismiss button
+	 */
+	public Modal(GUIContext context, ModalListener listener, String message, String dismissButtonText) {
+		super(context, context.getWidth(), context.getHeight());
 		
 		this.listener = listener;
-		
+				
 		int messageWidth = 700;
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);		
 		this.messageLabel = new Label(container, messageWidth, fieldFont, Color.white, message);
@@ -48,8 +65,17 @@ public class Modal extends Component {
 		add(panel, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
 	}
 	
-	public Modal(GUIContext container, ModalListener listener, String message, SegmentedControl segmentedControl, String submitButtonString, String cancelButtonString) {
-		super(container, container.getWidth(), container.getHeight());
+	/**
+	 * Constructs a {@code Modal} with a listener, message, segmented control, submit message text, and cancel button text.
+	 * @param context The GUI context
+	 * @param listener The listener
+	 * @param message The text for the message
+	 * @param segmentedControl A segmented control
+	 * @param submitButtonString The text for the submit button
+	 * @param cancelButtonString The text button for the cancel button
+	 */
+	public Modal(GUIContext context, ModalListener listener, String message, SegmentedControl segmentedControl, String submitButtonString, String cancelButtonString) {
+		super(context, context.getWidth(), context.getHeight());
 		
 		this.listener = listener;
 		this.segmentedControl = segmentedControl;
@@ -83,16 +109,33 @@ public class Modal extends Component {
 		add(panel, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
 	}
 	
+	@Override
+	public void render(GUIContext context, Graphics g) throws SlickException {
+		g.setColor(OVERLAY_COLOR);
+		g.fillRect(getX(), getY(), getWidth(), getHeight());
+		
+		super.render(context, g);
+	}
+	
+	@Override
+	public void keyReleased(int key, char c) {
+		if (key == Input.KEY_ENTER) {
+			listener.dismissModal(Modal.this);
+		}
+	}
+	
+	/**
+	 * Returns the segmented control.
+	 * @return The segmented control
+	 */
 	public SegmentedControl getSegmentedControl() {
 		return segmentedControl;
 	}
-	
-	public void render(GUIContext context, Graphics g) throws SlickException {		
-		super.render(context, g);
-	}
 
+	/**
+	 * Listener for the buttons of {@code Modal}.
+	 */
 	private class ButtonListener implements ComponentListener {
-
 		@Override
 		public void componentActivated(AbstractComponent source) {
 			listener.dismissModal(Modal.this);

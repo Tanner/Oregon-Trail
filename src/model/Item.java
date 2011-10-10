@@ -9,12 +9,13 @@ import model.Condition;
  * is weight.
  */
 public abstract class Item implements Conditioned{
-
+	
 	private String name;
 	private String description;
 	private Condition status;
 	private double weight; //This is the individual unit weight
 	private int numberOf;
+	private boolean isStackable = true;
 	
 	/**
 	 * 
@@ -79,7 +80,11 @@ public abstract class Item implements Conditioned{
 	 * @param amount The amount by which to increase the status
 	 */
 	public boolean increaseStatus(int amount) {
-		return status.increase(amount);
+		boolean returned = status.increase(amount);
+		if (status.getCurrent() == status.getMax()) {
+			this.isStackable = true;
+		}
+		return returned;
 	}
 	
 	/**
@@ -87,9 +92,13 @@ public abstract class Item implements Conditioned{
 	 * @param amount The amount by which to decrease the status
 	 */
 	public boolean decreaseStatus(int amount) {
-		return status.decrease(amount);
+		boolean returned = status.decrease(amount);
+		if (status.getCurrent() == status.getMin()) {
+			this.isStackable = false;
+		}
+		return returned;
 	}
-
+	
 	/**
 	 * Returns the weight of the item.
 	 * @return The weight of the item
@@ -114,6 +123,11 @@ public abstract class Item implements Conditioned{
 		return numberOf;
 	}
 	
+	/**
+	 * Increases the stack of the item by specified amount.
+	 * @param amount The amount to add to the stack.
+	 * @return True if the add succeeds, false otherwise.
+	 */
 	public boolean increaseStack(int amount) {
 		if(amount <= 0) {
 			Logger.log("Amount to increase by not positive", Logger.Level.INFO);
@@ -125,6 +139,11 @@ public abstract class Item implements Conditioned{
 		}
 	}
 	
+	/**
+	 * Decreases the stack of the item by specified amount.
+	 * @param amount The amount to subtract from the stack.
+	 * @return True if the subtract succeeds, false otherwise.
+	 */
 	public boolean decreaseStack(int amount) {
 		if(amount <= 0) {
 			Logger.log("Amount to decrease by not positive", Logger.Level.INFO);
@@ -138,5 +157,13 @@ public abstract class Item implements Conditioned{
 			Logger.log("Decrement successful", Logger.Level.INFO);
 			return true;
 		}
+	}
+	
+	/**
+	 * Whether or not the item can be stacked.
+	 * @return True if it can be stacked, false otherwise.
+	 */
+	public boolean isStackable() {
+		return isStackable;
 	}
 }

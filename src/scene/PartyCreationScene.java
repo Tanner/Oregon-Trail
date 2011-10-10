@@ -79,6 +79,7 @@ public class PartyCreationScene extends Scene {
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		int buttonWidth = (container.getWidth() - PADDING * (NUM_PEOPLE + 1)) / NUM_PEOPLE;
 
+		// Create the profession segmented control
 		int numOfProfessions = Person.Profession.values().length;
 		String[] professionLabels = new String[numOfProfessions];
 		for (int i = 0; i < numOfProfessions; i++) {
@@ -86,6 +87,7 @@ public class PartyCreationScene extends Scene {
 		}
 		professionSegmentedControl = new SegmentedControl(container, 800, 200, 5, 5, 5, 1, professionLabels);
 		
+		// Create the skill segemented control
 		int numOfSkills = Person.Skill.values().length - 1;
 		String[] skillLabels = new String[numOfSkills];
 		for (int i = 0; i < numOfSkills; i++) {
@@ -93,6 +95,7 @@ public class PartyCreationScene extends Scene {
 		}	
 		skillSegmentedControl = new SegmentedControl(container, 800, 200, 5, 3, 5, 3, skillLabels);
 		
+		// Create all the "add person" column
 		for (int i = 0; i < newPersonButtons.length; i++) {
 			Positionable newPersonButton = (i == 0) ? mainLayer : newPersonButtons[i - 1];
 			ReferencePoint newPersonButtonReferencePoint = (i == 0) ? ReferencePoint.TopLeft :ReferencePoint.TopRight;
@@ -151,6 +154,7 @@ public class PartyCreationScene extends Scene {
 			}
 		}
 		
+		// Create delete buttons for all the player columns
 		for (int i = 0; i < newPersonButtons.length; i++) {
 			personDeleteButtons[i] = new Button(container, regularButtonHeight, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "DELETE_PERSON_LABEL")));
 			personDeleteButtons[i].setVisible(false);
@@ -230,6 +234,7 @@ public class PartyCreationScene extends Scene {
 		personProfessionLabels[col].setVisible(false);
 		personMoneyLabels[col].setVisible(false);
 		personChangeSkillButtons[col].setVisible(false);
+		
 		for (int j = 0; j < personSkillLabels[col].length; j++) {
 			personSkillLabels[col][j].setVisible(false);
 		}
@@ -259,7 +264,7 @@ public class PartyCreationScene extends Scene {
 	
 	/**
 	 * Process the values from the modal dialog for profession
-	 * @param segmentedControlResults the results of the data entry
+	 * @param segmentedControlResults The results of the data entry
 	 */
 	
 	private void resignProfessionModal(int[] segmentedControlResults){
@@ -269,23 +274,22 @@ public class PartyCreationScene extends Scene {
 		personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
 		
 		personMoneyLabels[currentPersonModifying].setVisible(true);
-		
 		personChangeSkillButtons[currentPersonModifying].setVisible(true);
+		
 		for (int j = 0; j < personSkillLabels[currentPersonModifying].length; j++) {
 			personSkillLabels[currentPersonModifying][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
 			personSkillLabels[currentPersonModifying][j].setVisible(true);
-		}//for 
+		} 
 		
 		if (people.get(currentPersonModifying).getProfession().getStartingSkill() != Skill.NONE) {
 			personSkillLabels[currentPersonModifying][0].setText(people.get(currentPersonModifying).getProfession().getStartingSkill().getName());
 		}
-	}//resignProfessionModal
+	}
 	
 	/**
 	 * Process the values from the modal dialog for Skill selection
-	 * @param segmentedControlResults
+	 * @param segmentedControlResults The results of the data entry
 	 */
-		
 	private void resignSkillModal(int[] segmentedControlResults){
 		people.get(currentPersonModifying).clearSkills();
 		
@@ -293,16 +297,16 @@ public class PartyCreationScene extends Scene {
 			if (segmentedControlResults.length >= j + 1) {
 				people.get(currentPersonModifying).addSkill(Skill.values()[segmentedControlResults[j]]);
 			}
-		}//for through profession
+		}
 		
 		for (int j = 0; j < 3; j++) {
 			if (people.get(currentPersonModifying).getSkills().size() >= j + 1) {
 				personSkillLabels[currentPersonModifying][j].setText(people.get(currentPersonModifying).getSkills().get(j).getName());
 			} else {
 				personSkillLabels[currentPersonModifying][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
-			}//if 
-		}//for 
-	}//resignSkillModal
+			}
+		}
+	}
 	
 	@Override
 	public void dismissModal(Modal modal) {
@@ -311,40 +315,40 @@ public class PartyCreationScene extends Scene {
 		if (modal == professionModal) {
 			int[] segmentedControlResults = modal.getSegmentedControl().getSelection();
 			resignProfessionModal(segmentedControlResults);
-		}//if modal == professionalModal
-		else if (modal == skillModal) {
+		} else if (modal == skillModal) {
 			int[] segmentedControlResults = modal.getSegmentedControl().getSelection();
 			resignSkillModal(segmentedControlResults);
-		}//if modal == skillModal
-	}//resignModal method
+		}
+	}
 	
-	private class ButtonListener implements ComponentListener {
-		
+	private class ButtonListener implements ComponentListener {	
 		/**
 		 * Breakout method : newPersonButton triggered event - set text field access accordingly
-		 * @param i the index in the textfield array we are checking
+		 * @param i The index in the textfield array we are checking
 		 */		
 		private void newPersonButton(int i){
 			personNameTextFields[i].setVisible(true);			
 			personNameTextFields[i].setFocus(true);
-			
-		}//newPersonButton method
+		}
 	
 		/**
 		 * Breakout method : personNameTextField triggered event, setup person's data accordingly
-		 * @param i the index in the textfield array we are checking
-		 * @return exit code - 0 for natural exit, 1 for forced exit
+		 * @param i The index in the textfield array we are checking
+		 * @return Exit code - 0 for natural exit, 1 for forced exit
 		 */		
-		private int personNameTextField(int i){			
-			if(people.size() < i + 1) {//if party not full
-				if (!personNameTextFields[i].isEmpty()) {//if the textfield is not empty			
-					for (Person person : people) {//iterate through the party being built
-						if (person.getName().equalsIgnoreCase(personNameTextFields[i].getText())) {//check if name exists already
+		private int personNameTextField(int i) {			
+			if (people.size() < i + 1) {
+				// If the party is not full...
+				if (!personNameTextFields[i].isEmpty()) {
+					// If the textfield is not empty...		
+					for (Person person : people) {
+						if (person.getName().equalsIgnoreCase(personNameTextFields[i].getText())) {
+							// If the name already exists, tell the user
 							showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_DUP_NAME"), ConstantStore.get("GENERAL", "OK")));
 							personNameTextFields[i].clear();
-							return 1;//forced exit, propagate through calling method
-						}//name already exists
-					}//for each person
+							return 1;
+						}
+					}
 					
 					people.add(i, new Person(personNameTextFields[i].getText()));
 					
@@ -355,23 +359,24 @@ public class PartyCreationScene extends Scene {
 					personDeleteButtons[people.size() - 1].setVisible(true);
 					personChangeProfessionButtons[i].setVisible(true);
 					personProfessionLabels[i].setVisible(true);
-				}//if personNameTextField not empty
-			}//if people.size less than i+1 (party is not full)
-			else {//party is full
-				if (personNameTextFields[i].isEmpty()) {//set name appropriately to stored name if field is cleared.
+				}
+			} else {
+				// Party is full
+				if (personNameTextFields[i].isEmpty()) {
 					personNameTextFields[i].setText(people.get(i).getName());
-				}			
+				}
+				
 				people.get(i).setName(personNameTextFields[i].getText());
-			}//people.size not less than i+1
+			}
+			
 			return 0;
-		}//personNameTextField method
+		}
 		
 		/**
 		 * Breakout method : change profession button pressed, handle new profession entry by player
-		 * @param i the index of the button pushed
-		 */
-		
-		private void personChangeProfButton(int i){
+		 * @param i The index of the button pushed
+		 */	
+		private void personChangeProfButton(int i) {
 			professionSegmentedControl.clear();
 			professionModal = new Modal(container,
 					PartyCreationScene.this,
@@ -381,27 +386,29 @@ public class PartyCreationScene extends Scene {
 					ConstantStore.get("GENERAL", "CANCEL"));
 
 			int[] currentProfession = new int[1];
-			if(people.get(i).getProfession() != null) {//segemented control requires an array 
+			if (people.get(i).getProfession() != null) {
 				currentProfession[0] = people.get(i).getProfession().ordinal();
 			}
+			
 			professionSegmentedControl.setSelection(currentProfession);								
 			currentPersonModifying = i;
 			showModal(professionModal);			
-		}//personChangeProfButton method
+		}
 		
 		/**
 		 * Breakout method : change skill button pressed, handle data and code appropriately
 		 * @param i the index of the change skill button pressed
 		 */
-		private void personChangeSkillButton(int i){
-			
+		private void personChangeSkillButton(int i) {
 			skillSegmentedControl.clear();
 			String skillModalMessage;
+			
 			if (people.get(i).getProfession().getStartingSkill() != Skill.NONE) {
 				skillModalMessage = String.format(ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL_MESSAGE"), people.get(i).getName(), people.get(i).getProfession().getStartingSkill().getName());
 			}  else {
 				skillModalMessage = String.format(ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL_MESSAGE_NO_SKILL"), people.get(i).getName());
 			}
+			
 			skillModal = new Modal(container,
 					PartyCreationScene.this,
 					skillModalMessage,
@@ -421,31 +428,30 @@ public class PartyCreationScene extends Scene {
 			
 			currentSkills.remove(Person.Skill.NONE);
 			int[] currentSkillIndices = new int[currentSkills.size()];
-			for(int j = 0; j < currentSkillIndices.length; j++) {
+			for (int j = 0; j < currentSkillIndices.length; j++) {
 				currentSkillIndices[j] = currentSkills.get(j).ordinal();
 			}
+			
 			System.out.println(Arrays.toString(currentSkillIndices));
 			skillSegmentedControl.setSelection(currentSkillIndices);
 			currentPersonModifying = i;
 			showModal(skillModal);			
-		}//personChangeSkillButton method
+		}
 
 		/**
 		 * Breakout Method : personDelete button pressed - address person data accordingly
-		 * @param i index in array of buttons for button pressed
+		 * @param i Index in array of buttons for button pressed
 		 */
-		
 		public void personDeleteButton(int i){
 			//Delete the last created person
 			Logger.log("Deleting pending Person at index " + i, Logger.Level.INFO);
 			clearPersonData(i);
 			hidePersonColumn(i);			
-		}//personDeleteButton
+		}
 		
 		/**
 		 * Breakout method : confirm button pressed - check status of party and set up next scene if valid
 		 */
-		
 		public void confirmButton(){
 			if (people.size() == 0) {
 				showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_NO_MEMBERS"), ConstantStore.get("GENERAL", "OK")));
@@ -459,42 +465,39 @@ public class PartyCreationScene extends Scene {
 					return;
 				}
 			}
+			
 			//set initial game values
 			pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
 			rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
 			player.setParty(new Party(pace, rations, people));
 			
 			Logger.log("Confirm button pushed", Logger.Level.INFO);
-			GameDirector.sharedSceneDelegate().requestScene(SceneID.Town);
-			
+			GameDirector.sharedSceneDelegate().requestScene(SceneID.Town, PartyCreationScene.this);	
 		}
-		
 		
 		@Override		
 		public void componentActivated(AbstractComponent source) {		
-			int retCode = 0; 		//return code based on forced exit in personNameField code
+			int retCode = 0;
+			
 			for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
 					newPersonButton(i);
-				}
-				else if (source == personNameTextFields[i]) {	
+				} else if (source == personNameTextFields[i]) {	
 					retCode = personNameTextField(i);
-				}			
-				else if (source == personChangeProfessionButtons[i]) {
+				} else if (source == personChangeProfessionButtons[i]) {
 					personChangeProfButton(i);
-				}				
-				else if (source == personChangeSkillButtons[i]) {
+				} else if (source == personChangeSkillButtons[i]) {
 					personChangeSkillButton(i);
-				}
-				
-				else if (source == personDeleteButtons[i]) {
+				} else if (source == personDeleteButtons[i]) {
 					personDeleteButton(i);
 				}
-			}//for loop 
+			}
 			
-			if (retCode == 0){//personNameTextField had instance of forced return - bypass this code if return was forced
+			if (retCode == 0){
+				// PersonNameTextField had instance of forced return - bypass this code if return was forced
 				enableNextPersonField();
 			}
+			
 			if (source == confirmButton) {
 				confirmButton();
 			}

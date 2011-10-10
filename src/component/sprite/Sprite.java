@@ -13,7 +13,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.Component;
 
 /**
- * This class represents a sprite with an left and right animation.
+ * {@code Sprite} inherits from {@code Component} to extend features
+ * to represent a sprite with an left and right animation.
  */
 public class Sprite extends Component {
 	private Animation leftAnimation;
@@ -27,13 +28,13 @@ public class Sprite extends Component {
 	private DirectionFacing xDirection = DirectionFacing.LEFT;
 	
 	/**
-	 * Constructs a Sprite.
-	 * @param container Container displaying the component
+	 * Constructs a {@code Sprite} with a right and left animation.
+	 * @param context The GUI context
 	 * @param rightAnimation Animation for when facing right
 	 * @param leftAnimation Animation for when facing left
 	 */
-	public Sprite(GUIContext container, Animation rightAnimation, Animation leftAnimation) {
-		super(container, rightAnimation.getWidth(), rightAnimation.getHeight());
+	public Sprite(GUIContext context, Animation rightAnimation, Animation leftAnimation) {
+		super(context, rightAnimation.getWidth(), rightAnimation.getHeight());
 		
 		this.rightAnimation = rightAnimation;
 		this.leftAnimation = leftAnimation;
@@ -47,13 +48,13 @@ public class Sprite extends Component {
 	}
 	
 	/**
-	 * Constructs a Sprite.
-	 * @param container Container displaying the component
+	 * Constructs a {@code Sprite} with a right and left image..
+	 * @param container The GUI context
 	 * @param rightImage Image for when facing right
 	 * @param leftImage Image for when facing left
 	 */
-	public Sprite(GUIContext container, Image rightImage, Image leftImage) {
-		this(container, new Animation(new Image[]{rightImage}, 1), new Animation(new Image[]{leftImage}, 1));
+	public Sprite(GUIContext context, Image rightImage, Image leftImage) {
+		this(context, new Animation(new Image[]{rightImage}, 1), new Animation(new Image[]{leftImage}, 1));
 	}
 	
 	@Override

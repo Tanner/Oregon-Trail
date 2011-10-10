@@ -51,31 +51,35 @@ public class Inventory {
 	 */
 	public boolean addItem(Item item) {
 		if(getWeight() + (item.getStackWeight()) > MAX_WEIGHT) {
+			//Item addition would exceeded max weight
 			Logger.log("The inventory has max weight: " + MAX_WEIGHT + 
 					" and the addition of " + item.getName() + " would increase the weight to " + 
 					(getWeight() + item.getWeight()), Logger.Level.INFO);
 			return false;
-		}
-		else if(items.size() == MAX_SIZE) {
+		} else if(!items.contains(item) && items.size() == MAX_SIZE) {
+			// Item doesn't offend max weight and isn't already contained but would overflow inventory bins
 			Logger.log("The inventory has max capacity: " + MAX_SIZE + 
 					" and currently has " + items.size() + " items.", Logger.Level.INFO);
 			return false;
-		}
-		else {
-			if(items.contains(item)) {
-				if(!items.get(items.indexOf(item)).increaseStack(item.getNumberOf())) {
-					Logger.log("Could not add item", Logger.Level.INFO);
-					return false;
-				}
+		} else if(items.contains(item) && (items.get(items.indexOf(item)).isStackable() && item.isStackable()) ){
+			// Item doesn't offend max weight and is already present in inventory and both the item added and current item are stackable
+			if(!items.get(items.indexOf(item)).increaseStack(item.getNumberOf())) {
+				// IncreaseStack failed
+				Logger.log("Could not add item", Logger.Level.INFO);
+				return false;
+			} else {
+				// Successfully added item
+				Logger.log(item.getName() + " was added successfully.", Logger.Level.INFO);
+				return true;
 			}
-			else {
-				items.add(item);
-			}
+		} else {
+			//One or the other is not stackable, but there is room available, or the item doesn't already exist and there is room
+			items.add(item);
 			Logger.log(item.getName() + " was added successfully.", Logger.Level.INFO);
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Removes the specified item from the inventory if it exists.
 	 * @param item The item to be removed.

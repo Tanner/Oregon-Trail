@@ -1,14 +1,13 @@
 package component;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 import java.util.*;
 import java.util.regex.*;
 
 /**
- * A label class to draw text on screen.  Uses
- * Font's drawString method to accomplish this.
+ * {@code Label} inherits from {@code Component} to extend features that provide
+ * functionality that draws text.
  */
 public class Label extends Component {
 	public enum Alignment {
@@ -45,13 +44,13 @@ public class Label extends Component {
 	}
 	
 	/**
-	 * Creates a label to be drawn on the screen.
+	 * Constructs a {@code Label} with a width, font, color, and text.
 	 * 
-	 * @param context The game container
+	 * @param context The GUI context
+	 * @param width Width of the label
 	 * @param font Font the text will be drawn in
 	 * @param c Color of the text
 	 * @param text The text to draw
-	 * @param width Width of the label
 	 */
 	public Label(GUIContext context, int width, Font font, Color c, String text) {
 		super(context, width, font.getLineHeight());
@@ -65,9 +64,9 @@ public class Label extends Component {
 	}
 	
 	/**
-	 * Creates a label to be drawn on the screen.
+	 * Creates a {@code Label} with a font, color, and text.
 	 * 
-	 * @param context The game container
+	 * @param context The GUI context
 	 * @param font Font the text will be drawn in
 	 * @param c Color of the text
 	 * @param text The text to draw
@@ -78,12 +77,12 @@ public class Label extends Component {
 	}
 	
 	/**
-	 * Creates a label that is initially empty.
+	 * Constructs a {@code Label} with a width, font, and color.
 	 * 
-	 * @param context The game container
+	 * @param context The GUI context
+	 * @param width Width of the label
 	 * @param font Font the text will be drawn in
 	 * @param c	Color of the text
-	 * @param width Width of the label
 	 */
 	public Label(GUIContext context, int width, Font font, Color c) {
 		this(context, width, font, c, "");
@@ -149,41 +148,58 @@ public class Label extends Component {
 		}
 	}
 	
+	/**
+	 * Set background color.
+	 * @param color New background color
+	 */
 	public void setBackgroundColor(Color color) {
 		backgroundColor = color;
 	}
 	
+	/**
+	 * Set font.
+	 * @param font New font
+	 */
 	public void setFont(Font font) {
 		this.font = font;
 	}
+
+	/**
+	 * Get the width for the current font.
+	 * @return Width of the label using the current font
+	 */
+	public float getFontWidth() {
+		return font.getWidth(text);
+	}
 	
 	/**
-	 * Updates the label with new text, and calculates new width
-	 * and height based on that text.
-	 * 
-	 * @param text The text you want drawn on the label
+	 * Set the text.
+	 * @param text The text to be drawn
 	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 	
 	/**
-	 * Get the text of this label.
-	 * 
-	 * @return Label's current text
+	 * Get the text.
+	 * @return The current text
 	 */
 	public String getText() {
 		return text;
 	}
 	
 	/**
-	 * Changes the color of the label.
+	 * Set the text's color.
 	 * @param color New color
 	 */
 	public void setColor(Color color) {
 		c = color;
 	}
 	
+	/**
+	 * Set the text alignment.
+	 * @param alignment The new text alignment
+	 */
 	public void setAlignment(Alignment alignment) {
 		this.alignment = alignment;
 	}

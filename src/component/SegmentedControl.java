@@ -65,18 +65,6 @@ public class SegmentedControl extends Component {
 		permanent = new boolean[STATES];
 		singleSelection = -1;
 		
-		generateButtons(context);
-			
-		clear();		
-	}
-	
-	/**
-	 * Create each button for the SegmentedControl, and add listeners
-	 * to each button.
-	 * 
-	 * @param context The graphics context for the game
-	 */
-	public void generateButtons(GUIContext context) {
 		rowHeight = (getHeight() - (rows + 1) * margin) / rows;
 		colWidth = (getWidth() - (cols + 1) * margin) / cols;
 		
@@ -91,10 +79,21 @@ public class SegmentedControl extends Component {
 		boolean roundedCorners = (margin == 0) ? true : false;
 		
 		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TopLeft), rows, cols, 0, 0, margin, margin);
+			
+		clear();		
+	}
+	
+	@Override
+	public void render(GUIContext context, Graphics g) throws SlickException {
+		if (!isVisible()) {
+			return;
+		}
+		
+		super.render(context, g);
 	}
 	
 	/**
-	 * Update all buttons to their current state/color
+	 * Update all buttons to their current state.
 	 */
 	public void updateButtons() {
 		for (int i = 0; i < STATES; i++) {
@@ -106,13 +105,9 @@ public class SegmentedControl extends Component {
 		}
 	}
 	
-	
 	/**
-	 * This method allows you to set which buttons are selected in the current
-	 * SegmentedControl.  The correct use of this is to get the selection array
-	 * from getSelection(), and pass it back in to this method.
-	 * 
-	 * @param selection An array of selections to set on the SegmentedControl
+	 * Set which buttons are selected.
+	 * @param selection An array of selections to set, with the values of the array corresponding to the index of the button
 	 */
 	public void setSelection(int[] selection) {
 		if ( selection.length == 1) {
@@ -130,12 +125,8 @@ public class SegmentedControl extends Component {
 	}
 	
 	/**
-	 * This method will allow multiple buttons to be turned on permanently.  They
-	 * can not be unselected, and they count towards the maximum possible selected
-	 * button count.  Only works if the controller is set to allow more than
-	 * one button selection.
-	 * 
-	 * @param permanent An array of indices to set as permanently selected
+	 * Set buttons to be permanently toggled.
+	 * @param permanent An array of buttons to be permanently toggled, with the values of the array corresponding to the index of the button
 	 */
 	public void setPermanent(int[] permanent) {
 		if (maxSelected > 1) {
@@ -149,9 +140,7 @@ public class SegmentedControl extends Component {
 	}
 	
 	/**
-	 * Clear the state of the SegmentedController.
-	 * Sets button selection back to default if only 1 button is allowed to be
-	 * changed.  Otherwise, clear all selections.
+	 * Clear the selections of the buttons.
 	 */
 	public void clear() {
 		Arrays.fill(this.selection, false);
@@ -165,27 +154,31 @@ public class SegmentedControl extends Component {
 	}
 	
 	/**
-	 * Change the font used by each button on the SegmentedController.
-	 * 
-	 * @param f The new font to set.
+	 * Set the font used by each button.
+	 * @param f The new font for each button
 	 */
 	public void setFont(Font f) {
 		font = f;
-		for (Button b : buttons)
+		for (Button b : buttons) {
 			b.setFont(font);
+		}
 	}
 	
 	/**
-	 * Change the font color used by each button on the SegmentedController.
-	 * 
-	 * @param c The new color to set.
+	 * Set the font color used by each button.
+	 * @param c The new color from each button
 	 */
 	public void setColor(Color c) {
 		color = c;
-		for (Button b : buttons)
+		for (Button b : buttons) {
 			b.setLabelColor(color);
+		}
 	}
 	
+	/**
+	 * Return the number of buttons selected.
+	 * @return The number of buttons selected
+	 */
 	private int getNumSelected() {
 		int count = 0;
 		for (boolean b : selection) {
@@ -202,11 +195,10 @@ public class SegmentedControl extends Component {
 	}
 
 	/**
-	 * Returns the current state of the segmented controller.  This value
-	 * will be the position from the left of the button, with the value of the
-	 * far left button being 0
-	 * 
-	 * @return the current position of the clicked button
+	 * Returns the current state of the segmented controller as an array,
+	 * with each index of the array corresponding the index of the button
+	 * that was selected.
+	 * @return The current position of the clicked button
 	 */
 	public int[] getSelection() {
 		if (maxSelected > 1) {
@@ -226,31 +218,23 @@ public class SegmentedControl extends Component {
 			return returnStates;
 		}
 	}
-
-	@Override
-	public void render(GUIContext context, Graphics g) throws SlickException {
-		if (!isVisible()) {
-			return;
-		}
-		
-		super.render(context, g);
-	}
 	
-	public void setAcceptingInput(boolean acceptingInput) {
-		super.setAcceptingInput(acceptingInput);
-		
-		for (Button b : buttons) {
-			b.setAcceptingInput(acceptingInput);
-		}
-	}
-	
+	/**
+	 * Listener for the buttons of {@code SegmentedControl}.
+	 */
 	private class SegmentListener implements ComponentListener {
 		private int ordinal;
 		
+		/**
+		 * Constructs a {@code SegmentedListener} with an ordinal value
+		 * corresponding to the index of the button in {@code SegmentedControl}.
+		 * @param ordinal The ordinal value of the button in the {@code SegmentedControl}
+		 */
 		public SegmentListener(int ordinal) {
 			this.ordinal = ordinal;
 		}
 		
+		@Override
 		public void componentActivated(AbstractComponent source) {
 			Logger.log("Selected before button press: " + Arrays.toString(getSelection()), Logger.Level.DEBUG);
 			if (maxSelected > 1 && !permanent[ordinal]) {

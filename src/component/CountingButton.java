@@ -12,7 +12,7 @@ import core.FontManager;
 import core.GameDirector;
 
 /**
- * Create a button that has a flag that counts up or down.
+ * {@code CountingButton} inherits from {@code Button} to add a flag that counts up or down.
  */
 public class CountingButton extends Button {
 	private int count;
@@ -20,20 +20,20 @@ public class CountingButton extends Button {
 	private int max = Integer.MAX_VALUE;
 	
 	/**
-	 * Creates a counting button.
-	 * @param container Container for the  button
-	 * @param label Label for the button
+	 * Constructs a {@code CountingButton} with a width and height.
+	 * @param container The GUI context
 	 * @param width Width of the button
 	 * @param height Height of the button
+	 * @param label Label for the button
 	 */
-	public CountingButton(GUIContext container, Label label, int width, int height) {
-		super(container, width, height, label);
+	public CountingButton(GUIContext context, int width, int height, Label label) {
+		super(context, width, height, label);
 		
 		count = 0;
 	}
 
 	/**
-	 * Creates a button.
+	 * Constructs a {@code CountingButton} with a label.
 	 * @param container Container for the button
 	 * @param label Label for the button
 	 * @param origin Position of the button
