@@ -338,6 +338,10 @@ public class Person implements Conditioned{
 		return inventory.removeItem(item);
 	}
 	
+	/**
+	 * Returns the inventory of the person as an array list.
+	 * @return The inventory in a list.
+	 */
 	public ArrayList<Item> getInventoryAsList() {
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		for(Item item : inventory.getItems()) {
@@ -346,6 +350,10 @@ public class Person implements Conditioned{
 		return itemList;		
 	}
 	
+	/**
+	 * Returns the health condition for status bar.
+	 * @return The condition 'health'
+	 */
 	public Condition getHealth() {
 		return health.clone();
 	}
@@ -353,5 +361,29 @@ public class Person implements Conditioned{
 	@Override
 	public double getConditionPercentage() {
 		return health.getPercentage();
+	}
+	
+	public boolean canGetItem(Item item) {
+		ArrayList<Item> items = inventory.getItems();
+		boolean contains = false;
+		int indexOf = -1;
+		boolean allContainedStackable = true;
+		for(Item containedItem : items) {
+			if (containedItem.getClass() == item.getClass()) {
+				if(!containedItem.isStackable()) {
+					allContainedStackable = false;
+				}
+				contains = true;
+				indexOf = items.indexOf(containedItem);
+			}
+		}
+		if ((inventory.getWeight() + (item.getStackWeight()) > MAX_INVENTORY_WEIGHT) || 
+				(!contains && items.size() == inventory.getMaxSize()) || 
+				(contains && !allContainedStackable && items.size() == inventory.getMaxSize())) {
+			return false;
+		} else {
+			return true;
+		}
+		
 	}
 }

@@ -54,10 +54,13 @@ public class Party {
 	}
 	
 	public boolean buyItemForInventory(Item item, Person person) {
-		if (money > item.getStackCost()) {
-			
+		if (money > item.getStackCost() && person.canGetItem(item)) {
+			person.addToInventory(item);
+			money -= item.getStackCost();
+			return true;
+		} else {
+			return false;
 		}
-		return true;
 	}
 	/**
 	 * Returns an array of Persons present in the party
