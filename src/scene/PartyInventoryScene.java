@@ -20,6 +20,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.Button;
 import component.Component;
 import component.ConditionBar;
+import component.CountingButton;
 import component.Label;
 import component.Panel;
 import component.Positionable;
@@ -92,7 +93,9 @@ public class PartyInventoryScene extends Scene {
 			for (int i = 0; i < inventory.size(); i++) {
 				Item item = inventory.get(i);
 				
-				Button button = new Button(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, item.getName()));
+				CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, item.getName()));
+				button.setCount(item.getNumberOf());
+				
 				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item.getStatus());
 				
 				panel.add(button, lastPositionReference.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
