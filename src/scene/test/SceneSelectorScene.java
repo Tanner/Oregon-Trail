@@ -171,6 +171,8 @@ public class SceneSelectorScene extends Scene {
 			SonicScrewdriver sonic = new SonicScrewdriver(10 - people.indexOf(person));
 			person.addToInventory(wheel);
 			person.addToInventory(sonic);
+			person.removeFromInventory(new SonicScrewdriver(3));
+			person.addToInventory(new SonicScrewdriver(2));
 		}
 		
 		Vehicle vehicle = new Wagon();
@@ -178,6 +180,10 @@ public class SceneSelectorScene extends Scene {
 			Item sonic = new SonicScrewdriver(1);
 			sonic.decreaseStatus(random.nextInt(100));
 			vehicle.addToInventory(sonic);
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			vehicle.addToInventory(new SonicScrewdriver(i));
 		}
 		
 		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];

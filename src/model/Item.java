@@ -93,7 +93,7 @@ public abstract class Item implements Conditioned{
 	 */
 	public boolean decreaseStatus(int amount) {
 		boolean returned = status.decrease(amount);
-		if (status.getCurrent() == status.getMin()) {
+		if (status.getCurrent() < status.getMax()) {
 			this.isStackable = false;
 		}
 		return returned;
@@ -134,6 +134,7 @@ public abstract class Item implements Conditioned{
 			return false;
 		}
 		else {
+			numberOf += amount;
 			Logger.log("Increment successful", Logger.Level.INFO);
 			return true;
 		}
