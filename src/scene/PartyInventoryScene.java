@@ -28,7 +28,10 @@ import core.GameDirector;
 public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
 	private static final int PADDING = 20;
+	
 	private static final int ITEM_BUTTON_WIDTH = 40;
+	private static final int ITEM_BUTTON_HEIGHT = 20;
+	private static final int ITEM_CONDITION_BAR_HEIGHT = 5;
 	
 	private Party party;
 	
@@ -48,17 +51,18 @@ public class PartyInventoryScene extends Scene {
 		for (Person person : members) {
 			List<Item> inventory = person.getInventory().getItems();
 			
-			Panel panel = new Panel(container, 200, 100);
+			int width = ((ITEM_BUTTON_WIDTH + PADDING) * inventory.size()) + fieldFont.getWidth(person.getName());
+			Panel panel = new Panel(container, width, ITEM_BUTTON_HEIGHT + ITEM_CONDITION_BAR_HEIGHT);
 			
 			Label nameLabel = new Label(container, fieldFont, Color.white, person.getName());
 			panel.add(nameLabel, panel.getPosition(ReferencePoint.CenterLeft), ReferencePoint.CenterLeft, 0, 0);
 			
 			Positionable lastPositionReference = nameLabel;
 			for (Item item : inventory) {
-				Button button = new Button(container, ITEM_BUTTON_WIDTH, 20, new Label(container, fieldFont, Color.white, item.getName()));
-				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, 5, item);
+				Button button = new Button(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, item.getName()));
+				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item);
 				
-				panel.add(button, lastPositionReference.getPosition(ReferencePoint.CenterLeft), ReferencePoint.CenterLeft, 0, 0);
+				panel.add(button, lastPositionReference.getPosition(ReferencePoint.CenterLeft), ReferencePoint.CenterLeft, PADDING, 0);
 				panel.add(conditionBar, conditionBar.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, 0);
 				
 				lastPositionReference = button;
