@@ -481,8 +481,13 @@ public class PartyCreationScene extends Scene {
 		@Override		
 		public void componentActivated(AbstractComponent source) {		
 			int retCode = 0;
-			
-			for (int i = 0; i < NUM_PEOPLE; i++) {
+			int i = 0;
+			//for loop needed to be modified to a while to handle the retcode returned from personNameTextField
+			//originally method code resided here and had a return in it which broke this loop.  now
+			//that it has been broken out from here, the retCode needs to be able to break loop to maintain
+			//old functionality
+			while ((i < NUM_PEOPLE) && (retCode == 0)){
+			//for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
 					newPersonButton(i);
 				} else if (source == personNameTextFields[i]) {	
@@ -494,6 +499,7 @@ public class PartyCreationScene extends Scene {
 				} else if (source == personDeleteButtons[i]) {
 					personDeleteButton(i);
 				}
+				i++;
 			}
 			
 			if (retCode == 0){
