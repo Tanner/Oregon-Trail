@@ -347,7 +347,7 @@ public class Person implements Conditioned{
 	}
 	
 	public Condition getHealth() {
-		return health;
+		return health.clone();
 	}
 	
 	@Override

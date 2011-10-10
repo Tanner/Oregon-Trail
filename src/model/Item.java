@@ -67,7 +67,7 @@ public abstract class Item implements Conditioned{
 	 * @return The current condition of the item.
 	 */
 	public Condition getStatus() {
-		return status;
+		return status.clone();
 	}
 	
 	@Override

@@ -112,4 +112,8 @@ public class Condition {
 			return true;
 		}
 	}
+	
+	public Condition clone() {
+		return new Condition(this.min, this.max, this.current);
+	}
 }

@@ -19,7 +19,7 @@ public abstract class Vehicle extends Item{
 	 * @return The current status of the vehicle.
 	 */
 	public Condition getStatus() {
-		return status;
+		return status.clone();
 	}
 	
 	/**
