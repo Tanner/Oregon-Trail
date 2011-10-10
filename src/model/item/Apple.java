@@ -7,6 +7,6 @@ import model.Item;
 public class Apple extends Item {
 	public Apple(int numberOf) {
 		super(ConstantStore.get("ITEMS", "APPLE_NAME"), 
-			  ConstantStore.get("ITEMS", "APPLE_DESRCIPTION"), new Condition(100), 1.5, numberOf);
+			  ConstantStore.get("ITEMS", "APPLE_DESCRIPTION"), new Condition(100), 1.5, numberOf, 2);
 	}
 }

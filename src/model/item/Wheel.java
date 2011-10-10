@@ -8,6 +8,6 @@ public class Wheel extends Item {
 
 	public Wheel(int numberOf) {
 		super(ConstantStore.get("ITEMS", "WHEEL_NAME"), 
-			  ConstantStore.get("ITEMS", "WHEEL_DESRCIPTION"), new Condition(100), 5, numberOf);
+			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"), new Condition(100), 5, numberOf, 75);
 	}
 }
