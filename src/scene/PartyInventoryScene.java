@@ -71,7 +71,7 @@ public class PartyInventoryScene extends Scene {
 			Positionable lastPositionReference = nameLabel;
 			for (Item item : inventory) {
 				Button button = new Button(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, item.getName()));
-				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item);
+				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item.getStatus());
 				
 				panel.add(button, lastPositionReference.getPosition(ReferencePoint.CenterRight), ReferencePoint.CenterLeft, PADDING, 0);
 				panel.add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, CONDITION_BAR_PADDING);
