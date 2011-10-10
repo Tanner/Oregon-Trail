@@ -73,6 +73,9 @@ public class SegmentedControl extends Component {
 				if (i > 0) {
 					buttons[i].setLeftBorderWidth(0);
 				}
+				if (i > STATES / rows - 1) {
+					buttons[i].setTopBorderWidth(0);
+				}
 			}
 		}
 				
