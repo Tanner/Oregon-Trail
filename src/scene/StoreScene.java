@@ -27,7 +27,8 @@ public class StoreScene extends Scene {
 	private Label[] itemDescription;
 	String tempDescription = "This is an item description.\nIt is a good item, maybe a sonic screwdriver.\n\nYep.";
 	
-	private int currentItem = 0;
+	private int currentItem = -1;
+	private int hoverItem = -1;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -63,6 +64,7 @@ public class StoreScene extends Scene {
 		for (int i = 0; i < storeInventory.length; i++) {
 			tempLabel = new Label(container, fieldFont, Color.white, "Item " + i);
 			storeInventory[i] = new CountingButton(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+			storeInventory[i].addListener(new InventoryListener(i));
 		}
 		storeInventoryButtons = new Panel(container, BUTTON_WIDTH * 4 + PADDING * 3, BUTTON_HEIGHT * 4 + PADDING * 3);
 		
@@ -100,7 +102,29 @@ public class StoreScene extends Scene {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		updateLabels(currentItem);
+		//Re-enable all buttons if currently selected item's quantity goes back to 0
+		if ( currentItem != -1 && storeInventory[currentItem].getCount() == 0 ) {
+			currentItem = -1;
+			for (int i = 0; i < storeInventory.length; i++) {
+					storeInventory[i].setDisabled(false);
+			}
+			return;
+		}
+		//Don't do anything if there is no hovering/item selection
+		if ( hoverItem == -1 && currentItem == -1 ) {
+			return;
+		//Display information for the item currently being hovered over
+		} else if ( hoverItem != -1 && hoverItem != currentItem ) {
+			updateLabels(hoverItem);
+		//Display information for currently selected item, as well as disable
+		//all other buttons.
+		} else {
+			updateLabels(currentItem);
+			for (int i = 0; i < storeInventory.length; i++) {
+				if ( i != currentItem )
+					storeInventory[i].setDisabled(true);
+			}	
+		}
 	}
 
 	@Override
@@ -125,14 +149,29 @@ public class StoreScene extends Scene {
 		}
 	}
 	
+	private class InventoryListener implements ComponentListener {
+		
+		private int ordinal;
+		
+		public InventoryListener(int ordinal) {
+			this.ordinal = ordinal;
+		}
+		
+		public void componentActivated(AbstractComponent source) {
+			if ( currentItem == -1 || storeInventory[currentItem].getCount() == 0)
+				currentItem = ordinal;
+		}
+	}
+	
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		for (int i = 0; i < storeInventory.length; i++) {
 			if ( contains(storeInventory[i], newx, newy) )
 			{ 
-				currentItem = i;
-				break;
+				hoverItem = i;
+				return;
 			}
 		}
+		hoverItem = -1;
 	}
 	
 	/**
