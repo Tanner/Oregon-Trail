@@ -143,8 +143,8 @@ public class PartyInventoryScene extends Scene {
 			vehicleItemPanelsArray[vehicleItemPanels.indexOf(panel)] = panel;
 		}
 		
-		int numRows = 3;
-		int numCols = 8;
+		int numCols = (int)(((container.getWidth() - (2 * PADDING)) - wagonLabel.getFontWidth() - PADDING) / (ITEM_BUTTON_WIDTH + PADDING));
+		int numRows = vehicleItems.size() / numCols;
 		
 		mainLayer.addAsGrid(vehicleItemPanelsArray, wagonLabel.getPosition(ReferencePoint.TopRight), numRows, numCols, PADDING, 0, PADDING, PADDING);
 		
