@@ -82,6 +82,16 @@ public final class ConstantStore {
 		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
 		itemMap.put("SONIC_SCREWDRIVER_NAME", "Sonic");
 		itemMap.put("SONIC_SCREWDRIVER_DESCRIPTION", "Weeeweeeveeeeweee");
+		itemMap.put("APPLE_NAME", "Apple");
+		itemMap.put("APPLE_DESCRIPTION", "Its an Apple.");
+		itemMap.put("BREAD_NAME", "Bread");
+		itemMap.put("BREAD_DESCRIPTION", "Its the finest bread ever.");
+		itemMap.put("GUN_NAME", "Gun");
+		itemMap.put("GUN_DESCRIPTION", "Bang! Bang bang bang!");
+		itemMap.put("BULLET_NAME", "Bullet");
+		itemMap.put("BULLET_DESCRIPTION", "For a gun.");
+		itemMap.put("MEAT_NAME", "Meat");
+		itemMap.put("MEAT_DESCRIPTION", "Food noms - ohm nom nom.");
 		literalMap.put("ITEMS", itemMap);
 	}
 	
