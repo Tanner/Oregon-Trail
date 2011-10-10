@@ -18,8 +18,8 @@ public abstract class Vehicle extends Item{
 	 * Returns the status of the vehicle
 	 * @return The current status of the vehicle.
 	 */
-	public int getStatus() {
-		return status.getCurrent();
+	public Condition getStatus() {
+		return status;
 	}
 	
 	/**
