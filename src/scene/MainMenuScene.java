@@ -34,7 +34,7 @@ public class MainMenuScene extends Scene {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ENTER) {
-			GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyCreation);
+			GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyCreation, this);
 		}
 	}
 	

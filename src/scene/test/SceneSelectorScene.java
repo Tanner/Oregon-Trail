@@ -134,17 +134,17 @@ public class SceneSelectorScene extends Scene {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			if (component == buttons.get(0)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.MainMenu);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.MainMenu, SceneSelectorScene.this);
 			} else if (component == buttons.get(1)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyCreation);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyCreation, SceneSelectorScene.this);
 			} else if (component == buttons.get(2)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.Town);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.Town, SceneSelectorScene.this);
 			} else if (component == buttons.get(3)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.Store);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.Store, SceneSelectorScene.this);
 			} else if (component == buttons.get(4)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventoryScene);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventoryScene, SceneSelectorScene.this);
 			} else if (component == buttons.get(5)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTest);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTest, SceneSelectorScene.this);
 			} else if (component == buttons.get(6)) {
 				
 			} else if (component == buttons.get(7)) {

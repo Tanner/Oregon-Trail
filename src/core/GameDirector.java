@@ -94,7 +94,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	  SceneDelegate
 	  ----------------------*/
 	@Override
-	public void requestScene(SceneID id) {
+	public void requestScene(SceneID id, Scene lastScene) {
 		Scene newScene = sceneForSceneID(id);
 		sceneDirector.pushScene(newScene, true);
 	}

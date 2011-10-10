@@ -11,6 +11,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
+import scene.test.SceneSelectorScene;
+
 import component.Panel;
 import component.Label;
 import component.Positionable;
@@ -66,7 +68,7 @@ public class TownScene extends Scene {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ENTER) {
-			GameDirector.sharedSceneDelegate().requestScene(SceneID.Store);
+			GameDirector.sharedSceneDelegate().requestScene(SceneID.Store, this);
 		}
 	}
 
