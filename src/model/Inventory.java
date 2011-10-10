@@ -25,6 +25,14 @@ public class Inventory {
 	}
 	
 	/**
+	 * Returns the max number of items we can hold.
+	 * @return Max number of items to hold
+	 */
+	public int getMaxSize() {
+		return MAX_SIZE;
+	}
+	
+	/**
 	 * Returns the items in inventory.
 	 * @return The items in the inventory.
 	 */

@@ -3,6 +3,7 @@ package scene;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Inventory;
 import model.Item;
 import model.Party;
 import model.Person;
@@ -49,20 +50,27 @@ public class PartyInventoryScene extends Scene {
 		ArrayList<Person> members = party.getPartyMembers();
 		
 		int nameLabelWidth = 0;
-		int panelWidth = 0;
+		int nameWidth = 0;
+		int maxInventorySize = 0;
 		for (Person person : members) {
-			List<Item> inventory = person.getInventoryAsList();
+			Inventory inventory = person.getInventory();
+			
+			if (maxInventorySize < inventory.getMaxSize()) {
+				maxInventorySize = inventory.getMaxSize();
+			}
 			
 			int newWidth = fieldFont.getWidth(person.getName());
 			if (nameLabelWidth < newWidth) {
 				nameLabelWidth = newWidth;
 			}
 			
-			int newPanelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * inventory.size()) + fieldFont.getWidth(person.getName());
-			if (panelWidth < newPanelWidth) {
-				panelWidth = newPanelWidth;
+			int newNameWidth = fieldFont.getWidth(person.getName());
+			if (nameWidth < newNameWidth) {
+				nameWidth = newNameWidth;
 			}
 		}
+		
+		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize) + nameWidth;
 		
 		ArrayList<Panel> personPanels = new ArrayList<Panel>();
 		for (Person person : members) {
