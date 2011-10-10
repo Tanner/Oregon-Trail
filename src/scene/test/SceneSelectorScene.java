@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import model.*;
-import model.item.SonicScrewdriver;
-import model.item.Wheel;
+import model.item.*;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -173,10 +172,13 @@ public class SceneSelectorScene extends Scene {
 			person.addToInventory(wheel);
 			person.addToInventory(sonic);
 		}
+		
+		Vehicle vehicle = new Wagon();
 		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];
 		Party.Rations rations = Party.Rations.values()[random.nextInt(Party.Rations.values().length)];
-		
+
 		Party party = new Party(pace, rations, people);
+		party.setVehicle(vehicle);
 		
 		return party;
 	}
