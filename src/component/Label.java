@@ -175,6 +175,14 @@ public class Label extends Component {
 	}
 	
 	/**
+	 * Get the height for the current font.
+	 * @return Height for the current font
+	 */
+	public float getFontHeight() {
+		return font.getLineHeight();
+	}
+	
+	/**
 	 * Set the text.
 	 * @param text The text to be drawn
 	 */
