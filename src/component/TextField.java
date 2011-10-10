@@ -40,6 +40,9 @@ public class TextField extends Component implements Disableable {
 		
 		fieldColor = Color.gray;
 		fieldFocusColor = Color.darkGray;
+		
+		setBackgroundColor(fieldColor);
+		
 		label = new Label(container, width - PADDING * 2, font, Color.white);
 		add(label, getPosition(Positionable.ReferencePoint.CenterLeft), Positionable.ReferencePoint.CenterLeft, PADDING, 0);
 	}
@@ -49,13 +52,6 @@ public class TextField extends Component implements Disableable {
 		if (!isVisible()) {
 			return;
 		}
-		
-		if (this.hasFocus() || disabled) {
-			g.setColor(fieldFocusColor);
-		} else {
-			g.setColor(fieldColor);
-		}
-		g.fillRect(getX(), getY(), getWidth(), getHeight());
 		
 		super.render(container, g);
 	}
@@ -157,7 +153,14 @@ public class TextField extends Component implements Disableable {
 			if (isEmpty()) {
 				label.setText(placeholderText);
 			}
+			
 			notifyListeners();
+		}
+		
+		if (focus) {
+			setBackgroundColor(fieldFocusColor);
+		} else {
+			setBackgroundColor(fieldColor);
 		}
 		
 		super.setFocus(focus);

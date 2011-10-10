@@ -14,19 +14,12 @@ import core.ConstantStore;
  * {@code Button} inherits from {@code Component} to extend features that provides necessary
  * functionality to behave like a button.
  */
-public class Button extends Component implements Disableable {
-	private static final int CORNER_RADIUS = 2;
-	
+public class Button extends Component implements Disableable {	
 	private Label label;
 	private Color buttonColor;
 	private Color buttonActiveColor;
 	protected boolean active;
 	protected boolean disabled;
-	private int topLeftCornerRadius;
-	private int bottomLeftCornerRadius;
-	private int topRightCornerRadius;
-	private int bottomRightCornerRadius;
-	private boolean beveled;
 	
 	/**
 	 * Constructs a {@code Button} with a width, a height, a {@code Sprite}, and a {@code Label}.
@@ -47,7 +40,8 @@ public class Button extends Component implements Disableable {
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
 		
-		beveled = true;
+		setBackgroundColor(buttonColor);
+		setBeveled(true);
 		
 		container.getInput().addMouseListener(this);
 	}
@@ -68,7 +62,8 @@ public class Button extends Component implements Disableable {
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
 		
-		beveled = true;
+		setBackgroundColor(buttonColor);
+		setBeveled(true);
 		
 		container.getInput().addMouseListener(this);
 	}
@@ -87,66 +82,6 @@ public class Button extends Component implements Disableable {
 		if (!isVisible()) {
 			return;
 		}
-				
-		Color color;
-		if (active || disabled) {
-			color = buttonActiveColor;
-		} else {
-			color = buttonColor;
-		}
-		Color brightColor = color.brighter(0.1f);
-		Color darkColor = color.darker(0.2f);		
-
-		g.setColor(color);
-		// inner rect
-		g.fillRect(getX() + CORNER_RADIUS,
-				getY() + CORNER_RADIUS,
-				getWidth() - CORNER_RADIUS * 2,
-				getHeight() - CORNER_RADIUS * 2);
-		
-		// top bar
-		if (beveled) {
-			g.setColor(brightColor);
-		} else {
-			g.setColor(color);
-		}
-		g.fillRect(getX() + topLeftCornerRadius,
-				getY(),
-				getWidth() - topLeftCornerRadius - topRightCornerRadius,
-				CORNER_RADIUS);
-				
-		// bottom bar
-		if (beveled) {
-			g.setColor(darkColor);
-		} else {
-			g.setColor(color);
-		}
-		g.fillRect(getX() + bottomLeftCornerRadius,
-				getY() + getHeight() - CORNER_RADIUS,
-				getWidth() - bottomLeftCornerRadius - bottomRightCornerRadius,
-				CORNER_RADIUS);
-				
-		// left bar
-		if (beveled) {
-			g.setColor(brightColor);
-		} else {
-			g.setColor(color);
-		}
-		g.fillRect(getX(),
-				getY() + topLeftCornerRadius,
-				CORNER_RADIUS,
-				getHeight() - topLeftCornerRadius - bottomLeftCornerRadius);
-		
-		// right bar
-		if (beveled) {
-			g.setColor(darkColor);
-		} else {
-			g.setColor(color);
-		}
-		g.fillRect(getX() + getWidth() - CORNER_RADIUS,
-				getY() + topRightCornerRadius,
-				CORNER_RADIUS,
-				getHeight() - topRightCornerRadius - bottomRightCornerRadius);
 		
 		super.render(container, g);
 	}
@@ -167,7 +102,7 @@ public class Button extends Component implements Disableable {
 		}
 		
 		if (button == 0 && isMouseOver() && !disabled) {
-			active = true;
+			setActive(true);
 			input.consumeEvent();
 		}
 	}
@@ -181,7 +116,7 @@ public class Button extends Component implements Disableable {
  		if (button == 0 && isMouseOver() && !disabled && active) {
 			notifyListeners();
 			input.consumeEvent();
-			active = false;
+			setActive(false);
 		}
 	}
 	
@@ -195,7 +130,7 @@ public class Button extends Component implements Disableable {
 	}
 	
 	/**
-	 * Sets the color of the button's background.
+	 * Sets the color of the button's normal background.
 	 * @param color New color for the button
 	 */
 	public void setButtonColor(Color color) {
@@ -226,73 +161,6 @@ public class Button extends Component implements Disableable {
 		label.setColor(color);
 	}
 	
-	/**
-	 * Enable/disable rounded corners.
-	 * @param rounded Enables rounded corners if {@code true}, disables if {@code false}
-	 */
-	public void setRoundedCorners(boolean rounded) {
-		setTopLeftRoundedCorner(rounded);
-		setBottomLeftRoundedCorner(rounded);
-		setTopRightRoundedCorner(rounded);
-		setBottomRightRoundedCorner(rounded);
-	}
-	
-	/**
-	 * Enable/disable top-left rounded corner.
-	 * @param rounded Enables top-left rounded corner if {@code true}, disables if {@code false}
-	 */
-	public void setTopLeftRoundedCorner(boolean rounded) {
-		if (rounded) {
-			this.topLeftCornerRadius = CORNER_RADIUS;
-		} else {
-			this.topLeftCornerRadius = 0;
-		}
-	}
-	
-	/**
-	 * Enable/disable bottom-left rounded corner.
-	 * @param rounded Enables bottom-left rounded corner if {@code true}, disables if {@code false}
-	 */
-	public void setBottomLeftRoundedCorner(boolean rounded) {
-		if (rounded) {
-			this.bottomLeftCornerRadius = CORNER_RADIUS;
-		} else {
-			this.bottomLeftCornerRadius = 0;
-		}
-	}
-	
-	/**
-	 * Enable/disable top-right rounded corner.
-	 * @param rounded Enables top-right rounded corner if {@code true}, disables if {@code false}
-	 */
-	public void setTopRightRoundedCorner(boolean rounded) {
-		if (rounded) {
-			this.topRightCornerRadius = CORNER_RADIUS;
-		} else {
-			this.topRightCornerRadius = 0;
-		}
-	}
-	
-	/**
-	 * Enable/disable bottom-right rounded corner.
-	 * @param rounded Enables bottom-right rounded corner if {@code true}, disables if {@code false}
-	 */
-	public void setBottomRightRoundedCorner(boolean rounded) {
-		if (rounded) {
-			this.bottomRightCornerRadius = CORNER_RADIUS;
-		} else {
-			this.bottomRightCornerRadius = 0;
-		}
-	}
-	
-	/**
-	 * Enable/disable a beveled appearance.
-	 * @param beveled Enables beveled appearance if {@code true}, disables if {@code false}
-	 */
-	public void setBeveled(boolean beveled) {
-		this.beveled = beveled;
-	}
-	
 	@Override
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
@@ -301,5 +169,27 @@ public class Button extends Component implements Disableable {
 	@Override
 	public boolean isDisabled() {
 		return disabled;
+	}
+	
+	
+	/**
+	 * Return the button's active status.
+	 * @return If the button is active or not
+	 */
+	public boolean getActive() {
+		return active;
+	}
+	
+	/**
+	 * Change whether this button is active or not.
+	 * @param active New active state
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
+		if (active) {
+			setBackgroundColor(buttonActiveColor);
+		} else {
+			setBackgroundColor(buttonColor);
+		}
 	}
 }

@@ -17,7 +17,6 @@ public class Label extends Component {
 	private String text;
 	private Font font;
 	private Color c;
-	private Color backgroundColor;
 	private Alignment alignment;
 	private boolean clip;
 
@@ -100,10 +99,6 @@ public class Label extends Component {
 		if (clip == true)
 			g.setClip(getX(), getY(), getWidth(), getHeight());
 		
-		if (backgroundColor != null) {
-			g.setColor(backgroundColor);
-			g.fillRect(getX(), getY(), getWidth(), getHeight());
-		}
 		int startY = getY() + (getHeight() - (lines.size()*font.getLineHeight())) / 2;
 		for (int i = 0; i < lines.size(); i++) {
 			if (alignment == Alignment.Center) {
@@ -147,14 +142,6 @@ public class Label extends Component {
 			currentText = "";
 			currentLine++;
 		}
-	}
-	
-	/**
-	 * Set background color.
-	 * @param color New background color
-	 */
-	public void setBackgroundColor(Color color) {
-		backgroundColor = color;
 	}
 	
 	/**

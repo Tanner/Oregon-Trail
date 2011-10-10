@@ -40,9 +40,9 @@ public class ToggleButton extends Button {
 		
 		if (button == 0 && isMouseOver() && !disabled) {
 			if (!disableAutoToggle) {
-				active = !active;
+				setActive(!active);
 			} else {
-				active = true;
+				setActive(true);
 			}
 			
 			input.consumeEvent();
@@ -57,7 +57,7 @@ public class ToggleButton extends Button {
 		
  		if (button == 0 && isMouseOver() && !disabled && active) {
 			if (disableAutoToggle) {
-				active = false;
+				setActive(false);
 			}
 			
 			notifyListeners();
@@ -79,21 +79,5 @@ public class ToggleButton extends Button {
 	 */
 	public boolean getDisableAutoToggle() {
 		return disableAutoToggle;
-	}
-	
-	/**
-	 * Return the button's active status.
-	 * @return If the button is active or not
-	 */
-	public boolean getActive() {
-		return active;
-	}
-	
-	/**
-	 * Change whether this button is active or not.
-	 * @param active New active state
-	 */
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 }
