@@ -18,6 +18,7 @@ public class Button extends Component implements Disableable {
 	private Label label;
 	private Color buttonColor;
 	private Color buttonActiveColor;
+	private Color buttonDisabledColor;
 	protected boolean active;
 	protected boolean disabled;
 	
@@ -39,6 +40,7 @@ public class Button extends Component implements Disableable {
 		
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
+		buttonDisabledColor = ConstantStore.COLORS.get("INTERACTIVE_DISABLED");
 		
 		setBackgroundColor(buttonColor);
 		setBeveled(true);
@@ -61,6 +63,7 @@ public class Button extends Component implements Disableable {
 		
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
+		buttonDisabledColor = ConstantStore.COLORS.get("INTERACTIVE_DISABLED");
 		
 		setBackgroundColor(buttonColor);
 		setBeveled(true);
@@ -135,6 +138,11 @@ public class Button extends Component implements Disableable {
 	 */
 	public void setButtonColor(Color color) {
 		buttonColor = color;
+		
+		// Change current color now if not disabled nor active
+		if (!disabled && !active) {
+			setBackgroundColor(buttonColor);
+		}
 	}
 	
 	/**
@@ -143,6 +151,14 @@ public class Button extends Component implements Disableable {
 	 */
 	public void setButtonActiveColor(Color color) {
 		buttonActiveColor = color;
+	}
+
+	/**
+	 * Sets the color of the button's background for the disabled state.
+	 * @param color New color for the button in the disabled state
+	 */
+	public void setButtonDisabledColor(Color color) {
+		buttonDisabledColor = color;
 	}
 	
 	/**
@@ -164,6 +180,16 @@ public class Button extends Component implements Disableable {
 	@Override
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
+		
+		if (disabled) {
+			setBackgroundColor(buttonDisabledColor);
+		} else {
+			if (isActive()) {
+				setBackgroundColor(buttonActiveColor);
+			} else {
+				setBackgroundColor(buttonColor);
+			}
+		}
 	}
 	
 	@Override
@@ -176,7 +202,7 @@ public class Button extends Component implements Disableable {
 	 * Return the button's active status.
 	 * @return If the button is active or not
 	 */
-	public boolean getActive() {
+	public boolean isActive() {
 		return active;
 	}
 	
