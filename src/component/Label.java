@@ -13,12 +13,18 @@ public class Label extends Component {
 		Center,
 		Left
 	}
+	public enum VerticalAlignment {
+		Center,
+		Top
+	}
 	ArrayList<String> lines;
 	private String text;
 	private Font font;
 	private Color c;
 	private Color backgroundColor;
 	private Alignment alignment;
+	private VerticalAlignment verticalAlignment;
+	
 	private boolean clip;
 
 	/**
@@ -37,6 +43,7 @@ public class Label extends Component {
 		this.c = c;
 		this.text = text;
 		alignment = Alignment.Left;
+		verticalAlignment = VerticalAlignment.Center;
 		clip = true;
 		lines = new ArrayList<String>();
 		parseLines();
@@ -57,6 +64,7 @@ public class Label extends Component {
 		this.c = c;
 		this.text = text;
 		alignment = Alignment.Left;
+		verticalAlignment = VerticalAlignment.Center;
 		clip = true;
 		lines = new ArrayList<String>();
 		parseLines();
@@ -104,7 +112,14 @@ public class Label extends Component {
 			g.setColor(backgroundColor);
 			g.fillRect(getX(), getY(), getWidth(), getHeight());
 		}
-		int startY = getY() + (getHeight() - (lines.size()*font.getLineHeight())) / 2;
+		
+		int startY;
+		
+		if ( verticalAlignment == VerticalAlignment.Center)
+			startY = getY() + (getHeight() - (lines.size()*font.getLineHeight())) / 2;
+		else
+			startY = getY();
+		
 		for (int i = 0; i < lines.size(); i++) {
 			if (alignment == Alignment.Center) {
 				font.drawString(getX() + (getWidth() - font.getWidth(lines.get(i))) / 2,
@@ -200,10 +215,18 @@ public class Label extends Component {
 	}
 	
 	/**
-	 * Set the text alignment.
+	 * Set the horizontal text alignment.
 	 * @param alignment The new text alignment
 	 */
 	public void setAlignment(Alignment alignment) {
 		this.alignment = alignment;
+	}
+	
+	/**
+	 * Set the vertical text alignment.
+	 * @param alignment The new text alignment
+	 */
+	public void setVerticalAlignment(VerticalAlignment verticalAlignment) {
+		this.verticalAlignment = verticalAlignment;
 	}
 }
