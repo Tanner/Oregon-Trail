@@ -1,5 +1,8 @@
 package scene;
 
+import model.Party;
+import model.Person;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -15,6 +18,12 @@ import core.GameDirector;
 
 public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
+	
+	private Party party;
+	
+	public PartyInventoryScene(Party party) {
+		this.party = party;
+	}
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
