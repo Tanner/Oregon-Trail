@@ -5,32 +5,27 @@ import java.util.List;
 import java.util.Random;
 
 import model.Party;
-import model.Party.Pace;
 import model.Person;
 import model.Player;
 import model.Wheel;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Panel;
 import component.Button;
-import component.Component;
 import component.Label;
+import component.Positionable;
 import core.FontManager;
 import core.GameDirector;
-import core.Logger;
 
 import scene.Scene;
 import scene.SceneID;
-import scene.layout.GridLayout;
 
 /**
  * Be able to switch to any scene from this scene.
@@ -39,6 +34,8 @@ import scene.layout.GridLayout;
  */
 public class SceneSelectorScene extends Scene {
 	public static final SceneID ID = SceneID.SceneSelector;
+	
+	private static final int MARGIN = 20;
 
 	private ButtonListener buttonListener;
 	private List<Button> buttons;
@@ -52,50 +49,34 @@ public class SceneSelectorScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		
-		mainLayer.setLayout(new GridLayout(container, 4, 4));
-		
+				
 		buttons = new ArrayList<Button>();
 		
 		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		String[] labels = { "Main Menu", "Party Creation", "Town", "Store", "Party Inventory", "Components", "Remove Party", "Add Party" };
 		
-		Label mainMenuLabel = new Label(container, fieldFont, Color.white, "Main Menu");
-		Button mainMenuButton = new Button(container, mainMenuLabel);
-		buttons.add(mainMenuButton);
-		
-		Label partyCreationLabel = new Label(container, fieldFont, Color.white, "Party Creation");
-		Button partyCreationButton = new Button(container, partyCreationLabel);
-		buttons.add(partyCreationButton);
-		
-		Label townLabel = new Label(container, fieldFont, Color.white, "Town");
-		Button townButton = new Button(container, townLabel);
-		buttons.add(townButton);
-		
-		Label storeLabel = new Label(container, fieldFont, Color.white, "Store");
-		Button storeButton = new Button(container, storeLabel);
-		buttons.add(storeButton);
-		
-		Label partyInventorySceneLabel = new Label(container, fieldFont, Color.white, "Party Inventory Scene");
-		Button partyInventorySceneButton = new Button(container, partyInventorySceneLabel);
-		buttons.add(partyInventorySceneButton);
-		
-		Label componentsLabel = new Label(container, fieldFont, Color.white, "Components");
-		Button componentsButton = new Button(container, componentsLabel);
-		buttons.add(componentsButton);
-		
-		Label partyRemoveLabel = new Label(container, fieldFont, Color.white, "Remove party");
-		Button partyRemoveButton = new Button(container, partyRemoveLabel);
-		buttons.add(partyRemoveButton);
-		
-		Label partyAddLabel = new Label(container, fieldFont, Color.white, "Add Party");
-		Button partyAddButton = new Button(container, partyAddLabel);
-		buttons.add(partyAddButton);
+		int rows = (int)Math.ceil(Math.sqrt(labels.length));
+		int cols = (int)Math.ceil(Math.sqrt(labels.length));
+		int rowHeight = (container.getHeight() - (rows + 1) * MARGIN) / rows;
+		int colWidth = (container.getWidth() - (cols + 1) * MARGIN) / cols;
+		for (String s : labels) {
+			buttons.add(new Button(container, colWidth, rowHeight, new Label(container, fieldFont, Color.white, s)));
+		}
 		
 		buttonListener = new ButtonListener();
 		
+		Button[] buttonsToAdd = new Button[buttons.size()];
 		for (Button b : buttons) {
-			mainLayer.add(b);
+			buttonsToAdd[buttons.indexOf(b)] = b;
 		}
+		mainLayer.addAsGrid(buttonsToAdd,
+				mainLayer.getPosition(Positionable.ReferencePoint.TopLeft),
+				rows,
+				cols,
+				MARGIN,
+				MARGIN,
+				MARGIN,
+				MARGIN);
 		
 		backgroundLayer.add(new Panel(container, Color.black));
 		
