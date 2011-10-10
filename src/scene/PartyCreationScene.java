@@ -11,6 +11,7 @@ import model.Player;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.AbstractComponent;
@@ -201,7 +202,7 @@ public class PartyCreationScene extends Scene {
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
-		backgroundLayer.add(new Panel(container, new Color(0xb40c09)));
+		backgroundLayer.add(new Panel(container, new Image("resources/dark_dirt.png")));
 		
 		enableNextPersonField();
 	}

@@ -2,8 +2,8 @@ package scene;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
-import static core.ConstantStore.*;
 import component.Label;
+import component.Panel;
 import component.Positionable;
 
 import core.*;
@@ -24,6 +24,8 @@ public class MainMenuScene extends Scene {
 		
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);
 		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 5);
+		
+		backgroundLayer.add(new Panel(container, new Image("resources/dark_dirt.png")));
 	}
 
 	@Override
