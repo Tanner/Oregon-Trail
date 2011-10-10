@@ -11,6 +11,7 @@ import scene.Scene;
 import scene.SceneID;
 
 import component.*;
+import component.Label.Alignment;
 import core.*;
 
 /**
@@ -67,6 +68,12 @@ public class ComponentTestScene extends Scene {
 		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 		int[] num = {2,3};
 		segment.setPermanent(num);
+		
+		Label longLabel = new Label(container, 400, 105, fieldFont, Color.white, "Hello my name is jeremy.\n\nI am a really cool guy and stuff and I made a multiline label.\nOr did I?");
+		longLabel.setAlignment(Alignment.Center);
+		longLabel.setColor(Color.black);
+		longLabel.setBackgroundColor(Color.lightGray);
+		mainLayer.add(longLabel,segment.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, 10);
 		
 		Component colLabels[] = new Component[5];
 		for (int i = 0; i < colLabels.length; i++) {

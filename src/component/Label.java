@@ -2,6 +2,8 @@ package component;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.*;
+import java.util.*;
+import java.util.regex.*;
 
 /**
  * {@code Label} inherits from {@code Component} to extend features that provide
@@ -12,7 +14,7 @@ public class Label extends Component {
 		Center,
 		Left
 	}
-	
+	ArrayList<String> lines;
 	private String text;
 	private Font font;
 	private Color c;
@@ -20,6 +22,27 @@ public class Label extends Component {
 	private Alignment alignment;
 	private boolean clip;
 
+	/**
+	 * Creates a multi-line label that fits within a given width and height.
+	 * 
+	 * @param context The game container
+	 * @param width Width of the label
+	 * @param height Height of the label
+	 * @param font Font the text will be drawn in
+	 * @param c Color of the text
+	 * @param text The text to draw
+	 */
+	public Label(GUIContext context, int width, int height, Font font, Color c, String text) {
+		super (context, width, height);
+		this.font = font;
+		this.c = c;
+		this.text = text;
+		alignment = Alignment.Left;
+		clip = true;
+		lines = new ArrayList<String>();
+		parseLines();
+	}
+	
 	/**
 	 * Constructs a {@code Label} with a width, font, color, and text.
 	 * 
@@ -31,11 +54,11 @@ public class Label extends Component {
 	 */
 	public Label(GUIContext context, int width, Font font, Color c, String text) {
 		super(context, width, font.getLineHeight());
-		
 		this.font = font;
 		this.c = c;
 		this.text = text;
-		
+		lines = new ArrayList<String>();
+		lines.add(0, text);
 		alignment = Alignment.Left;
 		clip = true;
 	}
@@ -73,31 +96,56 @@ public class Label extends Component {
 		
 		super.render(container, g);
 		
-		g.setClip(getX(), getY(), getWidth(), getHeight());
+		if (clip == true)
+			g.setClip(getX(), getY(), getWidth(), getHeight());
 		
 		if (backgroundColor != null) {
 			g.setColor(backgroundColor);
 			g.fillRect(getX(), getY(), getWidth(), getHeight());
 		}
 		
-		String renderText = text;
-		while (font.getWidth(renderText) > getWidth()) {
-			renderText = text.substring(0, renderText.length()-1);
+		for (int i = 0; i < lines.size(); i++) {
+			if (alignment == Alignment.Center) {
+				font.drawString(getX() + (getWidth() - font.getWidth(lines.get(i))) / 2,
+						getY() + (font.getLineHeight())*i,
+						lines.get(i), c);
+			} else if (alignment == Alignment.Left){
+				font.drawString(getX(),
+						getY() + (font.getLineHeight())*i,
+						lines.get(i), c);
+			}
 		}
-		
-		if (alignment == Alignment.Center) {
-			font.drawString(getX() + (getWidth() - font.getWidth(renderText)) / 2,
-					getY() + (getHeight() - font.getLineHeight()) / 2,
-					renderText,
-					c);
-		} else if (alignment == Alignment.Left){
-			font.drawString(getX(),
-					getY() + (getHeight() - font.getLineHeight()) / 2,
-					renderText,
-					c);
-		}
-		
 		g.clearClip();
+	}
+	
+	/**
+	 * Parse lines of text for a multi-line label.
+	 * Separates lines by new line characters, and also
+	 * makes sure lines do not extend over the given label
+	 * width.
+	 */
+	public void parseLines() {
+		Scanner lineScan = new Scanner(text);
+		Scanner wordScan;
+		
+		String currentText = "";
+		int currentLine = 0;
+		
+		while ( lineScan.hasNext() ) {
+			wordScan = new Scanner(lineScan.nextLine());
+			while (wordScan.hasNext()) {
+				String nextWord = wordScan.next();
+				if ( font.getWidth(currentText + nextWord) > getWidth() ) {
+					lines.add(currentLine,currentText.trim());
+					currentText = "";
+					currentLine++;
+				}
+				currentText += nextWord + " ";
+			}
+			lines.add(currentLine,currentText.trim());
+			currentText = "";
+			currentLine++;
+		}
 	}
 	
 	/**

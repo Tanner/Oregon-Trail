@@ -8,7 +8,7 @@ public interface SceneDelegate {
 	 * 
 	 * @param id The ID for the scene requested
 	 */
-	public void requestScene(SceneID id);
+	public void requestScene(SceneID id, Scene lastScene);
 	
 	/**
 	 * Handle scene ending.
