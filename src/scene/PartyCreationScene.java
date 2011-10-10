@@ -49,9 +49,14 @@ public class PartyCreationScene extends Scene {
 	private Button newPersonButtons[] = new Button[NUM_PEOPLE];
 	private Button personDeleteButtons[] = new Button[NUM_PEOPLE];
 	private TextField personNameTextFields[] = new TextField[NUM_PEOPLE];
+	
+	private Panel personProfessionPanel[] = new Panel[NUM_PEOPLE];
 	private Button personChangeProfessionButtons[] = new Button[NUM_PEOPLE];
 	private Label personProfessionLabels[] = new Label[NUM_PEOPLE];
+	
 	private Label personMoneyLabels[] = new Label[NUM_PEOPLE];
+	
+	private Panel personSkillPanel[] = new Panel[NUM_PEOPLE];
 	private Button personChangeSkillButtons[] = new Button[NUM_PEOPLE];
 	private Label personSkillLabels[][] = new Label[NUM_PEOPLE][NUM_SKILLS];
 	
@@ -111,44 +116,48 @@ public class PartyCreationScene extends Scene {
 			personNameTextFields[i].setVisible(false);
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 			
+			// Profession
+			personProfessionPanel[i] = new Panel(container, buttonWidth, regularButtonHeight * 2);
+			personProfessionPanel[i].setVisible(false);
+			personProfessionPanel[i].setBorderColor(ConstantStore.COLORS.get("INTERACTIVE_BORDER_DARK"));
+			personProfessionPanel[i].setBorderWidth(2);
+			
 			personChangeProfessionButtons[i] = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_PROFESSION")));
-			personChangeProfessionButtons[i].setTopLeftRoundedCorner(true);
-			personChangeProfessionButtons[i].setTopRightRoundedCorner(true);
 			personChangeProfessionButtons[i].addListener(new ButtonListener());
-			personChangeProfessionButtons[i].setVisible(false);
-			mainLayer.add(personChangeProfessionButtons[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			personProfessionPanel[i].add(personChangeProfessionButtons[i], personProfessionPanel[i].getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft);
 			
 			personProfessionLabels[i] = new Label(container, buttonWidth, regularButtonHeight, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NO_PROFESSION_LABEL"));
 			personProfessionLabels[i].setBackgroundColor(Color.darkGray);
-			personProfessionLabels[i].setVisible(false);
 			personProfessionLabels[i].setAlignment(Alignment.Center);
-			mainLayer.add(personProfessionLabels[i], personChangeProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
+			personProfessionPanel[i].add(personProfessionLabels[i], personChangeProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
 			
+			mainLayer.add(personProfessionPanel[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			
+			// Money
 			personMoneyLabels[i] = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("GENERAL", "MONEY_SYMBOL")+"0");
 			personMoneyLabels[i].setAlignment(Alignment.Center);
 			personMoneyLabels[i].setVisible(false);
 			mainLayer.add(personMoneyLabels[i], personProfessionLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 			
-			personChangeSkillButtons[i] = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_SKILL")));
-			personChangeSkillButtons[i].setTopLeftRoundedCorner(true);
-			personChangeSkillButtons[i].setTopRightRoundedCorner(true);
-			personChangeSkillButtons[i].addListener(new ButtonListener());
-			personChangeSkillButtons[i].setVisible(false);
-			mainLayer.add(personChangeSkillButtons[i], personMoneyLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			// Skills
+			personSkillPanel[i] = new Panel(container, buttonWidth, regularButtonHeight * 4);
+			personSkillPanel[i].setVisible(false);
+			personSkillPanel[i].setBorderColor(ConstantStore.COLORS.get("INTERACTIVE_BORDER_DARK"));
+			personSkillPanel[i].setBorderWidth(2);
 			
-			Positionable skillLabelReferenceObject = personChangeSkillButtons[i];
+			personChangeSkillButtons[i] = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_SKILL")));
+			personChangeSkillButtons[i].addListener(new ButtonListener());
+			personSkillPanel[i].add(personChangeSkillButtons[i], personSkillPanel[i].getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft);
+			
 			for (int j = 0; j < personSkillLabels[i].length; j++) {
-				if (j != 0) {
-					skillLabelReferenceObject = personSkillLabels[i][j - 1];
-				}
-				
 				personSkillLabels[i][j] = new Label(container, buttonWidth, regularButtonHeight, fieldFont, Color.white, "");
 				personSkillLabels[i][j].setBackgroundColor(Color.darkGray);
-				personSkillLabels[i][j].setVisible(false);
 				personSkillLabels[i][j].setAlignment(Alignment.Center);
 				personSkillLabels[i][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
-				mainLayer.add(personSkillLabels[i][j], skillLabelReferenceObject.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
 			}
+			
+			personSkillPanel[i].addAsColumn(personSkillLabels[i], personChangeSkillButtons[i].getPosition(ReferencePoint.BottomLeft), 0, 0, 0);
+			mainLayer.add(personSkillPanel[i], personMoneyLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		}
 		
 		// Create delete buttons for all the player columns
@@ -161,7 +170,8 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		// Ration Selection
-		Label rationsLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "RATIONS_LABEL"));
+		int labelWidth = 100;
+		Label rationsLabel = new Label(container, labelWidth, regularButtonHeight, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "RATIONS_LABEL"));
 		mainLayer.add(rationsLabel, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
 		
 		int numOfRations = Party.Rations.values().length;
@@ -173,7 +183,7 @@ public class PartyCreationScene extends Scene {
 		mainLayer.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
 		
 		// Pace Selection
-		Label paceLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PACE_LABEL"));
+		Label paceLabel = new Label(container, labelWidth, regularButtonHeight, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PACE_LABEL"));
 		mainLayer.add(paceLabel, rationsLabel.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
 		
 		int numOfPaces = Party.Pace.values().length;
@@ -186,7 +196,6 @@ public class PartyCreationScene extends Scene {
 		
 		//Confirm Button
 		confirmButton = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PARTY_CONFIRM")));
-		confirmButton.setRoundedCorners(true);
 		confirmButton.addListener(new ButtonListener());
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
@@ -269,7 +278,7 @@ public class PartyCreationScene extends Scene {
 		personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
 		
 		personMoneyLabels[currentPersonModifying].setVisible(true);
-		personChangeSkillButtons[currentPersonModifying].setVisible(true);
+		personSkillPanel[currentPersonModifying].setVisible(true);
 		
 		for (int j = 0; j < personSkillLabels[currentPersonModifying].length; j++) {
 			personSkillLabels[currentPersonModifying][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
@@ -352,8 +361,7 @@ public class PartyCreationScene extends Scene {
 						personDeleteButtons[j].setVisible(false);
 					}
 					personDeleteButtons[people.size() - 1].setVisible(true);
-					personChangeProfessionButtons[i].setVisible(true);
-					personProfessionLabels[i].setVisible(true);
+					personProfessionPanel[i].setVisible(true);
 				}
 			} else {
 				// Party is full
