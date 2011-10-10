@@ -1,5 +1,6 @@
 package component;
 
+import model.Condition;
 import model.Conditioned;
 
 import org.newdawn.slick.Color;
@@ -11,7 +12,7 @@ import org.newdawn.slick.gui.GUIContext;
  * A bar that represents the status of a {@code Conditioned} object as a progress bar.
  */
 public class ConditionBar extends Component {
-	private Conditioned condition;
+	private Condition condition;
 	private Color barColor;
 	private Color backgroundColor;
 	
@@ -22,7 +23,7 @@ public class ConditionBar extends Component {
 	 * @param height The height
 	 * @param condition The {@code Conditioned} to use
 	 */
-	public ConditionBar(GUIContext context, int width, int height, Conditioned condition) {
+	public ConditionBar(GUIContext context, int width, int height, Condition condition) {
 		super(context, width, height);
 		
 		this.condition = condition;
@@ -43,7 +44,7 @@ public class ConditionBar extends Component {
 		g.fillRect(getX(), getY(), getWidth(), getHeight());
 		
 		g.setColor(barColor);
-		g.fillRect(getX(), getY(), (float)(getWidth() * condition.getConditionPercentage()), getHeight());
+		g.fillRect(getX(), getY(), (float)(getWidth() * condition.getPercentage()), getHeight());
 	}
 
 	/**
