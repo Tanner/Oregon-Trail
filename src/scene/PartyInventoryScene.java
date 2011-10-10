@@ -62,8 +62,8 @@ public class PartyInventoryScene extends Scene {
 				Button button = new Button(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, item.getName()));
 				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item);
 				
-				panel.add(button, lastPositionReference.getPosition(ReferencePoint.CenterLeft), ReferencePoint.CenterLeft, PADDING, 0);
-				panel.add(conditionBar, conditionBar.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, 0);
+				panel.add(button, lastPositionReference.getPosition(ReferencePoint.CenterRight), ReferencePoint.CenterLeft, PADDING, 0);
+				panel.add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, 0);
 				
 				lastPositionReference = button;
 			}
