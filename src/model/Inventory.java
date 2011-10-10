@@ -54,7 +54,7 @@ public class Inventory {
 			//Item addition would exceeded max weight
 			Logger.log("The inventory has max weight: " + MAX_WEIGHT + 
 					" and the addition of " + item.getName() + " would increase the weight to " + 
-					(getWeight() + item.getWeight()), Logger.Level.INFO);
+					(getWeight() + item.getStackWeight()), Logger.Level.INFO);
 			return false;
 		} else if(!items.contains(item) && items.size() == MAX_SIZE) {
 			// Item doesn't offend max weight and isn't already contained but would overflow inventory bins

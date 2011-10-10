@@ -8,6 +8,7 @@ import model.Party;
 import model.Party.Pace;
 import model.Person;
 import model.Player;
+import model.Wheel;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -188,6 +189,8 @@ public class SceneSelectorScene extends Scene {
 			for(Person.Skill skill : personSkill) {
 				person.addSkill(skill);
 			}
+			Wheel wheel = new Wheel(people.indexOf(person) + 1);
+			person.addToInventory(wheel);
 		}
 		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];
 		Party.Rations rations = Party.Rations.values()[random.nextInt(Party.Rations.values().length)];
