@@ -123,6 +123,7 @@ public class PartyCreationScene extends Scene {
 			personProfessionPanel[i].setBorderWidth(2);
 			
 			personChangeProfessionButtons[i] = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_PROFESSION")));
+			personChangeProfessionButtons[i].setBottomBorderWidth(0);
 			personChangeProfessionButtons[i].addListener(new ButtonListener());
 			personProfessionPanel[i].add(personChangeProfessionButtons[i], personProfessionPanel[i].getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft);
 			
@@ -146,6 +147,7 @@ public class PartyCreationScene extends Scene {
 			personSkillPanel[i].setBorderWidth(2);
 			
 			personChangeSkillButtons[i] = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_SKILL")));
+			personChangeSkillButtons[i].setBottomBorderWidth(0);
 			personChangeSkillButtons[i].addListener(new ButtonListener());
 			personSkillPanel[i].add(personChangeSkillButtons[i], personSkillPanel[i].getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft);
 			

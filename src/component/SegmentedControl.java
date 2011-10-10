@@ -67,10 +67,15 @@ public class SegmentedControl extends Component {
 			buttons[i] = new ToggleButton(context, colWidth, rowHeight, current);
 			buttons[i].setDisableAutoToggle(true);
 			buttons[i].addListener(new SegmentListener(i));
+			
+			// if there's no spacing, then set first button's left border to 0
+			if (margin <= 0) {
+				if (i > 0) {
+					buttons[i].setLeftBorderWidth(0);
+				}
+			}
 		}
-		
-		boolean roundedCorners = (margin == 0) ? true : false;
-		
+				
 		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TopLeft), rows, cols, 0, 0, margin, margin);
 			
 		clear();		

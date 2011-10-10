@@ -74,7 +74,7 @@ public class Button extends Component implements Disableable {
 		
 		setBackgroundColor(buttonColor);
 		setBevel(BevelType.Out);
-		setBevelWidth(3);
+		setBevelWidth(2);
 		setBorderColor(Color.black);
 		setBorderWidth(2);
 		
