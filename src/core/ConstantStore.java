@@ -70,6 +70,8 @@ public final class ConstantStore {
 		Map<String, String> itemMap = new HashMap<String, String>();
 		itemMap.put("WHEEL_NAME", "Wheel");
 		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
+		itemMap.put("SONIC_SCREWDRIVER_NAME", "Sonic Screwdriver");
+		itemMap.put("SONIC_SCREWDRIVER_DESCRIPTION", "Weeeweeeveeeeweee");
 		literalMap.put("ITEMS", itemMap);
 	}
 	
