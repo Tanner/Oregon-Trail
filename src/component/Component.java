@@ -30,15 +30,14 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	private int height;
 	
 	private Color backgroundColor;
-	private int topLeftCornerRadius;
-	private int bottomLeftCornerRadius;
-	private int topRightCornerRadius;
-	private int bottomRightCornerRadius;
 	private BevelType beveled;
 	private int bevelWidth;
 	
 	private Color borderColor;
-	private int borderWidth;
+	private int topBorderWidth;
+	private int rightBorderWidth;
+	private int bottomBorderWidth;
+	private int leftBorderWidth;
 	
 	protected List<Component> components;
 	private boolean mouseOver;
@@ -84,9 +83,9 @@ public abstract class Component extends AbstractComponent implements Positionabl
 				} else if (beveled == BevelType.In) {
 					g.setColor(darkColor);
 				}
-				g.fillRect(getX() + topLeftCornerRadius + borderWidth,
-						getY() + borderWidth,
-						getWidth() - topLeftCornerRadius - topRightCornerRadius - borderWidth * 2,
+				g.fillRect(getX() + leftBorderWidth,
+						getY() + topBorderWidth,
+						getWidth() - leftBorderWidth - rightBorderWidth,
 						bevelWidth);
 						
 				// bottom bar
@@ -95,9 +94,9 @@ public abstract class Component extends AbstractComponent implements Positionabl
 				} else if (beveled == BevelType.In) {
 					g.setColor(brightColor);
 				}
-				g.fillRect(getX() + bottomLeftCornerRadius + borderWidth,
-						getY() + getHeight() - bevelWidth - borderWidth,
-						getWidth() - bottomLeftCornerRadius - bottomRightCornerRadius - borderWidth * 2,
+				g.fillRect(getX() + leftBorderWidth,
+						getY() + getHeight() - bevelWidth - bottomBorderWidth,
+						getWidth() - leftBorderWidth - rightBorderWidth,
 						bevelWidth);
 						
 				// left bar
@@ -106,10 +105,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 				} else if (beveled == BevelType.In) {
 					g.setColor(darkColor);
 				}
-				g.fillRect(getX() + borderWidth,
-						getY() + topLeftCornerRadius + borderWidth,
+				g.fillRect(getX() + leftBorderWidth,
+						getY() + topBorderWidth,
 						bevelWidth,
-						getHeight() - topLeftCornerRadius - bottomLeftCornerRadius - borderWidth * 2);
+						getHeight() - topBorderWidth - bottomBorderWidth);
 				
 				// right bar
 				if (beveled == BevelType.Out) {
@@ -117,10 +116,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 				} else if (beveled == BevelType.In) {
 					g.setColor(brightColor);
 				}
-				g.fillRect(getX() + getWidth() - bevelWidth - borderWidth,
-						getY() + topRightCornerRadius + borderWidth,
+				g.fillRect(getX() + getWidth() - bevelWidth - rightBorderWidth,
+						getY() + topBorderWidth,
 						bevelWidth,
-						getHeight() - topRightCornerRadius - bottomRightCornerRadius - borderWidth * 2);
+						getHeight() - topBorderWidth - bottomBorderWidth);
 			}
 		}
 		
@@ -131,11 +130,30 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		g.setClip((Rectangle) getArea());
 				
 		// border
-		if (borderWidth > 0) {
-			g.setColor(borderColor);
-			g.setLineWidth(borderWidth);
-			g.drawRect(getX() + borderWidth / 2, getY(), getWidth() - borderWidth, getHeight() - borderWidth);
-		}
+		g.setColor(borderColor);
+		// top bar
+		g.fillRect(getX(),
+				getY(),
+				getWidth(),
+				topBorderWidth);
+		
+		// right bar
+		g.fillRect(getX() + getWidth() - rightBorderWidth,
+				getY(),
+				rightBorderWidth,
+				getHeight());
+		
+		// bottom bar
+		g.fillRect(getX(),
+				getY() + getHeight() - bottomBorderWidth,
+				getWidth(),
+				bottomBorderWidth);
+				
+		// left bar
+		g.fillRect(getX(),
+				getY(),
+				leftBorderWidth,
+				getHeight());
 		
 		g.clearClip();
 		
@@ -327,65 +345,6 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	/**
-	 * Enable/disable rounded corners.
-	 * @param rounded Enables rounded corners if {@code true}, disables if {@code false}
-	 */
-	public void setRoundedCorners(boolean rounded) {
-		setTopLeftRoundedCorner(rounded);
-		setBottomLeftRoundedCorner(rounded);
-		setTopRightRoundedCorner(rounded);
-		setBottomRightRoundedCorner(rounded);
-	}
-	
-	/**
-	 * Enable/disable top-left rounded corner.
-	 * @param rounded Enables top-left rounded corner if {@code true}, disables if {@code false}
-	 */
-	public void setTopLeftRoundedCorner(boolean rounded) {
-		if (rounded) {
-			this.topLeftCornerRadius = bevelWidth;
-		} else {
-			this.topLeftCornerRadius = 0;
-		}
-	}
-	
-	/**
-	 * Enable/disable bottom-left rounded corner.
-	 * @param rounded Enables bottom-left rounded corner if {@code true}, disables if {@code false}
-	 */
-	public void setBottomLeftRoundedCorner(boolean rounded) {
-		if (rounded) {
-			this.bottomLeftCornerRadius = bevelWidth;
-		} else {
-			this.bottomLeftCornerRadius = 0;
-		}
-	}
-	
-	/**
-	 * Enable/disable top-right rounded corner.
-	 * @param rounded Enables top-right rounded corner if {@code true}, disables if {@code false}
-	 */
-	public void setTopRightRoundedCorner(boolean rounded) {
-		if (rounded) {
-			this.topRightCornerRadius = bevelWidth;
-		} else {
-			this.topRightCornerRadius = 0;
-		}
-	}
-	
-	/**
-	 * Enable/disable bottom-right rounded corner.
-	 * @param rounded Enables bottom-right rounded corner if {@code true}, disables if {@code false}
-	 */
-	public void setBottomRightRoundedCorner(boolean rounded) {
-		if (rounded) {
-			this.bottomRightCornerRadius = bevelWidth;
-		} else {
-			this.bottomRightCornerRadius = 0;
-		}
-	}
-	
-	/**
 	 * Enable/disable a beveled appearance.
 	 * @param beveled Enables beveled appearance if {@code true}, disables if {@code false}
 	 */
@@ -398,7 +357,26 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	public void setBorderWidth(int width) {
-		this.borderWidth = width;
+		setTopBorderWidth(width);
+		setRightBorderWidth(width);
+		setBottomBorderWidth(width);
+		setLeftBorderWidth(width);
+	}
+	
+	public void setTopBorderWidth(int width) {
+		this.topBorderWidth = width;
+	}
+	
+	public void setRightBorderWidth(int width) {
+		this.rightBorderWidth = width;
+	}
+	
+	public void setBottomBorderWidth(int width) {
+		this.bottomBorderWidth = width;
+	}
+	
+	public void setLeftBorderWidth(int width) {
+		this.leftBorderWidth = width;
 	}
 	
 	public void setBorderColor(Color color) {
