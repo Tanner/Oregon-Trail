@@ -25,9 +25,10 @@ public abstract class Item implements Conditioned{
 	 * @param description The item's description
 	 * @param status The item's status
 	 * @param weight The item's weight
+	 * @param baseCost The base cost of the item
 	 */
 	public Item(String name, String description, Condition status, double weight, int baseCost) {
-		this(name, description, status, weight, baseCost, 1);
+		this(name, description, status, weight, 1, baseCost);
 	}
 	
 	/**
@@ -38,8 +39,9 @@ public abstract class Item implements Conditioned{
 	 * @param status The item's status
 	 * @param weight The item's weight
 	 * @param numberOf The number of items in the stack
+	 * @param baseCost The base cost of the item
 	 */
-	public Item(String name, String description, Condition status, double weight, int baseCost, int numberOf) {
+	public Item(String name, String description, Condition status, double weight, int numberOf, int baseCost) {
 		this.name = name;
 		this.description = description;
 		this.status = status;

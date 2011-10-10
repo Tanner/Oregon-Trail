@@ -127,4 +127,6 @@ public class Inventory {
 		Logger.log(item.getName() + " was added successfully.", Logger.Level.INFO);
 		return true;
 	}
+	
+	//TODO: Inventory knows when statuses change
 }
