@@ -67,8 +67,6 @@ public class Label extends Component {
 		clip = true;
 		lines = new ArrayList<String>();
 		parseLines();
-		
-		
 	}
 	
 	/**
@@ -104,15 +102,17 @@ public class Label extends Component {
 		
 		super.render(container, g);
 		
-		if (clip == true)
+		if (clip == true) {
 			g.setClip(getX(), getY(), getWidth(), getHeight());
+		}
 		
 		int startY;
 		
-		if ( verticalAlignment == VerticalAlignment.Center)
+		if ( verticalAlignment == VerticalAlignment.Center) {
 			startY = getY() + (getHeight() - (lines.size()*font.getLineHeight())) / 2;
-		else
+		} else {
 			startY = getY();
+		}
 		
 		for (int i = 0; i < lines.size(); i++) {
 			if (alignment == Alignment.Center) {
