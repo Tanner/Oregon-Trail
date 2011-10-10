@@ -3,6 +3,8 @@ package scene.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Player;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -34,6 +36,12 @@ public class SceneSelectorScene extends Scene {
 
 	private ButtonListener buttonListener;
 	private List<Button> buttons;
+	
+	private Player player;
+	
+	public SceneSelectorScene(Player player) {
+		this.player = player;
+	}
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -68,6 +76,14 @@ public class SceneSelectorScene extends Scene {
 		Label componentsLabel = new Label(container, fieldFont, Color.white, "Components");
 		Button componentsButton = new Button(container, componentsLabel);
 		buttons.add(componentsButton);
+		
+		Label partyRemoveLabel = new Label(container, fieldFont, Color.white, "Remove party");
+		Button partyRemoveButton = new Button(container, partyRemoveLabel);
+		buttons.add(partyRemoveButton);
+		
+		Label partyAddLabel = new Label(container, fieldFont, Color.white, "Add Party");
+		Button partyAddButton = new Button(container, partyAddLabel);
+		buttons.add(partyAddButton);
 		
 		buttonListener = new ButtonListener();
 		
@@ -129,6 +145,10 @@ public class SceneSelectorScene extends Scene {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventoryScene);
 			} else if (component == buttons.get(5)) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTest);
+			} else if (component == buttons.get(6)) {
+				
+			} else if (component == buttons.get(7)) {
+				
 			}
 		}
 	}

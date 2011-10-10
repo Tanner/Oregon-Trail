@@ -80,7 +80,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		case PartyInventoryScene:
 			return new PartyInventoryScene();
 		case SceneSelector:
-			return new SceneSelectorScene();
+			return new SceneSelectorScene(game.getPlayer());
 		case ComponentTest:
 			return new ComponentTestScene();
 		case GridLayoutTest:
