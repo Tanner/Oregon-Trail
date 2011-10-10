@@ -7,6 +7,7 @@ import model.Inventory;
 import model.Item;
 import model.Party;
 import model.Person;
+import model.item.Vehicle;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -55,6 +56,9 @@ public class PartyInventoryScene extends Scene {
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		
 		ArrayList<Person> members = party.getPartyMembers();
+		Vehicle vehicle = party.getVehicle();
+
+		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		
 		// Create a grid of all the party members and their inventories
 		int nameLabelWidth = 0;
@@ -72,13 +76,16 @@ public class PartyInventoryScene extends Scene {
 			}
 		}
 		
-		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize) + nameWidth;
+		int newWidth = fieldFont.getWidth(vehicle.getName());
+		if (nameLabelWidth < newWidth) {
+			nameLabelWidth = newWidth;
+		}
+		
+		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize) + nameLabelWidth;
 		
 		ArrayList<Panel> personPanels = new ArrayList<Panel>();
 		for (Person person : members) {
 			List<Item> inventory = person.getInventoryAsList();
-			
-			int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 			Panel panel = new Panel(container, panelWidth, panelHeight);
 			
 			Label nameLabel = new Label(container, nameLabelWidth, panelHeight, fieldFont, Color.white, person.getName());
@@ -88,7 +95,7 @@ public class PartyInventoryScene extends Scene {
 			for (int i = 0; i < inventory.size(); i++) {
 				Item item = inventory.get(i);
 				
-				lastPositionReference = createItemButtons(item, lastPositionReference, fieldFont, panel);
+				lastPositionReference = createItemButton(item, lastPositionReference, fieldFont, panel);
 			}
 			
 			personPanels.add(panel);
@@ -102,6 +109,29 @@ public class PartyInventoryScene extends Scene {
 		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1);
 		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
+		// Create Vehicle inventories (if one exists)	
+		List<Item> vehicleItems = vehicle.getInventory().getItems();
+		Panel panel = new Panel(container, panelWidth, panelHeight);
+
+		Label wagonLabel = new Label(container, nameLabelWidth, panelHeight, fieldFont, Color.white, vehicle.getName());
+		panel.add(wagonLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
+		
+		Positionable lastPositionReference = wagonLabel;
+		for (int i = 0; i < vehicleItems.size(); i++) {
+			Item item = vehicleItems.get(i);
+			
+			lastPositionReference = createItemButton(item, lastPositionReference, fieldFont, panel);
+		}
+		
+		int lastOddIndex = personPanels.size() - 1;
+		if (lastOddIndex % 2 != 0) {
+			lastOddIndex--;
+		}
+		Positionable locationReference = personPanels.get(lastOddIndex);
+		
+		mainLayer.add(panel, locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+		
+		// Close button
 		closeButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CLOSE")));
 		closeButton.addListener(new ButtonListener());
 		mainLayer.add(closeButton, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
@@ -119,7 +149,7 @@ public class PartyInventoryScene extends Scene {
 		return ID.ordinal();
 	}
 	
-	public Button createItemButtons(Item item, Positionable locationReference, Font font, Panel panel) {	
+	public Button createItemButton(Item item, Positionable locationReference, Font font, Panel panel) {	
 		CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, font, Color.white, item.getName()));
 		button.setCountUpOnLeftClick(false);
 		button.setMax(item.getNumberOf());
