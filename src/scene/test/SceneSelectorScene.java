@@ -147,7 +147,7 @@ public class SceneSelectorScene extends Scene {
 			} else if (component == buttons.get(3)) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.Store, SceneSelectorScene.this);
 			} else if (component == buttons.get(4)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventoryScene, SceneSelectorScene.this);
+				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventory, SceneSelectorScene.this);
 			} else if (component == buttons.get(5)) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTest, SceneSelectorScene.this);
 			} else if (component == buttons.get(6)) {

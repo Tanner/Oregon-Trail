@@ -14,7 +14,7 @@ import core.FontManager;
 import core.GameDirector;
 
 public class PartyInventoryScene extends Scene {
-	public static final SceneID ID = SceneID.PartyInventoryScene;
+	public static final SceneID ID = SceneID.PartyInventory;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
