@@ -49,8 +49,6 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		
 		components = new ArrayList<Component>();
 		visible = true;
-		
-		beveled = true;
 	}
 	
 	@Override
