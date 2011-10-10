@@ -93,17 +93,7 @@ public class PartyInventoryScene extends Scene {
 			for (int i = 0; i < inventory.size(); i++) {
 				Item item = inventory.get(i);
 				
-				CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, item.getName()));
-				button.setCountUpOnLeftClick(false);
-				button.setMax(item.getNumberOf());
-				button.setCount(item.getNumberOf());
-				
-				ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item.getStatus());
-				
-				panel.add(button, lastPositionReference.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
-				panel.add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, CONDITION_BAR_PADDING);
-				
-				lastPositionReference = button;
+				lastPositionReference = createItemButtons(item, lastPositionReference, fieldFont, panel);
 			}
 			
 			personPanels.add(panel);
@@ -132,6 +122,20 @@ public class PartyInventoryScene extends Scene {
 	@Override
 	public int getID() {
 		return ID.ordinal();
+	}
+	
+	public Button createItemButtons(Item item, Positionable locationReference, Font font, Panel panel) {	
+		CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, font, Color.white, item.getName()));
+		button.setCountUpOnLeftClick(false);
+		button.setMax(item.getNumberOf());
+		button.setCount(item.getNumberOf());
+		
+		ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item.getStatus());
+		
+		panel.add(button, locationReference.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
+		panel.add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, CONDITION_BAR_PADDING);
+		
+		return button;
 	}
 	
 	private class ButtonListener implements ComponentListener {
