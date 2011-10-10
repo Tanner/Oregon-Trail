@@ -102,7 +102,6 @@ public class PartyCreationScene extends Scene {
 			int newPersonButtonPaddingY = (i == 0) ? PADDING : 0;
 			
 			newPersonButtons[i] = new Button(container, buttonWidth, newPersonButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NEW_PLAYER")));
-			newPersonButtons[i].setRoundedCorners(true);
 			newPersonButtons[i].addListener(new ButtonListener());
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
 			
