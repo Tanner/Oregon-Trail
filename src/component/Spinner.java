@@ -7,7 +7,8 @@ import org.newdawn.slick.gui.*;
 import component.Label.Alignment;
 
 /**
- * A Spinner component that allows the user to select specific choices.
+ * {@code Spinner} inherits from {@code Component} to extend features that
+ * that allow the user to select specific choices.
  * Scrolls up or down through a list of options that each represent
  * a specific ordinal value.  Does not allow the user to go below/above
  * the 0/MAX_STATE values.
@@ -30,8 +31,7 @@ public class Spinner extends Component {
 	 * Creates a new Spinner.  Note if you pass in true before the list of Strings,
 	 * it will assume all Strings will contain ints, and it will return the int value
 	 * of the String instead of the state
-	 * 
-	 * @param context The game container
+	 * @param context The GUI context
 	 * @param font The font of the Spinner label
 	 * @param c The color of the Spinner label
 	 * @param width The width of the spinner
@@ -79,13 +79,12 @@ public class Spinner extends Component {
 	}
 	
 	/**
-	 * Gets the current state of the Spinner.  State 0 corresponds
+	 * Gets the current state of the Spinner. State 0 corresponds
 	 * to the first String of the constructor.
-	 * 
 	 * Alternate behavior is you can pass in a String of numbers,
 	 * and if treatAsNumbers is true, it 
 	 * 
-	 * @return the current state
+	 * @return The current state
 	 */
 	public int getState() {
 		return (!treatAsNumbers) ? state : Integer.parseInt(fields[state]);
@@ -93,8 +92,7 @@ public class Spinner extends Component {
 	
 	/**
 	 * Gets the text representation of the current state of the Spinner.
-	 * 
-	 * @return the current state in String form
+	 * @return The current state in String form
 	 */
 	public String getText() {
 		return fields[state];
@@ -109,6 +107,9 @@ public class Spinner extends Component {
 		super.render(context, g);
 	}
 	
+	/**
+	 * Refresh the buttons based off of the state.
+	 */
 	private void refreshState() {
 		if (state == 0) {
 			upButton.setDisabled(false);
@@ -123,12 +124,10 @@ public class Spinner extends Component {
 	}
 
 	/**
-	 * A listener that checks if an up/down button was pressed,
-	 * and updates the spinner's state.
-	 * 
-	 * @author Jeremy Grebner
+	 * A listener for the up/down buttons of {@code Spinner}.
 	 */
 	private class ButtonListener implements ComponentListener {
+		@Override
 		public void componentActivated(AbstractComponent source) {
 			if (source == upButton) {
 				state = (state == MAX_STATE) ? state : state + 1;
