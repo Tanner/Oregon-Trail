@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import model.item.Vehicle;
+
 import core.Logger;
 import core.Logger.Level;
 

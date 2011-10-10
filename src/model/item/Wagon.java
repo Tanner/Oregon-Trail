@@ -1,4 +1,6 @@
-package model;
+package model.item;
+
+import model.Condition;
 
 public class Wagon extends Vehicle {
 	public Wagon() {

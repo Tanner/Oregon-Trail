@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import model.*;
+import model.item.SonicScrewdriver;
+import model.item.Wheel;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

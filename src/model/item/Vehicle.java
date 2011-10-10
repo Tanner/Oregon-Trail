@@ -1,4 +1,8 @@
-package model;
+package model.item;
+
+import model.Condition;
+import model.Inventory;
+import model.Item;
 
 public abstract class Vehicle extends Item{
 

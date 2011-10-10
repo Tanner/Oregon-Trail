@@ -1,5 +1,7 @@
-package model;
+package model.item;
 
+import model.Condition;
+import model.Item;
 import core.ConstantStore;
 
 public class Wheel extends Item {
