@@ -51,7 +51,6 @@ public class Modal extends Component {
 		int buttonWidth = 200;
 		int buttonHeight = 40;
 		dismissButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, dismissButtonText));
-		dismissButton.setRoundedCorners(true);
 		dismissButton.addListener(new ButtonListener());
 		
 		int panelWidth = PADDING * 2 + messageLabel.getWidth();
@@ -89,11 +88,9 @@ public class Modal extends Component {
 		int buttonWidth = 200;
 		int buttonHeight = 40;
 		resignButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, submitButtonString));
-		resignButton.setRoundedCorners(true);
 		resignButton.addListener(buttonListener);
 		
 		dismissButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, cancelButtonString));
-		dismissButton.setRoundedCorners(true);
 		dismissButton.addListener(buttonListener);		
 		
 		int panelWidth = PADDING * 2 + segmentedControl.getWidth();

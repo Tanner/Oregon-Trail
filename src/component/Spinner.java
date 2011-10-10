@@ -58,10 +58,6 @@ public class Spinner extends Component {
 		labelButton = new Button(context, width-butWidth, height, label);
 		
 		//Set rounded corners, disable the label button and re-color it
-		upButton.setTopLeftRoundedCorner(true);
-		downButton.setBottomLeftRoundedCorner(true);
-		labelButton.setTopRightRoundedCorner(true);
-		labelButton.setBottomRightRoundedCorner(true);
 		labelButton.setDisabled(true);
 		labelButton.setButtonActiveColor(Color.gray);
 		
