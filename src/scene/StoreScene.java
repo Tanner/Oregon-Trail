@@ -1,5 +1,6 @@
 package scene;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 import model.*;
@@ -35,6 +36,7 @@ public class StoreScene extends Scene {
 	private Button cancelButton, clearButton, inventoryButton, buyButton;
 	private Label[] itemDescription;
 	private Label partyMoney;
+	private Modal buyModal;
 	
 	private int currentItem = -1;
 	private int hoverItem = -1;
@@ -42,8 +44,10 @@ public class StoreScene extends Scene {
 	String tempDescription = "This is an item description.\nIt is a good item, maybe a sonic screwdriver.\n\nYep.";
 	Inventory inv;
 	ArrayList<Item> tempInv;
+	Party p;
 	
 	public StoreScene (Party p) {
+		this.p = p;
 		inv = new Inventory(16,10000);
 		inv.addItem(new Apple(5));
 		inv.addItem(new Bread(3));
@@ -85,6 +89,7 @@ public class StoreScene extends Scene {
 		super.init(container, game);
 		
 		createComponents();
+		createModals();
 		
 		storeInventoryButtons.addAsGrid(storeInventory, mainLayer.getPosition(ReferencePoint.TopLeft), 4, 4, 0, 0, PADDING, PADDING);
 		mainLayer.add(storeInventoryButtons, mainLayer.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, PADDING, PADDING);
@@ -183,7 +188,7 @@ public class StoreScene extends Scene {
 		storeInventoryButtons = new Panel(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, INVENTORY_BUTTON_HEIGHT * 4 + PADDING * 3);
 		
 		//Create money label
-		partyMoney = new Label(container, storeInventoryButtons.getWidth(), BUTTON_HEIGHT, fieldFont, Color.white, "Party's Money: $1000");
+		partyMoney = new Label(container, storeInventoryButtons.getWidth(), BUTTON_HEIGHT, fieldFont, Color.white, "Party's Money: $" + p.getMoney());
 		partyMoney.setAlignment(Label.Alignment.Center);
 		
 		//Create cancel & inventory buttons
@@ -224,6 +229,17 @@ public class StoreScene extends Scene {
 		buyButton.setDisabled(true);
 	}
 	
+	private void createModals() {
+		ArrayList<Person> person = p.getPartyMembers();
+		String[] names = new String[5];
+		for (int i = 0; i < names.length - 1; i++) {
+			names[i] = person.get(i).getName();
+		}
+		names[4] = p.getVehicle().getName();
+		SegmentedControl choosePlayer = new SegmentedControl(container, 400, 200, 3, 2, 20, 1, names);
+		buyModal = new Modal(container, this, "Choose who will buy this item", choosePlayer, "Buy", "Cancel");
+	}
+	
 	/**
 	 * Update all the side labels on the store to reflect the current
 	 * active item.
@@ -262,14 +278,23 @@ public class StoreScene extends Scene {
 	}
 	
 	public void makePurchase() {
+		Item i = tempInv.get(currentItem);
 		int itemCount = storeInventory[currentItem].getMax() - storeInventory[currentItem].getCount();
-		System.out.println(itemCount);
-		Item tempItem = tempInv.get(currentItem);
-		for (int i = 0; i < itemCount; i++) {
-			System.out.println("Remove item");
-			inv.removeItem(tempItem);
+		int totalCost = itemCount*i.getCost();
+		try {
+			Class<Item> c = (Class<Item>) i.getClass();
+			Item newItem = c.newInstance();
+			newItem.increaseStack(itemCount);
+			Vehicle vehicle = p.getVehicle();
+			if ( p.getMoney() >= totalCost && vehicle.addToInventory(newItem) ) {
+				i.decreaseStack(itemCount);
+				p.setMoney(p.getMoney()-totalCost);
+				partyMoney.setText("Party's Money: $" + p.getMoney());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		storeInventory[currentItem].setMax(tempItem.getNumberOf());
+		storeInventory[currentItem].setMax(tempInv.get(currentItem).getNumberOf());
 	}
 	
 	/**
@@ -283,6 +308,7 @@ public class StoreScene extends Scene {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventory, StoreScene.this);
 			}
 			else if ( source == buyButton) {
+				showModal(buyModal);
 				makePurchase();
 			} else {
 				if ( currentItem != -1) {

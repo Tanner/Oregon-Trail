@@ -76,8 +76,12 @@ public class SegmentedControl extends Component {
 				}
 			}
 		}
-				
-		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TopLeft), rows, cols, 0, 0, margin, margin);
+		
+		//Center the control in the middle of the width/height if there is left over padding
+		int xOffset = (width - cols * colWidth - margin * (cols - 1) ) / 2;
+		int yOffset = (height - rows * rowHeight - margin * (rows - 1) ) / 2;
+		
+		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TopLeft), rows, cols, xOffset, yOffset, margin, margin);
 			
 		clear();		
 	}

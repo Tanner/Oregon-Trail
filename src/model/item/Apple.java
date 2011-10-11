@@ -9,4 +9,7 @@ public class Apple extends Item {
 		super(ConstantStore.get("ITEMS", "APPLE_NAME"), 
 			  ConstantStore.get("ITEMS", "APPLE_DESCRIPTION"), new Condition(100), 1.5, numberOf, 2);
 	}
+	public Apple() {
+		this(0);
+	}
 }

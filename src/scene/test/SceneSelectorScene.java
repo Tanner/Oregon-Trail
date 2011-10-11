@@ -183,15 +183,15 @@ public class SceneSelectorScene extends Scene {
 		}
 		
 		Vehicle vehicle = new Wagon();
-		for (int i = 0; i < vehicle.getInventory().getMaxSize(); i++) {
-			Item sonic = new SonicScrewdriver(1);
-			sonic.decreaseStatus(random.nextInt(100));
-			vehicle.addToInventory(sonic);
-		}
+//		for (int i = 0; i < vehicle.getInventory().getMaxSize() - 5; i++) {
+//			Item sonic = new SonicScrewdriver(1);
+//			sonic.decreaseStatus(random.nextInt(100));
+//			vehicle.addToInventory(sonic);
+//		}
 		
-		for (int i = 0; i < 5; i++) {
-			vehicle.addToInventory(new SonicScrewdriver(i));
-		}
+//		for (int i = 0; i < 5; i++) {
+//			vehicle.addToInventory(new SonicScrewdriver(i));
+//		}
 		
 		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];
 		Party.Rations rations = Party.Rations.values()[random.nextInt(Party.Rations.values().length)];

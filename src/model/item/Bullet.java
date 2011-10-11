@@ -9,4 +9,7 @@ public class Bullet extends Item {
 		super(ConstantStore.get("ITEMS", "BULLET_NAME"), 
 			  ConstantStore.get("ITEMS", "BULLET_DESCRIPTION"), new Condition(100), 0.25, numberOf, 2);
 	}
+	public Bullet() {
+		this(0);
+	}
 }

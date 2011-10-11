@@ -9,4 +9,7 @@ public class Gun extends Item {
 		super(ConstantStore.get("ITEMS", "GUN_NAME"), 
 			  ConstantStore.get("ITEMS", "GUN_DESCRIPTION"), new Condition(100), 5.0, numberOf, 50);
 	}
+	public Gun() {
+		this(0);
+	}
 }

@@ -128,5 +128,13 @@ public class Inventory {
 		return true;
 	}
 	
+	/**
+	 * Checks to see if the current inventory is full.
+	 * @return True if the inventory is full, false otherwise.
+	 */
+	public boolean isFull() {
+		return (items.size() == MAX_SIZE);
+	}
+	
 	//TODO: Inventory knows when statuses change
 }

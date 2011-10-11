@@ -99,6 +99,7 @@ public class Party {
 	 * @param money
 	 */
 	public void setMoney(int money){
+		Logger.log("Party money changed to: $" + money, Logger.Level.INFO);
 		this.money = money;
 	}
 	

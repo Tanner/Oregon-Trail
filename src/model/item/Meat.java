@@ -9,4 +9,7 @@ public class Meat extends Item {
 		super(ConstantStore.get("ITEMS", "MEAT_NAME"), 
 			  ConstantStore.get("ITEMS", "MEAT_DESCRIPTION"), new Condition(100), 25, numberOf, 75);
 	}
+	public Meat() {
+		this(0);
+	}
 }

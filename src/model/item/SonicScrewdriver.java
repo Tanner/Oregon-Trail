@@ -9,4 +9,7 @@ public class SonicScrewdriver extends Item {
 			super(ConstantStore.get("ITEMS", "SONIC_SCREWDRIVER_NAME"), 
 				  ConstantStore.get("ITEMS", "SONIC_SCREWDRIVER_DESCRIPTION"), new Condition(100), .5, numberOf, 100);
 	}
+	public SonicScrewdriver() {
+		this(0);
+	}
 }

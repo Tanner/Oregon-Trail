@@ -175,6 +175,7 @@ public abstract class Item implements Conditioned{
 			return false;
 		}
 		else {
+			numberOf -= amount;
 			Logger.log("Decrement successful", Logger.Level.INFO);
 			return true;
 		}

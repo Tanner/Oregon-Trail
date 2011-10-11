@@ -10,4 +10,7 @@ public class Wheel extends Item {
 		super(ConstantStore.get("ITEMS", "WHEEL_NAME"), 
 			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"), new Condition(100), 5, numberOf, 75);
 	}
+	public Wheel() {
+		this(0);
+	}
 }
