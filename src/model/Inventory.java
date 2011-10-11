@@ -72,6 +72,10 @@ public class Inventory {
 	 * @return True if successful
 	 */
 	public boolean canAddItems(ArrayList<Item> itemsToAdd) {
+		if(itemsToAdd.size() == 0) {
+			return false;
+		}
+		
 		int itemType = itemsToAdd.get(0).getTypeIndex();
 		double weight = 0;
 		for(Item item : itemsToAdd) {
