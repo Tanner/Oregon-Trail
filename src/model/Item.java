@@ -125,7 +125,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 			return 1;
 	}
 	
-	public int getType() {
+	public int getTypeIndex() {
 		return type.ordinal();
 	}
 }
