@@ -9,7 +9,6 @@ import org.newdawn.slick.font.effects.ShadowEffect;
 
 /**
  * Manages fonts for use in the game.
- * @author Ryan Ashcraft
  */
 public class FontManager {
 	public enum FontID {
