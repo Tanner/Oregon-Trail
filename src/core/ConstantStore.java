@@ -17,6 +17,18 @@ public final class ConstantStore {
 	 */
 	public static final Map<String, Map<String, String>> LITERALS;
 	public static final Map<String, Color> COLORS;
+	//USED AS INDEX IN ARRAYLIST
+	public static enum ITEM_TYPES {
+		APPLE,
+		BREAD,
+		BULLET,
+		GUN,
+		MEAT,
+		SONIC,
+		VEHICLE,
+		WAGON,
+		WHEEL,
+	}
 	
 	static {
 		Map<String, Map<String, String>> literalMap = new HashMap<String, Map<String, String>>();
@@ -51,6 +63,8 @@ public final class ConstantStore {
 		// Party Inventory Scene
 		Map<String, String> partyInventoryScene = new HashMap<String, String>();
 		partyInventoryScene.put("TRANSFER", "Transfer");
+		partyInventoryScene.put("DROP", "Drop");
+		partyInventoryScene.put("SELL", "Sell");
 		literalMap.put("PARTY_INVENTORY_SCENE", partyInventoryScene);
 		
 		// Items
@@ -98,6 +112,12 @@ public final class ConstantStore {
 		COLORS = Collections.unmodifiableMap(colorMap);
 	}
 	
+	/**
+	 * Returns string held in hash map of constant literal hashmaps
+	 * @param outer key to find appropriate inner map
+	 * @param inner key to item item within proper map
+	 * @return the string held in the map
+	 */
 	public static String get(String outer, String inner) {
 		return (String)LITERALS.get(outer).get(inner);
 	}
