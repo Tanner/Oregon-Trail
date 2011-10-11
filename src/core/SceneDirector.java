@@ -10,7 +10,7 @@ import scene.*;
 
 
 public class SceneDirector extends StateBasedGame {
-	private GameContainer container;
+//	private GameContainer container;
 	
 	private Stack<Scene> scenes;
 	
@@ -87,7 +87,7 @@ public class SceneDirector extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		this.container = container;
+//		this.container = container;
 		
 		MainMenuScene mainMenu = new MainMenuScene();
 		scenes.add(mainMenu);

@@ -2,7 +2,6 @@ package scene;
 
 import java.util.ArrayList;
 
-import model.Inventory;
 import model.Item;
 import model.Party;
 
@@ -11,7 +10,6 @@ import org.newdawn.slick.geom.*;
 import org.newdawn.slick.gui.*;
 import org.newdawn.slick.state.*;
 import component.*;
-import component.Component.BevelType;
 import component.Positionable.ReferencePoint;
 import core.*;
 
