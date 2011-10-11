@@ -3,7 +3,11 @@ package model.item;
 import core.ConstantStore;
 import model.Condition;
 import model.Item;
-
+/**
+ * ammo for a gun
+ * @author John
+ *
+ */
 public class Bullet extends Item {
 	public Bullet() {
 		super(ConstantStore.get("ITEMS", "BULLET_NAME"), 

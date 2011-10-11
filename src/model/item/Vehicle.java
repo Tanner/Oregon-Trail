@@ -10,14 +10,25 @@ import model.Inventory;
 import model.Item;
 
 public abstract class Vehicle extends Item implements Inventoried{
-
+/**
+ * Abstract class to design a vehicle
+ */
 	private Condition status;
 	private Inventory cargo;
 	private final int MAX_INVENTORY_SIZE = 10;
 	private final double MAX_INVENTORY_WEIGHT;
-	
+
+	/**
+	 * Makes a vehicle to be used to get to oregon
+	 * @param name what this vehicle is to be called
+	 * @param description what kind of vehicle this is
+	 * @param status what is the condition of this vehicle
+	 * @param maxWeight how much can this vehicle hold
+	 * @param weight how much this vehicle is currently carrying
+	 * @param cost how much this vehicle costs purchase  
+	 */
 	public Vehicle(String name, String description, Condition status, double maxWeight, double weight, int cost, ConstantStore.ITEM_TYPES type) {
-		super(name, description, status, weight, cost, type);
+	super(name, description, status, weight, cost, type);
 		this.MAX_INVENTORY_WEIGHT = maxWeight;
 		this.status = status;
 		this.cargo = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);	
@@ -34,6 +45,7 @@ public abstract class Vehicle extends Item implements Inventoried{
 	/**
 	 * Increases the vehicle's status by a specific amount. Returns false if the increase fails.
 	 * @param amount The amount by which to increase the status
+	 * @return whether the increase worked or not
 	 */
 	public boolean increaseStatus(int amount) {
 		return status.increase(amount);
@@ -42,6 +54,7 @@ public abstract class Vehicle extends Item implements Inventoried{
 	/**
 	 * Decreases the vehicle's status by a specific amount.  Returns false if the decrease fails.
 	 * @param amount The amount by which to decrease the status
+	 * @return whether the decrease worked or not
 	 */
 	public boolean decreaseStatus(int amount) {
 		return status.decrease(amount);

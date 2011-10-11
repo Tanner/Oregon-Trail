@@ -3,7 +3,11 @@ package model.item;
 import core.ConstantStore;
 import model.Condition;
 import model.Item;
-
+/**
+ * The bread item.  For sandwiches
+ * @author John
+ *
+ */
 public class Bread extends Item {
 	public Bread() {
 		super(ConstantStore.get("ITEMS", "BREAD_NAME"), 

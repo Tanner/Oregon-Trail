@@ -4,6 +4,11 @@ import model.Condition;
 import model.Item;
 import core.ConstantStore;
 
+/**
+ * It's round, it's wood.  It goes on a vehicle.
+ * @author John
+ *
+ */
 public class Wheel extends Item {
 
 	public Wheel() {
