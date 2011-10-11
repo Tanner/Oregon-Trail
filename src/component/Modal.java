@@ -9,6 +9,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.Input;
 
+import core.ConstantStore;
 import core.FontManager;
 import core.GameDirector;
 
@@ -55,7 +56,9 @@ public class Modal extends Component {
 		
 		int panelWidth = PADDING * 2 + messageLabel.getWidth();
 		int panelHeight = PADDING * 3 + messageLabel.getHeight() + dismissButton.getHeight();
-		panel = new Panel(container, panelWidth, panelHeight, Color.black);
+		panel = new Panel(container, panelWidth, panelHeight, ConstantStore.COLORS.get("MODAL"));
+		panel.setBorderColor(ConstantStore.COLORS.get("MODAL_BORDER"));
+		panel.setBorderWidth(2);
 		panel.setLocation((getWidth() - panel.getWidth()) / 2, (getHeight() - panel.getHeight() / 2));
 		
 		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TopCenter), Positionable.ReferencePoint.TopCenter, 0, PADDING);		
@@ -95,7 +98,9 @@ public class Modal extends Component {
 		
 		int panelWidth = PADDING * 2 + segmentedControl.getWidth();
 		int panelHeight = PADDING * 4 + messageLabel.getHeight() + segmentedControl.getHeight() + resignButton.getHeight();
-		panel = new Panel(container, panelWidth, panelHeight, Color.black);
+		panel = new Panel(container, panelWidth, panelHeight, ConstantStore.COLORS.get("MODAL"));
+		panel.setBorderColor(ConstantStore.COLORS.get("MODAL_BORDER"));
+		panel.setBorderWidth(2);
 		panel.setLocation((getWidth() - panel.getWidth()) / 2, (getHeight() - panel.getHeight() / 2));
 		
 		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TopCenter), Positionable.ReferencePoint.TopCenter, 0, PADDING);
