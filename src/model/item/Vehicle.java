@@ -85,4 +85,13 @@ public abstract class Vehicle extends Item implements Inventoried{
 	public boolean removeItemFromInventory(int itemIndex, int quantity) {
 		return (cargo.removeItem(itemIndex, quantity) != null);
 	}
+	
+	/**
+	 * Returns whether or not the item addition is possible.
+	 * @param The items to test the possibility of adding.
+	 * @return True if possible.
+	 */
+	public boolean canGetItem(ArrayList<Item> items) {
+		return cargo.canAddItems(items);
+	}
 }
