@@ -62,16 +62,9 @@ public class PartyInventoryScene extends Scene {
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		
 		// Create a grid of all the party members and their inventories
-		int maxInventorySize = 0;
-		for (Person person : members) {
-			Inventory inventory = person.getInventory();
-			
-			if (maxInventorySize < inventory.getMaxSize()) {
-				maxInventorySize = inventory.getMaxSize();
-			}
-		}
+		int maxInventorySize = Person.MAX_INVENTORY_SIZE;
 		
-		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize);
+		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize) - PADDING;
 		
 		ArrayList<Panel> personPanels = new ArrayList<Panel>();
 		for (Person person : members) {
@@ -87,6 +80,9 @@ public class PartyInventoryScene extends Scene {
 				
 				if (i == 0) {
 					position = lastPositionReference.getPosition(ReferencePoint.TopLeft);
+				}
+				
+				if (i == 0 || i == inventory.size()) {
 					padding = 0;
 				}
 				
@@ -107,7 +103,7 @@ public class PartyInventoryScene extends Scene {
 			personPanelsArray[personPanels.indexOf(panel)] = panel;
 		}
 		
-		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1);
+		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1) - 4;
 		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
 		// Create Vehicle inventories (if one exists)
