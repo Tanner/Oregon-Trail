@@ -25,6 +25,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		Out
 	}
 	
+	private Component parentComponent;
 	protected Vector2f origin;
 	private int width;
 	private int height;
@@ -163,24 +164,28 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 	}
 	
+	public void setParentComponent(Component component) {
+		this.parentComponent = component;
+	}
+	
+	/**
+	 * Return if visible and parent component(s) are visible.
+	 * @return {@code true} if visible, {@code false} is not
+	 */
+	public boolean isVisible() {
+		if (parentComponent != null) {
+			return visible && parentComponent.isVisible();
+		}
+		
+		return visible;
+	}
+	
 	/**
 	 * Set this component to be visible or invisible.
 	 * @param visible Enables visibility if {@code true}, disables if {@code false}
 	 */
 	public void setVisible(boolean visible) {
 		this.visible = visible;
-	}
-	
-	/**
-	 * Add this component at a location relative to a reference point.
-	 * @param component {@code Component} to add
-	 * @param location Location to add the component at
-	 * @param referencePoint {@code ReferencePoint} in the component to set to the location
-	 */
-	public void add(Component component, Vector2f location, ReferencePoint referencePoint) {
-		component.setPosition(location, referencePoint, 0, 0);
-		
-		components.add(component);
 	}
 	
 	/**
@@ -194,7 +199,18 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	public void add(Component component, Vector2f location, ReferencePoint referencePoint, int xOffset, int yOffset) {
 		component.setPosition(location, referencePoint, xOffset, yOffset);
 		
+		component.setParentComponent(this);
 		components.add(component);
+	}
+	
+	/**
+	 * Add this component at a location relative to a reference point.
+	 * @param component {@code Component} to add
+	 * @param location Location to add the component at
+	 * @param referencePoint {@code ReferencePoint} in the component to set to the location
+	 */
+	public void add(Component component, Vector2f location, ReferencePoint referencePoint) {
+		add(component, location, referencePoint, 0, 0);
 	}
 	
 	/**
@@ -261,6 +277,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * @param component Component to remove
 	 */
 	public void remove(Component component) {
+		component.setParentComponent(null);
 		components.remove(component);
 	}
 	
@@ -460,11 +477,16 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	/**
-	 * Set whether this component is accepting input.
+	 * Set whether this component is accepting input. Also sets all subcomponents
+	 * of this component.
 	 * @param acceptingInput Enables input if {@code true}, disables if {@code false}
 	 */
 	public void setAcceptingInput(boolean acceptingInput) {
 		super.setAcceptingInput(acceptingInput);
+		
+		for (Component c : components) {
+			c.setAcceptingInput(acceptingInput);
+		}
 	}
 	
 	@Override
@@ -480,13 +502,5 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 */
 	public boolean isMouseOver() {
 		return mouseOver;
-	}
-	
-	/**
-	 * Return if visible.
-	 * @return {@code true} if visible, {@code false} is not
-	 */
-	public boolean isVisible() {
-		return visible;
 	}
 }

@@ -92,6 +92,8 @@ public final class ConstantStore {
 		colorMap.put("INTERACTIVE_BORDER_DARK", Color.black);
 		colorMap.put("INTERACTIVE_BORDER_LIGHT", Color.white.darker(0.25f));
 		colorMap.put("INTERACTIVE_BORDER_FOCUS_LIGHT", Color.white.darker(0.5f));
+		colorMap.put("MODAL", Color.darkGray);
+		colorMap.put("MODAL_BORDER", Color.white);
 
 		COLORS = Collections.unmodifiableMap(colorMap);
 	}
