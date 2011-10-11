@@ -9,7 +9,11 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.Modal;
 import component.ModalListener;
 
-
+/**
+ * How the game displays information to the player.  Inherited by the containers which execute the game functionality
+ * @author NULL&&void
+ *
+ */
 public abstract class Scene extends BasicGameState implements ModalListener {
 	protected GameContainer container;
 	protected SceneLayer backgroundLayer;
@@ -38,7 +42,11 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 
 	@Override
 	public abstract void update(GameContainer container, StateBasedGame game, int delta) throws SlickException;
-	
+
+	/**
+	 * Activates a modal screen 
+	 * @param modal the screen to be displayed via modality
+	 */
 	public void showModal(Modal modal) {
 		modalLayer.add(modal);
 		
@@ -50,6 +58,10 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 		modalLayer.setVisible(true);
 	}
 	
+	/**
+	 * Deactivates a modal screen
+	 * @param the modal by which the activation shall be not
+	 */
 	public void dismissModal(Modal modal) {
 		// Make Modal invisible and set accepting input to false before removing it!
 		modalLayer.setVisible(false);

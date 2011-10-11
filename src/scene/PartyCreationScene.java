@@ -74,6 +74,10 @@ public class PartyCreationScene extends Scene {
 	
 	private int currentPersonModifying;
 	
+	/**
+	 * Creates a scene by which a party can be created.  creatively.  
+	 * @param player the player that will own the party upon creation
+	 */
 	public PartyCreationScene(Player player) {
 		this.player = player;
 	}
@@ -329,6 +333,11 @@ public class PartyCreationScene extends Scene {
 		}
 	}
 	
+	/**
+	 * Listens to buttons, yo'.
+	 * @author NULL&&void
+	 *
+	 */
 	private class ButtonListener implements ComponentListener {	
 		/**
 		 * Breakout method : newPersonButton triggered event - set text field access accordingly
