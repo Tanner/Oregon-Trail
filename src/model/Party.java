@@ -53,6 +53,12 @@ public class Party {
 		Logger.log("Current pace is: " + currentPace + " and current rations is: " + currentRations, Level.INFO);
 	}
 	
+	/**
+	 * Buys the item (pays for it) and then gives it to the designated buyer.
+	 * @param items The items to buy
+	 * @param buyer The thing that wants the items in its inventory
+	 * @return True if successful
+	 */
 	public boolean buyItemForInventory(ArrayList<Item> items, Inventoried buyer) {
 		int cost = 0;
 		for(Item item : items) {
@@ -67,6 +73,11 @@ public class Party {
 		}
 	}
 	
+	/**
+	 * Returns a list of inventoried things that can but the designated items.
+	 * @param items The items to test buying
+	 * @return The list of people
+	 */
 	public ArrayList<Inventoried> canGetItem(ArrayList<Item> items) {
 		ArrayList<Inventoried> ableList = new ArrayList<Inventoried>();
 		for(Person person : members) {
