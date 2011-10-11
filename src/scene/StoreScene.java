@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import model.Inventory;
 import model.Item;
 import model.Party;
+import model.item.*;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.*;
 import org.newdawn.slick.gui.*;
 import org.newdawn.slick.state.*;
 import component.*;
-import component.Component.BevelType;
 import component.Positionable.ReferencePoint;
 import core.*;
 
@@ -42,9 +42,44 @@ public class StoreScene extends Scene {
 	private int hoverItem = -1;
 	
 	String tempDescription = "This is an item description.\nIt is a good item, maybe a sonic screwdriver.\n\nYep.";
+	Inventory inv;
 	ArrayList<Item> tempInv;
+	
 	public StoreScene (Party p) {
-		tempInv = p.getVehicle().getInventory().getItems();
+		inv = new Inventory(16,10000);
+		inv.addItem(new Apple(5));
+		inv.addItem(new Bread(3));
+		inv.addItem(new Bullet(100));
+		inv.addItem(new Gun(2));
+		inv.addItem(new Meat(10));
+		inv.addItem(new SonicScrewdriver(1));
+		inv.addItem(new Wheel(4));
+		inv.addItem(new Wagon());
+		Item i = new Apple(5);
+		i.decreaseStatus(10);
+		inv.addItem(i);
+		i = new Bread(5);
+		i.decreaseStatus(10);
+		inv.addItem(i);
+		i = new Bullet(5);
+		i.decreaseStatus(10);
+		inv.addItem(i);
+		i = new Gun(5);
+		i.decreaseStatus(10);
+		inv.addItem(i);
+		i = new Meat(5);
+		i.decreaseStatus(10);
+		inv.addItem(i);
+		i = new SonicScrewdriver(5);
+		i.decreaseStatus(10);
+		inv.addItem(i);
+		i = new Wheel(5);
+		i.decreaseStatus(10);
+		inv.addItem(i);
+		i = new Apple(5);
+		i.decreaseStatus(10);
+		inv.addItem(i);
+		tempInv = inv.getItems();
 	}
 	
 	@Override
@@ -76,7 +111,7 @@ public class StoreScene extends Scene {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		
 		//Re-enable all buttons if currently selected item's quantity goes back to 0
-		if ( currentItem != -1 && storeInventory[currentItem].getCount() == 0 ) {
+		if ( currentItem != -1 && storeInventory[currentItem].getCount() == storeInventory[currentItem].getMax()) {
 			currentItem = -1;
 			buyButton.setDisabled(true);
 			clearButton.setDisabled(true);
@@ -140,8 +175,10 @@ public class StoreScene extends Scene {
 		//Create grid of store inventory buttons
 		storeInventory = new CountingButton[16];
 		for (int i = 0; i < storeInventory.length; i++) {
-			tempLabel = new Label(container, fieldFont, Color.white, tempInv.get(i%10).getName());
+			tempLabel = new Label(container, fieldFont, Color.white, tempInv.get(i).getName());
 			storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
+			storeInventory[i].setMax(tempInv.get(i).getNumberOf());
+			storeInventory[i].setCount(tempInv.get(i).getNumberOf());
 			storeInventory[i].addListener(new InventoryListener(i));
 		}
 		storeInventoryButtons = new Panel(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, INVENTORY_BUTTON_HEIGHT * 4 + PADDING * 3);
@@ -194,18 +231,15 @@ public class StoreScene extends Scene {
 	 * @param index The index of the item you wish to display information on
 	 */
 	private void updateLabels(int index) {
-		//Debug: remove this later
-		index = index % 10;
 		Item tempItem = tempInv.get(index);
-		
-		int count = storeInventory[index].getCount();
+		int count = storeInventory[index].getMax() - storeInventory[index].getCount();
 		itemDescription[0].setText(tempItem.getName());
 		itemDescription[1].setText(tempItem.getDescription());
 		itemDescription[2].setText("Weight: " + tempItem.getWeight() + " lbs");
-		itemDescription[3].setText("Cost: $" + index + ".00");
+		itemDescription[3].setText("Cost: $" + tempItem.getCost());
 		itemDescription[4].setText("Quantity: " + count);
 		itemDescription[5].setText("Total Weight: " + count*tempItem.getWeight());
-		itemDescription[6].setText("Total Cost: $" + count*index);
+		itemDescription[6].setText("Total Cost: $" + count*tempItem.getCost());
 	}
 	
 	/**
@@ -239,7 +273,7 @@ public class StoreScene extends Scene {
 			}
 			else {
 				if ( currentItem != -1) {
-					storeInventory[currentItem].setCount(0);
+					storeInventory[currentItem].setCount(storeInventory[currentItem].getMax());
 					updateLabels(currentItem);
 				}
 			}
