@@ -9,4 +9,5 @@ public interface Inventoried {
 	public boolean removeItemFromInventory(int itemIndex, int quantity);
 	public boolean canGetItem(Item item, int numberOf);
 	public String getName();
+	public Inventory getInventory();
 }
