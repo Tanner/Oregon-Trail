@@ -14,12 +14,14 @@ public class FontManager {
 	public enum FontID {
 		H1,
 		H2,
-		FIELD
+		FIELD,
+		BIG_FIELD
 	}
 	
-	private UnicodeFont h1;
-	private UnicodeFont h2;
+	private UnicodeFont h1Font;
+	private UnicodeFont h2Font;
 	private UnicodeFont fieldFont;
+	private UnicodeFont bigFieldFont;
 	
 	/**
 	 * Initializes everything for use.
@@ -27,20 +29,20 @@ public class FontManager {
 	public void init() {
 		try {
 			String glyphsToAdd = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890- .,:!\"'?$";
-			h1 = new UnicodeFont("resources/04B_03__.ttf", 48, true, false);
+			h1Font = new UnicodeFont("resources/04B_03__.ttf", 48, true, false);
 //			h1.addAsciiGlyphs();
-			h1.addGlyphs(glyphsToAdd);
-			h1.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
-			h1.getEffects().add(new ColorEffect());
-			h1.setPaddingBottom(1);
-			h1.loadGlyphs();
+			h1Font.addGlyphs(glyphsToAdd);
+			h1Font.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
+			h1Font.getEffects().add(new ColorEffect());
+			h1Font.setPaddingBottom(1);
+			h1Font.loadGlyphs();
 			
-			h2 = new UnicodeFont("resources/04B_03__.ttf", 32, true, false);
-			h2.addGlyphs(glyphsToAdd);
-			h2.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
-			h2.getEffects().add(new ColorEffect());
-			h2.setPaddingBottom(1);
-			h2.loadGlyphs();
+			h2Font = new UnicodeFont("resources/04B_03__.ttf", 32, true, false);
+			h2Font.addGlyphs(glyphsToAdd);
+			h2Font.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
+			h2Font.getEffects().add(new ColorEffect());
+			h2Font.setPaddingBottom(1);
+			h2Font.loadGlyphs();
 			
 			fieldFont = new UnicodeFont("resources/04B_03__.ttf", 20, true, false);
 			fieldFont.addGlyphs(glyphsToAdd);
@@ -49,6 +51,12 @@ public class FontManager {
 			fieldFont.setPaddingBottom(1);
 			fieldFont.loadGlyphs();
 			
+			bigFieldFont = new UnicodeFont("resources/04B_03__.ttf", 28, true, false);
+			bigFieldFont.addGlyphs(glyphsToAdd);
+			bigFieldFont.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
+			bigFieldFont.getEffects().add(new ColorEffect());
+			bigFieldFont.setPaddingBottom(1);
+			bigFieldFont.loadGlyphs();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -62,10 +70,12 @@ public class FontManager {
 	public UnicodeFont getFont(FontID id) {
 		switch(id) {
 		case H1:
-			return h1;
+			return h1Font;
 		case H2:
-			return h2;
+			return h2Font;
 		case FIELD:
+			return fieldFont;
+		case BIG_FIELD:
 			return fieldFont;
 		}
 		
