@@ -17,10 +17,18 @@ import component.Positionable;
 
 import core.*;
 
-
+/**
+ * the scene which represents a town
+ * @author NULL&&void
+ *
+ */
 public class TownScene extends Scene {
 	public static final SceneID ID = SceneID.Town;
-
+	
+	/**
+	 * builds town scene
+	 * @param party where/who the action is
+	 */
 	public TownScene(Party party) {
 		for (Person p : party.getPartyMembers()) {
 			Logger.log(p.getName() + ", the " + p.getProfession() + ", entered the town.", Logger.Level.INFO);

@@ -39,6 +39,10 @@ public class SceneSelectorScene extends Scene {
 	
 	private Player player;
 	
+	/**
+	 * creates the scene which selects the scene by which the player can select the scene they wish this scene to select 
+	 * @param player
+	 */
 	public SceneSelectorScene(Player player) {
 		this.player = player;
 	}
@@ -114,6 +118,11 @@ public class SceneSelectorScene extends Scene {
 		mainLayer.setAcceptingInput(false);
 	}
 	
+	/**
+	 * they are buttons with something to say.  we listen to them.
+	 * @author NULL&&void
+	 *
+	 */
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
