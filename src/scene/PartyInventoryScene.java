@@ -64,7 +64,7 @@ public class PartyInventoryScene extends Scene {
 		// Create a grid of all the party members and their inventories
 		int maxInventorySize = Person.MAX_INVENTORY_SIZE;
 		
-		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize);
+		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize) - PADDING;
 		
 		ArrayList<Panel> personPanels = new ArrayList<Panel>();
 		for (Person person : members) {
@@ -80,6 +80,9 @@ public class PartyInventoryScene extends Scene {
 				
 				if (i == 0) {
 					position = lastPositionReference.getPosition(ReferencePoint.TopLeft);
+				}
+				
+				if (i == 0 || i == inventory.size()) {
 					padding = 0;
 				}
 				
