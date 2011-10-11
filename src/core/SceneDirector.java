@@ -8,7 +8,10 @@ import org.newdawn.slick.state.transition.* ;
 
 import scene.*;
 
-
+/**
+ * Handles the stack of scenes for scene display
+ * 
+ */
 public class SceneDirector extends StateBasedGame {
 //	private GameContainer container;
 	
