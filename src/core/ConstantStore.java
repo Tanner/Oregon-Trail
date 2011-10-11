@@ -51,6 +51,8 @@ public final class ConstantStore {
 		// Party Inventory Scene
 		Map<String, String> partyInventoryScene = new HashMap<String, String>();
 		partyInventoryScene.put("TRANSFER", "Transfer");
+		partyInventoryScene.put("DROP", "Drop");
+		partyInventoryScene.put("SELL", "Sell");
 		literalMap.put("PARTY_INVENTORY_SCENE", partyInventoryScene);
 		
 		// Items

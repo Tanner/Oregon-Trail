@@ -366,7 +366,6 @@ public class Person implements Conditioned{
 	public boolean canGetItem(Item item) {
 		ArrayList<Item> items = inventory.getItems();
 		boolean contains = false;
-//		int indexOf = -1;
 		boolean allContainedStackable = true;
 		for(Item containedItem : items) {
 			if (containedItem.getClass() == item.getClass()) {
@@ -374,7 +373,6 @@ public class Person implements Conditioned{
 					allContainedStackable = false;
 				}
 				contains = true;
-//				indexOf = items.indexOf(containedItem);
 			}
 		}
 		if ((inventory.getWeight() + (item.getStackWeight()) > MAX_INVENTORY_WEIGHT) || 
