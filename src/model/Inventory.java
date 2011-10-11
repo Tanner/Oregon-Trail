@@ -79,7 +79,7 @@ public class Inventory {
 			Logger.log("The inventory has max capacity: " + MAX_SIZE + 
 					" and currently has " + items.size() + " items.", Logger.Level.INFO);
 			return false;
-		} else if(contains && (items.get(indexOf).isStackable() && item.isStackable()) ){
+		} else if (contains && (items.get(indexOf).isStackable() && item.isStackable()) ){
 			// Item doesn't offend max weight and is already present in inventory and both the item added and current item are stackable
 			if(!items.get(indexOf).increaseStack(item.getNumberOf())) {
 				// IncreaseStack failed
@@ -137,4 +137,49 @@ public class Inventory {
 	}
 	
 	//TODO: Inventory knows when statuses change
+	/**
+	 * Increases the status of a specific item in the inventory
+	 * @param itemIndex The index of the item in inventory
+	 * @param amount The amount to increase the status
+	 * @return true if successful, false otherwise
+	 */
+	public boolean increaseItemStatus(int itemIndex, int amount) {
+		Item item = items.get(itemIndex);
+		if(!item.isStackable()) {
+			//Item is unstackable (meaning it has damage) and it is in a single stack (because it is unstackable)
+			item.increaseStatus(amount);
+			Logger.log(item.getName() + " has its status increased.  Status is now at " + 
+					(item.getConditionPercentage() *100) + "%.", Logger.Level.INFO);
+			if(item.isStackable() && item.getNumberOf() == 1) {
+				//If it's become stackable again and it is in a single stack.
+				this.removeItem(item);
+				this.addItem(item);
+				Logger.log("Restacking " + item.getName(), Logger.Level.INFO);
+			}
+			return true;
+		} else {
+			//Item is stackable, so it cannot be damaged and the status increase must fail.
+			Logger.log("Cannot increase status of stacked item " + item.getName(), Logger.Level.INFO);
+			return false;
+		}
+	}
+	
+	public boolean decreaseItemStatus(int itemIndex, int amount) {
+		Item item = items.get(itemIndex);
+		if(item.getNumberOf() == 1) {
+			//If we have a single item in the stack, it's easy.
+			item.decreaseStatus(amount);
+			if(item.getStatus().getCurrent() == item.getStatus().getMin()) {
+				//If the item has broken.
+				Logger.log("Item status reached min.  Item destroyed.", Logger.Level.INFO);
+				this.removeItem(item);
+			}
+		} else {
+			//Item has a stack of more than one and must be full status.
+			//TODO: FIX THIS
+		}
+		
+		
+		return true;
+	}
 }
