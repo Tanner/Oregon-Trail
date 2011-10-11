@@ -5,7 +5,7 @@ import model.Condition;
 import model.Item;
 /**
  * ammo for a gun
- * @author John
+ * @author NULL&void
  *
  */
 public class Bullet extends Item {

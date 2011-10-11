@@ -5,7 +5,7 @@ import model.Item;
 import core.ConstantStore;
 /**
  * To fix what must be fixed
- * @author John
+ * @author NULL&void
  *
  */
 public class SonicScrewdriver extends Item {

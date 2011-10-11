@@ -6,7 +6,7 @@ import core.ConstantStore;
 
 /**
  * It's round, it's wood.  It goes on a vehicle.
- * @author John
+ * @author NULL&void
  *
  */
 public class Wheel extends Item {

@@ -5,7 +5,7 @@ import model.Condition;
 import model.Item;
 /**
  * The bread item.  For sandwiches
- * @author John
+ * @author NULL&void
  *
  */
 public class Bread extends Item {

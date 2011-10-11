@@ -5,7 +5,7 @@ import model.Condition;
 
 /**
  * The wagon object, by which we shall storm the trail
- * @author John
+ * @author NULL&void
  *
  */
 

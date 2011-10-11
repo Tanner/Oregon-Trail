@@ -5,7 +5,7 @@ import model.Condition;
 import model.Item;
 /**
  * It's an apple, jim
- * @author John
+ * @author NULL&void
  *
  */
 public class Apple extends Item {
