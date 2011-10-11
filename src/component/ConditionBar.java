@@ -58,4 +58,20 @@ public class ConditionBar extends Component {
 		g.setColor(barColor);
 		g.fillRect(getX(), getY(), (float)(getWidth() * percentage), getHeight());
 	}
+
+	/**
+	 * Get the current condition.
+	 * @return Current condition
+	 */
+	public Condition getCondition() {
+		return condition;
+	}
+
+	/**
+	 * Set a new condition.
+	 * @param condition New condition
+	 */
+	public void setCondition(Condition condition) {
+		this.condition = condition;
+	}
 }
