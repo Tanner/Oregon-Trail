@@ -34,28 +34,24 @@ public class FontManager {
 			h1Font.addGlyphs(glyphsToAdd);
 			h1Font.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
 			h1Font.getEffects().add(new ColorEffect());
-			h1Font.setPaddingBottom(1);
 			h1Font.loadGlyphs();
 			
 			h2Font = new UnicodeFont("resources/04B_03__.ttf", 32, true, false);
 			h2Font.addGlyphs(glyphsToAdd);
 			h2Font.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
 			h2Font.getEffects().add(new ColorEffect());
-			h2Font.setPaddingBottom(1);
 			h2Font.loadGlyphs();
 			
 			fieldFont = new UnicodeFont("resources/04B_03__.ttf", 20, true, false);
 			fieldFont.addGlyphs(glyphsToAdd);
 			fieldFont.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
 			fieldFont.getEffects().add(new ColorEffect());
-			fieldFont.setPaddingBottom(1);
 			fieldFont.loadGlyphs();
 			
 			bigFieldFont = new UnicodeFont("resources/04B_03__.ttf", 28, true, false);
 			bigFieldFont.addGlyphs(glyphsToAdd);
 			bigFieldFont.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
 			bigFieldFont.getEffects().add(new ColorEffect());
-			bigFieldFont.setPaddingBottom(1);
 			bigFieldFont.loadGlyphs();
 		} catch (SlickException e) {
 			e.printStackTrace();
