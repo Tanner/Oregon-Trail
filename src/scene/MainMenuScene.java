@@ -16,8 +16,8 @@ public class MainMenuScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		UnicodeFont h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
-		UnicodeFont h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
+		Font h1 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H1);
+		Font h2 = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.H2);
 		
 		Label titleLabel = new Label(container, h1, Color.white, ConstantStore.get("MAIN_MENU", "TITLE"));
 		Label subtitleLabel = new Label(container, h2, Color.white, ConstantStore.get("MAIN_MENU", "PRESS_ENTER"));

@@ -8,6 +8,7 @@ import model.*;
 import model.item.*;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
@@ -48,7 +49,7 @@ public class SceneSelectorScene extends Scene {
 				
 		buttons = new ArrayList<Button>();
 		
-		UnicodeFont fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		String[] labels = { "Main Menu", "Party Creation", "Town", "Store", "Party Inventory", "Components", "Remove Party", "Add Party" };
 		
 		int rows = (int)Math.ceil(Math.sqrt(labels.length));
