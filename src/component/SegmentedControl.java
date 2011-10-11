@@ -1,8 +1,6 @@
 package component;
 
 import org.newdawn.slick.*;
-
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
 import core.FontManager;

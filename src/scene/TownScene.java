@@ -5,27 +5,20 @@ import model.Person;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
-import scene.test.SceneSelectorScene;
-
 import component.Panel;
 import component.Label;
 import component.Positionable;
-import component.sprite.*;
 
 import core.*;
 
 
 public class TownScene extends Scene {
 	public static final SceneID ID = SceneID.Town;
-	
-	private Sprite mario;
-	private Sprite luigi;
 
 	public TownScene(Party party) {
 		for (Person p : party.getPartyMembers()) {
@@ -45,17 +38,6 @@ public class TownScene extends Scene {
 		
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);
 		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 5);
-		
-//		Image marioImage = new Image("resources/mario.png");
-//		mario = new Sprite(container, marioImage, marioImage.getFlippedCopy(true, false));
-//		mario.setLocation(0, container.getHeight() - mario.getHeight());
-//		
-//		Image luigiImage = new Image("resources/luigi.png");
-//		luigi = new Sprite(container, luigiImage, luigiImage.getFlippedCopy(true, false));
-//		luigi.setLocation(200, container.getHeight() - luigi.getHeight());
-//		
-//		mainLayer.add(mario);
-//		mainLayer.add(luigi);
 		
 		backgroundLayer.add(new Panel(container, new Color(0x003e84)));
 	}

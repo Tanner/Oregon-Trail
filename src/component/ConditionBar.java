@@ -1,7 +1,6 @@
 package component;
 
 import model.Condition;
-import model.Conditioned;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;

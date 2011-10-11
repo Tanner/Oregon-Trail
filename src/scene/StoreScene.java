@@ -2,7 +2,6 @@ package scene;
 
 import java.util.ArrayList;
 
-import model.Inventory;
 import model.Item;
 import model.Party;
 import model.item.*;

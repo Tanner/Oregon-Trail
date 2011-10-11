@@ -1,7 +1,6 @@
 package component;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.*;
 
 import component.Label.Alignment;
@@ -20,12 +19,10 @@ public class Spinner extends Component {
 		
 	private String[] fields;
 	private Label label;
+	private Button upButton, downButton;
 	private int state;
 	
 	private boolean treatAsNumbers;
-	
-	private Button upButton, downButton, labelButton;
-	private ButtonListener listener;
 	
 	/**
 	 * Creates a new Spinner.  Note if you pass in true before the list of Strings,
@@ -47,7 +44,7 @@ public class Spinner extends Component {
 		this.fields = fields;
 		this.treatAsNumbers = treatAsNumbers;
 		
-		listener = new ButtonListener();
+		ButtonListener listener = new ButtonListener();
 
 		Label upLabel = new Label(context, font, c, "Up");
 		Label downLabel = new Label(context, font, c, "Down");
