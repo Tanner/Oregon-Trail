@@ -2,6 +2,7 @@ package component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import model.Inventory;
 import model.Item;
@@ -29,7 +30,7 @@ public class OwnerInventoryButtons {
 	}
 	
 	public void createPanel(GameContainer container) {
-		List<Item> inventory = person.getInventoryAsList();
+		ArrayList<PriorityQueue<Item>> slots = person.getInventory().getSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * Person.MAX_INVENTORY_SIZE) - PADDING;
@@ -37,8 +38,8 @@ public class OwnerInventoryButtons {
 		Panel itemPanel = new Panel(container, panelWidth, panelHeight);
 		
 		Positionable lastPositionReference = itemPanel;
-		for (int i = 0; i < inventory.size(); i++) {
-			Item item = inventory.get(i);
+		for (int i = 0; i < slots.size(); i++) {
+			PriorityQueue<Item> items = slots.get(i);
 			
 			Vector2f position = lastPositionReference.getPosition(ReferencePoint.TopRight);
 			int padding = PADDING;
@@ -47,11 +48,11 @@ public class OwnerInventoryButtons {
 				position = lastPositionReference.getPosition(ReferencePoint.TopLeft);
 			}
 			
-			if (i == 0 || i == inventory.size()) {
+			if (i == 0 || i == items.size()) {
 				padding = 0;
 			}
 			
-			lastPositionReference = createItemButton(container, item, position, font, itemPanel, padding);
+			lastPositionReference = createItemButton(container, items, position, font, itemPanel, padding);
 		}
 		
 		Label nameLabel = new Label(container, font, Color.white, person.getName());
@@ -61,13 +62,13 @@ public class OwnerInventoryButtons {
 		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
 	}
 	
-	public Button createItemButton(GameContainer container, Item item, Vector2f position, Font font, Panel panel, int offset) {	
-		CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, font, Color.white, item.getName()));
+	public Button createItemButton(GameContainer container, PriorityQueue<Item> items, Vector2f position, Font font, Panel panel, int offset) {	
+		CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, font, Color.white, items.peek().getName()));
 		button.setCountUpOnLeftClick(false);
-		button.setMax(item.getNumberOf());
-		button.setCount(item.getNumberOf());
+		button.setMax(items.size());
+		button.setCount(items.size());
 		
-		ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item.getStatus());
+		ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, items.peek().getStatus());
 		
 		panel.add(button, position, ReferencePoint.TopLeft, offset, 0);
 		panel.add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, CONDITION_BAR_PADDING);
