@@ -1,5 +1,7 @@
 package model.item;
 
+import java.util.ArrayList;
+
 import model.Condition;
 import model.Inventory;
 import model.Item;
@@ -55,8 +57,8 @@ public abstract class Vehicle extends Item{
 	 * @param item The item to be added.
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
-	public boolean addToInventory(Item item) {
-		return cargo.addItem(item);
+	public boolean addToInventory(ArrayList<Item> items) {
+		return cargo.addItem(items);
 	}
 	
 	/**
@@ -64,7 +66,7 @@ public abstract class Vehicle extends Item{
 	 * @param item The item to be removed.
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
-	public boolean removeFromInventory(Item item) {
-		return cargo.removeItem(item);
+	public boolean removeFromInventory(int itemIndex, int quantity) {
+		return (cargo.removeItem(itemIndex, quantity) != null);
 	}
 }
