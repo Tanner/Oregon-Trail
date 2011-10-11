@@ -297,7 +297,7 @@ public class PartyCreationScene extends Scene {
 		personNameTextFields[col].clear();
 		personProfessionLabels[col].setText("No Profession");
 		for(int j = 0; j < 3; j++) {
-			personSkillLabels[col][j].setText("");
+			personSkillLabels[col][j].setText(""); 
 		}
 	}
 	
