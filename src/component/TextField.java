@@ -60,8 +60,7 @@ public class TextField extends Component implements Disableable {
 		
 		super.render(container, g);
 	}
-	
-	
+		
 	@Override
 	public void keyReleased(int key, char c) {
 		if (hasFocus()) {
@@ -158,16 +157,16 @@ public class TextField extends Component implements Disableable {
 			
 			notifyListeners();
 		}
-		
-		if (focus) {
+				
+		super.setFocus(focus);
+
+		if (hasFocus()) {
 			setBackgroundColor(fieldFocusColor);
 			setBorderColor(fieldFocusBorderColor);
 		} else {
 			setBackgroundColor(fieldColor);
 			setBorderColor(fieldBorderColor);
 		}
-		
-		super.setFocus(focus);
 	}
 	
 	
