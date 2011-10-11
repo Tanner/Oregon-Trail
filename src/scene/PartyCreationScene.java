@@ -35,7 +35,6 @@ import core.Logger;
 
 /**
  * The Party Creation Scene
- * @author Tanner Smith
  */
 public class PartyCreationScene extends Scene {
 	public static final SceneID ID = SceneID.PartyCreation;
