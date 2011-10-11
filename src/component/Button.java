@@ -51,8 +51,6 @@ public class Button extends Component implements Disableable {
 		setBevelWidth(2);
 		setBorderColor(buttonBorderColor);
 		setBorderWidth(2);
-		
-		container.getInput().addMouseListener(this);
 	}
 	
 	/**
@@ -77,8 +75,6 @@ public class Button extends Component implements Disableable {
 		setBevelWidth(2);
 		setBorderColor(Color.black);
 		setBorderWidth(2);
-		
-		container.getInput().addMouseListener(this);
 	}
 	
 	/**
@@ -100,19 +96,12 @@ public class Button extends Component implements Disableable {
 	}
 	
 	@Override
-	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		if (!isVisible()) {
-			return;
-		}
-		
-		super.mouseMoved(oldx, oldy, newx, newy);
-	}
-	
-	@Override
 	public void mousePressed(int button, int mx, int my) {
 		if (!isVisible() || !isAcceptingInput()) {
 			return;
 		}
+		
+		super.mousePressed(button, mx, my);
 		
 		if (button == 0 && isMouseOver() && !disabled) {
 			setActive(true);
@@ -125,6 +114,8 @@ public class Button extends Component implements Disableable {
 		if (!isVisible() || !isAcceptingInput()) {
 			return;
 		}
+		
+		super.mouseReleased(button, mx, my);
 		
  		if (button == 0 && isMouseOver() && !disabled && active) {
 			notifyListeners();

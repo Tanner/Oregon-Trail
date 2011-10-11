@@ -491,6 +491,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		if (!isVisible() || !isAcceptingInput()) {
+			return;
+		}
+		
 		super.mouseMoved(oldx, oldy, newx, newy);
 		
 		this.mouseOver = getArea().contains(newx, newy);

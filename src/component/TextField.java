@@ -84,17 +84,14 @@ public class TextField extends Component implements Disableable {
 	}
 	
 	@Override
-	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		if (!isVisible() || disabled) {
+	public void mouseReleased(int button, int x, int y) {
+		if (!isVisible() || !isAcceptingInput()) {
 			return;
 		}
 		
-		super.mouseMoved(oldx, oldy, newx, newy);
-	}
-	
-	@Override
-	public void mouseReleased(int button, int x, int y) {
-		if (isMouseOver()) {
+		super.mouseReleased(button, x, y);
+		
+		if (isMouseOver() && !disabled) {
 			setFocus(true);
 			input.consumeEvent();
 		}
