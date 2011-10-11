@@ -99,6 +99,12 @@ public class Inventory {
 				slots.get(itemType).add(item);
 				Logger.log(item.getName() + " added.", Logger.Level.INFO);
 			}
+			currentSize = 0;
+			for(PriorityQueue<Item> slot : slots) {
+				if (slot.size() > 0) {
+					currentSize += 1;
+				}
+			}
 			return true;
 		} else {
 			Logger.log("Add item failed", Logger.Level.INFO);
