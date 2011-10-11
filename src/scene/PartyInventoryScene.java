@@ -33,6 +33,9 @@ import core.GameDirector;
 
 public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
+	
+	public static enum EXTRA_BUTTON_FUNC { NONE, SELL, DROP};
+	
 	private static final int PADDING = 20;
 	
 	private static final int NUM_COLS = 2;
@@ -44,10 +47,13 @@ public class PartyInventoryScene extends Scene {
 	
 	private Party party;
 	
-	private Button closeButton, transferButton;
+	private Button closeButton, transferButton, functionButton;
+	private EXTRA_BUTTON_FUNC extraButtonFunctionality;
 	
-	public PartyInventoryScene(Party party) {
+	public PartyInventoryScene(Party party, EXTRA_BUTTON_FUNC extraButtonFunctionality) {
 		this.party = party;
+		
+		this.extraButtonFunctionality = extraButtonFunctionality;
 	}
 	
 	@Override
@@ -160,6 +166,19 @@ public class PartyInventoryScene extends Scene {
 		transferButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER")));
 		transferButton.addListener(new ButtonListener());
 		mainLayer.add(transferButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
+		
+		// Function button
+		if (extraButtonFunctionality != EXTRA_BUTTON_FUNC.NONE) {
+			String functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "DROP");
+			
+			if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
+				functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "SELL");
+			}
+			
+			functionButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, functionText));
+			functionButton.addListener(new ButtonListener());
+			mainLayer.add(functionButton, transferButton.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomRight, -PADDING, 0);
+		}
 		
 		backgroundLayer.add(new Panel(container, new Color(0x3b2d59)));
 	}

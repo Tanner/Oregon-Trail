@@ -6,11 +6,8 @@ import core.ConstantStore;
 
 public class Wheel extends Item {
 
-	public Wheel(int numberOf) {
-		super(ConstantStore.get("ITEMS", "WHEEL_NAME"), 
-			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"), new Condition(100), 5, numberOf, 75);
-	}
 	public Wheel() {
-		this(0);
+		super(ConstantStore.get("ITEMS", "WHEEL_NAME"), 
+			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"), new Condition(100), 5, 75);
 	}
 }
