@@ -155,7 +155,7 @@ public abstract class Item implements Conditioned{
 		}
 		else {
 			numberOf += amount;
-			Logger.log("Increment successful", Logger.Level.INFO);
+			Logger.log("Increment successful. " + name + " now has stack size " + numberOf, Logger.Level.INFO);
 			return true;
 		}
 	}
@@ -176,7 +176,7 @@ public abstract class Item implements Conditioned{
 		}
 		else {
 			numberOf -= amount;
-			Logger.log("Decrement successful", Logger.Level.INFO);
+			Logger.log("Decrement successful. " + name + " now has stack size " + numberOf, Logger.Level.INFO);
 			return true;
 		}
 	}
