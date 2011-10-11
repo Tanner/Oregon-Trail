@@ -143,7 +143,14 @@ public class PartyInventoryScene extends Scene {
 			vehicleItemPanelsArray[vehicleItemPanels.indexOf(panel)] = panel;
 		}
 		
+		// Calculate how many item buttons we can fit after the label and inside our frame with padding
 		int numCols = (int)(((container.getWidth() - (2 * PADDING)) - wagonLabel.getFontWidth() - PADDING) / (ITEM_BUTTON_WIDTH + PADDING));
+		
+		// Don't forget to take into account that the last button doesn't really have padding after it
+		if ((numCols * ITEM_BUTTON_WIDTH + PADDING) + ITEM_BUTTON_WIDTH < (container.getWidth() - (2 * PADDING))) {
+			numCols++;
+		}
+		
 		int numRows = vehicleItems.size() / numCols;
 		
 		mainLayer.addAsGrid(vehicleItemPanelsArray, wagonLabel.getPosition(ReferencePoint.BottomLeft), numRows, numCols, 0, PADDING, PADDING, PADDING);
