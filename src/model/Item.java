@@ -1,6 +1,5 @@
 package model;
 
-import core.Logger;
 import model.Condition;
 
 /**
@@ -8,28 +7,14 @@ import model.Condition;
  * An item contains it's own condition as well as a name, description, and weight.  The only modifiable aspect
  * is weight.
  */
-public abstract class Item implements Conditioned{
+public abstract class Item implements Conditioned, Comparable<Item>{
 	
 	private String name;
 	private String description;
 	private Condition status;
 	private double weight; //This is the individual unit weight
-	private int numberOf;
 	private boolean isStackable = true;
 	private int baseCost;
-	
-	/**
-	 * 
-	 * Creates a new item with a name, description, status, and weight.
-	 * @param name The item's name
-	 * @param description The item's description
-	 * @param status The item's status
-	 * @param weight The item's weight
-	 * @param baseCost The base cost of the item
-	 */
-	public Item(String name, String description, Condition status, double weight, int baseCost) {
-		this(name, description, status, weight, 1, baseCost);
-	}
 	
 	/**
 	 * 
@@ -41,12 +26,11 @@ public abstract class Item implements Conditioned{
 	 * @param numberOf The number of items in the stack
 	 * @param baseCost The base cost of the item
 	 */
-	public Item(String name, String description, Condition status, double weight, int numberOf, int baseCost) {
+	public Item(String name, String description, Condition status, double weight, int baseCost) {
 		this.name = name;
 		this.description = description;
 		this.status = status;
-		this.weight = weight;
-		this.numberOf = numberOf;
+		this.weight = weight;;
 		this.baseCost = baseCost;
 	}
 
@@ -67,19 +51,12 @@ public abstract class Item implements Conditioned{
 	}
 
 	/**
-	 * Returns the base cost of the item.
+	 * Returns the cost of the item.  Cost is the item multiplied
+	 * by its current condition. 
 	 * @return The base cost of the item
 	 */
 	public int getCost() {
-		return baseCost;
-	}
-	
-	/**
-	 * Returns the cost of the full item stack.
-	 * @return The cost of the item stack
-	 */
-	public int getStackCost() {
-		return baseCost*numberOf;
+		return (int) (baseCost * status.getPercentage());
 	}
 	
 	/**
@@ -128,64 +105,22 @@ public abstract class Item implements Conditioned{
 	}	
 	
 	/**
-	 * Returns the weight of the item stack.
-	 * @return The weight of the item stack
-	 */
-	public double getStackWeight() {
-		return weight*(double)numberOf;
-	}	
-	
-	/**
-	 * Returns the number of the item.
-	 * @return The number of the item
-	 */
-	public int getNumberOf() {
-		return numberOf;
-	}
-	
-	/**
-	 * Increases the stack of the item by specified amount.
-	 * @param amount The amount to add to the stack.
-	 * @return True if the add succeeds, false otherwise.
-	 */
-	public boolean increaseStack(int amount) {
-		if(amount <= 0) {
-			Logger.log("Amount to increase by not positive", Logger.Level.INFO);
-			return false;
-		}
-		else {
-			numberOf += amount;
-			Logger.log("Increment successful. " + name + " now has stack size " + numberOf, Logger.Level.INFO);
-			return true;
-		}
-	}
-	
-	/**
-	 * Decreases the stack of the item by specified amount.
-	 * @param amount The amount to subtract from the stack.
-	 * @return True if the subtract succeeds, false otherwise.
-	 */
-	public boolean decreaseStack(int amount) {
-		if(amount <= 0) {
-			Logger.log("Amount to decrease by not positive", Logger.Level.INFO);
-			return false;
-		}
-		else if(amount > numberOf) {
-			Logger.log("Amount to decrease by more than exist", Logger.Level.INFO);
-			return false;
-		}
-		else {
-			numberOf -= amount;
-			Logger.log("Decrement successful. " + name + " now has stack size " + numberOf, Logger.Level.INFO);
-			return true;
-		}
-	}
-	
-	/**
 	 * Whether or not the item can be stacked.
 	 * @return True if it can be stacked, false otherwise.
 	 */
 	public boolean isStackable() {
 		return isStackable;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(Item i) {
+		if ( Math.abs(getConditionPercentage() - i.getConditionPercentage()) < 0.000001 )
+			return 0;
+		if ( getConditionPercentage() < i.getConditionPercentage() )
+			return -1;
+		else 
+			return 1;
 	}
 }

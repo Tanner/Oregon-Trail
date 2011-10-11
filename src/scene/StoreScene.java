@@ -49,36 +49,36 @@ public class StoreScene extends Scene {
 	public StoreScene (Party p) {
 		this.p = p;
 		inv = new Inventory(16,10000);
-		inv.addItem(new Apple(5));
-		inv.addItem(new Bread(3));
-		inv.addItem(new Bullet(100));
-		inv.addItem(new Gun(2));
-		inv.addItem(new Meat(10));
-		inv.addItem(new SonicScrewdriver(1));
-		inv.addItem(new Wheel(4));
+		inv.addItem(new Apple());
+		inv.addItem(new Bread());
+		inv.addItem(new Bullet());
+		inv.addItem(new Gun());
+		inv.addItem(new Meat());
+		inv.addItem(new SonicScrewdriver());
+		inv.addItem(new Wheel());
 		inv.addItem(new Wagon());
-		Item i = new Apple(5);
+		Item i = new Apple();
 		i.decreaseStatus(10);
 		inv.addItem(i);
-		i = new Bread(5);
+		i = new Bread();
 		i.decreaseStatus(10);
 		inv.addItem(i);
-		i = new Bullet(5);
+		i = new Bullet();
 		i.decreaseStatus(10);
 		inv.addItem(i);
-		i = new Gun(5);
+		i = new Gun();
 		i.decreaseStatus(10);
 		inv.addItem(i);
-		i = new Meat(5);
+		i = new Meat();
 		i.decreaseStatus(10);
 		inv.addItem(i);
-		i = new SonicScrewdriver(5);
+		i = new SonicScrewdriver();
 		i.decreaseStatus(10);
 		inv.addItem(i);
-		i = new Wheel(5);
+		i = new Wheel();
 		i.decreaseStatus(10);
 		inv.addItem(i);
-		i = new Apple(5);
+		i = new Apple();
 		i.decreaseStatus(10);
 		inv.addItem(i);
 		tempInv = inv.getItems();
@@ -180,8 +180,8 @@ public class StoreScene extends Scene {
 		for (int i = 0; i < storeInventory.length; i++) {
 			tempLabel = new Label(container, fieldFont, Color.white, tempInv.get(i).getName());
 			storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
-			storeInventory[i].setMax(tempInv.get(i).getNumberOf());
-			storeInventory[i].setCount(tempInv.get(i).getNumberOf());
+			storeInventory[i].setMax(tempInv.get(i).size());
+			storeInventory[i].setCount(tempInv.get(i).size());
 			storeInventory[i].setCountUpOnLeftClick(false);
 			storeInventory[i].addListener(new InventoryListener(i));
 		}
@@ -282,10 +282,7 @@ public class StoreScene extends Scene {
 		int itemCount = storeInventory[currentItem].getMax() - storeInventory[currentItem].getCount();
 		int totalCost = itemCount*i.getCost();
 		try {
-			Class<Item> c = (Class<Item>) i.getClass();
-			Item newItem = c.newInstance();
-			newItem.increaseStack(itemCount);
-			Vehicle vehicle = p.getVehicle();
+
 			if ( p.getMoney() >= totalCost && vehicle.addToInventory(newItem) ) {
 				i.decreaseStack(itemCount);
 				p.setMoney(p.getMoney()-totalCost);
