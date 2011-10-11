@@ -59,7 +59,7 @@ public class Party {
 			cost += item.getCost();
 		}
 		if (money > cost && person.canGetItem(items)) {
-			person.addToInventory(items);
+			person.addItemToInventory(items);
 			money -= cost;
 			return true;
 		} else {

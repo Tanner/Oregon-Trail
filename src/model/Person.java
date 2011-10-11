@@ -8,7 +8,7 @@ import core.Logger;
  * Person consists of a list of skills the person is proficient with as well
  * as their name, and what their profession is called.
  */
-public class Person implements Conditioned{
+public class Person implements Conditioned, Inventoried{
 	private Condition skillPoints;
 	private Condition health;
 	private boolean isMale;
@@ -325,7 +325,7 @@ public class Person implements Conditioned{
 	 * @param item The item to be added.
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
-	public boolean addToInventory(ArrayList<Item> items) {
+	public boolean addItemToInventory(ArrayList<Item> items) {
 		return inventory.addItem(items);
 	}
 	
@@ -334,7 +334,7 @@ public class Person implements Conditioned{
 	 * @param item The item to be removed.
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
-	public boolean removeFromInventory(int itemIndex, int quantity) {
+	public boolean removeItemFromInventory(int itemIndex, int quantity) {
 		if (inventory.removeItem(itemIndex, quantity) != null) {
 			return true;
 		} else {

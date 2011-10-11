@@ -166,20 +166,25 @@ public class SceneSelectorScene extends Scene {
 			for(Person.Skill skill : personSkill) {
 				person.addSkill(skill);
 			}
-			Wheel wheel = new Wheel(1);
+			Wheel wheel = new Wheel();
+			ArrayList<Item> itemsToAdd = new ArrayList<Item>();
 			wheel.decreaseStatus(random.nextInt(100));
-			person.addToInventory(wheel);
+			itemsToAdd.add(wheel);
+			person.addToInventory(itemsToAdd);
 
-			SonicScrewdriver sonic = new SonicScrewdriver(10 - people.indexOf(person));
-			person.addToInventory(sonic);
-			person.removeFromInventory(new SonicScrewdriver(3));
-			person.addToInventory(new SonicScrewdriver(2));
+			SonicScrewdriver sonic = new SonicScrewdriver();
+			itemsToAdd.clear();
+			itemsToAdd.add(sonic);
+			person.addToInventory(itemsToAdd);
+			person.addToInventory(itemsToAdd);
 			
-			Bread bread = new Bread(1);
-			person.addToInventory(bread);
+			person.removeFromInventory(sonic.getTypeIndex(), 1);
 			
-			Apple apple = new Apple(1);
-			person.addToInventory(apple);
+//			Bread bread = new Bread(1);
+//			person.addToInventory(bread);
+//			
+//			Apple apple = new Apple(1);
+//			person.addToInventory(apple);
 		}
 		
 		Vehicle vehicle = new Wagon();

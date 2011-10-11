@@ -22,6 +22,9 @@ public class Inventory {
 		this.MAX_SIZE = maxSize;
 		this.MAX_WEIGHT = maxWeight;
 		this.slots = new ArrayList<PriorityQueue<Item>>(ConstantStore.ITEM_TYPES.values().length);
+		for(int i = 0; i < ConstantStore.ITEM_TYPES.values().length; i++) {
+			slots.add(new PriorityQueue<Item>());
+		}
 		this.currentSize = 0;
 	}
 	
@@ -94,9 +97,11 @@ public class Inventory {
 		if(canAddItems(itemsToAdd)) {
 			for(Item item : itemsToAdd) {
 				slots.get(itemType).add(item);
+				Logger.log(item.getName() + " added.", Logger.Level.INFO);
 			}
 			return true;
 		} else {
+			Logger.log("Add item failed", Logger.Level.INFO);
 			return false;
 		}
 	}
@@ -115,6 +120,7 @@ public class Inventory {
 			for(int i = 0; i < quantity; i++) {
 				removedItems.add(slots.get(itemType).poll());
 			}
+			Logger.log("Items removed successfully", Logger.Level.INFO);
 		}
 		return removedItems;
 	}

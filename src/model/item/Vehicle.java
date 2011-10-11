@@ -2,19 +2,22 @@ package model.item;
 
 import java.util.ArrayList;
 
+import core.ConstantStore;
+
 import model.Condition;
+import model.Inventoried;
 import model.Inventory;
 import model.Item;
 
-public abstract class Vehicle extends Item{
+public abstract class Vehicle extends Item implements Inventoried{
 
 	private Condition status;
 	private Inventory cargo;
 	private final int MAX_INVENTORY_SIZE = 10;
 	private final double MAX_INVENTORY_WEIGHT;
 	
-	public Vehicle(String name, String description, Condition status, double maxWeight, double weight, int cost) {
-		super(name, description, status, weight, cost);
+	public Vehicle(String name, String description, Condition status, double maxWeight, double weight, int cost, ConstantStore.ITEM_TYPES type) {
+		super(name, description, status, weight, cost, type);
 		this.MAX_INVENTORY_WEIGHT = maxWeight;
 		this.status = status;
 		this.cargo = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);	
@@ -57,7 +60,7 @@ public abstract class Vehicle extends Item{
 	 * @param item The item to be added.
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
-	public boolean addToInventory(ArrayList<Item> items) {
+	public boolean addItemToInventory(ArrayList<Item> items) {
 		return cargo.addItem(items);
 	}
 	
@@ -66,7 +69,7 @@ public abstract class Vehicle extends Item{
 	 * @param item The item to be removed.
 	 * @return True if the method succeeded, false if the add isn't possible.
 	 */
-	public boolean removeFromInventory(int itemIndex, int quantity) {
+	public boolean removeItemFromInventory(int itemIndex, int quantity) {
 		return (cargo.removeItem(itemIndex, quantity) != null);
 	}
 }
