@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import model.Inventoried;
 import model.Inventory;
 import model.Item;
 import model.Person;
@@ -25,15 +26,16 @@ public class OwnerInventoryButtons {
 	private static final int NAME_PADDING = 10;
 	private static final int PADDING = 20;
 	
-	private Person person;
+	private Inventoried inventoried;
 	private ArrayList<SlotConditionGroup> itemSlots;
 	private Font font;
 	
-	public OwnerInventoryButtons(Person person) {
+	public OwnerInventoryButtons(Inventoried inventoried) {
+		this.inventoried = inventoried;
 	}
 	
-	public void createPanel(GameContainer container) {
-		ArrayList<PriorityQueue<Item>> slots = person.getInventory().getSlots();
+	public Panel getPanel(GameContainer container) {
+		ArrayList<PriorityQueue<Item>> slots = inventoried.getInventory().getSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * Person.MAX_INVENTORY_SIZE) - PADDING;
@@ -58,11 +60,13 @@ public class OwnerInventoryButtons {
 			itemPanel.add(itemSlots.get(i), position, ReferencePoint.TopLeft, padding, 0);
 		}
 		
-		Label nameLabel = new Label(container, font, Color.white, person.getName());
+		Label nameLabel = new Label(container, font, Color.white, inventoried.getName());
 		
 		Panel panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int)nameLabel.getFontHeight());
 		panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
+		
+		return panel;
 	}
 
 	/**

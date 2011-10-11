@@ -23,6 +23,7 @@ import component.Component;
 import component.ConditionBar;
 import component.CountingButton;
 import component.Label;
+import component.OwnerInventoryButtons;
 import component.Panel;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
@@ -47,6 +48,9 @@ public class PartyInventoryScene extends Scene {
 	
 	private Party party;
 	
+	private OwnerInventoryButtons playerInventoryButtons[];
+	private OwnerInventoryButtons vehicleInventoryButtons;
+	
 	private Button closeButton, transferButton, functionButton;
 	private EXTRA_BUTTON_FUNC extraButtonFunctionality;
 	
@@ -64,98 +68,34 @@ public class PartyInventoryScene extends Scene {
 		
 		ArrayList<Person> members = party.getPartyMembers();
 		Vehicle vehicle = party.getVehicle();
-
-		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		
 		// Create a grid of all the party members and their inventories
 		int maxInventorySize = Person.MAX_INVENTORY_SIZE;
+				
+		Panel personPanels[] = new Panel[party.getPartyMembers().size()];
+		playerInventoryButtons = new OwnerInventoryButtons[personPanels.length];
+		
+		for (int i = 0; i < personPanels.length; i++) {
+			Person person = members.get(i);
+			
+			playerInventoryButtons[i] = new OwnerInventoryButtons(person);
+			personPanels[i] = playerInventoryButtons[i].getPanel(container);
+		}
 		
 		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize) - PADDING;
-		
-		ArrayList<Panel> personPanels = new ArrayList<Panel>();
-		for (Person person : members) {
-			List<Item> inventory = person.getInventoryAsList();
-			Panel itemPanel = new Panel(container, panelWidth, panelHeight);
-			
-			Positionable lastPositionReference = itemPanel;
-			for (int i = 0; i < inventory.size(); i++) {
-				Item item = inventory.get(i);
-				
-				Vector2f position = lastPositionReference.getPosition(ReferencePoint.TopRight);
-				int padding = PADDING;
-				
-				if (i == 0) {
-					position = lastPositionReference.getPosition(ReferencePoint.TopLeft);
-				}
-				
-				if (i == 0 || i == inventory.size()) {
-					padding = 0;
-				}
-				
-				lastPositionReference = createItemButton(item, position, fieldFont, itemPanel, padding);
-			}
-			
-			Label nameLabel = new Label(container, fieldFont, Color.white, person.getName());			
-			Panel panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int)nameLabel.getFontHeight());
-			
-			panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
-			panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
-			
-			personPanels.add(panel);
-		}
-		
-		Component[] personPanelsArray = new Component[personPanels.size()];
-		for (Panel panel : personPanels) {
-			personPanelsArray[personPanels.indexOf(panel)] = panel;
-		}
-		
 		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1) - 4;
-		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
+		
+		mainLayer.addAsGrid(personPanels, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
 		// Create Vehicle inventories (if one exists)
-		Label wagonLabel = new Label(container, fieldFont, Color.white, vehicle.getName());
-		
-		// Add the vehicle label to the last left handed side person label
-		int lastOddIndex = personPanels.size() - 1;
+		int lastOddIndex = personPanels.length - 1;
 		if (lastOddIndex % 2 != 0) {
 			lastOddIndex--;
 		}
-		Positionable locationReference = personPanels.get(lastOddIndex);
-		
-		mainLayer.add(wagonLabel, locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
-		
-		// Now make all the item condition bar buttons things
-		List<Item> vehicleItems = vehicle.getInventory().getItems();
-		
-		ArrayList<Panel> vehicleItemPanels = new ArrayList<Panel>();
-		
-		for (int i = 0; i < vehicleItems.size(); i++) {
-			Item item = vehicleItems.get(i);
+		Positionable locationReference = personPanels[lastOddIndex];
 
-			Panel itemPanel = new Panel(container, ITEM_BUTTON_WIDTH, panelHeight);
-			
-			createItemButton(item, itemPanel.getPosition(ReferencePoint.TopLeft), fieldFont, itemPanel, 0);
-			
-			vehicleItemPanels.add(itemPanel);
-		}
-		
-		// Now add the grid of all the item buttons
-		Component[] vehicleItemPanelsArray = new Component[vehicleItemPanels.size()];
-		for (Panel panel : vehicleItemPanels) {
-			vehicleItemPanelsArray[vehicleItemPanels.indexOf(panel)] = panel;
-		}
-		
-		// Calculate how many item buttons we can fit after the label and inside our frame with padding
-		int numCols = (int)(((container.getWidth() - (2 * PADDING)) - wagonLabel.getFontWidth() - PADDING) / (ITEM_BUTTON_WIDTH + PADDING));
-		
-		// Don't forget to take into account that the last button doesn't really have padding after it
-		if ((numCols * ITEM_BUTTON_WIDTH + PADDING) + ITEM_BUTTON_WIDTH < (container.getWidth() - (2 * PADDING))) {
-			numCols++;
-		}
-		
-		int numRows = vehicleItems.size() / numCols;
-		
-		mainLayer.addAsGrid(vehicleItemPanelsArray, wagonLabel.getPosition(ReferencePoint.BottomLeft), numRows, numCols, 0, PADDING, PADDING, PADDING);
+		vehicleInventoryButtons = new OwnerInventoryButtons(vehicle);
+		mainLayer.add(vehicleInventoryButtons.getPanel(container), locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		
 		// Close button
 		closeButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CLOSE")));
@@ -191,20 +131,6 @@ public class PartyInventoryScene extends Scene {
 	@Override
 	public int getID() {
 		return ID.ordinal();
-	}
-	
-	public Button createItemButton(Item item, Vector2f position, Font font, Panel panel, int offset) {	
-		CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, new Label(container, font, Color.white, item.getName()));
-		button.setCountUpOnLeftClick(false);
-		button.setMax(item.getNumberOf());
-		button.setCount(item.getNumberOf());
-		
-		ConditionBar conditionBar = new ConditionBar(container, ITEM_BUTTON_WIDTH, ITEM_CONDITION_BAR_HEIGHT, item.getStatus());
-		
-		panel.add(button, position, ReferencePoint.TopLeft, offset, 0);
-		panel.add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, CONDITION_BAR_PADDING);
-		
-		return button;
 	}
 	
 	private class ButtonListener implements ComponentListener {
