@@ -71,16 +71,13 @@ public class Inventory {
 	 * @param itemsToAdd The list of items to add.
 	 * @return True if successful
 	 */
-	public boolean canAddItems(ArrayList<Item> itemsToAdd) {
-		if(itemsToAdd.size() == 0) {
+	public boolean canAddItems(Item item, int numberOf) {
+		if(numberOf == 0) {
 			return false;
 		}
 		
-		int itemType = itemsToAdd.get(0).getTypeIndex();
-		double weight = 0;
-		for(Item item : itemsToAdd) {
-			weight += item.getWeight();
-		}
+		int itemType = item.getTypeIndex();
+		double weight = item.getWeight() * numberOf;
 		if(getWeight() + weight > MAX_WEIGHT) {
 			Logger.log("Not enough weight capacity", Logger.Level.INFO);
 			return false;
@@ -101,7 +98,7 @@ public class Inventory {
 			return false;
 		}
 		int itemType = itemsToAdd.get(0).getTypeIndex();		
-		if(canAddItems(itemsToAdd)) {
+		if(canAddItems(itemsToAdd.get(0), itemsToAdd.size())) {
 			for(Item item : itemsToAdd) {
 				slots.get(itemType).add(item);
 				Logger.log(item.getName() + " added.", Logger.Level.INFO);

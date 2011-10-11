@@ -373,7 +373,7 @@ public class Person implements Conditioned, Inventoried{
 	 * @param The items to test the possibility of adding.
 	 * @return True if possible.
 	 */
-	public boolean canGetItem(ArrayList<Item> items) {
-		return inventory.canAddItems(items);
+	public boolean canGetItem(Item item, int numberOf) {
+		return inventory.canAddItems(item, numberOf);
 	}
 }

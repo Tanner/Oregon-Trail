@@ -91,7 +91,7 @@ public abstract class Vehicle extends Item implements Inventoried{
 	 * @param The items to test the possibility of adding.
 	 * @return True if possible.
 	 */
-	public boolean canGetItem(ArrayList<Item> items) {
-		return cargo.canAddItems(items);
+	public boolean canGetItem(Item item, int numberOf) {
+		return cargo.canAddItems(item, numberOf);
 	}
 }

@@ -64,7 +64,7 @@ public class Party {
 		for(Item item : items) {
 			cost += item.getCost();
 		}
-		if (money > cost && buyer.canGetItem(items)) {
+		if (money > cost && buyer.canGetItem(items.get(0), items.size())) {
 			buyer.addItemToInventory(items);
 			money -= cost;
 			return true;
@@ -81,11 +81,11 @@ public class Party {
 	public ArrayList<Inventoried> canGetItem(ArrayList<Item> items) {
 		ArrayList<Inventoried> ableList = new ArrayList<Inventoried>();
 		for(Person person : members) {
-			if(person.canGetItem(items)) {
+			if(person.canGetItem(items.get(0), items.size())) {
 				ableList.add(person);
 			}
 		}
-		if (vehicle != null && vehicle.canGetItem(items)) {
+		if (vehicle != null && vehicle.canGetItem(items.get(0), items.size())) {
 			ableList.add(vehicle);
 		}
 		return ableList;
