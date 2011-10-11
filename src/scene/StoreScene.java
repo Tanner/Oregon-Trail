@@ -2,8 +2,7 @@ package scene;
 
 import java.util.ArrayList;
 
-import model.Item;
-import model.Party;
+import model.*;
 import model.item.*;
 
 import org.newdawn.slick.*;
@@ -178,6 +177,7 @@ public class StoreScene extends Scene {
 			storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
 			storeInventory[i].setMax(tempInv.get(i).getNumberOf());
 			storeInventory[i].setCount(tempInv.get(i).getNumberOf());
+			storeInventory[i].setCountUpOnLeftClick(false);
 			storeInventory[i].addListener(new InventoryListener(i));
 		}
 		storeInventoryButtons = new Panel(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, INVENTORY_BUTTON_HEIGHT * 4 + PADDING * 3);
@@ -220,6 +220,7 @@ public class StoreScene extends Scene {
 		clearButton.setDisabled(true);
 		tempLabel = new Label(container, h2, Color.white, "Buy");
 		buyButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		buyButton.addListener(new ButtonListener());
 		buyButton.setDisabled(true);
 	}
 	
@@ -260,6 +261,17 @@ public class StoreScene extends Scene {
 		return false;
 	}
 	
+	public void makePurchase() {
+		int itemCount = storeInventory[currentItem].getMax() - storeInventory[currentItem].getCount();
+		System.out.println(itemCount);
+		Item tempItem = tempInv.get(currentItem);
+		for (int i = 0; i < itemCount; i++) {
+			System.out.println("Remove item");
+			inv.removeItem(tempItem);
+		}
+		storeInventory[currentItem].setMax(tempItem.getNumberOf());
+	}
+	
 	/**
 	 * Check for presses from the cancel/inventory/clear buttons.
 	 */
@@ -270,7 +282,9 @@ public class StoreScene extends Scene {
 			} else if ( source == inventoryButton ) {
 				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventory, StoreScene.this);
 			}
-			else {
+			else if ( source == buyButton) {
+				makePurchase();
+			} else {
 				if ( currentItem != -1) {
 					storeInventory[currentItem].setCount(storeInventory[currentItem].getMax());
 					updateLabels(currentItem);
