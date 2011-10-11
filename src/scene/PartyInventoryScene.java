@@ -62,14 +62,7 @@ public class PartyInventoryScene extends Scene {
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		
 		// Create a grid of all the party members and their inventories
-		int maxInventorySize = 0;
-		for (Person person : members) {
-			Inventory inventory = person.getInventory();
-			
-			if (maxInventorySize < inventory.getMaxSize()) {
-				maxInventorySize = inventory.getMaxSize();
-			}
-		}
+		int maxInventorySize = Person.MAX_INVENTORY_SIZE;
 		
 		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize);
 		

@@ -18,7 +18,7 @@ public class Person implements Conditioned{
 	private final static float baseMoney = 1600f;
 	private final static int baseSkillPoints = 70;
 	private Inventory inventory;
-	private final int MAX_INVENTORY_SIZE = 4;
+	public static final int MAX_INVENTORY_SIZE = 4;
 	private final double MAX_INVENTORY_WEIGHT = 10;
 	
 	/**
