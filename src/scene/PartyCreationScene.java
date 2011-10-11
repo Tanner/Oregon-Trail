@@ -48,6 +48,7 @@ public class PartyCreationScene extends Scene {
 	
 	private Player player;
 	
+	private ComponentListener componentListener;
 	private Button newPersonButtons[] = new Button[NUM_PEOPLE];
 	private Button personDeleteButtons[] = new Button[NUM_PEOPLE];
 	private TextField personNameTextFields[] = new TextField[NUM_PEOPLE];
@@ -86,6 +87,8 @@ public class PartyCreationScene extends Scene {
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
 		int buttonWidth = (container.getWidth() - PADDING * (NUM_PEOPLE + 1)) / NUM_PEOPLE;
 
+		componentListener = new SceneComponentListener();
+		
 		// Create the profession segmented control
 		int numOfProfessions = Person.Profession.values().length;
 		String[] professionLabels = new String[numOfProfessions];
@@ -109,12 +112,12 @@ public class PartyCreationScene extends Scene {
 			int newPersonButtonPaddingY = (i == 0) ? PADDING : 0;
 			
 			newPersonButtons[i] = new Button(container, buttonWidth, newPersonButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NEW_PLAYER")));
-			newPersonButtons[i].addListener(new ButtonListener());
+			newPersonButtons[i].addListener(componentListener);
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TopLeft, PADDING, newPersonButtonPaddingY);
 			
 			personNameTextFields[i] = new TextField(container, buttonWidth, regularButtonHeight, fieldFont);
 			personNameTextFields[i].setPlaceholderText(ConstantStore.get("PARTY_CREATION_SCENE", "NAME_PLACEHOLDER"));
-			personNameTextFields[i].addListener(new ButtonListener());
+			personNameTextFields[i].addListener(componentListener);
 			personNameTextFields[i].setVisible(false);
 			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
 			
@@ -127,7 +130,7 @@ public class PartyCreationScene extends Scene {
 			personChangeProfessionButtons[i] = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_PROFESSION")));
 			personChangeProfessionButtons[i].setAcceptingInput(false);
 			personChangeProfessionButtons[i].setBottomBorderWidth(0);
-			personChangeProfessionButtons[i].addListener(new ButtonListener());
+			personChangeProfessionButtons[i].addListener(componentListener);
 			personProfessionPanel[i].add(personChangeProfessionButtons[i], personProfessionPanel[i].getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft);
 			
 			personProfessionLabels[i] = new Label(container, buttonWidth, regularButtonHeight, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NO_PROFESSION_LABEL"));
@@ -152,7 +155,7 @@ public class PartyCreationScene extends Scene {
 			personChangeSkillButtons[i] = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "CHANGE_SKILL")));
 			personChangeSkillButtons[i].setAcceptingInput(false);
 			personChangeSkillButtons[i].setBottomBorderWidth(0);
-			personChangeSkillButtons[i].addListener(new ButtonListener());
+			personChangeSkillButtons[i].addListener(componentListener);
 			personSkillPanel[i].add(personChangeSkillButtons[i], personSkillPanel[i].getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft);
 			
 			for (int j = 0; j < personSkillLabels[i].length; j++) {
@@ -171,7 +174,7 @@ public class PartyCreationScene extends Scene {
 			personDeleteButtons[i] = new Button(container, regularButtonHeight, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "DELETE_PERSON_LABEL")));
 			personDeleteButtons[i].setVisible(false);
 			personDeleteButtons[i].setButtonColor(Color.red);
-			personDeleteButtons[i].addListener(new ButtonListener());
+			personDeleteButtons[i].addListener(componentListener);
 			mainLayer.add(personDeleteButtons[i], newPersonButtons[i].getPosition(ReferencePoint.TopRight), ReferencePoint.CenterCenter, 0, 0);
 		}
 		
@@ -202,7 +205,7 @@ public class PartyCreationScene extends Scene {
 		
 		//Confirm Button
 		confirmButton = new Button(container, buttonWidth, regularButtonHeight, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PARTY_CONFIRM")));
-		confirmButton.addListener(new ButtonListener());
+		confirmButton.addListener(componentListener);
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
 		backgroundLayer.add(new Panel(container, new Image("resources/dark_dirt.png")));
@@ -218,6 +221,35 @@ public class PartyCreationScene extends Scene {
 	@Override
 	public int getID() {
 		return ID.ordinal();
+	}
+	
+	@Override
+	public void start() {
+		super.start();
+		
+//		for (Button b : buttons) {
+//			b.addListener(buttonListener);
+//		}
+	}
+
+	@Override
+	public void pause() {
+		super.pause();
+		
+//		for (Button b : buttons) {
+//			b.removeListener(buttonListener);
+//		}
+	}
+
+	@Override
+	public void stop() {
+		super.stop();
+		
+//		for (Button b : buttons) {
+//			b.removeListener(buttonListener);
+//		}
+		
+		mainLayer.setAcceptingInput(false);
 	}
 	
 	/**
@@ -330,7 +362,7 @@ public class PartyCreationScene extends Scene {
 		}
 	}
 	
-	private class ButtonListener implements ComponentListener {	
+	private class SceneComponentListener implements ComponentListener {	
 		/**
 		 * Breakout method : newPersonButton triggered event - set text field access accordingly
 		 * @param i The index in the textfield array we are checking
