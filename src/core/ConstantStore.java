@@ -98,6 +98,12 @@ public final class ConstantStore {
 		COLORS = Collections.unmodifiableMap(colorMap);
 	}
 	
+	/**
+	 * Returns string held in hash map of constant literal hashmaps
+	 * @param outer key to find appropriate inner map
+	 * @param inner key to item item within proper map
+	 * @return the string held in the map
+	 */
 	public static String get(String outer, String inner) {
 		return (String)LITERALS.get(outer).get(inner);
 	}

@@ -61,7 +61,7 @@ public class FontManager {
 	/**
 	 * Get the font for the ID.
 	 * @param id Requested font ID
-	 * @return Font
+	 * @return Font requested or null if not found
 	 */
 	public UnicodeFont getFont(FontID id) {
 		switch(id) {

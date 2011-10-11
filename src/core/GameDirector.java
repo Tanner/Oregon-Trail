@@ -8,6 +8,12 @@ import scene.test.*;
 
 import model.*;
 
+/**
+ * The class responsible for the logical progression of the game
+ * 
+ * @author NULL&void
+ */
+
 public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	public static boolean DEBUG_MODE = false;
 	
@@ -20,6 +26,10 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	
 	private Game game;
 	
+	/**
+	 * Instantiates a game director object
+	 */
+	
 	private GameDirector() {
 		 sharedDirector = this;
 		 
@@ -30,6 +40,12 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		 game = new Game();
 	}
 	
+	/**
+	 * Singleton Design pattern.  Returns the single instance of game director object that drives the game, for the scenes to interact with
+	 * 
+	 * @return handle of game director for scene to interract with
+	 */
+	
 	public static SceneDelegate sharedSceneDelegate() {
 		if (sharedDirector == null) {
 			sharedDirector = new GameDirector();
@@ -38,6 +54,12 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		return sharedDirector;
 	}
 	
+	
+	/**
+	 * Singleton Design pattern.  Returns the single instance of the game director that drives the game, for the scene director to interact with
+	 * 
+	 * @return handle of game director for scene director to interract with
+	 */
 	public static SceneDirectorDelegate sharedSceneDirectorDelegate() {
 		if (sharedDirector == null) {
 			sharedDirector = new GameDirector();
@@ -46,6 +68,9 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		return sharedDirector;
 	}
 	
+	/**
+	 * Launches window that contains game
+	 */
 	public void start() {
 		try {
 			container = new AppGameContainer(sceneDirector);
@@ -58,14 +83,27 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 		}
 	}
 	
+	/**
+	 * returns the game object
+	 * @return the game
+	 */
 	public Game getGame() {
 		return game;
 	}
 	
+	/**
+	 * returns the container that holds the gui element of the game
+	 * @return the game container
+	 */
 	public AppGameContainer getContainer() {
 		return container;
 	}
 	
+	/**
+	 * determines the appropriate game scene to return based on a passed id
+	 * @param id the sceneid desired
+	 * @return the handle to the newly created scene
+	 */
 	private Scene sceneForSceneID(SceneID id) {
 		switch (id) {
 		case MainMenu:
