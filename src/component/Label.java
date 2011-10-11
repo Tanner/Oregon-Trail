@@ -9,6 +9,8 @@ import java.util.*;
  * functionality that draws text.
  */
 public class Label extends Component {
+	private static final int Y_OFFSET = 1;
+	
 	public enum Alignment {
 		Center,
 		Left
@@ -113,6 +115,8 @@ public class Label extends Component {
 		} else {
 			startY = getY();
 		}
+		
+		startY += Y_OFFSET;
 		
 		for (int i = 0; i < lines.size(); i++) {
 			if (alignment == Alignment.Center) {
