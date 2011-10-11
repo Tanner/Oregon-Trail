@@ -28,7 +28,7 @@ public class FontManager {
 	public void init() {
 		try {
 			String glyphsToAdd = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890- .,:!\"'?$";
-			h1 = new UnicodeFont("resources/04B_03__.ttf", 42, true, false);
+			h1 = new UnicodeFont("resources/04B_03__.ttf", 48, true, false);
 //			h1.addAsciiGlyphs();
 			h1.addGlyphs(glyphsToAdd);
 			h1.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
@@ -36,7 +36,7 @@ public class FontManager {
 			h1.setPaddingBottom(1);
 			h1.loadGlyphs();
 			
-			h2 = new UnicodeFont("resources/04B_03__.ttf", 28, true, false);
+			h2 = new UnicodeFont("resources/04B_03__.ttf", 32, true, false);
 			h2.addGlyphs(glyphsToAdd);
 			h2.getEffects().add(new ShadowEffect(Color.black, 0, 1, 1f));
 			h2.getEffects().add(new ColorEffect());
