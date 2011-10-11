@@ -63,8 +63,13 @@ public class Inventory {
 		return weight;
 	}
 
+	/**
+	 * Determines if the inventory can handle the addition
+	 * @param itemsToAdd The list of items to add.
+	 * @return True if successful
+	 */
 	public boolean canAddItems(ArrayList<Item> itemsToAdd) {
-		int itemType = itemsToAdd.get(0).getType();
+		int itemType = itemsToAdd.get(0).getTypeIndex();
 		double weight = 0;
 		for(Item item : itemsToAdd) {
 			weight += item.getWeight();
@@ -85,7 +90,7 @@ public class Inventory {
 	 * @return True if successful, false otherwise
 	 */
 	public boolean addItem(ArrayList<Item> itemsToAdd) {
-		int itemType = itemsToAdd.get(0).getType();		
+		int itemType = itemsToAdd.get(0).getTypeIndex();		
 		if(canAddItems(itemsToAdd)) {
 			for(Item item : itemsToAdd) {
 				slots.get(itemType).add(item);
