@@ -103,7 +103,7 @@ public class PartyInventoryScene extends Scene {
 			personPanelsArray[personPanels.indexOf(panel)] = panel;
 		}
 		
-		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1);
+		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1) - 4;
 		mainLayer.addAsGrid(personPanelsArray, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
 		// Create Vehicle inventories (if one exists)
