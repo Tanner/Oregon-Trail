@@ -66,6 +66,19 @@ public class Party {
 			return false;
 		}
 	}
+	
+	public ArrayList<Inventoried> canGetItem(ArrayList<Item> items) {
+		ArrayList<Inventoried> ableList = new ArrayList<Inventoried>();
+		for(Person person : members) {
+			if(person.canGetItem(items)) {
+				ableList.add(person);
+			}
+		}
+		if (vehicle != null && vehicle.canGetItem(items)) {
+			ableList.add(vehicle);
+		}
+		return ableList;
+	}
 	/**
 	 * Returns an array of Persons present in the party
 	 * @return
