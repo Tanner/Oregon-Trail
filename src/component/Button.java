@@ -179,6 +179,14 @@ public class Button extends Component implements Disableable {
 		label.setColor(color);
 	}
 	
+	/**
+	 * Sets the text of this button.
+	 * @param text New text
+	 */
+	public void setText(String text) {
+		label.setText(text);
+	}
+	
 	@Override
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
