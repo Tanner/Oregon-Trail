@@ -108,7 +108,7 @@ public class Label extends Component {
 		
 		int startY;
 		
-		if ( verticalAlignment == VerticalAlignment.Center) {
+		if (verticalAlignment == VerticalAlignment.Center) {
 			startY = getY() + (getHeight() - (lines.size()*font.getLineHeight())) / 2;
 		} else {
 			startY = getY();
