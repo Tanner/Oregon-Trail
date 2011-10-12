@@ -4,8 +4,6 @@ import core.Logger;
 
 /**
  * A condition with a min and max value and also a current value.
- * 
- * @author George Johnston
  */
 public class Condition {
 	private int min, max, current;
@@ -113,6 +111,7 @@ public class Condition {
 		}
 	}
 	
+	@Override
 	public Condition clone() {
 		return new Condition(this.min, this.max, this.current);
 	}

@@ -33,7 +33,7 @@ import core.GameDirector;
 import core.Logger;
 
 /**
- * The Party Creation Scene
+ * Scene to allow user to create a party for the game.
  */
 public class PartyCreationScene extends Scene {
 	public static final SceneID ID = SceneID.PartyCreation;
@@ -243,7 +243,7 @@ public class PartyCreationScene extends Scene {
 	}
 	
 	/**
-	 * Enable the next "new person" button
+	 * Enable the next "new person" button.
 	 */
 	private void enableNextPersonField() {
 		for (int i = 0; i < NUM_PEOPLE; i++) {
@@ -355,7 +355,7 @@ public class PartyCreationScene extends Scene {
 	
 	private class SceneComponentListener implements ComponentListener {	
 		/**
-		 * Breakout method : newPersonButton triggered event - set text field access accordingly
+		 * New person button triggered event; set text field access accordingly.
 		 * @param i The index in the textfield array we are checking
 		 */		
 		private void newPersonButtonActivated(int i){
@@ -364,9 +364,9 @@ public class PartyCreationScene extends Scene {
 		}
 	
 		/**
-		 * Breakout method : personNameTextField triggered event, setup person's data accordingly
+		 * Person name text field triggered event, setup person's data accordingly.
 		 * @param i The index in the textfield array we are checking
-		 * @return Exit code - 0 for natural exit, 1 for forced exit
+		 * @return exit code - 0 for natural exit, 1 for forced exit
 		 */		
 		private int personNameTextFieldActivated(int i) {			
 			if (people.size() < i + 1) {
@@ -404,6 +404,10 @@ public class PartyCreationScene extends Scene {
 			return 0;
 		}
 		
+		/**
+		 * Gender control changed value; handle new gender for player.
+		 * @param i The index of the button pushed
+		 */
 		private void personGenderControlActivated(int i) {
 			int[] genderControlSelection = personGenderControl[i].getSelection();
 			
@@ -420,7 +424,7 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		/**
-		 * Breakout method : change profession button pressed, handle new profession entry by player
+		 * Change profession button pressed; handle new profession entry by player.
 		 * @param i The index of the button pushed
 		 */	
 		private void personChangeProfButtonActivated(int i) {
@@ -443,7 +447,7 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		/**
-		 * Breakout method : change skill button pressed, handle data and code appropriately
+		 * Change skill button pressed; handle data and code appropriately.
 		 * @param i the index of the change skill button pressed
 		 */
 		private void personChangeSkillButtonActivated(int i) {
@@ -486,7 +490,7 @@ public class PartyCreationScene extends Scene {
 		}
 
 		/**
-		 * Breakout Method : personDelete button pressed - address person data accordingly
+		 * Person delete button pressed; address person data accordingly.
 		 * @param i Index in array of buttons for button pressed
 		 */
 		public void personDeleteButtonActivated(int i){
@@ -497,7 +501,7 @@ public class PartyCreationScene extends Scene {
 		}
 		
 		/**
-		 * Breakout method : confirm button pressed - check status of party and set up next scene if valid
+		 * Confirm button pressed; check status of party and set up next scene if valid.
 		 */
 		public void confirmButtonActivated(){
 			if (people.size() == 0) {
