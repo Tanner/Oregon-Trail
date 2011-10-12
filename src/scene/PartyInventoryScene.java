@@ -84,16 +84,18 @@ public class PartyInventoryScene extends Scene {
 		mainLayer.addAsGrid(personPanels, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
 		// Create Vehicle inventories (if one exists)
-		int lastOddIndex = personPanels.length - 1;
-		if (lastOddIndex % 2 != 0) {
-			lastOddIndex--;
+		if (vehicle != null) {
+			int lastOddIndex = personPanels.length - 1;
+			if (lastOddIndex % 2 != 0) {
+				lastOddIndex--;
+			}
+			Positionable locationReference = personPanels[lastOddIndex];
+	
+			vehicleInventoryButtons = new OwnerInventoryButtons(vehicle);
+			vehicleInventoryButtons.setFont(fieldFont);
+			vehicleInventoryButtons.makePanel(container);
+			mainLayer.add(vehicleInventoryButtons.getPanel(), locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		}
-		Positionable locationReference = personPanels[lastOddIndex];
-
-		vehicleInventoryButtons = new OwnerInventoryButtons(vehicle);
-		vehicleInventoryButtons.setFont(fieldFont);
-		vehicleInventoryButtons.makePanel(container);
-		mainLayer.add(vehicleInventoryButtons.getPanel(), locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		
 		// Close button
 		closeButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CLOSE")));
@@ -123,7 +125,7 @@ public class PartyInventoryScene extends Scene {
 		binButton.addListener(new ButtonListener());
 		
 		int xOffset = ((container.getWidth() - 2 * PADDING) / 2) - (BIN_BUTTON_WIDTH / 2);
-		int yOffset = (int)((vehicleInventoryButtons.getPanel().getPosition(ReferencePoint.BottomLeft).y - closeButton.getPosition(ReferencePoint.TopLeft).y) / 2) + (BIN_BUTTON_HEIGHT / 2); 
+		int yOffset = (int)((personPanels[personPanels.length - 1].getPosition(ReferencePoint.BottomLeft).y + PADDING + BUTTON_HEIGHT - closeButton.getPosition(ReferencePoint.TopLeft).y) / 2) + (BIN_BUTTON_HEIGHT / 2); 
 		
 		mainLayer.add(binButton, closeButton.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, xOffset, yOffset);
 		
