@@ -135,12 +135,6 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 				// Requested Party Creation Scene
 				newScene = new PartyCreationScene(game.getPlayer());
 			}
-		} else if (lastScene instanceof PartyCreationScene) {
-			// Last scene was Party Creation Scene
-			if (id == SceneID.Town) {
-				// Requested Town Scene
-				newScene = new TownScene(game.getPlayer().getParty());
-			}
 		} else if (lastScene instanceof TownScene) {
 			// Last scene was Town Scene
 			if (id == SceneID.Store) {
@@ -169,7 +163,16 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	
 	@Override
 	public void sceneDidEnd(Scene scene) {
+		Scene newScene = null;
+		if (scene instanceof PartyCreationScene) {
+			// Last scene was Party Creation Scene
+			newScene = new TownScene(game.getPlayer().getParty());
+		}
+		
 		sceneDirector.popScene(true);
+		if (newScene != null) {
+			sceneDirector.pushScene(newScene, true);
+		}
 	}
 	
 	@Override

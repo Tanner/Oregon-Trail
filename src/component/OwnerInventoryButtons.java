@@ -16,6 +16,11 @@ import org.newdawn.slick.gui.ComponentListener;
 
 import component.Positionable.ReferencePoint;
 
+/**
+ * This class is a group of a {@code Button} and a {@code ConditionBar}.
+ * 
+ * The group is for a speicific {@code Inventoried}.
+ */
 public class OwnerInventoryButtons {
 	private static final int ITEM_BUTTON_WIDTH = 80;
 	private static final int ITEM_BUTTON_HEIGHT = 40;
@@ -27,19 +32,28 @@ public class OwnerInventoryButtons {
 	private Inventoried inventoried;
 	private ArrayList<SlotConditionGroup> itemSlots;
 	private Font font;
+	private ConditionBar weightBar;
 	private Panel panel;
 	
+	/**
+	 * Constructs a new {@code OwnerInventoryButtons} with an {@code Inventoried}.
+	 * @param inventoried Inventoried object for this OwnerInventoryButtons
+	 */
 	public OwnerInventoryButtons(Inventoried inventoried) {
 		this.inventoried = inventoried;
 		
 		itemSlots = new ArrayList<SlotConditionGroup>();
 	}
 	
+	/**
+	 * Creates the panel that holds both the {@code Button} and the {@code ConditionBar}.
+	 * @param container Container
+	 */
 	public void makePanel(GameContainer container) {
 		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
-		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * Person.MAX_INVENTORY_SIZE) - PADDING;
+		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * inventoried.getMaxSize()) - PADDING;
 		
 		int maxInventorySize = inventoried.getInventory().getMaxSize();
 		
@@ -79,8 +93,15 @@ public class OwnerInventoryButtons {
 		panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int)nameLabel.getFontHeight());
 		panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
-	}	
+		
+		weightBar = new ConditionBar(container, ITEM_BUTTON_WIDTH * 2 + PADDING, nameLabel.getHeight(), getWeightCondition(), font);
+		weightBar.setDisableText(false);
+		panel.add(weightBar, itemPanel.getPosition(ReferencePoint.TopRight), ReferencePoint.BottomRight, 0, -NAME_PADDING);
+	}
 	
+	/**
+	 * Update the contents of the buttons to be current
+	 */
 	public void updateButtons() {
 		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 
@@ -129,6 +150,15 @@ public class OwnerInventoryButtons {
 		this.font = font;
 	}
 	
+	/**
+	 * Get the weight condition for the weight condition bar.
+	 * @return Condition that represents the weight
+	 */
+	public Condition getWeightCondition() {
+		int weightLeft = (int)(inventoried.getMaxWeight() - inventoried.getWeight());
+		return new Condition(0, (int)inventoried.getMaxWeight(), weightLeft);
+	}
+	
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
@@ -146,6 +176,8 @@ public class OwnerInventoryButtons {
 			if (amount == 0) {
 				updateButtons();
 			}
+			
+			weightBar.setCondition(getWeightCondition());
 		}
 	}
 }

@@ -44,9 +44,8 @@ public class Modal extends Component {
 		
 		this.listener = listener;
 				
-		int messageWidth = 700;
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);		
-		this.messageLabel = new Label(container, messageWidth, fieldFont, Color.white, message);
+		this.messageLabel = new Label(container, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.Center);
 		
 		int buttonWidth = 200;
@@ -82,9 +81,8 @@ public class Modal extends Component {
 		this.listener = listener;
 		this.segmentedControl = segmentedControl;
 				
-		int messageWidth = 700;
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);		
-		messageLabel = new Label(container, messageWidth, fieldFont, Color.white, message);
+		messageLabel = new Label(container, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.Center);
 		
 		ButtonListener buttonListener = new ButtonListener();
@@ -96,7 +94,7 @@ public class Modal extends Component {
 		dismissButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, cancelButtonString));
 		dismissButton.addListener(buttonListener);		
 		
-		int panelWidth = PADDING * 2 + segmentedControl.getWidth();
+		int panelWidth = PADDING * 2 + Math.max(segmentedControl.getWidth(), messageLabel.getWidth());
 		int panelHeight = PADDING * 4 + messageLabel.getHeight() + segmentedControl.getHeight() + resignButton.getHeight();
 		panel = new Panel(container, panelWidth, panelHeight, ConstantStore.COLORS.get("MODAL"));
 		panel.setBorderColor(ConstantStore.COLORS.get("MODAL_BORDER"));

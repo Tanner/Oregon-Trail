@@ -116,11 +116,11 @@ public class SceneSelectorScene extends Scene {
 				}
 				GameDirector.sharedSceneListener().requestScene(SceneID.Store, SceneSelectorScene.this);
 			} else if (component == buttons.get(4)) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, SceneSelectorScene.this);
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
 					return;
 				}
+				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, SceneSelectorScene.this);
 			} else if (component == buttons.get(5)) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.ComponentTest, SceneSelectorScene.this);
 			} else if (component == buttons.get(6)) {

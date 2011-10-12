@@ -13,6 +13,13 @@ import org.newdawn.slick.gui.GUIContext;
 
 import component.Label.Alignment;
 
+/**
+ * A group consisting of a {@code Button} and {@code ConditionBar}.
+ * 
+ * Both the {@code Button} and the {@code ConditionBar} are linked to a specific item and item slot for an {@code Item}.
+ * @author tanner
+ *
+ */
 public class SlotConditionGroup extends Component {
 	private static final int ITEM_BUTTON_HEIGHT = 40;
 	private static final int ITEM_CONDITION_BAR_HEIGHT = 5;
@@ -23,6 +30,14 @@ public class SlotConditionGroup extends Component {
 	private int pocketNumber;
 	private ITEM_TYPE item;
 	
+	/**
+	 * Construct a {@code SlotConditionGroup} with a {@code GUIContext}, width, height, {@code Font}, and the pocket number.
+	 * @param container The container for this {@code Component}
+	 * @param width Width
+	 * @param height Height
+	 * @param font Font to use
+	 * @param pocketNumber The "pocket number" that the {@code Inventoried} has on it to use
+	 */
 	public SlotConditionGroup(GUIContext container, int width, int height, Font font, int pocketNumber) {
 		super(container, width, height);
 		
@@ -55,14 +70,29 @@ public class SlotConditionGroup extends Component {
 		super.render(container, g);
 	}
 	
+	/**
+	 * Get the pocket number.
+	 * @return Pocket number
+	 */
 	public int getPocketNumber() {
 		return pocketNumber;
 	}
 	
+	/**
+	 * Get the ITEM_TYPE.
+	 * @return ITEM_TYPE
+	 */
 	public ITEM_TYPE getItem() {
 		return item;
 	}
 	
+	/**
+	 * Changes the contents of the group.
+	 * @param item New ITEM_TYPE
+	 * @param name New name
+	 * @param amount New quantity
+	 * @param condition Condition to use
+	 */
 	public void changeContents(ITEM_TYPE item, String name, int amount, Condition condition) {
 		this.item = item;
 		
