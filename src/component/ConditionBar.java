@@ -41,7 +41,7 @@ public class ConditionBar extends Component {
 	
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
-		if (!isVisible() || condition != null) {
+		if (!isVisible() || condition == null) {
 			return;
 		}
 		
