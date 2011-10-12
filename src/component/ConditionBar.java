@@ -19,6 +19,7 @@ public class ConditionBar extends Component {
 	private Color normalColor;
 	private Color warningColor;
 	private Color dangerColor;
+	private Color backgroundColor;
 	
 	/**
 	 * Constructs a new {@code ConditionBar} with a {@code GUIContext}, width, height, and a {@code Conditioned}.
@@ -36,7 +37,9 @@ public class ConditionBar extends Component {
 		warningColor = Color.yellow;
 		dangerColor = Color.red;
 		
-		setBackgroundColor(Color.gray);
+		backgroundColor = Color.gray;
+		
+		setBackgroundColor(backgroundColor);
 	}
 	
 	@Override
@@ -73,5 +76,21 @@ public class ConditionBar extends Component {
 	 */
 	public void setCondition(Condition condition) {
 		this.condition = condition;
+	}
+
+	/**
+	 * Get the background color.
+	 * @return Background color
+	 */
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	/**
+	 * Set a new background color.
+	 * @param backgroundColor New background color
+	 */
+	public void setBackgroundColor(Color backgroundColor) {
+		this.backgroundColor = backgroundColor;
 	}
 }
