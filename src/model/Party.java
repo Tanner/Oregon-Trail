@@ -82,6 +82,10 @@ public class Party {
 	 */
 	public ArrayList<Inventoried> canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
 		ArrayList<Inventoried> ableList = new ArrayList<Inventoried>();
+		
+		if(itemType.getCost() * numberOf > money) {
+			return ableList;
+		}
 		for(Person person : members) {
 			if(person.canGetItem(itemType, numberOf)) {
 				ableList.add(person);
