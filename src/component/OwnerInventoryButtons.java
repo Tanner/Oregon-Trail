@@ -31,6 +31,7 @@ public class OwnerInventoryButtons {
 	private Inventoried inventoried;
 	private ArrayList<SlotConditionGroup> itemSlots;
 	private Font font;
+	private Panel panel;
 	
 	public OwnerInventoryButtons(Inventoried inventoried) {
 		this.inventoried = inventoried;
@@ -38,7 +39,7 @@ public class OwnerInventoryButtons {
 		itemSlots = new ArrayList<SlotConditionGroup>();
 	}
 	
-	public Panel getPanel(GameContainer container) {
+	public void makePanel(GameContainer container) {
 		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
@@ -79,10 +80,16 @@ public class OwnerInventoryButtons {
 		
 		Label nameLabel = new Label(container, font, Color.white, inventoried.getName());
 		
-		Panel panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int)nameLabel.getFontHeight());
+		panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int)nameLabel.getFontHeight());
 		panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
-		
+	}	
+	
+	/**
+	 * Get the panel of this object.
+	 * @return The Panel
+	 */
+	public Panel getPanel() {
 		return panel;
 	}
 	
