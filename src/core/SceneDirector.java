@@ -9,8 +9,7 @@ import org.newdawn.slick.state.transition.* ;
 import scene.*;
 
 /**
- * Handles the stack of scenes for scene display
- * 
+ * Handles the stack of scenes for scene display.
  */
 public class SceneDirector extends StateBasedGame {
 //	private GameContainer container;
@@ -31,7 +30,6 @@ public class SceneDirector extends StateBasedGame {
 	/**
 	 * Push a {@code Scene} on the stack. Present the {@code Scene} with an animated
 	 * transition if animated is {@code true}.
-	 * 
 	 * @param scene {@code Scene} to present
 	 * @param animated Boolean value whether to animate transition
 	 */
@@ -60,7 +58,6 @@ public class SceneDirector extends StateBasedGame {
 	/**
 	 * Pop the top {@code Scene} on the stack. Present the next {@code Scene} on the stack.
 	 * Animate transition if animated is {@code true}.
-	 * 
 	 * @param animated Boolean value whether to animate transition
 	 */
 	public void popScene(boolean animated) {
@@ -80,7 +77,6 @@ public class SceneDirector extends StateBasedGame {
 	
 	/**
 	 * Remove all {@code Scene} objects on the stack and add a new {@code Scene}.
-	 * 
 	 * @param scene Scene to be added after
 	 */
 	public void replaceStackWithScene(Scene scene) {
