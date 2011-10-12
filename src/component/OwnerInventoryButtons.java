@@ -42,11 +42,19 @@ public class OwnerInventoryButtons {
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * Person.MAX_INVENTORY_SIZE) - PADDING;
 		
+		int maxInventorySize = inventoried.getInventory().getMaxSize();
+		
 		Panel itemPanel = new Panel(container, panelWidth, panelHeight);
 		
 		Positionable lastPositionReference = itemPanel;
-		for (int i = 0; i < slots.size(); i++) {
-			PriorityQueue<Item> items = slots.get(i);
+		for (int i = 0; i < maxInventorySize; i++) {
+			PriorityQueue<Item> items;
+			
+			if (i < slots.size()) {
+				items = slots.get(i);
+			} else {
+				items = null;
+			}
 			
 			Vector2f position = lastPositionReference.getPosition(ReferencePoint.TopRight);
 			int padding = PADDING;
@@ -54,12 +62,14 @@ public class OwnerInventoryButtons {
 			if (i == 0) {
 				position = lastPositionReference.getPosition(ReferencePoint.TopLeft);
 				padding = 0;
-			} else if (i == items.size()) {
+			} else if (i == maxInventorySize) {
 				padding = 0;
 			}
 			
 			itemSlots.add(i, new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font, i, items));
 			itemPanel.add(itemSlots.get(i), position, ReferencePoint.TopLeft, padding, 0);
+			
+			lastPositionReference = itemSlots.get(i);
 		}
 		
 		Label nameLabel = new Label(container, font, Color.white, inventoried.getName());
