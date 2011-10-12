@@ -32,6 +32,8 @@ public class OwnerInventoryButtons {
 	
 	public OwnerInventoryButtons(Inventoried inventoried) {
 		this.inventoried = inventoried;
+		
+		itemSlots = new ArrayList<SlotConditionGroup>();
 	}
 	
 	public Panel getPanel(GameContainer container) {
@@ -56,7 +58,7 @@ public class OwnerInventoryButtons {
 				padding = 0;
 			}
 			
-			itemSlots.set(i, new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font, i, items));
+			itemSlots.add(i, new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font, i, items));
 			itemPanel.add(itemSlots.get(i), position, ReferencePoint.TopLeft, padding, 0);
 		}
 		
