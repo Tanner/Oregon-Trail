@@ -39,6 +39,7 @@ public class Button extends Component implements Disableable {
 		add(sprite, getPosition(Positionable.ReferencePoint.TopCenter), Positionable.ReferencePoint.TopCenter);
 		
 		this.label = label;
+		label.setColor(ConstantStore.COLORS.get("INTERACTIVE_LABEL_NORMAL"));
 		add(label, getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.BottomCenter);
 		
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
@@ -183,8 +184,11 @@ public class Button extends Component implements Disableable {
 		this.disabled = disabled;
 		
 		if (disabled) {
+			this.active = false;
+			
 			setBackgroundColor(buttonDisabledColor);
 			setBevel(BevelType.None);
+			label.setColor(ConstantStore.COLORS.get("INTERACTIVE_LABEL_DISABLED"));
 		} else {
 			if (isActive()) {
 				setBackgroundColor(buttonActiveColor);
@@ -193,6 +197,7 @@ public class Button extends Component implements Disableable {
 				setBackgroundColor(buttonColor);
 				setBevel(BevelType.Out);
 			}
+			label.setColor(ConstantStore.COLORS.get("INTERACTIVE_LABEL_NORMAL"));
 		}
 	}
 	
