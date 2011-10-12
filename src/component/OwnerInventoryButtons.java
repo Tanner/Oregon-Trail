@@ -61,11 +61,13 @@ public class OwnerInventoryButtons {
 			
 			SlotConditionGroup slotConditionGroup = new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font, i);
 			
-			String name = slots.get(i).getName();
-			int amount = inventoried.getInventory().getNumberOf(slots.get(i));
-			Condition condition = null;
-			
-			slotConditionGroup.changeContents(name, amount, condition);
+			if (i < slots.size()) {
+				String name = slots.get(i).getName();
+				int amount = inventoried.getInventory().getNumberOf(slots.get(i));
+				Condition condition = null;
+				
+				slotConditionGroup.changeContents(name, amount, condition);
+			}
 			
 			itemSlots.add(i, slotConditionGroup);
 			itemPanel.add(itemSlots.get(i), position, ReferencePoint.TopLeft, padding, 0);
