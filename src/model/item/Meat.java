@@ -12,6 +12,8 @@ public class Meat extends Item {
 	public Meat() {
 		super(ConstantStore.get("ITEMS", "MEAT_NAME"), 
 			  ConstantStore.get("ITEMS", "MEAT_DESCRIPTION"), new Condition(100),
-			  25, 75, Item.ITEM_TYPES.MEAT);
+			  Double.parseDouble(ConstantStore.get("ITEMS", "MEAT_WEIGHT")),
+			  Integer.parseInt(ConstantStore.get("ITEMS", "MEAT_COST")),
+			  Item.ITEM_TYPES.MEAT);
 	}
 }

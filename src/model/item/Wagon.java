@@ -12,7 +12,10 @@ import model.Item;
 
 public class Wagon extends Vehicle {
 	public Wagon() {
-		super("Wagon", "This is a wagon", new Condition(100), 2000, 200,
-				2000, Item.ITEM_TYPES.WAGON);
+		super(ConstantStore.get("ITEMS", "WAGON_NAME"),
+				ConstantStore.get("ITEMS", "WAGON_DESCRIPTION"), new Condition(100), 2000,
+				Double.parseDouble(ConstantStore.get("ITEMS", "WAGON_WEIGHT")),
+				Integer.parseInt(ConstantStore.get("ITEMS", "WAGON_COST")),
+				Item.ITEM_TYPES.WAGON);
 	}
 }

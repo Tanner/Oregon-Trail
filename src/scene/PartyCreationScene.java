@@ -222,35 +222,6 @@ public class PartyCreationScene extends Scene {
 		return ID.ordinal();
 	}
 	
-	@Override
-	public void start() {
-		super.start();
-		
-//		for (Button b : buttons) {
-//			b.addListener(buttonListener);
-//		}
-	}
-
-	@Override
-	public void pause() {
-		super.pause();
-		
-//		for (Button b : buttons) {
-//			b.removeListener(buttonListener);
-//		}
-	}
-
-	@Override
-	public void stop() {
-		super.stop();
-		
-//		for (Button b : buttons) {
-//			b.removeListener(buttonListener);
-//		}
-		
-		mainLayer.setAcceptingInput(false);
-	}
-	
 	/**
 	 * Enable the next "new person" button
 	 */

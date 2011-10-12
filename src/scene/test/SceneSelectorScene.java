@@ -69,6 +69,7 @@ public class SceneSelectorScene extends Scene {
 		Button[] buttonsToAdd = new Button[buttons.size()];
 		for (Button b : buttons) {
 			buttonsToAdd[buttons.indexOf(b)] = b;
+			b.addListener(buttonListener);
 		}
 		mainLayer.addAsGrid(buttonsToAdd,
 				mainLayer.getPosition(Positionable.ReferencePoint.TopLeft),
@@ -87,35 +88,6 @@ public class SceneSelectorScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		return;
-	}
-
-	@Override
-	public void start() {
-		super.start();
-		
-		for (Button b : buttons) {
-			b.addListener(buttonListener);
-		}
-	}
-
-	@Override
-	public void pause() {
-		super.pause();
-		
-		for (Button b : buttons) {
-			b.removeListener(buttonListener);
-		}
-	}
-
-	@Override
-	public void stop() {
-		super.stop();
-		
-		for (Button b : buttons) {
-			b.removeListener(buttonListener);
-		}
-		
-		mainLayer.setAcceptingInput(false);
 	}
 	
 	/**

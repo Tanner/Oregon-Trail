@@ -10,8 +10,10 @@ import core.ConstantStore;
  */
 public class SonicScrewdriver extends Item {
 	public SonicScrewdriver() {
-			super(ConstantStore.get("ITEMS", "SONIC_SCREWDRIVER_NAME"), 
-				  ConstantStore.get("ITEMS", "SONIC_SCREWDRIVER_DESCRIPTION"), new Condition(100),
-				  .5, 100, Item.ITEM_TYPES.SONIC);
+			super(ConstantStore.get("ITEMS", "SONIC_NAME"), 
+				  ConstantStore.get("ITEMS", "SONIC_DESCRIPTION"), new Condition(100),
+				  Double.parseDouble(ConstantStore.get("ITEMS", "SONIC_WEIGHT")),
+				  Integer.parseInt(ConstantStore.get("ITEMS", "SONIC_COST")),
+				  Item.ITEM_TYPES.SONIC);
 	}
 }
