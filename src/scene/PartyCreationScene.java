@@ -525,7 +525,7 @@ public class PartyCreationScene extends Scene {
 			player.setParty(new Party(pace, rations, people));
 			
 			Logger.log("Confirm button pushed", Logger.Level.INFO);
-			GameDirector.sharedSceneListener().requestScene(SceneID.Town, PartyCreationScene.this);	
+			GameDirector.sharedSceneListener().sceneDidEnd(PartyCreationScene.this);	
 		}
 		
 		@Override		
