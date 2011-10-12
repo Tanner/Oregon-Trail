@@ -160,10 +160,13 @@ public class SceneSelectorScene extends Scene {
 			person.addItemToInventory(itemsToAdd);
 			person.addItemToInventory(itemsToAdd);
 			
-			person.removeItemFromInventory(sonic.getType(), 1);
-			
-//			Bread bread = new Bread(1);
-//			person.addToInventory(bread);
+			for (int i = 0; i < 5; i++) {
+				itemsToAdd.clear();
+				Bread bread = new Bread();
+				bread.decreaseStatus(random.nextInt(100));
+				itemsToAdd.add(bread);
+				person.addItemToInventory(itemsToAdd);	
+			}
 //			
 //			Apple apple = new Apple(1);
 //			person.addToInventory(apple);
