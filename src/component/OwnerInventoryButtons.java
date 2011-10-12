@@ -95,7 +95,7 @@ public class OwnerInventoryButtons {
 		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
 		
 		Condition weightCondition = new Condition(0, (int)inventoried.getMaxWeight(), (int)inventoried.getWeight());
-		weightBar = new ConditionBar(container, 200, nameLabel.getHeight(), weightCondition, font);
+		weightBar = new ConditionBar(container, ITEM_BUTTON_WIDTH * 2 + PADDING, nameLabel.getHeight(), weightCondition, font);
 		weightBar.setDisableText(false);
 		panel.add(weightBar, itemPanel.getPosition(ReferencePoint.TopRight), ReferencePoint.BottomRight, 0, -NAME_PADDING);
 	}	
