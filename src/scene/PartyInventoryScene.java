@@ -79,6 +79,8 @@ public class PartyInventoryScene extends Scene {
 			Person person = members.get(i);
 			
 			playerInventoryButtons[i] = new OwnerInventoryButtons(person);
+			playerInventoryButtons[i].setFont(fieldFont);
+			
 			personPanels[i] = playerInventoryButtons[i].getPanel(container);
 		}
 		
@@ -95,6 +97,7 @@ public class PartyInventoryScene extends Scene {
 		Positionable locationReference = personPanels[lastOddIndex];
 
 		vehicleInventoryButtons = new OwnerInventoryButtons(vehicle);
+		vehicleInventoryButtons.setFont(fieldFont);
 		mainLayer.add(vehicleInventoryButtons.getPanel(container), locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		
 		// Close button
