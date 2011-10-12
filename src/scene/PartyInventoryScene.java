@@ -125,7 +125,7 @@ public class PartyInventoryScene extends Scene {
 		binButton.addListener(new ButtonListener());
 		
 		int xOffset = ((container.getWidth() - 2 * PADDING) / 2) - (BIN_BUTTON_WIDTH / 2);
-		int yOffset = (int)((vehicleInventoryButtons.getPanel().getPosition(ReferencePoint.BottomLeft).y - closeButton.getPosition(ReferencePoint.TopLeft).y) / 2) + (BIN_BUTTON_HEIGHT / 2); 
+		int yOffset = (int)((personPanels[personPanels.length - 1].getPosition(ReferencePoint.BottomLeft).y + PADDING + BUTTON_HEIGHT - closeButton.getPosition(ReferencePoint.TopLeft).y) / 2) + (BIN_BUTTON_HEIGHT / 2); 
 		
 		mainLayer.add(binButton, closeButton.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, xOffset, yOffset);
 		
