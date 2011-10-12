@@ -86,6 +86,24 @@ public class OwnerInventoryButtons {
 		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
 	}	
 	
+	public void updateButtons() {
+		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
+
+		int maxInventorySize = inventoried.getInventory().getMaxSize();
+
+		for (int i = 0; i < maxInventorySize; i++) {
+			if (i < slots.size()) {
+				String name = slots.get(i).getName();
+				int amount = inventoried.getInventory().getNumberOf(slots.get(i));
+				Condition condition = inventoried.getInventory().getConditionOf(slots.get(i));
+				
+				itemSlots.get(i).changeContents(slots.get(i), name, amount, condition);
+			} else {
+				itemSlots.get(i).changeContents(ITEM_TYPE.APPLE, null, 0, null);
+			}
+		}
+	}
+	
 	/**
 	 * Get the panel of this object.
 	 * @return The Panel
@@ -122,8 +140,6 @@ public class OwnerInventoryButtons {
 			SlotConditionGroup slotConditionGroup = (SlotConditionGroup)component;
 			ITEM_TYPE item = slotConditionGroup.getItem();
 			
-			Logger.log("Item in this button: "+item, Logger.Level.INFO);
-			
 			inventoried.removeItemFromInventory(item, 1);
 			
 			String name = item.getName();
@@ -131,6 +147,10 @@ public class OwnerInventoryButtons {
 			Condition condition = inventoried.getInventory().getConditionOf(item);
 			
 			slotConditionGroup.changeContents(item, name, amount, condition);
+			
+			if (amount == 0) {
+				updateButtons();
+			}
 		}
 	}
 }
