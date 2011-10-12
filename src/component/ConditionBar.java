@@ -26,6 +26,8 @@ public class ConditionBar extends Component {
 	private boolean disableText;
 	private Label label;
 	
+	private ConditionPanel conditionPanel;
+	
 	/**
 	 * Constructs a new {@code ConditionBar} with a {@code GUIContext}, width, height, and a {@code Conditioned}.
 	 * @param context The GUI context
@@ -35,45 +37,29 @@ public class ConditionBar extends Component {
 	 */
 	public ConditionBar(GUIContext context, int width, int height, Condition condition) {
 		super(context, width, height);
+
+		conditionPanel = new ConditionPanel(context, getWidth(), getHeight(), Color.gray);
+		add(conditionPanel, getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft);
 		
-		this.condition = condition;
-		
+		setCondition(condition);
+		setDisableText(true);
+
 		normalColor = Color.green;
 		warningColor = Color.yellow;
 		dangerColor = Color.red;
-		
-		setDisableText(true);
-		
-		setBackgroundColor(Color.gray);
-		
-		double percentage;
-		if (condition == null) {
-			percentage = 0;
-		} else {
-			percentage = condition.getPercentage();
-		}
-		Color barColor = normalColor;
-		if (percentage < dangerLevel) {
-			barColor = dangerColor;
-		} else if (percentage < warningLevel) {
-			barColor = warningColor;
-		}
-		
-		Panel barPanel = new Panel(context, (int)(getWidth() * Math.min(percentage, 1)), getHeight(), barColor);
-		this.add(barPanel, getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft);
 	}
 	
 	public ConditionBar(GUIContext context, int width, int height, Condition condition, Font font) {
 		this(context, width, height, condition);
-		
-		String labelText = "";
-		if (condition != null) {
-			labelText = (condition.getPercentage() * 100)+"%";
-		}
-		
-		label = new Label(context, getWidth(), getHeight(), font, Color.white, labelText);
+				
+		label = new Label(context, getWidth(), getHeight(), font, Color.white, "0%");
 		label.setAlignment(Alignment.Center);
+		
+		updateLabelText();
+		
 		add(label, getPosition(ReferencePoint.CenterCenter), ReferencePoint.CenterCenter, 0, 0);
+		
+		setDisableText(false);
 	}
 	
 	@Override
@@ -82,12 +68,22 @@ public class ConditionBar extends Component {
 			return;
 		}
 		
-		double percentage = condition.getPercentage();
-		if (label != null && !disableText) {
-			label.setText((percentage * 100)+"%");
+		super.render(context, g);
+	}
+	
+	/**
+	 * Get the bar color to use.
+	 * @return Bar color that corresponds with the {@code Condition} value
+	 */
+	public Color getBarColor() {
+		Color barColor = normalColor;
+		if (condition.getPercentage() < dangerLevel) {
+			barColor = dangerColor;
+		} else if (condition.getPercentage() < warningLevel) {
+			barColor = warningColor;
 		}
 		
-		super.render(context, g);
+		return barColor;
 	}
 
 	/**
@@ -104,6 +100,19 @@ public class ConditionBar extends Component {
 	 */
 	public void setCondition(Condition condition) {
 		this.condition = condition;
+		
+		updateLabelText();
+	}
+	
+	public void updateLabelText() {
+		if (condition != null) {
+			double percentage = condition.getPercentage();
+			if (label != null) {
+				label.setText((int)(percentage * 100)+"%");
+			}
+			
+			conditionPanel.setPercentage(percentage);
+		}
 	}
 
 	/**
@@ -120,6 +129,10 @@ public class ConditionBar extends Component {
 	 */
 	public void setDisableText(boolean disableText) {
 		this.disableText = disableText;
+		
+		if (label != null) {
+			label.setVisible(!disableText);
+		}
 	}
 	
 	/**
@@ -128,5 +141,31 @@ public class ConditionBar extends Component {
 	 */
 	public void setFont(Font font) {
 		label.setFont(font);
+	}
+	
+	private class ConditionPanel extends Panel {
+		private double percentage;
+		
+		public ConditionPanel(GUIContext context, int width, int height, Color color) {
+			super(context, width, height, color);
+			
+			percentage = 0;
+		}
+		
+		@Override
+		public void render(GUIContext context, Graphics g) throws SlickException {
+			if (!isVisible()) {
+				return;
+			}
+			
+			super.render(context, g);
+			
+			g.setColor(getBarColor());
+			g.fillRect(getX(), getY(), (int)(getWidth() * percentage), getHeight());
+		}
+		
+		public void setPercentage(double percentage) {
+			this.percentage = percentage;
+		}
 	}
 }
