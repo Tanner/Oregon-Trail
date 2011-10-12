@@ -33,7 +33,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		 
 		 fontManager = new FontManager();
 
-		 sceneDirector = new SceneDirector("Oregon Trail");
+		 sceneDirector = new SceneDirector("Oregon Trail", this);
 		 
 		 game = new Game();
 	}
@@ -43,26 +43,9 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	 * @return handle of game director for scene to interact with
 	 */
 	public static SceneListener sharedSceneListener() {
-		if (sharedDirector == null) {
-			sharedDirector = new GameDirector();
-		}
-		
 		return sharedDirector;
 	}
-	
-	
-	/**
-	 * Singleton Design pattern. Returns the single instance of the game director that drives the game, for the scene director to interact with.
-	 * @return handle of game director for scene director to interact with
-	 */
-	public static SceneDirectorListener sharedSceneDirectorListener() {
-		if (sharedDirector == null) {
-			sharedDirector = new GameDirector();
-		}
-		
-		return sharedDirector;
-	}
-	
+
 	/**
 	 * Launches window that contains game.
 	 */
