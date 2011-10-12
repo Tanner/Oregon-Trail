@@ -17,7 +17,7 @@ public interface Inventoried {
 	 * @param quantity The number of items to remove
 	 * @return True if successful
 	 */
-	public boolean removeItemFromInventory(int itemIndex, int quantity);
+	public boolean removeItemFromInventory(Item.ITEM_TYPE itemType, int quantity);
 	
 	/**
 	 * Returns whether or not the number of a specific item type can be added to the inventory

@@ -160,7 +160,7 @@ public class SceneSelectorScene extends Scene {
 			person.addItemToInventory(itemsToAdd);
 			person.addItemToInventory(itemsToAdd);
 			
-			person.removeItemFromInventory(sonic.getType().ordinal(), 1);
+			person.removeItemFromInventory(sonic.getType(), 1);
 			
 //			Bread bread = new Bread(1);
 //			person.addToInventory(bread);
