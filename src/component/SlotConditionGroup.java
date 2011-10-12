@@ -66,11 +66,14 @@ public class SlotConditionGroup extends Component {
 			button.setDisabled(false);
 			button.setCount(amount);
 			button.setMax(amount);
+
+			button.setHideCount(false);
 			
 			conditionBar.setCondition(condition);
 		} else {
 			button.setText("None");
 			button.setDisabled(true);
+			button.setHideCount(true);
 			
 			conditionBar.setCondition(null);
 		}
