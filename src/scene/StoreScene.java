@@ -249,7 +249,7 @@ public class StoreScene extends Scene {
 		for (int i = 0; i < names.length; i++) {
 			names[i] = buyers.get(i).getName();
 		}
-		SegmentedControl choosePlayer = new SegmentedControl(container, 400, 200, 3, 2, 20, 1, names);
+		SegmentedControl choosePlayer = new SegmentedControl(container, 400, 200, 3, 2, 20, true, 1, names);
 		buyModal = new Modal(container, this, "Choose who will buy this item", choosePlayer, "Buy", "Cancel");
 	}
 	

@@ -14,7 +14,6 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
@@ -40,6 +39,8 @@ public class PartyCreationScene extends Scene {
 	public static final SceneID ID = SceneID.PartyCreation;
 	
 	private static final int PADDING = 20;
+	private static final int INNER_PADDING = 10;
+	
 	private static final int NUM_PEOPLE = 4;
 	private static final int NUM_SKILLS = 3;
 	private static final int newPersonButtonHeight = 100;
@@ -47,32 +48,46 @@ public class PartyCreationScene extends Scene {
 	
 	private Player player;
 	
+	// Array of people
+	private ArrayList<Person> people = new ArrayList<Person>();
+	
+	// Component Listener
 	private ComponentListener componentListener;
+	
+	// Add/delete buttons
 	private Button newPersonButtons[] = new Button[NUM_PEOPLE];
 	private Button personDeleteButtons[] = new Button[NUM_PEOPLE];
+	
+	// Name textfield
 	private TextField personNameTextFields[] = new TextField[NUM_PEOPLE];
 	
+	// Gender segmented control
+	private SegmentedControl personGenderControl[] = new SegmentedControl[NUM_PEOPLE];
+	
+	// Profession buttons and labels
 	private Panel personProfessionPanel[] = new Panel[NUM_PEOPLE];
 	private Button personChangeProfessionButtons[] = new Button[NUM_PEOPLE];
 	private Label personProfessionLabels[] = new Label[NUM_PEOPLE];
 	
+	// Money label
 	private Label personMoneyLabels[] = new Label[NUM_PEOPLE];
 	
+	// Skill buttons and labels
 	private Panel personSkillPanel[] = new Panel[NUM_PEOPLE];
 	private Button personChangeSkillButtons[] = new Button[NUM_PEOPLE];
 	private Label personSkillLabels[][] = new Label[NUM_PEOPLE][NUM_SKILLS];
 	
-	private Button confirmButton;
+	// Segmented Controls
 	private SegmentedControl rationsSegmentedControl, professionSegmentedControl, skillSegmentedControl, paceSegmentedControl;
 	
-	private ArrayList<Person> people = new ArrayList<Person>();
-		
+	// Confirm Button
+	private Button confirmButton;
+	
+	// Modals
 	private Modal professionModal;
 	private Modal skillModal;
 	
-	private Rations rations;
-	private Pace pace;
-	
+	// Current person modying index
 	private int currentPersonModifying;
 	
 	public PartyCreationScene(Player player) {
@@ -94,7 +109,7 @@ public class PartyCreationScene extends Scene {
 		for (int i = 0; i < numOfProfessions; i++) {
 			professionLabels[i] = Person.Profession.values()[i].toString();
 		}
-		professionSegmentedControl = new SegmentedControl(container, 800, 200, 5, 5, 5, 1, professionLabels);
+		professionSegmentedControl = new SegmentedControl(container, 800, 200, 5, 5, 5, true, 1, professionLabels);
 		
 		// Create the skill segemented control
 		int numOfSkills = Person.Skill.values().length - 1;
@@ -102,7 +117,7 @@ public class PartyCreationScene extends Scene {
 		for (int i = 0; i < numOfSkills; i++) {
 			skillLabels[i] = Person.Skill.values()[i].getName();
 		}	
-		skillSegmentedControl = new SegmentedControl(container, 800, 200, 5, 3, 5, 3, skillLabels);
+		skillSegmentedControl = new SegmentedControl(container, 800, 200, 5, 3, 5, true, 3, skillLabels);
 		
 		// Create all the "add person" column
 		for (int i = 0; i < newPersonButtons.length; i++) {
@@ -118,7 +133,12 @@ public class PartyCreationScene extends Scene {
 			personNameTextFields[i].setPlaceholderText(ConstantStore.get("PARTY_CREATION_SCENE", "NAME_PLACEHOLDER"));
 			personNameTextFields[i].addListener(componentListener);
 			personNameTextFields[i].setVisible(false);
-			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+			mainLayer.add(personNameTextFields[i], newPersonButtons[i].getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, INNER_PADDING);
+			
+			personGenderControl[i] = new SegmentedControl(container, buttonWidth, regularButtonHeight, 1, 2, 0, false, 1, "Male", "Female");
+			personGenderControl[i].setVisible(false);
+			personGenderControl[i].addListener(componentListener);
+			mainLayer.add(personGenderControl[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, INNER_PADDING);
 			
 			// Profession
 			personProfessionPanel[i] = new Panel(container, buttonWidth, regularButtonHeight * 2);
@@ -137,13 +157,13 @@ public class PartyCreationScene extends Scene {
 			personProfessionLabels[i].setAlignment(Alignment.Center);
 			personProfessionPanel[i].add(personProfessionLabels[i], personChangeProfessionButtons[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, 0);
 			
-			mainLayer.add(personProfessionPanel[i], personNameTextFields[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			mainLayer.add(personProfessionPanel[i], personGenderControl[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, INNER_PADDING);
 			
 			// Money
 			personMoneyLabels[i] = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("GENERAL", "MONEY_SYMBOL")+"0");
 			personMoneyLabels[i].setAlignment(Alignment.Center);
 			personMoneyLabels[i].setVisible(false);
-			mainLayer.add(personMoneyLabels[i], personProfessionLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			mainLayer.add(personMoneyLabels[i], personProfessionLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, INNER_PADDING);
 			
 			// Skills
 			personSkillPanel[i] = new Panel(container, buttonWidth, regularButtonHeight * 4);
@@ -165,7 +185,7 @@ public class PartyCreationScene extends Scene {
 			}
 			
 			personSkillPanel[i].addAsColumn(personSkillLabels[i], personChangeSkillButtons[i].getPosition(ReferencePoint.BottomLeft), 0, 0, 0);
-			mainLayer.add(personSkillPanel[i], personMoneyLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			mainLayer.add(personSkillPanel[i], personMoneyLabels[i].getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, INNER_PADDING);
 		}
 		
 		// Create delete buttons for all the player columns
@@ -187,7 +207,7 @@ public class PartyCreationScene extends Scene {
 		for (int i = 0; i < numOfRations; i++) {
 			rationLabels[i] = Party.Rations.values()[i].toString();
 		}
-		rationsSegmentedControl = new SegmentedControl(container, buttonWidth * 2 + PADDING, regularButtonHeight, 1, rationLabels.length, 0, 1, rationLabels);
+		rationsSegmentedControl = new SegmentedControl(container, buttonWidth * 2 + PADDING, regularButtonHeight, 1, rationLabels.length, 0, true, 1, rationLabels);
 		mainLayer.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.TopRight), ReferencePoint.TopLeft, PADDING, 0);
 		
 		// Pace Selection
@@ -199,7 +219,7 @@ public class PartyCreationScene extends Scene {
 		for (int i = 0; i < numOfPaces; i++) {
 			paceLabels[i] = Party.Pace.values()[i].toString();
 		}
-		paceSegmentedControl = new SegmentedControl(container, buttonWidth * 2 + PADDING, regularButtonHeight, 1, paceLabels.length, 0, 1, paceLabels);
+		paceSegmentedControl = new SegmentedControl(container, buttonWidth * 2 + PADDING, regularButtonHeight, 1, paceLabels.length, 0, true, 1, paceLabels);
 		mainLayer.add(paceSegmentedControl, rationsSegmentedControl.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);
 		
 		//Confirm Button
@@ -242,6 +262,7 @@ public class PartyCreationScene extends Scene {
 	private void hidePersonColumn(int col) {
 		personDeleteButtons[col].setVisible(false);
 		personNameTextFields[col].setVisible(false);
+		personGenderControl[col].setVisible(false);
 		personProfessionPanel[col].setVisible(false);
 		personMoneyLabels[col].setVisible(false);
 		personSkillPanel[col].setVisible(false);
@@ -265,6 +286,7 @@ public class PartyCreationScene extends Scene {
 	private void clearPersonData(int col) {
 		people.remove(col);
 		
+		personGenderControl[col].setSelection(new int[]{});
 		personNameTextFields[col].clear();
 		personProfessionLabels[col].setText("No Profession");
 		for(int j = 0; j < 3; j++) {
@@ -276,7 +298,6 @@ public class PartyCreationScene extends Scene {
 	 * Process the values from the modal dialog for profession
 	 * @param segmentedControlResults The results of the data entry
 	 */
-	
 	private void resignProfessionModal(int[] segmentedControlResults){
 		personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
 		people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
@@ -337,7 +358,7 @@ public class PartyCreationScene extends Scene {
 		 * Breakout method : newPersonButton triggered event - set text field access accordingly
 		 * @param i The index in the textfield array we are checking
 		 */		
-		private void newPersonButton(int i){
+		private void newPersonButtonActivated(int i){
 			personNameTextFields[i].setVisible(true);			
 			personNameTextFields[i].setFocus(true);
 		}
@@ -368,9 +389,8 @@ public class PartyCreationScene extends Scene {
 						personDeleteButtons[j].setVisible(false);
 					}
 					personDeleteButtons[people.size() - 1].setVisible(true);
-					personProfessionPanel[i].setVisible(true);
 					
-					personChangeProfessionButtons[i].setAcceptingInput(true);
+					personGenderControl[i].setVisible(true);
 				}
 			} else {
 				// Party is full
@@ -382,6 +402,21 @@ public class PartyCreationScene extends Scene {
 			}
 			
 			return 0;
+		}
+		
+		private void personGenderControlActivated(int i) {
+			int[] genderControlSelection = personGenderControl[i].getSelection();
+			
+			if (genderControlSelection.length != 0) {
+				if (genderControlSelection[0] == 0) {
+					people.get(i).setIsMale(true);
+				} else {
+					people.get(i).setIsMale(false);
+				}
+				
+				personProfessionPanel[i].setVisible(true);
+				personChangeProfessionButtons[i].setAcceptingInput(true);
+			}
 		}
 		
 		/**
@@ -479,8 +514,8 @@ public class PartyCreationScene extends Scene {
 			}
 			
 			//set initial game values
-			pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
-			rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
+			Pace pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
+			Rations rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
 			player.setParty(new Party(pace, rations, people));
 			
 			Logger.log("Confirm button pushed", Logger.Level.INFO);
@@ -498,7 +533,9 @@ public class PartyCreationScene extends Scene {
 			while ((i < NUM_PEOPLE) && (retCode == 0)){
 			//for (int i = 0; i < NUM_PEOPLE; i++) {
 				if (source == newPersonButtons[i]) {
-					newPersonButton(i);
+					newPersonButtonActivated(i);
+				} else if (source == personGenderControl[i]) {
+					personGenderControlActivated(i);
 				} else if (source == personNameTextFields[i]) {	
 					retCode = personNameTextFieldActivated(i);
 				} else if (source == personChangeProfessionButtons[i]) {
