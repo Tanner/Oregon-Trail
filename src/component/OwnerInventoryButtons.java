@@ -16,6 +16,11 @@ import org.newdawn.slick.gui.ComponentListener;
 
 import component.Positionable.ReferencePoint;
 
+/**
+ * This class is a group of a {@code Button} and a {@code ConditionBar}.
+ * 
+ * The group is for a speicific {@code Inventoried}.
+ */
 public class OwnerInventoryButtons {
 	private static final int ITEM_BUTTON_WIDTH = 80;
 	private static final int ITEM_BUTTON_HEIGHT = 40;
@@ -30,12 +35,20 @@ public class OwnerInventoryButtons {
 	private ConditionBar weightBar;
 	private Panel panel;
 	
+	/**
+	 * Constructs a new {@code OwnerInventoryButtons} with an {@code Inventoried}.
+	 * @param inventoried Inventoried object for this OwnerInventoryButtons
+	 */
 	public OwnerInventoryButtons(Inventoried inventoried) {
 		this.inventoried = inventoried;
 		
 		itemSlots = new ArrayList<SlotConditionGroup>();
 	}
 	
+	/**
+	 * Creates the panel that holds both the {@code Button} and the {@code ConditionBar}.
+	 * @param container Container
+	 */
 	public void makePanel(GameContainer container) {
 		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 		
@@ -87,6 +100,9 @@ public class OwnerInventoryButtons {
 		panel.add(weightBar, itemPanel.getPosition(ReferencePoint.TopRight), ReferencePoint.BottomRight, 0, -NAME_PADDING);
 	}	
 	
+	/**
+	 * Update the contents of the buttons to be current
+	 */
 	public void updateButtons() {
 		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 
