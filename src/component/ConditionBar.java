@@ -49,6 +49,14 @@ public class ConditionBar extends Component {
 		dangerColor = Color.red;
 	}
 	
+	/**
+	 * Constructs a new {@code ConditionBar} with a {@code GUIContext}, width, height, a {@code Conditioned}, and a {@code Font} for text.
+	 * @param context The GUI context
+	 * @param width The width
+	 * @param height The height
+	 * @param condition The {@code Conditioned} to use
+	 * @param font Font to use for the text overlay
+	 */
 	public ConditionBar(GUIContext context, int width, int height, Condition condition, Font font) {
 		this(context, width, height, condition);
 				
@@ -104,6 +112,9 @@ public class ConditionBar extends Component {
 		updateLabelText();
 	}
 	
+	/**
+	 * Update the label text with whatever condition value is present.
+	 */
 	public void updateLabelText() {
 		if (condition != null) {
 			double percentage = condition.getPercentage();
@@ -146,6 +157,13 @@ public class ConditionBar extends Component {
 	private class ConditionPanel extends Panel {
 		private double percentage;
 		
+		/**
+		 * Constructs a new ConditionPanel with a {@code GUIContext}, width, height, and {@code Color}.
+		 * @param context Container
+		 * @param width Width
+		 * @param height Height
+		 * @param color Background color
+		 */
 		public ConditionPanel(GUIContext context, int width, int height, Color color) {
 			super(context, width, height, color);
 			
@@ -164,6 +182,10 @@ public class ConditionBar extends Component {
 			g.fillRect(getX(), getY(), (int)(getWidth() * percentage), getHeight());
 		}
 		
+		/**
+		 * Sets the percentage of the bar.
+		 * @param percentage New percentage
+		 */
 		public void setPercentage(double percentage) {
 			this.percentage = percentage;
 		}
