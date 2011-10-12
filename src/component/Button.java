@@ -201,7 +201,6 @@ public class Button extends Component implements Disableable {
 		return disabled;
 	}
 	
-	
 	/**
 	 * Return the button's active status.
 	 * @return If the button is active or not
@@ -215,7 +214,12 @@ public class Button extends Component implements Disableable {
 	 * @param active New active state
 	 */
 	public void setActive(boolean active) {
+		if (isDisabled()) {
+			return;
+		}
+		
 		this.active = active;
+		
 		if (active) {
 			setBackgroundColor(buttonActiveColor);
 			setBevel(BevelType.In);
