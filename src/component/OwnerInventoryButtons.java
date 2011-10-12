@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import model.Condition;
 import model.Inventoried;
 import model.Inventory;
 import model.Item;
@@ -37,7 +38,7 @@ public class OwnerInventoryButtons {
 	}
 	
 	public Panel getPanel(GameContainer container) {
-		ArrayList<PriorityQueue<Item>> slots = inventoried.getInventory().getPopulatedSlots();
+		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * Person.MAX_INVENTORY_SIZE) - PADDING;
@@ -48,14 +49,6 @@ public class OwnerInventoryButtons {
 		
 		Positionable lastPositionReference = itemPanel;
 		for (int i = 0; i < maxInventorySize; i++) {
-			PriorityQueue<Item> items;
-			
-			if (i < slots.size()) {
-				items = slots.get(i);
-			} else {
-				items = null;
-			}
-			
 			Vector2f position = lastPositionReference.getPosition(ReferencePoint.TopRight);
 			int padding = PADDING;
 			
@@ -66,7 +59,15 @@ public class OwnerInventoryButtons {
 				padding = 0;
 			}
 			
-			itemSlots.add(i, new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font, i, items));
+			SlotConditionGroup slotConditionGroup = new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font, i);
+			
+			String name = slots.get(i).getName();
+			int amount = inventoried.getInventory().getNumberOf(slots.get(i));
+			Condition condition = null;
+			
+			slotConditionGroup.changeContents(name, amount, condition);
+			
+			itemSlots.add(i, slotConditionGroup);
 			itemPanel.add(itemSlots.get(i), position, ReferencePoint.TopLeft, padding, 0);
 			
 			lastPositionReference = itemSlots.get(i);
