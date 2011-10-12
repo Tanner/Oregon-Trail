@@ -152,7 +152,9 @@ public class TextField extends Component implements Disableable {
 	public void setFocus(boolean focus) {
 		if (!focus && hasFocus()) {
 			if (isEmpty()) {
-				label.setText(placeholderText);
+				if (placeholderText != null) {
+					label.setText(placeholderText);
+				}
 			}
 			
 			notifyListeners();
