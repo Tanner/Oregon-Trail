@@ -43,6 +43,9 @@ public class PartyInventoryScene extends Scene {
 	private static final int BUTTON_HEIGHT = 40;
 	private static final int BUTTON_WIDTH = 200;
 	
+	private static final int BIN_BUTTON_HEIGHT = 100;
+	private static final int BIN_BUTTON_WIDTH = BUTTON_WIDTH;
+	
 	private Party party;
 	
 	private OwnerInventoryButtons playerInventoryButtons[];
@@ -77,8 +80,9 @@ public class PartyInventoryScene extends Scene {
 			
 			playerInventoryButtons[i] = new OwnerInventoryButtons(person);
 			playerInventoryButtons[i].setFont(fieldFont);
+			playerInventoryButtons[i].makePanel(container);
 			
-			personPanels[i] = playerInventoryButtons[i].getPanel(container);
+			personPanels[i] = playerInventoryButtons[i].getPanel();
 		}
 		
 		int panelWidth = ((OwnerInventoryButtons.getButtonWidth() + PADDING) * maxInventorySize) - PADDING;
@@ -95,7 +99,8 @@ public class PartyInventoryScene extends Scene {
 
 		vehicleInventoryButtons = new OwnerInventoryButtons(vehicle);
 		vehicleInventoryButtons.setFont(fieldFont);
-		mainLayer.add(vehicleInventoryButtons.getPanel(container), locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+		vehicleInventoryButtons.makePanel(container);
+		mainLayer.add(vehicleInventoryButtons.getPanel(), locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		
 		// Close button
 		closeButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CLOSE")));
@@ -121,9 +126,13 @@ public class PartyInventoryScene extends Scene {
 		}
 		
 		// Bin button
-		binButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, BUTTON_WIDTH, fieldFont, Color.white, ""));
+		binButton = new Button(container, BIN_BUTTON_WIDTH, BIN_BUTTON_HEIGHT, new Label(container, BUTTON_WIDTH, fieldFont, Color.white, ""));
 		binButton.addListener(new ButtonListener());
-//		mainLayer.add(binButton, mainLayer.getPosition(ReferencePoint.Bottom))
+		
+		int xOffset = ((container.getWidth() - 2 * PADDING) / 2) - (BIN_BUTTON_WIDTH / 2);
+		int yOffset = (int)((vehicleInventoryButtons.getPanel().getPosition(ReferencePoint.BottomLeft).y - closeButton.getPosition(ReferencePoint.TopLeft).y) / 2) + (BIN_BUTTON_HEIGHT / 2); 
+		
+		mainLayer.add(binButton, closeButton.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, xOffset, yOffset);
 		
 		backgroundLayer.add(new Panel(container, new Color(0x3b2d59)));
 	}
