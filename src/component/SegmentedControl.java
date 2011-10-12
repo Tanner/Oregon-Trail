@@ -99,8 +99,8 @@ public class SegmentedControl extends Component {
 	 * Update all buttons to their current state.
 	 */
 	public void updateButtons() {
-		for (int i = 0; i < STATES; i++) {
-			if (permanent[i] || selection[i] || i == singleSelection) {
+		for (int i = 0; i < buttons.length; i++) {
+			if ((permanent[i] || selection[i] || i == singleSelection)) {
 				buttons[i].setActive(true);
 			} else {
 				buttons[i].setActive(false);
@@ -113,7 +113,7 @@ public class SegmentedControl extends Component {
 	 * @param selection An array of selections to set, with the values of the array corresponding to the index of the button
 	 */
 	public void setSelection(int[] selection) {
-		if ( selection.length == 1) {
+		if (selection.length == 1) {
 			singleSelection = selection[0];
 		} else {
 			for (int i : selection) {
@@ -138,6 +138,13 @@ public class SegmentedControl extends Component {
 				this.permanent[i] = true;
 			}
 			setSelection(permanent);
+		}
+		updateButtons();
+	}
+	
+	public void setDisabled(int[] disabled) {
+		for (int i : disabled) {
+			buttons[i].setDisabled(true);
 		}
 		updateButtons();
 	}
