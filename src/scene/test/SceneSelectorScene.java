@@ -15,10 +15,12 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.Modal;
 import component.Panel;
 import component.Button;
 import component.Label;
 import component.Positionable;
+import core.ConstantStore;
 import core.FontManager;
 import core.GameDirector;
 
@@ -102,11 +104,23 @@ public class SceneSelectorScene extends Scene {
 			} else if (component == buttons.get(1)) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PartyCreation, SceneSelectorScene.this);
 			} else if (component == buttons.get(2)) {
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;
+				}
 				GameDirector.sharedSceneListener().requestScene(SceneID.Town, SceneSelectorScene.this);
 			} else if (component == buttons.get(3)) {
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;
+				}
 				GameDirector.sharedSceneListener().requestScene(SceneID.Store, SceneSelectorScene.this);
 			} else if (component == buttons.get(4)) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, SceneSelectorScene.this);
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;
+				}
 			} else if (component == buttons.get(5)) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.ComponentTest, SceneSelectorScene.this);
 			} else if (component == buttons.get(6)) {
@@ -114,6 +128,10 @@ public class SceneSelectorScene extends Scene {
 			} else if (component == buttons.get(7)) {
 				player.setParty(makeRandomParty());
 			}
+		}
+		
+		private void warnBecauseNoParty() {
+			modalLayer.add(new Modal(container, SceneSelectorScene.this, ConstantStore.get("SCENE_SELECTOR_SCENE", "ERR_NO_PARTY_FOR_SCENE"), ConstantStore.get("GENERAL", "OK")));
 		}
 	}
 	

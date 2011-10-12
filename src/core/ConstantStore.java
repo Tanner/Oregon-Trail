@@ -27,6 +27,11 @@ public final class ConstantStore {
 		mainMenu.put("PRESS_ENTER", "Press Enter to Start");
 		literalMap.put("MAIN_MENU", mainMenu);
 		
+		// Scene Selector Scene
+		Map<String, String> sceneSelectorScene = new HashMap<String, String>();
+		sceneSelectorScene.put("ERR_NO_PARTY_FOR_SCENE", "Error - A party is required for this scene.");
+		literalMap.put("SCENE_SELECTOR_SCENE", sceneSelectorScene);
+		
 		// Player Creation Scene
 		Map<String, String> partyCreationScene = new HashMap<String, String>();
 		partyCreationScene.put("NEW_PLAYER", "New Player");
