@@ -8,6 +8,7 @@ import model.Condition;
 import model.Inventoried;
 import model.Inventory;
 import model.Item;
+import model.Item.ITEM_TYPE;
 import model.Person;
 
 import org.newdawn.slick.Color;
@@ -118,7 +119,18 @@ public class OwnerInventoryButtons {
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
-			Logger.log("Item in this button: "+((SlotConditionGroup) component).getItem(), Logger.Level.INFO);
+			SlotConditionGroup slotConditionGroup = (SlotConditionGroup)component;
+			ITEM_TYPE item = slotConditionGroup.getItem();
+			
+			Logger.log("Item in this button: "+item, Logger.Level.INFO);
+			
+			inventoried.removeItemFromInventory(item, 1);
+			
+			String name = item.getName();
+			int amount = inventoried.getInventory().getNumberOf(item);
+			Condition condition = inventoried.getInventory().getConditionOf(item);
+			
+			slotConditionGroup.changeContents(item, name, amount, condition);
 		}
 	}
 }
