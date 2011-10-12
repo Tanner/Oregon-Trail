@@ -2,6 +2,7 @@ package component;
 
 import java.util.PriorityQueue;
 
+import model.Condition;
 import model.Item;
 
 import org.newdawn.slick.Color;
@@ -24,7 +25,7 @@ public class SlotConditionGroup extends Component {
 	
 	private int slotNumber;
 	
-	public SlotConditionGroup(GUIContext container, int width, int height, Font font, int slotNumber, PriorityQueue<Item> items) {
+	public SlotConditionGroup(GUIContext container, int width, int height, Font font, int slotNumber) {
 		super(container, width, height);
 		
 		this.slotNumber = slotNumber;
@@ -34,8 +35,6 @@ public class SlotConditionGroup extends Component {
 		
 		button = new CountingButton(container, width, ITEM_BUTTON_HEIGHT, label);
 		conditionBar = new ConditionBar(container, width, ITEM_CONDITION_BAR_HEIGHT, null);
-		
-		changeContents(items);
 		
 		button.setCountUpOnLeftClick(false);
 		button.addListener(new ButtonListener());
@@ -59,16 +58,14 @@ public class SlotConditionGroup extends Component {
 		return slotNumber;
 	}
 	
-	public void changeContents(PriorityQueue<Item> items) {
-		if (items != null && items.size() > 1) {
-			Item topItem = items.peek();
-			
-			button.setText(topItem.getName());
+	public void changeContents(String name, int amount, Condition condition) {
+		if (name != null && condition != null) {
+			button.setText(name);
 			button.setDisabled(false);
-			button.setCount(items.size());
-			button.setMax(items.size());
+			button.setCount(amount);
+			button.setMax(amount);
 			
-			conditionBar.setCondition(topItem.getStatus());
+			conditionBar.setCondition(condition);
 		} else {
 			button.setText("None");
 			button.setDisabled(true);
