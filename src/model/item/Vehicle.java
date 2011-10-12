@@ -27,7 +27,9 @@ public abstract class Vehicle extends Item implements Inventoried{
 	 * @param weight how much this vehicle is currently carrying
 	 * @param cost how much this vehicle costs purchase  
 	 */
-	public Vehicle(String name, String description, Condition status, double maxWeight, double weight, int cost, ConstantStore.ITEM_TYPES type) {
+	public Vehicle(String name, String description, Condition status, 
+			double maxWeight, double weight,
+			int cost, Item.ITEM_TYPES type) {
 	super(name, description, status, weight, cost, type);
 		this.MAX_INVENTORY_WEIGHT = maxWeight;
 		this.status = status;

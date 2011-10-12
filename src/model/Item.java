@@ -16,7 +16,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	private double weight; //This is the individual unit weight
 	private boolean isStackable = true;
 	private int baseCost;
-	private ConstantStore.ITEM_TYPES type;
+	private ITEM_TYPES type;
 	/**
 	 * 
 	 * Creates a new item with a name, description, status, and weight.
@@ -28,7 +28,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @param baseCost The base cost of the item
 	 * @param type The type of the item
 	 */
-	public Item(String name, String description, Condition status, double weight, int baseCost, ConstantStore.ITEM_TYPES type) {
+	public Item(String name, String description, Condition status, double weight, int baseCost, ITEM_TYPES type) {
 		this.name = name;
 		this.description = description;
 		this.status = status;
@@ -129,5 +129,16 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	
 	public int getTypeIndex() {
 		return type.ordinal();
+	}
+	
+	public enum ITEM_TYPES {
+		APPLE,
+		BREAD,
+		BULLET,
+		GUN,
+		MEAT,
+		SONIC,
+		WAGON,
+		WHEEL,
 	}
 }

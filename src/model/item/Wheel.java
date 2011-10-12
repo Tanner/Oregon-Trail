@@ -14,6 +14,6 @@ public class Wheel extends Item {
 	public Wheel() {
 		super(ConstantStore.get("ITEMS", "WHEEL_NAME"), 
 			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"), new Condition(100),
-			  5, 75, ConstantStore.ITEM_TYPES.WHEEL);
+			  5, 75, Item.ITEM_TYPES.WHEEL);
 	}
 }

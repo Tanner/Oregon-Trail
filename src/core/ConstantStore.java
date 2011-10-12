@@ -17,17 +17,6 @@ public final class ConstantStore {
 	 */
 	public static final Map<String, Map<String, String>> LITERALS;
 	public static final Map<String, Color> COLORS;
-	//USED AS INDEX IN ARRAYLIST
-	public static enum ITEM_TYPES {
-		APPLE,
-		BREAD,
-		BULLET,
-		GUN,
-		MEAT,
-		SONIC,
-		WAGON,
-		WHEEL,
-	}
 	
 	static {
 		Map<String, Map<String, String>> literalMap = new HashMap<String, Map<String, String>>();

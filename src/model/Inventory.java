@@ -21,8 +21,8 @@ public class Inventory {
 	public Inventory(int maxSize, double maxWeight) {
 		this.MAX_SIZE = maxSize;
 		this.MAX_WEIGHT = maxWeight;
-		this.slots = new ArrayList<PriorityQueue<Item>>(ConstantStore.ITEM_TYPES.values().length);
-		for(int i = 0; i < ConstantStore.ITEM_TYPES.values().length; i++) {
+		this.slots = new ArrayList<PriorityQueue<Item>>(Item.ITEM_TYPES.values().length);
+		for(int i = 0; i < Item.ITEM_TYPES.values().length; i++) {
 			slots.add(new PriorityQueue<Item>());
 		}
 		this.currentSize = 0;
@@ -37,10 +37,24 @@ public class Inventory {
 	}
 	
 	/**
-	 * Returns the slots in inventory.
+	 * Returns the slots in inventory with items.
 	 * @return The slots in the inventory.
 	 */
-	public ArrayList<PriorityQueue<Item>> getSlots() {
+	public ArrayList<PriorityQueue<Item>> getPopulatedSlots() {
+		ArrayList<PriorityQueue<Item>> popSlots = new ArrayList<PriorityQueue<Item>>();
+		for(PriorityQueue<Item> slot : slots) {
+			if (slot.size() != 0) {
+				popSlots.add(slot);
+			}
+		}
+		return popSlots;
+	}
+	
+	/**
+	 * Returns all slots in inventory.
+	 * @return The slots in the inventory.
+	 */
+	public ArrayList<PriorityQueue<Item>> getAllSlots() {
 		return slots;
 	}
 	
