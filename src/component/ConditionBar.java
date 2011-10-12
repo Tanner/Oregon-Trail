@@ -44,7 +44,23 @@ public class ConditionBar extends Component {
 		
 		setDisableText(true);
 		
-//		setBackgroundColor(Color.gray);
+		setBackgroundColor(Color.gray);
+		
+		double percentage;
+		if (condition == null) {
+			percentage = 0;
+		} else {
+			percentage = condition.getPercentage();
+		}
+		Color barColor = normalColor;
+		if (percentage < dangerLevel) {
+			barColor = dangerColor;
+		} else if (percentage < warningLevel) {
+			barColor = warningColor;
+		}
+		
+		Panel barPanel = new Panel(context, (int)(getWidth() * Math.min(percentage, 1)), getHeight(), barColor);
+		this.add(barPanel, getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft);
 	}
 	
 	public ConditionBar(GUIContext context, int width, int height, Condition condition, Font font) {
@@ -54,6 +70,7 @@ public class ConditionBar extends Component {
 		if (condition != null) {
 			labelText = (condition.getPercentage() * 100)+"%";
 		}
+		
 		label = new Label(context, getWidth(), getHeight(), font, Color.white, labelText);
 		label.setAlignment(Alignment.Center);
 		add(label, getPosition(ReferencePoint.CenterCenter), ReferencePoint.CenterCenter, 0, 0);
@@ -66,16 +83,6 @@ public class ConditionBar extends Component {
 		}
 		
 		double percentage = condition.getPercentage();
-		Color barColor = normalColor;
-		if (percentage < dangerLevel) {
-			barColor = dangerColor;
-		} else if (percentage < warningLevel) {
-			barColor = warningColor;
-		}
-		
-		g.setColor(barColor);
-		g.fillRect(getX(), getY(), (float)(getWidth() * percentage), getHeight());
-		
 		if (label != null && !disableText) {
 			label.setText((percentage * 100)+"%");
 		}
