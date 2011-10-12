@@ -138,6 +138,10 @@ public class Inventory {
 		}
 		return removedItems;
 	}
+	
+	public ArrayList<Item> removeItem(Item.ITEM_TYPE itemType, int quantity) {
+		return removeItem(itemType.ordinal(), quantity);
+	}
 	/**
 	 * Checks to see if the current inventory is full.
 	 * @return True if the inventory is full, false otherwise.
@@ -148,5 +152,9 @@ public class Inventory {
 	
 	public int getNumberOf(Item.ITEM_TYPE itemType) {
 		return slots.get(itemType.ordinal()).size();
+	}
+	
+	public Condition getConditionOf(Item.ITEM_TYPE itemType) {
+		return slots.get(itemType.ordinal()).peek().getStatus();
 	}
 }
