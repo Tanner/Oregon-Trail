@@ -66,7 +66,8 @@ public class OwnerInventoryButtons {
 				int amount = inventoried.getInventory().getNumberOf(slots.get(i));
 				Condition condition = inventoried.getInventory().getConditionOf(slots.get(i));
 				
-				slotConditionGroup.changeContents(name, amount, condition);
+				slotConditionGroup.changeContents(slots.get(i), name, amount, condition);
+				slotConditionGroup.addListener(new ButtonListener());
 			}
 			
 			itemSlots.add(i, slotConditionGroup);

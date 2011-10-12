@@ -4,6 +4,7 @@ import java.util.PriorityQueue;
 
 import model.Condition;
 import model.Item;
+import model.Item.ITEM_TYPE;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -24,6 +25,7 @@ public class SlotConditionGroup extends Component {
 	private ConditionBar conditionBar;
 	
 	private int pocketNumber;
+	private ITEM_TYPE item;
 	
 	public SlotConditionGroup(GUIContext container, int width, int height, Font font, int pocketNumber) {
 		super(container, width, height);
@@ -44,7 +46,7 @@ public class SlotConditionGroup extends Component {
 		add(button, this.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 		add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, padding);
 		
-		changeContents(null, 0, null);
+		changeContents(ITEM_TYPE.APPLE, null, 0, null);
 	}
 
 	@Override
@@ -60,7 +62,13 @@ public class SlotConditionGroup extends Component {
 		return pocketNumber;
 	}
 	
-	public void changeContents(String name, int amount, Condition condition) {
+	public ITEM_TYPE getItem() {
+		return item;
+	}
+	
+	public void changeContents(ITEM_TYPE item, String name, int amount, Condition condition) {
+		this.item = item;
+		
 		if (name != null) {
 			button.setText(name);
 			button.setDisabled(false);
