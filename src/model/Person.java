@@ -374,6 +374,11 @@ public class Person implements Conditioned, Inventoried{
 	 * @return True if possible.
 	 */
 	public boolean canGetItem(Item item, int numberOf) {
-		return inventory.canAddItems(item, numberOf);
+		return inventory.canAddItems(item.getType(), numberOf);
+	}
+
+	@Override
+	public int getMaxSize() {
+		return MAX_INVENTORY_SIZE;
 	}
 }

@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-import core.ConstantStore;
 import core.Logger;
 
 /**
@@ -21,8 +20,8 @@ public class Inventory {
 	public Inventory(int maxSize, double maxWeight) {
 		this.MAX_SIZE = maxSize;
 		this.MAX_WEIGHT = maxWeight;
-		this.slots = new ArrayList<PriorityQueue<Item>>(Item.ITEM_TYPES.values().length);
-		for(int i = 0; i < Item.ITEM_TYPES.values().length; i++) {
+		this.slots = new ArrayList<PriorityQueue<Item>>(Item.ITEM_TYPE.values().length);
+		for(int i = 0; i < Item.ITEM_TYPE.values().length; i++) {
 			slots.add(new PriorityQueue<Item>());
 		}
 		this.currentSize = 0;
@@ -40,22 +39,14 @@ public class Inventory {
 	 * Returns the slots in inventory with items.
 	 * @return The slots in the inventory.
 	 */
-	public ArrayList<PriorityQueue<Item>> getPopulatedSlots() {
-		ArrayList<PriorityQueue<Item>> popSlots = new ArrayList<PriorityQueue<Item>>();
-		for(PriorityQueue<Item> slot : slots) {
-			if (slot.size() != 0) {
-				popSlots.add(slot);
+	public ArrayList<Item.ITEM_TYPE> getPopulatedSlots() {
+		ArrayList<Item.ITEM_TYPE> popSlots = new ArrayList<Item.ITEM_TYPE>();
+		for(Item.ITEM_TYPE itemType : Item.ITEM_TYPE.values()) {
+			if (getNumberOf(itemType) != 0) {
+				popSlots.add(itemType);
 			}
 		}
 		return popSlots;
-	}
-	
-	/**
-	 * Returns all slots in inventory.
-	 * @return The slots in the inventory.
-	 */
-	public ArrayList<PriorityQueue<Item>> getAllSlots() {
-		return slots;
 	}
 	
 	/**
@@ -85,17 +76,16 @@ public class Inventory {
 	 * @param itemsToAdd The list of items to add.
 	 * @return True if successful
 	 */
-	public boolean canAddItems(Item item, int numberOf) {
+	public boolean canAddItems(Item.ITEM_TYPE itemType, int numberOf) {
 		if(numberOf == 0) {
 			return false;
 		}
 		
-		int itemType = item.getTypeIndex();
-		double weight = item.getWeight() * numberOf;
+		double weight = itemType.getWeight() * numberOf;
 		if(getWeight() + weight > MAX_WEIGHT) {
 			Logger.log("Not enough weight capacity", Logger.Level.INFO);
 			return false;
-		} else if (currentSize == MAX_SIZE && slots.get(itemType).size() == 0) {
+		} else if (currentSize == MAX_SIZE && getNumberOf(itemType) == 0) {
 			Logger.log("Not enough slots open", Logger.Level.INFO);
 			return false;
 		} else {
@@ -111,10 +101,10 @@ public class Inventory {
 		if(itemsToAdd.size() == 0) {
 			return false;
 		}
-		int itemType = itemsToAdd.get(0).getTypeIndex();		
-		if(canAddItems(itemsToAdd.get(0), itemsToAdd.size())) {
+		Item.ITEM_TYPE itemType = itemsToAdd.get(0).getType();		
+		if(canAddItems(itemType, itemsToAdd.size())) {
 			for(Item item : itemsToAdd) {
-				slots.get(itemType).add(item);
+				slots.get(itemType.ordinal()).add(item);
 				Logger.log(item.getName() + " added.", Logger.Level.INFO);
 			}
 			currentSize = 0;
@@ -154,5 +144,9 @@ public class Inventory {
 	 */
 	public boolean isFull() {
 		return (slots.size() == MAX_SIZE);
+	}
+	
+	public int getNumberOf(Item.ITEM_TYPE itemType) {
+		return slots.get(itemType.ordinal()).size();
 	}
 }

@@ -10,4 +10,5 @@ public interface Inventoried {
 	public boolean canGetItem(Item item, int numberOf);
 	public String getName();
 	public Inventory getInventory();
+	public int getMaxSize();
 }

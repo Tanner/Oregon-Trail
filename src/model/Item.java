@@ -16,7 +16,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	private double weight; //This is the individual unit weight
 	private boolean isStackable = true;
 	private int baseCost;
-	private ITEM_TYPES type;
+	private ITEM_TYPE type;
 	/**
 	 * 
 	 * Creates a new item with a name, description, status, and weight.
@@ -28,7 +28,8 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @param baseCost The base cost of the item
 	 * @param type The type of the item
 	 */
-	public Item(String name, String description, Condition status, double weight, int baseCost, ITEM_TYPES type) {
+	public Item(String name, String description, Condition status, 
+			double weight, int baseCost, ITEM_TYPE type) {
 		this.name = name;
 		this.description = description;
 		this.status = status;
@@ -127,18 +128,72 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 			return 1;
 	}
 	
-	public int getTypeIndex() {
-		return type.ordinal();
+	public ITEM_TYPE getType() {
+		return type;
 	}
 	
-	public enum ITEM_TYPES {
-		APPLE,
-		BREAD,
-		BULLET,
-		GUN,
-		MEAT,
-		SONIC,
-		WAGON,
-		WHEEL,
+	public enum ITEM_TYPE {
+		APPLE (ConstantStore.get("ITEMS", "APPLE_NAME"), 
+			  ConstantStore.get("ITEMS", "APPLE_DESCRIPTION"), 
+			  ConstantStore.get("ITEMS", "APPLE_COST"), 
+			  ConstantStore.get("ITEMS", "APPLE_WEIGHT")),
+		BREAD (ConstantStore.get("ITEMS", "BREAD_NAME"), 
+			  ConstantStore.get("ITEMS", "BREAD_DESCRIPTION"),
+			  ConstantStore.get("ITEMS", "BREAD_COST"),
+			  ConstantStore.get("ITEMS", "BREAD_WEIGHT")),
+		BULLET (ConstantStore.get("ITEMS", "BULLET_NAME"), 
+			  ConstantStore.get("ITEMS", "BULLET_DESCRIPTION"),
+			  ConstantStore.get("ITEMS", "BULLET_COST"),
+			  ConstantStore.get("ITEMS", "BULLET_WEIGHT")),
+		GUN (ConstantStore.get("ITEMS", "GUN_NAME"), 
+			ConstantStore.get("ITEMS", "GUN_DESCRIPTION"),
+			ConstantStore.get("ITEMS", "GUN_COST"),
+			ConstantStore.get("ITEMS", "GUN_WEIGHT")),
+		MEAT (ConstantStore.get("ITEMS", "MEAT_NAME"), 
+			  ConstantStore.get("ITEMS", "MEAT_DESCRIPTION"),
+			  ConstantStore.get("ITEMS", "MEAT_COST"),
+			  ConstantStore.get("ITEMS", "MEAT_WEIGHT")),
+		SONIC (ConstantStore.get("ITEMS", "SONIC_NAME"), 
+			  ConstantStore.get("ITEMS", "SONIC_DESCRIPTION"),
+			  ConstantStore.get("ITEMS", "SONIC_COST"),
+			  ConstantStore.get("ITEMS", "SONIC_WEIGHT")),
+		WAGON (ConstantStore.get("ITEMS", "WAGON_NAME"), 
+			  ConstantStore.get("ITEMS", "WAGON_DESCRIPTION"),
+			  ConstantStore.get("ITEMS", "WAGON_COST"),
+			  ConstantStore.get("ITEMS", "WAGON_WEIGHT")),
+		WHEEL (ConstantStore.get("ITEMS", "WHEEL_NAME"), 
+			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"),
+			  ConstantStore.get("ITEMS", "WHEEL_COST"),
+			  ConstantStore.get("ITEMS", "WHEEL_WEIGHT"));
+		
+		private final String name;
+		private final String description;
+		private final int cost;
+		private final double weight;
+		
+		private ITEM_TYPE (String name, String description, String cost, String weight) {
+			this.name = name;
+			this.description = description;
+			this.cost = Integer.parseInt(cost);
+			this.weight = Double.parseDouble(weight);
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public String getDescription() {
+			return description;
+		}
+		
+		public int getCost() {
+			return cost;
+		}
+		
+		public double getWeight() {
+			return weight;
+		}
 	}
+	
+	
 }
