@@ -8,6 +8,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
+import component.Label.Alignment;
+
 /**
  * A bar that represents the status of a {@code Conditioned} object as a progress bar.
  */
@@ -20,10 +22,9 @@ public class ConditionBar extends Component {
 	private Color normalColor;
 	private Color warningColor;
 	private Color dangerColor;
-	private Color backgroundColor;
 	
 	private boolean disableText;
-	private Font font;
+	private Label label;
 	
 	/**
 	 * Constructs a new {@code ConditionBar} with a {@code GUIContext}, width, height, and a {@code Conditioned}.
@@ -43,9 +44,19 @@ public class ConditionBar extends Component {
 		
 		setDisableText(true);
 		
-		backgroundColor = Color.gray;
+//		setBackgroundColor(Color.gray);
+	}
+	
+	public ConditionBar(GUIContext context, int width, int height, Condition condition, Font font) {
+		this(context, width, height, condition);
 		
-		setBackgroundColor(backgroundColor);
+		String labelText = "";
+		if (condition != null) {
+			labelText = (condition.getPercentage() * 100)+"%";
+		}
+		label = new Label(context, getWidth(), getHeight(), font, Color.white, labelText);
+		label.setAlignment(Alignment.Center);
+		add(label, getPosition(ReferencePoint.CenterCenter), ReferencePoint.CenterCenter, 0, 0);
 	}
 	
 	@Override
@@ -53,8 +64,6 @@ public class ConditionBar extends Component {
 		if (!isVisible() || condition == null) {
 			return;
 		}
-		
-		super.render(context, g);
 		
 		double percentage = condition.getPercentage();
 		Color barColor = normalColor;
@@ -67,8 +76,11 @@ public class ConditionBar extends Component {
 		g.setColor(barColor);
 		g.fillRect(getX(), getY(), (float)(getWidth() * percentage), getHeight());
 		
-		Label label = new Label(context, getHeight(), getWidth(), font, Color.white, (percentage * 100)+"%");
-		add(label, getPosition(ReferencePoint.CenterCenter), ReferencePoint.CenterCenter, 0, getHeight() / 2);
+		if (label != null && !disableText) {
+			label.setText((percentage * 100)+"%");
+		}
+		
+		super.render(context, g);
 	}
 
 	/**
@@ -85,22 +97,6 @@ public class ConditionBar extends Component {
 	 */
 	public void setCondition(Condition condition) {
 		this.condition = condition;
-	}
-
-	/**
-	 * Get the background color.
-	 * @return Background color
-	 */
-	public Color getBackgroundColor() {
-		return backgroundColor;
-	}
-
-	/**
-	 * Set a new background color.
-	 * @param backgroundColor New background color
-	 */
-	public void setBackgroundColor(Color backgroundColor) {
-		this.backgroundColor = backgroundColor;
 	}
 
 	/**
@@ -124,6 +120,6 @@ public class ConditionBar extends Component {
 	 * @param font New font
 	 */
 	public void setFont(Font font) {
-		this.font = font;
+		label.setFont(font);
 	}
 }
