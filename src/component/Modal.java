@@ -46,7 +46,7 @@ public class Modal extends Component {
 		this.listener = listener;
 				
 		int messageWidth = 700;
-		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);		
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);		
 		this.messageLabel = new Label(container, messageWidth, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.Center);
 		
@@ -84,7 +84,7 @@ public class Modal extends Component {
 		this.segmentedControl = segmentedControl;
 				
 		int messageWidth = 700;
-		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);		
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);		
 		messageLabel = new Label(container, messageWidth, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.Center);
 		

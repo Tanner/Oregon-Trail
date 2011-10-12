@@ -92,7 +92,7 @@ public class SceneDirector extends StateBasedGame {
 		scenes.add(mainMenu);
 		addState(mainMenu);
 		
-		GameDirector.sharedSceneDirectorDelegate().sceneDirectorReady();
+		GameDirector.sharedSceneDirectorListener().sceneDirectorReady();
 	}
 	
 	@Override
@@ -125,7 +125,7 @@ public class SceneDirector extends StateBasedGame {
 //		}
 		
 		if (c == '+') {
-			GameDirector.sharedSceneDelegate().showSceneSelector();
+			GameDirector.sharedSceneListener().showSceneSelector();
 		} else if (c == '-') {
 			GameDirector.DEBUG_MODE = !GameDirector.DEBUG_MODE;
 		}
