@@ -2,6 +2,7 @@ package scene;
 
 import java.util.ArrayList;
 
+import model.Inventory;
 import model.Party;
 import model.Person;
 import model.item.Vehicle;
@@ -40,6 +41,7 @@ public class PartyInventoryScene extends Scene {
 	private static final int BIN_BUTTON_WIDTH = BUTTON_WIDTH;
 	
 	private Party party;
+	private Inventory binInventory;
 	
 	private OwnerInventoryButtons playerInventoryButtons[];
 	private OwnerInventoryButtons vehicleInventoryButtons;
@@ -128,6 +130,8 @@ public class PartyInventoryScene extends Scene {
 		int yOffset = (int)((personPanels[personPanels.length - 1].getPosition(ReferencePoint.BottomLeft).y + PADDING + BUTTON_HEIGHT - closeButton.getPosition(ReferencePoint.TopLeft).y) / 2) + (BIN_BUTTON_HEIGHT / 2); 
 		
 		mainLayer.add(binButton, closeButton.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, xOffset, yOffset);
+		
+		binInventory = new Inventory(1, Double.MAX_VALUE);
 		
 		backgroundLayer.add(new Panel(container, new Color(0x3b2d59)));
 	}
