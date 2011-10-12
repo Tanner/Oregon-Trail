@@ -94,11 +94,10 @@ public class OwnerInventoryButtons {
 		panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
 		
-		Condition weightCondition = new Condition(0, (int)inventoried.getMaxWeight(), (int)inventoried.getWeight());
-		weightBar = new ConditionBar(container, ITEM_BUTTON_WIDTH * 2 + PADDING, nameLabel.getHeight(), weightCondition, font);
+		weightBar = new ConditionBar(container, ITEM_BUTTON_WIDTH * 2 + PADDING, nameLabel.getHeight(), getWeightCondition(), font);
 		weightBar.setDisableText(false);
 		panel.add(weightBar, itemPanel.getPosition(ReferencePoint.TopRight), ReferencePoint.BottomRight, 0, -NAME_PADDING);
-	}	
+	}
 	
 	/**
 	 * Update the contents of the buttons to be current
@@ -151,6 +150,15 @@ public class OwnerInventoryButtons {
 		this.font = font;
 	}
 	
+	/**
+	 * Get the weight condition for the weight condition bar.
+	 * @return Condition that represents the weight
+	 */
+	public Condition getWeightCondition() {
+		int weightLeft = (int)(inventoried.getMaxWeight() - inventoried.getWeight());
+		return new Condition(0, (int)inventoried.getMaxWeight(), weightLeft);
+	}
+	
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
@@ -169,8 +177,7 @@ public class OwnerInventoryButtons {
 				updateButtons();
 			}
 			
-			Condition weightCondition = new Condition(0, (int)inventoried.getMaxWeight(), (int)inventoried.getWeight());
-			weightBar.setCondition(weightCondition);
+			weightBar.setCondition(getWeightCondition());
 		}
 	}
 }
