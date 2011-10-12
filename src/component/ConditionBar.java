@@ -44,8 +44,8 @@ public class ConditionBar extends Component {
 		setCondition(condition);
 		setDisableText(true);
 
-		normalColor = Color.green;
-		warningColor = Color.yellow;
+		normalColor = new Color(0x00a300);
+		warningColor = new Color(0xe0e000);
 		dangerColor = Color.red;
 	}
 	
