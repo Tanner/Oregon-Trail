@@ -28,9 +28,8 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	private Game game;
 	
 	/**
-	 * Instantiates a game director object
+	 * Constructs a game director object.
 	 */
-	
 	private GameDirector() {
 		 sharedDirector = this;
 		 
@@ -42,11 +41,9 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	}
 	
 	/**
-	 * Singleton Design pattern.  Returns the single instance of game director object that drives the game, for the scenes to interact with
-	 * 
-	 * @return handle of game director for scene to interract with
+	 * Singleton Design pattern. Returns the single instance of game director object that drives the game, for the scenes to interact with.
+	 * @return handle of game director for scene to interact with
 	 */
-	
 	public static SceneDelegate sharedSceneDelegate() {
 		if (sharedDirector == null) {
 			sharedDirector = new GameDirector();
@@ -57,9 +54,8 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	
 	
 	/**
-	 * Singleton Design pattern.  Returns the single instance of the game director that drives the game, for the scene director to interact with
-	 * 
-	 * @return handle of game director for scene director to interract with
+	 * Singleton Design pattern. Returns the single instance of the game director that drives the game, for the scene director to interact with.
+	 * @return handle of game director for scene director to interact with
 	 */
 	public static SceneDirectorDelegate sharedSceneDirectorDelegate() {
 		if (sharedDirector == null) {
@@ -70,7 +66,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	}
 	
 	/**
-	 * Launches window that contains game
+	 * Launches window that contains game.
 	 */
 	public void start() {
 		try {
@@ -85,7 +81,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	}
 	
 	/**
-	 * returns the game object
+	 * Returns the game object.
 	 * @return the game
 	 */
 	public Game getGame() {
@@ -93,7 +89,7 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	}
 	
 	/**
-	 * returns the container that holds the gui element of the game
+	 * Returns the container that holds the gui element of the game.
 	 * @return the game container
 	 */
 	public AppGameContainer getContainer() {
@@ -101,8 +97,8 @@ public class GameDirector implements SceneDelegate, SceneDirectorDelegate {
 	}
 	
 	/**
-	 * determines the appropriate game scene to return based on a passed id
-	 * @param id the sceneid desired
+	 * Determines the appropriate game scene to return based on a passed id.
+	 * @param id the {@code SceneID} desired
 	 * @return the handle to the newly created scene
 	 */
 	private Scene sceneForSceneID(SceneID id) {
