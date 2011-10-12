@@ -3,6 +3,7 @@ package component;
 import model.Condition;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
@@ -21,6 +22,9 @@ public class ConditionBar extends Component {
 	private Color dangerColor;
 	private Color backgroundColor;
 	
+	private boolean disableText;
+	private Font font;
+	
 	/**
 	 * Constructs a new {@code ConditionBar} with a {@code GUIContext}, width, height, and a {@code Conditioned}.
 	 * @param context The GUI context
@@ -36,6 +40,8 @@ public class ConditionBar extends Component {
 		normalColor = Color.green;
 		warningColor = Color.yellow;
 		dangerColor = Color.red;
+		
+		setDisableText(true);
 		
 		backgroundColor = Color.gray;
 		
@@ -60,6 +66,9 @@ public class ConditionBar extends Component {
 		
 		g.setColor(barColor);
 		g.fillRect(getX(), getY(), (float)(getWidth() * percentage), getHeight());
+		
+		Label label = new Label(context, getHeight(), getWidth(), font, Color.white, (percentage * 100)+"%");
+		add(label, getPosition(ReferencePoint.CenterCenter), ReferencePoint.CenterCenter, 0, getHeight() / 2);
 	}
 
 	/**
@@ -92,5 +101,29 @@ public class ConditionBar extends Component {
 	 */
 	public void setBackgroundColor(Color backgroundColor) {
 		this.backgroundColor = backgroundColor;
+	}
+
+	/**
+	 * Get whether or not the text is disabled.
+	 * @return Whether or not the text is disabled
+	 */
+	public boolean getDisableText() {
+		return disableText;
+	}
+
+	/**
+	 * Set whether or not the text is disabled.
+	 * @param disableText Whether or not the text is disabled
+	 */
+	public void setDisableText(boolean disableText) {
+		this.disableText = disableText;
+	}
+	
+	/**
+	 * Set the font for the condition bar.
+	 * @param font New font
+	 */
+	public void setFont(Font font) {
+		this.font = font;
 	}
 }
