@@ -12,6 +12,9 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
+import component.Label.Alignment;
+import component.Label.VerticalAlignment;
+
 public class SlotConditionGroup extends Component {
 	private static final int ITEM_BUTTON_HEIGHT = 40;
 	private static final int ITEM_CONDITION_BAR_HEIGHT = 5;
@@ -26,7 +29,10 @@ public class SlotConditionGroup extends Component {
 		
 		this.slotNumber = slotNumber;
 		
-		button = new CountingButton(container, width, ITEM_BUTTON_HEIGHT, new Label(container, font, Color.white, ""));
+		Label label = new Label(container, width, font, Color.white, "");
+		label.setAlignment(Alignment.Center);
+		
+		button = new CountingButton(container, width, ITEM_BUTTON_HEIGHT, label);
 		conditionBar = new ConditionBar(container, width, ITEM_CONDITION_BAR_HEIGHT, null);
 		
 		changeContents(items);
