@@ -19,6 +19,7 @@ public class CountingButton extends Button {
 	private int min = 0;
 	private int max = Integer.MAX_VALUE;
 	private boolean countUpOnLeftClick;
+	private boolean disableAutoCount;
 	private boolean hideCount;
 	
 	/**
@@ -34,6 +35,7 @@ public class CountingButton extends Button {
 		count = 0;
 		countUpOnLeftClick = true;
 		hideCount = false;
+		disableAutoCount = false;
 	}
 
 	/**
@@ -48,6 +50,7 @@ public class CountingButton extends Button {
 		count = 0;
 		countUpOnLeftClick = true;
 		hideCount = false;
+		disableAutoCount = false;
 	}
 	
 	@Override
@@ -88,14 +91,16 @@ public class CountingButton extends Button {
 			input.consumeEvent();
 			setActive(false);
 			
-			if (button == 0 && countUpOnLeftClick && count < max) {
-				count++;
-			} else if (button != 0 && countUpOnLeftClick && count > min) {
-				count--;
-			} else if (button == 0 && !countUpOnLeftClick && count > min) {
-				count--;
-			} else if (button != 0 && !countUpOnLeftClick && count < max) {
-				count++;
+			if (!disableAutoCount) {
+				if (button == 0 && countUpOnLeftClick && count < max) {
+					count++;
+				} else if (button != 0 && countUpOnLeftClick && count > min) {
+					count--;
+				} else if (button == 0 && !countUpOnLeftClick && count > min) {
+					count--;
+				} else if (button != 0 && !countUpOnLeftClick && count < max) {
+					count++;
+				}
 			}
 		}
 	}
@@ -178,5 +183,21 @@ public class CountingButton extends Button {
 	 */
 	public void setHideCount(boolean hideCount) {
 		this.hideCount = hideCount;
+	}
+
+	/**
+	 * Get whether the button will auto count at all.
+	 * @return Whether the button will auto count at all.
+	 */
+	public boolean getDisableAutoCount() {
+		return disableAutoCount;
+	}
+
+	/**
+	 * Set whether the button auto counts at all.
+	 * @param disableAutoCount Whether the button auto counts at all
+	 */
+	public void setDisableAutoCount(boolean disableAutoCount) {
+		this.disableAutoCount = disableAutoCount;
 	}
 }
