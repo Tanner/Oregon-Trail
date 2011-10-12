@@ -18,6 +18,7 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 
 import component.Positionable.ReferencePoint;
+import core.Logger;
 
 public class OwnerInventoryButtons {
 	private static final int ITEM_BUTTON_WIDTH = 80;
@@ -84,6 +85,14 @@ public class OwnerInventoryButtons {
 		
 		return panel;
 	}
+	
+	/**
+	 * Get the button width
+	 * @return Button width
+	 */
+	public static int getButtonWidth() {
+		return ITEM_BUTTON_WIDTH;
+	}
 
 	/**
 	 * @return the font
@@ -97,5 +106,12 @@ public class OwnerInventoryButtons {
 	 */
 	public void setFont(Font font) {
 		this.font = font;
+	}
+	
+	private class ButtonListener implements ComponentListener {
+		@Override
+		public void componentActivated(AbstractComponent component) {
+			Logger.log("Item in this button: "+((SlotConditionGroup) component).getItem(), Logger.Level.INFO);
+		}
 	}
 }
