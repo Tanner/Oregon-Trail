@@ -152,6 +152,9 @@ public class OwnerInventoryButtons {
 			if (amount == 0) {
 				updateButtons();
 			}
+			
+			Condition weightCondition = new Condition(0, (int)inventoried.getMaxWeight(), (int)inventoried.getWeight());
+			weightBar.setCondition(weightCondition);
 		}
 	}
 }
