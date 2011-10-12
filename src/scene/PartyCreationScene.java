@@ -98,7 +98,7 @@ public class PartyCreationScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		int buttonWidth = (container.getWidth() - PADDING * (NUM_PEOPLE + 1)) / NUM_PEOPLE;
 
 		componentListener = new SceneComponentListener();
@@ -523,7 +523,7 @@ public class PartyCreationScene extends Scene {
 			player.setParty(new Party(pace, rations, people));
 			
 			Logger.log("Confirm button pushed", Logger.Level.INFO);
-			GameDirector.sharedSceneDelegate().requestScene(SceneID.Town, PartyCreationScene.this);	
+			GameDirector.sharedSceneListener().requestScene(SceneID.Town, PartyCreationScene.this);	
 		}
 		
 		@Override		

@@ -69,7 +69,7 @@ public class SlotConditionGroup extends Component {
 	public void changeContents(ITEM_TYPE item, String name, int amount, Condition condition) {
 		this.item = item;
 		
-		if (name != null) {
+		if (amount != 0 && name != null) {
 			button.setText(name);
 			button.setDisabled(false);
 			button.setCount(amount);

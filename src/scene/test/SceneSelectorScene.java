@@ -53,7 +53,7 @@ public class SceneSelectorScene extends Scene {
 				
 		buttons = new ArrayList<Button>();
 		
-		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		String[] labels = { "Main Menu", "Party Creation", "Town", "Store", "Party Inventory", "Components", "Remove Party", "Add Party" };
 		
 		int rows = (int)Math.ceil(Math.sqrt(labels.length));
@@ -99,17 +99,17 @@ public class SceneSelectorScene extends Scene {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			if (component == buttons.get(0)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.MainMenu, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.MainMenu, SceneSelectorScene.this);
 			} else if (component == buttons.get(1)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyCreation, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PartyCreation, SceneSelectorScene.this);
 			} else if (component == buttons.get(2)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.Town, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.Town, SceneSelectorScene.this);
 			} else if (component == buttons.get(3)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.Store, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.Store, SceneSelectorScene.this);
 			} else if (component == buttons.get(4)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.PartyInventory, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, SceneSelectorScene.this);
 			} else if (component == buttons.get(5)) {
-				GameDirector.sharedSceneDelegate().requestScene(SceneID.ComponentTest, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.ComponentTest, SceneSelectorScene.this);
 			} else if (component == buttons.get(6)) {
 				player.setParty(null);
 			} else if (component == buttons.get(7)) {

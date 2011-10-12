@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class SegmentedControl extends Component {
 	
-	private Font font = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+	private Font font = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 	private Color color = Color.white;
 	
 	private final int STATES;

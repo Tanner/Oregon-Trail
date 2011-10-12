@@ -54,7 +54,7 @@ public class CountingButton extends Button {
 	public void render(GUIContext container, Graphics g) throws SlickException {
 		super.render(container, g);
 		
-		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
 		if (!hideCount) {
 			Label countLabel = new Label(container, fieldFont, Color.white, ""+count);

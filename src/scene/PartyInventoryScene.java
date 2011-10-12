@@ -40,18 +40,18 @@ public class PartyInventoryScene extends Scene {
 	private static final int PADDING = 20;
 	
 	private static final int NUM_COLS = 2;
-	private static final int ITEM_BUTTON_WIDTH = 80;
-	private static final int ITEM_BUTTON_HEIGHT = 40;
-	private static final int ITEM_CONDITION_BAR_HEIGHT = 5;
-	private static final int CONDITION_BAR_PADDING = 4;
-	private static final int NAME_PADDING = 10;
+	private static final int BUTTON_HEIGHT = 40;
+	private static final int BUTTON_WIDTH = 200;
+	
+	private static final int BIN_BUTTON_HEIGHT = 100;
+	private static final int BIN_BUTTON_WIDTH = BUTTON_WIDTH;
 	
 	private Party party;
 	
 	private OwnerInventoryButtons playerInventoryButtons[];
 	private OwnerInventoryButtons vehicleInventoryButtons;
 	
-	private Button closeButton, transferButton, functionButton;
+	private Button closeButton, transferButton, functionButton, binButton;
 	private EXTRA_BUTTON_FUNC extraButtonFunctionality;
 	
 	public PartyInventoryScene(Party party, EXTRA_BUTTON_FUNC extraButtonFunctionality) {
@@ -64,7 +64,7 @@ public class PartyInventoryScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
-		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
 		ArrayList<Person> members = party.getPartyMembers();
 		Vehicle vehicle = party.getVehicle();
@@ -80,11 +80,12 @@ public class PartyInventoryScene extends Scene {
 			
 			playerInventoryButtons[i] = new OwnerInventoryButtons(person);
 			playerInventoryButtons[i].setFont(fieldFont);
+			playerInventoryButtons[i].makePanel(container);
 			
-			personPanels[i] = playerInventoryButtons[i].getPanel(container);
+			personPanels[i] = playerInventoryButtons[i].getPanel();
 		}
 		
-		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * maxInventorySize) - PADDING;
+		int panelWidth = ((OwnerInventoryButtons.getButtonWidth() + PADDING) * maxInventorySize) - PADDING;
 		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1) - 4;
 		
 		mainLayer.addAsGrid(personPanels, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
@@ -98,15 +99,16 @@ public class PartyInventoryScene extends Scene {
 
 		vehicleInventoryButtons = new OwnerInventoryButtons(vehicle);
 		vehicleInventoryButtons.setFont(fieldFont);
-		mainLayer.add(vehicleInventoryButtons.getPanel(container), locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+		vehicleInventoryButtons.makePanel(container);
+		mainLayer.add(vehicleInventoryButtons.getPanel(), locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		
 		// Close button
-		closeButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CLOSE")));
+		closeButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CLOSE")));
 		closeButton.addListener(new ButtonListener());
 		mainLayer.add(closeButton, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
 		
 		// Transfer button
-		transferButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER")));
+		transferButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER")));
 		transferButton.addListener(new ButtonListener());
 		mainLayer.add(transferButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
@@ -118,10 +120,19 @@ public class PartyInventoryScene extends Scene {
 				functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "SELL");
 			}
 			
-			functionButton = new Button(container, 200, 40, new Label(container, fieldFont, Color.white, functionText));
+			functionButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, functionText));
 			functionButton.addListener(new ButtonListener());
 			mainLayer.add(functionButton, transferButton.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomRight, -PADDING, 0);
 		}
+		
+		// Bin button
+		binButton = new Button(container, BIN_BUTTON_WIDTH, BIN_BUTTON_HEIGHT, new Label(container, BUTTON_WIDTH, fieldFont, Color.white, ""));
+		binButton.addListener(new ButtonListener());
+		
+		int xOffset = ((container.getWidth() - 2 * PADDING) / 2) - (BIN_BUTTON_WIDTH / 2);
+		int yOffset = (int)((vehicleInventoryButtons.getPanel().getPosition(ReferencePoint.BottomLeft).y - closeButton.getPosition(ReferencePoint.TopLeft).y) / 2) + (BIN_BUTTON_HEIGHT / 2); 
+		
+		mainLayer.add(binButton, closeButton.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, xOffset, yOffset);
 		
 		backgroundLayer.add(new Panel(container, new Color(0x3b2d59)));
 	}
@@ -140,7 +151,7 @@ public class PartyInventoryScene extends Scene {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			if (component == closeButton) {
-				GameDirector.sharedSceneDelegate().sceneDidEnd(PartyInventoryScene.this);
+				GameDirector.sharedSceneListener().sceneDidEnd(PartyInventoryScene.this);
 			}
 		}
 	}

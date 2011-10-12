@@ -8,6 +8,7 @@ import model.Condition;
 import model.Inventoried;
 import model.Inventory;
 import model.Item;
+import model.Item.ITEM_TYPE;
 import model.Person;
 
 import org.newdawn.slick.Color;
@@ -18,6 +19,7 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 
 import component.Positionable.ReferencePoint;
+import core.Logger;
 
 public class OwnerInventoryButtons {
 	private static final int ITEM_BUTTON_WIDTH = 80;
@@ -30,6 +32,7 @@ public class OwnerInventoryButtons {
 	private Inventoried inventoried;
 	private ArrayList<SlotConditionGroup> itemSlots;
 	private Font font;
+	private Panel panel;
 	
 	public OwnerInventoryButtons(Inventoried inventoried) {
 		this.inventoried = inventoried;
@@ -37,7 +40,7 @@ public class OwnerInventoryButtons {
 		itemSlots = new ArrayList<SlotConditionGroup>();
 	}
 	
-	public Panel getPanel(GameContainer container) {
+	public void makePanel(GameContainer container) {
 		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
@@ -78,11 +81,25 @@ public class OwnerInventoryButtons {
 		
 		Label nameLabel = new Label(container, font, Color.white, inventoried.getName());
 		
-		Panel panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int)nameLabel.getFontHeight());
+		panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int)nameLabel.getFontHeight());
 		panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
-		
+	}	
+	
+	/**
+	 * Get the panel of this object.
+	 * @return The Panel
+	 */
+	public Panel getPanel() {
 		return panel;
+	}
+	
+	/**
+	 * Get the button width
+	 * @return Button width
+	 */
+	public static int getButtonWidth() {
+		return ITEM_BUTTON_WIDTH;
 	}
 
 	/**
@@ -97,5 +114,23 @@ public class OwnerInventoryButtons {
 	 */
 	public void setFont(Font font) {
 		this.font = font;
+	}
+	
+	private class ButtonListener implements ComponentListener {
+		@Override
+		public void componentActivated(AbstractComponent component) {
+			SlotConditionGroup slotConditionGroup = (SlotConditionGroup)component;
+			ITEM_TYPE item = slotConditionGroup.getItem();
+			
+			Logger.log("Item in this button: "+item, Logger.Level.INFO);
+			
+			inventoried.removeItemFromInventory(item, 1);
+			
+			String name = item.getName();
+			int amount = inventoried.getInventory().getNumberOf(item);
+			Condition condition = inventoried.getInventory().getConditionOf(item);
+			
+			slotConditionGroup.changeContents(item, name, amount, condition);
+		}
 	}
 }
