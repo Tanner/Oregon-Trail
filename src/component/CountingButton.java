@@ -19,6 +19,7 @@ public class CountingButton extends Button {
 	private int min = 0;
 	private int max = Integer.MAX_VALUE;
 	private boolean countUpOnLeftClick;
+	private boolean hideCount;
 	
 	/**
 	 * Constructs a {@code CountingButton} with a width and height.
@@ -32,6 +33,7 @@ public class CountingButton extends Button {
 		
 		count = 0;
 		countUpOnLeftClick = true;
+		hideCount = false;
 	}
 
 	/**
@@ -45,6 +47,7 @@ public class CountingButton extends Button {
 		
 		count = 0;
 		countUpOnLeftClick = true;
+		hideCount = false;
 	}
 	
 	@Override
@@ -52,11 +55,14 @@ public class CountingButton extends Button {
 		super.render(container, g);
 		
 		Font fieldFont = GameDirector.sharedSceneDelegate().getFontManager().getFont(FontManager.FontID.FIELD);
-		Label countLabel = new Label(container, fieldFont, Color.white, ""+count);
-		countLabel.setBackgroundColor(Color.red);
-		countLabel.setPosition(getPosition(ReferencePoint.TopRight), ReferencePoint.CenterCenter);
-		countLabel.setAlignment(Alignment.Center);
-		countLabel.render(container, g);
+		
+		if (!hideCount) {
+			Label countLabel = new Label(container, fieldFont, Color.white, ""+count);
+			countLabel.setBackgroundColor(Color.red);
+			countLabel.setPosition(getPosition(ReferencePoint.TopRight), ReferencePoint.CenterCenter);
+			countLabel.setAlignment(Alignment.Center);
+			countLabel.render(container, g);
+		}
 	}
 	
 	@Override
@@ -156,5 +162,21 @@ public class CountingButton extends Button {
 	 */
 	public int getCount() {
 		return count;
+	}
+
+	/**
+	 * Get whether the count is hidden or not.
+	 * @return Whether the count is hidden or not
+	 */
+	public boolean getHideCount() {
+		return hideCount;
+	}
+
+	/**
+	 * Set whether the count is hidden or not.
+	 * @param hideCount Whether the count is hidden or not
+	 */
+	public void setHideCount(boolean hideCount) {
+		this.hideCount = hideCount;
 	}
 }
