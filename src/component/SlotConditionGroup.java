@@ -43,6 +43,8 @@ public class SlotConditionGroup extends Component {
 		
 		add(button, this.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 		add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, padding);
+		
+		changeContents(null, 0, null);
 	}
 
 	@Override
@@ -59,7 +61,7 @@ public class SlotConditionGroup extends Component {
 	}
 	
 	public void changeContents(String name, int amount, Condition condition) {
-		if (name != null && condition != null) {
+		if (name != null) {
 			button.setText(name);
 			button.setDisabled(false);
 			button.setCount(amount);
