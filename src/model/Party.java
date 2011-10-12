@@ -61,10 +61,12 @@ public class Party {
 	 */
 	public boolean buyItemForInventory(ArrayList<Item> items, Inventoried buyer) {
 		int cost = 0;
+		Item.ITEM_TYPE itemType = items.get(0).getType();
+		int numberOf = items.size();
 		for(Item item : items) {
 			cost += item.getCost();
 		}
-		if (money > cost && buyer.canGetItem(items.get(0), items.size())) {
+		if (money > cost && buyer.canGetItem(itemType, numberOf)) {
 			buyer.addItemToInventory(items);
 			money -= cost;
 			return true;
@@ -78,14 +80,14 @@ public class Party {
 	 * @param items The items to test buying
 	 * @return The list of people
 	 */
-	public ArrayList<Inventoried> canGetItem(ArrayList<Item> items) {
+	public ArrayList<Inventoried> canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
 		ArrayList<Inventoried> ableList = new ArrayList<Inventoried>();
 		for(Person person : members) {
-			if(person.canGetItem(items.get(0), items.size())) {
+			if(person.canGetItem(itemType, numberOf)) {
 				ableList.add(person);
 			}
 		}
-		if (vehicle != null && vehicle.canGetItem(items.get(0), items.size())) {
+		if (vehicle != null && vehicle.canGetItem(itemType, numberOf)) {
 			ableList.add(vehicle);
 		}
 		return ableList;

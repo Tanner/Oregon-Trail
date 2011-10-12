@@ -7,7 +7,7 @@ public interface Inventoried {
 	
 	public boolean addItemToInventory(ArrayList<Item> itemsToAdd);
 	public boolean removeItemFromInventory(int itemIndex, int quantity);
-	public boolean canGetItem(Item item, int numberOf);
+	public boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf);
 	public String getName();
 	public Inventory getInventory();
 	public int getMaxSize();

@@ -29,7 +29,7 @@ public abstract class Vehicle extends Item implements Inventoried{
 	 */
 	public Vehicle(String name, String description, Condition status, 
 			double maxWeight, double weight,
-			int cost, Item.ITEM_TYPES type) {
+			int cost, Item.ITEM_TYPE type) {
 	super(name, description, status, weight, cost, type);
 		this.MAX_INVENTORY_WEIGHT = maxWeight;
 		this.status = status;
@@ -93,7 +93,11 @@ public abstract class Vehicle extends Item implements Inventoried{
 	 * @param The items to test the possibility of adding.
 	 * @return True if possible.
 	 */
-	public boolean canGetItem(Item item, int numberOf) {
-		return cargo.canAddItems(item, numberOf);
+	public boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
+		return cargo.canAddItems(itemType, numberOf);
+	}
+	
+	public int getMaxSize() {
+		return MAX_INVENTORY_SIZE;
 	}
 }

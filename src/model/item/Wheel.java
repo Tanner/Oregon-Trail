@@ -16,6 +16,6 @@ public class Wheel extends Item {
 			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"), new Condition(100),
 			  Double.parseDouble(ConstantStore.get("ITEMS", "WHEEL_WEIGHT")),
 			  Integer.parseInt(ConstantStore.get("ITEMS", "WHEEL_COST")),
-			  Item.ITEM_TYPES.WHEEL);
+			  Item.ITEM_TYPE.WHEEL);
 	}
 }

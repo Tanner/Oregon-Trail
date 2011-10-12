@@ -14,6 +14,6 @@ public class SonicScrewdriver extends Item {
 				  ConstantStore.get("ITEMS", "SONIC_DESCRIPTION"), new Condition(100),
 				  Double.parseDouble(ConstantStore.get("ITEMS", "SONIC_WEIGHT")),
 				  Integer.parseInt(ConstantStore.get("ITEMS", "SONIC_COST")),
-				  Item.ITEM_TYPES.SONIC);
+				  Item.ITEM_TYPE.SONIC);
 	}
 }

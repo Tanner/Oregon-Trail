@@ -16,6 +16,6 @@ public class Wagon extends Vehicle {
 				ConstantStore.get("ITEMS", "WAGON_DESCRIPTION"), new Condition(100), 2000,
 				Double.parseDouble(ConstantStore.get("ITEMS", "WAGON_WEIGHT")),
 				Integer.parseInt(ConstantStore.get("ITEMS", "WAGON_COST")),
-				Item.ITEM_TYPES.WAGON);
+				Item.ITEM_TYPE.WAGON);
 	}
 }

@@ -14,6 +14,6 @@ public class Bullet extends Item {
 			  ConstantStore.get("ITEMS", "BULLET_DESCRIPTION"), new Condition(100),
 			  Double.parseDouble(ConstantStore.get("ITEMS", "BULLET_WEIGHT")),
 			  Integer.parseInt(ConstantStore.get("ITEMS", "BULLET_COST")),
-			  Item.ITEM_TYPES.BULLET);
+			  Item.ITEM_TYPE.BULLET);
 	}
 }

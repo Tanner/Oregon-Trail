@@ -14,7 +14,7 @@ public class Gun extends Item {
 			  ConstantStore.get("ITEMS", "GUN_DESCRIPTION"), new Condition(100),
 			  Double.parseDouble(ConstantStore.get("ITEMS", "GUN_WEIGHT")),
 			  Integer.parseInt(ConstantStore.get("ITEMS", "GUN_COST")),
-			  Item.ITEM_TYPES.GUN);
+			  Item.ITEM_TYPE.GUN);
 	}
 
 }
