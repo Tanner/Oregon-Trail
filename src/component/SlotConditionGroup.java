@@ -39,6 +39,7 @@ public class SlotConditionGroup extends Component {
 		conditionBar = new ConditionBar(container, width, ITEM_CONDITION_BAR_HEIGHT, null);
 		
 		button.setCountUpOnLeftClick(false);
+		button.setDisableAutoCount(true);
 		button.addListener(new ButtonListener());
 		
 		int padding = height - (ITEM_BUTTON_HEIGHT + ITEM_CONDITION_BAR_HEIGHT);

@@ -62,7 +62,7 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	 * Deactivates a modal screen
 	 * @param the modal by which the activation shall be not
 	 */
-	public void dismissModal(Modal modal) {
+	public void dismissModal(Modal modal, boolean cancelled) {
 		// Make Modal invisible and set accepting input to false before removing it!
 		modalLayer.setVisible(false);
 		modalLayer.setAcceptingInput(false);
