@@ -49,6 +49,10 @@ public class StoreScene extends Scene {
 	Inventory inv;
 	Party p;
 	
+	/**
+	 * This method sets up
+	 * @param p The players party
+	 */
 	public StoreScene (Party p) {
 		this.p = p;
 		inv = new Inventory(8,10000);
@@ -161,6 +165,7 @@ public class StoreScene extends Scene {
 	public int getID() {
 		return ID.ordinal();
 	}
+	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {
@@ -175,6 +180,21 @@ public class StoreScene extends Scene {
 		}
 	}
 	
+	@Override
+	public void dismissModal(Modal modal, boolean cancelled) {
+		super.dismissModal(modal, cancelled);
+		if ( modal == buyModal ) {
+			if ( cancelled )
+				inv.addItem(currentPurchase);
+			else {
+				int[] buyer = buyModal.getSegmentedControl().getSelection();
+				p.buyItemForInventory(currentPurchase, currentBuyers.get(buyer[0]));
+				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
+				partyMoney.setText("Party's Money: $ " + p.getMoney());
+			}
+		}
+	}
+	
 	/**
 	 * Create all on-screen components for the scene.
 	 */
@@ -182,6 +202,7 @@ public class StoreScene extends Scene {
 		Label tempLabel;
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
+		//Create inventory buttons and a map to which button stands for which inventory item
 		ArrayList<Item.ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
 		buttonMap = new ArrayList<Item.ITEM_TYPE>();
 		storeInventory = new CountingButton[inventorySlots.size()];
@@ -226,7 +247,6 @@ public class StoreScene extends Scene {
 		itemDescription[4] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[5] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[6] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
-		updateLabels(currentItem);
 		textPanel = new Panel(container, textPanelWidth, storeInventoryButtons.getHeight(), TEXT_PANEL_COLOR);
 		
 		//Create clear & buy button
@@ -246,19 +266,17 @@ public class StoreScene extends Scene {
 	 * @param index The index of the item you wish to display information on
 	 */
 	private void updateLabels(Item.ITEM_TYPE currentItem) {
-		if (currentItem != null ) {
-			int count = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
-			itemDescription[0].setText(currentItem.getName());
-			itemDescription[1].setText(currentItem.getDescription());
-			itemDescription[2].setText("Weight: " + currentItem.getWeight() + " lbs");
-			itemDescription[3].setText("Cost: $" + currentItem.getCost());
-			itemDescription[4].setText("Quantity: " + count);
-			itemDescription[5].setText("Total Weight: " + count*currentItem.getWeight());
-			itemDescription[6].setText("Total Cost: $" + count*currentItem.getCost());
-		}
+		int count = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
+		itemDescription[0].setText(currentItem.getName());
+		itemDescription[1].setText(currentItem.getDescription());
+		itemDescription[2].setText("Weight: " + currentItem.getWeight() + " lbs");
+		itemDescription[3].setText("Cost: $" + currentItem.getCost());
+		itemDescription[4].setText("Quantity: " + count);
+		itemDescription[5].setText("Total Weight: " + count*currentItem.getWeight());
+		itemDescription[6].setText("Total Cost: $" + count*currentItem.getCost());
 	}
 	
-	public boolean makePurchase() {
+	private boolean makePurchase() {
 		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
 		currentBuyers = p.canGetItem(currentItem, itemCount);			
 		if ( currentBuyers.size() != 0 ) {
@@ -331,21 +349,6 @@ public class StoreScene extends Scene {
 		public void componentActivated(AbstractComponent source) {
 			if ( currentItem == null || storeInventory[getButtonIndex(item)].getCount() == 0)
 				currentItem = item;
-		}
-	}
-
-	@Override
-	public void dismissModal(Modal modal, boolean cancelled) {
-		super.dismissModal(modal, cancelled);
-		if ( modal == buyModal ) {
-			if ( cancelled )
-				inv.addItem(currentPurchase);
-			else {
-				int[] buyer = buyModal.getSegmentedControl().getSelection();
-				p.buyItemForInventory(currentPurchase, currentBuyers.get(buyer[0]));
-				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
-				partyMoney.setText("Party's Money: $ " + p.getMoney());
-			}
 		}
 	}
 }
