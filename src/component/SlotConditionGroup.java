@@ -23,12 +23,12 @@ public class SlotConditionGroup extends Component {
 	private CountingButton button;
 	private ConditionBar conditionBar;
 	
-	private int slotNumber;
+	private int pocketNumber;
 	
-	public SlotConditionGroup(GUIContext container, int width, int height, Font font, int slotNumber) {
+	public SlotConditionGroup(GUIContext container, int width, int height, Font font, int pocketNumber) {
 		super(container, width, height);
 		
-		this.slotNumber = slotNumber;
+		this.pocketNumber = pocketNumber;
 		
 		Label label = new Label(container, width, font, Color.white, "");
 		label.setAlignment(Alignment.Center);
@@ -56,8 +56,8 @@ public class SlotConditionGroup extends Component {
 		super.render(container, g);
 	}
 	
-	public int getSlotNumber() {
-		return slotNumber;
+	public int getPocketNumber() {
+		return pocketNumber;
 	}
 	
 	public void changeContents(String name, int amount, Condition condition) {
