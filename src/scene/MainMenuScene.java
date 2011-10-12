@@ -9,10 +9,7 @@ import component.Positionable;
 import core.*;
 
 /**
- * Scene displayed upon game startup - displays title of game
- * 
- * @author NULL&&void
- *
+ * Scene displayed upon game startup - displays title of game.
  */
 
 public class MainMenuScene extends Scene {

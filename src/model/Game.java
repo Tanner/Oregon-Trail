@@ -3,9 +3,7 @@ package model;
 import core.Logger;
 
 /**
- * Holds all game data
- * 
- * @author George Johnston
+ * Holds all game data.
  */
 public class Game {
 	private Player player;
@@ -21,8 +19,8 @@ public class Game {
 	}
 	
 	/**
-	 * For use by GameDirector.  Returns player
-	 * @return The player game currently knows.
+	 * For use by GameDirector. Returns player.
+	 * @return the player game currently knows
 	 */
 	public Player getPlayer() {
 		return this.player;
