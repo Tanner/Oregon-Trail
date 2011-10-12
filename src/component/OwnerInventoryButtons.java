@@ -53,7 +53,7 @@ public class OwnerInventoryButtons {
 		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
-		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * Person.MAX_INVENTORY_SIZE) - PADDING;
+		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * inventoried.getMaxSize()) - PADDING;
 		
 		int maxInventorySize = inventoried.getInventory().getMaxSize();
 		
