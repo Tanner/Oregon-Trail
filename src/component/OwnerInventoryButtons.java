@@ -37,7 +37,7 @@ public class OwnerInventoryButtons {
 	}
 	
 	public Panel getPanel(GameContainer container) {
-		ArrayList<PriorityQueue<Item>> slots = inventoried.getInventory().getSlots();
+		ArrayList<PriorityQueue<Item>> slots = inventoried.getInventory().getPopulatedSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * Person.MAX_INVENTORY_SIZE) - PADDING;
