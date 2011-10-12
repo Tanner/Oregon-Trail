@@ -22,6 +22,7 @@ public class SegmentedControl extends Component {
 	private Color color = Color.white;
 	
 	private final int STATES;
+	private final boolean requireSelection;
 	private final int maxSelected;
 	
 	private int rowHeight, colWidth;
@@ -43,14 +44,16 @@ public class SegmentedControl extends Component {
 	 * @param rows The number of desired rows the controller will have.
 	 * @param cols The number of desired columns the controller will have
 	 * @param margin The padding between each button
-	 * @param maxSelected The maximum number of selected buttons at a time
+	 * @param requireSelection Require selection at all times
+	 * @param maxSelectable The maximum number of selected buttons at a time
 	 * @param labels The labels for each segmented button.
 	 */
-	public SegmentedControl(GUIContext context, int width, int height, int rows, int cols, int margin, int maxSelected, String ... labels) {
+	public SegmentedControl(GUIContext context, int width, int height, int rows, int cols, int margin, boolean requireSelection, int maxSelectable, String ... labels) {
 		super(context, width, height);
 		
 		STATES = labels.length;
-		this.maxSelected = maxSelected;
+		this.maxSelected = maxSelectable;
+		this.requireSelection = requireSelection;
 		buttons = new ToggleButton[STATES];
 		selection = new boolean[STATES];
 		permanent = new boolean[STATES];
@@ -113,7 +116,9 @@ public class SegmentedControl extends Component {
 	 * @param selection An array of selections to set, with the values of the array corresponding to the index of the button
 	 */
 	public void setSelection(int[] selection) {
-		if (selection.length == 1) {
+		if (selection.length == 0) {
+			singleSelection = -1;
+		} if (selection.length == 1) {
 			singleSelection = selection[0];
 		} else {
 			for (int i : selection) {
@@ -155,7 +160,7 @@ public class SegmentedControl extends Component {
 	public void clear() {
 		Arrays.fill(this.selection, false);
 		Arrays.fill(this.permanent, false);
-		if (maxSelected == 1) {
+		if (requireSelection) {
 			singleSelection = 0;
 			buttons[singleSelection].setActive(true);
 		} else {
@@ -260,7 +265,11 @@ public class SegmentedControl extends Component {
 			else {
 				singleSelection = ordinal;
 			}
+			
 			updateButtons();
+			
+			SegmentedControl.this.notifyListeners();
+			
 			Logger.log("Selected after button press: " + Arrays.toString(getSelection()), Logger.Level.DEBUG);
 		}
 	}

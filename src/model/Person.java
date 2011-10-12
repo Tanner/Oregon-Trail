@@ -11,7 +11,7 @@ import core.Logger;
 public class Person implements Conditioned, Inventoried{
 	private Condition skillPoints;
 	private Condition health;
-	private boolean isMale;
+	private boolean isMale = true;
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
 	private String name;
 	private Profession profession;
@@ -301,6 +301,8 @@ public class Person implements Conditioned, Inventoried{
 	
 	public void setIsMale(boolean isMale) {
 		this.isMale = isMale;
+		
+		Logger.log("Gender changed to " + (isMale ? "Male" : "Female"), Logger.Level.INFO);
 	}
 	
 	/**
