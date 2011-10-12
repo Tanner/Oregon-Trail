@@ -298,7 +298,7 @@ public class PartyCreationScene extends Scene {
 	 * Process the values from the modal dialog for profession
 	 * @param segmentedControlResults The results of the data entry
 	 */
-	private void resignProfessionModal(int[] segmentedControlResults){
+	private void setProfession(int[] segmentedControlResults){
 		personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
 		people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
 		
@@ -322,7 +322,7 @@ public class PartyCreationScene extends Scene {
 	 * Process the values from the modal dialog for Skill selection
 	 * @param segmentedControlResults The results of the data entry
 	 */
-	private void resignSkillModal(int[] segmentedControlResults){
+	private void setSkills(int[] segmentedControlResults){
 		people.get(currentPersonModifying).clearSkills();
 		
 		for (int j = 0; j < 3; j++) {
@@ -341,15 +341,17 @@ public class PartyCreationScene extends Scene {
 	}
 	
 	@Override
-	public void dismissModal(Modal modal) {
+	public void dismissModal(Modal modal, boolean cancelled) {
 		super.dismissModal(modal);
 		
-		if (modal == professionModal) {
-			int[] segmentedControlResults = modal.getSegmentedControl().getSelection();
-			resignProfessionModal(segmentedControlResults);
-		} else if (modal == skillModal) {
-			int[] segmentedControlResults = modal.getSegmentedControl().getSelection();
-			resignSkillModal(segmentedControlResults);
+		if (!cancelled) {
+			if (modal == professionModal) {
+				int[] segmentedControlResults = modal.getSegmentedControl().getSelection();
+				setProfession(segmentedControlResults);
+			} else if (modal == skillModal) {
+				int[] segmentedControlResults = modal.getSegmentedControl().getSelection();
+				setSkills(segmentedControlResults);
+			}
 		}
 	}
 	
