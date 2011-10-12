@@ -155,6 +155,6 @@ public class Inventory {
 	}
 	
 	public Condition getConditionOf(Item.ITEM_TYPE itemType) {
-		return slots.get(itemType.ordinal()).peek().getStatus();
+		return getNumberOf(itemType) != 0 ? slots.get(itemType.ordinal()).peek().getStatus() : null;
 	}
 }
