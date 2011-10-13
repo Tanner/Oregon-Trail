@@ -80,10 +80,10 @@ public abstract class Vehicle extends Item implements Inventoried{
 	/**
 	 * Removes the specified item from the inventory if it exists.
 	 * @param item The item to be removed.
-	 * @return True if the method succeeded, false if the add isn't possible.
+	 * @return The items removed (null if doesn't exist.)
 	 */
-	public boolean removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
-		return (cargo.removeItem(itemIndex, quantity) != null);
+	public ArrayList<Item> removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
+		return cargo.removeItem(itemIndex, quantity);
 	}
 	
 	/**

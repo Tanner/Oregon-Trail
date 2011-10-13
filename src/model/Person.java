@@ -334,14 +334,10 @@ public class Person implements Conditioned, Inventoried{
 	/**
 	 * Removes the specified item from the inventory if it exists.
 	 * @param item The item to be removed.
-	 * @return True if the method succeeded, false if the add isn't possible.
+	 * @return The removed items
 	 */
-	public boolean removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
-		if (inventory.removeItem(itemIndex, quantity) != null) {
-			return true;
-		} else {
-			return false;
-		}
+	public ArrayList<Item> removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
+		return inventory.removeItem(itemIndex, quantity);
 	}
 	
 	/**
