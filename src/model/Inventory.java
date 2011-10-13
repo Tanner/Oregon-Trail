@@ -200,4 +200,18 @@ public class Inventory {
 	public Condition getConditionOf(Item.ITEM_TYPE itemType) {
 		return getNumberOf(itemType) != 0 ? slots.get(itemType.ordinal()).peek().getStatus() : null;
 	}
+	
+	/**
+	 * ToString method for debugging and whatnot
+	 * @return String representation of the inventory
+	 */
+	public String toString() {
+		ArrayList<Item.ITEM_TYPE> popSlots = getPopulatedSlots();
+		String str = "Size: " + popSlots.size() + ". ";
+		for(Item.ITEM_TYPE itemType : popSlots) {
+			str += " # of " + itemType.getName() + "s: " + getNumberOf(itemType);
+		}
+				
+		return str;
+	}
 }

@@ -115,4 +115,12 @@ public class Condition {
 	public Condition clone() {
 		return new Condition(this.min, this.max, this.current);
 	}
+	
+	/**
+	 * toString method for debugging, other things
+	 * @return a string representing the condition
+	 */
+	public String toString() {
+		return "Min: " + min + ", Max: " + max + ", Current: " + current;
+	}
 }

@@ -128,8 +128,20 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 			return 1;
 	}
 	
+	/**
+	 * Returns the item type
+	 * @return The item type
+	 */
 	public ITEM_TYPE getType() {
 		return type;
+	}
+	
+	/**
+	 * Returns the item as a string.
+	 * @return the item as a string
+	 */
+	public String toString() {
+		return type.getName();
 	}
 	
 	public enum ITEM_TYPE {

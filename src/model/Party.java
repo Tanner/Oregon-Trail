@@ -240,4 +240,17 @@ public class Party {
 	public void setRations(Rations rations){
 		this.currentRations = rations;
 	}
+	
+	/**
+	 * Returns the party members as a string
+	 * @return the party members as a string
+	 */
+	public String toString() {
+		String str = "Members: ";
+		for(Person person : members) {
+			str += person.toString() + "; ";
+		}
+		str += "Money remaining:" + money;
+		return str;
+	}
 }

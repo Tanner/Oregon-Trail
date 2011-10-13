@@ -174,6 +174,23 @@ public class Person implements Conditioned, Inventoried{
 		return profession;
 	}
 	
+	
+	/**
+	 * Returns meaningful data about the person as a string.
+	 * @return the string with meaningful data about the person
+	 */
+	public String toString() {
+		String str = "Name: " + name;
+		if(profession != null) {
+			 str += ", Profession: " + profession.getName();
+		}
+		for(Skill skill : skills) {
+			str += ", Skill: " + skill.getName();
+		}
+		str+= (isMale ? ", Gender: Male" : ", Gender: Female");
+		return str;
+	}
+	
 	/**
 	 * Skills named and with skill point cost.
 	 * 
