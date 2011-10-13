@@ -102,9 +102,9 @@ public class OwnerInventoryButtons {
 	}
 	
 	/**
-	 * Update the contents of the buttons to be current
+	 * Update the contents of the buttons and the weightbar to be current
 	 */
-	public void updateButtons() {
+	public void updateGraphics() {
 		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 
 		int maxInventorySize = inventoried.getInventory().getMaxSize();
@@ -120,6 +120,10 @@ public class OwnerInventoryButtons {
 				itemSlots.get(i).changeContents(ITEM_TYPE.APPLE, null, 0, null);
 			}
 		}
+		
+		weightBar.setCondition(getWeightCondition());
+	}
+	
 	}
 	
 	/**
@@ -178,9 +182,7 @@ public class OwnerInventoryButtons {
 			ArrayList<Item> itemsRemoved = inventoried.removeItemFromInventory(item, 1);
 			listener.itemRemoved(OwnerInventoryButtons.this, itemsRemoved.get(0));
 			
-			updateButtons();
-			
-			weightBar.setCondition(getWeightCondition());
+			updateGraphics();
 		}
 	}
 }
