@@ -180,6 +180,16 @@ public class PartyInventoryScene extends Scene {
 		binButton.setCount(amount);
 		binButton.setText(name);
 	}
+	
+	public boolean canAddItemToBin(ITEM_TYPE item) {
+		for (int i = 0; i < binInventory.length; i++) {
+			if (binInventory[i].canAddItems(item, 1) == false) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 
 	@Override
 	public int getID() {
@@ -198,6 +208,11 @@ public class PartyInventoryScene extends Scene {
 	private class OwnerInventoryButtonsListener implements ItemListener {
 		@Override
 		public void itemRemoved(OwnerInventoryButtons ownerInventoryButtons, Item itemRemoved) {
+			if (!canAddItemToBin(itemRemoved.getType())) {
+				Logger.log("Bin cannot hold "+itemRemoved+" at the moment", Logger.Level.INFO);
+				return;
+			}
+			
 			Logger.log("Item was removed! Item was "+itemRemoved, Logger.Level.INFO);
 			
 			//Find out who removed the item
