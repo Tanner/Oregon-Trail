@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.Inventory;
 import model.Item;
+import model.Item.ITEM_TYPE;
 import model.Party;
 import model.Person;
 import model.item.Vehicle;
@@ -17,8 +18,10 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Button;
+import component.CountingButton;
 import component.ItemListener;
 import component.Label;
+import component.Label.Alignment;
 import component.OwnerInventoryButtons;
 import component.Panel;
 import component.Positionable;
@@ -49,7 +52,8 @@ public class PartyInventoryScene extends Scene {
 	private OwnerInventoryButtons playerInventoryButtons[];
 	private OwnerInventoryButtons vehicleInventoryButtons;
 	
-	private Button closeButton, transferButton, functionButton, binButton;
+	private Button closeButton, transferButton, functionButton;
+	private CountingButton binButton;
 	private EXTRA_BUTTON_FUNC extraButtonFunctionality;
 	
 	public PartyInventoryScene(Party party, EXTRA_BUTTON_FUNC extraButtonFunctionality) {
@@ -131,7 +135,9 @@ public class PartyInventoryScene extends Scene {
 		}
 		
 		// Bin button
-		binButton = new Button(container, BIN_BUTTON_WIDTH, BIN_BUTTON_HEIGHT, new Label(container, BUTTON_WIDTH, fieldFont, Color.white, ""));
+		Label binLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "");
+		binLabel.setAlignment(Alignment.Center);
+		binButton = new CountingButton(container, BIN_BUTTON_WIDTH, BIN_BUTTON_HEIGHT, binLabel);
 		binButton.addListener(new ButtonListener());
 		
 		int xOffset = ((container.getWidth() - 2 * PADDING) / 2) - (BIN_BUTTON_WIDTH / 2);
@@ -153,6 +159,26 @@ public class PartyInventoryScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		return;
+	}
+	
+	public void updateBinButton() {
+		int amount = 0;
+		String name = null;
+		
+		for (int i = 0; i < binInventory.length; i++) {
+			ArrayList<ITEM_TYPE> itemType = binInventory[i].getPopulatedSlots();
+			
+			if (itemType.size() > 0) {
+				amount += binInventory[i].getNumberOf(itemType.get(0));
+				
+				if (name == null) {
+					name = itemType.get(0).getName();
+				}
+			}
+		}
+		
+		binButton.setCount(amount);
+		binButton.setText(name);
 	}
 
 	@Override
@@ -195,6 +221,8 @@ public class PartyInventoryScene extends Scene {
 			itemsRemoved.add(itemRemoved);
 			
 			binInventory[binInventoryIndex].addItem(itemsRemoved);
+			
+			updateBinButton();
 		}
 	}
 }
