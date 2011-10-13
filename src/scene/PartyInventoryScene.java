@@ -138,6 +138,7 @@ public class PartyInventoryScene extends Scene {
 		Label binLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "");
 		binLabel.setAlignment(Alignment.Center);
 		binButton = new CountingButton(container, BIN_BUTTON_WIDTH, BIN_BUTTON_HEIGHT, binLabel);
+		binButton.setDisableAutoCount(true);
 		binButton.addListener(new ButtonListener());
 		
 		int xOffset = ((container.getWidth() - 2 * PADDING) / 2) - (BIN_BUTTON_WIDTH / 2);
@@ -163,7 +164,7 @@ public class PartyInventoryScene extends Scene {
 	
 	public void updateBinButton() {
 		int amount = 0;
-		String name = null;
+		String name = "";
 		
 		for (int i = 0; i < binInventory.length; i++) {
 			ArrayList<ITEM_TYPE> itemType = binInventory[i].getPopulatedSlots();
@@ -171,7 +172,7 @@ public class PartyInventoryScene extends Scene {
 			if (itemType.size() > 0) {
 				amount += binInventory[i].getNumberOf(itemType.get(0));
 				
-				if (name == null) {
+				if (name.length() == 0) {
 					name = itemType.get(0).getName();
 				}
 			}
@@ -210,7 +211,17 @@ public class PartyInventoryScene extends Scene {
 		public void itemRemoved(OwnerInventoryButtons ownerInventoryButtons, Item itemRemoved) {
 			if (!canAddItemToBin(itemRemoved.getType())) {
 				Logger.log("Bin cannot hold "+itemRemoved+" at the moment", Logger.Level.INFO);
-				return;
+				
+				Logger.log("Bin is giving everyone back their items", Logger.Level.INFO);
+				for (int i = 0; i < binInventory.length; i++) {
+					ArrayList<ITEM_TYPE> populated = binInventory[i].getPopulatedSlots();
+					
+					if (populated.size() > 0) {
+						ITEM_TYPE itemToRemove = populated.get(0);
+						ArrayList<Item> itemsRemoved = binInventory[i].removeItem(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
+						playerInventoryButtons[i].addItemToInventory(itemsRemoved);
+					}
+				}
 			}
 			
 			Logger.log("Item was removed! Item was "+itemRemoved, Logger.Level.INFO);

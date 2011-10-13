@@ -124,6 +124,16 @@ public class OwnerInventoryButtons {
 		weightBar.setCondition(getWeightCondition());
 	}
 	
+	public boolean addItemToInventory(ArrayList<Item> items) {
+		boolean success = false;
+		
+		success = inventoried.addItemToInventory(items);
+		
+		if (success) {
+			updateGraphics();
+		}
+		
+		return success;
 	}
 	
 	/**
