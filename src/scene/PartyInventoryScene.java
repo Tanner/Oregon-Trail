@@ -16,6 +16,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Button;
+import component.ItemListener;
 import component.Label;
 import component.OwnerInventoryButtons;
 import component.Panel;
@@ -25,6 +26,7 @@ import component.Positionable.ReferencePoint;
 import core.ConstantStore;
 import core.FontManager;
 import core.GameDirector;
+import core.Logger;
 
 public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
@@ -75,6 +77,8 @@ public class PartyInventoryScene extends Scene {
 			
 			playerInventoryButtons[i] = new OwnerInventoryButtons(person);
 			playerInventoryButtons[i].setFont(fieldFont);
+			playerInventoryButtons[i].setListener(new OwnerInventoryButtonsListener());
+			
 			playerInventoryButtons[i].makePanel(container);
 			
 			personPanels[i] = playerInventoryButtons[i].getPanel();
@@ -95,7 +99,10 @@ public class PartyInventoryScene extends Scene {
 	
 			vehicleInventoryButtons = new OwnerInventoryButtons(vehicle);
 			vehicleInventoryButtons.setFont(fieldFont);
+			vehicleInventoryButtons.setListener(new OwnerInventoryButtonsListener());
+			
 			vehicleInventoryButtons.makePanel(container);
+			
 			mainLayer.add(vehicleInventoryButtons.getPanel(), locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
 		}
 		
@@ -152,6 +159,13 @@ public class PartyInventoryScene extends Scene {
 			if (component == closeButton) {
 				GameDirector.sharedSceneListener().sceneDidEnd(PartyInventoryScene.this);
 			}
+		}
+	}
+	
+	private class OwnerInventoryButtonsListener implements ItemListener {
+		@Override
+		public void itemRemoved(OwnerInventoryButtons ownerInventoryButtons) {
+			Logger.log("Item was removed!", Logger.Level.INFO);
 		}
 	}
 }

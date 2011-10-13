@@ -35,6 +35,8 @@ public class OwnerInventoryButtons {
 	private ConditionBar weightBar;
 	private Panel panel;
 	
+	private ItemListener listener;
+	
 	/**
 	 * Constructs a new {@code OwnerInventoryButtons} with an {@code Inventoried}.
 	 * @param inventoried Inventoried object for this OwnerInventoryButtons
@@ -159,6 +161,14 @@ public class OwnerInventoryButtons {
 		return new Condition(0, (int)inventoried.getMaxWeight(), weightLeft);
 	}
 	
+	/**
+	 * Set the listener.
+	 * @param listener New listener
+	 */
+	public void setListener(ItemListener listener) {
+		this.listener = listener;
+	}
+	
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
@@ -166,6 +176,7 @@ public class OwnerInventoryButtons {
 			ITEM_TYPE item = slotConditionGroup.getItem();
 			
 			inventoried.removeItemFromInventory(item, 1);
+			listener.itemRemoved(OwnerInventoryButtons.this);
 			
 			String name = item.getName();
 			int amount = inventoried.getInventory().getNumberOf(item);
