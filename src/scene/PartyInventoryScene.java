@@ -3,6 +3,7 @@ package scene;
 import java.util.ArrayList;
 
 import model.Inventory;
+import model.Item;
 import model.Party;
 import model.Person;
 import model.item.Vehicle;
@@ -164,8 +165,8 @@ public class PartyInventoryScene extends Scene {
 	
 	private class OwnerInventoryButtonsListener implements ItemListener {
 		@Override
-		public void itemRemoved(OwnerInventoryButtons ownerInventoryButtons) {
-			Logger.log("Item was removed!", Logger.Level.INFO);
+		public void itemRemoved(OwnerInventoryButtons ownerInventoryButtons, Item itemRemoved) {
+			Logger.log("Item was removed! Item was "+itemRemoved, Logger.Level.INFO);
 		}
 	}
 }

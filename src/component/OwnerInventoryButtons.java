@@ -175,8 +175,8 @@ public class OwnerInventoryButtons {
 			SlotConditionGroup slotConditionGroup = (SlotConditionGroup)component;
 			ITEM_TYPE item = slotConditionGroup.getItem();
 			
-			inventoried.removeItemFromInventory(item, 1);
-			listener.itemRemoved(OwnerInventoryButtons.this);
+			ArrayList<Item> itemsRemoved = inventoried.removeItemFromInventory(item, 1);
+			listener.itemRemoved(OwnerInventoryButtons.this, itemsRemoved.get(0));
 			
 			String name = item.getName();
 			int amount = inventoried.getInventory().getNumberOf(item);
