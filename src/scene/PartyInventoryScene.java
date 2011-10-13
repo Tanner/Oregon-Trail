@@ -44,7 +44,7 @@ public class PartyInventoryScene extends Scene {
 	private static final int BIN_BUTTON_WIDTH = BUTTON_WIDTH;
 	
 	private Party party;
-	private Inventory binInventory;
+	private Inventory[] binInventory;
 	
 	private OwnerInventoryButtons playerInventoryButtons[];
 	private OwnerInventoryButtons vehicleInventoryButtons;
@@ -139,7 +139,13 @@ public class PartyInventoryScene extends Scene {
 		
 		mainLayer.add(binButton, closeButton.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, xOffset, yOffset);
 		
-		binInventory = new Inventory(1, Double.MAX_VALUE);
+		int numberOfBinPockets = playerInventoryButtons.length;
+		numberOfBinPockets += vehicleInventoryButtons != null ? 1 : 0;
+		binInventory = new Inventory[numberOfBinPockets];
+		
+		for (int i = 0; i < binInventory.length; i++) {
+			binInventory[i] = new Inventory(1, Integer.MAX_VALUE);
+		}
 		
 		backgroundLayer.add(new Panel(container, new Color(0x3b2d59)));
 	}
@@ -167,6 +173,28 @@ public class PartyInventoryScene extends Scene {
 		@Override
 		public void itemRemoved(OwnerInventoryButtons ownerInventoryButtons, Item itemRemoved) {
 			Logger.log("Item was removed! Item was "+itemRemoved, Logger.Level.INFO);
+			
+			//Find out who removed the item
+			int binInventoryIndex = -1;
+			
+			// Check the people
+			for (int i = 0; i < playerInventoryButtons.length; i++) {
+				if (playerInventoryButtons[i] == ownerInventoryButtons) {
+					binInventoryIndex = i;
+				}
+			}
+			
+			// Check the vehicle (it gets the last index)
+			if (vehicleInventoryButtons != null && vehicleInventoryButtons == ownerInventoryButtons) {
+				binInventoryIndex = binInventory.length - 1;
+			}
+			
+			// Add the item to the bin inventory in the correct spot so we know who the source was if we want to remove it from the bin
+			// TODO: Why do I have to create an ArrayList?
+			ArrayList<Item> itemsRemoved = new ArrayList<Item>();
+			itemsRemoved.add(itemRemoved);
+			
+			binInventory[binInventoryIndex].addItem(itemsRemoved);
 		}
 	}
 }
