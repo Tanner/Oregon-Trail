@@ -136,6 +136,14 @@ public class Inventory {
 			}
 			Logger.log("Items removed successfully", Logger.Level.INFO);
 		}
+		
+		currentSize = 0;
+		for(PriorityQueue<Item> slot : slots) {
+			if (slot.size() > 0) {
+				currentSize += 1;
+			}
+		}
+		
 		return removedItems;
 	}
 	
@@ -157,6 +165,14 @@ public class Inventory {
 			}
 			Logger.log("Items removed successfully", Logger.Level.INFO);
 		}
+		
+		currentSize = 0;
+		for(PriorityQueue<Item> slot : slots) {
+			if (slot.size() > 0) {
+				currentSize += 1;
+			}
+		}
+		
 		return removedItems;
 	}
 	/**
