@@ -5,11 +5,19 @@ import java.util.ArrayList;
 public interface Inventoried {
 	
 	/**
-	 * Adds the item to inventory.
+	 * Adds the items to inventory.
 	 * @param itemsToAdd The items to add to the inventory
 	 * @return True if successful
 	 */
 	public boolean addItemToInventory(ArrayList<Item> itemsToAdd);
+	
+	
+	/**
+	 * Adds a single item to inventory.
+	 * @param item The items to add to the inventory
+	 * @return True if successful
+	 */
+	public boolean addItemToInventory(Item item);
 	
 	/**
 	 * Removes the item from inventory.

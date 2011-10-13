@@ -322,14 +322,18 @@ public class Person implements Conditioned, Inventoried{
 		return inventory;
 	}
 	
-	/**
-	 * Adds the specified item to the inventory if weight and size allows.
-	 * @param item The item to be added.
-	 * @return True if the method succeeded, false if the add isn't possible.
-	 */
+	@Override
 	public boolean addItemToInventory(ArrayList<Item> items) {
 		return inventory.addItem(items);
 	}
+	
+	@Override
+	public boolean addItemToInventory(Item item) {
+		ArrayList<Item> itemToAdd = new ArrayList<Item>();
+		itemToAdd.add(item);
+		return inventory.addItem(itemToAdd);
+	}
+	
 	
 	/**
 	 * Removes the specified item from the inventory if it exists.

@@ -68,13 +68,16 @@ public abstract class Vehicle extends Item implements Inventoried{
 		return cargo;
 	}
 	
-	/**
-	 * Adds the specified item to the inventory if weight and size allows.
-	 * @param item The item to be added.
-	 * @return True if the method succeeded, false if the add isn't possible.
-	 */
+	@Override
 	public boolean addItemToInventory(ArrayList<Item> items) {
 		return cargo.addItem(items);
+	}
+	
+	@Override
+	public boolean addItemToInventory(Item item) {
+		ArrayList<Item> itemToAdd = new ArrayList<Item>();
+		itemToAdd.add(item);
+		return cargo.addItem(itemToAdd);
 	}
 	
 	/**
