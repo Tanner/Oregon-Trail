@@ -178,15 +178,7 @@ public class OwnerInventoryButtons {
 			ArrayList<Item> itemsRemoved = inventoried.removeItemFromInventory(item, 1);
 			listener.itemRemoved(OwnerInventoryButtons.this, itemsRemoved.get(0));
 			
-			String name = item.getName();
-			int amount = inventoried.getInventory().getNumberOf(item);
-			Condition condition = inventoried.getInventory().getConditionOf(item);
-			
-			slotConditionGroup.changeContents(item, name, amount, condition);
-			
-			if (amount == 0) {
-				updateButtons();
-			}
+			updateButtons();
 			
 			weightBar.setCondition(getWeightCondition());
 		}
