@@ -369,6 +369,24 @@ public class Person implements Conditioned, Inventoried{
 		return health.clone();
 	}
 	
+	/**
+	 * Decreases health by amount
+	 * @param amount The amount
+	 * @return True if successful
+	 */
+	public boolean decreaseHealth(int amount) {
+		return health.decrease(amount);
+	}
+	
+	/**
+	 * Increases health by amount
+	 * @param amount The amount
+	 * @return True if successful
+	 */
+	public boolean increaseHealth(int amount) {
+		return health.increase(amount);
+	}
+	
 	@Override
 	public double getConditionPercentage() {
 		return health.getPercentage();

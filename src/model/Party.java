@@ -17,6 +17,7 @@ public class Party {
 	private Pace currentPace;
 	private Rations currentRations;
 	private Vehicle vehicle;
+	private int location;
 	
 	
 	/**
@@ -39,6 +40,7 @@ public class Party {
 		this.money = 0;
 		this.currentPace = pace;
 		this.currentRations = rations;
+		this.location = 0;
 		String partyCreationLog = members.size() + " members were created successfully: ";
 		for (Person person: party){
 			
@@ -158,18 +160,20 @@ public class Party {
 	 * The possible values of the party's pace
 	 */
 	public enum Pace{
-		STEADY ("Steady"),
-		STRENUOUS ("Strenuous"),
-		GRUELING ("Grueling");
+		STEADY ("Steady", 10),
+		STRENUOUS ("Strenuous", 20),
+		GRUELING ("Grueling", 30);
 		
 		private final String name;
+		private int pace;
 		
 		/**
 		 * 
 		 * @param name The name of the pace
 		 */
-		private Pace(String name) {
+		private Pace(String name, int pace) {
 			this.name = name;
+			this.pace = pace;
 		}
 		
 		/**
@@ -178,6 +182,14 @@ public class Party {
 		 */
 		public String toString() {
 			return this.name;
+		}
+		
+		/**
+		 * Returns the current pace/speed
+		 * @return the current pace/speed
+		 */
+		public int getPace() {
+			return pace;
 		}
 	}
 	
@@ -202,18 +214,20 @@ public class Party {
 	 * The possible settings of the party's consumption rate
 	 */	
 	public enum Rations{
-		FILLING ("Filling"),
-		MEAGER ("Meager"),
-		BAREBONES ("Barebones");
+		FILLING ("Filling", 100),
+		MEAGER ("Meager", 75),
+		BAREBONES ("Barebones", 50);
 		
 		private final String name;
+		private int breakpoint;
 		
 		/**
 		 * 
 		 * @param name The name of the rations
 		 */
-		private Rations(String name) {
+		private Rations(String name, int breakpoint) {
 			this.name = name;
+			this.breakpoint = breakpoint;
 		}
 		
 		/**
@@ -222,6 +236,10 @@ public class Party {
 		 */
 		public String toString() {
 			return this.name;
+		}
+		
+		public int getBreakpoint() {
+			return breakpoint;
 		}
 	}
 	
@@ -252,5 +270,67 @@ public class Party {
 		}
 		str += "Money remaining:" + money;
 		return str;
+	}
+	
+	/**
+	 * Returns the current location
+	 * @return
+	 */
+	public int getLocation() {
+		return location;
+	}
+	/**
+	 * Steps the player forward through the game.
+	 */
+	public int walk() {
+		location += 2*getPace().getPace();
+		for(Person person : members) {
+			person.decreaseHealth(getPace().getPace());
+			healToBreakpoint(person);
+		}
+		return location;
+	}
+	
+	/**
+	 * Heals the person until they are at their designated breakpoint
+	 * @param person The person to feed
+	 */
+	public void healToBreakpoint (Person person) {
+		//Figure out how much restoration is needed.
+		int restoreNeeded = person.getConditionPercentage() < getRations().getBreakpoint() ? getRations().getBreakpoint() - person.getHealth().getCurrent() : 0;
+		boolean hasFood = false;
+		
+		for(Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
+			//Find out if the person has any food
+			if(itemType.getIsFood()) {
+				hasFood = true;
+			}
+		}
+		
+		if(restoreNeeded > 0 && hasFood) {
+			//If we need restoration, and have food
+			Item.ITEM_TYPE firstFood = null;
+			for(Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
+				if(itemType.getIsFood() && firstFood == null) {
+					firstFood = itemType;
+				}
+			}
+			ArrayList<Item> foodList = person.removeItemFromInventory(firstFood, 1);
+			Item food = foodList.get(0);
+			int foodFactor = food.getType().getFoodFactor();
+
+			int foodToEat = (restoreNeeded / foodFactor) + 1;
+			if (food.getStatus().getCurrent() > foodToEat) {
+				//If there is enough condition in the food to feed the person completely, heal them and eat
+				person.increaseHealth(foodToEat * foodFactor);
+				food.decreaseStatus(foodToEat);
+				person.addItemToInventory(food); //puts the item back in inventory
+				//Food status down, person health up
+			} else {
+				//we don't have enough status in the food to completely heal the person, so eat it all.
+				person.increaseHealth(food.getStatus().getCurrent() * foodFactor);
+				healToBreakpoint(person); //Recursively call the function to ensure we eat as much as possible.
+			}
+		}
 	}
 }
