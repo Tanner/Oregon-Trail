@@ -199,6 +199,18 @@ public class PartyInventoryScene extends Scene {
 		
 		return true;
 	}
+	
+	public void returnBinItems() {
+		for (int i = 0; i < binInventory.length; i++) {
+			ArrayList<ITEM_TYPE> populated = binInventory[i].getPopulatedSlots();
+			
+			if (populated.size() > 0) {
+				ITEM_TYPE itemToRemove = populated.get(0);
+				ArrayList<Item> itemsRemoved = binInventory[i].removeItem(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
+				playerInventoryButtons[i].addItemToInventory(itemsRemoved);
+			}
+		}
+	}
 
 	@Override
 	public int getID() {
@@ -209,6 +221,8 @@ public class PartyInventoryScene extends Scene {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			if (component == closeButton) {
+				returnBinItems();
+				
 				GameDirector.sharedSceneListener().sceneDidEnd(PartyInventoryScene.this);
 			}
 		}
@@ -221,15 +235,7 @@ public class PartyInventoryScene extends Scene {
 				Logger.log("Bin cannot hold "+itemRemoved+" at the moment", Logger.Level.INFO);
 				
 				Logger.log("Bin is giving everyone back their items", Logger.Level.INFO);
-				for (int i = 0; i < binInventory.length; i++) {
-					ArrayList<ITEM_TYPE> populated = binInventory[i].getPopulatedSlots();
-					
-					if (populated.size() > 0) {
-						ITEM_TYPE itemToRemove = populated.get(0);
-						ArrayList<Item> itemsRemoved = binInventory[i].removeItem(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
-						playerInventoryButtons[i].addItemToInventory(itemsRemoved);
-					}
-				}
+				returnBinItems();
 			}
 			
 			Logger.log("Item was removed! Item was "+itemRemoved, Logger.Level.INFO);
