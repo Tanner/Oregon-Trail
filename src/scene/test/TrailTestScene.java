@@ -32,7 +32,7 @@ public class TrailTestScene extends Scene {
 
 	private SegmentedControl rationsSegmentedControl;
 	private SegmentedControl paceSegmentedControl;
-	private Button updateButton, stepButton;
+	private Button updateButton, stepButton, cancelButton, partyInventoryButton;
 	
 	public TrailTestScene(Party party) {
 		this.party = party;
@@ -88,18 +88,28 @@ public class TrailTestScene extends Scene {
 		paceSegmentedControl = new SegmentedControl(container, buttonWidth * 2 + PADDING, regularButtonHeight, 1, paceLabels.length, 0, true, 1, paceLabels);
 		mainLayer.add(paceSegmentedControl, rationsSegmentedControl.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, 0, -PADDING);	
 		
-		vehicleInventory = new Label(container, 900, 90, fieldFont, Color.white, vehicle.getInventory().toString());
-		mainLayer.add(vehicleInventory, paceSegmentedControl.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.BottomLeft,-110,-5);
-		
+		if (vehicle != null) {
+			vehicleInventory = new Label(container, 900, 90, fieldFont, Color.white, vehicle.getInventory().toString());
+			mainLayer.add(vehicleInventory, paceSegmentedControl.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.BottomLeft,-110,-5);
+		}
 		//Buttons
-		Label tempLabel = new Label(container, fieldFont, Color.white, "Update");
+		Label tempLabel = new Label(container, fieldFont, Color.white, "Update P/R");
 		updateButton = new Button(container,  buttonWidth, regularButtonHeight, tempLabel);
 		updateButton.addListener(new ButtonListener());
 		tempLabel = new Label(container, fieldFont, Color.white, "Step");
 		stepButton = new Button(container, buttonWidth, regularButtonHeight, tempLabel);
+		stepButton.addListener(new ButtonListener());
+		tempLabel = new Label(container, fieldFont, Color.white, "Cancel");
+		cancelButton = new Button(container, buttonWidth, regularButtonHeight, tempLabel);
+		cancelButton.addListener(new ButtonListener());
+		tempLabel = new Label(container, fieldFont, Color.white, "Party Inventory");
+		partyInventoryButton = new Button(container, buttonWidth, regularButtonHeight, tempLabel);
+		partyInventoryButton.addListener(new ButtonListener());
 		mainLayer.add(stepButton, mainLayer.getPosition(ReferencePoint.BottomRight), Positionable.ReferencePoint.BottomRight, -PADDING,-PADDING);	
 		mainLayer.add(updateButton, stepButton.getPosition(ReferencePoint.TopRight), Positionable.ReferencePoint.BottomRight, 0, -PADDING);
-
+		mainLayer.add(cancelButton, stepButton.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopRight, -PADDING, 0);
+		mainLayer.add(partyInventoryButton, cancelButton.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.BottomLeft, 0, -PADDING);
+		
 		backgroundLayer.add(new Panel(container, new Color(0x0C5DA5)));
 	}
 	
@@ -112,11 +122,16 @@ public class TrailTestScene extends Scene {
 			if (source == stepButton) {
 				//@TODO George, enter your "step" method call here.
 				updateLabels();
-			} else {
+			} else if ( source == updateButton ){
 				Pace pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
 				Rations rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
 				party.setPace(pace);
 				party.setRations(rations);
+			}
+			else if ( source == partyInventoryButton ) 
+				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, TrailTestScene.this);
+			else {
+				GameDirector.sharedSceneListener().sceneDidEnd(TrailTestScene.this);
 			}
 		}
 	}
@@ -132,6 +147,8 @@ public class TrailTestScene extends Scene {
 			partyHealth[i].setCondition(persons.get(i).getHealth());
 			partyInventory[i].setText(persons.get(i).getInventory().toString());
 		}
-		vehicleInventory.setText(vehicle.getInventory().toString());
+		if (vehicle != null) {
+			vehicleInventory.setText(vehicle.getInventory().toString());
+		}
 	}
 }
