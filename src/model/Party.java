@@ -289,7 +289,14 @@ public class Party {
 		location += 2*getPace().getPace();
 		for(Person person : members) {
 			person.decreaseHealth(getPace().getPace());
-			healToBreakpoint(person);
+			System.out.println(checkHungerStatus(person));
+			if(person.getHealth().getCurrent() == 0) {
+				//Do something to remove the person from the party
+				//TODO
+			}
+			else {
+				healToBreakpoint(person);
+			}
 		}
 		return location;
 	}
@@ -334,6 +341,24 @@ public class Party {
 				person.increaseHealth(food.getStatus().getCurrent() * foodFactor);
 				healToBreakpoint(person); //Recursively call the function to ensure we eat as much as possible.
 			}
+		}
+	}
+	
+	/**
+	 * Determines if a party member is near dying or dead, and alerts the player.
+	 * @param person The person who's status we're checking.
+	 * @return A string with a message about the health status of the person
+	 */
+	public String checkHungerStatus(Person person) {
+		int currentHealth = person.getHealth().getCurrent();
+		if(currentHealth == 0) {
+			return person.getName() + " has died of starvation!";
+		}
+		else if(person.getHealth().getCurrent() < 2*getPace().getPace()) {
+			return person.getName() + " is in danger of starvation.";
+		}
+		else {
+			return null;
 		}
 	}
 }
