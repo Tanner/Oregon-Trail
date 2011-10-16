@@ -35,7 +35,7 @@ import core.Logger;
 public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
 	
-	public static enum EXTRA_BUTTON_FUNC { NONE, SELL, DROP};
+	public static enum EXTRA_BUTTON_FUNC {SELL, DROP};
 	
 	private static final int PADDING = 20;
 	
@@ -48,6 +48,7 @@ public class PartyInventoryScene extends Scene {
 	
 	private Party party;
 	private Inventory[] binInventory;
+	private Inventory storeInventory;
 	
 	private OwnerInventoryButtons playerInventoryButtons[];
 	private OwnerInventoryButtons vehicleInventoryButtons;
@@ -56,10 +57,17 @@ public class PartyInventoryScene extends Scene {
 	private CountingButton binButton;
 	private EXTRA_BUTTON_FUNC extraButtonFunctionality;
 	
-	public PartyInventoryScene(Party party, EXTRA_BUTTON_FUNC extraButtonFunctionality) {
+	public PartyInventoryScene(Party party) {
 		this.party = party;
 		
-		this.extraButtonFunctionality = extraButtonFunctionality;
+		this.extraButtonFunctionality = EXTRA_BUTTON_FUNC.DROP;
+	}
+	
+	public PartyInventoryScene(Party party, Inventory storeInventory) {
+		this.party = party;
+		
+		this.storeInventory = storeInventory;
+		this.extraButtonFunctionality = EXTRA_BUTTON_FUNC.SELL;
 	}
 	
 	@Override
@@ -122,17 +130,15 @@ public class PartyInventoryScene extends Scene {
 		mainLayer.add(transferButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
 		// Function button
-		if (extraButtonFunctionality != EXTRA_BUTTON_FUNC.NONE) {
-			String functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "DROP");
-			
-			if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
-				functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "SELL");
-			}
-			
-			functionButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, functionText));
-			functionButton.addListener(new ButtonListener());
-			mainLayer.add(functionButton, transferButton.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomRight, -PADDING, 0);
+		String functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "DROP");
+		
+		if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
+			functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "SELL");
 		}
+		
+		functionButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, functionText));
+		functionButton.addListener(new ButtonListener());
+		mainLayer.add(functionButton, transferButton.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomRight, -PADDING, 0);
 		
 		// Bin button
 		Label binLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "");
