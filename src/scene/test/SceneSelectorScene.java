@@ -190,6 +190,9 @@ public class SceneSelectorScene extends Scene {
 //			
 //			Apple apple = new Apple(1);
 //			person.addToInventory(apple);
+			
+			//randomly hurt party members
+			person.decreaseHealth(random.nextInt(100));
 		}
 		
 		Vehicle vehicle = new Wagon();

@@ -121,6 +121,7 @@ public class TrailTestScene extends Scene {
 		public void componentActivated(AbstractComponent source) {
 			if (source == stepButton) {
 				//@TODO George, enter your "step" method call here.
+				party.walk();
 				updateLabels();
 			} else if ( source == updateButton ){
 				Pace pace = Pace.values()[paceSegmentedControl.getSelection()[0]];

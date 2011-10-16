@@ -300,7 +300,7 @@ public class Party {
 	 */
 	public void healToBreakpoint (Person person) {
 		//Figure out how much restoration is needed.
-		int restoreNeeded = person.getConditionPercentage() < getRations().getBreakpoint() ? getRations().getBreakpoint() - person.getHealth().getCurrent() : 0;
+		int restoreNeeded = person.getHealth().getCurrent() < getRations().getBreakpoint() ? getRations().getBreakpoint() - person.getHealth().getCurrent() : 0;
 		boolean hasFood = false;
 		
 		for(Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
