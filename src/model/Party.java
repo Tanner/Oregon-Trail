@@ -206,6 +206,7 @@ public class Party {
 	 * @param pace The party's new pace
 	 */
 	public void setPace(Pace pace){
+		Logger.log("Party pace changed to: " + pace, Logger.Level.INFO);
 		this.currentPace = pace;
 	}
 	
@@ -256,6 +257,7 @@ public class Party {
 	 * @param rations The desired new ration consumption rate
 	 */
 	public void setRations(Rations rations){
+		Logger.log("Party rations changed to: " + rations, Logger.Level.INFO);
 		this.currentRations = rations;
 	}
 	

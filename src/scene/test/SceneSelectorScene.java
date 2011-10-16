@@ -55,7 +55,7 @@ public class SceneSelectorScene extends Scene {
 		buttons = new ArrayList<Button>();
 		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
-		String[] labels = { "Main Menu", "Party Creation", "Town", "Store", "Party Inventory", "Components", "Remove Party", "Add Party" };
+		String[] labels = { "Main Menu", "Party Creation", "Town", "Store", "Party Inventory", "Components", "Remove Party", "Add Party", "Trail Test Scene" };
 		
 		int rows = (int)Math.ceil(Math.sqrt(labels.length));
 		int cols = (int)Math.ceil(Math.sqrt(labels.length));
@@ -127,6 +127,9 @@ public class SceneSelectorScene extends Scene {
 				player.setParty(null);
 			} else if (component == buttons.get(7)) {
 				player.setParty(makeRandomParty());
+			} else if (component == buttons.get(8)) {
+				GameDirector.sharedSceneListener().requestScene(SceneID.TrailTestScene, SceneSelectorScene.this);
+
 			}
 		}
 		

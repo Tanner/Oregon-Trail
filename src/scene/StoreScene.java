@@ -274,12 +274,50 @@ public class StoreScene extends Scene {
 		itemDescription[4].setText("Quantity: " + count);
 		itemDescription[5].setText("Total Weight: " + count*currentItem.getWeight());
 		itemDescription[6].setText("Total Cost: $" + count*currentItem.getCost());
+		partyMoney.setText("Party's Money: $" + p.getMoney());
 	}
 	
-	private boolean makePurchase() {
+	/**
+	 * Check the validity of a current purchase after the Buy button has been pressed.
+	 * @return -1 if a failed purchase, 0 if purchase can proceed, 1 if you handled the case inside this method
+	 */
+	private int makePurchase() {
 		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
-		currentBuyers = p.canGetItem(currentItem, itemCount);			
-		if ( currentBuyers.size() != 0 ) {
+		currentBuyers = p.canGetItem(currentItem, itemCount);
+		//The player doesn't have a wagon and is trying to buy one
+		if ( currentItem == Item.ITEM_TYPE.WAGON && p.getVehicle() == null ) {
+			//The player tries to buy too many wagons
+			if ( itemCount > 1 ) {
+				String errorText = "Please buy a single wagon first!";
+				failedBuyModal = new Modal(container, this, errorText, "Ok");
+				return -1;
+			}
+			//The player is able to buy the wagon
+			else if ( p.getMoney() > currentItem.getCost() ) {
+				p.setVehicle(new Wagon());
+				inv.removeItem(currentItem, 1);
+				p.setMoney(p.getMoney()-Item.ITEM_TYPE.WAGON.getCost());
+				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
+				updateLabels(currentItem);
+				return 1;
+			//The player doesn't have enough money to buy a wagon at all
+			} else { 
+				String errorText = "You don't have enough money to buy a wagon."
+						+ "\nBetter prepare to make it on foot.";
+				failedBuyModal = new Modal(container, this, errorText, "Ok");
+				return -1;
+			}
+		//Display modal if the user can not buy the currently selected item
+		} else if ( currentBuyers.size() == 0 ) {
+			String errorText;
+			if ( p.getMoney() < itemCount*currentItem.getCost() )
+				errorText = "You don't have enough money for this purchase.";
+			else
+				errorText = "No one can carry that much weight!";
+			failedBuyModal = new Modal(container, this, errorText, "Ok");
+			return -1;
+		//Make the purchase
+		} else {
 			currentPurchase = inv.removeItem(currentItem, itemCount);
 			String[] names = new String[currentBuyers.size()];
 			for (int i = 0; i < names.length; i++) {
@@ -287,17 +325,27 @@ public class StoreScene extends Scene {
 			}
 			SegmentedControl choosePlayer = new SegmentedControl(container, 400, 200, 3, 2, 20, true, 1, names);
 			buyModal = new Modal(container, this, "Choose who will buy this item", choosePlayer, "Buy", "Cancel");
-			return true;
-		} else {
-			failedBuyModal = new Modal(container, this, "It doesn't seem like you can purchase that!", "Ok");
-			return false;
+			return 0;
 		}
 	}
 	
+	/**
+	 * A helper method to find the button index in the inventoryButton
+	 * array, given an Item type.
+	 * @param item The item to 
+	 * @return the index in the button array of the item
+	 */
 	private int getButtonIndex(Item.ITEM_TYPE item) {
 		return buttonMap.indexOf(item);
 	}
 	
+	/**
+	 * A helper method to find the Item type for a certain
+	 * button, given the button's index in the inventoryButton
+	 * array.
+	 * @param index the index of inventoryButton
+	 * @return the Item that the given button is associated with
+	 */
 	private Item.ITEM_TYPE getItemFromButtonIndex(int index) {
 		return buttonMap.get(index);
 	}
@@ -313,18 +361,10 @@ public class StoreScene extends Scene {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, StoreScene.this);
 			}
 			else if ( source == buyButton) {
-				if ( currentItem == Item.ITEM_TYPE.WAGON && p.getVehicle() == null ) {
-					if ( p.getMoney() > currentItem.getCost() ) {
-						p.setVehicle(new Wagon());
-						inv.removeItem(currentItem, 1);
-						updateLabels(currentItem);
-					}
-					return;
-				}
-				boolean success = makePurchase();
-				if (success)
+				int successCode = makePurchase();
+				if (successCode == 0)
 					showModal(buyModal);
-				else
+				else if (successCode == -1)
 					showModal(failedBuyModal);		
 			} else {
 				if ( currentItem != null) {

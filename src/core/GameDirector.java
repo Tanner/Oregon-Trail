@@ -98,6 +98,8 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 			return new SceneSelectorScene(game.getPlayer());
 		case ComponentTest:
 			return new ComponentTestScene();
+		case TrailTestScene:
+			return new TrailTestScene(game.getPlayer().getParty());
 		}
 		
 		return null;
