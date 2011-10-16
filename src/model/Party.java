@@ -279,6 +279,7 @@ public class Party {
 	public int getLocation() {
 		return location;
 	}
+	
 	/**
 	 * Steps the player forward through the game.
 	 */
@@ -319,7 +320,7 @@ public class Party {
 			Item food = foodList.get(0);
 			int foodFactor = food.getType().getFoodFactor();
 
-			int foodToEat = (restoreNeeded / foodFactor) + 1;
+			int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
 			if (food.getStatus().getCurrent() > foodToEat) {
 				//If there is enough condition in the food to feed the person completely, heal them and eat
 				person.increaseHealth(foodToEat * foodFactor);
