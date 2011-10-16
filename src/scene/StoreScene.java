@@ -350,6 +350,11 @@ public class StoreScene extends Scene {
 		return buttonMap.get(index);
 	}
 	
+	public Inventory getInventory() {
+		return inv;
+		
+	}
+	
 	/**
 	 * Check for presses from the cancel/inventory/clear buttons.
 	 */
