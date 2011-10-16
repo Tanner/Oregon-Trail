@@ -274,12 +274,30 @@ public class StoreScene extends Scene {
 		itemDescription[4].setText("Quantity: " + count);
 		itemDescription[5].setText("Total Weight: " + count*currentItem.getWeight());
 		itemDescription[6].setText("Total Cost: $" + count*currentItem.getCost());
+		partyMoney.setText("Party's Money: $" + p.getMoney());
 	}
 	
-	private boolean makePurchase() {
+	private int makePurchase() {
 		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
-		currentBuyers = p.canGetItem(currentItem, itemCount);			
-		if ( currentBuyers.size() != 0 ) {
+		currentBuyers = p.canGetItem(currentItem, itemCount);
+		if ( currentItem == Item.ITEM_TYPE.WAGON && p.getVehicle() == null ) {
+			if ( p.getMoney() > currentItem.getCost() ) {
+				p.setVehicle(new Wagon());
+				inv.removeItem(currentItem, 1);
+				p.setMoney(p.getMoney()-Item.ITEM_TYPE.WAGON.getCost());
+				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
+				updateLabels(currentItem);
+			}
+			return 1;
+		} else if ( currentBuyers.size() == 0 ) {
+			String errorText;
+			if ( p.getMoney() < itemCount*currentItem.getCost() )
+				errorText = "You don't have enough money for this purchase.";
+			else
+				errorText = "No one can carry that much weight!";
+			failedBuyModal = new Modal(container, this, errorText, "Ok");
+			return -1;
+		} else {
 			currentPurchase = inv.removeItem(currentItem, itemCount);
 			String[] names = new String[currentBuyers.size()];
 			for (int i = 0; i < names.length; i++) {
@@ -287,10 +305,7 @@ public class StoreScene extends Scene {
 			}
 			SegmentedControl choosePlayer = new SegmentedControl(container, 400, 200, 3, 2, 20, true, 1, names);
 			buyModal = new Modal(container, this, "Choose who will buy this item", choosePlayer, "Buy", "Cancel");
-			return true;
-		} else {
-			failedBuyModal = new Modal(container, this, "It doesn't seem like you can purchase that!", "Ok");
-			return false;
+			return 0;
 		}
 	}
 	
@@ -313,18 +328,10 @@ public class StoreScene extends Scene {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, StoreScene.this);
 			}
 			else if ( source == buyButton) {
-				if ( currentItem == Item.ITEM_TYPE.WAGON && p.getVehicle() == null ) {
-					if ( p.getMoney() > currentItem.getCost() ) {
-						p.setVehicle(new Wagon());
-						inv.removeItem(currentItem, 1);
-						updateLabels(currentItem);
-					}
-					return;
-				}
-				boolean success = makePurchase();
-				if (success)
+				int successCode = makePurchase();
+				if (successCode == 0)
 					showModal(buyModal);
-				else
+				else if (successCode == -1)
 					showModal(failedBuyModal);		
 			} else {
 				if ( currentItem != null) {

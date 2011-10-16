@@ -8,5 +8,6 @@ public enum SceneID {
 	PartyInventory,
 	Town,
 	SceneSelector,
-	ComponentTest
+	ComponentTest,
+	TrailTestScene
 }
