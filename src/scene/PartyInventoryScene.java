@@ -130,10 +130,12 @@ public class PartyInventoryScene extends Scene {
 		mainLayer.add(transferButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
 		// Function button
-		String functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "DROP");
+		String functionText = null;
 		
 		if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
 			functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "SELL");
+		} else {
+			functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "DROP");
 		}
 		
 		functionButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, functionText));
