@@ -224,6 +224,15 @@ public class PartyInventoryScene extends Scene {
 				returnBinItems();
 				
 				GameDirector.sharedSceneListener().sceneDidEnd(PartyInventoryScene.this);
+			} else if (component == functionButton) {
+				if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
+					//
+				} else if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.DROP) {
+					for (int i = 0; i < binInventory.length; i++) {
+						binInventory[i].clear();
+					}
+					updateBinButton();
+				}
 			}
 		}
 	}
