@@ -5,7 +5,6 @@ import model.Condition;
 import model.Inventoried;
 import model.Item;
 import model.Item.ITEM_TYPE;
-import model.Person;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -19,7 +18,7 @@ import component.Positionable.ReferencePoint;
 /**
  * This class is a group of a {@code Button} and a {@code ConditionBar}.
  * 
- * The group is for a speicific {@code Inventoried}.
+ * The group is for a specific {@code Inventoried}.
  */
 public class OwnerInventoryButtons {
 	private static final int ITEM_BUTTON_WIDTH = 80;
