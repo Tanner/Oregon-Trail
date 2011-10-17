@@ -98,6 +98,8 @@ public class OwnerInventoryButtons {
 		weightBar = new ConditionBar(container, ITEM_BUTTON_WIDTH * 2 + PADDING, nameLabel.getHeight(), getWeightCondition(), font);
 		weightBar.setDisableText(false);
 		panel.add(weightBar, itemPanel.getPosition(ReferencePoint.TopRight), ReferencePoint.BottomRight, 0, -NAME_PADDING);
+		
+		updateGraphics();
 	}
 	
 	/**
@@ -114,9 +116,10 @@ public class OwnerInventoryButtons {
 				int amount = inventoried.getInventory().getNumberOf(slots.get(i));
 				Condition condition = inventoried.getInventory().getConditionOf(slots.get(i));
 				
+				itemSlots.get(i).setDisable(false);
 				itemSlots.get(i).changeContents(slots.get(i), name, amount, condition);
 			} else {
-				itemSlots.get(i).changeContents(ITEM_TYPE.APPLE, null, 0, null);
+				itemSlots.get(i).setDisable(true);
 			}
 		}
 		

@@ -58,7 +58,7 @@ public class SlotConditionGroup extends Component {
 		add(button, this.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
 		add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, padding);
 		
-		changeContents(ITEM_TYPE.APPLE, null, 0, null);
+		setDisable(true);
 	}
 
 	@Override
@@ -96,22 +96,22 @@ public class SlotConditionGroup extends Component {
 	public void changeContents(ITEM_TYPE item, String name, int amount, Condition condition) {
 		this.item = item;
 		
-		if (amount != 0 && name != null) {
-			button.setText(name);
-			button.setDisabled(false);
-			button.setCount(amount);
-			button.setMax(amount);
-
-			button.setHideCount(false);
-			
-			conditionBar.setCondition(condition);
-		} else {
+		button.setText(name);
+		button.setCount(amount);
+		button.setMax(amount);
+		
+		conditionBar.setCondition(condition);
+	}
+	
+	public void setDisable(boolean disabled) {
+		if (disabled) {
 			button.setText("None");
-			button.setDisabled(true);
-			button.setHideCount(true);
-			
-			conditionBar.setCondition(null);
 		}
+		
+		button.setHideCount(disabled);
+		button.setDisabled(disabled);
+		
+		conditionBar.setVisible(!disabled);
 	}
 	
 	private class ButtonListener implements ComponentListener {
