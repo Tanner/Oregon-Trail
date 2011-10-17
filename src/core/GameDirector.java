@@ -1,5 +1,7 @@
 package core;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
@@ -7,6 +9,14 @@ import scene.*;
 import scene.test.*;
 
 import model.*;
+import model.item.Apple;
+import model.item.Bread;
+import model.item.Bullet;
+import model.item.Gun;
+import model.item.Meat;
+import model.item.SonicScrewdriver;
+import model.item.Wagon;
+import model.item.Wheel;
 
 /**
  * Directs the logical functionality of the game. Sets everything in motion.
@@ -23,6 +33,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	private AppGameContainer container;
 	
 	private Game game;
+	private Inventory storeInventory = new Inventory(8,10000);
 	
 	/**
 	 * Constructs a game director object.
@@ -33,7 +44,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		 fontManager = new FontManager();
 
 		 sceneDirector = new SceneDirector("Oregon Trail", this);
-		 
+		 makeInitialStoreInventory();
 		 game = new Game();
 	}
 	
@@ -90,7 +101,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		case Town:
 			return new TownScene(game.getPlayer().getParty());
 		case Store:
-			return new StoreScene(game.getPlayer().getParty());
+			return new StoreScene(game.getPlayer().getParty(), storeInventory);
 		case PartyInventory:
 			return new PartyInventoryScene(game.getPlayer().getParty());
 		case SceneSelector:
@@ -104,6 +115,53 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		return null;
 	}
 	
+	/**
+	 * This method initializes the stores inventory.
+	 */
+	private void makeInitialStoreInventory() {
+		Inventory inv = storeInventory;
+		ArrayList<Item> itemToAdd = new ArrayList<Item>();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Apple());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Bread());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Bullet());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Gun());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Meat());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new SonicScrewdriver());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Wagon());
+		}
+		inv.addItem(itemToAdd);
+		itemToAdd.clear();
+		for (int i = 0; i < 1 + Math.random() * 10; i++) {
+			itemToAdd.add(new Wheel());
+		}
+		inv.addItem(itemToAdd);
+	}
+
 	/*----------------------
 	  SceneDelegate
 	  ----------------------*/
@@ -123,7 +181,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 			// Last scene was Town Scene
 			if (id == SceneID.Store) {
 				// Requested Store Scene
-				newScene = new StoreScene(game.getPlayer().getParty());	
+				newScene = new StoreScene(game.getPlayer().getParty(), storeInventory);	
 			}
 		} else if (lastScene instanceof StoreScene) {
 			// Last scene was Store Scene

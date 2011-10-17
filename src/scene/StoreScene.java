@@ -52,50 +52,11 @@ public class StoreScene extends Scene {
 	/**
 	 * This method sets up
 	 * @param p The players party
+	 * @param storeInventory The inventory the store will use (passed from GameDirector)
 	 */
-	public StoreScene (Party p) {
+	public StoreScene (Party p, Inventory storeInventory) {
 		this.p = p;
-		inv = new Inventory(8,10000);
-		ArrayList<Item> itemToAdd = new ArrayList<Item>();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Apple());
-		}
-		inv.addItem(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Bread());
-		}
-		inv.addItem(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Bullet());
-		}
-		inv.addItem(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Gun());
-		}
-		inv.addItem(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Meat());
-		}
-		inv.addItem(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new SonicScrewdriver());
-		}
-		inv.addItem(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Wagon());
-		}
-		inv.addItem(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Wheel());
-		}
-		inv.addItem(itemToAdd);
+		this.inv = storeInventory;
 	}
 	
 	@Override
