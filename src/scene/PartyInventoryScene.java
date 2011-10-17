@@ -239,15 +239,15 @@ public class PartyInventoryScene extends Scene {
 	
 	private class OwnerInventoryButtonsListener implements ItemListener {
 		@Override
-		public void itemRemoved(OwnerInventoryButtons ownerInventoryButtons, Item itemRemoved) {
-			if (!canAddItemToBin(itemRemoved.getType())) {
-				Logger.log("Bin cannot hold "+itemRemoved+" at the moment", Logger.Level.INFO);
+		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons, ITEM_TYPE item) {
+			if (!canAddItemToBin(item)) {
+				Logger.log("Bin cannot hold "+item+" at the moment", Logger.Level.INFO);
 				
 				Logger.log("Bin is giving everyone back their items", Logger.Level.INFO);
 				returnBinItems();
 			}
 			
-			Logger.log("Item was removed! Item was "+itemRemoved, Logger.Level.INFO);
+			Logger.log("Item was removed! Item was "+item, Logger.Level.INFO);
 			
 			//Find out who removed the item
 			int binInventoryIndex = -1;
@@ -265,13 +265,17 @@ public class PartyInventoryScene extends Scene {
 			}
 			
 			// Add the item to the bin inventory in the correct spot so we know who the source was if we want to remove it from the bin
-			// TODO: Why do I have to create an ArrayList?
-			ArrayList<Item> itemsRemoved = new ArrayList<Item>();
-			itemsRemoved.add(itemRemoved);
+			// Also remove the item from the person's inventory
+			ArrayList<Item> itemsRemoved = ownerInventoryButtons.removeItemFromInventory(item, 1);
 			
 			binInventory[binInventoryIndex].addItem(itemsRemoved);
 			
 			updateBinButton();
+		}
+		
+		@Override
+		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons) {
+			//
 		}
 	}
 }

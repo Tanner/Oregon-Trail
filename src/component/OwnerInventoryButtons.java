@@ -135,6 +135,10 @@ public class OwnerInventoryButtons {
 		return success;
 	}
 	
+	public ArrayList<Item> removeItemFromInventory(ITEM_TYPE item, int quantity) {
+		return inventoried.removeItemFromInventory(item, quantity);
+	}
+	
 	/**
 	 * Get the panel of this object.
 	 * @return The Panel
@@ -188,8 +192,7 @@ public class OwnerInventoryButtons {
 			SlotConditionGroup slotConditionGroup = (SlotConditionGroup)component;
 			ITEM_TYPE item = slotConditionGroup.getItem();
 			
-			ArrayList<Item> itemsRemoved = inventoried.removeItemFromInventory(item, 1);
-			listener.itemRemoved(OwnerInventoryButtons.this, itemsRemoved.get(0));
+			listener.itemButtonPressed(OwnerInventoryButtons.this, item);
 			
 			updateGraphics();
 		}
