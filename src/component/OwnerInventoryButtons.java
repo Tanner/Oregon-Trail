@@ -150,6 +150,10 @@ public class OwnerInventoryButtons {
 		return inventoried.removeItemFromInventory(item, quantity);
 	}
 	
+	public boolean canAddItems(ITEM_TYPE item, int quantity) {
+		return inventoried.canGetItem(item, quantity);
+	}
+	
 	/**
 	 * Get the panel of this object.
 	 * @return The Panel

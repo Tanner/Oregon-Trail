@@ -227,6 +227,15 @@ public class PartyInventoryScene extends Scene {
 	public static Mode getCurrentMode() {
 		return currentMode;
 	}
+	
+	public int getBinSize() {
+		int size = 0;
+		for (int i = 0; i < binInventory.length; i++) {
+			size += binInventory[i].getCurrentSize();
+		}
+		
+		return size;
+	}
 
 	@Override
 	public int getID() {
@@ -251,12 +260,7 @@ public class PartyInventoryScene extends Scene {
 				}
 			} else if (component == transferButton) {
 				// Check if the bin has anything in it before proceeding
-				int size = 0;
-				for (int i = 0; i < binInventory.length; i++) {
-					size += binInventory[i].getCurrentSize();
-				}
-				
-				if (size <= 0) {
+				if (getBinSize() <= 0) {
 					// Nothing in the bin, so we can't transfer.
 					showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN"), ConstantStore.get("GENERAL", "OK")));
 					return;
@@ -319,7 +323,20 @@ public class PartyInventoryScene extends Scene {
 		
 		@Override
 		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons) {
-			//
+			ITEM_TYPE itemType = null;
+			for (int i = 0; i < binInventory.length; i++) {
+				ArrayList<ITEM_TYPE> populatedSlots = binInventory[i].getPopulatedSlots();
+				if (populatedSlots.size() > 0) {
+					itemType = populatedSlots.get(0);
+					break;
+				}
+			}
+			
+			if (ownerInventoryButtons.canAddItems(itemType, getBinSize())) {
+				//
+			} else {
+				showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_INV_FAIL"), ConstantStore.get("GENERAL", "OK")));
+			}
 		}
 	}
 }
