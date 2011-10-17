@@ -264,8 +264,10 @@ public class PartyInventoryScene extends Scene {
 				
 				if (currentMode == Mode.NORMAL) {
 					currentMode = Mode.TRANSFER;
+					transferButton.setText(ConstantStore.get("GENERAL", "CANCEL"));
 				} else {
 					currentMode = Mode.NORMAL;
+					transferButton.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
 				}
 				
 				for (OwnerInventoryButtons oib : playerInventoryButtons) {
