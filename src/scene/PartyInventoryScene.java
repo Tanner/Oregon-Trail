@@ -36,6 +36,7 @@ public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
 	
 	public static enum EXTRA_BUTTON_FUNC {SELL, DROP};
+	public static enum Mode {NORMAL, TRANSFER};
 	
 	private static final int PADDING = 20;
 	
@@ -55,7 +56,9 @@ public class PartyInventoryScene extends Scene {
 	
 	private Button closeButton, transferButton, functionButton;
 	private CountingButton binButton;
+	
 	private EXTRA_BUTTON_FUNC extraButtonFunctionality;
+	private static Mode currentMode;
 	
 	public PartyInventoryScene(Party party) {
 		this.party = party;
@@ -211,6 +214,14 @@ public class PartyInventoryScene extends Scene {
 			}
 		}
 	}
+	
+	/**
+	 * Get the current mode.
+	 * @return Current mode
+	 */
+	public static Mode getCurrentMode() {
+		return currentMode;
+	}
 
 	@Override
 	public int getID() {
@@ -233,6 +244,17 @@ public class PartyInventoryScene extends Scene {
 					}
 					updateBinButton();
 				}
+			} else if (component == transferButton) {
+				if (currentMode == Mode.NORMAL) {
+					currentMode = Mode.TRANSFER;
+				} else {
+					currentMode = Mode.NORMAL;
+				}
+				
+				for (OwnerInventoryButtons oib : playerInventoryButtons) {
+					oib.updateGraphics();
+				}
+				vehicleInventoryButtons.updateGraphics();
 			}
 		}
 	}

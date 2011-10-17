@@ -13,6 +13,9 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 
+import scene.PartyInventoryScene;
+import scene.PartyInventoryScene.Mode;
+
 import component.Positionable.ReferencePoint;
 
 /**
@@ -119,7 +122,12 @@ public class OwnerInventoryButtons {
 				itemSlots.get(i).setDisable(false);
 				itemSlots.get(i).changeContents(slots.get(i), name, amount, condition);
 			} else {
-				itemSlots.get(i).setDisable(true);
+				if (PartyInventoryScene.getCurrentMode() == Mode.TRANSFER && i == slots.size()) {
+					itemSlots.get(i).setDisable(false);
+					itemSlots.get(i).setCurrentMode(SlotConditionGroup.Mode.TRANSFER);
+				} else {
+					itemSlots.get(i).setDisable(true);
+				}
 			}
 		}
 		
@@ -188,7 +196,7 @@ public class OwnerInventoryButtons {
 	public void setListener(ItemListener listener) {
 		this.listener = listener;
 	}
-	
+
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
