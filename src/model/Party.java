@@ -32,7 +32,7 @@ public class Party {
 	 * @param party Array of people to be initialized into party
 	 */
 	public Party(Pace pace, Rations rations, ArrayList<Person> party) {
-		for(Person person : party) {
+		for (Person person : party) {
 			if (person != null) {
 				members.add(person);
 			}
@@ -65,7 +65,7 @@ public class Party {
 		int cost = 0;
 		Item.ITEM_TYPE itemType = items.get(0).getType();
 		int numberOf = items.size();
-		for(Item item : items) {
+		for (Item item : items) {
 			cost += item.getCost();
 		}
 		if (money > cost && buyer.canGetItem(itemType, numberOf)) {
@@ -85,11 +85,11 @@ public class Party {
 	public ArrayList<Inventoried> canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
 		ArrayList<Inventoried> ableList = new ArrayList<Inventoried>();
 		
-		if(itemType.getCost() * numberOf > money) {
+		if (itemType.getCost() * numberOf > money) {
 			return ableList;
 		}
-		for(Person person : members) {
-			if(person.canGetItem(itemType, numberOf)) {
+		for (Person person : members) {
+			if (person.canGetItem(itemType, numberOf)) {
 				ableList.add(person);
 			}
 		}
@@ -113,9 +113,9 @@ public class Party {
 	public ArrayList<Person.Skill> getSkills() {
 		
 		ArrayList<Person.Skill> skillList = new ArrayList<Person.Skill>();
-		for(Person person : members) {
-			for(Person.Skill skill: person.getSkills()) {
-				if(!skillList.contains(skill) && skill != Person.Skill.NONE) {
+		for (Person person : members) {
+			for (Person.Skill skill: person.getSkills()) {
+				if (!skillList.contains(skill) && skill != Person.Skill.NONE) {
 					skillList.add(skill);
 				}
 			}
@@ -267,7 +267,7 @@ public class Party {
 	 */
 	public String toString() {
 		String str = "Members: ";
-		for(Person person : members) {
+		for (Person person : members) {
 			str += person.toString() + "; ";
 		}
 		str += "Money remaining:" + money;
@@ -287,7 +287,7 @@ public class Party {
 	 */
 	public int walk() {
 		location += 2*getPace().getPace();
-		for(Person person : members) {
+		for (Person person : members) {
 			person.decreaseHealth(getPace().getPace());
 			healToBreakpoint(person);
 		}
@@ -303,18 +303,18 @@ public class Party {
 		int restoreNeeded = person.getHealth().getCurrent() < getRations().getBreakpoint() ? getRations().getBreakpoint() - person.getHealth().getCurrent() : 0;
 		boolean hasFood = false;
 		
-		for(Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
+		for (Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
 			//Find out if the person has any food
-			if(itemType.getIsFood()) {
+			if (itemType.getIsFood()) {
 				hasFood = true;
 			}
 		}
 		
-		if(restoreNeeded > 0 && hasFood) {
+		if (restoreNeeded > 0 && hasFood) {
 			//If we need restoration, and have food
 			Item.ITEM_TYPE firstFood = null;
-			for(Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
-				if(itemType.getIsFood() && firstFood == null) {
+			for (Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
+				if (itemType.getIsFood() && firstFood == null) {
 					firstFood = itemType;
 				}
 			}
