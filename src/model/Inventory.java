@@ -202,6 +202,15 @@ public class Inventory {
 	}
 	
 	/**
+	 * Clear all the items in each slot.
+	 */
+	public void clear() {
+		for(PriorityQueue<Item> slot : slots) {
+			slot.clear();
+		}
+	}
+	
+	/**
 	 * ToString method for debugging and whatnot
 	 * @return String representation of the inventory
 	 */

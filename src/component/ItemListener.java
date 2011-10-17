@@ -1,7 +1,9 @@
 package component;
 
-import model.Item;
+import model.Item.ITEM_TYPE;
 
 public interface ItemListener {
-	public void itemRemoved(OwnerInventoryButtons ownerInventoryButtons, Item itemRemoved);
+	public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons, ITEM_TYPE item);
+	
+	public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons);
 }

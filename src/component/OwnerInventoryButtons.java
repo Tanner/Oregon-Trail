@@ -5,7 +5,6 @@ import model.Condition;
 import model.Inventoried;
 import model.Item;
 import model.Item.ITEM_TYPE;
-import model.Person;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -19,7 +18,7 @@ import component.Positionable.ReferencePoint;
 /**
  * This class is a group of a {@code Button} and a {@code ConditionBar}.
  * 
- * The group is for a speicific {@code Inventoried}.
+ * The group is for a specific {@code Inventoried}.
  */
 public class OwnerInventoryButtons {
 	private static final int ITEM_BUTTON_WIDTH = 80;
@@ -99,6 +98,8 @@ public class OwnerInventoryButtons {
 		weightBar = new ConditionBar(container, ITEM_BUTTON_WIDTH * 2 + PADDING, nameLabel.getHeight(), getWeightCondition(), font);
 		weightBar.setDisableText(false);
 		panel.add(weightBar, itemPanel.getPosition(ReferencePoint.TopRight), ReferencePoint.BottomRight, 0, -NAME_PADDING);
+		
+		updateGraphics();
 	}
 	
 	/**
@@ -115,9 +116,10 @@ public class OwnerInventoryButtons {
 				int amount = inventoried.getInventory().getNumberOf(slots.get(i));
 				Condition condition = inventoried.getInventory().getConditionOf(slots.get(i));
 				
+				itemSlots.get(i).setDisable(false);
 				itemSlots.get(i).changeContents(slots.get(i), name, amount, condition);
 			} else {
-				itemSlots.get(i).changeContents(ITEM_TYPE.APPLE, null, 0, null);
+				itemSlots.get(i).setDisable(true);
 			}
 		}
 		
@@ -134,6 +136,10 @@ public class OwnerInventoryButtons {
 		}
 		
 		return success;
+	}
+	
+	public ArrayList<Item> removeItemFromInventory(ITEM_TYPE item, int quantity) {
+		return inventoried.removeItemFromInventory(item, quantity);
 	}
 	
 	/**
@@ -189,8 +195,11 @@ public class OwnerInventoryButtons {
 			SlotConditionGroup slotConditionGroup = (SlotConditionGroup)component;
 			ITEM_TYPE item = slotConditionGroup.getItem();
 			
-			ArrayList<Item> itemsRemoved = inventoried.removeItemFromInventory(item, 1);
-			listener.itemRemoved(OwnerInventoryButtons.this, itemsRemoved.get(0));
+			if (item != null) {
+				listener.itemButtonPressed(OwnerInventoryButtons.this, item);
+			} else {
+				listener.itemButtonPressed(OwnerInventoryButtons.this);
+			}
 			
 			updateGraphics();
 		}

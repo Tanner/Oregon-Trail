@@ -35,7 +35,7 @@ import core.Logger;
 public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
 	
-	public static enum EXTRA_BUTTON_FUNC { NONE, SELL, DROP};
+	public static enum EXTRA_BUTTON_FUNC {SELL, DROP};
 	
 	private static final int PADDING = 20;
 	
@@ -48,6 +48,7 @@ public class PartyInventoryScene extends Scene {
 	
 	private Party party;
 	private Inventory[] binInventory;
+	private Inventory storeInventory;
 	
 	private OwnerInventoryButtons playerInventoryButtons[];
 	private OwnerInventoryButtons vehicleInventoryButtons;
@@ -56,10 +57,17 @@ public class PartyInventoryScene extends Scene {
 	private CountingButton binButton;
 	private EXTRA_BUTTON_FUNC extraButtonFunctionality;
 	
-	public PartyInventoryScene(Party party, EXTRA_BUTTON_FUNC extraButtonFunctionality) {
+	public PartyInventoryScene(Party party) {
 		this.party = party;
 		
-		this.extraButtonFunctionality = extraButtonFunctionality;
+		this.extraButtonFunctionality = EXTRA_BUTTON_FUNC.DROP;
+	}
+	
+	public PartyInventoryScene(Party party, Inventory storeInventory) {
+		this.party = party;
+		
+		this.storeInventory = storeInventory;
+		this.extraButtonFunctionality = EXTRA_BUTTON_FUNC.SELL;
 	}
 	
 	@Override
@@ -122,17 +130,17 @@ public class PartyInventoryScene extends Scene {
 		mainLayer.add(transferButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
 		// Function button
-		if (extraButtonFunctionality != EXTRA_BUTTON_FUNC.NONE) {
-			String functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "DROP");
-			
-			if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
-				functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "SELL");
-			}
-			
-			functionButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, functionText));
-			functionButton.addListener(new ButtonListener());
-			mainLayer.add(functionButton, transferButton.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomRight, -PADDING, 0);
+		String functionText = null;
+		
+		if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
+			functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "SELL");
+		} else {
+			functionText = ConstantStore.get("PARTY_INVENTORY_SCENE", "DROP");
 		}
+		
+		functionButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, functionText));
+		functionButton.addListener(new ButtonListener());
+		mainLayer.add(functionButton, transferButton.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomRight, -PADDING, 0);
 		
 		// Bin button
 		Label binLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "");
@@ -191,6 +199,18 @@ public class PartyInventoryScene extends Scene {
 		
 		return true;
 	}
+	
+	public void returnBinItems() {
+		for (int i = 0; i < binInventory.length; i++) {
+			ArrayList<ITEM_TYPE> populated = binInventory[i].getPopulatedSlots();
+			
+			if (populated.size() > 0) {
+				ITEM_TYPE itemToRemove = populated.get(0);
+				ArrayList<Item> itemsRemoved = binInventory[i].removeItem(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
+				playerInventoryButtons[i].addItemToInventory(itemsRemoved);
+			}
+		}
+	}
 
 	@Override
 	public int getID() {
@@ -201,30 +221,33 @@ public class PartyInventoryScene extends Scene {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			if (component == closeButton) {
+				returnBinItems();
+				
 				GameDirector.sharedSceneListener().sceneDidEnd(PartyInventoryScene.this);
+			} else if (component == functionButton) {
+				if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
+					//
+				} else if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.DROP) {
+					for (int i = 0; i < binInventory.length; i++) {
+						binInventory[i].clear();
+					}
+					updateBinButton();
+				}
 			}
 		}
 	}
 	
 	private class OwnerInventoryButtonsListener implements ItemListener {
 		@Override
-		public void itemRemoved(OwnerInventoryButtons ownerInventoryButtons, Item itemRemoved) {
-			if (!canAddItemToBin(itemRemoved.getType())) {
-				Logger.log("Bin cannot hold "+itemRemoved+" at the moment", Logger.Level.INFO);
+		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons, ITEM_TYPE item) {
+			if (!canAddItemToBin(item)) {
+				Logger.log("Bin cannot hold "+item+" at the moment", Logger.Level.INFO);
 				
 				Logger.log("Bin is giving everyone back their items", Logger.Level.INFO);
-				for (int i = 0; i < binInventory.length; i++) {
-					ArrayList<ITEM_TYPE> populated = binInventory[i].getPopulatedSlots();
-					
-					if (populated.size() > 0) {
-						ITEM_TYPE itemToRemove = populated.get(0);
-						ArrayList<Item> itemsRemoved = binInventory[i].removeItem(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
-						playerInventoryButtons[i].addItemToInventory(itemsRemoved);
-					}
-				}
+				returnBinItems();
 			}
 			
-			Logger.log("Item was removed! Item was "+itemRemoved, Logger.Level.INFO);
+			Logger.log("Item was removed! Item was "+item, Logger.Level.INFO);
 			
 			//Find out who removed the item
 			int binInventoryIndex = -1;
@@ -242,13 +265,17 @@ public class PartyInventoryScene extends Scene {
 			}
 			
 			// Add the item to the bin inventory in the correct spot so we know who the source was if we want to remove it from the bin
-			// TODO: Why do I have to create an ArrayList?
-			ArrayList<Item> itemsRemoved = new ArrayList<Item>();
-			itemsRemoved.add(itemRemoved);
+			// Also remove the item from the person's inventory
+			ArrayList<Item> itemsRemoved = ownerInventoryButtons.removeItemFromInventory(item, 1);
 			
 			binInventory[binInventoryIndex].addItem(itemsRemoved);
 			
 			updateBinButton();
+		}
+		
+		@Override
+		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons) {
+			//
 		}
 	}
 }

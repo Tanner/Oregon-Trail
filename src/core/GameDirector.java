@@ -4,7 +4,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import scene.*;
-import scene.PartyInventoryScene.EXTRA_BUTTON_FUNC;
 import scene.test.*;
 
 import model.*;
@@ -93,7 +92,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		case Store:
 			return new StoreScene(game.getPlayer().getParty());
 		case PartyInventory:
-			return new PartyInventoryScene(game.getPlayer().getParty(), EXTRA_BUTTON_FUNC.DROP);
+			return new PartyInventoryScene(game.getPlayer().getParty());
 		case SceneSelector:
 			return new SceneSelectorScene(game.getPlayer());
 		case ComponentTest:
@@ -130,14 +129,14 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 			// Last scene was Store Scene
 			if (id == SceneID.PartyInventory) {
 				// Requested Party Inventory Scene
-				newScene = new PartyInventoryScene(game.getPlayer().getParty(), EXTRA_BUTTON_FUNC.SELL);
+				newScene = new PartyInventoryScene(game.getPlayer().getParty(), ((StoreScene)lastScene).getInventory());
 			}
 		} else if (lastScene instanceof SceneSelectorScene) {
 			// Last scene was Scene Selector Scene
 			newScene =  sceneForSceneID(id);
 		} else if (id == SceneID.PartyInventory) {
 			// Requested Party Inventory Scene
-			newScene = new PartyInventoryScene(game.getPlayer().getParty(), EXTRA_BUTTON_FUNC.DROP);
+			newScene = new PartyInventoryScene(game.getPlayer().getParty());
 		}
 		
 		if (newScene != null) {
