@@ -4,7 +4,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 import scene.*;
-import scene.PartyInventoryScene.EXTRA_BUTTON_FUNC;
 import scene.test.*;
 
 import model.*;
