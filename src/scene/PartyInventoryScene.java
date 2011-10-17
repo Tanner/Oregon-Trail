@@ -274,6 +274,9 @@ public class PartyInventoryScene extends Scene {
 					oib.updateGraphics();
 				}
 				vehicleInventoryButtons.updateGraphics();
+			} else if (component == binButton) {
+				returnBinItems();
+				updateBinButton();
 			}
 		}
 	}
