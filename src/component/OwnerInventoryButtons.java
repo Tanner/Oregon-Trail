@@ -192,7 +192,11 @@ public class OwnerInventoryButtons {
 			SlotConditionGroup slotConditionGroup = (SlotConditionGroup)component;
 			ITEM_TYPE item = slotConditionGroup.getItem();
 			
-			listener.itemButtonPressed(OwnerInventoryButtons.this, item);
+			if (item != null) {
+				listener.itemButtonPressed(OwnerInventoryButtons.this, item);
+			} else {
+				listener.itemButtonPressed(OwnerInventoryButtons.this);
+			}
 			
 			updateGraphics();
 		}
