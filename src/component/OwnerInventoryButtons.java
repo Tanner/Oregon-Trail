@@ -203,7 +203,7 @@ public class OwnerInventoryButtons {
 			SlotConditionGroup slotConditionGroup = (SlotConditionGroup)component;
 			ITEM_TYPE item = slotConditionGroup.getItem();
 			
-			if (item != null) {
+			if (PartyInventoryScene.getCurrentMode() == PartyInventoryScene.Mode.NORMAL) {
 				listener.itemButtonPressed(OwnerInventoryButtons.this, item);
 			} else {
 				listener.itemButtonPressed(OwnerInventoryButtons.this);
