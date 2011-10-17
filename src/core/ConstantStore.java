@@ -58,6 +58,7 @@ public final class ConstantStore {
 		partyInventoryScene.put("TRANSFER", "Transfer");
 		partyInventoryScene.put("DROP", "Drop");
 		partyInventoryScene.put("SELL", "Sell");
+		partyInventoryScene.put("ERR_EMPTY_BIN", "The bin is empty. Please add an item to the bin to proceed.");
 		literalMap.put("PARTY_INVENTORY_SCENE", partyInventoryScene);
 		
 		// Items

@@ -21,6 +21,7 @@ import component.Button;
 import component.CountingButton;
 import component.ItemListener;
 import component.Label;
+import component.Modal;
 import component.Label.Alignment;
 import component.OwnerInventoryButtons;
 import component.Panel;
@@ -245,6 +246,18 @@ public class PartyInventoryScene extends Scene {
 					updateBinButton();
 				}
 			} else if (component == transferButton) {
+				// Check if the bin has anything in it before proceeding
+				int size = 0;
+				for (int i = 0; i < binInventory.length; i++) {
+					size += binInventory[i].getCurrentSize();
+				}
+				
+				if (size <= 0) {
+					// Nothing in the bin, so we can't transfer.
+					showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN"), ConstantStore.get("GENERAL", "OK")));
+					return;
+				}
+				
 				if (currentMode == Mode.NORMAL) {
 					currentMode = Mode.TRANSFER;
 				} else {
