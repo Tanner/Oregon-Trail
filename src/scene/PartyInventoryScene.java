@@ -65,13 +65,17 @@ public class PartyInventoryScene extends Scene {
 		this.party = party;
 		
 		this.extraButtonFunctionality = EXTRA_BUTTON_FUNC.DROP;
+		
+		currentMode = Mode.NORMAL;
 	}
 	
 	public PartyInventoryScene(Party party, Inventory storeInventory) {
 		this.party = party;
 		
 		this.storeInventory = storeInventory;
-		this.extraButtonFunctionality = EXTRA_BUTTON_FUNC.SELL;
+		extraButtonFunctionality = EXTRA_BUTTON_FUNC.SELL;
+		
+		currentMode = Mode.NORMAL;
 	}
 	
 	@Override
