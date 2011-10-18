@@ -333,7 +333,26 @@ public class PartyInventoryScene extends Scene {
 			}
 			
 			if (ownerInventoryButtons.canAddItems(itemType, getBinSize())) {
-				//
+				ArrayList<Item> items = new ArrayList<Item>();
+				for (int i = 0; i < binInventory.length; i++) {
+					items.addAll(binInventory[i].removeItem(itemType, binInventory[i].getCurrentSize()));
+				}
+				
+				ownerInventoryButtons.addItemToInventory(items);
+				
+				// Reset everything
+				currentMode = Mode.NORMAL;
+				transferButton.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
+				
+				for (OwnerInventoryButtons oib : playerInventoryButtons) {
+					oib.updateGraphics();
+				}
+				vehicleInventoryButtons.updateGraphics();
+				
+				for (int i = 0; i < binInventory.length; i++) {
+					binInventory[i].clear();
+				}
+				updateBinButton();
 			} else {
 				showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_INV_FAIL"), ConstantStore.get("GENERAL", "OK")));
 			}

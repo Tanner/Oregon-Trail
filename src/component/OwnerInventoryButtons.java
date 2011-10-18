@@ -83,8 +83,9 @@ public class OwnerInventoryButtons {
 				Condition condition = inventoried.getInventory().getConditionOf(slots.get(i));
 				
 				slotConditionGroup.changeContents(slots.get(i), name, amount, condition);
-				slotConditionGroup.addListener(new ButtonListener());
 			}
+			
+			slotConditionGroup.addListener(new ButtonListener());
 			
 			itemSlots.add(i, slotConditionGroup);
 			itemPanel.add(itemSlots.get(i), position, ReferencePoint.TopLeft, padding, 0);
@@ -121,12 +122,16 @@ public class OwnerInventoryButtons {
 				
 				itemSlots.get(i).setDisable(false);
 				itemSlots.get(i).changeContents(slots.get(i), name, amount, condition);
+				
+				itemSlots.get(i).setCurrentMode(SlotConditionGroup.Mode.NORMAL);
 			} else {
 				if (PartyInventoryScene.getCurrentMode() == Mode.TRANSFER && i == slots.size()) {
 					itemSlots.get(i).setDisable(false);
 					itemSlots.get(i).setCurrentMode(SlotConditionGroup.Mode.TRANSFER);
 				} else {
 					itemSlots.get(i).setDisable(true);
+					
+					itemSlots.get(i).setCurrentMode(SlotConditionGroup.Mode.NORMAL);
 				}
 			}
 		}
