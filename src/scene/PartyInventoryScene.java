@@ -201,6 +201,16 @@ public class PartyInventoryScene extends Scene {
 		binButton.setText(name);
 	}
 	
+	public void updateGraphics() {
+		for (OwnerInventoryButtons oib : playerInventoryButtons) {
+			oib.updateGraphics();
+		}
+		
+		if (vehicleInventoryButtons != null) {
+			vehicleInventoryButtons.updateGraphics();
+		}
+	}
+	
 	public boolean canAddItemToBin(ITEM_TYPE item) {
 		for (int i = 0; i < binInventory.length; i++) {
 			if (binInventory[i].canAddItems(item, 1) == false) {
@@ -277,10 +287,7 @@ public class PartyInventoryScene extends Scene {
 					transferButton.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
 				}
 				
-				for (OwnerInventoryButtons oib : playerInventoryButtons) {
-					oib.updateGraphics();
-				}
-				vehicleInventoryButtons.updateGraphics();
+				updateGraphics();
 			} else if (component == binButton) {
 				returnBinItems();
 				updateBinButton();
@@ -347,10 +354,7 @@ public class PartyInventoryScene extends Scene {
 				currentMode = Mode.NORMAL;
 				transferButton.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
 				
-				for (OwnerInventoryButtons oib : playerInventoryButtons) {
-					oib.updateGraphics();
-				}
-				vehicleInventoryButtons.updateGraphics();
+				updateGraphics();
 				
 				for (int i = 0; i < binInventory.length; i++) {
 					binInventory[i].clear();
