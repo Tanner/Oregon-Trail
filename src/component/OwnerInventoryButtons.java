@@ -13,6 +13,9 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 
+import scene.PartyInventoryScene;
+import scene.PartyInventoryScene.Mode;
+
 import component.Positionable.ReferencePoint;
 
 /**
@@ -80,8 +83,9 @@ public class OwnerInventoryButtons {
 				Condition condition = inventoried.getInventory().getConditionOf(slots.get(i));
 				
 				slotConditionGroup.changeContents(slots.get(i), name, amount, condition);
-				slotConditionGroup.addListener(new ButtonListener());
 			}
+			
+			slotConditionGroup.addListener(new ButtonListener());
 			
 			itemSlots.add(i, slotConditionGroup);
 			itemPanel.add(itemSlots.get(i), position, ReferencePoint.TopLeft, padding, 0);
@@ -118,8 +122,17 @@ public class OwnerInventoryButtons {
 				
 				itemSlots.get(i).setDisable(false);
 				itemSlots.get(i).changeContents(slots.get(i), name, amount, condition);
+				
+				itemSlots.get(i).setCurrentMode(SlotConditionGroup.Mode.NORMAL);
 			} else {
-				itemSlots.get(i).setDisable(true);
+				if (PartyInventoryScene.getCurrentMode() == Mode.TRANSFER && i == slots.size()) {
+					itemSlots.get(i).setDisable(false);
+					itemSlots.get(i).setCurrentMode(SlotConditionGroup.Mode.TRANSFER);
+				} else {
+					itemSlots.get(i).setDisable(true);
+					
+					itemSlots.get(i).setCurrentMode(SlotConditionGroup.Mode.NORMAL);
+				}
 			}
 		}
 		
@@ -140,6 +153,10 @@ public class OwnerInventoryButtons {
 	
 	public ArrayList<Item> removeItemFromInventory(ITEM_TYPE item, int quantity) {
 		return inventoried.removeItemFromInventory(item, quantity);
+	}
+	
+	public boolean canAddItems(ITEM_TYPE item, int quantity) {
+		return inventoried.canGetItem(item, quantity);
 	}
 	
 	/**
@@ -188,14 +205,14 @@ public class OwnerInventoryButtons {
 	public void setListener(ItemListener listener) {
 		this.listener = listener;
 	}
-	
+
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			SlotConditionGroup slotConditionGroup = (SlotConditionGroup)component;
 			ITEM_TYPE item = slotConditionGroup.getItem();
 			
-			if (item != null) {
+			if (PartyInventoryScene.getCurrentMode() == PartyInventoryScene.Mode.NORMAL) {
 				listener.itemButtonPressed(OwnerInventoryButtons.this, item);
 			} else {
 				listener.itemButtonPressed(OwnerInventoryButtons.this);

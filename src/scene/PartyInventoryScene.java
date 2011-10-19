@@ -21,6 +21,7 @@ import component.Button;
 import component.CountingButton;
 import component.ItemListener;
 import component.Label;
+import component.Modal;
 import component.Label.Alignment;
 import component.OwnerInventoryButtons;
 import component.Panel;
@@ -36,6 +37,7 @@ public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
 	
 	public static enum EXTRA_BUTTON_FUNC {SELL, DROP};
+	public static enum Mode {NORMAL, TRANSFER};
 	
 	private static final int PADDING = 20;
 	
@@ -55,19 +57,25 @@ public class PartyInventoryScene extends Scene {
 	
 	private Button closeButton, transferButton, functionButton;
 	private CountingButton binButton;
+	
 	private EXTRA_BUTTON_FUNC extraButtonFunctionality;
+	private static Mode currentMode;
 	
 	public PartyInventoryScene(Party party) {
 		this.party = party;
 		
 		this.extraButtonFunctionality = EXTRA_BUTTON_FUNC.DROP;
+		
+		currentMode = Mode.NORMAL;
 	}
 	
 	public PartyInventoryScene(Party party, Inventory storeInventory) {
 		this.party = party;
 		
 		this.storeInventory = storeInventory;
-		this.extraButtonFunctionality = EXTRA_BUTTON_FUNC.SELL;
+		extraButtonFunctionality = EXTRA_BUTTON_FUNC.SELL;
+		
+		currentMode = Mode.NORMAL;
 	}
 	
 	@Override
@@ -211,6 +219,23 @@ public class PartyInventoryScene extends Scene {
 			}
 		}
 	}
+	
+	/**
+	 * Get the current mode.
+	 * @return Current mode
+	 */
+	public static Mode getCurrentMode() {
+		return currentMode;
+	}
+	
+	public int getBinSize() {
+		int size = 0;
+		for (int i = 0; i < binInventory.length; i++) {
+			size += binInventory[i].getCurrentSize();
+		}
+		
+		return size;
+	}
 
 	@Override
 	public int getID() {
@@ -233,6 +258,29 @@ public class PartyInventoryScene extends Scene {
 					}
 					updateBinButton();
 				}
+			} else if (component == transferButton) {
+				// Check if the bin has anything in it before proceeding
+				if (getBinSize() <= 0) {
+					// Nothing in the bin, so we can't transfer.
+					showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN"), ConstantStore.get("GENERAL", "OK")));
+					return;
+				}
+				
+				if (currentMode == Mode.NORMAL) {
+					currentMode = Mode.TRANSFER;
+					transferButton.setText(ConstantStore.get("GENERAL", "CANCEL"));
+				} else {
+					currentMode = Mode.NORMAL;
+					transferButton.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
+				}
+				
+				for (OwnerInventoryButtons oib : playerInventoryButtons) {
+					oib.updateGraphics();
+				}
+				vehicleInventoryButtons.updateGraphics();
+			} else if (component == binButton) {
+				returnBinItems();
+				updateBinButton();
 			}
 		}
 	}
@@ -275,7 +323,39 @@ public class PartyInventoryScene extends Scene {
 		
 		@Override
 		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons) {
-			//
+			ITEM_TYPE itemType = null;
+			for (int i = 0; i < binInventory.length; i++) {
+				ArrayList<ITEM_TYPE> populatedSlots = binInventory[i].getPopulatedSlots();
+				if (populatedSlots.size() > 0) {
+					itemType = populatedSlots.get(0);
+					break;
+				}
+			}
+			
+			if (ownerInventoryButtons.canAddItems(itemType, getBinSize())) {
+				ArrayList<Item> items = new ArrayList<Item>();
+				for (int i = 0; i < binInventory.length; i++) {
+					items.addAll(binInventory[i].removeItem(itemType, binInventory[i].getCurrentSize()));
+				}
+				
+				ownerInventoryButtons.addItemToInventory(items);
+				
+				// Reset everything
+				currentMode = Mode.NORMAL;
+				transferButton.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
+				
+				for (OwnerInventoryButtons oib : playerInventoryButtons) {
+					oib.updateGraphics();
+				}
+				vehicleInventoryButtons.updateGraphics();
+				
+				for (int i = 0; i < binInventory.length; i++) {
+					binInventory[i].clear();
+				}
+				updateBinButton();
+			} else {
+				showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_INV_FAIL"), ConstantStore.get("GENERAL", "OK")));
+			}
 		}
 	}
 }

@@ -27,6 +27,9 @@ public class SlotConditionGroup extends Component {
 	private CountingButton button;
 	private ConditionBar conditionBar;
 	
+	public static enum Mode {NORMAL, TRANSFER};
+	private Mode currentMode;
+	
 	private int pocketNumber;
 	private ITEM_TYPE item;
 	
@@ -94,6 +97,10 @@ public class SlotConditionGroup extends Component {
 	 * @param condition Condition to use
 	 */
 	public void changeContents(ITEM_TYPE item, String name, int amount, Condition condition) {
+		if (currentMode == Mode.TRANSFER) {
+			return;
+		}
+		
 		this.item = item;
 		
 		button.setText(name);
@@ -112,6 +119,31 @@ public class SlotConditionGroup extends Component {
 		button.setDisabled(disabled);
 		
 		conditionBar.setVisible(!disabled);
+	}
+	
+	/**
+	 * Get the current mode.
+	 * @return Current mode
+	 */
+	public Mode getCurrentMode() {
+		return currentMode;
+	}
+
+	/**
+	 * Set the current mode.
+	 * @param currentMode Current mode
+	 */
+	public void setCurrentMode(Mode currentMode) {
+		this.currentMode = currentMode;
+		
+		if (currentMode == Mode.TRANSFER) {
+			button.setText("Free");
+			
+			button.setHideCount(true);
+			
+			button.setDisabled(false);
+			conditionBar.setVisible(false);
+		}
 	}
 	
 	private class ButtonListener implements ComponentListener {

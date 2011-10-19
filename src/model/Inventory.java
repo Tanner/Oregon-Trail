@@ -208,6 +208,8 @@ public class Inventory {
 		for(PriorityQueue<Item> slot : slots) {
 			slot.clear();
 		}
+		
+		currentSize = 0;
 	}
 	
 	/**
