@@ -231,7 +231,7 @@ public class PartyInventoryScene extends Scene {
 	public int getBinSize() {
 		int size = 0;
 		for (int i = 0; i < binInventory.length; i++) {
-			size += binInventory[i].getCurrentSize();
+			size += binInventory[i].getNumberOfItems();
 		}
 		
 		return size;
@@ -335,7 +335,7 @@ public class PartyInventoryScene extends Scene {
 			if (ownerInventoryButtons.canAddItems(itemType, getBinSize())) {
 				ArrayList<Item> items = new ArrayList<Item>();
 				for (int i = 0; i < binInventory.length; i++) {
-					items.addAll(binInventory[i].removeItem(itemType, binInventory[i].getCurrentSize()));
+					items.addAll(binInventory[i].removeItem(itemType, binInventory[i].getNumberOf(itemType)));
 				}
 				
 				ownerInventoryButtons.addItemToInventory(items);

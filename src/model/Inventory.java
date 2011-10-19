@@ -193,6 +193,20 @@ public class Inventory {
 	}
 	
 	/**
+	 * Returns the number of any item type in this inventory.
+	 * @return The number of any item types that is in this inventory
+	 */
+	public int getNumberOfItems() {
+		int size = 0;
+		
+		for(PriorityQueue<Item> slot : slots) {
+			size += slot.size();
+		}
+		
+		return size;
+	}
+	
+	/**
 	 * 
 	 * @param itemType
 	 * @return
