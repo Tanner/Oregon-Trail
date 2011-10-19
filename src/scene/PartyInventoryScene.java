@@ -133,7 +133,10 @@ public class PartyInventoryScene extends Scene {
 		mainLayer.add(closeButton, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
 		
 		// Transfer button
-		transferButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER")));
+		Label transferLabel = new Label(container, BUTTON_WIDTH, BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
+		transferLabel.setAlignment(Alignment.Center);
+		
+		transferButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, transferLabel);
 		transferButton.addListener(new ButtonListener());
 		mainLayer.add(transferButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
 		
