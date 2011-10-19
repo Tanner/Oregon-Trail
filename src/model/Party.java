@@ -318,25 +318,43 @@ public class Party {
 		}
 		
 		// Find out if the person has any food
-		boolean hasFood = false;
+		boolean personHasFood = false;
+		boolean vehicleHasFood = false;
 		
 		for (Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
 			if (itemType.getIsFood()) {
-				hasFood = true;
+				personHasFood = true;
+			}
+		}
+		if(!personHasFood) {
+			for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
+				if (itemType.getIsFood()) {
+					vehicleHasFood = true;
+				}
 			}
 		}
 		
-		if (restoreNeeded > 0 && hasFood) {
+		Inventoried donator = null;
+		if (personHasFood) {
+			donator = person;
+		}
+		else if (!personHasFood && vehicleHasFood){
+			donator = vehicle;
+		}
+		
+		if (restoreNeeded > 0 && donator != null) {
 			//If we need restoration, and have food
 			Item.ITEM_TYPE firstFood = null;
+			ArrayList<Item.ITEM_TYPE> typeList = donator.getInventory().getPopulatedSlots();
 			
-			for (Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
+			for (Item.ITEM_TYPE itemType : typeList) {
 				if (itemType.getIsFood() && firstFood == null) {
 					firstFood = itemType;
 				}
 			}
 			
-			ArrayList<Item> foodList = person.removeItemFromInventory(firstFood, 1);
+			ArrayList<Item> foodList = donator.removeItemFromInventory(firstFood, 1);
+			
 			Item food = foodList.get(0);
 			int foodFactor = food.getType().getFoodFactor();
 
@@ -347,7 +365,7 @@ public class Party {
 				
 				person.increaseHealth(foodToEat * foodFactor);
 				food.decreaseStatus(foodToEat);
-				person.addItemToInventory(food); //puts the item back in inventory
+				donator.addItemToInventory(food); //puts the item back in inventory
 				//Food status down, person health up
 			} else {
 				//we don't have enough status in the food to completely heal the person, so eat it all.

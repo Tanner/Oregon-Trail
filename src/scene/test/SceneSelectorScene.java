@@ -205,6 +205,7 @@ public class SceneSelectorScene extends Scene {
 //		for (int i = 0; i < 5; i++) {
 //			vehicle.addToInventory(new SonicScrewdriver(i));
 //		}
+		vehicle.addItemToInventory(new Bread());
 		
 		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];
 		Party.Rations rations = Party.Rations.values()[random.nextInt(Party.Rations.values().length)];
