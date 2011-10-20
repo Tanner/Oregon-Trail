@@ -109,8 +109,9 @@ public class StoreScene extends Scene {
 			clearButton.setDisabled(false);
 			updateLabels(currentItem);
 			for (int i = 0; i < storeInventory.length; i++) {
-				if ( i != getButtonIndex(currentItem) )
+				if (i != getButtonIndex(currentItem)) {
 					storeInventory[i].setDisabled(true);
+				}
 			}
 		}
 	}
@@ -144,9 +145,9 @@ public class StoreScene extends Scene {
 	public void dismissModal(Modal modal, boolean cancelled) {
 		super.dismissModal(modal, cancelled);
 		if ( modal == buyModal ) {
-			if ( cancelled )
+			if (cancelled) {
 				inv.addItem(currentPurchase);
-			else {
+			} else {
 				int[] buyer = buyModal.getSegmentedControl().getSelection();
 				p.buyItemForInventory(currentPurchase, currentBuyers.get(buyer[0]));
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
@@ -270,10 +271,11 @@ public class StoreScene extends Scene {
 		//Display modal if the user can not buy the currently selected item
 		} else if ( currentBuyers.size() == 0 ) {
 			String errorText;
-			if ( p.getMoney() < itemCount * currentItem.getCost() )
+			if (p.getMoney() < itemCount * currentItem.getCost()) {
 				errorText = "You don't have enough money for this purchase.";
-			else
+			} else {
 				errorText = "No one can carry that much weight!";
+			}
 			failedBuyModal = new Modal(container, this, errorText, "Ok");
 			return -1;
 		//Make the purchase
@@ -327,10 +329,11 @@ public class StoreScene extends Scene {
 			}
 			else if ( source == buyButton) {
 				int successCode = makePurchase();
-				if (successCode == 0)
+				if (successCode == 0) {
 					showModal(buyModal);
-				else if (successCode == -1)
+				} else if (successCode == -1) {
 					showModal(failedBuyModal);
+				}
 			} else {
 				if ( currentItem != null) {
 					storeInventory[getButtonIndex(currentItem)].setCount(storeInventory[getButtonIndex(currentItem)].getMax());
@@ -352,8 +355,9 @@ public class StoreScene extends Scene {
 		}
 		
 		public void componentActivated(AbstractComponent source) {
-			if ( currentItem == null || storeInventory[getButtonIndex(item)].getCount() == 0)
+			if (currentItem == null || storeInventory[getButtonIndex(item)].getCount() == 0) {
 				currentItem = item;
+			}
 		}
 	}
 }

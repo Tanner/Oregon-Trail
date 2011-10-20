@@ -119,12 +119,13 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(Item i) {
-		if ( Math.abs(getConditionPercentage() - i.getConditionPercentage()) < 0.000001 )
+		if (Math.abs(getConditionPercentage() - i.getConditionPercentage()) < 0.000001) {
 			return 0;
-		if ( getConditionPercentage() < i.getConditionPercentage() )
+		} else if (getConditionPercentage() < i.getConditionPercentage()) {
 			return -1;
-		else 
+		} else {
 			return 1;
+		}
 	}
 	
 	/**

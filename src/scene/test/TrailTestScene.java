@@ -129,9 +129,9 @@ public class TrailTestScene extends Scene {
 				party.setPace(pace);
 				party.setRations(rations);
 			}
-			else if ( source == partyInventoryButton ) 
+			else if (source == partyInventoryButton) { 
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, TrailTestScene.this);
-			else {
+			} else {
 				GameDirector.sharedSceneListener().sceneDidEnd(TrailTestScene.this);
 			}
 		}
