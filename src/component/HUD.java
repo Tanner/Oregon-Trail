@@ -13,6 +13,8 @@ public class HUD extends Component {
 	private static final int PADDING = 20;
 	
 	private static final int BUTTON_WIDTH = 200;
+	
+	private static final int CONDITION_BAR_HEIGHT = 10;
 	private static final int CONDITION_BAR_PADDING = 4;
 	
 	private ComponentConditionGroup<Label> memberHealthGroup;
@@ -22,10 +24,10 @@ public class HUD extends Component {
 		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
-		int height = fieldFont.getLineHeight() + ComponentConditionGroup.CONDITION_BAR_HEIGHT;
+		int height = fieldFont.getLineHeight() + CONDITION_BAR_HEIGHT + CONDITION_BAR_PADDING;
 
 		Label label = new Label(context, BUTTON_WIDTH, fieldFont, Color.white, "Party Members");
-		memberHealthGroup = new ComponentConditionGroup<Label>(context, BUTTON_WIDTH, height + CONDITION_BAR_PADDING, label, data.getPartyMembersHealth());
+		memberHealthGroup = new ComponentConditionGroup<Label>(context, BUTTON_WIDTH, height, CONDITION_BAR_HEIGHT, label, data.getPartyMembersHealth());
 		
 		add(memberHealthGroup, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, PADDING, PADDING);
 	}
