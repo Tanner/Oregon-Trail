@@ -261,6 +261,8 @@ public class PartyInventoryScene extends Scene {
 			if (component == closeButton) {
 				returnBinItems();
 				
+				updateBinButton();
+				
 				GameDirector.sharedSceneListener().sceneDidEnd(PartyInventoryScene.this);
 			} else if (component == functionButton) {
 				if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
