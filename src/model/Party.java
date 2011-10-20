@@ -19,6 +19,75 @@ public class Party {
 	private int location;
 	
 	/**
+	 * 
+	 * The possible values of the party's pace
+	 */
+	public enum Pace{
+		STEADY ("Steady", 10),
+		STRENUOUS ("Strenuous", 20),
+		GRUELING ("Grueling", 30);
+		
+		private final String name;
+		private int pace;
+		
+		/**
+		 * Constructs a new Pace.
+		 * @param name The name of the pace
+		 */
+		private Pace(String name, int pace) {
+			this.name = name;
+			this.pace = pace;
+		}
+		
+		@Override
+		public String toString() {
+			return this.name;
+		}
+		
+		/**
+		 * Returns the current pace/speed.
+		 * @return the current pace/speed
+		 */
+		public int getPace() {
+			return pace;
+		}
+	}
+
+	/**
+	 * The possible settings of the party's consumption rate
+	 */	
+	public enum Rations {
+		FILLING ("Filling", 100),
+		MEAGER ("Meager", 75),
+		BAREBONES ("Barebones", 50);
+		
+		private final String name;
+		private int breakpoint;
+		
+		/**
+		 * Construct a new Ration
+		 * @param name The name of the rations
+		 */
+		private Rations(String name, int breakpoint) {
+			this.name = name;
+			this.breakpoint = breakpoint;
+		}
+		
+		@Override
+		public String toString() {
+			return this.name;
+		}
+		
+		/**
+		 * Returns the breakpoint.
+		 * @return The breakpoint value
+		 */
+		public int getBreakpoint() {
+			return breakpoint;
+		}
+	}
+
+	/**
 	 * If party is created before members, this constructor is used.
 	 */
 	public Party() {
@@ -162,41 +231,6 @@ public class Party {
 	}
 	
 	/**
-	 * 
-	 * The possible values of the party's pace
-	 */
-	public enum Pace{
-		STEADY ("Steady", 10),
-		STRENUOUS ("Strenuous", 20),
-		GRUELING ("Grueling", 30);
-		
-		private final String name;
-		private int pace;
-		
-		/**
-		 * Constructs a new Pace.
-		 * @param name The name of the pace
-		 */
-		private Pace(String name, int pace) {
-			this.name = name;
-			this.pace = pace;
-		}
-		
-		@Override
-		public String toString() {
-			return this.name;
-		}
-		
-		/**
-		 * Returns the current pace/speed.
-		 * @return the current pace/speed
-		 */
-		public int getPace() {
-			return pace;
-		}
-	}
-	
-	/**
 	 * Get the party's pace.
 	 * @return the party's pace setting
 	 */
@@ -211,40 +245,6 @@ public class Party {
 	public void setPace(Pace pace) {
 		Logger.log("Party pace changed to: " + pace, Logger.Level.INFO);
 		this.currentPace = pace;
-	}
-	
-	/**
-	 * The possible settings of the party's consumption rate
-	 */	
-	public enum Rations {
-		FILLING ("Filling", 100),
-		MEAGER ("Meager", 75),
-		BAREBONES ("Barebones", 50);
-		
-		private final String name;
-		private int breakpoint;
-		
-		/**
-		 * Construct a new Ration
-		 * @param name The name of the rations
-		 */
-		private Rations(String name, int breakpoint) {
-			this.name = name;
-			this.breakpoint = breakpoint;
-		}
-		
-		@Override
-		public String toString() {
-			return this.name;
-		}
-		
-		/**
-		 * Returns the breakpoint.
-		 * @return The breakpoint value
-		 */
-		public int getBreakpoint() {
-			return breakpoint;
-		}
 	}
 	
 	/**
