@@ -131,8 +131,7 @@ public class StoreScene extends Scene {
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {
 			for (int i = 0; i < storeInventory.length; i++) {
-				if ( ((Rectangle)storeInventory[i].getArea()).contains(newx, newy) )
-				{ 
+				if ( ((Rectangle)storeInventory[i].getArea()).contains(newx, newy) ) { 
 					hoverItem = getItemFromButtonIndex(i);
 					return;
 				}
