@@ -158,7 +158,7 @@ public class OwnerInventoryButtons {
 	public boolean addItemToInventory(List<Item> items) {
 		boolean success = false;
 		
-		success = inventoried.addItemToInventory(items);
+		success = inventoried.addItemsToInventory(items);
 		
 		if (success) {
 			updateGraphics();

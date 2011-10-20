@@ -181,20 +181,20 @@ public class SceneSelectorScene extends Scene {
 			ArrayList<Item> itemsToAdd = new ArrayList<Item>();
 			wheel.decreaseStatus(random.nextInt(100));
 			itemsToAdd.add(wheel);
-			person.addItemToInventory(itemsToAdd);
+			person.addItemsToInventory(itemsToAdd);
 
 			SonicScrewdriver sonic = new SonicScrewdriver();
 			itemsToAdd.clear();
 			itemsToAdd.add(sonic);
-			person.addItemToInventory(itemsToAdd);
-			person.addItemToInventory(itemsToAdd);
+			person.addItemsToInventory(itemsToAdd);
+			person.addItemsToInventory(itemsToAdd);
 			
 			for (int i = 0; i < 5; i++) {
 				itemsToAdd.clear();
 				Bread bread = new Bread();
 				bread.decreaseStatus(random.nextInt(100));
 				itemsToAdd.add(bread);
-				person.addItemToInventory(itemsToAdd);
+				person.addItemsToInventory(itemsToAdd);
 			}
 //			
 //			Apple apple = new Apple(1);

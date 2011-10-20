@@ -11,13 +11,13 @@ import core.Logger;
  */
 public class Person implements Conditioned, Inventoried{
 	
-	private Condition skillPoints;
+	private final Condition skillPoints;
 	
-	private Condition health;
+	private final Condition health;
 	
 	private boolean isMale = true;
 	
-	private List<Skill> skills = new ArrayList<Skill>();
+	private final List<Skill> skills = new ArrayList<Skill>();
 	
 	private String name;
 	
@@ -27,7 +27,7 @@ public class Person implements Conditioned, Inventoried{
 	
 	private static final int BASE_SKILL_POINTS = 70;
 	
-	private Inventory inventory;
+	private final Inventory inventory;
 	
 	public static final int MAX_INVENTORY_SIZE = 5;
 	
@@ -130,7 +130,8 @@ public class Person implements Conditioned, Inventoried{
 			if(skillPoints.getCurrent() < newSkill.getCost()) {
 				Logger.log(this.name + " does not have enough skill points to obtain " + 
 						newSkill + ".  Current skill points: " + 
-						skillPoints.getCurrent() + " Cost of new skill: " + newSkill.getCost(), Logger.Level.INFO);
+						skillPoints.getCurrent() + " Cost of new skill: " + 
+						newSkill.getCost(), Logger.Level.INFO);
 			}
 			else {
 				skillPoints.decrease(newSkill.getCost());
@@ -138,7 +139,8 @@ public class Person implements Conditioned, Inventoried{
 				Logger.log(this.name + " gained the skill " +
 						newSkill, Logger.Level.INFO);
 				Logger.log(this.name + " has " + 
-						skillPoints.getCurrent() + " skill points remaning.", Logger.Level.INFO);
+						skillPoints.getCurrent() + " skill points remaning.",
+						Logger.Level.INFO);
 				return true;
 			}
 		}
@@ -309,7 +311,7 @@ public class Person implements Conditioned, Inventoried{
 		 * @return Multiplier
 		 */
 		public int getMoney() {
-			return (int)(BASE_MONEY / moneyDivider);
+			return (int) (BASE_MONEY / moneyDivider);
 		}
 		
 		/**
@@ -356,13 +358,13 @@ public class Person implements Conditioned, Inventoried{
 	}
 	
 	@Override
-	public boolean addItemToInventory(List<Item> items) {
+	public boolean addItemsToInventory(List<Item> items) {
 		return inventory.addItem(items);
 	}
 	
 	@Override
 	public boolean addItemToInventory(Item item) {
-		List<Item> itemToAdd = new ArrayList<Item>();
+		final List<Item> itemToAdd = new ArrayList<Item>();
 		itemToAdd.add(item);
 		return inventory.addItem(itemToAdd);
 	}

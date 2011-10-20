@@ -70,7 +70,7 @@ public abstract class Vehicle extends Item implements Inventoried{
 	}
 	
 	@Override
-	public boolean addItemToInventory(List<Item> items) {
+	public boolean addItemsToInventory(List<Item> items) {
 		return cargo.addItem(items);
 	}
 	

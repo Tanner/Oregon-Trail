@@ -37,7 +37,7 @@ public class Party implements HUDDataSource {
 		
 		private final String name;
 
-		private int speed;
+		private final int speed;
 		
 		/**
 		 * Constructs a new Pace.
@@ -73,7 +73,7 @@ public class Party implements HUDDataSource {
 		
 		private final String name;
 
-		private int breakpoint;
+		private final int breakpoint;
 		
 		/**
 		 * Construct a new Ration
@@ -148,15 +148,15 @@ public class Party implements HUDDataSource {
 	 */
 	public boolean buyItemForInventory(List<Item> items, Inventoried buyer) {
 		int cost = 0;
-		Item.ITEM_TYPE itemType = items.get(0).getType();
-		int numberOf = items.size();
+		final Item.ITEM_TYPE itemType = items.get(0).getType();
+		final int numberOf = items.size();
 		
 		for (Item item : items) {
 			cost += item.getCost();
 		}
 		
 		if (money > cost && buyer.canGetItem(itemType, numberOf)) {
-			buyer.addItemToInventory(items);
+			buyer.addItemsToInventory(items);
 			money -= cost;
 			return true;
 		} else {
@@ -171,7 +171,7 @@ public class Party implements HUDDataSource {
 	 * @return The list of people
 	 */
 	public List<Inventoried> canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
-		List<Inventoried> ableList = new ArrayList<Inventoried>();
+		final List<Inventoried> ableList = new ArrayList<Inventoried>();
 		
 		if (itemType.getCost() * numberOf > money) {
 			return ableList;
@@ -203,7 +203,7 @@ public class Party implements HUDDataSource {
 	 * @return A list of skills in the party
 	 */
 	public List<Person.Skill> getSkills() {
-		List<Person.Skill> skillList = new ArrayList<Person.Skill>();
+		final List<Person.Skill> skillList = new ArrayList<Person.Skill>();
 		
 		for (Person person : members) {
 			for (Person.Skill skill: person.getSkills()) {
@@ -310,7 +310,7 @@ public class Party implements HUDDataSource {
 	public int walk() {
 		location += 2 * getPace().getSpeed();
 		
-		List<Person> deathList = new ArrayList<Person>();
+		final List<Person> deathList = new ArrayList<Person>();
 		for (Person person : members) {
 			healToBreakpoint(person);
 			person.decreaseHealth(getPace().getSpeed());
@@ -369,7 +369,7 @@ public class Party implements HUDDataSource {
 		if (restoreNeeded > 0 && donator != null) {
 			//If we need restoration, and have food
 			Item.ITEM_TYPE firstFood = null;
-			List<Item.ITEM_TYPE> typeList = 
+			final List<Item.ITEM_TYPE> typeList = 
 				donator.getInventory().getPopulatedSlots();
 			
 			for (Item.ITEM_TYPE itemType : typeList) {
@@ -378,10 +378,10 @@ public class Party implements HUDDataSource {
 				}
 			}
 			
-			List<Item> foodList = 
-				(ArrayList<Item>)donator.removeItemFromInventory(firstFood, 1);
+			final List<Item> foodList = 
+				donator.removeItemFromInventory(firstFood, 1);
 			
-			Item food = foodList.get(0);
+			final Item food = foodList.get(0);
 			int foodFactor = food.getType().getFoodFactor();
 			
 			//Do some handling for party member skills, such as cooking
@@ -392,7 +392,7 @@ public class Party implements HUDDataSource {
 				foodFactor += 1;
 			}
 
-			int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
+			final int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
 			
 			if (food.getStatus().getCurrent() > foodToEat) {
 				//If there is enough condition in the food to feed the person completely, heal them and eat
@@ -415,7 +415,7 @@ public class Party implements HUDDataSource {
 	 * @return A string with a message about the health status of the person
 	 */
 	public String checkHungerStatus(Person person) {
-		int currentHealth = person.getHealth().getCurrent();
+		final int currentHealth = person.getHealth().getCurrent();
 		if(currentHealth == 0) {
 			return person.getName() + " has died of starvation!";
 		}
@@ -441,13 +441,14 @@ public class Party implements HUDDataSource {
 				minSum += health.getMin();
 			}
 			
-			int size = members.size();
+			final int size = members.size();
 			return new Condition(minSum / size, maxSum / size, currentSum / size);
 		}
 		
 		return null;
 	}
 
+	@Override
 	public Condition getVehicleStatus() {
 		if (vehicle != null) {
 			return vehicle.getStatus();
