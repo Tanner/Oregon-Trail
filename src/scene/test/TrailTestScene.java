@@ -28,7 +28,7 @@ public class TrailTestScene extends Scene {
 	private Label vehicleInventory;
 	private Label[] partyNames, partyInventory;
 	private ConditionBar[] partyHealth;
-	private ArrayList<Person> persons;
+	private List<Person> persons;
 
 	private SegmentedControl rationsSegmentedControl;
 	private SegmentedControl paceSegmentedControl;

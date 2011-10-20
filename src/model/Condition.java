@@ -30,7 +30,8 @@ public class Condition {
 	}
 	
 	/**
-	 * Constructor for Condition. Sets the minimum value to zero and the current value to the maximum value.
+	 * Constructor for Condition. Sets the minimum value to 
+	 * zero and the current value to the maximum value.
 	 * @param max Maximum value for the condition
 	 */
 	public Condition(int max) {
@@ -111,15 +112,15 @@ public class Condition {
 		}
 	}
 	
-	@Override
-	public Condition clone() {
+	/***
+	 * Returns a copy of the current condition for use in analysis.
+	 * @return A copy of the condition
+	 */
+	public Condition copy() {
 		return new Condition(this.min, this.max, this.current);
 	}
 	
-	/**
-	 * toString method for debugging, other things
-	 * @return a string representing the condition
-	 */
+	@Override
 	public String toString() {
 		return "Min: " + min + ", Max: " + max + ", Current: " + current;
 	}

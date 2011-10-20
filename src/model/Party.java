@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.datasource.HUDDataSource;
 import model.item.Vehicle;
@@ -12,11 +13,17 @@ import core.Logger.Level;
  * Party class that contains an array of persons that are members.
  */
 public class Party implements HUDDataSource {
-	private ArrayList<Person> members = new ArrayList<Person>();
+	
+	private List<Person> members = new ArrayList<Person>();
+	
 	private int money;
+	
 	private Pace currentPace;
+	
 	private Rations currentRations;
+	
 	private Vehicle vehicle;
+	
 	private int location;
 	
 	/**
@@ -29,15 +36,17 @@ public class Party implements HUDDataSource {
 		GRUELING ("Grueling", 30);
 		
 		private final String name;
-		private int pace;
+
+		private int speed;
 		
 		/**
 		 * Constructs a new Pace.
 		 * @param name The name of the pace
+		 * @param speed The speed the pace makes you travel
 		 */
-		private Pace(String name, int pace) {
+		private Pace(String name, int speed) {
 			this.name = name;
-			this.pace = pace;
+			this.speed = speed;
 		}
 		
 		@Override
@@ -49,8 +58,8 @@ public class Party implements HUDDataSource {
 		 * Returns the current pace/speed.
 		 * @return the current pace/speed
 		 */
-		public int getPace() {
-			return pace;
+		public int getSpeed() {
+			return speed;
 		}
 	}
 
@@ -63,11 +72,13 @@ public class Party implements HUDDataSource {
 		BAREBONES ("Barebones", 50);
 		
 		private final String name;
+
 		private int breakpoint;
 		
 		/**
 		 * Construct a new Ration
 		 * @param name The name of the rations
+		 * @param breakpoint The goal stable health for the party members
 		 */
 		private Rations(String name, int breakpoint) {
 			this.name = name;
@@ -97,9 +108,11 @@ public class Party implements HUDDataSource {
 	
 	/**
 	 * If people are present before party is created, this constructor is used
+	 * @param currentPace The current pace of the party
+	 * @param rations The current rations of the party
 	 * @param party Array of people to be initialized into party
 	 */
-	public Party(Pace pace, Rations rations, ArrayList<Person> party) {
+	public Party(Pace currentPace, Rations currentRations, List<Person> party) {
 		for (Person person : party) {
 			if (person != null) {
 				members.add(person);
@@ -107,21 +120,24 @@ public class Party implements HUDDataSource {
 		}
 		
 		this.money = 0;
-		this.currentPace = pace;
-		this.currentRations = rations;
+		this.currentPace = currentPace;
+		this.currentRations = currentRations;
 		this.location = 0;
 		
 		String partyCreationLog = members.size() + " members were created successfully: ";
 		for (Person person : party) {
 			this.money += person.getProfession().getMoney();
-			Logger.log(person.getName() + " as a " + person.getProfession() + " brings $" + 
-					person.getProfession().getMoney() + " to the party.", Logger.Level.INFO);
+			Logger.log(person.getName() + " as a " + 
+					person.getProfession() + " brings $" + 
+					person.getProfession().getMoney() + 
+					" to the party.", Logger.Level.INFO);
 
 			partyCreationLog += person.getName() + " ";
 		}
 		Logger.log(partyCreationLog, Logger.Level.INFO);
 		Logger.log("Party starting money is: $" + money, Logger.Level.INFO);
-		Logger.log("Current pace is: " + currentPace + " and current rations is: " + currentRations, Level.INFO);
+		Logger.log("Current pace is: " + this.currentPace + 
+				" and current rations is: " + this.currentRations, Level.INFO);
 	}
 	
 	/**
@@ -130,7 +146,7 @@ public class Party implements HUDDataSource {
 	 * @param buyer The thing that wants the items in its inventory
 	 * @return True if successful
 	 */
-	public boolean buyItemForInventory(ArrayList<Item> items, Inventoried buyer) {
+	public boolean buyItemForInventory(List<Item> items, Inventoried buyer) {
 		int cost = 0;
 		Item.ITEM_TYPE itemType = items.get(0).getType();
 		int numberOf = items.size();
@@ -150,11 +166,12 @@ public class Party implements HUDDataSource {
 	
 	/**
 	 * Returns a list of inventoried things that can but the designated items.
-	 * @param items The items to test buying
+	 * @param itemType The item type that is being tested
+	 * @numberOf The number of items to try with
 	 * @return The list of people
 	 */
-	public ArrayList<Inventoried> canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
-		ArrayList<Inventoried> ableList = new ArrayList<Inventoried>();
+	public List<Inventoried> canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
+		List<Inventoried> ableList = new ArrayList<Inventoried>();
 		
 		if (itemType.getCost() * numberOf > money) {
 			return ableList;
@@ -172,20 +189,21 @@ public class Party implements HUDDataSource {
 		
 		return ableList;
 	}
+
 	/**
-	 * Returns an array of Persons present in the party
-	 * @return
+	 * Returns a list of Persons present in the party
+	 * @return The members of the party
 	 */
-	public ArrayList<Person> getPartyMembers() {
+	public List<Person> getPartyMembers() {
 		return this.members;
 	}
 
 	/**
-	 * Returns an array of the Skills present in the party
-	 * @return
+	 * Returns a list of the Skills present in the party
+	 * @return A list of skills in the party
 	 */
-	public ArrayList<Person.Skill> getSkills() {
-		ArrayList<Person.Skill> skillList = new ArrayList<Person.Skill>();
+	public List<Person.Skill> getSkills() {
+		List<Person.Skill> skillList = new ArrayList<Person.Skill>();
 		
 		for (Person person : members) {
 			for (Person.Skill skill: person.getSkills()) {
@@ -197,6 +215,7 @@ public class Party implements HUDDataSource {
 		
 		return skillList;
 	}
+
 	/**
 	 * Returns the money
 	 * @return the party's money
@@ -241,11 +260,11 @@ public class Party implements HUDDataSource {
 	
 	/**
 	 * Sets a party's new pace.
-	 * @param pace The party's new pace
+	 * @param currentPace The party's new pace
 	 */
-	public void setPace(Pace pace) {
-		Logger.log("Party pace changed to: " + pace, Logger.Level.INFO);
-		this.currentPace = pace;
+	public void setPace(Pace currentPace) {
+		Logger.log("Party pace changed to: " + currentPace, Logger.Level.INFO);
+		this.currentPace = currentPace;
 	}
 	
 	/**
@@ -286,19 +305,19 @@ public class Party implements HUDDataSource {
 	
 	/**
 	 * Steps the player forward through the game.
+	 * @return the distance travelled with the walk
 	 */
 	public int walk() {
-		location += 2 * getPace().getPace();
+		location += 2 * getPace().getSpeed();
 		
-		ArrayList<Person> deathList = new ArrayList<Person>();
+		List<Person> deathList = new ArrayList<Person>();
 		for (Person person : members) {
 			healToBreakpoint(person);
-			person.decreaseHealth(getPace().getPace());
+			person.decreaseHealth(getPace().getSpeed());
 			Logger.log(checkHungerStatus(person), Logger.Level.INFO);
 			if(person.getHealth().getCurrent() == 0) {
 				deathList.add(person);
-			}
-			else {
+			} else {
 				healToBreakpoint(person);
 			}
 		}
@@ -317,7 +336,8 @@ public class Party implements HUDDataSource {
 		int restoreNeeded = 0;
 		
 		if (person.getHealth().getCurrent() < getRations().getBreakpoint()) {
-			restoreNeeded = getRations().getBreakpoint() - person.getHealth().getCurrent();
+			restoreNeeded = getRations().getBreakpoint() - 
+			person.getHealth().getCurrent();
 		
 		}
 		
@@ -349,7 +369,8 @@ public class Party implements HUDDataSource {
 		if (restoreNeeded > 0 && donator != null) {
 			//If we need restoration, and have food
 			Item.ITEM_TYPE firstFood = null;
-			ArrayList<Item.ITEM_TYPE> typeList = donator.getInventory().getPopulatedSlots();
+			List<Item.ITEM_TYPE> typeList = 
+				donator.getInventory().getPopulatedSlots();
 			
 			for (Item.ITEM_TYPE itemType : typeList) {
 				if (itemType.getIsFood() && firstFood == null) {
@@ -357,7 +378,8 @@ public class Party implements HUDDataSource {
 				}
 			}
 			
-			ArrayList<Item> foodList = donator.removeItemFromInventory(firstFood, 1);
+			List<Item> foodList = 
+				(ArrayList<Item>)donator.removeItemFromInventory(firstFood, 1);
 			
 			Item food = foodList.get(0);
 			int foodFactor = food.getType().getFoodFactor();
@@ -397,7 +419,7 @@ public class Party implements HUDDataSource {
 		if(currentHealth == 0) {
 			return person.getName() + " has died of starvation!";
 		}
-		else if(person.getHealth().getCurrent() < 2 * getPace().getPace()) {
+		else if(person.getHealth().getCurrent() < 2 * getPace().getSpeed()) {
 			return person.getName() + " is in danger of starvation.";
 		}
 		else {
@@ -426,7 +448,6 @@ public class Party implements HUDDataSource {
 		return null;
 	}
 
-	@Override
 	public Condition getVehicleStatus() {
 		if (vehicle != null) {
 			return vehicle.getStatus();

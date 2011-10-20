@@ -25,4 +25,12 @@ public class Game {
 	public Player getPlayer() {
 		return this.player;
 	}
+	
+	/**
+	 * String representation of the game
+	 * @return the string
+	 */
+	public String toString() {
+		return null;
+	}
 }

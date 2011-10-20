@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Inventoried {
 	
@@ -9,59 +9,59 @@ public interface Inventoried {
 	 * @param itemsToAdd The items to add to the inventory
 	 * @return True if successful
 	 */
-	public boolean addItemToInventory(ArrayList<Item> itemsToAdd);
-	
+	boolean addItemToInventory(List<Item> itemsToAdd);
 	
 	/**
 	 * Adds a single item to inventory.
 	 * @param item The items to add to the inventory
 	 * @return True if successful
 	 */
-	public boolean addItemToInventory(Item item);
+	boolean addItemToInventory(Item item);
 	
 	/**
 	 * Removes the item from inventory.
-	 * @param itemIndex The type of item to remove
+	 * @param itemType The type of item to remove
 	 * @param quantity The number of items to remove
 	 * @return True if successful
 	 */
-	public ArrayList<Item> removeItemFromInventory(Item.ITEM_TYPE itemType, int quantity);
+	List<Item> removeItemFromInventory(Item.ITEM_TYPE itemType, int quantity);
 	
 	/**
-	 * Returns whether or not the number of a specific item type can be added to the inventory.
+	 * Returns whether or not the number of a specific item type 
+	 * can be added to the inventory.
 	 * @param itemType The type of item to test with
 	 * @param numberOf The number of items to test with
 	 * @return True if successful.
 	 */
-	public boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf);
+	boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf);
 	
 	/**
 	 * The name of the inventoried person.
 	 * @return The name
 	 */
-	public String getName();
+	String getName();
 	
 	/**
 	 * The inventory of the inventoried person.
 	 * @return The inventory
 	 */
-	public Inventory getInventory();
+	Inventory getInventory();
 	
 	/**
 	 * The max size of the inventory.
 	 * @return The max size.
 	 */
-	public int getMaxSize();
+	int getMaxSize();
 	
 	/**
 	 * Returns the current carried weight
 	 * @return The current carried weight
 	 */
-	public double getWeight();
+	double getWeight();
 	
 	/**
 	 * Returns the max weight of the inventory
 	 * @return The max weight
 	 */
-	public double getMaxWeight();
+	double getMaxWeight();
 }

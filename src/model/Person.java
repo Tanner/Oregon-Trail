@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import core.Logger;
 
@@ -9,20 +10,32 @@ import core.Logger;
  * as their name, and what their profession is called.
  */
 public class Person implements Conditioned, Inventoried{
+	
 	private Condition skillPoints;
+	
 	private Condition health;
+	
 	private boolean isMale = true;
-	private ArrayList<Skill> skills = new ArrayList<Skill>();
+	
+	private List<Skill> skills = new ArrayList<Skill>();
+	
 	private String name;
+	
 	private Profession profession;
+	
 	private static final float BASE_MONEY = 1600f;
+	
 	private static final int BASE_SKILL_POINTS = 70;
+	
 	private Inventory inventory;
+	
 	public static final int MAX_INVENTORY_SIZE = 5;
-	private final double MAX_INVENTORY_WEIGHT = 10;
+	
+	private static final double MAX_INVENTORY_WEIGHT = 10;
 	
 	/**
-	 * Person creation should be done this way always - name first, then profession and skills are added.
+	 * Person creation should be done this way always - 
+	 * name first, then profession and skills are added.
 	 * @param name 
 	 */
 	public Person(String name){
@@ -38,7 +51,7 @@ public class Person implements Conditioned, Inventoried{
 	 * @param profession the desired profession
 	 * @return successful completion of operation
 	 */
-	public boolean setProfession(Profession profession) {
+	public boolean changeProfession(Profession profession) {
 		//This will only happen during party creation when the skills haven't been chosen yet.
 		if (this.profession == null) {
 			this.profession = profession;
@@ -50,9 +63,10 @@ public class Person implements Conditioned, Inventoried{
 			return false;
 		} else if (this.profession != profession) {
 			this.skills.clear();
-			Logger.log(this.name + " stopped being a " + this.profession + " and lost all current skills", Logger.Level.INFO);
+			Logger.log(this.name + " stopped being a " + 
+					this.profession + " and lost all current skills", Logger.Level.INFO);
 			this.profession = null;
-			setProfession(profession);
+			changeProfession(profession);
 			return true;
 		} else {
 			Logger.log("Don't know what happened", Logger.Level.INFO);
@@ -68,6 +82,10 @@ public class Person implements Conditioned, Inventoried{
 		return skillPoints.getCurrent();
 	}
 	
+	/**
+	 * Clears the persons skills
+	 * @return True is successful, false otherwise
+	 */
 	public boolean clearSkills() {
 		for (int i = skills.size() - 1; i >= 0; i--) {
 			Skill skill = skills.get(i);
@@ -80,12 +98,14 @@ public class Person implements Conditioned, Inventoried{
 	
 	public boolean addSkill(Skill newSkill) {
 		if(skills.contains(newSkill)) {
-			Logger.log(this.name + " already has the skill " + newSkill, Logger.Level.INFO);
+			Logger.log(this.name + " already has the skill " 
+					+ newSkill, Logger.Level.INFO);
 			return false;
 		}
 		else if(newSkill == this.profession.getStartingSkill()) {
 			skills.add(newSkill);
-			Logger.log("As a " + this.profession + " " + this.name + " gains the skill " + newSkill, Logger.Level.INFO);
+			Logger.log("As a " + this.profession + " " + 
+					this.name + " gains the skill " + newSkill, Logger.Level.INFO);
 			return true;
 		}
 		else {
@@ -94,8 +114,7 @@ public class Person implements Conditioned, Inventoried{
 			return true;
 		}
 	}
-	
-	
+
 	/**
 	 * Adds a skill to this person's skill set
 	 * @param newSkill skill to be added
@@ -103,18 +122,23 @@ public class Person implements Conditioned, Inventoried{
 	 */
 	public boolean buySkill(Skill newSkill){
 		if(skills.contains(newSkill)) {
-			Logger.log(this.name + " already has the skill " + newSkill, Logger.Level.INFO);
+			Logger.log(this.name + " already has the skill " + 
+					newSkill, Logger.Level.INFO);
 			return false;
 		}
 		else {
 			if(skillPoints.getCurrent() < newSkill.getCost()) {
-				Logger.log(this.name + " does not have enough skill points to obtain " + newSkill + ".  Current skill points: " + skillPoints.getCurrent() + " Cost of new skill: " + newSkill.getCost(), Logger.Level.INFO);
+				Logger.log(this.name + " does not have enough skill points to obtain " + 
+						newSkill + ".  Current skill points: " + 
+						skillPoints.getCurrent() + " Cost of new skill: " + newSkill.getCost(), Logger.Level.INFO);
 			}
 			else {
 				skillPoints.decrease(newSkill.getCost());
 				skills.add(newSkill);
-				Logger.log(this.name + " gained the skill " + newSkill, Logger.Level.INFO);
-				Logger.log(this.name + " has " + skillPoints.getCurrent() + " skill points remaning.", Logger.Level.INFO);
+				Logger.log(this.name + " gained the skill " +
+						newSkill, Logger.Level.INFO);
+				Logger.log(this.name + " has " + 
+						skillPoints.getCurrent() + " skill points remaning.", Logger.Level.INFO);
 				return true;
 			}
 		}
@@ -128,7 +152,8 @@ public class Person implements Conditioned, Inventoried{
 	 */
 	public boolean removeSkill(Skill oldSkill) {
 		if (!this.skills.contains(oldSkill)) {
-			Logger.log("Cannot remove a skill that isn't already known.", Logger.Level.INFO);
+			Logger.log("Cannot remove a skill that isn't already known.",
+					Logger.Level.INFO);
 			return false;
 		}
 		else if (this.profession.getStartingSkill() == oldSkill) {
@@ -146,14 +171,11 @@ public class Person implements Conditioned, Inventoried{
 	 * Gets the list of skills a person has.
 	 * @return The list of skills
 	 */
-	public ArrayList<Skill> getSkills() {
+	public List<Skill> getSkills() {
 		return skills;
 	}
 	
-	/**
-	 * I FORGOT MY NAME!
-	 * @return Person's name
-	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -170,12 +192,8 @@ public class Person implements Conditioned, Inventoried{
 	public Profession getProfession(){
 		return profession;
 	}
-	
-	
-	/**
-	 * Returns meaningful data about the person as a string.
-	 * @return the string with meaningful data about the person
-	 */
+
+	@Override
 	public String toString() {
 		String str = "Name: " + name;
 		if(profession != null) {
@@ -209,6 +227,7 @@ public class Person implements Conditioned, Inventoried{
 		NONE (0, "");
 		
 		private final int cost;
+
 		private final String name;
 		
 		/**
@@ -269,7 +288,9 @@ public class Person implements Conditioned, Inventoried{
 		TEACHER (5, Skill.NONE, "Teacher");
 		
 		private final float moneyDivider;
+
 		private final Skill startingSkill;
+		
 		private final String name;
 		
 		/**
@@ -316,7 +337,8 @@ public class Person implements Conditioned, Inventoried{
 	public void setIsMale(boolean isMale) {
 		this.isMale = isMale;
 		
-		Logger.log("Gender changed to " + (isMale ? "Male" : "Female"), Logger.Level.INFO);
+		Logger.log("Gender changed to " + 
+				(isMale ? "Male" : "Female"), Logger.Level.INFO);
 	}
 	
 	/**
@@ -328,33 +350,25 @@ public class Person implements Conditioned, Inventoried{
 		return isMale;
 	}
 	
-	/**
-	 * Returns the inventory of the person
-	 * @return The inventory of the person
-	 */
+	@Override
 	public Inventory getInventory() {
 		return inventory;
 	}
 	
 	@Override
-	public boolean addItemToInventory(ArrayList<Item> items) {
+	public boolean addItemToInventory(List<Item> items) {
 		return inventory.addItem(items);
 	}
 	
 	@Override
 	public boolean addItemToInventory(Item item) {
-		ArrayList<Item> itemToAdd = new ArrayList<Item>();
+		List<Item> itemToAdd = new ArrayList<Item>();
 		itemToAdd.add(item);
 		return inventory.addItem(itemToAdd);
 	}
-	
-	
-	/**
-	 * Removes the specified item from the inventory if it exists.
-	 * @param item The item to be removed.
-	 * @return The removed items
-	 */
-	public ArrayList<Item> removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
+
+	@Override
+	public List<Item> removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
 		return inventory.removeItem(itemIndex, quantity);
 	}
 	
@@ -363,7 +377,7 @@ public class Person implements Conditioned, Inventoried{
 	 * @return The condition 'health'
 	 */
 	public Condition getHealth() {
-		return health.clone();
+		return health.copy();
 	}
 	
 	/**
@@ -389,11 +403,7 @@ public class Person implements Conditioned, Inventoried{
 		return health.getPercentage();
 	}
 	
-	/**
-	 * Returns whether or not the item addition is possible.
-	 * @param The items to test the possibility of adding.
-	 * @return True if possible.
-	 */
+	@Override
 	public boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
 		return inventory.canAddItems(itemType, numberOf);
 	}

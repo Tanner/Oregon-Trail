@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 import core.Logger;
@@ -9,13 +10,19 @@ import core.Logger;
  * Inventory with an ArrayList that holds all the arrayLists of items in the inventory.
  */
 public class Inventory {
-	private ArrayList<PriorityQueue<Item>> slots;
+	
+	private final List<PriorityQueue<Item>> slots;
+	
 	private final int MAX_SIZE;
+	
 	private final double MAX_WEIGHT;
+	
 	private int currentSize;
 
 	/**
 	 * Inventory starts out empty.
+	 * @param maxSize the max size of the inventory
+	 * @param maxWeight the max weight of the inventory
 	 */
 	public Inventory(int maxSize, double maxWeight) {
 		this.MAX_SIZE = maxSize;
@@ -39,8 +46,8 @@ public class Inventory {
 	 * Returns the slots in inventory with items.
 	 * @return The slots in the inventory.
 	 */
-	public ArrayList<Item.ITEM_TYPE> getPopulatedSlots() {
-		ArrayList<Item.ITEM_TYPE> popSlots = new ArrayList<Item.ITEM_TYPE>();
+	public List<Item.ITEM_TYPE> getPopulatedSlots() {
+		List<Item.ITEM_TYPE> popSlots = new ArrayList<Item.ITEM_TYPE>();
 		for(Item.ITEM_TYPE itemType : Item.ITEM_TYPE.values()) {
 			if (getNumberOf(itemType) != 0) {
 				popSlots.add(itemType);
@@ -73,7 +80,8 @@ public class Inventory {
 
 	/**
 	 * Determines if the inventory can handle the addition
-	 * @param itemsToAdd The list of items to add.
+	 * @param itemType The item type
+	 * @param numberOf The number of items to test with
 	 * @return True if successful
 	 */
 	public boolean canAddItems(Item.ITEM_TYPE itemType, int numberOf) {
@@ -81,7 +89,7 @@ public class Inventory {
 			return false;
 		}
 		
-		double weight = itemType.getWeight() * numberOf;
+		final double weight = itemType.getWeight() * numberOf;
 		if(getWeight() + weight > MAX_WEIGHT) {
 			Logger.log("Not enough weight capacity", Logger.Level.INFO);
 			return false;
@@ -92,16 +100,17 @@ public class Inventory {
 			return true;
 		}
 	}
+	
 	/**
 	 * Adds the item to the inventory.
-	 * @param item The item to add
+	 * @param itemsToAdd The items to add
 	 * @return True if successful, false otherwise
 	 */
-	public boolean addItem(ArrayList<Item> itemsToAdd) {
+	public boolean addItem(List<Item> itemsToAdd) {
 		if(itemsToAdd.size() == 0) {
 			return false;
 		}
-		Item.ITEM_TYPE itemType = itemsToAdd.get(0).getType();
+		final Item.ITEM_TYPE itemType = itemsToAdd.get(0).getType();
 		if(canAddItems(itemType, itemsToAdd.size())) {
 			for(Item item : itemsToAdd) {
 				slots.get(itemType.ordinal()).add(item);
@@ -122,11 +131,12 @@ public class Inventory {
 
 	/**
 	 * Removes the item from the inventory.
-	 * @param item The item to remove
+	 * @param itemType The item to remove
+	 * @param quantity The number to remove
 	 * @return True if successful, false otherwise
 	 * */
-	public ArrayList<Item> removeItem(int itemType, int quantity) {
-		ArrayList<Item> removedItems = new ArrayList<Item>();
+	public List<Item> removeItem(int itemType, int quantity) {
+		List<Item> removedItems = new ArrayList<Item>();
 		if(slots.get(itemType).size() < quantity) {
 			Logger.log("Not enough items to remove", Logger.Level.INFO);
 			removedItems = null;
@@ -153,9 +163,9 @@ public class Inventory {
 	 * @param quantity The number of the item to remvove
 	 * @return The removed items.
 	 */
-	public ArrayList<Item> removeItem(Item.ITEM_TYPE itemType, int quantity) {
-		ArrayList<Item> removedItems = new ArrayList<Item>();
-		int itemIndex = itemType.ordinal();
+	public List<Item> removeItem(Item.ITEM_TYPE itemType, int quantity) {
+		List<Item> removedItems = new ArrayList<Item>();
+		final int itemIndex = itemType.ordinal();
 		if(slots.get(itemIndex).size() < quantity) {
 			Logger.log("Not enough items to remove", Logger.Level.INFO);
 			removedItems = null;
@@ -175,6 +185,7 @@ public class Inventory {
 		
 		return removedItems;
 	}
+	
 	/**
 	 * Checks to see if the current inventory is full.
 	 * @return True if the inventory is full, false otherwise.
@@ -207,12 +218,14 @@ public class Inventory {
 	}
 	
 	/**
-	 * 
-	 * @param itemType
-	 * @return
+	 * Checks the item type
+	 * @param itemType The item to check
+	 * @return The condition of the worst item in the list
 	 */
 	public Condition getConditionOf(Item.ITEM_TYPE itemType) {
-		return getNumberOf(itemType) != 0 ? slots.get(itemType.ordinal()).peek().getStatus() : null;
+		return getNumberOf(itemType) != 0 ? 
+				slots.get(itemType.ordinal()).peek().getStatus() :
+					null;
 	}
 	
 	/**
@@ -231,7 +244,7 @@ public class Inventory {
 	 * @return String representation of the inventory
 	 */
 	public String toString() {
-		ArrayList<Item.ITEM_TYPE> popSlots = getPopulatedSlots();
+		final List<Item.ITEM_TYPE> popSlots = getPopulatedSlots();
 		String str = "Size: " + popSlots.size() + ". ";
 		for(Item.ITEM_TYPE itemType : popSlots) {
 			str += " # of " + itemType.getName() + "s: " + getNumberOf(itemType);

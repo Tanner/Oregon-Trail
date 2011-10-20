@@ -1,6 +1,7 @@
 package model.item;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Condition;
 import model.Inventoried;
@@ -39,7 +40,7 @@ public abstract class Vehicle extends Item implements Inventoried{
 	 * @return The current status of the vehicle.
 	 */
 	public Condition getStatus() {
-		return status.clone();
+		return status.copy();
 	}
 	
 	/**
@@ -69,7 +70,7 @@ public abstract class Vehicle extends Item implements Inventoried{
 	}
 	
 	@Override
-	public boolean addItemToInventory(ArrayList<Item> items) {
+	public boolean addItemToInventory(List<Item> items) {
 		return cargo.addItem(items);
 	}
 	
@@ -85,7 +86,7 @@ public abstract class Vehicle extends Item implements Inventoried{
 	 * @param item The item to be removed.
 	 * @return The items removed (null if doesn't exist.)
 	 */
-	public ArrayList<Item> removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
+	public List<Item> removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
 		return cargo.removeItem(itemIndex, quantity);
 	}
 	
