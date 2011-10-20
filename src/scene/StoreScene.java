@@ -111,7 +111,7 @@ public class StoreScene extends Scene {
 			for (int i = 0; i < storeInventory.length; i++) {
 				if ( i != getButtonIndex(currentItem) )
 					storeInventory[i].setDisabled(true);
-			}	
+			}
 		}
 	}
 
@@ -331,7 +331,7 @@ public class StoreScene extends Scene {
 				if (successCode == 0)
 					showModal(buyModal);
 				else if (successCode == -1)
-					showModal(failedBuyModal);		
+					showModal(failedBuyModal);
 			} else {
 				if ( currentItem != null) {
 					storeInventory[getButtonIndex(currentItem)].setCount(storeInventory[getButtonIndex(currentItem)].getMax());

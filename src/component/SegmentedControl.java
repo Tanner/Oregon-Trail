@@ -86,7 +86,7 @@ public class SegmentedControl extends Component {
 		
 		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TOPLEFT), rows, cols, xOffset, yOffset, margin, margin);
 			
-		clear();		
+		clear();
 	}
 	
 	@Override

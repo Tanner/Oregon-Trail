@@ -14,7 +14,7 @@ import core.ConstantStore;
  * {@code Button} inherits from {@code Component} to extend features that provides necessary
  * functionality to behave like a button.
  */
-public class Button extends Component implements Disableable {	
+public class Button extends Component implements Disableable {
 	private Label label;
 	
 	private Color buttonColor;

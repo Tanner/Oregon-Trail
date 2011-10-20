@@ -31,7 +31,7 @@ public abstract class Vehicle extends Item implements Inventoried{
 	super(name, description, status, weight, cost, type);
 		this.MAX_INVENTORY_WEIGHT = maxWeight;
 		this.status = status;
-		this.cargo = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);	
+		this.cargo = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);
 	}
 	
 	/**

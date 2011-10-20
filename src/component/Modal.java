@@ -44,7 +44,7 @@ public class Modal extends Component {
 		
 		this.listener = listener;
 				
-		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);		
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		this.messageLabel = new Label(container, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		
@@ -60,7 +60,7 @@ public class Modal extends Component {
 		panel.setBorderWidth(2);
 		panel.setLocation((getWidth() - panel.getWidth()) / 2, (getHeight() - panel.getHeight() / 2));
 		
-		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);		
+		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
 		panel.add(dismissButton, panel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -PADDING);
 		
 		add(panel, getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
@@ -81,7 +81,7 @@ public class Modal extends Component {
 		this.listener = listener;
 		this.segmentedControl = segmentedControl;
 				
-		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);		
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		messageLabel = new Label(container, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		
@@ -92,7 +92,7 @@ public class Modal extends Component {
 		resignButton.addListener(buttonListener);
 		
 		dismissButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, cancelButtonString));
-		dismissButton.addListener(buttonListener);		
+		dismissButton.addListener(buttonListener);
 		
 		int panelWidth = PADDING * 2 + Math.max(segmentedControl.getWidth(), messageLabel.getWidth());
 		int panelHeight = PADDING * 4 + messageLabel.getHeight() + segmentedControl.getHeight() + resignButton.getHeight();

@@ -86,7 +86,7 @@ public class TrailTestScene extends Scene {
 			paceLabels[i] = Party.Pace.values()[i].toString();
 		}
 		paceSegmentedControl = new SegmentedControl(container, BUTTON_WIDTH * 2 + PADDING, REGULAR_BUTTON_HEIGHT, 1, paceLabels.length, 0, true, 1, paceLabels);
-		mainLayer.add(paceSegmentedControl, rationsSegmentedControl.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, -PADDING);	
+		mainLayer.add(paceSegmentedControl, rationsSegmentedControl.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, -PADDING);
 		
 		if (vehicle != null) {
 			vehicleInventory = new Label(container, 900, 90, fieldFont, Color.white, vehicle.getInventory().toString());
@@ -105,7 +105,7 @@ public class TrailTestScene extends Scene {
 		tempLabel = new Label(container, fieldFont, Color.white, "Party Inventory");
 		partyInventoryButton = new Button(container, BUTTON_WIDTH, REGULAR_BUTTON_HEIGHT, tempLabel);
 		partyInventoryButton.addListener(new ButtonListener());
-		mainLayer.add(stepButton, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);	
+		mainLayer.add(stepButton, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
 		mainLayer.add(updateButton, stepButton.getPosition(ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, 0, -PADDING);
 		mainLayer.add(cancelButton, stepButton.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPRIGHT, -PADDING, 0);
 		mainLayer.add(partyInventoryButton, cancelButton.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.BOTTOMLEFT, 0, -PADDING);

@@ -116,7 +116,7 @@ public class PartyCreationScene extends Scene {
 		String[] skillLabels = new String[numOfSkills];
 		for (int i = 0; i < numOfSkills; i++) {
 			skillLabels[i] = Person.Skill.values()[i].getName();
-		}	
+		}
 		skillSegmentedControl = new SegmentedControl(container, 800, 200, 5, 3, 5, true, 3, skillLabels);
 		
 		// Create all the "add person" column
@@ -355,13 +355,13 @@ public class PartyCreationScene extends Scene {
 		}
 	}
 	
-	private class SceneComponentListener implements ComponentListener {	
+	private class SceneComponentListener implements ComponentListener {
 		/**
 		 * New person button triggered event; set text field access accordingly.
 		 * @param i The index in the textfield array we are checking
 		 */		
 		private void newPersonButtonActivated(int i){
-			personNameTextFields[i].setVisible(true);			
+			personNameTextFields[i].setVisible(true);
 			personNameTextFields[i].setFocus(true);
 		}
 	
@@ -370,7 +370,7 @@ public class PartyCreationScene extends Scene {
 		 * @param i The index in the textfield array we are checking
 		 * @return exit code - 0 for natural exit, 1 for forced exit
 		 */		
-		private int personNameTextFieldActivated(int i) {			
+		private int personNameTextFieldActivated(int i) {
 			if (people.size() < i + 1) {
 				// If the party is not full...
 				if (!personNameTextFields[i].isEmpty()) {
@@ -443,9 +443,9 @@ public class PartyCreationScene extends Scene {
 				currentProfession[0] = people.get(i).getProfession().ordinal();
 			}
 			
-			professionSegmentedControl.setSelection(currentProfession);								
+			professionSegmentedControl.setSelection(currentProfession);
 			currentPersonModifying = i;
-			showModal(professionModal);			
+			showModal(professionModal);
 		}
 		
 		/**
@@ -488,7 +488,7 @@ public class PartyCreationScene extends Scene {
 			System.out.println(Arrays.toString(currentSkillIndices));
 			skillSegmentedControl.setSelection(currentSkillIndices);
 			currentPersonModifying = i;
-			showModal(skillModal);			
+			showModal(skillModal);
 		}
 
 		/**
@@ -499,7 +499,7 @@ public class PartyCreationScene extends Scene {
 			//Delete the last created person
 			Logger.log("Deleting pending Person at index " + i, Logger.Level.INFO);
 			clearPersonData(i);
-			hidePersonColumn(i);			
+			hidePersonColumn(i);
 		}
 		
 		/**
@@ -525,11 +525,11 @@ public class PartyCreationScene extends Scene {
 			player.setParty(new Party(pace, rations, people));
 			
 			Logger.log("Confirm button pushed", Logger.Level.INFO);
-			GameDirector.sharedSceneListener().sceneDidEnd(PartyCreationScene.this);	
+			GameDirector.sharedSceneListener().sceneDidEnd(PartyCreationScene.this);
 		}
 		
-		@Override		
-		public void componentActivated(AbstractComponent source) {		
+		@Override
+		public void componentActivated(AbstractComponent source) {
 			int retCode = 0;
 			int i = 0;
 			//for loop needed to be modified to a while to handle the retcode returned from personNameTextField
@@ -542,7 +542,7 @@ public class PartyCreationScene extends Scene {
 					newPersonButtonActivated(i);
 				} else if (source == personGenderControl[i]) {
 					personGenderControlActivated(i);
-				} else if (source == personNameTextFields[i]) {	
+				} else if (source == personNameTextFields[i]) {
 					retCode = personNameTextFieldActivated(i);
 				} else if (source == personChangeProfessionButtons[i]) {
 					personChangeProfButtonActivated(i);

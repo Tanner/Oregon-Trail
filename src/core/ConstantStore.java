@@ -11,7 +11,7 @@ import org.newdawn.slick.Color;
  * 
  * @author NULL&void
  */
-public final class ConstantStore {	
+public final class ConstantStore {
 	/**
 	 * Initialize and build literal map used to hold all display literals in game
 	 */

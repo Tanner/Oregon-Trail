@@ -69,7 +69,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 				g.fillRect(getX(), getY(), getWidth(), getHeight());
 			} else {
 				Color brightColor = backgroundColor.brighter(0.1f);
-				Color darkColor = backgroundColor.darker(0.2f);		
+				Color darkColor = backgroundColor.darker(0.2f);
 				
 				g.setColor(backgroundColor);
 				// inner rect
@@ -463,7 +463,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	@Override
-	public void setLocation(int x, int y) {		
+	public void setLocation(int x, int y) {
 		if (origin == null) {
 			origin = new Vector2f((int)x, (int)y);
 		} else {

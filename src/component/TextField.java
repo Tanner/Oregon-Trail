@@ -68,7 +68,7 @@ public class TextField extends Component implements Disableable {
 				label.setText("");
 			}
 			
-			if (key == Input.KEY_ENTER) {				
+			if (key == Input.KEY_ENTER) {
 				setFocus(false);
 			} else if (key == Input.KEY_BACK && label.getText().length() >= 1) {
 				Logger.log("Deleting last character", Logger.Level.DEBUG);

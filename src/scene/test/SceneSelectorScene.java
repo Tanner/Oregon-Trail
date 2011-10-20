@@ -185,7 +185,7 @@ public class SceneSelectorScene extends Scene {
 				Bread bread = new Bread();
 				bread.decreaseStatus(random.nextInt(100));
 				itemsToAdd.add(bread);
-				person.addItemToInventory(itemsToAdd);	
+				person.addItemToInventory(itemsToAdd);
 			}
 //			
 //			Apple apple = new Apple(1);

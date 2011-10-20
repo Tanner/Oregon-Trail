@@ -106,7 +106,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 */
 	public double getWeight() {
 		return weight;
-	}	
+	}
 	
 	/**
 	 * Whether or not the item can be stacked.

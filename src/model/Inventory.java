@@ -101,7 +101,7 @@ public class Inventory {
 		if(itemsToAdd.size() == 0) {
 			return false;
 		}
-		Item.ITEM_TYPE itemType = itemsToAdd.get(0).getType();		
+		Item.ITEM_TYPE itemType = itemsToAdd.get(0).getType();
 		if(canAddItems(itemType, itemsToAdd.size())) {
 			for(Item item : itemsToAdd) {
 				slots.get(itemType.ordinal()).add(item);
