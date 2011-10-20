@@ -75,7 +75,7 @@ public class OwnerInventoryButtons {
 				padding = 0;
 			}
 			
-			SlotConditionGroup slotConditionGroup = new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font, i);
+			SlotConditionGroup slotConditionGroup = new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font);
 			
 			if (i < slots.size()) {
 				String name = slots.get(i).getName();

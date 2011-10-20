@@ -28,7 +28,6 @@ public class SlotConditionGroup extends Component {
 	public static enum Mode {NORMAL, TRANSFER};
 	private Mode currentMode;
 	
-	private int pocketNumber;
 	private ITEM_TYPE item;
 	
 	/**
@@ -39,10 +38,8 @@ public class SlotConditionGroup extends Component {
 	 * @param font Font to use
 	 * @param pocketNumber The "pocket number" that the {@code Inventoried} has on it to use
 	 */
-	public SlotConditionGroup(GUIContext container, int width, int height, Font font, int pocketNumber) {
+	public SlotConditionGroup(GUIContext container, int width, int height, Font font) {
 		super(container, width, height);
-		
-		this.pocketNumber = pocketNumber;
 		
 		Label label = new Label(container, width, font, Color.white, "");
 		label.setAlignment(Alignment.CENTER);
@@ -69,14 +66,6 @@ public class SlotConditionGroup extends Component {
 		}
 		
 		super.render(container, g);
-	}
-	
-	/**
-	 * Get the pocket number.
-	 * @return Pocket number
-	 */
-	public int getPocketNumber() {
-		return pocketNumber;
 	}
 	
 	/**
