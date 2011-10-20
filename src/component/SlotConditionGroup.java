@@ -99,6 +99,17 @@ public class SlotConditionGroup extends ComponentConditionGroup<CountingButton> 
 		}
 	}
 	
+	@Override
+	public void setDisable(boolean disabled) {
+		super.setDisable(disabled);
+		
+		if (disabled) {
+			component.setText("None");
+		}
+		
+		component.setHideCount(disabled);
+	}
+	
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
