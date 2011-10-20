@@ -17,6 +17,8 @@ import scene.PartyInventoryScene;
 import scene.PartyInventoryScene.Mode;
 
 import component.Positionable.ReferencePoint;
+import core.FontManager;
+import core.GameDirector;
 
 /**
  * This class is a group of a {@code Button} and a {@code ConditionBar}.
@@ -75,7 +77,12 @@ public class OwnerInventoryButtons {
 				padding = 0;
 			}
 			
-			SlotConditionGroup slotConditionGroup = new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font);
+			Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+			
+			Label label = new Label(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, fieldFont, Color.white, "");
+			CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, label);
+			
+			SlotConditionGroup slotConditionGroup = new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font, button, new Condition(0, 0, 0));
 			
 			if (i < slots.size()) {
 				String name = slots.get(i).getName();
