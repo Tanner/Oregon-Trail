@@ -103,7 +103,7 @@ public class HuntScene extends Scene {
 	}
 
 	@Override
-	public void keyReleased(int key, char c) {
+	public void keyPressed(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
 			GameDirector.sharedSceneListener().sceneDidEnd(this);
 		}

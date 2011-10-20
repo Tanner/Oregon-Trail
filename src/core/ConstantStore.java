@@ -62,7 +62,12 @@ public final class ConstantStore {
 		partyInventoryScene.put("ERR_INV_FAIL", "This inventory cannot hold all the bin's items. Please select another inventory.");
 		literalMap.put("PARTY_INVENTORY_SCENE", partyInventoryScene);
 		
-		// Items
+		// HUD
+		Map<String, String> hudScene = new HashMap<String, String>();
+		hudScene.put("MEMBERS_HEALTH", "Members");
+		hudScene.put("VEHICLE_HEALTH", "Vehicle");
+		literalMap.put("HUD_SCENE", hudScene);
+		
 		// Items
 		Map<String, String> itemMap = new HashMap<String, String>();
 		itemMap.put("WHEEL_NAME", "Wheel");

@@ -30,7 +30,7 @@ public class SlotConditionGroup extends ComponentConditionGroup<CountingButton> 
 	 * @param pocketNumber The "pocket number" that the {@code Inventoried} has on it to use
 	 */
 	public SlotConditionGroup(GUIContext container, int width, int height, Font font, CountingButton button, Condition condition) {
-		super(container, width, height, font, button, condition);
+		super(container, width, height, button, condition);
 		
 		button.addListener(new ButtonListener());
 		

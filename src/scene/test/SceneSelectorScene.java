@@ -55,7 +55,7 @@ public class SceneSelectorScene extends Scene {
 		buttons = new ArrayList<Button>();
 		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
-		String[] labels = { "Main Menu", "Party Creation", "Town", "Store", "Party Inventory", "Components", "Remove Party", "Add Party", "Trail Test Scene", "Hunt Scene Test" };
+		String[] labels = { "Main Menu", "Party Creation", "Town", "Store", "Party Inventory", "Components", "Trail Test Scene", "Hunt Scene Test", "Remove Party", "Add Party" };
 		
 		int rows = (int)Math.ceil(Math.sqrt(labels.length));
 		int cols = (int)Math.ceil(Math.sqrt(labels.length));
@@ -124,23 +124,26 @@ public class SceneSelectorScene extends Scene {
 			} else if (component == buttons.get(5)) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.COMPONENTTEST, SceneSelectorScene.this);
 			} else if (component == buttons.get(6)) {
-				player.setParty(null);
-			} else if (component == buttons.get(7)) {
-				player.setParty(makeRandomParty());
-			} else if (component == buttons.get(8)) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTESTSCENE, SceneSelectorScene.this);
-
-			} else if (component == buttons.get(9)) {
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
 					return;		
-					}		
+				}
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTESTSCENE, SceneSelectorScene.this);
+			} else if (component == buttons.get(7)) {
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;		
+				}
 				GameDirector.sharedSceneListener().requestScene(SceneID.HUNT, SceneSelectorScene.this);
-			}
+			} else if (component == buttons.get(8)) {
+				player.setParty(null);
+			} else if (component == buttons.get(9)) {
+				player.setParty(makeRandomParty());
+			} 
 		}
 		
 		private void warnBecauseNoParty() {
-			modalLayer.add(new Modal(container, SceneSelectorScene.this, ConstantStore.get("SCENE_SELECTOR_SCENE", "ERR_NO_PARTY_FOR_SCENE"), ConstantStore.get("GENERAL", "OK")));
+			showModal((new Modal(container, SceneSelectorScene.this, ConstantStore.get("SCENE_SELECTOR_SCENE", "ERR_NO_PARTY_FOR_SCENE"), ConstantStore.get("GENERAL", "OK"))));
 		}
 	}
 	

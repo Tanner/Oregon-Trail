@@ -43,7 +43,7 @@ public class Label extends Component {
 		this.font = font;
 		this.c = c;
 		this.text = text;
-		alignment = Alignment.LEFT;
+		alignment = Alignment.CENTER;
 		verticalAlignment = VerticalAlignment.CENTER;
 		clip = true;
 		lines = new ArrayList<String>();
@@ -60,15 +60,7 @@ public class Label extends Component {
 	 * @param text The text to draw
 	 */
 	public Label(GUIContext context, int width, Font font, Color c, String text) {
-		super(context, width, font.getLineHeight());
-		this.font = font;
-		this.c = c;
-		this.text = text;
-		alignment = Alignment.LEFT;
-		verticalAlignment = VerticalAlignment.CENTER;
-		clip = true;
-		lines = new ArrayList<String>();
-		parseLines();
+		this(context, width, font.getLineHeight(), font, c, text);
 	}
 	
 	/**

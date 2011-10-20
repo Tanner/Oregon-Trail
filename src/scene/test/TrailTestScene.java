@@ -111,6 +111,8 @@ public class TrailTestScene extends Scene {
 		mainLayer.add(partyInventoryButton, cancelButton.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.BOTTOMLEFT, 0, -PADDING);
 		
 		backgroundLayer.add(new Panel(container, new Color(0x0C5DA5)));
+		
+		showHUD(new HUD(container, party));
 	}
 	
 	@Override
