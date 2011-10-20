@@ -40,24 +40,21 @@ public class Person implements Conditioned, Inventoried{
 	 */
 	public boolean setProfession(Profession profession) {
 		//This will only happen during party creation when the skills haven't been chosen yet.
-		if(this.profession == null) {
+		if (this.profession == null) {
 			this.profession = profession;
 			Logger.log(this.name + " became a " + this.profession, Logger.Level.INFO);
 			addSkill(profession.getStartingSkill());
 			return true;
-		}
-		else if(this.profession == profession) {
+		} else if (this.profession == profession) {
 			Logger.log(this.name + " is already a " + profession, Logger.Level.INFO);
 			return false;
-		}
-		else if (this.profession != profession) {
+		} else if (this.profession != profession) {
 			this.skills.clear();
 			Logger.log(this.name + " stopped being a " + this.profession + " and lost all current skills", Logger.Level.INFO);
 			this.profession = null;
 			setProfession(profession);
 			return true;
-		}
-		else {
+		} else {
 			Logger.log("Don't know what happened", Logger.Level.INFO);
 			return false;
 		}
