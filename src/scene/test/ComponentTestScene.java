@@ -53,8 +53,8 @@ public class ComponentTestScene extends Scene {
 		label = new Label(container, 300, fieldFont, Color.white, "Label");
 		mainLayer.add(label, button.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
 	
-		spinner = new Spinner(container, 300, 50, fieldFont, Color.white, false, "Hello","There","Encyclopedia");
-		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BOTTOMLEFT),Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
+		spinner = new Spinner(container, 300, 50, fieldFont, Color.white, false, "Hello", "There", "Encyclopedia");
+		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
 	
 		spinnerLabel = new Label(container, 300, fieldFont, Color.white, "Label");
 		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
@@ -64,9 +64,9 @@ public class ComponentTestScene extends Scene {
 			strs[i] = arr[i].getName();
 		}	
 
-		segment = new SegmentedControl(container,500, 100, 4, 3, 0, true, 4, strs);
+		segment = new SegmentedControl(container, 500, 100, 4, 3, 0, true, 4, strs);
 		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
-		int[] num = {2,3};
+		int[] num = {2, 3};
 		segment.setPermanent(num);
 		segment.setDisabled(new int[]{5});
 		
@@ -74,7 +74,7 @@ public class ComponentTestScene extends Scene {
 		longLabel.setAlignment(Alignment.CENTER);
 		longLabel.setColor(Color.black);
 		longLabel.setBackgroundColor(Color.lightGray);
-		mainLayer.add(longLabel,segment.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, 10);
+		mainLayer.add(longLabel, segment.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, 10);
 		
 		Component colLabels[] = new Component[5];
 		for (int i = 0; i < colLabels.length; i++) {

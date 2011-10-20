@@ -150,13 +150,13 @@ public class Label extends Component {
 			while (wordScan.hasNext()) {
 				String nextWord = wordScan.next();
 				if ( font.getWidth(currentText + nextWord) > getWidth() ) {
-					lines.add(currentLine,currentText.trim());
+					lines.add(currentLine, currentText.trim());
 					currentText = "";
 					currentLine++;
 				}
 				currentText += nextWord + " ";
 			}
-			lines.add(currentLine,currentText.trim());
+			lines.add(currentLine, currentText.trim());
 			currentText = "";
 			currentLine++;
 		}

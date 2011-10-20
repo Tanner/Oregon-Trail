@@ -50,7 +50,7 @@ public class TrailTestScene extends Scene {
 		partyInventory = new Label[persons.size()];
 		for (int i = 0; i < persons.size(); i++) {
 			partyNames[i] = new Label(container, fieldFont, Color.white, persons.get(i).getName());
-			partyHealth[i] = new ConditionBar(container, 200, fieldFont.getLineHeight(), persons.get(i).getHealth(),fieldFont);
+			partyHealth[i] = new ConditionBar(container, 200, fieldFont.getLineHeight(), persons.get(i).getHealth(), fieldFont);
 			partyInventory[i] = new Label(container, fieldFont, Color.white, persons.get(i).getInventory().toString());
 		}
 		Component[][] layout = new Component[persons.size()][3];
@@ -58,7 +58,7 @@ public class TrailTestScene extends Scene {
 			layout[i][0] = partyNames[i];
 			layout[i][1] = partyHealth[i];
 			layout[i][2] = partyInventory[i];
-			mainLayer.addAsColumn(layout[i], new Vector2f(0,0), PADDING,PADDING+ i*100, PADDING);
+			mainLayer.addAsColumn(layout[i], new Vector2f(0, 0), PADDING, PADDING+ i*100, PADDING);
 		}
 		
 		//Stolen Segmented Control from Party Creation Scene
@@ -90,7 +90,7 @@ public class TrailTestScene extends Scene {
 		
 		if (vehicle != null) {
 			vehicleInventory = new Label(container, 900, 90, fieldFont, Color.white, vehicle.getInventory().toString());
-			mainLayer.add(vehicleInventory, paceSegmentedControl.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.BOTTOMLEFT,-110,-5);
+			mainLayer.add(vehicleInventory, paceSegmentedControl.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.BOTTOMLEFT, -110, -5);
 		}
 		//Buttons
 		Label tempLabel = new Label(container, fieldFont, Color.white, "Update P/R");
@@ -105,7 +105,7 @@ public class TrailTestScene extends Scene {
 		tempLabel = new Label(container, fieldFont, Color.white, "Party Inventory");
 		partyInventoryButton = new Button(container, BUTTON_WIDTH, REGULAR_BUTTON_HEIGHT, tempLabel);
 		partyInventoryButton.addListener(new ButtonListener());
-		mainLayer.add(stepButton, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING,-PADDING);	
+		mainLayer.add(stepButton, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);	
 		mainLayer.add(updateButton, stepButton.getPosition(ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, 0, -PADDING);
 		mainLayer.add(cancelButton, stepButton.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPRIGHT, -PADDING, 0);
 		mainLayer.add(partyInventoryButton, cancelButton.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.BOTTOMLEFT, 0, -PADDING);

@@ -68,16 +68,16 @@ public class StoreScene extends Scene {
 		storeInventoryButtons.addAsGrid(storeInventory, mainLayer.getPosition(ReferencePoint.TOPLEFT), 4, 4, 0, 0, PADDING, PADDING);
 		mainLayer.add(storeInventoryButtons, mainLayer.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT, PADDING, PADDING);
 		
-		mainLayer.add(partyMoney, storeInventoryButtons.getPosition(ReferencePoint.BOTTOMCENTER),Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
+		mainLayer.add(partyMoney, storeInventoryButtons.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
 
-		mainLayer.add(textPanel,storeInventoryButtons.getPosition(ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.TOPLEFT, WIDE_PADDING, 0);
+		mainLayer.add(textPanel, storeInventoryButtons.getPosition(ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.TOPLEFT, WIDE_PADDING, 0);
 		textPanel.addAsColumn(itemDescription, textPanel.getPosition(ReferencePoint.TOPLEFT), PADDING, PADDING, PADDING);
 		
 		mainLayer.add(clearButton, textPanel.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
 		mainLayer.add(buyButton, clearButton.getPosition(ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING/2);
 		
-		Vector2f cancelPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BOTTOMLEFT).getX(),buyButton.getPosition(ReferencePoint.TOPLEFT).getY());
-		Vector2f inventoryPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BOTTOMRIGHT).getX(),buyButton.getPosition(ReferencePoint.TOPLEFT).getY());
+		Vector2f cancelPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BOTTOMLEFT).getX(), buyButton.getPosition(ReferencePoint.TOPLEFT).getY());
+		Vector2f inventoryPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BOTTOMRIGHT).getX(), buyButton.getPosition(ReferencePoint.TOPLEFT).getY());
 		mainLayer.add(cancelButton, cancelPos, Positionable.ReferencePoint.TOPLEFT, 0, 0);
 		mainLayer.add(inventoryButton, inventoryPos, Positionable.ReferencePoint.TOPRIGHT, 0, 0);
 		
@@ -131,7 +131,7 @@ public class StoreScene extends Scene {
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {
 			for (int i = 0; i < storeInventory.length; i++) {
-				if ( ((Rectangle)storeInventory[i].getArea()).contains(newx,newy) )
+				if ( ((Rectangle)storeInventory[i].getArea()).contains(newx, newy) )
 				{ 
 					hoverItem = getItemFromButtonIndex(i);
 					return;
@@ -185,10 +185,10 @@ public class StoreScene extends Scene {
 		
 		//Create cancel & inventory buttons
 		tempLabel = new Label(container, fieldFont, Color.white, "Cancel");
-		cancelButton = new Button(container, BUTTON_WIDTH,BUTTON_HEIGHT,tempLabel);
+		cancelButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		cancelButton.addListener(new ButtonListener());
 		tempLabel = new Label(container, fieldFont, Color.white, "Inventory");
-		inventoryButton = new Button(container, BUTTON_WIDTH,BUTTON_HEIGHT,tempLabel);
+		inventoryButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		inventoryButton.addListener(new ButtonListener());
 		tempLabel = new Label(container, fieldFont, Color.white, "Clear");
 
@@ -211,7 +211,7 @@ public class StoreScene extends Scene {
 		textPanel = new Panel(container, textPanelWidth, storeInventoryButtons.getHeight(), TEXT_PANEL_COLOR);
 		
 		//Create clear & buy button
-		clearButton = new Button(container, BUTTON_WIDTH,BUTTON_HEIGHT,tempLabel);
+		clearButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		clearButton.addListener(new ButtonListener());
 		clearButton.setDisabled(true);
 		tempLabel = new Label(container, fieldFont, Color.white, "Buy");

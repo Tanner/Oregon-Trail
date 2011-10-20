@@ -33,7 +33,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	private AppGameContainer container;
 	
 	private Game game;
-	private Inventory storeInventory = new Inventory(8,10000);
+	private Inventory storeInventory = new Inventory(8, 10000);
 	
 	/**
 	 * Constructs a game director object.
