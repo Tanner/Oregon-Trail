@@ -124,10 +124,6 @@ public abstract class Component extends AbstractComponent implements Positionabl
 			}
 		}
 		
-		for (Component component : components) {
-			component.render(container, g);
-		}
-		
 		g.setClip((Rectangle) getArea());
 				
 		// border
@@ -157,6 +153,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 				getHeight());
 		
 		g.clearClip();
+		
+		for (Component component : components) {
+			component.render(container, g);
+		}
 		
 		if (GameDirector.DEBUG_MODE) {
 			g.setColor(Color.red);

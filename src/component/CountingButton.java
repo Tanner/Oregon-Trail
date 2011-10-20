@@ -21,6 +21,7 @@ public class CountingButton extends Button {
 	private boolean countUpOnLeftClick;
 	private boolean disableAutoCount;
 	private boolean hideCount;
+	private Label countLabel;
 	
 	/**
 	 * Constructs a {@code CountingButton} with a width and height.
@@ -36,6 +37,14 @@ public class CountingButton extends Button {
 		countUpOnLeftClick = true;
 		hideCount = false;
 		disableAutoCount = false;
+		
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+		
+		countLabel = new Label(container, fieldFont, Color.white, "" + count);
+		countLabel.setBackgroundColor(Color.red);
+		countLabel.setAlignment(Alignment.CENTER);
+		
+		add(countLabel, this.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER, 0, 0);
 	}
 
 	/**
@@ -56,16 +65,6 @@ public class CountingButton extends Button {
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
 		super.render(container, g);
-		
-		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
-		
-		if (!hideCount) {
-			Label countLabel = new Label(container, fieldFont, Color.white, "" + count);
-			countLabel.setBackgroundColor(Color.red);
-			countLabel.setPosition(getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER);
-			countLabel.setAlignment(Alignment.CENTER);
-			countLabel.render(container, g);
-		}
 	}
 	
 	@Override
@@ -159,6 +158,8 @@ public class CountingButton extends Button {
 	 */
 	public void setCount(int count) {
 		this.count = count;
+		
+		countLabel.setText("" + count);
 	}
 	
 	/**
@@ -183,6 +184,8 @@ public class CountingButton extends Button {
 	 */
 	public void setHideCount(boolean hideCount) {
 		this.hideCount = hideCount;
+		
+		countLabel.setVisible(!hideCount);
 	}
 
 	/**
