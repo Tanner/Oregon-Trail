@@ -16,6 +16,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import scene.PartyInventoryScene;
 import scene.PartyInventoryScene.Mode;
 
+import component.Label.Alignment;
 import component.Positionable.ReferencePoint;
 import core.FontManager;
 import core.GameDirector;
@@ -80,9 +81,12 @@ public class OwnerInventoryButtons {
 			Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 			
 			Label label = new Label(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, fieldFont, Color.white, "");
+			label.setAlignment(Alignment.CENTER);
+			
 			CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, label);
 			
 			SlotConditionGroup slotConditionGroup = new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font, button, new Condition(0, 0, 0));
+			slotConditionGroup.addListener(new ButtonListener());
 			
 			if (i < slots.size()) {
 				String name = slots.get(i).getName();
@@ -91,9 +95,7 @@ public class OwnerInventoryButtons {
 				
 				slotConditionGroup.changeContents(slots.get(i), name, amount, condition);
 			}
-			
-			slotConditionGroup.addListener(new ButtonListener());
-			
+						
 			itemSlots.add(i, slotConditionGroup);
 			itemPanel.add(itemSlots.get(i), position, ReferencePoint.TOPLEFT, padding, 0);
 			
