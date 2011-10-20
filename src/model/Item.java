@@ -148,58 +148,60 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		APPLE (ConstantStore.get("ITEMS", "APPLE_NAME"), 
 			  ConstantStore.get("ITEMS", "APPLE_DESCRIPTION"), 
 			  ConstantStore.get("ITEMS", "APPLE_COST"), 
-			  ConstantStore.get("ITEMS", "APPLE_WEIGHT"), true, 1),
+			  ConstantStore.get("ITEMS", "APPLE_WEIGHT"), true, true, 1),
 		BREAD (ConstantStore.get("ITEMS", "BREAD_NAME"), 
 			  ConstantStore.get("ITEMS", "BREAD_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "BREAD_COST"),
-			  ConstantStore.get("ITEMS", "BREAD_WEIGHT"), true, 2),
+			  ConstantStore.get("ITEMS", "BREAD_WEIGHT"), true, false, 2),
 		BULLET (ConstantStore.get("ITEMS", "BULLET_NAME"), 
 			  ConstantStore.get("ITEMS", "BULLET_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "BULLET_COST"),
-			  ConstantStore.get("ITEMS", "BULLET_WEIGHT"), false),
+			  ConstantStore.get("ITEMS", "BULLET_WEIGHT"), false, false),
 		GUN (ConstantStore.get("ITEMS", "GUN_NAME"), 
 			ConstantStore.get("ITEMS", "GUN_DESCRIPTION"),
 			ConstantStore.get("ITEMS", "GUN_COST"),
-			ConstantStore.get("ITEMS", "GUN_WEIGHT"), false),
+			ConstantStore.get("ITEMS", "GUN_WEIGHT"), false, false),
 		MEAT (ConstantStore.get("ITEMS", "MEAT_NAME"), 
 			  ConstantStore.get("ITEMS", "MEAT_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "MEAT_COST"),
-			  ConstantStore.get("ITEMS", "MEAT_WEIGHT"), true, 4),
+			  ConstantStore.get("ITEMS", "MEAT_WEIGHT"), true, false, 4),
 		SONIC (ConstantStore.get("ITEMS", "SONIC_NAME"), 
 			  ConstantStore.get("ITEMS", "SONIC_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "SONIC_COST"),
-			  ConstantStore.get("ITEMS", "SONIC_WEIGHT"), false),
+			  ConstantStore.get("ITEMS", "SONIC_WEIGHT"), false, false),
 		WAGON (ConstantStore.get("ITEMS", "WAGON_NAME"), 
 			  ConstantStore.get("ITEMS", "WAGON_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "WAGON_COST"),
-			  ConstantStore.get("ITEMS", "WAGON_WEIGHT"), false),
+			  ConstantStore.get("ITEMS", "WAGON_WEIGHT"), false, false),
 		WHEEL (ConstantStore.get("ITEMS", "WHEEL_NAME"), 
 			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "WHEEL_COST"),
-			  ConstantStore.get("ITEMS", "WHEEL_WEIGHT"), false);
+			  ConstantStore.get("ITEMS", "WHEEL_WEIGHT"), false, false);
 		
 		private final String name;
 		private final String description;
 		private final int cost;
 		private final double weight;
-		private boolean isFood;
+		private boolean isFood, isPlant;
 		private int foodFactor;
 		
-		private ITEM_TYPE (String name, String description, String cost, String weight, boolean isFood) {
+		private ITEM_TYPE (String name, String description, String cost, String weight, boolean isFood, boolean isPlant) {
 			this.name = name;
 			this.description = description;
 			this.cost = Integer.parseInt(cost);
 			this.weight = Double.parseDouble(weight);
 			this.isFood = isFood;
+			this.isPlant = isPlant;
 			this.foodFactor = 0;
 		}
 		
-		private ITEM_TYPE (String name, String description, String cost, String weight, boolean isFood, int foodFactor) {
+		private ITEM_TYPE (String name, String description, String cost, String weight, boolean isFood, boolean isPlant, int foodFactor) {
 			this.name = name;
 			this.description = description;
 			this.cost = Integer.parseInt(cost);
 			this.weight = Double.parseDouble(weight);
 			this.isFood = isFood;
+			this.isPlant = isPlant;
 			this.foodFactor = foodFactor;
 		}
 		
@@ -225,6 +227,10 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		
 		public int getFoodFactor() {
 			return foodFactor;
+		}
+		
+		public boolean getIsPlant() {
+			return isPlant;
 		}
 	}
 	

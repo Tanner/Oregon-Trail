@@ -290,21 +290,24 @@ public class Party implements HUDDataSource {
 	public int walk() {
 		location += 2 * getPace().getPace();
 		
+		ArrayList<Person> deathList = new ArrayList<Person>();
 		for (Person person : members) {
+			healToBreakpoint(person);
 			person.decreaseHealth(getPace().getPace());
-			System.out.println(checkHungerStatus(person));
+			Logger.log(checkHungerStatus(person), Logger.Level.INFO);
 			if(person.getHealth().getCurrent() == 0) {
-				//Do something to remove the person from the party
-				//TODO
+				deathList.add(person);
 			}
 			else {
 				healToBreakpoint(person);
 			}
 		}
-		
+		for (Person person : deathList) {
+			members.remove(person);
+		}
 		return location;
 	}
-	
+
 	/**
 	 * Heals the person until they are at their designated breakpoint.
 	 * @param person The person to feed
@@ -358,6 +361,14 @@ public class Party implements HUDDataSource {
 			
 			Item food = foodList.get(0);
 			int foodFactor = food.getType().getFoodFactor();
+			
+			//Do some handling for party member skills, such as cooking
+			if(food.getType().getIsPlant() && getSkills().contains(Person.Skill.BOTANY)) {
+				foodFactor += 1;
+			}
+			if(getSkills().contains(Person.Skill.COOKING)) {
+				foodFactor += 1;
+			}
 
 			int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
 			
