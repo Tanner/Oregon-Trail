@@ -1,5 +1,6 @@
 package scene;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import model.*;
@@ -11,6 +12,7 @@ import org.newdawn.slick.gui.*;
 import org.newdawn.slick.state.*;
 import component.*;
 import component.Positionable.ReferencePoint;
+import component.sprite.Sprite;
 import core.*;
 
 /**
@@ -171,7 +173,18 @@ public class StoreScene extends Scene {
 			Item.ITEM_TYPE currentType = inventorySlots.get(i);
 			buttonMap.add(currentType);
 			tempLabel = new Label(container, fieldFont, Color.white, currentType.getName());
-			storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
+			String itemImagePath = "resources/icons/items/" + currentType.toString().toLowerCase() + ".png";
+			Sprite sprite = null;
+			if (new File(itemImagePath).exists()) {
+				try {
+					sprite = new Sprite(container, new Image(itemImagePath, false, Image.FILTER_NEAREST));
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
+				storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, sprite, tempLabel);
+			} else {
+				storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
+			}
 			storeInventory[i].setMax(inv.getNumberOf(currentType));
 			storeInventory[i].setCount(inv.getNumberOf(currentType));
 			storeInventory[i].setCountUpOnLeftClick(false);

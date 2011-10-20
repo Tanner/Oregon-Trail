@@ -20,7 +20,7 @@ public class Sprite extends Component {
 	private Animation leftAnimation;
 	private Animation rightAnimation;
 	private Animation currentAnimation;
-	private Vector2f position;
+
 	private float rotation;
 	private float scale;
 	
@@ -35,14 +35,13 @@ public class Sprite extends Component {
 	 */
 	public Sprite(GUIContext context, Animation rightAnimation, Animation leftAnimation) {
 		super(context, rightAnimation.getWidth(), rightAnimation.getHeight());
-		
+				
 		this.rightAnimation = rightAnimation;
 		this.leftAnimation = leftAnimation;
 		
 		xDirection = DirectionFacing.LEFT;
 		currentAnimation = leftAnimation;
 		
-		position = new Vector2f(0, 0);
 		scale = 1;
 		rotation = 0;
 	}
@@ -57,11 +56,15 @@ public class Sprite extends Component {
 		this(context, new Animation(new Image[]{rightImage}, 1), new Animation(new Image[]{leftImage}, 1));
 	}
 	
+	public Sprite(GUIContext context, Image image) {
+		this(context, image, image);
+	}
+	
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
 		super.render(context, g);
 
-		currentAnimation.draw(position.getX(), position.getY());
+		currentAnimation.draw(getX(), getY());
 	}
 	
 	/**
@@ -102,32 +105,6 @@ public class Sprite extends Component {
 	 */
 	public float getScale() {
 		return scale;
-	}
-	
-	/**
-	 * Get the bounding box of this Sprite.
-	 * @return Rectangle bounding box of the Sprite
-	 */
-	public Rectangle getBounds() {
-		return new Rectangle(position.x, position.y, getWidth(), getHeight());
-	}
-	
-	@Override
-	public void setLocation(int x, int y) {
-		if (position == null) {
-			position = new Vector2f(x, y);
-		} else {
-			position.set(x, y);
-		}
-	}
-	
-	/**
-	 * Set the location of the Sprite
-	 * @param x New X location
-	 * @param y New Y location
-	 */
-	public void setLocation(float x, float y) {
-		position.set(x, y);
 	}
 	
 	/**

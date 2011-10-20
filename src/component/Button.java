@@ -15,6 +15,7 @@ import core.ConstantStore;
  * functionality to behave like a button.
  */
 public class Button extends Component implements Disableable {
+	private static final int PADDING = 10;
 	private Label label;
 	
 	private Color buttonColor;
@@ -36,11 +37,10 @@ public class Button extends Component implements Disableable {
 	public Button(GUIContext context, int width, int height, Sprite sprite, Label label) {
 		super(context, width, height);
 		
-		add(sprite, getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER);
+		add(sprite, getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -PADDING);
 		
 		this.label = label;
-		label.setColor(ConstantStore.COLORS.get("INTERACTIVE_LABEL_NORMAL"));
-		add(label, getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER);
+		add(label, getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -PADDING);
 		
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
@@ -122,15 +122,6 @@ public class Button extends Component implements Disableable {
 			notifyListeners();
 			input.consumeEvent();
 			setActive(false);
-		}
-	}
-	
-	@Override
-	public void setLocation(int x, int y) {
-		super.setLocation(x, y);
-
-		if (label != null) {
-			label.setPosition(this.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
 		}
 	}
 	

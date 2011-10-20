@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.Label.Alignment;
+import component.sprite.Sprite;
 
 import core.FontManager;
 import core.GameDirector;
@@ -46,6 +47,23 @@ public class CountingButton extends Button {
 		
 		add(countLabel, this.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER, 0, 0);
 	}
+	
+	public CountingButton(GUIContext context, int width, int height, Sprite sprite, Label label) {
+		super(context, width, height, sprite, label);
+		
+		count = 0;
+		countUpOnLeftClick = true;
+		hideCount = false;
+		disableAutoCount = false;
+		
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+		
+		countLabel = new Label(container, fieldFont, Color.white, "" + count);
+		countLabel.setBackgroundColor(Color.red);
+		countLabel.setAlignment(Alignment.CENTER);
+		
+		add(countLabel, this.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER, 0, 0);
+	}
 
 	/**
 	 * Constructs a {@code CountingButton} with a label.
@@ -60,6 +78,14 @@ public class CountingButton extends Button {
 		countUpOnLeftClick = true;
 		hideCount = false;
 		disableAutoCount = false;
+		
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+		
+		countLabel = new Label(container, fieldFont, Color.white, "" + count);
+		countLabel.setBackgroundColor(Color.red);
+		countLabel.setAlignment(Alignment.CENTER);
+		
+		add(countLabel, this.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER, 0, 0);
 	}
 	
 	@Override
