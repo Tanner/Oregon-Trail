@@ -58,7 +58,7 @@ public class TrailTestScene extends Scene {
 			layout[i][0] = partyNames[i];
 			layout[i][1] = partyHealth[i];
 			layout[i][2] = partyInventory[i];
-			mainLayer.addAsColumn(layout[i], new Vector2f(0, 0), PADDING, PADDING+ i*100, PADDING);
+			mainLayer.addAsColumn(layout[i], new Vector2f(0, 0), PADDING, PADDING + i * 100, PADDING);
 		}
 		
 		//Stolen Segmented Control from Party Creation Scene

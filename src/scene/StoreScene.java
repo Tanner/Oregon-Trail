@@ -74,7 +74,7 @@ public class StoreScene extends Scene {
 		textPanel.addAsColumn(itemDescription, textPanel.getPosition(ReferencePoint.TOPLEFT), PADDING, PADDING, PADDING);
 		
 		mainLayer.add(clearButton, textPanel.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
-		mainLayer.add(buyButton, clearButton.getPosition(ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING/2);
+		mainLayer.add(buyButton, clearButton.getPosition(ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING / 2);
 		
 		Vector2f cancelPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BOTTOMLEFT).getX(), buyButton.getPosition(ReferencePoint.TOPLEFT).getY());
 		Vector2f inventoryPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BOTTOMRIGHT).getX(), buyButton.getPosition(ReferencePoint.TOPLEFT).getY());
@@ -196,8 +196,8 @@ public class StoreScene extends Scene {
 		//Create item description text labels
 		itemDescription = new Label[7];
 		
-		int textPanelWidth = mainLayer.getWidth() - (int) storeInventoryButtons.getPosition(ReferencePoint.TOPRIGHT).getX() - PADDING - WIDE_PADDING*2;
-		int textPanelLabelWidth = textPanelWidth - PADDING*2;
+		int textPanelWidth = mainLayer.getWidth() - (int) storeInventoryButtons.getPosition(ReferencePoint.TOPRIGHT).getX() - PADDING - WIDE_PADDING * 2;
+		int textPanelLabelWidth = textPanelWidth - PADDING * 2;
 		itemDescription[0] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[0].setAlignment(Label.Alignment.CENTER);
 		itemDescription[1] = new Label(container, textPanelLabelWidth, 135, fieldFont, Color.white, "");
@@ -233,8 +233,8 @@ public class StoreScene extends Scene {
 		itemDescription[2].setText("Weight: " + currentItem.getWeight() + " lbs");
 		itemDescription[3].setText("Cost: $" + currentItem.getCost());
 		itemDescription[4].setText("Quantity: " + count);
-		itemDescription[5].setText("Total Weight: " + count*currentItem.getWeight());
-		itemDescription[6].setText("Total Cost: $" + count*currentItem.getCost());
+		itemDescription[5].setText("Total Weight: " + count * currentItem.getWeight());
+		itemDescription[6].setText("Total Cost: $" + count * currentItem.getCost());
 		partyMoney.setText("Party's Money: $" + p.getMoney());
 	}
 	
@@ -257,7 +257,7 @@ public class StoreScene extends Scene {
 			else if ( p.getMoney() > currentItem.getCost() ) {
 				p.setVehicle(new Wagon());
 				inv.removeItem(currentItem, 1);
-				p.setMoney(p.getMoney()-Item.ITEM_TYPE.WAGON.getCost());
+				p.setMoney(p.getMoney() - Item.ITEM_TYPE.WAGON.getCost());
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
 				updateLabels(currentItem);
 				return 1;
@@ -271,7 +271,7 @@ public class StoreScene extends Scene {
 		//Display modal if the user can not buy the currently selected item
 		} else if ( currentBuyers.size() == 0 ) {
 			String errorText;
-			if ( p.getMoney() < itemCount*currentItem.getCost() )
+			if ( p.getMoney() < itemCount * currentItem.getCost() )
 				errorText = "You don't have enough money for this purchase.";
 			else
 				errorText = "No one can carry that much weight!";

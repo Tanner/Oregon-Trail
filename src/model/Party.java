@@ -44,7 +44,7 @@ public class Party {
 		String partyCreationLog = members.size() + " members were created successfully: ";
 		for (Person person : party) {
 			this.money += person.getProfession().getMoney();
-			Logger.log(person.getName()+ " as a " + person.getProfession() + " brings $" + 
+			Logger.log(person.getName() + " as a " + person.getProfession() + " brings $" + 
 					person.getProfession().getMoney() + " to the party.", Logger.Level.INFO);
 
 			partyCreationLog += person.getName() + " ";
@@ -287,7 +287,7 @@ public class Party {
 	 * Steps the player forward through the game.
 	 */
 	public int walk() {
-		location += 2*getPace().getPace();
+		location += 2 * getPace().getPace();
 		
 		for (Person person : members) {
 			person.decreaseHealth(getPace().getPace());
@@ -385,7 +385,7 @@ public class Party {
 		if(currentHealth == 0) {
 			return person.getName() + " has died of starvation!";
 		}
-		else if(person.getHealth().getCurrent() < 2*getPace().getPace()) {
+		else if(person.getHealth().getCurrent() < 2 * getPace().getPace()) {
 			return person.getName() + " is in danger of starvation.";
 		}
 		else {

@@ -48,16 +48,16 @@ public class Spinner extends Component {
 
 		Label upLabel = new Label(context, font, c, "Up");
 		Label downLabel = new Label(context, font, c, "Down");
-		int butWidth = (int)(font.getWidth("Down")*PADDING);
+		int butWidth = (int)(font.getWidth("Down") * PADDING);
 		label = new Label(context, width - butWidth, height, font, c, fields[0]);
 		label.setBackgroundColor(ConstantStore.COLORS.get("INTERACTIVE_NORMAL"));
 		label.setBorderWidth(2);
 		label.setLeftBorderWidth(0);
 		label.setBorderColor(ConstantStore.COLORS.get("INTERACTIVE_BORDER_DARK"));
 		label.setAlignment(Alignment.CENTER);
-		upButton = new Button(context, butWidth, height/2, upLabel);
+		upButton = new Button(context, butWidth, height / 2, upLabel);
 		upButton.setBottomBorderWidth(0);
-		downButton = new Button(context, butWidth, height/2 + 1, downLabel);	// add one to height because has bottom border
+		downButton = new Button(context, butWidth, height / 2 + 1, downLabel);	// add one to height because has bottom border
 		
 		add(upButton, getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT);
 		add(downButton, this.getPosition(ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT);

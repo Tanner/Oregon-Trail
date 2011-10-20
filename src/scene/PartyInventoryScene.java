@@ -392,14 +392,14 @@ public class PartyInventoryScene extends Scene {
 		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons, ITEM_TYPE item) {
 			// User wants to add items to the bin, check to see if the bin can hold it
 			if (!canAddItemToBin(item)) {
-				Logger.log("Bin cannot hold "+item+" at the moment", Logger.Level.INFO);
+				Logger.log("Bin cannot hold " + item + " at the moment", Logger.Level.INFO);
 				
 				Logger.log("Bin is giving everyone back their items", Logger.Level.INFO);
 				returnBinItems();
 			}
 			
 			// If we get this far, the bin can hold the item
-			Logger.log("Item was removed! Item was "+item, Logger.Level.INFO);
+			Logger.log("Item was removed! Item was " + item, Logger.Level.INFO);
 			
 			// Find out who removed the item
 			int binInventoryIndex = -1;

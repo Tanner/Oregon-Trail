@@ -119,7 +119,7 @@ public class ConditionBar extends Component {
 		if (condition != null) {
 			double percentage = condition.getPercentage();
 			if (label != null) {
-				label.setText((int)(percentage * 100)+"%");
+				label.setText((int)(percentage * 100) + "%");
 			}
 			
 			conditionPanel.setPercentage(percentage);

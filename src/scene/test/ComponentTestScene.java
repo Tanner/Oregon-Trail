@@ -78,19 +78,19 @@ public class ComponentTestScene extends Scene {
 		
 		Component colLabels[] = new Component[5];
 		for (int i = 0; i < colLabels.length; i++) {
-			colLabels[i] = new Label(container, fieldFont, Color.white, "Label "+i);
+			colLabels[i] = new Label(container, fieldFont, Color.white, "Label " + i);
 		}
 		//mainLayer.addAsColumn(colLabels, mainLayer.getPosition(Positionable.ReferencePoint.TopCenter), 0, PADDING, PADDING);
 		
 		Component rowLabels[] = new Component[5];
 		for (int i = 0; i < rowLabels.length; i++) {
-			rowLabels[i] = new Label(container, fieldFont, Color.white, "Label "+i);
+			rowLabels[i] = new Label(container, fieldFont, Color.white, "Label " + i);
 		}
 		//mainLayer.addAsRow(rowLabels, colLabels[colLabels.length - 1].getPosition(Positionable.ReferencePoint.TopLeft), 0, colLabels[colLabels.length - 1].getHeight() + PADDING, PADDING);
 		
 		Component gridLabels[] = new Component[9];
 		for (int i = 0; i < gridLabels.length; i++) {
-			gridLabels[i] = new Label(container, fieldFont, Color.white, "Label "+i);
+			gridLabels[i] = new Label(container, fieldFont, Color.white, "Label " + i);
 		}
 		mainLayer.addAsGrid(gridLabels, mainLayer.getPosition(Positionable.ReferencePoint.TOPCENTER), 3, 3, 0, PADDING, PADDING, PADDING);
 		
@@ -114,7 +114,7 @@ public class ComponentTestScene extends Scene {
 	
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			label.setText("TextField has \""+textField.getText()+"\"");
+			label.setText("TextField has \"" + textField.getText() + "\"");
 			spinnerLabel.setText("Spinner has \"" + spinner.getText() + "\"");
 		}
 	}

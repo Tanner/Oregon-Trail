@@ -160,7 +160,7 @@ public class PartyCreationScene extends Scene {
 			mainLayer.add(personProfessionPanel[i], personGenderControl[i].getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, INNER_PADDING);
 			
 			// Money
-			personMoneyLabels[i] = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("GENERAL", "MONEY_SYMBOL")+"0");
+			personMoneyLabels[i] = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("GENERAL", "MONEY_SYMBOL") + "0");
 			personMoneyLabels[i].setAlignment(Alignment.CENTER);
 			personMoneyLabels[i].setVisible(false);
 			mainLayer.add(personMoneyLabels[i], personProfessionLabels[i].getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, INNER_PADDING);

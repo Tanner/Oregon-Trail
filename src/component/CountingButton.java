@@ -60,7 +60,7 @@ public class CountingButton extends Button {
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
 		if (!hideCount) {
-			Label countLabel = new Label(container, fieldFont, Color.white, ""+count);
+			Label countLabel = new Label(container, fieldFont, Color.white, "" + count);
 			countLabel.setBackgroundColor(Color.red);
 			countLabel.setPosition(getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER);
 			countLabel.setAlignment(Alignment.CENTER);
