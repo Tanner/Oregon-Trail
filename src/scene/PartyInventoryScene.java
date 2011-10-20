@@ -33,6 +33,10 @@ import core.FontManager;
 import core.GameDirector;
 import core.Logger;
 
+/**
+ * {@code PartyInventoryScene} can manipulate the party's inventory and allow the user to
+ * sell, transfer, or drop {@code Item}.
+ */
 public class PartyInventoryScene extends Scene {
 	public static final SceneID ID = SceneID.PartyInventory;
 	
@@ -61,6 +65,11 @@ public class PartyInventoryScene extends Scene {
 	private EXTRA_BUTTON_FUNC extraButtonFunctionality;
 	private static Mode currentMode;
 	
+	/**
+	 * Constructs a {@code PartyInventoryScene} with just a {@code Party}.
+	 * Allows you to drop {@code Item} as extra functionality.
+	 * @param party Party to use for the scene
+	 */
 	public PartyInventoryScene(Party party) {
 		this.party = party;
 		
@@ -69,6 +78,12 @@ public class PartyInventoryScene extends Scene {
 		currentMode = Mode.NORMAL;
 	}
 	
+	/**
+	 * Constructs a {@code PartyInventoryScene} with just a {@code Party} and an {@code Inventory}.
+	 * Allows you to sell {@code Item} to the {@code Inventory} supplied as extra functionality.
+	 * @param party Party to use for the scene
+	 * @param storeInventory Inventory to sell items back to
+	 */
 	public PartyInventoryScene(Party party, Inventory storeInventory) {
 		this.party = party;
 		
@@ -181,6 +196,9 @@ public class PartyInventoryScene extends Scene {
 		return;
 	}
 	
+	/**
+	 * Update the bin button to show the correct item and the correct amount of item.
+	 */
 	public void updateBinButton() {
 		int amount = 0;
 		String name = "";
@@ -201,6 +219,9 @@ public class PartyInventoryScene extends Scene {
 		binButton.setText(name);
 	}
 	
+	/**
+	 * Update all the {@code OwnerInventoryButtons} and the vehicle inventory buttons.
+	 */
 	public void updateGraphics() {
 		for (OwnerInventoryButtons oib : playerInventoryButtons) {
 			oib.updateGraphics();
@@ -211,6 +232,11 @@ public class PartyInventoryScene extends Scene {
 		}
 	}
 	
+	/**
+	 * Check to see if an {@code ITEM_TYPE} can be added to the bin.
+	 * @param item ITEM_TYPE to check
+	 * @return Whether or not the item can be added to the bin
+	 */
 	public boolean canAddItemToBin(ITEM_TYPE item) {
 		for (int i = 0; i < binInventory.length; i++) {
 			if (binInventory[i].canAddItems(item, 1) == false) {
@@ -221,6 +247,9 @@ public class PartyInventoryScene extends Scene {
 		return true;
 	}
 	
+	/**
+	 * Returns all the items in the bin to their correct owner.
+	 */
 	public void returnBinItems() {
 		for (int i = 0; i < binInventory.length; i++) {
 			ArrayList<ITEM_TYPE> populated = binInventory[i].getPopulatedSlots();
@@ -241,6 +270,10 @@ public class PartyInventoryScene extends Scene {
 		return currentMode;
 	}
 	
+	/**
+	 * Get the size of the bin
+	 * @return The number of items are in the bin
+	 */
 	public int getBinSize() {
 		int size = 0;
 		for (int i = 0; i < binInventory.length; i++) {
@@ -250,6 +283,10 @@ public class PartyInventoryScene extends Scene {
 		return size;
 	}
 	
+	/**
+	 * The {@code ITEM_TYPE} that the bin is currently holding, if any.
+	 * @return ITEM_TYPE that the bin is holding
+	 */
 	public ITEM_TYPE getBinItemType() {
 		ITEM_TYPE itemType = null;
 		for (int i = 0; i < binInventory.length; i++) {
@@ -263,6 +300,10 @@ public class PartyInventoryScene extends Scene {
 		return itemType;
 	}
 	
+	/**
+	 * Get the a list of {@code Item} in the bin.
+	 * @return List of Items in the bin
+	 */
 	public ArrayList<Item> getItemsInBin() {
 		ITEM_TYPE itemType = getBinItemType();
 		
@@ -274,6 +315,9 @@ public class PartyInventoryScene extends Scene {
 		return items;
 	}
 	
+	/**
+	 * Clears the bin out of all items and updates the bin button to reflect the changes.
+	 */
 	public void emptyBin() {
 		for (int i = 0; i < binInventory.length; i++) {
 			binInventory[i].clear();
@@ -287,17 +331,23 @@ public class PartyInventoryScene extends Scene {
 		return ID.ordinal();
 	}
 	
+	/**
+	 * {@code ButtonListener} listens and acts on buttons in {@code PartyInventoryScene}.
+	 */
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			if (component == closeButton) {
+				// Ok, the user hit close - return any items in the bin and go back to the previous scene
 				returnBinItems();
 				
 				updateBinButton();
 				
 				GameDirector.sharedSceneListener().sceneDidEnd(PartyInventoryScene.this);
 			} else if (component == functionButton) {
+				// Extra functionality time - what can we do?
 				if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
+					// Ok, we're going to sell so get all the items together, give them to the store and give us money!
 					ArrayList<Item> items = getItemsInBin();
 					
 					storeInventory.addItem(items);
@@ -305,6 +355,7 @@ public class PartyInventoryScene extends Scene {
 					
 					party.setMoney(party.getMoney() + items.size() * items.get(0).getCost());
 				} else if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.DROP) {
+					// Ok, drop... Just empty the bin...
 					emptyBin();
 				}
 			} else if (component == transferButton) {
@@ -315,6 +366,7 @@ public class PartyInventoryScene extends Scene {
 					return;
 				}
 				
+				// Change the button text depending on what mode we're in
 				if (currentMode == Mode.NORMAL) {
 					currentMode = Mode.TRANSFER;
 					transferButton.setText(ConstantStore.get("GENERAL", "CANCEL"));
@@ -325,15 +377,20 @@ public class PartyInventoryScene extends Scene {
 				
 				updateGraphics();
 			} else if (component == binButton) {
+				// Return all items back to their sources
 				returnBinItems();
 				updateBinButton();
 			}
 		}
 	}
 	
+	/**
+	 * {@code OwnerInventoryButtonsListener} listens for button events from the {@code OwnerInventoryButtons}.
+	 */
 	private class OwnerInventoryButtonsListener implements ItemListener {
 		@Override
 		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons, ITEM_TYPE item) {
+			// User wants to add items to the bin, check to see if the bin can hold it
 			if (!canAddItemToBin(item)) {
 				Logger.log("Bin cannot hold "+item+" at the moment", Logger.Level.INFO);
 				
@@ -341,9 +398,10 @@ public class PartyInventoryScene extends Scene {
 				returnBinItems();
 			}
 			
+			// If we get this far, the bin can hold the item
 			Logger.log("Item was removed! Item was "+item, Logger.Level.INFO);
 			
-			//Find out who removed the item
+			// Find out who removed the item
 			int binInventoryIndex = -1;
 			
 			// Check the people
@@ -368,8 +426,12 @@ public class PartyInventoryScene extends Scene {
 		}
 		
 		@Override
-		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons) {			
+		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons) {
+			// User has clicked on a "Free" button (most likely) so we will transfer all the items into their inventory
+			
+			// Check to see if the source can hold all these items in the bin
 			if (ownerInventoryButtons.canAddItems(getBinItemType(), getBinSize())) {
+				// Add items to their inventory
 				ArrayList<Item> items = getItemsInBin();
 				
 				ownerInventoryButtons.addItemToInventory(items);
@@ -382,6 +444,7 @@ public class PartyInventoryScene extends Scene {
 				
 				emptyBin();
 			} else {
+				// Oh noez! They can't do that. Yell at the user and tell them to try again later
 				showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_INV_FAIL"), ConstantStore.get("GENERAL", "OK")));
 			}
 		}

@@ -17,8 +17,6 @@ import component.Label.Alignment;
  * A group consisting of a {@code Button} and {@code ConditionBar}.
  * 
  * Both the {@code Button} and the {@code ConditionBar} are linked to a specific item and item slot for an {@code Item}.
- * @author tanner
- *
  */
 public class SlotConditionGroup extends Component {
 	private static final int ITEM_BUTTON_HEIGHT = 40;
@@ -110,6 +108,10 @@ public class SlotConditionGroup extends Component {
 		conditionBar.setCondition(condition);
 	}
 	
+	/**
+	 * Set whether or not this component is disabled.
+	 * @param disabled Disabled or not (true for disabled)
+	 */
 	public void setDisable(boolean disabled) {
 		if (disabled) {
 			button.setText("None");

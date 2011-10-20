@@ -139,6 +139,11 @@ public class OwnerInventoryButtons {
 		weightBar.setCondition(getWeightCondition());
 	}
 	
+	/**
+	 * Add an item to the {@code Inventoried} inventory.
+	 * @param items List of Items to add to the inventory
+	 * @return Whether or not the addition was successful
+	 */
 	public boolean addItemToInventory(ArrayList<Item> items) {
 		boolean success = false;
 		
@@ -151,10 +156,22 @@ public class OwnerInventoryButtons {
 		return success;
 	}
 	
+	/**
+	 * Remove an item from the {@code Inventoried} inventory.
+	 * @param item ITEM_TYPE to remove
+	 * @param quantity Number of the item to remove
+	 * @return Whether or not the removal was successful
+	 */
 	public ArrayList<Item> removeItemFromInventory(ITEM_TYPE item, int quantity) {
 		return inventoried.removeItemFromInventory(item, quantity);
 	}
 	
+	/**
+	 * Check to see if an {@code ITEM_TYPE} can be added.
+	 * @param item ITEM_TYPE to check
+	 * @param quantity Number of the item to check
+	 * @return Whether or not the check return true or false
+	 */
 	public boolean canAddItems(ITEM_TYPE item, int quantity) {
 		return inventoried.canGetItem(item, quantity);
 	}
