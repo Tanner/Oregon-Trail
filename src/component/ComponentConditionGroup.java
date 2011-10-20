@@ -2,7 +2,6 @@ package component;
 
 import model.Condition;
 
-import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
