@@ -122,11 +122,7 @@ public class SegmentedControl extends Component {
 			singleSelection = selection[0];
 		} else {
 			for (int i : selection) {
-				if (this.permanent[i] != true) {
-					this.selection[i] = true;
-				} else {
-					this.selection[i] = false;
-				}
+				this.selection[i] = !this.permanent[i];
 			}
 		}
 		updateButtons();

@@ -239,7 +239,7 @@ public class PartyInventoryScene extends Scene {
 	 */
 	public boolean canAddItemToBin(ITEM_TYPE item) {
 		for (int i = 0; i < binInventory.length; i++) {
-			if (binInventory[i].canAddItems(item, 1) == false) {
+			if (!binInventory[i].canAddItems(item, 1)) {
 				return false;
 			}
 		}

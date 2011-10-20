@@ -104,7 +104,7 @@ public class Label extends Component {
 		
 		super.render(container, g);
 		
-		if (clip == true) {
+		if (clip) {
 			g.setClip(getX(), getY(), getWidth(), getHeight());
 		}
 		
