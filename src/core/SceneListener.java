@@ -2,7 +2,6 @@ package core;
 
 import scene.Scene;
 import scene.SceneID;
-import core.FontManager;
 
 /**
  * An interface between scenes and the game director.

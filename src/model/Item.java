@@ -1,7 +1,6 @@
 package model;
 
 import core.ConstantStore;
-import model.Condition;
 
 /**
  * 
