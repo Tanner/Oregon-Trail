@@ -128,7 +128,7 @@ public class SceneSelectorScene extends Scene {
 					warnBecauseNoParty();
 					return;		
 				}
-				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTESTSCENE, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this);
 			} else if (component == buttons.get(7)) {
 				if (player.getParty() == null) {
 					warnBecauseNoParty();

@@ -110,7 +110,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 			return new SceneSelectorScene(game.getPlayer());
 		case COMPONENTTEST:
 			return new ComponentTestScene();
-		case TRAILTESTSCENE:
+		case TRAILTEST:
 			return new TrailTestScene(game.getPlayer().getParty());
 		case HUNT :
 			return new HuntScene(game.getPlayer().getParty());
