@@ -46,7 +46,9 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		
 	/**
 	 * Constructs a {@code Component} with a width and height.
-	 * @param container Container the component resides in
+	 * @param context The Gui Context
+	 * @param width the width of the component
+	 * @param heigh the height of the component
 	 */
 	public Component(GUIContext context, int width, int height) {
 		super(context);
