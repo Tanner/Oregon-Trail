@@ -16,6 +16,9 @@ import core.GameDirector;
  * {@code CountingButton} inherits from {@code Button} to add a flag that counts up or down.
  */
 public class CountingButton extends Button {
+	private static final int COUNTING_LABEL_WIDTH = 25; 
+	private static final int COUNTING_LABEL_HEIGHT = 25; 
+	
 	private int count;
 	private int min = 0;
 	private int max = Integer.MAX_VALUE;
@@ -41,7 +44,7 @@ public class CountingButton extends Button {
 		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
-		countLabel = new Label(container, fieldFont, Color.white, "" + count);
+		countLabel = new Label(container, COUNTING_LABEL_WIDTH, COUNTING_LABEL_HEIGHT, fieldFont, Color.white, "" + count);
 		countLabel.setBackgroundColor(Color.red);
 		countLabel.setAlignment(Alignment.CENTER);
 		
@@ -58,7 +61,7 @@ public class CountingButton extends Button {
 		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
-		countLabel = new Label(container, fieldFont, Color.white, "" + count);
+		countLabel = new Label(container, COUNTING_LABEL_WIDTH, COUNTING_LABEL_HEIGHT, fieldFont, Color.white, "" + count);
 		countLabel.setBackgroundColor(Color.red);
 		countLabel.setAlignment(Alignment.CENTER);
 		
@@ -81,7 +84,7 @@ public class CountingButton extends Button {
 		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
-		countLabel = new Label(container, fieldFont, Color.white, "" + count);
+		countLabel = new Label(container, COUNTING_LABEL_WIDTH, COUNTING_LABEL_HEIGHT, fieldFont, Color.white, "" + count);
 		countLabel.setBackgroundColor(Color.red);
 		countLabel.setAlignment(Alignment.CENTER);
 		
@@ -118,13 +121,13 @@ public class CountingButton extends Button {
 			
 			if (!disableAutoCount) {
 				if (button == 0 && countUpOnLeftClick && count < max) {
-					count++;
+					setCount(count + 1);
 				} else if (button != 0 && countUpOnLeftClick && count > min) {
-					count--;
+					setCount(count - 1);
 				} else if (button == 0 && !countUpOnLeftClick && count > min) {
-					count--;
+					setCount(count - 1);
 				} else if (button != 0 && !countUpOnLeftClick && count < max) {
-					count++;
+					setCount(count + 1);
 				}
 			}
 		}
