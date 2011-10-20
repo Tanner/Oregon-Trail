@@ -249,6 +249,38 @@ public class PartyInventoryScene extends Scene {
 		
 		return size;
 	}
+	
+	public ITEM_TYPE getBinItemType() {
+		ITEM_TYPE itemType = null;
+		for (int i = 0; i < binInventory.length; i++) {
+			ArrayList<ITEM_TYPE> populatedSlots = binInventory[i].getPopulatedSlots();
+			if (populatedSlots.size() > 0) {
+				itemType = populatedSlots.get(0);
+				break;
+			}
+		}
+		
+		return itemType;
+	}
+	
+	public ArrayList<Item> getItemsInBin() {
+		ITEM_TYPE itemType = getBinItemType();
+		
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (int i = 0; i < binInventory.length; i++) {
+			items.addAll(binInventory[i].removeItem(itemType, binInventory[i].getNumberOf(itemType)));
+		}
+		
+		return items;
+	}
+	
+	public void emptyBin() {
+		for (int i = 0; i < binInventory.length; i++) {
+			binInventory[i].clear();
+		}
+		
+		updateBinButton();
+	}
 
 	@Override
 	public int getID() {
@@ -266,12 +298,14 @@ public class PartyInventoryScene extends Scene {
 				GameDirector.sharedSceneListener().sceneDidEnd(PartyInventoryScene.this);
 			} else if (component == functionButton) {
 				if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
-					//
+					ArrayList<Item> items = getItemsInBin();
+					
+					storeInventory.addItem(items);
+					emptyBin();
+					
+					party.setMoney(party.getMoney() + items.size() * items.get(0).getCost());
 				} else if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.DROP) {
-					for (int i = 0; i < binInventory.length; i++) {
-						binInventory[i].clear();
-					}
-					updateBinButton();
+					emptyBin();
 				}
 			} else if (component == transferButton) {
 				// Check if the bin has anything in it before proceeding
@@ -334,21 +368,9 @@ public class PartyInventoryScene extends Scene {
 		}
 		
 		@Override
-		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons) {
-			ITEM_TYPE itemType = null;
-			for (int i = 0; i < binInventory.length; i++) {
-				ArrayList<ITEM_TYPE> populatedSlots = binInventory[i].getPopulatedSlots();
-				if (populatedSlots.size() > 0) {
-					itemType = populatedSlots.get(0);
-					break;
-				}
-			}
-			
-			if (ownerInventoryButtons.canAddItems(itemType, getBinSize())) {
-				ArrayList<Item> items = new ArrayList<Item>();
-				for (int i = 0; i < binInventory.length; i++) {
-					items.addAll(binInventory[i].removeItem(itemType, binInventory[i].getNumberOf(itemType)));
-				}
+		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons) {			
+			if (ownerInventoryButtons.canAddItems(getBinItemType(), getBinSize())) {
+				ArrayList<Item> items = getItemsInBin();
 				
 				ownerInventoryButtons.addItemToInventory(items);
 				
@@ -358,10 +380,7 @@ public class PartyInventoryScene extends Scene {
 				
 				updateGraphics();
 				
-				for (int i = 0; i < binInventory.length; i++) {
-					binInventory[i].clear();
-				}
-				updateBinButton();
+				emptyBin();
 			} else {
 				showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_INV_FAIL"), ConstantStore.get("GENERAL", "OK")));
 			}
