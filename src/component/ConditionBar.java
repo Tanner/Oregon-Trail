@@ -39,7 +39,7 @@ public class ConditionBar extends Component {
 		super(context, width, height);
 
 		conditionPanel = new ConditionPanel(context, getWidth(), getHeight(), Color.gray);
-		add(conditionPanel, getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft);
+		add(conditionPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
 		setCondition(condition);
 		setDisableText(true);
@@ -61,11 +61,11 @@ public class ConditionBar extends Component {
 		this(context, width, height, condition);
 				
 		label = new Label(context, getWidth(), getHeight(), font, Color.white, "0%");
-		label.setAlignment(Alignment.Center);
+		label.setAlignment(Alignment.CENTER);
 		
 		updateLabelText();
 		
-		add(label, getPosition(ReferencePoint.CenterCenter), ReferencePoint.CenterCenter, 0, 0);
+		add(label, getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER, 0, 0);
 		
 		setDisableText(false);
 	}

@@ -20,9 +20,9 @@ import core.GameDirector;
  */
 public abstract class Component extends AbstractComponent implements Positionable {
 	public static enum BevelType {
-		None,
-		In,
-		Out
+		NONE,
+		IN,
+		OUT
 	}
 	
 	private Component parentComponent;
@@ -65,7 +65,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		
 		if (backgroundColor != null) {
 			g.setColor(backgroundColor);
-			if (beveled == BevelType.None) {
+			if (beveled == BevelType.NONE) {
 				g.fillRect(getX(), getY(), getWidth(), getHeight());
 			} else {
 				Color brightColor = backgroundColor.brighter(0.1f);
@@ -79,9 +79,9 @@ public abstract class Component extends AbstractComponent implements Positionabl
 						getHeight() - bevelWidth * 2);
 				
 				// top bar
-				if (beveled == BevelType.Out) {
+				if (beveled == BevelType.OUT) {
 					g.setColor(brightColor);
-				} else if (beveled == BevelType.In) {
+				} else if (beveled == BevelType.IN) {
 					g.setColor(darkColor);
 				}
 				g.fillRect(getX() + leftBorderWidth,
@@ -90,9 +90,9 @@ public abstract class Component extends AbstractComponent implements Positionabl
 						bevelWidth);
 						
 				// bottom bar
-				if (beveled == BevelType.Out) {
+				if (beveled == BevelType.OUT) {
 					g.setColor(darkColor);
-				} else if (beveled == BevelType.In) {
+				} else if (beveled == BevelType.IN) {
 					g.setColor(brightColor);
 				}
 				g.fillRect(getX() + leftBorderWidth,
@@ -101,9 +101,9 @@ public abstract class Component extends AbstractComponent implements Positionabl
 						bevelWidth);
 						
 				// left bar
-				if (beveled == BevelType.Out) {
+				if (beveled == BevelType.OUT) {
 					g.setColor(brightColor);
-				} else if (beveled == BevelType.In) {
+				} else if (beveled == BevelType.IN) {
 					g.setColor(darkColor);
 				}
 				g.fillRect(getX() + leftBorderWidth,
@@ -112,9 +112,9 @@ public abstract class Component extends AbstractComponent implements Positionabl
 						getHeight() - topBorderWidth - bottomBorderWidth);
 				
 				// right bar
-				if (beveled == BevelType.Out) {
+				if (beveled == BevelType.OUT) {
 					g.setColor(darkColor);
-				} else if (beveled == BevelType.In) {
+				} else if (beveled == BevelType.IN) {
 					g.setColor(brightColor);
 				}
 				g.fillRect(getX() + getWidth() - bevelWidth - rightBorderWidth,
@@ -223,7 +223,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 */
 	public void addAsColumn(Component[] components, Vector2f location, int xOffset, int yOffset, int spacing) {
 		for (int i = 0; i < components.length; i++) {
-			add(components[i], location, ReferencePoint.TopLeft, xOffset, yOffset);
+			add(components[i], location, ReferencePoint.TOPLEFT, xOffset, yOffset);
 			location.set(location.x, location.y + components[i].getHeight() + spacing);
 		}
 	}
@@ -239,7 +239,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	public void addAsRow(Component[] components, Vector2f location, int xOffset, int yOffset, int spacing) {
 		for (int i = 0; i < components.length; i++) {
 			if (components[i] != null) {
-				add(components[i], location, ReferencePoint.TopLeft, xOffset, yOffset);
+				add(components[i], location, ReferencePoint.TOPLEFT, xOffset, yOffset);
 				location.set(location.x + components[i].getWidth() + spacing, location.y);
 			}
 		}
@@ -287,31 +287,31 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		int y = (int) location.y;
 		
 		switch (referencePoint) {
-			case TopLeft:
+			case TOPLEFT:
 				setLocation(x, y);
 				break;
-			case TopCenter:
+			case TOPCENTER:
 				setLocation(x - getWidth() / 2, y);
 				break;
-			case TopRight:
+			case TOPRIGHT:
 				setLocation(x - getWidth(), y);
 				break;
-			case CenterLeft:
+			case CENTERLEFT:
 				setLocation(x, y - getHeight() / 2);
 				break;
-			case CenterCenter:
+			case CENTERCENTER:
 				setLocation(x - getWidth() / 2, y - getHeight() / 2);
 				break;
-			case CenterRight:
+			case CENTERRIGHT:
 				setLocation(x - getWidth(), y - getHeight() / 2);
 				break;
-			case BottomLeft:
+			case BOTTOMLEFT:
 				setLocation(x, y - getHeight());
 				break;
-			case BottomCenter:
+			case BOTTOMCENTER:
 				setLocation(x - getWidth() / 2, y - getHeight());
 				break;
-			case BottomRight:
+			case BOTTOMRIGHT:
 				setLocation(x - getWidth(), y - getHeight());
 				break;
 		}
@@ -330,23 +330,23 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		int y = getY();
 		
 		switch (referencePoint) {
-			case TopLeft:
+			case TOPLEFT:
 				return new Vector2f(x, y);
-			case TopCenter:
+			case TOPCENTER:
 				return new Vector2f(x + getWidth() / 2, y);
-			case TopRight:
+			case TOPRIGHT:
 				return new Vector2f(x + getWidth(), y);
-			case CenterLeft:
+			case CENTERLEFT:
 				return new Vector2f(x, y + getHeight() / 2);
-			case CenterCenter:
+			case CENTERCENTER:
 				return new Vector2f(x + getWidth() / 2, y + getHeight() / 2);
-			case CenterRight:
+			case CENTERRIGHT:
 				return new Vector2f(x + getWidth(), y + getHeight() / 2);
-			case BottomLeft:
+			case BOTTOMLEFT:
 				return new Vector2f(x, y + getHeight());
-			case BottomCenter:
+			case BOTTOMCENTER:
 				return new Vector2f(x + getWidth() / 2, y + getHeight());
-			case BottomRight:
+			case BOTTOMRIGHT:
 				return new Vector2f(x + getWidth(), y + getHeight());
 		}
 		

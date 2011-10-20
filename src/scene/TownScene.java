@@ -22,7 +22,7 @@ import core.*;
  *
  */
 public class TownScene extends Scene {
-	public static final SceneID ID = SceneID.Town;
+	public static final SceneID ID = SceneID.TOWN;
 	
 	/**
 	 * builds town scene
@@ -44,8 +44,8 @@ public class TownScene extends Scene {
 		Label titleLabel = new Label(container, h1, Color.white, "Town");
 		Label subtitleLabel = new Label(container, h2, Color.white, "Press Enter to Go to Store");
 		
-		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.BottomCenter, 0, -5);
-		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, 5);
+		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -5);
+		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
 		
 		backgroundLayer.add(new Panel(container, new Color(0x003e84)));
 	}
@@ -58,7 +58,7 @@ public class TownScene extends Scene {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ENTER) {
-			GameDirector.sharedSceneListener().requestScene(SceneID.Store, this);
+			GameDirector.sharedSceneListener().requestScene(SceneID.STORE, this);
 		}
 	}
 

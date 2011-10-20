@@ -19,7 +19,7 @@ import core.*;
  */
 public class StoreScene extends Scene {
 	
-	public static final SceneID ID = SceneID.Store;
+	public static final SceneID ID = SceneID.STORE;
 	
 	private final int PADDING = 20;
 	private final int WIDE_PADDING = PADDING * 2;
@@ -65,21 +65,21 @@ public class StoreScene extends Scene {
 		
 		createComponents();
 		
-		storeInventoryButtons.addAsGrid(storeInventory, mainLayer.getPosition(ReferencePoint.TopLeft), 4, 4, 0, 0, PADDING, PADDING);
-		mainLayer.add(storeInventoryButtons, mainLayer.getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, PADDING, PADDING);
+		storeInventoryButtons.addAsGrid(storeInventory, mainLayer.getPosition(ReferencePoint.TOPLEFT), 4, 4, 0, 0, PADDING, PADDING);
+		mainLayer.add(storeInventoryButtons, mainLayer.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT, PADDING, PADDING);
 		
-		mainLayer.add(partyMoney, storeInventoryButtons.getPosition(ReferencePoint.BottomCenter),Positionable.ReferencePoint.TopCenter, 0, PADDING);
+		mainLayer.add(partyMoney, storeInventoryButtons.getPosition(ReferencePoint.BOTTOMCENTER),Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
 
-		mainLayer.add(textPanel,storeInventoryButtons.getPosition(ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft, WIDE_PADDING, 0);
-		textPanel.addAsColumn(itemDescription, textPanel.getPosition(ReferencePoint.TopLeft), PADDING, PADDING, PADDING);
+		mainLayer.add(textPanel,storeInventoryButtons.getPosition(ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.TOPLEFT, WIDE_PADDING, 0);
+		textPanel.addAsColumn(itemDescription, textPanel.getPosition(ReferencePoint.TOPLEFT), PADDING, PADDING, PADDING);
 		
-		mainLayer.add(clearButton, textPanel.getPosition(ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, PADDING);
-		mainLayer.add(buyButton, clearButton.getPosition(ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING/2);
+		mainLayer.add(clearButton, textPanel.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
+		mainLayer.add(buyButton, clearButton.getPosition(ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING/2);
 		
-		Vector2f cancelPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BottomLeft).getX(),buyButton.getPosition(ReferencePoint.TopLeft).getY());
-		Vector2f inventoryPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BottomRight).getX(),buyButton.getPosition(ReferencePoint.TopLeft).getY());
-		mainLayer.add(cancelButton, cancelPos, Positionable.ReferencePoint.TopLeft, 0, 0);
-		mainLayer.add(inventoryButton, inventoryPos, Positionable.ReferencePoint.TopRight, 0, 0);
+		Vector2f cancelPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BOTTOMLEFT).getX(),buyButton.getPosition(ReferencePoint.TOPLEFT).getY());
+		Vector2f inventoryPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BOTTOMRIGHT).getX(),buyButton.getPosition(ReferencePoint.TOPLEFT).getY());
+		mainLayer.add(cancelButton, cancelPos, Positionable.ReferencePoint.TOPLEFT, 0, 0);
+		mainLayer.add(inventoryButton, inventoryPos, Positionable.ReferencePoint.TOPRIGHT, 0, 0);
 		
 		backgroundLayer.add(new Panel(container, BACKGROUND_COLOR));
 	}
@@ -181,7 +181,7 @@ public class StoreScene extends Scene {
 		
 		//Create money label
 		partyMoney = new Label(container, storeInventoryButtons.getWidth(), BUTTON_HEIGHT, fieldFont, Color.white, "Party's Money: $" + p.getMoney());
-		partyMoney.setAlignment(Label.Alignment.Center);
+		partyMoney.setAlignment(Label.Alignment.CENTER);
 		
 		//Create cancel & inventory buttons
 		tempLabel = new Label(container, fieldFont, Color.white, "Cancel");
@@ -196,13 +196,13 @@ public class StoreScene extends Scene {
 		//Create item description text labels
 		itemDescription = new Label[7];
 		
-		int textPanelWidth = mainLayer.getWidth() - (int) storeInventoryButtons.getPosition(ReferencePoint.TopRight).getX() - PADDING - WIDE_PADDING*2;
+		int textPanelWidth = mainLayer.getWidth() - (int) storeInventoryButtons.getPosition(ReferencePoint.TOPRIGHT).getX() - PADDING - WIDE_PADDING*2;
 		int textPanelLabelWidth = textPanelWidth - PADDING*2;
 		itemDescription[0] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
-		itemDescription[0].setAlignment(Label.Alignment.Center);
+		itemDescription[0].setAlignment(Label.Alignment.CENTER);
 		itemDescription[1] = new Label(container, textPanelLabelWidth, 135, fieldFont, Color.white, "");
-		itemDescription[1].setAlignment(Label.Alignment.Center);
-		itemDescription[1].setVerticalAlignment(Label.VerticalAlignment.Top);
+		itemDescription[1].setAlignment(Label.Alignment.CENTER);
+		itemDescription[1].setVerticalAlignment(Label.VerticalAlignment.TOP);
 		itemDescription[2] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[3] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[4] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
@@ -324,7 +324,7 @@ public class StoreScene extends Scene {
 			if ( source == cancelButton ) {
 				GameDirector.sharedSceneListener().sceneDidEnd(StoreScene.this);
 			} else if ( source == inventoryButton ) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, StoreScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, StoreScene.this);
 			}
 			else if ( source == buyButton) {
 				int successCode = makePurchase();

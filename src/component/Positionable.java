@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
  */
 public interface Positionable {
 	public static enum ReferencePoint {
-		TopLeft, TopCenter, TopRight, CenterLeft, CenterCenter, CenterRight, BottomLeft, BottomCenter, BottomRight
+		TOPLEFT, TOPCENTER, TOPRIGHT, CENTERLEFT, CENTERCENTER, CENTERRIGHT, BOTTOMLEFT, BOTTOMCENTER, BOTTOMRIGHT
 	}
 	
 	/**

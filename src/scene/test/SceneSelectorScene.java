@@ -31,7 +31,7 @@ import scene.SceneID;
  * Scene to start another scene.
  */
 public class SceneSelectorScene extends Scene {
-	public static final SceneID ID = SceneID.SceneSelector;
+	public static final SceneID ID = SceneID.SCENESELECTOR;
 	
 	private static final int MARGIN = 20;
 
@@ -73,7 +73,7 @@ public class SceneSelectorScene extends Scene {
 			b.addListener(buttonListener);
 		}
 		mainLayer.addAsGrid(buttonsToAdd,
-				mainLayer.getPosition(Positionable.ReferencePoint.TopLeft),
+				mainLayer.getPosition(Positionable.ReferencePoint.TOPLEFT),
 				rows,
 				cols,
 				MARGIN,
@@ -100,35 +100,35 @@ public class SceneSelectorScene extends Scene {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			if (component == buttons.get(0)) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.MainMenu, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, SceneSelectorScene.this);
 			} else if (component == buttons.get(1)) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.PartyCreation, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYCREATION, SceneSelectorScene.this);
 			} else if (component == buttons.get(2)) {
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
 					return;
 				}
-				GameDirector.sharedSceneListener().requestScene(SceneID.Town, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, SceneSelectorScene.this);
 			} else if (component == buttons.get(3)) {
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
 					return;
 				}
-				GameDirector.sharedSceneListener().requestScene(SceneID.Store, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.STORE, SceneSelectorScene.this);
 			} else if (component == buttons.get(4)) {
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
 					return;
 				}
-				GameDirector.sharedSceneListener().requestScene(SceneID.PartyInventory, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, SceneSelectorScene.this);
 			} else if (component == buttons.get(5)) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.ComponentTest, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.COMPONENTTEST, SceneSelectorScene.this);
 			} else if (component == buttons.get(6)) {
 				player.setParty(null);
 			} else if (component == buttons.get(7)) {
 				player.setParty(makeRandomParty());
 			} else if (component == buttons.get(8)) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.TrailTestScene, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTESTSCENE, SceneSelectorScene.this);
 
 			}
 		}

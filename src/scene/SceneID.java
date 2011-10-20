@@ -1,13 +1,13 @@
 package scene;
 
 public enum SceneID {
-	Default,
-	MainMenu,
-	PartyCreation,
-	Store,
-	PartyInventory,
-	Town,
-	SceneSelector,
-	ComponentTest,
-	TrailTestScene
+	DEFAULT,
+	MAINMENU,
+	PARTYCREATION,
+	STORE,
+	PARTYINVENTORY,
+	TOWN,
+	SCENESELECTOR,
+	COMPONENTTEST,
+	TRAILTESTSCENE
 }

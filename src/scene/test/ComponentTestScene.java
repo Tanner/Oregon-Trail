@@ -21,7 +21,7 @@ import core.*;
  * @author Tanner Smith
  */
 public class ComponentTestScene extends Scene {
-	public static final SceneID ID = SceneID.ComponentTest;
+	public static final SceneID ID = SceneID.COMPONENTTEST;
 	private static final int PADDING = 20;
 
 	private TextField textField;
@@ -37,27 +37,27 @@ public class ComponentTestScene extends Scene {
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 
 		Label textFieldLabel = new Label(container, 300, fieldFont, Color.white, "Text Field");
-		mainLayer.add(textFieldLabel, mainLayer.getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft, PADDING, PADDING);
+		mainLayer.add(textFieldLabel, mainLayer.getPosition(Positionable.ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT, PADDING, PADDING);
 		
 		textField = new TextField(container, 300, 40, fieldFont);
 		textField.addListener(new ButtonListener());
-		mainLayer.add(textField, textFieldLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft);
+		mainLayer.add(textField, textFieldLabel.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT);
 		
 		Label buttonLabel = new Label(container, fieldFont, Color.white, "Button");
-		mainLayer.add(buttonLabel, textField.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+		mainLayer.add(buttonLabel, textField.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
 		
 		button = new Button(container, 300, 40, new Label(container, fieldFont, Color.white, "my button"));
 		button.addListener(new ButtonListener());
-		mainLayer.add(button, buttonLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft);
+		mainLayer.add(button, buttonLabel.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT);
 		
 		label = new Label(container, 300, fieldFont, Color.white, "Label");
-		mainLayer.add(label, button.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+		mainLayer.add(label, button.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
 	
 		spinner = new Spinner(container, 300, 50, fieldFont, Color.white, false, "Hello","There","Encyclopedia");
-		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BottomLeft),Positionable.ReferencePoint.TopLeft, 0, PADDING);
+		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BOTTOMLEFT),Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
 	
 		spinnerLabel = new Label(container, 300, fieldFont, Color.white, "Label");
-		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
 		Person.Skill[] arr = Person.Skill.values();
 		String[] strs = new String[arr.length - 2];
 		for (int i = 0; i < strs.length; i++) {
@@ -65,16 +65,16 @@ public class ComponentTestScene extends Scene {
 		}	
 
 		segment = new SegmentedControl(container,500, 100, 4, 3, 0, true, 4, strs);
-		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, PADDING);
+		mainLayer.add(segment, spinnerLabel.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
 		int[] num = {2,3};
 		segment.setPermanent(num);
 		segment.setDisabled(new int[]{5});
 		
 		Label longLabel = new Label(container, 400, 125, fieldFont, Color.white, "Hello my name is jeremy.\n\nI am a really cool guy and stuff and I made a multiline label.\nOr did I?");
-		longLabel.setAlignment(Alignment.Center);
+		longLabel.setAlignment(Alignment.CENTER);
 		longLabel.setColor(Color.black);
 		longLabel.setBackgroundColor(Color.lightGray);
-		mainLayer.add(longLabel,segment.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.TopLeft, 0, 10);
+		mainLayer.add(longLabel,segment.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, 10);
 		
 		Component colLabels[] = new Component[5];
 		for (int i = 0; i < colLabels.length; i++) {
@@ -92,18 +92,18 @@ public class ComponentTestScene extends Scene {
 		for (int i = 0; i < gridLabels.length; i++) {
 			gridLabels[i] = new Label(container, fieldFont, Color.white, "Label "+i);
 		}
-		mainLayer.addAsGrid(gridLabels, mainLayer.getPosition(Positionable.ReferencePoint.TopCenter), 3, 3, 0, PADDING, PADDING, PADDING);
+		mainLayer.addAsGrid(gridLabels, mainLayer.getPosition(Positionable.ReferencePoint.TOPCENTER), 3, 3, 0, PADDING, PADDING, PADDING);
 		
 		ToggleButton tb = new ToggleButton(container, 200, 40, new Label(container, fieldFont, Color.white, "Toggle Button"));
-		mainLayer.add(tb, mainLayer.getPosition(Positionable.ReferencePoint.BottomRight), Positionable.ReferencePoint.BottomRight, -PADDING, -PADDING);
+		mainLayer.add(tb, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
 		
 		CountingButton cb = new CountingButton(container, 200, 40, new Label(container, fieldFont, Color.white, "Counting Button"));
 		cb.setMin(0);
 		cb.setMax(10);
-		mainLayer.add(cb, tb.getPosition(Positionable.ReferencePoint.TopRight), Positionable.ReferencePoint.BottomRight, 0, -PADDING);
+		mainLayer.add(cb, tb.getPosition(Positionable.ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, 0, -PADDING);
 		
 		ConditionBar conditionBar = new ConditionBar(container, 200, 40, new Condition(0, 10, 0));
-		mainLayer.add(conditionBar, cb.getPosition(Positionable.ReferencePoint.TopLeft), Positionable.ReferencePoint.BottomLeft, 0, -PADDING);
+		mainLayer.add(conditionBar, cb.getPosition(Positionable.ReferencePoint.TOPLEFT), Positionable.ReferencePoint.BOTTOMLEFT, 0, -PADDING);
 		
 		backgroundLayer.add(new Panel(container, Color.blue));
 	}

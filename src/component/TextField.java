@@ -49,7 +49,7 @@ public class TextField extends Component implements Disableable {
 		setBorderWidth(2);
 		
 		label = new Label(container, width - PADDING * 2, font, Color.white);
-		add(label, getPosition(Positionable.ReferencePoint.CenterLeft), Positionable.ReferencePoint.CenterLeft, PADDING, 0);
+		add(label, getPosition(Positionable.ReferencePoint.CENTERLEFT), Positionable.ReferencePoint.CENTERLEFT, PADDING, 0);
 	}
 	
 	@Override

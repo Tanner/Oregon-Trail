@@ -84,7 +84,7 @@ public class SegmentedControl extends Component {
 		int xOffset = (width - cols * colWidth - margin * (cols - 1) ) / 2;
 		int yOffset = (height - rows * rowHeight - margin * (rows - 1) ) / 2;
 		
-		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TopLeft), rows, cols, xOffset, yOffset, margin, margin);
+		this.addAsGrid(buttons, getPosition(Positionable.ReferencePoint.TOPLEFT), rows, cols, xOffset, yOffset, margin, margin);
 			
 		clear();		
 	}

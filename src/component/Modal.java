@@ -46,7 +46,7 @@ public class Modal extends Component {
 				
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);		
 		this.messageLabel = new Label(container, fieldFont, Color.white, message);
-		messageLabel.setAlignment(Label.Alignment.Center);
+		messageLabel.setAlignment(Label.Alignment.CENTER);
 		
 		int buttonWidth = 200;
 		int buttonHeight = 40;
@@ -60,10 +60,10 @@ public class Modal extends Component {
 		panel.setBorderWidth(2);
 		panel.setLocation((getWidth() - panel.getWidth()) / 2, (getHeight() - panel.getHeight() / 2));
 		
-		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TopCenter), Positionable.ReferencePoint.TopCenter, 0, PADDING);		
-		panel.add(dismissButton, panel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.BottomCenter, 0, -PADDING);
+		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);		
+		panel.add(dismissButton, panel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -PADDING);
 		
-		add(panel, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
+		add(panel, getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class Modal extends Component {
 				
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);		
 		messageLabel = new Label(container, fieldFont, Color.white, message);
-		messageLabel.setAlignment(Label.Alignment.Center);
+		messageLabel.setAlignment(Label.Alignment.CENTER);
 		
 		ButtonListener buttonListener = new ButtonListener();
 		int buttonWidth = 200;
@@ -101,12 +101,12 @@ public class Modal extends Component {
 		panel.setBorderWidth(2);
 		panel.setLocation((getWidth() - panel.getWidth()) / 2, (getHeight() - panel.getHeight() / 2));
 		
-		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TopCenter), Positionable.ReferencePoint.TopCenter, 0, PADDING);
-		panel.add(segmentedControl, messageLabel.getPosition(Positionable.ReferencePoint.BottomCenter), Positionable.ReferencePoint.TopCenter, 0, PADDING);
-		panel.add(dismissButton, panel.getPosition(Positionable.ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft, PADDING, -PADDING);
-		panel.add(resignButton, panel.getPosition(Positionable.ReferencePoint.BottomRight), Positionable.ReferencePoint.BottomRight, -PADDING, -PADDING);
+		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
+		panel.add(segmentedControl, messageLabel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
+		panel.add(dismissButton, panel.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT, PADDING, -PADDING);
+		panel.add(resignButton, panel.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
 		
-		add(panel, getPosition(Positionable.ReferencePoint.CenterCenter), Positionable.ReferencePoint.CenterCenter);
+		add(panel, getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
 	}
 	
 	@Override

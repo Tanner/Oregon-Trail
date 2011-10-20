@@ -38,7 +38,7 @@ import core.Logger;
  * sell, transfer, or drop {@code Item}.
  */
 public class PartyInventoryScene extends Scene {
-	public static final SceneID ID = SceneID.PartyInventory;
+	public static final SceneID ID = SceneID.PARTYINVENTORY;
 	
 	public static enum EXTRA_BUTTON_FUNC {SELL, DROP};
 	public static enum Mode {NORMAL, TRANSFER};
@@ -123,7 +123,7 @@ public class PartyInventoryScene extends Scene {
 		int panelWidth = ((OwnerInventoryButtons.getButtonWidth() + PADDING) * maxInventorySize) - PADDING;
 		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1) - 4;
 		
-		mainLayer.addAsGrid(personPanels, mainLayer.getPosition(ReferencePoint.TopLeft), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
+		mainLayer.addAsGrid(personPanels, mainLayer.getPosition(ReferencePoint.TOPLEFT), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
 		// Create Vehicle inventories (if one exists)
 		if (vehicle != null) {
@@ -139,21 +139,21 @@ public class PartyInventoryScene extends Scene {
 			
 			vehicleInventoryButtons.makePanel(container);
 			
-			mainLayer.add(vehicleInventoryButtons.getPanel(), locationReference.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, PADDING);
+			mainLayer.add(vehicleInventoryButtons.getPanel(), locationReference.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, PADDING);
 		}
 		
 		// Close button
 		closeButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CLOSE")));
 		closeButton.addListener(new ButtonListener());
-		mainLayer.add(closeButton, mainLayer.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomLeft, PADDING, -PADDING);
+		mainLayer.add(closeButton, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, PADDING, -PADDING);
 		
 		// Transfer button
 		Label transferLabel = new Label(container, BUTTON_WIDTH, BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
-		transferLabel.setAlignment(Alignment.Center);
+		transferLabel.setAlignment(Alignment.CENTER);
 		
 		transferButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, transferLabel);
 		transferButton.addListener(new ButtonListener());
-		mainLayer.add(transferButton, mainLayer.getPosition(ReferencePoint.BottomRight), ReferencePoint.BottomRight, -PADDING, -PADDING);
+		mainLayer.add(transferButton, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
 		
 		// Function button
 		String functionText = null;
@@ -166,19 +166,19 @@ public class PartyInventoryScene extends Scene {
 		
 		functionButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, functionText));
 		functionButton.addListener(new ButtonListener());
-		mainLayer.add(functionButton, transferButton.getPosition(ReferencePoint.BottomLeft), ReferencePoint.BottomRight, -PADDING, 0);
+		mainLayer.add(functionButton, transferButton.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMRIGHT, -PADDING, 0);
 		
 		// Bin button
 		Label binLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "");
-		binLabel.setAlignment(Alignment.Center);
+		binLabel.setAlignment(Alignment.CENTER);
 		binButton = new CountingButton(container, BIN_BUTTON_WIDTH, BIN_BUTTON_HEIGHT, binLabel);
 		binButton.setDisableAutoCount(true);
 		binButton.addListener(new ButtonListener());
 		
 		int xOffset = ((container.getWidth() - 2 * PADDING) / 2) - (BIN_BUTTON_WIDTH / 2);
-		int yOffset = (int)((personPanels[personPanels.length - 1].getPosition(ReferencePoint.BottomLeft).y + PADDING + BUTTON_HEIGHT - closeButton.getPosition(ReferencePoint.TopLeft).y) / 2) + (BIN_BUTTON_HEIGHT / 2); 
+		int yOffset = (int)((personPanels[personPanels.length - 1].getPosition(ReferencePoint.BOTTOMLEFT).y + PADDING + BUTTON_HEIGHT - closeButton.getPosition(ReferencePoint.TOPLEFT).y) / 2) + (BIN_BUTTON_HEIGHT / 2); 
 		
-		mainLayer.add(binButton, closeButton.getPosition(ReferencePoint.TopLeft), ReferencePoint.BottomLeft, xOffset, yOffset);
+		mainLayer.add(binButton, closeButton.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, xOffset, yOffset);
 		
 		int numberOfBinPockets = playerInventoryButtons.length;
 		numberOfBinPockets += vehicleInventoryButtons != null ? 1 : 0;

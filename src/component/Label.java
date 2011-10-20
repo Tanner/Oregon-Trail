@@ -12,12 +12,12 @@ public class Label extends Component {
 	private static final int Y_OFFSET = 1;
 	
 	public enum Alignment {
-		Center,
-		Left
+		CENTER,
+		LEFT
 	}
 	public enum VerticalAlignment {
-		Center,
-		Top
+		CENTER,
+		TOP
 	}
 	ArrayList<String> lines;
 	private String text;
@@ -43,8 +43,8 @@ public class Label extends Component {
 		this.font = font;
 		this.c = c;
 		this.text = text;
-		alignment = Alignment.Left;
-		verticalAlignment = VerticalAlignment.Center;
+		alignment = Alignment.LEFT;
+		verticalAlignment = VerticalAlignment.CENTER;
 		clip = true;
 		lines = new ArrayList<String>();
 		parseLines();
@@ -64,8 +64,8 @@ public class Label extends Component {
 		this.font = font;
 		this.c = c;
 		this.text = text;
-		alignment = Alignment.Left;
-		verticalAlignment = VerticalAlignment.Center;
+		alignment = Alignment.LEFT;
+		verticalAlignment = VerticalAlignment.CENTER;
 		clip = true;
 		lines = new ArrayList<String>();
 		parseLines();
@@ -110,7 +110,7 @@ public class Label extends Component {
 		
 		int startY;
 		
-		if (verticalAlignment == VerticalAlignment.Center) {
+		if (verticalAlignment == VerticalAlignment.CENTER) {
 			startY = getY() + (getHeight() - (lines.size()*font.getLineHeight())) / 2;
 		} else {
 			startY = getY();
@@ -119,11 +119,11 @@ public class Label extends Component {
 		startY += Y_OFFSET;
 		
 		for (int i = 0; i < lines.size(); i++) {
-			if (alignment == Alignment.Center) {
+			if (alignment == Alignment.CENTER) {
 				font.drawString(getX() + (getWidth() - font.getWidth(lines.get(i))) / 2,
 						startY + (font.getLineHeight())*i,
 						lines.get(i), c);
-			} else if (alignment == Alignment.Left){
+			} else if (alignment == Alignment.LEFT){
 				font.drawString(getX(),
 						startY + (font.getLineHeight())*i,
 						lines.get(i), c);

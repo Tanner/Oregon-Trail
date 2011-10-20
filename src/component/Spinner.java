@@ -54,15 +54,15 @@ public class Spinner extends Component {
 		label.setBorderWidth(2);
 		label.setLeftBorderWidth(0);
 		label.setBorderColor(ConstantStore.COLORS.get("INTERACTIVE_BORDER_DARK"));
-		label.setAlignment(Alignment.Center);
+		label.setAlignment(Alignment.CENTER);
 		upButton = new Button(context, butWidth, height/2, upLabel);
 		upButton.setBottomBorderWidth(0);
 		downButton = new Button(context, butWidth, height/2 + 1, downLabel);	// add one to height because has bottom border
 		
-		add(upButton, getPosition(ReferencePoint.TopLeft), Positionable.ReferencePoint.TopLeft);
-		add(downButton, this.getPosition(ReferencePoint.BottomLeft), Positionable.ReferencePoint.BottomLeft);
+		add(upButton, getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT);
+		add(downButton, this.getPosition(ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT);
 		//Sets the label text to be in the center of the textbox
-		add(label, upButton.getPosition(ReferencePoint.TopRight), Positionable.ReferencePoint.TopLeft);
+		add(label, upButton.getPosition(ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.TOPLEFT);
 		
 		listener = new ButtonListener();
 		upButton.addListener(listener);

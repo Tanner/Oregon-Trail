@@ -94,21 +94,21 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	 */
 	private Scene sceneForSceneID(SceneID id) {
 		switch (id) {
-		case MainMenu:
+		case MAINMENU:
 			return new MainMenuScene();
-		case PartyCreation:
+		case PARTYCREATION:
 			return new PartyCreationScene(game.getPlayer());
-		case Town:
+		case TOWN:
 			return new TownScene(game.getPlayer().getParty());
-		case Store:
+		case STORE:
 			return new StoreScene(game.getPlayer().getParty(), storeInventory);
-		case PartyInventory:
+		case PARTYINVENTORY:
 			return new PartyInventoryScene(game.getPlayer().getParty());
-		case SceneSelector:
+		case SCENESELECTOR:
 			return new SceneSelectorScene(game.getPlayer());
-		case ComponentTest:
+		case COMPONENTTEST:
 			return new ComponentTestScene();
-		case TrailTestScene:
+		case TRAILTESTSCENE:
 			return new TrailTestScene(game.getPlayer().getParty());
 		}
 		
@@ -168,31 +168,31 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	@Override
 	public void requestScene(SceneID id, Scene lastScene) {
 		Scene newScene = null;
-		if (id == SceneID.SceneSelector) {
+		if (id == SceneID.SCENESELECTOR) {
 			// Requested scene selector
 			newScene = new SceneSelectorScene(game.getPlayer());
 		} else if (lastScene instanceof MainMenuScene) {
 			// Last scene was Main Menu Scene
-			if (id == SceneID.PartyCreation) {
+			if (id == SceneID.PARTYCREATION) {
 				// Requested Party Creation Scene
 				newScene = new PartyCreationScene(game.getPlayer());
 			}
 		} else if (lastScene instanceof TownScene) {
 			// Last scene was Town Scene
-			if (id == SceneID.Store) {
+			if (id == SceneID.STORE) {
 				// Requested Store Scene
 				newScene = new StoreScene(game.getPlayer().getParty(), storeInventory);	
 			}
 		} else if (lastScene instanceof StoreScene) {
 			// Last scene was Store Scene
-			if (id == SceneID.PartyInventory) {
+			if (id == SceneID.PARTYINVENTORY) {
 				// Requested Party Inventory Scene
 				newScene = new PartyInventoryScene(game.getPlayer().getParty(), ((StoreScene)lastScene).getInventory());
 			}
 		} else if (lastScene instanceof SceneSelectorScene) {
 			// Last scene was Scene Selector Scene
 			newScene =  sceneForSceneID(id);
-		} else if (id == SceneID.PartyInventory) {
+		} else if (id == SceneID.PARTYINVENTORY) {
 			// Requested Party Inventory Scene
 			newScene = new PartyInventoryScene(game.getPlayer().getParty());
 		}
@@ -224,7 +224,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	
 	@Override
 	public void showSceneSelector() {
-		sceneDirector.replaceStackWithScene(sceneForSceneID(SceneID.SceneSelector));
+		sceneDirector.replaceStackWithScene(sceneForSceneID(SceneID.SCENESELECTOR));
 	}
 	
 	/*----------------------

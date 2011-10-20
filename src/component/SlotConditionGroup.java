@@ -45,7 +45,7 @@ public class SlotConditionGroup extends Component {
 		this.pocketNumber = pocketNumber;
 		
 		Label label = new Label(container, width, font, Color.white, "");
-		label.setAlignment(Alignment.Center);
+		label.setAlignment(Alignment.CENTER);
 		
 		button = new CountingButton(container, width, ITEM_BUTTON_HEIGHT, label);
 		conditionBar = new ConditionBar(container, width, ITEM_CONDITION_BAR_HEIGHT, null);
@@ -56,8 +56,8 @@ public class SlotConditionGroup extends Component {
 		
 		int padding = height - (ITEM_BUTTON_HEIGHT + ITEM_CONDITION_BAR_HEIGHT);
 		
-		add(button, this.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
-		add(conditionBar, button.getPosition(ReferencePoint.BottomCenter), ReferencePoint.TopCenter, 0, padding);
+		add(button, this.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, 0);
+		add(conditionBar, button.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, padding);
 		
 		setDisable(true);
 	}

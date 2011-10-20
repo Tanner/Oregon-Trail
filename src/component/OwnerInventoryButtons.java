@@ -65,11 +65,11 @@ public class OwnerInventoryButtons {
 		
 		Positionable lastPositionReference = itemPanel;
 		for (int i = 0; i < maxInventorySize; i++) {
-			Vector2f position = lastPositionReference.getPosition(ReferencePoint.TopRight);
+			Vector2f position = lastPositionReference.getPosition(ReferencePoint.TOPRIGHT);
 			int padding = PADDING;
 			
 			if (i == 0) {
-				position = lastPositionReference.getPosition(ReferencePoint.TopLeft);
+				position = lastPositionReference.getPosition(ReferencePoint.TOPLEFT);
 				padding = 0;
 			} else if (i == maxInventorySize) {
 				padding = 0;
@@ -88,7 +88,7 @@ public class OwnerInventoryButtons {
 			slotConditionGroup.addListener(new ButtonListener());
 			
 			itemSlots.add(i, slotConditionGroup);
-			itemPanel.add(itemSlots.get(i), position, ReferencePoint.TopLeft, padding, 0);
+			itemPanel.add(itemSlots.get(i), position, ReferencePoint.TOPLEFT, padding, 0);
 			
 			lastPositionReference = itemSlots.get(i);
 		}
@@ -96,12 +96,12 @@ public class OwnerInventoryButtons {
 		Label nameLabel = new Label(container, font, Color.white, inventoried.getName());
 		
 		panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int)nameLabel.getFontHeight());
-		panel.add(nameLabel, panel.getPosition(ReferencePoint.TopLeft), ReferencePoint.TopLeft, 0, 0);
-		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BottomLeft), ReferencePoint.TopLeft, 0, NAME_PADDING);
+		panel.add(nameLabel, panel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, 0);
+		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, NAME_PADDING);
 		
 		weightBar = new ConditionBar(container, ITEM_BUTTON_WIDTH * 2 + PADDING, nameLabel.getHeight(), getWeightCondition(), font);
 		weightBar.setDisableText(false);
-		panel.add(weightBar, itemPanel.getPosition(ReferencePoint.TopRight), ReferencePoint.BottomRight, 0, -NAME_PADDING);
+		panel.add(weightBar, itemPanel.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.BOTTOMRIGHT, 0, -NAME_PADDING);
 		
 		updateGraphics();
 	}
