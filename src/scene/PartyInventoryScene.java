@@ -257,7 +257,14 @@ public class PartyInventoryScene extends Scene {
 			if (populated.size() > 0) {
 				ITEM_TYPE itemToRemove = populated.get(0);
 				ArrayList<Item> itemsRemoved = binInventory[i].removeItem(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
-				playerInventoryButtons[i].addItemToInventory(itemsRemoved);
+				
+				if (i != 4) {
+					// If the item belongs to a person
+					playerInventoryButtons[i].addItemToInventory(itemsRemoved);
+				} else {
+					// ... or the vehicle
+					vehicleInventoryButtons.addItemToInventory(itemsRemoved);
+				}
 			}
 		}
 	}
