@@ -134,6 +134,6 @@ public final class ConstantStore {
 	 * @return the string held in the map
 	 */
 	public static String get(String outer, String inner) {
-		return (String)LITERALS.get(outer).get(inner);
+		return LITERALS.get(outer).get(inner);
 	}
 }

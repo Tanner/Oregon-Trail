@@ -465,14 +465,14 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	@Override
 	public void setLocation(int x, int y) {
 		if (origin == null) {
-			origin = new Vector2f((int)x, (int)y);
+			origin = new Vector2f(x, y);
 		} else {
 			if (components != null) {
 				for (Component c : components) {
 					c.setLocation(c.getX() + (x - getX()), c.getY() + (y - getY()));
 				}
 			}
-			origin.set((int)x, (int)y);
+			origin.set(x, y);
 		}
 	}
 	

@@ -123,7 +123,7 @@ public class PartyInventoryScene extends Scene {
 		int panelWidth = ((OwnerInventoryButtons.getButtonWidth() + PADDING) * maxInventorySize) - PADDING;
 		int peopleSpacing = ((container.getWidth() - (2 * PADDING)) - (panelWidth * NUM_COLS)) / (NUM_COLS - 1) - 4;
 		
-		mainLayer.addAsGrid(personPanels, mainLayer.getPosition(ReferencePoint.TOPLEFT), (int)(members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
+		mainLayer.addAsGrid(personPanels, mainLayer.getPosition(ReferencePoint.TOPLEFT), (members.size() / 2), NUM_COLS, PADDING, PADDING, peopleSpacing, PADDING);
 		
 		// Create Vehicle inventories (if one exists)
 		if (vehicle != null) {
