@@ -15,8 +15,8 @@ public class Person implements Conditioned, Inventoried{
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
 	private String name;
 	private Profession profession;
-	private final static float baseMoney = 1600f;
-	private final static int baseSkillPoints = 70;
+	private final static float BASE_MONEY = 1600f;
+	private final static int BASE_SKILL_POINTS = 70;
 	private Inventory inventory;
 	public static final int MAX_INVENTORY_SIZE = 5;
 	private final double MAX_INVENTORY_WEIGHT = 10;
@@ -27,7 +27,7 @@ public class Person implements Conditioned, Inventoried{
 	 */
 	public Person(String name){
 		this.name = name;
-		this.skillPoints = new Condition(0, baseSkillPoints, 0);
+		this.skillPoints = new Condition(0, BASE_SKILL_POINTS, 0);
 		this.health = new Condition(100);
 		Logger.log(name + " was created", Logger.Level.INFO);
 		this.inventory = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);
@@ -291,7 +291,7 @@ public class Person implements Conditioned, Inventoried{
 		 * @return Multiplier
 		 */
 		public int getMoney() {
-			return (int)(baseMoney / moneyDivider);
+			return (int)(BASE_MONEY / moneyDivider);
 		}
 		
 		/**
