@@ -335,23 +335,20 @@ public class StoreScene extends Scene {
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			if ( source == cancelButton ) {
+			if (source == cancelButton ) {
 				GameDirector.sharedSceneListener().sceneDidEnd(StoreScene.this);
-			} else if ( source == inventoryButton ) {
+			} else if (source == inventoryButton ) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, StoreScene.this);
-			}
-			else if ( source == buyButton) {
+			} else if (source == buyButton) {
 				int successCode = makePurchase();
 				if (successCode == 0) {
 					showModal(buyModal);
 				} else if (successCode == -1) {
 					showModal(failedBuyModal);
 				}
-			} else {
-				if ( currentItem != null) {
-					storeInventory[getButtonIndex(currentItem)].setCount(storeInventory[getButtonIndex(currentItem)].getMax());
-					updateLabels(currentItem);
-				}
+			} else if (currentItem != null) {
+				storeInventory[getButtonIndex(currentItem)].setCount(storeInventory[getButtonIndex(currentItem)].getMax());
+				updateLabels(currentItem);
 			}
 		}
 	}
