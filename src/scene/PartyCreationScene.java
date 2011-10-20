@@ -300,7 +300,7 @@ public class PartyCreationScene extends Scene {
 	 */
 	private void setProfession(int[] segmentedControlResults){
 		personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
-		people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
+		people.get(currentPersonModifying).changeProfession(Person.Profession.values()[segmentedControlResults[0]]);
 		
 		personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
 		
@@ -477,7 +477,7 @@ public class PartyCreationScene extends Scene {
 				skillSegmentedControl.setPermanent(new int[0]);
 			}
 			
-			ArrayList<Skill> currentSkills = people.get(i).getSkills();
+			List<Skill> currentSkills = people.get(i).getSkills();
 			
 			currentSkills.remove(Person.Skill.NONE);
 			int[] currentSkillIndices = new int[currentSkills.size()];

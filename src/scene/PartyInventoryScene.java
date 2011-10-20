@@ -1,6 +1,7 @@
 package scene;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Inventory;
 import model.Item;
@@ -99,7 +100,7 @@ public class PartyInventoryScene extends Scene {
 
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
-		ArrayList<Person> members = party.getPartyMembers();
+		List<Person> members = party.getPartyMembers();
 		Vehicle vehicle = party.getVehicle();
 		
 		// Create a grid of all the party members and their inventories
@@ -204,7 +205,7 @@ public class PartyInventoryScene extends Scene {
 		String name = "";
 		
 		for (int i = 0; i < binInventory.length; i++) {
-			ArrayList<ITEM_TYPE> itemType = binInventory[i].getPopulatedSlots();
+			List<ITEM_TYPE> itemType = binInventory[i].getPopulatedSlots();
 			
 			if (itemType.size() > 0) {
 				amount += binInventory[i].getNumberOf(itemType.get(0));
@@ -252,11 +253,11 @@ public class PartyInventoryScene extends Scene {
 	 */
 	public void returnBinItems() {
 		for (int i = 0; i < binInventory.length; i++) {
-			ArrayList<ITEM_TYPE> populated = binInventory[i].getPopulatedSlots();
+			List<ITEM_TYPE> populated = binInventory[i].getPopulatedSlots();
 			
 			if (populated.size() > 0) {
 				ITEM_TYPE itemToRemove = populated.get(0);
-				ArrayList<Item> itemsRemoved = binInventory[i].removeItem(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
+				List<Item> itemsRemoved = binInventory[i].removeItem(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
 				
 				if (i != 4) {
 					// If the item belongs to a person
@@ -297,7 +298,7 @@ public class PartyInventoryScene extends Scene {
 	public ITEM_TYPE getBinItemType() {
 		ITEM_TYPE itemType = null;
 		for (int i = 0; i < binInventory.length; i++) {
-			ArrayList<ITEM_TYPE> populatedSlots = binInventory[i].getPopulatedSlots();
+			List<ITEM_TYPE> populatedSlots = binInventory[i].getPopulatedSlots();
 			if (populatedSlots.size() > 0) {
 				itemType = populatedSlots.get(0);
 				break;
@@ -425,7 +426,7 @@ public class PartyInventoryScene extends Scene {
 			
 			// Add the item to the bin inventory in the correct spot so we know who the source was if we want to remove it from the bin
 			// Also remove the item from the person's inventory
-			ArrayList<Item> itemsRemoved = ownerInventoryButtons.removeItemFromInventory(item, 1);
+			List<Item> itemsRemoved = ownerInventoryButtons.removeItemFromInventory(item, 1);
 			
 			binInventory[binInventoryIndex].addItem(itemsRemoved);
 			

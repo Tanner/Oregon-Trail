@@ -1,6 +1,8 @@
 package component;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import model.Condition;
 import model.Inventoried;
 import model.Item;
@@ -57,7 +59,7 @@ public class OwnerInventoryButtons {
 	 * @param container Container
 	 */
 	public void makePanel(GameContainer container) {
-		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
+		List<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * inventoried.getMaxSize()) - PADDING;
@@ -119,7 +121,7 @@ public class OwnerInventoryButtons {
 	 * Update the contents of the buttons and the weightbar to be current
 	 */
 	public void updateGraphics() {
-		ArrayList<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
+		List<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 
 		int maxInventorySize = inventoried.getInventory().getMaxSize();
 
@@ -153,7 +155,7 @@ public class OwnerInventoryButtons {
 	 * @param items List of Items to add to the inventory
 	 * @return Whether or not the addition was successful
 	 */
-	public boolean addItemToInventory(ArrayList<Item> items) {
+	public boolean addItemToInventory(List<Item> items) {
 		boolean success = false;
 		
 		success = inventoried.addItemToInventory(items);
@@ -171,7 +173,7 @@ public class OwnerInventoryButtons {
 	 * @param quantity Number of the item to remove
 	 * @return Whether or not the removal was successful
 	 */
-	public ArrayList<Item> removeItemFromInventory(ITEM_TYPE item, int quantity) {
+	public List<Item> removeItemFromInventory(ITEM_TYPE item, int quantity) {
 		return inventoried.removeItemFromInventory(item, quantity);
 	}
 	

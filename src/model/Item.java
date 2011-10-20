@@ -4,18 +4,26 @@ import core.ConstantStore;
 
 /**
  * 
- * An item contains it's own condition as well as a name, description, and weight.  The only modifiable aspect
+ * An item contains it's own condition as well as a 
+ * name, description, and weight.  The only modifiable aspect
  * is weight.
  */
 public abstract class Item implements Conditioned, Comparable<Item>{
 	
-	private String name;
-	private String description;
-	private Condition status;
-	private double weight; //This is the individual unit weight
+	private final String name;
+
+	private final String description;
+	
+	private final Condition status;
+	
+	private final double weight; //This is the individual unit weight
+	
 	private boolean isStackable = true;
-	private int baseCost;
-	private ITEM_TYPE type;
+	
+	private final int baseCost;
+	
+	private final ITEM_TYPE type;
+	
 	/**
 	 * 
 	 * Creates a new item with a name, description, status, and weight.
@@ -23,7 +31,6 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @param description The item's description
 	 * @param status The item's status
 	 * @param weight The item's weight
-	 * @param numberOf The number of items in the stack
 	 * @param baseCost The base cost of the item
 	 * @param type The type of the item
 	 */
@@ -59,7 +66,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @return The base cost of the item
 	 */
 	public int getCost() {
-		return (int) (baseCost * status.getPercentage());
+		return (int)(baseCost * status.getPercentage());
 	}
 	
 	/**
@@ -67,7 +74,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @return The current condition of the item.
 	 */
 	public Condition getStatus() {
-		return status.clone();
+		return status.copy();
 	}
 	
 	@Override
@@ -76,11 +83,13 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	}
 
 	/**
-	 * Increases the item's status by a specific amount. Returns false if the increase fails.
+	 * Increases the item's status by a specific amount. 
+	 * Returns false if the increase fails.
 	 * @param amount The amount by which to increase the status
+	 * @return True if successful, false otherwise
 	 */
 	public boolean increaseStatus(int amount) {
-		boolean returned = status.increase(amount);
+		final boolean returned = status.increase(amount);
 		if (status.getCurrent() == status.getMax()) {
 			this.isStackable = true;
 		}
@@ -88,11 +97,13 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	}
 	
 	/**
-	 * Decreases the item's status by a specific amount.  Returns false if the decrease fails.
+	 * Decreases the item's status by a specific amount.  
+	 * Returns false if the decrease fails.
 	 * @param amount The amount by which to decrease the status
+	 * @return True if successful, false otherwise
 	 */
 	public boolean decreaseStatus(int amount) {
-		boolean returned = status.decrease(amount);
+		final boolean returned = status.decrease(amount);
 		if (status.getCurrent() < status.getMax()) {
 			this.isStackable = false;
 		}
@@ -115,9 +126,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		return isStackable;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
+	@Override
 	public int compareTo(Item i) {
 		if (Math.abs(getConditionPercentage() - i.getConditionPercentage()) < 0.000001) {
 			return 0;
@@ -136,10 +145,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		return type;
 	}
 	
-	/**
-	 * Returns the item as a string.
-	 * @return the item as a string
-	 */
+	@Override
 	public String toString() {
 		return type.getName();
 	}
@@ -156,11 +162,11 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		BULLET (ConstantStore.get("ITEMS", "BULLET_NAME"), 
 			  ConstantStore.get("ITEMS", "BULLET_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "BULLET_COST"),
-			  ConstantStore.get("ITEMS", "BULLET_WEIGHT"), false, false),
+			  ConstantStore.get("ITEMS", "BULLET_WEIGHT"), false, false, 0),
 		GUN (ConstantStore.get("ITEMS", "GUN_NAME"), 
 			ConstantStore.get("ITEMS", "GUN_DESCRIPTION"),
 			ConstantStore.get("ITEMS", "GUN_COST"),
-			ConstantStore.get("ITEMS", "GUN_WEIGHT"), false, false),
+			ConstantStore.get("ITEMS", "GUN_WEIGHT"), false, false, 0),
 		MEAT (ConstantStore.get("ITEMS", "MEAT_NAME"), 
 			  ConstantStore.get("ITEMS", "MEAT_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "MEAT_COST"),
@@ -168,34 +174,40 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		SONIC (ConstantStore.get("ITEMS", "SONIC_NAME"), 
 			  ConstantStore.get("ITEMS", "SONIC_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "SONIC_COST"),
-			  ConstantStore.get("ITEMS", "SONIC_WEIGHT"), false, false),
+			  ConstantStore.get("ITEMS", "SONIC_WEIGHT"), false, false, 0),
 		WAGON (ConstantStore.get("ITEMS", "WAGON_NAME"), 
 			  ConstantStore.get("ITEMS", "WAGON_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "WAGON_COST"),
-			  ConstantStore.get("ITEMS", "WAGON_WEIGHT"), false, false),
+			  ConstantStore.get("ITEMS", "WAGON_WEIGHT"), false, false, 0),
 		WHEEL (ConstantStore.get("ITEMS", "WHEEL_NAME"), 
 			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"),
 			  ConstantStore.get("ITEMS", "WHEEL_COST"),
-			  ConstantStore.get("ITEMS", "WHEEL_WEIGHT"), false, false);
+			  ConstantStore.get("ITEMS", "WHEEL_WEIGHT"), false, false, 0);
 		
 		private final String name;
+
 		private final String description;
+		
 		private final int cost;
+		
 		private final double weight;
+		
 		private boolean isFood, isPlant;
+		
 		private int foodFactor;
 		
-		private ITEM_TYPE (String name, String description, String cost, String weight, boolean isFood, boolean isPlant) {
-			this.name = name;
-			this.description = description;
-			this.cost = Integer.parseInt(cost);
-			this.weight = Double.parseDouble(weight);
-			this.isFood = isFood;
-			this.isPlant = isPlant;
-			this.foodFactor = 0;
-		}
-		
-		private ITEM_TYPE (String name, String description, String cost, String weight, boolean isFood, boolean isPlant, int foodFactor) {
+		/**
+		 * Makes the item type
+		 * @param name Name of the item type
+		 * @param description Description of the item type
+		 * @param cost Cost of the item type
+		 * @param weight Weight of the item type
+		 * @param isFood If the item is food
+		 * @param isPlant If the item is a plant
+		 * @param foodFactor The multiplier for the food (if it is one, else 0)
+		 */
+		private ITEM_TYPE (String name, String description, String cost,
+				String weight, boolean isFood, boolean isPlant, int foodFactor) {
 			this.name = name;
 			this.description = description;
 			this.cost = Integer.parseInt(cost);
@@ -205,30 +217,58 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 			this.foodFactor = foodFactor;
 		}
 		
+		/**
+		 * The name of the type
+		 * @return The name
+		 */
 		public String getName() {
 			return name;
 		}
 		
+		/**
+		 * The description of the type
+		 * @return The description
+		 */
 		public String getDescription() {
 			return description;
 		}
 		
+		/**
+		 * The cost of the type
+		 * @return The cost
+		 */
 		public int getCost() {
 			return cost;
 		}
 		
+		/**
+		 * The weight of the type
+		 * @return The weight
+		 */
 		public double getWeight() {
 			return weight;
 		}
 		
+		/**
+		 * Whether or not the item is food
+		 * @return Is the item food?
+		 */
 		public boolean getIsFood() {
 			return isFood;
 		}
 		
+		/**
+		 * The multiplier for the food
+		 * @return The multiplier
+		 */
 		public int getFoodFactor() {
 			return foodFactor;
 		}
 		
+		/**
+		 * Is the item a plant
+		 * @return Is it a plant?
+		 */
 		public boolean getIsPlant() {
 			return isPlant;
 		}

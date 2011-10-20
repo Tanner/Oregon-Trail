@@ -44,4 +44,12 @@ public class Player {
 	public void setParty(Party party) {
 		this.party = party;
 	}
+	
+	/**
+	 * String representation of the player.
+	 * return the string
+	 */
+	public String toString() {
+		return party.toString();
+	}
 }

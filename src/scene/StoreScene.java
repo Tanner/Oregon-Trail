@@ -2,6 +2,7 @@ package scene;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.*;
 import model.item.*;
@@ -41,8 +42,8 @@ public class StoreScene extends Scene {
 	private Modal buyModal;
 	private Modal failedBuyModal;
 	
-	private ArrayList<Item> currentPurchase;
-	private ArrayList<Inventoried> currentBuyers;
+	private List<Item> currentPurchase;
+	private List<Inventoried> currentBuyers;
 	
 	private Item.ITEM_TYPE currentItem = null;
 	private Item.ITEM_TYPE hoverItem = null;
@@ -166,7 +167,7 @@ public class StoreScene extends Scene {
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
 		//Create inventory buttons and a map to which button stands for which inventory item
-		ArrayList<Item.ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
+		List<Item.ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
 		buttonMap = new ArrayList<Item.ITEM_TYPE>();
 		storeInventory = new CountingButton[inventorySlots.size()];
 		for (int i = 0; i < inventorySlots.size(); i++) {
