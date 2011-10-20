@@ -6,6 +6,8 @@ import model.Item.ITEM_TYPE;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.gui.AbstractComponent;
+import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
 /**
@@ -29,6 +31,8 @@ public class SlotConditionGroup extends ComponentConditionGroup<CountingButton> 
 	 */
 	public SlotConditionGroup(GUIContext container, int width, int height, Font font, CountingButton button, Condition condition) {
 		super(container, width, height, font, button, condition);
+		
+		button.addListener(new ButtonListener());
 		
 		setDisable(true);
 	}
@@ -92,6 +96,13 @@ public class SlotConditionGroup extends ComponentConditionGroup<CountingButton> 
 			component.setDisabled(false);
 			
 			conditionBar.setVisible(false);
+		}
+	}
+	
+	private class ButtonListener implements ComponentListener {
+		@Override
+		public void componentActivated(AbstractComponent component) {
+			notifyListeners();
 		}
 	}
 }
