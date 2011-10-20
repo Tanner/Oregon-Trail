@@ -10,6 +10,9 @@ import core.ConstantStore;
 import core.FontManager;
 import core.GameDirector;
 
+/**
+ * A HUD holds quick information for the player.
+ */
 public class HUD extends Component {
 	private static final int PADDING = 20;
 	
@@ -20,6 +23,11 @@ public class HUD extends Component {
 	
 	private ComponentConditionGroup<Label> memberHealthGroup, vehicleStatusGroup;
 	
+	/**
+	 * Constructs a HUD with a {@code GUIContext} and {@code HUDDataSource}.
+	 * @param context Context
+	 * @param data Data source to use
+	 */
 	public HUD(GUIContext context, HUDDataSource data) {
 		super(context, context.getWidth(), context.getHeight());
 		
