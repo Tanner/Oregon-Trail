@@ -13,8 +13,8 @@ import org.newdawn.slick.gui.GUIContext;
 public class ComponentConditionGroup <T extends Component> extends Component {
 	private static final int CONDITION_BAR_HEIGHT = 5;
 	
-	private T component;
-	private ConditionBar conditionBar;
+	protected T component;
+	protected ConditionBar conditionBar;
 	
 	/**
 	 * Construct a {@code ComponentConditionGroup} with a {@code GUIContext}, width, height, {@code Font}, {@code Component}, and a {@code Condition}.

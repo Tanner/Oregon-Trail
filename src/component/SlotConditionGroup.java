@@ -14,16 +14,13 @@ import org.newdawn.slick.gui.GUIContext;
 import component.Label.Alignment;
 
 /**
- * A group consisting of a {@code Button} and {@code ConditionBar}.
+ * A group consisting of a {@code CountingButton} and {@code ConditionBar}.
  * 
- * Both the {@code Button} and the {@code ConditionBar} are linked to a specific item and item slot for an {@code Item}.
+ * Both the {@code CountingButton} and the {@code ConditionBar} are linked to a specific item and item slot for an {@code Item}.
  */
-public class SlotConditionGroup extends Component {
+public class SlotConditionGroup extends ComponentConditionGroup<CountingButton> {
 	private static final int ITEM_BUTTON_HEIGHT = 40;
 	private static final int ITEM_CONDITION_BAR_HEIGHT = 5;
-	
-	private CountingButton button;
-	private ConditionBar conditionBar;
 	
 	public static enum Mode {NORMAL, TRANSFER};
 	private Mode currentMode;
@@ -38,18 +35,11 @@ public class SlotConditionGroup extends Component {
 	 * @param font Font to use
 	 * @param pocketNumber The "pocket number" that the {@code Inventoried} has on it to use
 	 */
-	public SlotConditionGroup(GUIContext container, int width, int height, Font font) {
-		super(container, width, height);
+	public SlotConditionGroup(GUIContext container, int width, int height, Font font, CountingButton button, Condition condition) {
+		super(container, width, height, font, button, condition);
 		
 		Label label = new Label(container, width, font, Color.white, "");
 		label.setAlignment(Alignment.CENTER);
-		
-		button = new CountingButton(container, width, ITEM_BUTTON_HEIGHT, label);
-		conditionBar = new ConditionBar(container, width, ITEM_CONDITION_BAR_HEIGHT, null);
-		
-		button.setCountUpOnLeftClick(false);
-		button.setDisableAutoCount(true);
-		button.addListener(new ButtonListener());
 		
 		int padding = height - (ITEM_BUTTON_HEIGHT + ITEM_CONDITION_BAR_HEIGHT);
 		
@@ -90,26 +80,11 @@ public class SlotConditionGroup extends Component {
 		
 		this.item = item;
 		
-		button.setText(name);
-		button.setCount(amount);
-		button.setMax(amount);
+		component.setText(name);
+		component.setCount(amount);
+		component.setMax(amount);
 		
 		conditionBar.setCondition(condition);
-	}
-	
-	/**
-	 * Set whether or not this component is disabled.
-	 * @param disabled Disabled or not (true for disabled)
-	 */
-	public void setDisable(boolean disabled) {
-		if (disabled) {
-			button.setText("None");
-		}
-		
-		button.setHideCount(disabled);
-		button.setDisabled(disabled);
-		
-		conditionBar.setVisible(!disabled);
 	}
 	
 	/**
@@ -128,19 +103,11 @@ public class SlotConditionGroup extends Component {
 		this.currentMode = currentMode;
 		
 		if (currentMode == Mode.TRANSFER) {
-			button.setText("Free");
+			component.setText("Free");
+			component.setHideCount(true);
+			component.setDisabled(false);
 			
-			button.setHideCount(true);
-			
-			button.setDisabled(false);
 			conditionBar.setVisible(false);
-		}
-	}
-	
-	private class ButtonListener implements ComponentListener {
-		@Override
-		public void componentActivated(AbstractComponent component) {
-			notifyListeners();
 		}
 	}
 }
