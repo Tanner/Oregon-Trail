@@ -15,8 +15,8 @@ public class Person implements Conditioned, Inventoried{
 	private ArrayList<Skill> skills = new ArrayList<Skill>();
 	private String name;
 	private Profession profession;
-	private final static float BASE_MONEY = 1600f;
-	private final static int BASE_SKILL_POINTS = 70;
+	private static final float BASE_MONEY = 1600f;
+	private static final int BASE_SKILL_POINTS = 70;
 	private Inventory inventory;
 	public static final int MAX_INVENTORY_SIZE = 5;
 	private final double MAX_INVENTORY_WEIGHT = 10;
