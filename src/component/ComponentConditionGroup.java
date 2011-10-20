@@ -10,10 +10,10 @@ import org.newdawn.slick.gui.GUIContext;
 /**
  * A group consisting of a {@code Component} and {@code ConditionBar}.
  */
-public class ComponentConditionGroup extends Component {
+public class ComponentConditionGroup <T extends Component> extends Component {
 	private static final int CONDITION_BAR_HEIGHT = 5;
 	
-	private Component component;
+	private T component;
 	private ConditionBar conditionBar;
 	
 	/**
@@ -25,7 +25,7 @@ public class ComponentConditionGroup extends Component {
 	 * @param component Component to use
 	 * @param condition Condition for the {@code ConditionBar}
 	 */
-	public ComponentConditionGroup(GUIContext container, int width, int height, Font font, Component component, Condition condition) {
+	public ComponentConditionGroup(GUIContext container, int width, int height, Font font, T component, Condition condition) {
 		super(container, width, height);
 		
 		this.component = component;
@@ -53,6 +53,14 @@ public class ComponentConditionGroup extends Component {
 	 */
 	public void setCondition(Condition condition) {
 		conditionBar.setCondition(condition);
+	}
+	
+	/**
+	 * Returns the {@code Component}.
+	 * @return The Component
+	 */
+	public T getComponent() {
+		return component;
 	}
 	
 	/**
