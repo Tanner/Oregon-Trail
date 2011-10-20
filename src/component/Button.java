@@ -80,7 +80,7 @@ public class Button extends Component implements Disableable {
 	
 	/**
 	 * Constructs a {@code Button} with a {@code Label}.
-	 * @param context The GUI context
+	 * @param container The GUI context
 	 * @param label A label
 	 */
 	public Button(GUIContext container, Label label) {
