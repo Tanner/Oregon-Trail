@@ -3,15 +3,10 @@ package component;
 import model.Condition;
 import model.Item.ITEM_TYPE;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.gui.AbstractComponent;
-import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
-
-import component.Label.Alignment;
 
 /**
  * A group consisting of a {@code CountingButton} and {@code ConditionBar}.
@@ -19,9 +14,6 @@ import component.Label.Alignment;
  * Both the {@code CountingButton} and the {@code ConditionBar} are linked to a specific item and item slot for an {@code Item}.
  */
 public class SlotConditionGroup extends ComponentConditionGroup<CountingButton> {
-	private static final int ITEM_BUTTON_HEIGHT = 40;
-	private static final int ITEM_CONDITION_BAR_HEIGHT = 5;
-	
 	public static enum Mode {NORMAL, TRANSFER};
 	private Mode currentMode;
 	
@@ -37,14 +29,6 @@ public class SlotConditionGroup extends ComponentConditionGroup<CountingButton> 
 	 */
 	public SlotConditionGroup(GUIContext container, int width, int height, Font font, CountingButton button, Condition condition) {
 		super(container, width, height, font, button, condition);
-		
-		Label label = new Label(container, width, font, Color.white, "");
-		label.setAlignment(Alignment.CENTER);
-		
-		int padding = height - (ITEM_BUTTON_HEIGHT + ITEM_CONDITION_BAR_HEIGHT);
-		
-		add(button, this.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, 0);
-		add(conditionBar, button.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, padding);
 		
 		setDisable(true);
 	}
