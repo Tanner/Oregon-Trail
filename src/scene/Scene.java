@@ -6,6 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.HUD;
 import component.Modal;
 import component.ModalListener;
 
@@ -70,6 +71,10 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 		backgroundLayer.setAcceptingInput(true);
 		mainLayer.setAcceptingInput(true);
 		hudLayer.setAcceptingInput(true);
+	}
+	
+	public void showHUD(HUD hud) {
+		hudLayer.add(hud);
 	}
 	
 	/**
