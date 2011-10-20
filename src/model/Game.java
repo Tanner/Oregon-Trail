@@ -7,11 +7,13 @@ import core.Logger;
  */
 public class Game {
 	private Player player;
+	private WorldMap worldMap;
 	
 	/**
 	 * Know nothing, make nothing.
 	 */
-	public Game() {
+	public Game(WorldMap worldMap) {
+		this.worldMap = worldMap;
 		this.player = new Player();
 		if(player != null){
 			Logger.log("Player was created successfully", Logger.Level.INFO);

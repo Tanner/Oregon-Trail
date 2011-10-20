@@ -33,6 +33,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	private AppGameContainer container;
 	
 	private Game game;
+	private WorldMap worldMap;
 	private Inventory storeInventory = new Inventory(8, 10000);
 	
 	/**
@@ -45,7 +46,8 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 
 		 sceneDirector = new SceneDirector("Oregon Trail", this);
 		 makeInitialStoreInventory();
-		 game = new Game();
+		 worldMap = new WorldMap();
+		 game = new Game(worldMap);
 	}
 	
 	/**
