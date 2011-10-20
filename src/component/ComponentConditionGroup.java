@@ -2,7 +2,6 @@ package component;
 
 import model.Condition;
 
-import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
@@ -11,7 +10,7 @@ import org.newdawn.slick.gui.GUIContext;
  * A group consisting of a {@code Component} and {@code ConditionBar}.
  */
 public class ComponentConditionGroup <T extends Component> extends Component {
-	private static final int CONDITION_BAR_HEIGHT = 5;
+	public static final int CONDITION_BAR_HEIGHT = 5;
 	
 	protected T component;
 	protected ConditionBar conditionBar;
@@ -21,21 +20,33 @@ public class ComponentConditionGroup <T extends Component> extends Component {
 	 * @param container The container for this {@code Component}
 	 * @param width Width
 	 * @param height Height
-	 * @param font Font to use
+	 * @param conditionBarHeight Height for the {@code ConditionBar}
 	 * @param component Component to use
 	 * @param condition Condition for the {@code ConditionBar}
 	 */
-	public ComponentConditionGroup(GUIContext container, int width, int height, Font font, T component, Condition condition) {
+	public ComponentConditionGroup(GUIContext container, int width, int height, int conditionBarHeight, T component, Condition condition) {
 		super(container, width, height);
 		
 		this.component = component;
 		
-		conditionBar = new ConditionBar(container, width, CONDITION_BAR_HEIGHT, condition);
+		conditionBar = new ConditionBar(container, width, conditionBarHeight, condition);
 		
-		int padding = height - (component.getHeight() + CONDITION_BAR_HEIGHT);
+		int padding = height - (component.getHeight() + conditionBar.getHeight());
 		
 		add(component, this.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, 0);
 		add(conditionBar, component.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, padding);
+	}
+	
+	/**
+	 * Construct a {@code ComponentConditionGroup} with a {@code GUIContext}, width, height, {@code Font}, {@code Component}, and a {@code Condition}.
+	 * @param container The container for this {@code Component}
+	 * @param width Width
+	 * @param height Height
+	 * @param component Component to use
+	 * @param condition Condition for the {@code ConditionBar}
+	 */
+	public ComponentConditionGroup(GUIContext container, int width, int height, T component, Condition condition) {
+		this(container, width, height, CONDITION_BAR_HEIGHT, component, condition);
 	}
 
 	@Override
