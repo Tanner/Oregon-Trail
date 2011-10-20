@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import model.datasource.HUDDataSource;
 import model.item.Vehicle;
 
 import core.Logger;
@@ -10,7 +11,7 @@ import core.Logger.Level;
 /**
  * Party class that contains an array of persons that are members.
  */
-public class Party {
+public class Party implements HUDDataSource {
 	private ArrayList<Person> members = new ArrayList<Person>();
 	private int money;
 	private Pace currentPace;
@@ -391,5 +392,35 @@ public class Party {
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public Condition getPartyMembersHealth() {
+		int currentSum = 0;
+		int maxSum = 0;
+		int minSum = 0;
+		
+		if (members != null && members.size() > 0) {
+			for (Person person : members) {
+				Condition health = person.getHealth();
+				currentSum += health.getCurrent();
+				maxSum += health.getMax();
+				minSum += health.getMin();
+			}
+			
+			int size = members.size();
+			return new Condition(minSum / size, maxSum / size, currentSum / size);
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Condition getVehicleStatus() {
+		if (vehicle != null) {
+			return vehicle.getStatus();
+		}
+		
+		return null;
 	}
 }
