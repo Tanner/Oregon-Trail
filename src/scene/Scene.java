@@ -29,7 +29,6 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 		mainLayer = new SceneLayer(container);
 		hudLayer = new SceneLayer(container);
 		modalLayer = new SceneLayer(container);
-		modalLayer.setVisible(false);
 	}
 
 	@Override

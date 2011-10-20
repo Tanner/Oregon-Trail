@@ -143,7 +143,7 @@ public class SceneSelectorScene extends Scene {
 		}
 		
 		private void warnBecauseNoParty() {
-			modalLayer.add(new Modal(container, SceneSelectorScene.this, ConstantStore.get("SCENE_SELECTOR_SCENE", "ERR_NO_PARTY_FOR_SCENE"), ConstantStore.get("GENERAL", "OK")));
+			showModal((new Modal(container, SceneSelectorScene.this, ConstantStore.get("SCENE_SELECTOR_SCENE", "ERR_NO_PARTY_FOR_SCENE"), ConstantStore.get("GENERAL", "OK"))));
 		}
 	}
 	
