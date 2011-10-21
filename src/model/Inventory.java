@@ -217,7 +217,7 @@ public class Inventory {
 	 */
 	public String toString() {
 		final List<Item.ITEM_TYPE> popSlots = getPopulatedSlots();
-		StringBuffer str = new StringBuffer("Size: " + popSlots.size() + ". ");
+		final StringBuffer str = new StringBuffer("Size: " + popSlots.size() + ". ");
 		for(Item.ITEM_TYPE itemType : popSlots) {
 			str.append(" # of " + itemType.getName() + "s: " + getNumberOf(itemType));
 		}

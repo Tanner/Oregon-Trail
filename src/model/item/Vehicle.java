@@ -13,7 +13,7 @@ import model.Item;
  * @author Null && Void
  *
  */
-public abstract class Vehicle extends Item implements Inventoried{
+public class Vehicle extends Item implements Inventoried{
 /**
  * Abstract class to design a vehicle
  */

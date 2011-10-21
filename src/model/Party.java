@@ -125,7 +125,8 @@ public class Party implements HUDDataSource {
 		this.currentRations = currentRations;
 		this.location = 0;
 		
-		StringBuffer partyCreationLog = new StringBuffer(members.size() + " members were created successfully: ");
+		final StringBuffer partyCreationLog = new StringBuffer(members.size() + 
+				" members were created successfully: ");
 		for (Person person : party) {
 			this.money += person.getProfession().getMoney();
 			Logger.log(person.getName() + " as a " + 
@@ -287,7 +288,7 @@ public class Party implements HUDDataSource {
 	
 	@Override
 	public String toString() {
-		StringBuffer str = new StringBuffer("Members: ");
+		final StringBuffer str = new StringBuffer("Members: ");
 		for (Person person : members) {
 			str.append(person.toString() + "; ");
 		}

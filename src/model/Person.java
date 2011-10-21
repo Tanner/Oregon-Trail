@@ -324,7 +324,7 @@ public class Person implements Conditioned, Inventoried {
 
 	@Override
 	public String toString() {
-		StringBuffer str = new StringBuffer("Name: " + name);
+		final StringBuffer str = new StringBuffer("Name: " + name);
 		if(profession != null) {
 			 str.append(", Profession: " + profession.getName());
 		}
