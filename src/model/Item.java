@@ -17,38 +17,14 @@ public class Item implements Conditioned, Comparable<Item>{
 	private final ITEM_TYPE type;
 	
 	public enum ITEM_TYPE {
-		APPLE (ConstantStore.get("ITEMS", "APPLE_NAME"), 
-			  ConstantStore.get("ITEMS", "APPLE_DESCRIPTION"), 
-			  ConstantStore.get("ITEMS", "APPLE_COST"), 
-			  ConstantStore.get("ITEMS", "APPLE_WEIGHT"), true, true, 1),
-		BREAD (ConstantStore.get("ITEMS", "BREAD_NAME"), 
-			  ConstantStore.get("ITEMS", "BREAD_DESCRIPTION"),
-			  ConstantStore.get("ITEMS", "BREAD_COST"),
-			  ConstantStore.get("ITEMS", "BREAD_WEIGHT"), true, false, 2),
-		BULLET (ConstantStore.get("ITEMS", "BULLET_NAME"), 
-			  ConstantStore.get("ITEMS", "BULLET_DESCRIPTION"),
-			  ConstantStore.get("ITEMS", "BULLET_COST"),
-			  ConstantStore.get("ITEMS", "BULLET_WEIGHT"), false, false, 0),
-		GUN (ConstantStore.get("ITEMS", "GUN_NAME"), 
-			ConstantStore.get("ITEMS", "GUN_DESCRIPTION"),
-			ConstantStore.get("ITEMS", "GUN_COST"),
-			ConstantStore.get("ITEMS", "GUN_WEIGHT"), false, false, 0),
-		MEAT (ConstantStore.get("ITEMS", "MEAT_NAME"), 
-			  ConstantStore.get("ITEMS", "MEAT_DESCRIPTION"),
-			  ConstantStore.get("ITEMS", "MEAT_COST"),
-			  ConstantStore.get("ITEMS", "MEAT_WEIGHT"), true, false, 4),
-		SONIC (ConstantStore.get("ITEMS", "SONIC_NAME"), 
-			  ConstantStore.get("ITEMS", "SONIC_DESCRIPTION"),
-			  ConstantStore.get("ITEMS", "SONIC_COST"),
-			  ConstantStore.get("ITEMS", "SONIC_WEIGHT"), false, false, 0),
-		WAGON (ConstantStore.get("ITEMS", "WAGON_NAME"), 
-			  ConstantStore.get("ITEMS", "WAGON_DESCRIPTION"),
-			  ConstantStore.get("ITEMS", "WAGON_COST"),
-			  ConstantStore.get("ITEMS", "WAGON_WEIGHT"), false, false, 0),
-		WHEEL (ConstantStore.get("ITEMS", "WHEEL_NAME"), 
-			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"),
-			  ConstantStore.get("ITEMS", "WHEEL_COST"),
-			  ConstantStore.get("ITEMS", "WHEEL_WEIGHT"), false, false, 0);
+		APPLE ("APPLE", true, true, 1),
+		BREAD ("BREAD", true, false, 2),
+		BULLET ("BULLET", false, false, 0),
+		GUN ("GUN", false, false, 0),
+		MEAT ("MEAT", true, false, 4),
+		SONIC ("SONIC", false, false, 0),
+		WAGON ("WAGON", false, false, 0),
+		WHEEL ("WHEEL", false, false, 0);
 		
 		private final String name;
 	
@@ -72,12 +48,14 @@ public class Item implements Conditioned, Comparable<Item>{
 		 * @param isPlant If the item is a plant
 		 * @param foodFactor The multiplier for the food (if it is one, else 0)
 		 */
-		private ITEM_TYPE (String name, String description, String cost,
-				String weight, boolean isFood, boolean isPlant, int foodFactor) {
-			this.name = name;
-			this.description = description;
-			this.cost = Integer.parseInt(cost);
-			this.weight = Double.parseDouble(weight);
+		//private ITEM_TYPE (String name, String description, String cost,
+			//	String weight, boolean isFood, boolean isPlant, int foodFactor) {
+		private ITEM_TYPE (String type, boolean isFood, boolean isPlant, int foodFactor) {
+			String reference = type;
+			this.name = ConstantStore.get("ITEMS", type + "_NAME");
+			this.description = ConstantStore.get("ITEMS", type + "_DESCRIPTION");
+			this.cost = Integer.parseInt(ConstantStore.get("ITEMS", type + "_COST"));
+			this.weight = Double.parseDouble(ConstantStore.get("ITEMS", type + "_WEIGHT"));
 			this.isFood = isFood;
 			this.isPlant = isPlant;
 			this.foodFactor = foodFactor;
