@@ -22,5 +22,11 @@ public class SceneLayer extends Component {
 	
 	public void add(Component component) {
 		components.add(component);
+		component.setParentComponent(this);
+	}
+	
+	@Override
+	public boolean isVisible() {
+		return true;
 	}
 }

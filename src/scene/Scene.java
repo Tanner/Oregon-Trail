@@ -45,22 +45,24 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 		modalLayer.render(container, g);
 		
 		if (tooltip != null) {
-			tooltip.render(container, g);
+			if (tooltip.getOwner().isMouseOver()) {
+				tooltip.render(container, g);
+			} else {
+				removeTooltip();
+			}
 		}
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		if (tooltip != null && !tooltip.getOwner().getArea().includes(tooltip.getX(), tooltip.getY())) {
-			tooltip = null;
-		}
-	}
+	public abstract void update(GameContainer container, StateBasedGame game, int delta) throws SlickException;
 
 	/**
 	 * Activates a modal screen 
 	 * @param modal the screen to be displayed via modality
 	 */
 	public void showModal(Modal modal) {
+		removeTooltip();
+		
 		modalLayer.add(modal);
 		
 		backgroundLayer.setAcceptingInput(false);
@@ -76,6 +78,8 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	 * @param the modal by which the activation shall be not
 	 */
 	public void dismissModal(Modal modal, boolean cancelled) {
+		removeTooltip();
+		
 		// Make Modal invisible and set accepting input to false before removing it!
 		modalLayer.setVisible(false);
 		modalLayer.setAcceptingInput(false);
@@ -118,9 +122,35 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	public abstract int getID();
 	
 	public static void showTooltip(int x, int y, Component owner, String message) {
-		if (tooltip == null || tooltip.getOwner() != owner) {
-			tooltip = new Tooltip(container, 50, 50, owner, message);
-			tooltip.setPosition(new Vector2f(x, y), ReferencePoint.TOPLEFT);
+		if (tooltip != null) {
+			if (tooltip.getOwner() != owner) {
+				tooltip = new Tooltip(container, 200, 50, owner, message);
+			}
+			
+			setTooltipPosition(x, y);
+		} else {
+			tooltip = new Tooltip(container, 200, 50, owner, message);
+			setTooltipPosition(x, y);
 		}
+	}
+	
+	public static void removeTooltip() {
+		tooltip = null;
+	}
+	
+	private static void setTooltipPosition(int x, int y) {
+		ReferencePoint referencePoint = ReferencePoint.TOPLEFT;
+		if (x < container.getWidth() >> 1) {
+			if (y > container.getHeight() >> 1) {
+				referencePoint = ReferencePoint.BOTTOMLEFT;
+			}
+		} else {
+			if (y > container.getHeight() >> 1) {
+				referencePoint = ReferencePoint.BOTTOMRIGHT;
+			} else {
+				referencePoint = ReferencePoint.TOPRIGHT;	
+			}
+		}
+		tooltip.setPosition(new Vector2f(x, y), referencePoint);
 	}
 }
