@@ -158,7 +158,7 @@ public class StoreScene extends Scene {
 				int[] buyer = buyModal.getSegmentedControl().getSelection();
 				party.buyItemForInventory(currentPurchase, currentParty.get(buyer[0]));
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
-				partyMoney.setText("Party's Money: $ " + party.getMoney());
+				partyMoney.setText("Party's Money: $" + party.getMoney());
 			}
 		}
 	}
