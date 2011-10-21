@@ -49,7 +49,7 @@ public class PartyCreationScene extends Scene {
 	private Player player;
 	
 	// Array of people
-	private ArrayList<Person> people = new ArrayList<Person>();
+	private List<Person> people = new ArrayList<Person>();
 	
 	// Component Listener
 	private ComponentListener componentListener;
