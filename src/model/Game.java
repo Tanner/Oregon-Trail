@@ -6,14 +6,13 @@ import core.Logger;
  * Holds all game data.
  */
 public class Game {
-	
 	private final Player player;
 	
 	private final WorldMap worldMap;
 	
 	/**
-	 * Know nothing, make nothing.
-	 * @param worldMap The games world map (via gamedirector)
+	 * Constructs an new Game with a {@code WorldMap}.
+	 * @param worldMap The games world map
 	 */
 	public Game(WorldMap worldMap) {
 		this.worldMap = worldMap;

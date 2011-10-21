@@ -12,8 +12,6 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 
-import scene.Scene;
-
 import core.GameDirector;
 
 /**

@@ -6,8 +6,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
-import scene.Scene;
-
 import component.sprite.Sprite;
 
 import core.ConstantStore;
