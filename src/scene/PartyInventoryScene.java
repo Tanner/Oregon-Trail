@@ -259,7 +259,7 @@ public class PartyInventoryScene extends Scene {
 				ITEM_TYPE itemToRemove = populated.get(0);
 				List<Item> itemsRemoved = binInventory[i].removeItem(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
 				
-				if (i != 4) {
+				if (i != party.getPartyMembers().size()) {
 					// If the item belongs to a person
 					playerInventoryButtons[i].addItemToInventory(itemsRemoved);
 				} else {
@@ -312,7 +312,7 @@ public class PartyInventoryScene extends Scene {
 	 * Get the a list of {@code Item} in the bin.
 	 * @return List of Items in the bin
 	 */
-	public ArrayList<Item> getItemsInBin() {
+	public List<Item> getItemsInBin() {
 		ITEM_TYPE itemType = getBinItemType();
 		
 		if (itemType == null) {
@@ -320,7 +320,7 @@ public class PartyInventoryScene extends Scene {
 			return null;
 		}
 		
-		ArrayList<Item> items = new ArrayList<Item>();
+		List<Item> items = new ArrayList<Item>();
 		for (int i = 0; i < binInventory.length; i++) {
 			items.addAll(binInventory[i].removeItem(itemType, binInventory[i].getNumberOf(itemType)));
 		}
@@ -361,7 +361,7 @@ public class PartyInventoryScene extends Scene {
 				// Extra functionality time - what can we do?
 				if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
 					// Ok, we're going to sell so get all the items together, give them to the store and give us money!
-					ArrayList<Item> items = getItemsInBin();
+					List<Item> items = getItemsInBin();
 					
 					if (items == null) {
 						// No items in the bin, so stop
@@ -451,7 +451,7 @@ public class PartyInventoryScene extends Scene {
 			// Check to see if the source can hold all these items in the bin
 			if (ownerInventoryButtons.canAddItems(getBinItemType(), getBinSize())) {
 				// Add items to their inventory
-				ArrayList<Item> items = getItemsInBin();
+				List<Item> items = getItemsInBin();
 				
 				ownerInventoryButtons.addItemToInventory(items);
 				
