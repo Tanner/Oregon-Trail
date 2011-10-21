@@ -219,14 +219,17 @@ public class SceneSelectorScene extends Scene {
 	public void addRandomItems(Inventoried inventoried) {
 		Random random = new Random();
 		
-		int numberOfItemsToAdd = random.nextInt(inventoried.getMaxSize() + 1);
+		int numberOfItemsToAdd = random.nextInt(inventoried.getMaxSize()) + 2;
 		
-		for (int i = 0; i < numberOfItemsToAdd || inventoried.getWeight() == inventoried.getMaxWeight(); i++) {
+		for (int i = 0; i < numberOfItemsToAdd; i++) {
 			Item item;
+			int attempts = 0;
 			do {
 				int randomItem = random.nextInt(ITEM_TYPE.values().length);
 				item = new Item(ITEM_TYPE.values()[randomItem]);
-			} while(!inventoried.canGetItem(item.getType(), 1));
+				
+				attempts++;
+			} while(!inventoried.canGetItem(item.getType(), 1) && attempts < ITEM_TYPE.values().length);
 			
 			item.decreaseStatus(random.nextInt(101));
 			
