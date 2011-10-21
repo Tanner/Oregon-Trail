@@ -8,16 +8,17 @@ import core.Logger;
 /**
  * Person consists of a list of skills the person is proficient with as well
  * as their name, and what their profession is called.
+ * @author Null && Void
  */
-public class Person implements Conditioned, Inventoried{
+public class Person implements Conditioned, Inventoried {
 	
-	private Condition skillPoints;
+	private final Condition skillPoints;
 	
-	private Condition health;
+	private final Condition health;
 	
 	private boolean isMale = true;
 	
-	private List<Skill> skills = new ArrayList<Skill>();
+	private final List<Skill> skills = new ArrayList<Skill>();
 	
 	private String name;
 	
@@ -27,184 +28,11 @@ public class Person implements Conditioned, Inventoried{
 	
 	private static final int BASE_SKILL_POINTS = 70;
 	
-	private Inventory inventory;
+	private final Inventory inventory;
 	
 	public static final int MAX_INVENTORY_SIZE = 5;
 	
 	private static final double MAX_INVENTORY_WEIGHT = 10;
-	
-	/**
-	 * Person creation should be done this way always - 
-	 * name first, then profession and skills are added.
-	 * @param name 
-	 */
-	public Person(String name){
-		this.name = name;
-		this.skillPoints = new Condition(0, BASE_SKILL_POINTS, 0);
-		this.health = new Condition(100);
-		Logger.log(name + " was created", Logger.Level.INFO);
-		this.inventory = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);
-	}
-	
-	/**
-	 * Establish this party member's profession
-	 * @param profession the desired profession
-	 * @return successful completion of operation
-	 */
-	public boolean changeProfession(Profession profession) {
-		//This will only happen during party creation when the skills haven't been chosen yet.
-		if (this.profession == null) {
-			this.profession = profession;
-			Logger.log(this.name + " became a " + this.profession, Logger.Level.INFO);
-			addSkill(profession.getStartingSkill());
-			return true;
-		} else if (this.profession == profession) {
-			Logger.log(this.name + " is already a " + profession, Logger.Level.INFO);
-			return false;
-		} else if (this.profession != profession) {
-			this.skills.clear();
-			Logger.log(this.name + " stopped being a " + 
-					this.profession + " and lost all current skills", Logger.Level.INFO);
-			this.profession = null;
-			changeProfession(profession);
-			return true;
-		} else {
-			Logger.log("Don't know what happened", Logger.Level.INFO);
-			return false;
-		}
-	}
-
-	/**
-	 * Gets remaining skill points for consideration during skill adding
-	 * @return Remaining skill points
-	 */
-	public int getSkillPoints() {
-		return skillPoints.getCurrent();
-	}
-	
-	/**
-	 * Clears the persons skills
-	 * @return True is successful, false otherwise
-	 */
-	public boolean clearSkills() {
-		for (int i = skills.size() - 1; i >= 0; i--) {
-			Skill skill = skills.get(i);
-			if (!skill.equals(profession.getStartingSkill())) {
-				skills.remove(skill);
-			}
-		}
-		return true;
-	}
-	
-	public boolean addSkill(Skill newSkill) {
-		if(skills.contains(newSkill)) {
-			Logger.log(this.name + " already has the skill " 
-					+ newSkill, Logger.Level.INFO);
-			return false;
-		}
-		else if(newSkill == this.profession.getStartingSkill()) {
-			skills.add(newSkill);
-			Logger.log("As a " + this.profession + " " + 
-					this.name + " gains the skill " + newSkill, Logger.Level.INFO);
-			return true;
-		}
-		else {
-			skills.add(newSkill);
-			Logger.log(this.name + " gained the skill " + newSkill, Logger.Level.INFO);
-			return true;
-		}
-	}
-
-	/**
-	 * Adds a skill to this person's skill set
-	 * @param newSkill skill to be added
-	 * @return successful completion of this operation
-	 */
-	public boolean buySkill(Skill newSkill){
-		if(skills.contains(newSkill)) {
-			Logger.log(this.name + " already has the skill " + 
-					newSkill, Logger.Level.INFO);
-			return false;
-		}
-		else {
-			if(skillPoints.getCurrent() < newSkill.getCost()) {
-				Logger.log(this.name + " does not have enough skill points to obtain " + 
-						newSkill + ".  Current skill points: " + 
-						skillPoints.getCurrent() + " Cost of new skill: " + newSkill.getCost(), Logger.Level.INFO);
-			}
-			else {
-				skillPoints.decrease(newSkill.getCost());
-				skills.add(newSkill);
-				Logger.log(this.name + " gained the skill " +
-						newSkill, Logger.Level.INFO);
-				Logger.log(this.name + " has " + 
-						skillPoints.getCurrent() + " skill points remaning.", Logger.Level.INFO);
-				return true;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Removes skill from person's skill set	
-	 * @param oldSkill skill to be removed
-	 * @return Successful completion of operation
-	 */
-	public boolean removeSkill(Skill oldSkill) {
-		if (!this.skills.contains(oldSkill)) {
-			Logger.log("Cannot remove a skill that isn't already known.",
-					Logger.Level.INFO);
-			return false;
-		}
-		else if (this.profession.getStartingSkill() == oldSkill) {
-			Logger.log("Cannot remove profession's starting skill", Logger.Level.INFO);
-			return false;
-		}
-		else {
-			this.skills.remove(oldSkill);
-			this.skillPoints.increase(oldSkill.getCost());
-			return true;
-		}
-	}
-	
-	/**
-	 * Gets the list of skills a person has.
-	 * @return The list of skills
-	 */
-	public List<Skill> getSkills() {
-		return skills;
-	}
-	
-	@Override
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-		Logger.log("Name changed to " + name, Logger.Level.INFO);
-	}
-	
-	/**
-	 * Profession of person in party
-	 * @return Person's profession
-	 */
-	public Profession getProfession(){
-		return profession;
-	}
-
-	@Override
-	public String toString() {
-		String str = "Name: " + name;
-		if(profession != null) {
-			 str += ", Profession: " + profession.getName();
-		}
-		for(Skill skill : skills) {
-			str += ", Skill: " + skill.getName();
-		}
-		str+= (isMale ? ", Gender: Male" : ", Gender: Female");
-		return str;
-	}
 	
 	/**
 	 * Skills named and with skill point cost.
@@ -227,12 +55,13 @@ public class Person implements Conditioned, Inventoried{
 		NONE (0, "");
 		
 		private final int cost;
-
+	
 		private final String name;
 		
 		/**
 		 * Sets the cost of the skill as designated
 		 * @param cost The cost of the skill (defined above)
+		 * @param name The name of the skill
 		 */
 		private Skill(int cost, String name) {
 			this.cost = cost;
@@ -255,7 +84,7 @@ public class Person implements Conditioned, Inventoried{
 			return name;
 		}
 	}
-	
+
 	/**
 	 * Professions with their gold/score multiplier and starting skill
 	 * 
@@ -288,7 +117,7 @@ public class Person implements Conditioned, Inventoried{
 		TEACHER (5, Skill.NONE, "Teacher");
 		
 		private final float moneyDivider;
-
+	
 		private final Skill startingSkill;
 		
 		private final String name;
@@ -296,7 +125,8 @@ public class Person implements Conditioned, Inventoried{
 		/**
 		 * Assigns money multiplier and starting skill to each profession
 		 * @param moneyDivider Gold divided by and score multiplied by this 
-		 * @param startSkill Skill the profession starts with
+		 * @param startingSkill Skill the profession starts with
+		 * @param name The profession's name
 		 */
 		private Profession(float moneyDivider, Skill startingSkill, String name) {
 			this.moneyDivider = moneyDivider;
@@ -309,7 +139,7 @@ public class Person implements Conditioned, Inventoried{
 		 * @return Multiplier
 		 */
 		public int getMoney() {
-			return (int)(BASE_MONEY / moneyDivider);
+			return (int) (BASE_MONEY / moneyDivider);
 		}
 		
 		/**
@@ -327,6 +157,182 @@ public class Person implements Conditioned, Inventoried{
 		public String getName(){
 			return name;
 		}
+	}
+
+	/**
+	 * Person creation should be done this way always - 
+	 * name first, then profession and skills are added.
+	 * @param name 
+	 */
+	public Person(String name){
+		this.name = name;
+		this.skillPoints = new Condition(0, BASE_SKILL_POINTS, 0);
+		this.health = new Condition(100);
+		Logger.log(name + " was created", Logger.Level.INFO);
+		this.inventory = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);
+	}
+	
+	/**
+	 * Establish this party member's profession
+	 * @param profession the desired profession
+	 */
+	public void setProfession(Profession profession) {
+		//This will only happen during party creation when the skills haven't been chosen yet.
+		if (this.profession == null) {
+			this.profession = profession;
+			Logger.log(this.name + " became a " + this.profession, Logger.Level.INFO);
+			addSkill(profession.getStartingSkill());
+			return;
+		} else if (this.profession == profession) {
+			Logger.log(this.name + " is already a " + profession, Logger.Level.INFO);
+			return;
+		} else if (this.profession != profession) {
+			this.skills.clear();
+			Logger.log(this.name + " stopped being a " + 
+					this.profession + " and lost all current skills", Logger.Level.INFO);
+			this.profession = null;
+			setProfession(profession);
+			return;
+		} else {
+			Logger.log("Don't know what happened", Logger.Level.INFO);
+			return;
+		}
+	}
+
+	/**
+	 * Gets remaining skill points for consideration during skill adding
+	 * @return Remaining skill points
+	 */
+	public int getSkillPoints() {
+		return skillPoints.getCurrent();
+	}
+	
+	/**
+	 * Clears the persons skills
+	 */
+	public void clearSkills() {
+		for (int i = skills.size() - 1; i >= 0; i--) {
+			Skill skill = skills.get(i);
+			if (!skill.equals(profession.getStartingSkill())) {
+				skills.remove(skill);
+			}
+		}
+	}
+	
+	/**
+	 * Adds a new skill to the person
+	 * @param newSkill The skill to add
+	 */
+	public void addSkill(Skill newSkill) {
+		if(skills.contains(newSkill)) {
+			Logger.log(this.name + " already has the skill " 
+					+ newSkill, Logger.Level.INFO);
+			return;
+		} else if(newSkill == this.profession.getStartingSkill()) {
+			skills.add(newSkill);
+			Logger.log("As a " + this.profession + " " + 
+					this.name + " gains the skill " + newSkill, Logger.Level.INFO);
+			return;
+		} else {
+			skills.add(newSkill);
+			Logger.log(this.name + " gained the skill " + newSkill, Logger.Level.INFO);
+			return;
+		}
+	}
+
+	/**
+	 * Adds a skill to this person's skill set
+	 * @param newSkill skill to be added
+	 */
+	public void buySkill(Skill newSkill){
+		if(skills.contains(newSkill)) {
+			Logger.log(this.name + " already has the skill " + 
+					newSkill, Logger.Level.INFO);
+			return;
+		}
+		else {
+			if(skillPoints.getCurrent() < newSkill.getCost()) {
+				Logger.log(this.name + " does not have enough skill points to obtain " + 
+						newSkill + ".  Current skill points: " + 
+						skillPoints.getCurrent() + " Cost of new skill: " + 
+						newSkill.getCost(), Logger.Level.INFO);
+			}
+			else {
+				skillPoints.decrease(newSkill.getCost());
+				skills.add(newSkill);
+				Logger.log(this.name + " gained the skill " +
+						newSkill, Logger.Level.INFO);
+				Logger.log(this.name + " has " + 
+						skillPoints.getCurrent() + " skill points remaning.",
+						Logger.Level.INFO);
+				return;
+			}
+		}
+		return;
+	}
+	
+	/**
+	 * Removes skill from person's skill set	
+	 * @param oldSkill skill to be removed
+	 */
+	public void removeSkill(Skill oldSkill) {
+		if (!this.skills.contains(oldSkill)) {
+			Logger.log("Cannot remove a skill that isn't already known.",
+					Logger.Level.INFO);
+			return;
+		}
+		else if (this.profession.getStartingSkill() == oldSkill) {
+			Logger.log("Cannot remove profession's starting skill", Logger.Level.INFO);
+			return;
+		}
+		else {
+			this.skills.remove(oldSkill);
+			this.skillPoints.increase(oldSkill.getCost());
+			return;
+		}
+	}
+	
+	/**
+	 * Gets the list of skills a person has.
+	 * @return The list of skills
+	 */
+	public List<Skill> getSkills() {
+		return skills;
+	}
+	
+	@Override
+	public String getName() {
+		return name;
+	}
+	
+	/**
+	 * Sets the name of the person
+	 * @param name The name of the person
+	 */
+	public void setName(String name) {
+		this.name = name;
+		Logger.log("Name changed to " + name, Logger.Level.INFO);
+	}
+	
+	/**
+	 * Profession of person in party
+	 * @return Person's profession
+	 */
+	public Profession getProfession(){
+		return profession;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer str = new StringBuffer("Name: " + name);
+		if(profession != null) {
+			 str.append(", Profession: " + profession.getName());
+		}
+		for(Skill skill : skills) {
+			str.append(", Skill: " + skill.getName());
+		}
+		str.append((isMale ? ", Gender: Male" : ", Gender: Female"));
+		return str.toString();
 	}
 	
 	/**
@@ -346,7 +352,7 @@ public class Person implements Conditioned, Inventoried{
 	 * @return Whether or not this Person is male
 	 */
 	
-	public boolean getIsMale() {
+	public boolean isMale() {
 		return isMale;
 	}
 	
@@ -356,15 +362,15 @@ public class Person implements Conditioned, Inventoried{
 	}
 	
 	@Override
-	public boolean addItemToInventory(List<Item> items) {
-		return inventory.addItem(items);
+	public void addItemsToInventory(List<Item> items) {
+		inventory.addItem(items);
 	}
 	
 	@Override
-	public boolean addItemToInventory(Item item) {
-		List<Item> itemToAdd = new ArrayList<Item>();
+	public void addItemToInventory(Item item) {
+		final List<Item> itemToAdd = new ArrayList<Item>();
 		itemToAdd.add(item);
-		return inventory.addItem(itemToAdd);
+		inventory.addItem(itemToAdd);
 	}
 
 	@Override
@@ -383,19 +389,17 @@ public class Person implements Conditioned, Inventoried{
 	/**
 	 * Decreases health by amount
 	 * @param amount The amount
-	 * @return True if successful
 	 */
-	public boolean decreaseHealth(int amount) {
-		return health.decrease(amount);
+	public void decreaseHealth(int amount) {
+		health.decrease(amount);
 	}
 	
 	/**
 	 * Increases health by amount
 	 * @param amount The amount
-	 * @return True if successful
 	 */
-	public boolean increaseHealth(int amount) {
-		return health.increase(amount);
+	public void increaseHealth(int amount) {
+		health.increase(amount);
 	}
 	
 	@Override

@@ -6,13 +6,15 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
+import scene.Scene;
+
 import component.sprite.Sprite;
 
 import core.ConstantStore;
 
 /**
- * {@code Button} inherits from {@code Component} to extend features that provides necessary
- * functionality to behave like a button.
+ * {@code Button} inherits from {@code Component} to extend features
+ * that provides necessary functionality to behave like a button.
  */
 public class Button extends Component implements Disableable {
 	private static final int PADDING = 10;
@@ -27,7 +29,8 @@ public class Button extends Component implements Disableable {
 	private boolean disabled;
 	
 	/**
-	 * Constructs a {@code Button} with a width, a height, a {@code Sprite}, and a {@code Label}.
+	 * Constructs a {@code Button} with a width, a height, a {@code Sprite},
+	 * and a {@code Label}.
 	 * @param context The GUI context
 	 * @param width The width
 	 * @param height The height
@@ -37,10 +40,12 @@ public class Button extends Component implements Disableable {
 	public Button(GUIContext context, int width, int height, Sprite sprite, Label label) {
 		super(context, width, height);
 		
-		add(sprite, getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -PADDING);
+		add(sprite, getPosition(Positionable.ReferencePoint.CENTERCENTER),
+				Positionable.ReferencePoint.CENTERCENTER, 0, -PADDING);
 		
 		this.label = label;
-		add(label, getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -PADDING);
+		add(label, getPosition(Positionable.ReferencePoint.BOTTOMCENTER),
+				Positionable.ReferencePoint.BOTTOMCENTER, 0, -PADDING);
 		
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
@@ -65,7 +70,8 @@ public class Button extends Component implements Disableable {
 		super(context, width, height);
 		
 		this.label = label;
-		this.add(label, getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
+		this.add(label, getPosition(Positionable.ReferencePoint.CENTERCENTER),
+				Positionable.ReferencePoint.CENTERCENTER);
 		
 		buttonColor = ConstantStore.COLORS.get("INTERACTIVE_NORMAL");
 		buttonActiveColor = ConstantStore.COLORS.get("INTERACTIVE_ACTIVE");
@@ -97,6 +103,15 @@ public class Button extends Component implements Disableable {
 	}
 	
 	@Override
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		if (!isVisible() || !isAcceptingInput()) {
+			return;
+		}
+		
+		super.mouseMoved(oldx, oldy, newx, newy);
+	}
+	
+	@Override
 	public void mousePressed(int button, int mx, int my) {
 		if (!isVisible() || !isAcceptingInput()) {
 			return;
@@ -117,7 +132,7 @@ public class Button extends Component implements Disableable {
 		}
 		
 		super.mouseReleased(button, mx, my);
-		
+				
  		if (button == 0 && isMouseOver() && !disabled && active) {
 			notifyListeners();
 			input.consumeEvent();
@@ -176,6 +191,14 @@ public class Button extends Component implements Disableable {
 	 */
 	public void setText(String text) {
 		label.setText(text);
+	}
+	
+	/**
+	 * Gets the text in this button.
+	 * @return Text in the button
+	 */
+	public String getText() {
+		return label.getText();
 	}
 	
 	@Override

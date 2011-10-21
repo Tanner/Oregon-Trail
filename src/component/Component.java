@@ -12,6 +12,8 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 
+import scene.Scene;
+
 import core.GameDirector;
 
 /**
@@ -126,6 +128,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 			}
 		}
 		
+		for (Component component : components) {
+			component.render(container, g);
+		}
+		
 		g.setClip((Rectangle) getArea());
 				
 		// border
@@ -156,10 +162,6 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		
 		g.clearClip();
 		
-		for (Component component : components) {
-			component.render(container, g);
-		}
-		
 		if (GameDirector.DEBUG_MODE) {
 			g.setColor(Color.red);
 			g.drawRect(getX(), getY(), getWidth(), getHeight());
@@ -179,7 +181,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 			return visible && parentComponent.isVisible();
 		}
 		
-		return visible;
+		return false;
 	}
 	
 	/**
@@ -201,8 +203,8 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	public void add(Component component, Vector2f location, ReferencePoint referencePoint, int xOffset, int yOffset) {
 		component.setPosition(location, referencePoint, xOffset, yOffset);
 		
-		component.setParentComponent(this);
 		components.add(component);
+		component.setParentComponent(this);
 	}
 	
 	/**
@@ -498,7 +500,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 		
 		super.mouseMoved(oldx, oldy, newx, newy);
-		
+				
 		this.mouseOver = getArea().contains(newx, newy);
 	}
 	

@@ -7,7 +7,8 @@ import java.util.PriorityQueue;
 import core.Logger;
 
 /**
- * Inventory with an ArrayList that holds all the arrayLists of items in the inventory.
+ * Inventory with an list that holds all the arrayLists of items in the inventory.
+ * @author Null && Void
  */
 public class Inventory {
 	
@@ -47,7 +48,7 @@ public class Inventory {
 	 * @return The slots in the inventory.
 	 */
 	public List<Item.ITEM_TYPE> getPopulatedSlots() {
-		List<Item.ITEM_TYPE> popSlots = new ArrayList<Item.ITEM_TYPE>();
+		final List<Item.ITEM_TYPE> popSlots = new ArrayList<Item.ITEM_TYPE>();
 		for(Item.ITEM_TYPE itemType : Item.ITEM_TYPE.values()) {
 			if (getNumberOf(itemType) != 0) {
 				popSlots.add(itemType);
@@ -104,11 +105,10 @@ public class Inventory {
 	/**
 	 * Adds the item to the inventory.
 	 * @param itemsToAdd The items to add
-	 * @return True if successful, false otherwise
 	 */
-	public boolean addItem(List<Item> itemsToAdd) {
+	public void addItem(List<Item> itemsToAdd) {
 		if(itemsToAdd.size() == 0) {
-			return false;
+			return;
 		}
 		final Item.ITEM_TYPE itemType = itemsToAdd.get(0).getType();
 		if(canAddItems(itemType, itemsToAdd.size())) {
@@ -122,41 +122,13 @@ public class Inventory {
 					currentSize += 1;
 				}
 			}
-			return true;
+			return;
 		} else {
 			Logger.log("Add item failed", Logger.Level.INFO);
-			return false;
+			return;
 		}
 	}
 
-	/**
-	 * Removes the item from the inventory.
-	 * @param itemType The item to remove
-	 * @param quantity The number to remove
-	 * @return True if successful, false otherwise
-	 * */
-	public List<Item> removeItem(int itemType, int quantity) {
-		List<Item> removedItems = new ArrayList<Item>();
-		if(slots.get(itemType).size() < quantity) {
-			Logger.log("Not enough items to remove", Logger.Level.INFO);
-			removedItems = null;
-		} else {
-			for(int i = 0; i < quantity; i++) {
-				removedItems.add(slots.get(itemType).poll());
-			}
-			Logger.log("Items removed successfully", Logger.Level.INFO);
-		}
-		
-		currentSize = 0;
-		for(PriorityQueue<Item> slot : slots) {
-			if (slot.size() > 0) {
-				currentSize += 1;
-			}
-		}
-		
-		return removedItems;
-	}
-	
 	/**
 	 * Removes the item from the inventory and gives it back as an arrayList
 	 * @param itemType The type of item to remove
@@ -245,11 +217,11 @@ public class Inventory {
 	 */
 	public String toString() {
 		final List<Item.ITEM_TYPE> popSlots = getPopulatedSlots();
-		String str = "Size: " + popSlots.size() + ". ";
+		StringBuffer str = new StringBuffer("Size: " + popSlots.size() + ". ");
 		for(Item.ITEM_TYPE itemType : popSlots) {
-			str += " # of " + itemType.getName() + "s: " + getNumberOf(itemType);
+			str.append(" # of " + itemType.getName() + "s: " + getNumberOf(itemType));
 		}
 				
-		return str;
+		return str.toString();
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import model.*;
+import model.Item.ITEM_TYPE;
 import model.item.*;
 
 import org.newdawn.slick.Color;
@@ -35,14 +36,12 @@ public class SceneSelectorScene extends Scene {
 	
 	private static final int MARGIN = 20;
 
-	private ButtonListener buttonListener;
 	private List<Button> buttons;
 	
 	private Player player;
 	
 	/**
-	 * creates the scene which selects the scene by which the player can select the scene they wish this scene to select 
-	 * @param player
+	 * Creates the scene which selects the scene by which the player can select the scene they wish this scene to select 
 	 */
 	public SceneSelectorScene(Player player) {
 		this.player = player;
@@ -51,35 +50,36 @@ public class SceneSelectorScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-				
-		buttons = new ArrayList<Button>();
 		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
-		String[] labels = { "Main Menu", "Party Creation", "Town", "Store", "Party Inventory", "Components", "Trail Test Scene", "Hunt Scene Test", "Remove Party", "Add Party" };
 		
-		int rows = (int)Math.ceil(Math.sqrt(labels.length));
-		int cols = (int)Math.ceil(Math.sqrt(labels.length));
-		int rowHeight = (container.getHeight() - (rows + 1) * MARGIN) / rows;
-		int colWidth = (container.getWidth() - (cols + 1) * MARGIN) / cols;
-		for (String s : labels) {
-			buttons.add(new Button(container, colWidth, rowHeight, new Label(container, fieldFont, Color.white, s)));
+		SceneID scenes[] = SceneID.values();
+		
+		int size = (int)Math.ceil(Math.sqrt(scenes.length));
+		int height = (container.getHeight() - (size + 1) * MARGIN) / size;
+		int width = (container.getWidth() - (size + 1) * MARGIN) / size;
+		
+		// Create all the buttons for the scenes
+		buttons = new ArrayList<Button>();
+		for (SceneID scene : scenes) {
+			buttons.add(new Button(container, width, height, new Label(container, fieldFont, Color.white, scene.getName())));
 		}
 		
-		buttonListener = new ButtonListener();
+		// Create extra function button
+		buttons.add(new Button(container, width, height, new Label(container, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "ADD_PARTY"))));
+		buttons.add(new Button(container, width, height, new Label(container, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))));
+		
+		// Add listeners to buttons and make an array
+		ButtonListener buttonListener = new ButtonListener();
 		
 		Button[] buttonsToAdd = new Button[buttons.size()];
-		for (Button b : buttons) {
-			buttonsToAdd[buttons.indexOf(b)] = b;
-			b.addListener(buttonListener);
+		for (int i = 0; i < buttons.size(); i++) {
+			buttonsToAdd[i] = buttons.get(i);
+			buttonsToAdd[i].addListener(buttonListener);
 		}
-		mainLayer.addAsGrid(buttonsToAdd,
-				mainLayer.getPosition(Positionable.ReferencePoint.TOPLEFT),
-				rows,
-				cols,
-				MARGIN,
-				MARGIN,
-				MARGIN,
-				MARGIN);
+		
+		// Add stuff
+		mainLayer.addAsGrid(buttonsToAdd, mainLayer.getPosition(Positionable.ReferencePoint.TOPLEFT), size, size, MARGIN, MARGIN, MARGIN, MARGIN);
 		
 		backgroundLayer.add(new Panel(container, Color.black));
 		
@@ -88,60 +88,75 @@ public class SceneSelectorScene extends Scene {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		return;
 	}
 	
 	/**
-	 * they are buttons with something to say.  we listen to them.
-	 * @author NULL&&void
-	 *
+	 * They are buttons with something to say. We listen to them.
 	 */
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
-			if (component == buttons.get(0)) {
+			String buttonText = ((Button) component).getText();
+			
+			if (buttonText.equals(SceneID.MAINMENU.getName())) {
+				// Main Menu
 				GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, SceneSelectorScene.this);
-			} else if (component == buttons.get(1)) {
+			} else if (buttonText.equals(SceneID.PARTYCREATION.getName())) {
+				// Party Creation
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYCREATION, SceneSelectorScene.this);
-			} else if (component == buttons.get(2)) {
+			} else if (buttonText.equals(SceneID.TOWN.getName())) {
+				// Town
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
 					return;
 				}
+				
 				GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, SceneSelectorScene.this);
-			} else if (component == buttons.get(3)) {
+			} else if (buttonText.equals(SceneID.STORE.getName())) {
+				// Store
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
 					return;
 				}
+				
 				GameDirector.sharedSceneListener().requestScene(SceneID.STORE, SceneSelectorScene.this);
-			} else if (component == buttons.get(4)) {
+			} else if (buttonText.equals(SceneID.PARTYINVENTORY.getName())) {
+				// Party Inventory
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
 					return;
 				}
+				
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, SceneSelectorScene.this);
-			} else if (component == buttons.get(5)) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.COMPONENTTEST, SceneSelectorScene.this);
-			} else if (component == buttons.get(6)) {
+			} else if (buttonText.equals(SceneID.HUNT.getName())) {
+				// Hunt
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
-					return;		
+					return;
 				}
-				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTESTSCENE, SceneSelectorScene.this);
-			} else if (component == buttons.get(7)) {
-				if (player.getParty() == null) {
-					warnBecauseNoParty();
-					return;		
-				}
+				
 				GameDirector.sharedSceneListener().requestScene(SceneID.HUNT, SceneSelectorScene.this);
-			} else if (component == buttons.get(8)) {
+			} else if (buttonText.equals(SceneID.COMPONENTTEST.getName())) {
+				// Component Test
+				GameDirector.sharedSceneListener().requestScene(SceneID.COMPONENTTEST, SceneSelectorScene.this);
+			} else if (buttonText.equals(SceneID.TRAILTEST.getName())) {
+				// Trail Test
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;
+				}
+				
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this);
+			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))) {
 				player.setParty(null);
-			} else if (component == buttons.get(9)) {
+			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "ADD_PARTY"))) {
 				player.setParty(makeRandomParty());
-			} 
+			}
 		}
 		
+		/**
+		 * Warn the user that they need a party to continnue.
+		 */
 		private void warnBecauseNoParty() {
 			showModal((new Modal(container, SceneSelectorScene.this, ConstantStore.get("SCENE_SELECTOR_SCENE", "ERR_NO_PARTY_FOR_SCENE"), ConstantStore.get("GENERAL", "OK"))));
 		}
@@ -161,60 +176,35 @@ public class SceneSelectorScene extends Scene {
 		people.add(new Person("Carl"));
 		people.add(new Person("Diane"));
 		
-		for(Person person : people) {
+		for (Person person : people) {
 			ArrayList<Person.Skill> personSkill = new ArrayList<Person.Skill>();
-			person.changeProfession(Person.Profession.values()[random.nextInt(Person.Profession.values().length)]);
+			person.setProfession(Person.Profession.values()[random.nextInt(Person.Profession.values().length)]);
 	
 			int skillPoints = 0;
-			for (Person.Skill tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];
-			tempSkill != Person.Skill.NONE && personSkill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120; 
-			tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)]) {
-				if(!personSkill.contains(tempSkill)){
+			
+			// Randomly assign some skills
+			Person.Skill tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];
+			while (tempSkill != Person.Skill.NONE && personSkill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120) {
+				if (!personSkill.contains(tempSkill)) {
 					personSkill.add(tempSkill);
 					skillPoints += tempSkill.getCost();
 				}
+				
+				tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];
 			}
-			for(Person.Skill skill : personSkill) {
+			
+			for (Person.Skill skill : personSkill) {
 				person.addSkill(skill);
 			}
-			Wheel wheel = new Wheel();
-			ArrayList<Item> itemsToAdd = new ArrayList<Item>();
-			wheel.decreaseStatus(random.nextInt(100));
-			itemsToAdd.add(wheel);
-			person.addItemToInventory(itemsToAdd);
-
-			SonicScrewdriver sonic = new SonicScrewdriver();
-			itemsToAdd.clear();
-			itemsToAdd.add(sonic);
-			person.addItemToInventory(itemsToAdd);
-			person.addItemToInventory(itemsToAdd);
 			
-			for (int i = 0; i < 5; i++) {
-				itemsToAdd.clear();
-				Bread bread = new Bread();
-				bread.decreaseStatus(random.nextInt(100));
-				itemsToAdd.add(bread);
-				person.addItemToInventory(itemsToAdd);
-			}
-//			
-//			Apple apple = new Apple(1);
-//			person.addToInventory(apple);
+			addRandomItems(person);
 			
-			//randomly hurt party members
+			// Randomly hurt party members
 			person.decreaseHealth(random.nextInt(100));
 		}
 		
 		Vehicle vehicle = new Wagon();
-//		for (int i = 0; i < vehicle.getInventory().getMaxSize() - 5; i++) {
-//			Item sonic = new SonicScrewdriver(1);
-//			sonic.decreaseStatus(random.nextInt(100));
-//			vehicle.addToInventory(sonic);
-//		}
-		
-//		for (int i = 0; i < 5; i++) {
-//			vehicle.addToInventory(new SonicScrewdriver(i));
-//		}
-		vehicle.addItemToInventory(new Bread());
+		addRandomItems(vehicle);
 		
 		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];
 		Party.Rations rations = Party.Rations.values()[random.nextInt(Party.Rations.values().length)];
@@ -223,6 +213,27 @@ public class SceneSelectorScene extends Scene {
 		party.setVehicle(vehicle);
 		
 		return party;
+	}
+	
+	public void addRandomItems(Inventoried inventoried) {
+		Random random = new Random();
+		
+		int numberOfItemsToAdd = random.nextInt(inventoried.getMaxSize()) + 2;
+		
+		for (int i = 0; i < numberOfItemsToAdd; i++) {
+			Item item;
+			int attempts = 0;
+			do {
+				int randomItem = random.nextInt(ITEM_TYPE.values().length);
+				item = new Item(ITEM_TYPE.values()[randomItem]);
+				
+				attempts++;
+			} while(!inventoried.canGetItem(item.getType(), 1) && attempts < ITEM_TYPE.values().length);
+			
+			item.decreaseStatus(random.nextInt(101));
+			
+			inventoried.addItemToInventory(item);
+		}
 	}
 
 	@Override

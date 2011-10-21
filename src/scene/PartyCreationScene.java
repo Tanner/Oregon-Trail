@@ -200,6 +200,7 @@ public class PartyCreationScene extends Scene {
 		// Ration Selection
 		int labelWidth = 100;
 		Label rationsLabel = new Label(container, labelWidth, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "RATIONS_LABEL"));
+		rationsLabel.setAlignment(Alignment.LEFT);
 		mainLayer.add(rationsLabel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, PADDING, -PADDING);
 		
 		int numOfRations = Party.Rations.values().length;
@@ -212,6 +213,7 @@ public class PartyCreationScene extends Scene {
 		
 		// Pace Selection
 		Label paceLabel = new Label(container, labelWidth, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PACE_LABEL"));
+		paceLabel.setAlignment(Alignment.LEFT);
 		mainLayer.add(paceLabel, rationsLabel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, -PADDING);
 		
 		int numOfPaces = Party.Pace.values().length;
@@ -234,7 +236,6 @@ public class PartyCreationScene extends Scene {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		return;
 	}
 
 	@Override
@@ -300,7 +301,7 @@ public class PartyCreationScene extends Scene {
 	 */
 	private void setProfession(int[] segmentedControlResults){
 		personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
-		people.get(currentPersonModifying).changeProfession(Person.Profession.values()[segmentedControlResults[0]]);
+		people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
 		
 		personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
 		

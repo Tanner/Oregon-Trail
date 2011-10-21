@@ -107,16 +107,16 @@ public class HuntScene extends Scene {
 		if (key == Input.KEY_ESCAPE) {
 			GameDirector.sharedSceneListener().sceneDidEnd(this);
 		}
-		if (key== Input.KEY_D){//pressed the right key
+		if (key == Input.KEY_D){//pressed the right key
 			
 		}
-		if (key== Input.KEY_W){//pressed the forward key
+		if (key == Input.KEY_W){//pressed the forward key
 			
 		}
-		if (key== Input.KEY_A){//pressed the left key
+		if (key == Input.KEY_A){//pressed the left key
 			
 		}
-		if (key== Input.KEY_S){//pressed the back key
+		if (key == Input.KEY_S){//pressed the back key
 			
 		}
 	}

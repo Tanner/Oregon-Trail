@@ -7,148 +7,15 @@ import core.ConstantStore;
  * An item contains it's own condition as well as a 
  * name, description, and weight.  The only modifiable aspect
  * is weight.
+ * @author Null && Void
  */
-public abstract class Item implements Conditioned, Comparable<Item>{
-	
-	private final String name;
-
-	private final String description;
+public class Item implements Conditioned, Comparable<Item>{
 	
 	private final Condition status;
 	
-	private final double weight; //This is the individual unit weight
-	
 	private boolean isStackable = true;
 	
-	private final int baseCost;
-	
 	private final ITEM_TYPE type;
-	
-	/**
-	 * 
-	 * Creates a new item with a name, description, status, and weight.
-	 * @param name The item's name
-	 * @param description The item's description
-	 * @param status The item's status
-	 * @param weight The item's weight
-	 * @param baseCost The base cost of the item
-	 * @param type The type of the item
-	 */
-	public Item(String name, String description, Condition status, 
-			double weight, int baseCost, ITEM_TYPE type) {
-		this.name = name;
-		this.description = description;
-		this.status = status;
-		this.weight = weight;
-		this.baseCost = baseCost;
-		this.type = type;
-	}
-
-	/**
-	 * Returns the item's name.
-	 * @return The item's name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Returns the item's description.
-	 * @return The item's description
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * Returns the cost of the item.  Cost is the item multiplied
-	 * by its current condition. 
-	 * @return The base cost of the item
-	 */
-	public int getCost() {
-		return (int)(baseCost * status.getPercentage());
-	}
-	
-	/**
-	 * Returns the current condition of the item.
-	 * @return The current condition of the item.
-	 */
-	public Condition getStatus() {
-		return status.copy();
-	}
-	
-	@Override
-	public double getConditionPercentage() {
-		return status.getPercentage();
-	}
-
-	/**
-	 * Increases the item's status by a specific amount. 
-	 * Returns false if the increase fails.
-	 * @param amount The amount by which to increase the status
-	 * @return True if successful, false otherwise
-	 */
-	public boolean increaseStatus(int amount) {
-		final boolean returned = status.increase(amount);
-		if (status.getCurrent() == status.getMax()) {
-			this.isStackable = true;
-		}
-		return returned;
-	}
-	
-	/**
-	 * Decreases the item's status by a specific amount.  
-	 * Returns false if the decrease fails.
-	 * @param amount The amount by which to decrease the status
-	 * @return True if successful, false otherwise
-	 */
-	public boolean decreaseStatus(int amount) {
-		final boolean returned = status.decrease(amount);
-		if (status.getCurrent() < status.getMax()) {
-			this.isStackable = false;
-		}
-		return returned;
-	}
-	
-	/**
-	 * Returns the weight of the item.
-	 * @return The weight of the item
-	 */
-	public double getWeight() {
-		return weight;
-	}
-	
-	/**
-	 * Whether or not the item can be stacked.
-	 * @return True if it can be stacked, false otherwise.
-	 */
-	public boolean isStackable() {
-		return isStackable;
-	}
-	
-	@Override
-	public int compareTo(Item i) {
-		if (Math.abs(getConditionPercentage() - i.getConditionPercentage()) < 0.000001) {
-			return 0;
-		} else if (getConditionPercentage() < i.getConditionPercentage()) {
-			return -1;
-		} else {
-			return 1;
-		}
-	}
-	
-	/**
-	 * Returns the item type
-	 * @return The item type
-	 */
-	public ITEM_TYPE getType() {
-		return type;
-	}
-	
-	@Override
-	public String toString() {
-		return type.getName();
-	}
 	
 	public enum ITEM_TYPE {
 		APPLE (ConstantStore.get("ITEMS", "APPLE_NAME"), 
@@ -185,16 +52,16 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 			  ConstantStore.get("ITEMS", "WHEEL_WEIGHT"), false, false, 0);
 		
 		private final String name;
-
+	
 		private final String description;
 		
 		private final int cost;
 		
 		private final double weight;
 		
-		private boolean isFood, isPlant;
+		private final boolean isFood, isPlant;
 		
-		private int foodFactor;
+		private final int foodFactor;
 		
 		/**
 		 * Makes the item type
@@ -253,7 +120,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		 * Whether or not the item is food
 		 * @return Is the item food?
 		 */
-		public boolean getIsFood() {
+		public boolean isFood() {
 			return isFood;
 		}
 		
@@ -269,9 +136,121 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		 * Is the item a plant
 		 * @return Is it a plant?
 		 */
-		public boolean getIsPlant() {
+		public boolean isPlant() {
 			return isPlant;
 		}
+	}
+
+	/**
+	 * 
+	 * Creates a new item with a name, description, status, and weight.
+	 * @param type The type of the item
+	 */
+	public Item(ITEM_TYPE type) {
+		this.status = new Condition(100);
+		this.type = type;
+	}
+
+	/**
+	 * Returns the item's name.
+	 * @return The item's name
+	 */
+	public String getName() {
+		return type.getName();
+	}
+
+	/**
+	 * Returns the item's description.
+	 * @return The item's description
+	 */
+	public String getDescription() {
+		return type.getDescription();
+	}
+
+	/**
+	 * Returns the cost of the item.  Cost is the item multiplied
+	 * by its current condition. 
+	 * @return The base cost of the item
+	 */
+	public int getCost() {
+		return (int) (type.getCost() * status.getPercentage());
+	}
+	
+	/**
+	 * Returns the current condition of the item.
+	 * @return The current condition of the item.
+	 */
+	public Condition getStatus() {
+		return status.copy();
+	}
+	
+	@Override
+	public double getConditionPercentage() {
+		return status.getPercentage();
+	}
+
+	/**
+	 * Increases the item's status by a specific amount. 
+	 * Returns false if the increase fails.
+	 * @param amount The amount by which to increase the status
+	 */
+	public void increaseStatus(int amount) {
+		status.increase(amount);
+		if (status.getCurrent() == status.getMax()) {
+			this.isStackable = true;
+		}
+	}
+	
+	/**
+	 * Decreases the item's status by a specific amount.  
+	 * Returns false if the decrease fails.
+	 * @param amount The amount by which to decrease the status
+	 */
+	public void decreaseStatus(int amount) {
+		status.decrease(amount);
+		if (status.getCurrent() < status.getMax()) {
+			this.isStackable = false;
+		}
+	}
+	
+	/**
+	 * Returns the weight of the item.
+	 * @return The weight of the item
+	 */
+	public double getWeight() {
+		return type.getWeight();
+	}
+	
+	/**
+	 * Whether or not the item can be stacked.
+	 * @return True if it can be stacked, false otherwise.
+	 */
+	public boolean isStackable() {
+		return isStackable;
+	}
+	
+	@Override
+	public int compareTo(Item i) {
+		if (Math.abs(getConditionPercentage() - i.getConditionPercentage()) < 0.000001) {
+			return 0;
+		} else if (getConditionPercentage() < i.getConditionPercentage()) {
+			return -1;
+		} else {
+			return 1;
+		}
+	}
+	
+	/**
+	 * Returns the item type
+	 * @return The item type
+	 */
+	public ITEM_TYPE getType() {
+		return type;
+	}
+	
+	@Override
+	public String toString() {
+		return type.getName();
 	}
 	
 	
