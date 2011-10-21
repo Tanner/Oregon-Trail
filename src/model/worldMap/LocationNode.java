@@ -21,12 +21,8 @@ public class LocationNode {
 		WORLD_LATITUDE = Latitude;
 		WORLD_LONGITUDE = Longitude;
 		
-<<<<<<< HEAD
-		locationName = "Location " + new Integer(LOCATION_INDEX).toString();
-=======
-		townName = "Town " + LOCATION_INDEX;
->>>>>>> e4cd16022fa5f7271b30d0c5d6e9add901b3da10
 
+		locationName = "Location " + new Integer(LOCATION_INDEX).toString();
 		outBoundTrails = new ArrayList<TrailEdge>(trails);
 	}
 
