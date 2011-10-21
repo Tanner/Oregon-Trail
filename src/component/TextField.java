@@ -7,7 +7,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
-import component.Label.*;
+import component.Label.Alignment;
 
 import core.ConstantStore;
 import core.Logger;

@@ -88,6 +88,7 @@ public class SceneSelectorScene extends Scene {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		return;
 	}
 	
 	/**
@@ -132,7 +133,7 @@ public class SceneSelectorScene extends Scene {
 				// Hunt
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
-					return;
+					return;		
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.HUNT, SceneSelectorScene.this);
@@ -143,7 +144,7 @@ public class SceneSelectorScene extends Scene {
 				// Trail Test
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
-					return;
+					return;		
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this);
