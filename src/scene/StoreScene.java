@@ -159,6 +159,13 @@ public class StoreScene extends Scene {
 		}
 	}
 	
+	@Override
+	public void start() {
+		super.start();
+		if ( partyMoney != null )
+			partyMoney.setText("Party's Money: $" + p.getMoney());
+	}
+	
 	/**
 	 * Create all on-screen components for the scene.
 	 */
@@ -262,7 +269,7 @@ public class StoreScene extends Scene {
 		//The player doesn't have a wagon and is trying to buy one
 		if ( currentItem == Item.ITEM_TYPE.WAGON && p.getVehicle() == null ) {
 			//The player tries to buy too many wagons
-			if ( itemCount > 1 ) {
+			if ( itemCount > 1 && p.getMoney() >= Item.ITEM_TYPE.WAGON.getCost()) {
 				String errorText = "Please buy a single wagon first!";
 				failedBuyModal = new Modal(container, this, errorText, "Ok");
 				return -1;
@@ -326,9 +333,12 @@ public class StoreScene extends Scene {
 		return buttonMap.get(index);
 	}
 	
+	/**
+	 * The method to return the current inventory of the store.
+	 * @return The store's inventory
+	 */
 	public Inventory getInventory() {
 		return inv;
-		
 	}
 	
 	/**
