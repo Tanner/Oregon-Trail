@@ -147,7 +147,15 @@ public class SceneSelectorScene extends Scene {
 					return;		
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this);	
+			} else if (buttonText.equals(SceneID.TRAIL.getName())) {
+				// Trail Test
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;		
+				}
+				
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, SceneSelectorScene.this);
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))) {
 				player.setParty(null);
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "ADD_PARTY"))) {
