@@ -7,6 +7,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
+import component.Label.Alignment;
+
 import core.ConstantStore;
 import core.Logger;
 
@@ -49,6 +51,7 @@ public class TextField extends Component implements Disableable {
 		setBorderWidth(2);
 		
 		label = new Label(container, width - PADDING * 2, font, Color.white);
+		label.setAlignment(Alignment.LEFT);
 		add(label, getPosition(Positionable.ReferencePoint.CENTERLEFT), Positionable.ReferencePoint.CENTERLEFT, PADDING, 0);
 	}
 	
