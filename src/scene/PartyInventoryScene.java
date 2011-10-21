@@ -315,6 +315,11 @@ public class PartyInventoryScene extends Scene {
 	public ArrayList<Item> getItemsInBin() {
 		ITEM_TYPE itemType = getBinItemType();
 		
+		if (itemType == null) {
+			// No items in the bin, return null
+			return null;
+		}
+		
 		ArrayList<Item> items = new ArrayList<Item>();
 		for (int i = 0; i < binInventory.length; i++) {
 			items.addAll(binInventory[i].removeItem(itemType, binInventory[i].getNumberOf(itemType)));
@@ -357,6 +362,12 @@ public class PartyInventoryScene extends Scene {
 				if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.SELL) {
 					// Ok, we're going to sell so get all the items together, give them to the store and give us money!
 					ArrayList<Item> items = getItemsInBin();
+					
+					if (items == null) {
+						// No items in the bin, so stop
+						showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN"), ConstantStore.get("GENERAL", "OK")));
+						return;
+					}
 					
 					storeInventory.addItem(items);
 					emptyBin();
