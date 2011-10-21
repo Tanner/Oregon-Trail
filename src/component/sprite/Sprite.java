@@ -58,11 +58,18 @@ public class Sprite extends Component {
 		this(context, image, image);
 	}
 	
+	public Sprite(GUIContext context, int width, Image image) {
+		super(context, width, width * image.getHeight() / image.getWidth());
+		
+		this.leftAnimation = new Animation(new Image[]{image}, 1);
+		currentAnimation = leftAnimation;
+	}
+	
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
 		super.render(context, g);
 
-		currentAnimation.draw(getX(), getY());
+		currentAnimation.draw(getX(), getY(), getWidth(), getHeight());
 	}
 	
 	/**

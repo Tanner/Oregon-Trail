@@ -5,6 +5,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.Label;
 import component.Panel;
 import component.Positionable;
+import component.sprite.Sprite;
 
 import core.*;
 
@@ -19,16 +20,18 @@ public class MainMenuScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		Font h1 = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.H1);
 		Font h2 = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.H2);
 		
-		Label titleLabel = new Label(container, h1, Color.white, ConstantStore.get("MAIN_MENU", "TITLE"));
 		Label subtitleLabel = new Label(container, h2, Color.white, ConstantStore.get("MAIN_MENU", "PRESS_ENTER"));
 		
-		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -5);
-		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
+		//mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -5);
 		
-		backgroundLayer.add(new Panel(container, new Image("resources/dark_dirt.png")));
+		Sprite logoSprite = new Sprite(container, 400, new Image("resources/logo.png", false, Image.FILTER_NEAREST));
+				
+		mainLayer.add(logoSprite, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -logoSprite.getHeight() / 4 - 20);
+		mainLayer.add(subtitleLabel, logoSprite.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 20);
+		
+		backgroundLayer.add(new Panel(container, new Image("resources/trail.png")));
 	}
 
 	@Override
