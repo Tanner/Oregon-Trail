@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.Label.Alignment;
+import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
 
 import core.FontManager;
@@ -15,7 +16,7 @@ import core.GameDirector;
 /**
  * {@code CountingButton} inherits from {@code Button} to add a flag that counts up or down.
  */
-public class CountingButton extends Button {
+public class Counter extends Component implements Disableable {
 	private static final int COUNTING_LABEL_WIDTH = 25; 
 	private static final int COUNTING_LABEL_HEIGHT = 25; 
 	
@@ -26,6 +27,7 @@ public class CountingButton extends Button {
 	private boolean disableAutoCount;
 	private boolean hideCount;
 	private Label countLabel;
+	private CountingButton button;
 	
 	/**
 	 * Constructs a {@code CountingButton} with a width and height.
@@ -34,56 +36,37 @@ public class CountingButton extends Button {
 	 * @param height Height of the button
 	 * @param label Label for the button
 	 */
-	public CountingButton(GUIContext context, int width, int height, Label label) {
-		super(context, width, height, label);
+	public Counter(GUIContext context, int width, int height, Label label) {
+		super(context, width, height);
 		
 		count = 0;
 		countUpOnLeftClick = true;
 		hideCount = false;
 		disableAutoCount = false;
 		
-		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+		button = new CountingButton(context, width, height, label);
+		add(button, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
+		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		countLabel = new Label(container, COUNTING_LABEL_WIDTH, COUNTING_LABEL_HEIGHT, fieldFont, Color.white, "" + count);
 		countLabel.setBackgroundColor(Color.red);
 		countLabel.setAlignment(Alignment.CENTER);
 		
-		add(countLabel, this.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER, 0, 0);
+		add(countLabel, getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER);
 	}
 	
-	public CountingButton(GUIContext context, int width, int height, Sprite sprite, Label label) {
-		super(context, width, height, sprite, label);
+	public Counter(GUIContext context, int width, int height, Sprite sprite, Label label) {
+		super(context, width, height);
 		
 		count = 0;
 		countUpOnLeftClick = true;
 		hideCount = false;
 		disableAutoCount = false;
 		
-		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
-		
-		countLabel = new Label(container, COUNTING_LABEL_WIDTH, COUNTING_LABEL_HEIGHT, fieldFont, Color.white, "" + count);
-		countLabel.setBackgroundColor(Color.red);
-		countLabel.setAlignment(Alignment.CENTER);
-		
-		add(countLabel, this.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER, 0, 0);
-	}
-
-	/**
-	 * Constructs a {@code CountingButton} with a label.
-	 * @param container Container for the button
-	 * @param label Label for the button
-	 * @param origin Position of the button
-	 */
-	public CountingButton(GUIContext container, Label label) {
-		super(container, label);
-		
-		count = 0;
-		countUpOnLeftClick = true;
-		hideCount = false;
-		disableAutoCount = false;
+		button = new CountingButton(context, width, height, sprite, label);
+		add(button, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
-		
 		countLabel = new Label(container, COUNTING_LABEL_WIDTH, COUNTING_LABEL_HEIGHT, fieldFont, Color.white, "" + count);
 		countLabel.setBackgroundColor(Color.red);
 		countLabel.setAlignment(Alignment.CENTER);
@@ -94,43 +77,6 @@ public class CountingButton extends Button {
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
 		super.render(container, g);
-	}
-	
-	@Override
-	public void mousePressed(int button, int mx, int my) {
-		if (!isVisible() || !isAcceptingInput()) {
-			return;
-		}
-		
-		if (isMouseOver() && !isDisabled()) {
-			setActive(true);
-			input.consumeEvent();
-		}
-	}
-	
-	@Override
-	public void mouseReleased(int button, int mx, int my) {
-		if (!isVisible()) {
-			return;
-		}
-		
- 		if (isMouseOver() && !isDisabled() && isActive()) {
-			notifyListeners();
-			input.consumeEvent();
-			setActive(false);
-			
-			if (!disableAutoCount) {
-				if (button == 0 && countUpOnLeftClick && count < max) {
-					setCount(count + 1);
-				} else if (button != 0 && countUpOnLeftClick && count > min) {
-					setCount(count - 1);
-				} else if (button == 0 && !countUpOnLeftClick && count > min) {
-					setCount(count - 1);
-				} else if (button != 0 && !countUpOnLeftClick && count < max) {
-					setCount(count + 1);
-				}
-			}
-		}
 	}
 	
 	/**
@@ -232,4 +178,66 @@ public class CountingButton extends Button {
 	public void setDisableAutoCount(boolean disableAutoCount) {
 		this.disableAutoCount = disableAutoCount;
 	}
+	
+	@Override
+	public boolean isDisabled() {
+		return button.isDisabled();
+	}
+
+	@Override
+	public void setDisabled(boolean disabled) {
+		button.setDisabled(disabled);
+	}
+	
+	private class CountingButton extends Button {
+		public CountingButton(GUIContext context, int width, int height, Label label) {
+			super(context, width, height, label);
+		}
+
+		public CountingButton(GUIContext context, int width, int height, Sprite sprite, Label label) {
+			super(context, width, height, sprite, label);
+		}
+		
+		@Override
+		public void mousePressed(int button, int mx, int my) {
+			if (!isVisible() || !isAcceptingInput()) {
+				return;
+			}
+			
+			if (isMouseOver() && !isDisabled()) {
+				setActive(true);
+				input.consumeEvent();
+			}
+		}
+		
+		@Override
+		public void mouseReleased(int button, int mx, int my) {
+			if (!isVisible()) {
+				return;
+			}
+			
+	 		if (isMouseOver() && !isDisabled() && isActive()) {
+				Counter.this.notifyListeners();
+				input.consumeEvent();
+				setActive(false);
+				
+				if (!disableAutoCount) {
+					if (button == 0 && countUpOnLeftClick && count < max) {
+						setCount(count + 1);
+					} else if (button != 0 && countUpOnLeftClick && count > min) {
+						setCount(count - 1);
+					} else if (button == 0 && !countUpOnLeftClick && count > min) {
+						setCount(count - 1);
+					} else if (button != 0 && !countUpOnLeftClick && count < max) {
+						setCount(count + 1);
+					}
+				}
+			}
+		}
+	}
+
+	public void setText(String text) {
+		button.setText(text);
+	}
 }
+

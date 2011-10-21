@@ -15,7 +15,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 import component.Button;
-import component.CountingButton;
+import component.Counter;
 import component.ItemListener;
 import component.Label;
 import component.Modal;

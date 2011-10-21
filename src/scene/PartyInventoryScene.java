@@ -19,7 +19,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Button;
-import component.CountingButton;
+import component.Counter;
 import component.ItemListener;
 import component.Label;
 import component.Modal;
@@ -61,7 +61,7 @@ public class PartyInventoryScene extends Scene {
 	private OwnerInventoryButtons vehicleInventoryButtons;
 	
 	private Button closeButton, transferButton, functionButton;
-	private CountingButton binButton;
+	private Counter binButton;
 	
 	private EXTRA_BUTTON_FUNC extraButtonFunctionality;
 	private static Mode currentMode;
@@ -172,7 +172,7 @@ public class PartyInventoryScene extends Scene {
 		// Bin button
 		Label binLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "");
 		binLabel.setAlignment(Alignment.CENTER);
-		binButton = new CountingButton(container, BIN_BUTTON_WIDTH, BIN_BUTTON_HEIGHT, binLabel);
+		binButton = new Counter(container, BIN_BUTTON_WIDTH, BIN_BUTTON_HEIGHT, binLabel);
 		binButton.setDisableAutoCount(true);
 		binButton.addListener(new ButtonListener());
 		

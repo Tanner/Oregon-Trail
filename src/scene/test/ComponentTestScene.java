@@ -95,7 +95,7 @@ public class ComponentTestScene extends Scene {
 		ToggleButton tb = new ToggleButton(container, 200, 40, new Label(container, fieldFont, Color.white, "Toggle Button"));
 		mainLayer.add(tb, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
 		
-		CountingButton cb = new CountingButton(container, 200, 40, new Label(container, fieldFont, Color.white, "Counting Button"));
+		Counter cb = new Counter(container, 200, 40, new Label(container, fieldFont, Color.white, "Counting Button"));
 		cb.setMin(0);
 		cb.setMax(10);
 		mainLayer.add(cb, tb.getPosition(Positionable.ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, 0, -PADDING);

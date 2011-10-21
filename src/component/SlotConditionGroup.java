@@ -15,7 +15,7 @@ import org.newdawn.slick.gui.GUIContext;
  * 
  * Both the {@code CountingButton} and the {@code ConditionBar} are linked to a specific item and item slot for an {@code Item}.
  */
-public class SlotConditionGroup extends ComponentConditionGroup<CountingButton> {
+public class SlotConditionGroup extends ComponentConditionGroup<Counter> {
 	public static enum Mode {NORMAL, TRANSFER};
 	private Mode currentMode;
 	
@@ -29,7 +29,7 @@ public class SlotConditionGroup extends ComponentConditionGroup<CountingButton> 
 	 * @param font Font to use
 	 * @param pocketNumber The "pocket number" that the {@code Inventoried} has on it to use
 	 */
-	public SlotConditionGroup(GUIContext container, int width, int height, Font font, CountingButton button, Condition condition) {
+	public SlotConditionGroup(GUIContext container, int width, int height, Font font, Counter button, Condition condition) {
 		super(container, width, height, button, condition);
 		
 		button.addListener(new ButtonListener());

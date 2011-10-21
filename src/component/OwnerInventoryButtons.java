@@ -85,7 +85,9 @@ public class OwnerInventoryButtons {
 			Label label = new Label(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, fieldFont, Color.white, "");
 			label.setAlignment(Alignment.CENTER);
 			
-			CountingButton button = new CountingButton(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, label);
+			Counter button = new Counter(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, label);
+			button.setCountUpOnLeftClick(false);
+			button.setDisableAutoCount(true);
 			
 			SlotConditionGroup slotConditionGroup = new SlotConditionGroup(container, ITEM_BUTTON_WIDTH, panelHeight, font, button, new Condition(0, 0, 0));
 			slotConditionGroup.addListener(new ButtonListener());

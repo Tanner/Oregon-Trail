@@ -34,8 +34,8 @@ public class StoreScene extends Scene {
 	private final Color BACKGROUND_COLOR = new Color(0x0C5DA5);
 	private final Color TEXT_PANEL_COLOR = new Color(0x679FD2);
 		
-	private CountingButton[] storeInventory;
 	private List<ITEM_TYPE> buttonMap;
+	private Counter[] storeInventory;
 	private Panel storeInventoryButtons, textPanel;
 	private Button cancelButton, clearButton, inventoryButton, buyButton;
 	private Label[] itemDescription;
@@ -190,7 +190,7 @@ public class StoreScene extends Scene {
 		//Create inventory buttons and a map to which button stands for which inventory item
 		List<Item.ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
 		buttonMap = new ArrayList<Item.ITEM_TYPE>();
-		storeInventory = new CountingButton[inventorySlots.size()];
+		storeInventory = new Counter[inventorySlots.size()];
 		for (int i = 0; i < inventorySlots.size(); i++) {
 			Item.ITEM_TYPE currentType = inventorySlots.get(i);
 			buttonMap.add(currentType);
@@ -203,9 +203,9 @@ public class StoreScene extends Scene {
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
-				storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, sprite, tempLabel);
+				storeInventory[i] = new Counter(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, sprite, tempLabel);
 			} else {
-				storeInventory[i] = new CountingButton(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
+				storeInventory[i] = new Counter(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
 			}
 			storeInventory[i].setMax(inv.getNumberOf(currentType));
 			storeInventory[i].setCount(inv.getNumberOf(currentType));
