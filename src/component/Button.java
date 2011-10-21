@@ -105,10 +105,6 @@ public class Button extends Component implements Disableable {
 		}
 		
 		super.mouseMoved(oldx, oldy, newx, newy);
-		
-		if (isMouseOver()) {
-			Scene.showTooltip(newx, newy, this, label.getText());
-		}
 	}
 	
 	@Override
