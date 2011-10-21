@@ -49,7 +49,6 @@ public class StoreScene extends Scene {
 	private Item.ITEM_TYPE currentItem = null;
 	private Item.ITEM_TYPE hoverItem = null;
 	
-	private String tempDescription = "This is an item description.\nIt is a good item, maybe a sonic screwdriver.\n\nYep.";
 	private Inventory inv;
 	private Party party;
 	
@@ -101,7 +100,7 @@ public class StoreScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		//Re-enable all buttons if currently selected item's quantity goes back to 0
-		if ( currentItem != null && storeInventory[getButtonIndex(currentItem)].getCount() == storeInventory[getButtonIndex(currentItem)].getMax()) {
+		if (currentItem != null && storeInventory[getButtonIndex(currentItem)].getCount() == storeInventory[getButtonIndex(currentItem)].getMax()) {
 			currentItem = null;
 			buyButton.setDisabled(true);
 			clearButton.setDisabled(true);
@@ -110,18 +109,20 @@ public class StoreScene extends Scene {
 			}
 			return;
 		}
+		
 		//Don't do anything if there is no hovering/item selection
-		if ( hoverItem == null && currentItem == null ) {
+		if (hoverItem == null && currentItem == null ) {
 			return;
-		//Display information for the item currently being hovered over
 		} else if ( hoverItem != null && getButtonIndex(hoverItem) != getButtonIndex(currentItem) ) {
+			//Display information for the item currently being hovered over
 			updateLabels(hoverItem);
-		//Display information for currently selected item, as well as disable
-		//all other buttons.
 		} else {
+			//Display information for currently selected item, as well as disable
+			//all other buttons.
 			buyButton.setDisabled(false);
 			clearButton.setDisabled(false);
 			updateLabels(currentItem);
+			
 			for (int i = 0; i < storeInventory.length; i++) {
 				if (i != getButtonIndex(currentItem)) {
 					storeInventory[i].setDisabled(true);
@@ -144,13 +145,14 @@ public class StoreScene extends Scene {
 	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {
+		if (mainLayer.isVisible() && mainLayer.isAcceptingInput()) {
 			for (int i = 0; i < storeInventory.length; i++) {
-				if ( ((Rectangle) storeInventory[i].getArea()).contains(newx, newy) ) { 
+				if (((Rectangle) storeInventory[i].getArea()).contains(newx, newy)) { 
 					hoverItem = getItemFromButtonIndex(i);
 					return;
 				}
 			}
+			
 			hoverItem = null;
 		}
 	}
@@ -158,7 +160,8 @@ public class StoreScene extends Scene {
 	@Override
 	public void dismissModal(Modal modal, boolean cancelled) {
 		super.dismissModal(modal, cancelled);
-		if ( modal == buyModal ) {
+		
+		if (modal == buyModal) {
 			if (cancelled) {
 				inv.addItem(currentPurchase);
 			} else {
@@ -190,6 +193,7 @@ public class StoreScene extends Scene {
 		//Create inventory buttons and a map to which button stands for which inventory item
 		List<Item.ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
 		buttonMap = new ArrayList<Item.ITEM_TYPE>();
+		
 		storeInventory = new Counter[inventorySlots.size()];
 		for (int i = 0; i < inventorySlots.size(); i++) {
 			Item.ITEM_TYPE currentType = inventorySlots.get(i);
@@ -197,6 +201,7 @@ public class StoreScene extends Scene {
 			tempLabel = new Label(container, fieldFont, Color.white, currentType.getName());
 			String itemImagePath = "resources/icons/items/" + currentType.toString().toLowerCase() + ".png";
 			Sprite sprite = null;
+			
 			if (new File(itemImagePath).exists()) {
 				try {
 					sprite = new Sprite(container, new Image(itemImagePath, false, Image.FILTER_NEAREST));
@@ -224,12 +229,22 @@ public class StoreScene extends Scene {
 		tempLabel = new Label(container, fieldFont, Color.white, "Cancel");
 		cancelButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		cancelButton.addListener(new ButtonListener());
+		
 		tempLabel = new Label(container, fieldFont, Color.white, "Inventory");
 		inventoryButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		inventoryButton.addListener(new ButtonListener());
-		tempLabel = new Label(container, fieldFont, Color.white, "Clear");
-
 		
+		//Create clear & buy buttons
+		tempLabel = new Label(container, fieldFont, Color.white, "Clear");
+		clearButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		clearButton.addListener(new ButtonListener());
+		clearButton.setDisabled(true);
+		
+		tempLabel = new Label(container, fieldFont, Color.white, "Buy");
+		buyButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		buyButton.addListener(new ButtonListener());
+		buyButton.setDisabled(true);
+
 		//Create item description text labels
 		itemDescription = new Label[7];
 		
@@ -248,15 +263,6 @@ public class StoreScene extends Scene {
 		itemDescription[5] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[6] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		textPanel = new Panel(container, textPanelWidth, storeInventoryButtons.getHeight(), TEXT_PANEL_COLOR);
-		
-		//Create clear & buy button
-		clearButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
-		clearButton.addListener(new ButtonListener());
-		clearButton.setDisabled(true);
-		tempLabel = new Label(container, fieldFont, Color.white, "Buy");
-		buyButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
-		buyButton.addListener(new ButtonListener());
-		buyButton.setDisabled(true);
 	}
 	
 	/**
@@ -267,6 +273,8 @@ public class StoreScene extends Scene {
 	 */
 	private void updateLabels(Item.ITEM_TYPE currentItem) {
 		int count = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
+		
+		//TODO: These text prefixes should be in ConstantStore
 		itemDescription[0].setText(currentItem.getName());
 		itemDescription[1].setText(currentItem.getDescription());
 		itemDescription[2].setText("Weight: " + currentItem.getWeight() + " lbs");
@@ -285,31 +293,35 @@ public class StoreScene extends Scene {
 		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
 		List<Inventoried> currentBuyers = party.canGetItem(currentItem, itemCount);
 		System.out.println(currentBuyers);
+		
 		//The player doesn't have a wagon and is trying to buy one
-		if ( currentItem == Item.ITEM_TYPE.WAGON && party.getVehicle() == null ) {
-			//The player tries to buy too many wagons
-			if ( itemCount > 1 && party.getMoney() >= Item.ITEM_TYPE.WAGON.getCost()) {
+		if (currentItem == Item.ITEM_TYPE.WAGON && party.getVehicle() == null ) {
+			if (itemCount > 1 && party.getMoney() >= Item.ITEM_TYPE.WAGON.getCost()) {
+				//The player tries to buy too many wagons
+				
 				String errorText = "Please buy a single wagon first!";
 				failedBuyModal = new Modal(container, this, errorText, "Ok");
 				return -1;
-			}
-			//The player is able to buy the wagon
-			else if ( party.getMoney() > currentItem.getCost() ) {
+			} else if ( party.getMoney() > currentItem.getCost() ) {
+				//The player is able to buy the wagon
+				
 				party.setVehicle(new Wagon());
 				inv.removeItem(currentItem, 1);
 				party.setMoney(party.getMoney() - Item.ITEM_TYPE.WAGON.getCost());
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
 				updateLabels(currentItem);
 				return 1;
-			//The player doesn't have enough money to buy a wagon at all
-			} else { 
+			} else {
+				//The player doesn't have enough money to buy a wagon at all
+				
 				String errorText = "You don't have enough money to buy a wagon."
 						+ "\nBetter prepare to make it on foot.";
 				failedBuyModal = new Modal(container, this, errorText, "Ok");
 				return -1;
 			}
-		//Display modal if the user can not buy the currently selected item
-		} else if ( currentBuyers.size() == 0 ) {
+		} else if (currentBuyers.size() == 0) {
+			//Display modal if the user can not buy the currently selected item
+			
 			String errorText;
 			if (party.getMoney() < itemCount * currentItem.getCost()) {
 				errorText = "You don't have enough money for this purchase.";
@@ -317,15 +329,16 @@ public class StoreScene extends Scene {
 				errorText = "No one can carry that much weight!";
 			}
 			failedBuyModal = new Modal(container, this, errorText, "Ok");
+			
 			return -1;
-		//Make the purchase
 		} else {
+			//Make the purchase
 			currentPurchase = inv.removeItem(currentItem, itemCount);
 			
 			//Get a list of all the actual party members and vehicle if it exists
 			currentParty = new ArrayList<Inventoried>();
 			currentParty.addAll(party.getPartyMembers());
-			if ( party.getVehicle() != null)
+			if (party.getVehicle() != null)
 				currentParty.add(party.getVehicle());
 			
 			//Get all of the people that can't buy the current item,
@@ -335,12 +348,14 @@ public class StoreScene extends Scene {
 			for (int i = 0; i < currentParty.size(); i++) {
 				Inventoried currentPerson = currentParty.get(i);
 				boolean found = false;
+				
 				for (int j = 0; j < currentBuyers.size() && !found; j++) {
 					if ( currentPerson == currentBuyers.get(j) ) {
 						found = true;
 					}
 				}
-				if ( !found ) {
+				
+				if (!found) {
 					disabledList.add(currentPerson);
 				} else {
 					enabledList.add(currentPerson);
@@ -401,9 +416,9 @@ public class StoreScene extends Scene {
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			if (source == cancelButton ) {
+			if (source == cancelButton) {
 				GameDirector.sharedSceneListener().sceneDidEnd(StoreScene.this);
-			} else if (source == inventoryButton ) {
+			} else if (source == inventoryButton) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, StoreScene.this);
 			} else if (source == buyButton) {
 				int successCode = makePurchase();
@@ -423,7 +438,6 @@ public class StoreScene extends Scene {
 	 *	Check for presses on the store's inventory item buttons
 	 */
 	private class InventoryListener implements ComponentListener {
-		
 		private Item.ITEM_TYPE item;
 		
 		public InventoryListener(Item.ITEM_TYPE item) {
