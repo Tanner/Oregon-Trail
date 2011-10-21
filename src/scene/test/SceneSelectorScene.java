@@ -35,7 +35,6 @@ public class SceneSelectorScene extends Scene {
 	
 	private static final int MARGIN = 20;
 
-	private ButtonListener buttonListener;
 	private List<Button> buttons;
 	
 	private Player player;
@@ -59,18 +58,26 @@ public class SceneSelectorScene extends Scene {
 		int height = (container.getHeight() - (size + 1) * MARGIN) / size;
 		int width = (container.getWidth() - (size + 1) * MARGIN) / size;
 		
+		// Create all the buttons for the scenes
 		buttons = new ArrayList<Button>();
 		for (SceneID scene : scenes) {
 			buttons.add(new Button(container, width, height, new Label(container, fieldFont, Color.white, scene.getName())));
 		}
 		
-		buttonListener = new ButtonListener();
+		// Create extra function button
+		buttons.add(new Button(container, width, height, new Label(container, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "ADD_PARTY"))));
+		buttons.add(new Button(container, width, height, new Label(container, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))));
+		
+		// Add listeners to buttons and make an array
+		ButtonListener buttonListener = new ButtonListener();
 		
 		Button[] buttonsToAdd = new Button[buttons.size()];
 		for (int i = 0; i < buttons.size(); i++) {
 			buttonsToAdd[i] = buttons.get(i);
 			buttonsToAdd[i].addListener(buttonListener);
 		}
+		
+		// Add stuff
 		mainLayer.addAsGrid(buttonsToAdd, mainLayer.getPosition(Positionable.ReferencePoint.TOPLEFT), size, size, MARGIN, MARGIN, MARGIN, MARGIN);
 		
 		backgroundLayer.add(new Panel(container, Color.black));
@@ -140,11 +147,11 @@ public class SceneSelectorScene extends Scene {
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this);
-			} else if (component == buttons.get(8)) {
+			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))) {
 				player.setParty(null);
-			} else if (component == buttons.get(9)) {
+			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "ADD_PARTY"))) {
 				player.setParty(makeRandomParty());
-			} 
+			}
 		}
 		
 		private void warnBecauseNoParty() {
