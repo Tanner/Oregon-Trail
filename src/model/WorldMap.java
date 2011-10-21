@@ -41,6 +41,7 @@ public class WorldMap {
 	 */
 	public WorldMap(int numNodes, int numTrails){
 		this.generateMap(numNodes, numTrails);
+		this.currDestination = this.mapHead;
 	}
 	
 	/**
@@ -59,40 +60,42 @@ public class WorldMap {
 	 * @param numTrails number of trails linking locations - will be forced to be enough to at least link all locations
 	 */
 	private void generateMap(int numLocations, int numTrails){
-		//build a temporary list to hold the generated locations
-		LocationNode[] tempLocationStore = new LocationNode[numLocations];
-		//temp array holding number of locations at each rank, indexed by rank
+			//build a temporary list to hold the generated locations
+		List<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
+			//temp array holding number of locations at each rank, indexed by rank
 		int[] numRankAra = new int[MAX_RANK];
-		
-		
-		//manufacture random object - make constant seeded now for testing purposes
+			//current node's rank as we're building the node list
+		int curRank = 0;
+			//manufacture random object - make constant seeded now for testing purposes
 		Random mapRand = new Random(12345);
-		//num of edges from current location - will be between 1 and MAX_TRAILS_OUT
+			//num of edges from current location - will be between 1 and MAX_TRAILS_OUT
 		int numExitTrails;
 		
-		//number of trails out of Independence - 1 to MaxTrailsOut constant
+			//number of trails out of Independence - 1 to MaxTrailsOut constant
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
-		//build beginning and final locations, and set up pointer to current location
+			//build beginning and final locations
 		this.mapHead = new LocationNode("Independence", MAX_X, MAX_Y/2, numExitTrails, 0);
-		this.currDestination = this.mapHead;
 		this.finalDestination = new LocationNode("Portland", 0,0,0, MAX_RANK);
 		
 		numRankAra[0] = 1;
 		numRankAra[MAX_RANK - 1] = 1;
 		
-		tempLocationStore[0] = mapHead;
-		tempLocationStore[numLocations-1] = finalDestination;
+		tempLocationStore.add(mapHead);
 		for(int i = 1; i < numLocations-1; i++){
-			//derive x coord of this location on map
-			int tmpX;
-			//derive y coord of this location on map - should give some range of y between 0 and MAX_Y
-			int tmpY = (MAX_Y/2) + (MAX_Y/MAX_RANK) * (mapRand.nextInt(MAX_RANK) - (MAX_RANK/2));
+			
+			
+				//derive x coord of this location on map - should give range of MAX_X to 0 in "clumps" clustered around MAX_X/MAX_RANK 
+			int tmpX = MAX_X - (((MAX_X/MAX_RANK) * curRank) + (mapRand.nextInt(MAX_X/(2 * MAX_RANK)) - MAX_X/MAX_RANK));
+				//derive y coord of this location on map - should give some range of y between -MAX_Y/2 and MAX_Y/2
+			int tmpY = ((MAX_Y/MAX_RANK) * (mapRand.nextInt(MAX_RANK) - (MAX_RANK/2)));			
+			
 			
 			
 			//LocationNode tempNode = new LocationNode()
 			
 		}//for all locations make a node
-					
+		tempLocationStore.add(finalDestination);
+
 			
 			
 		
