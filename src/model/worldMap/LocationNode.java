@@ -16,10 +16,10 @@ public class LocationNode {
 	
 	/**
 	 * Constructor for making a {@code LocationNode}
-	 * @param locationName
-	 * @param Latitude
-	 * @param Longitude
-	 * @param trails
+	 * @param locationName String representing name of location
+	 * @param Latitude Real World(tm) latitude of location (for MapScene manufacture)
+	 * @param Longitude Real World(tm) longitude of location (for MapScene Manufacture)
+	 * @param trails number of trails exiting this location
 	 */
 	public LocationNode(String locationName, int Latitude, int Longitude, int trails){
 		LOCATION_INDEX = LocationNode.indexCount++;
