@@ -17,14 +17,14 @@ public class Item implements Conditioned, Comparable<Item>{
 	private final ITEM_TYPE type;
 	
 	public enum ITEM_TYPE {
-		APPLE ("APPLE", true, true, 1),
-		BREAD ("BREAD", true, false, 2),
-		BULLET ("BULLET", false, false, 0),
-		GUN ("GUN", false, false, 0),
-		MEAT ("MEAT", true, false, 4),
-		SONIC ("SONIC", false, false, 0),
-		WAGON ("WAGON", false, false, 0),
-		WHEEL ("WHEEL", false, false, 0);
+		APPLE ("APPLE", true, true),
+		BREAD ("BREAD", true, false),
+		BULLET ("BULLET", false, false),
+		GUN ("GUN", false, false),
+		MEAT ("MEAT", true, false),
+		SONIC ("SONIC", false, false),
+		WAGON ("WAGON", false, false),
+		WHEEL ("WHEEL", false, false);
 		
 		private final String name;
 	
@@ -50,15 +50,14 @@ public class Item implements Conditioned, Comparable<Item>{
 		 */
 		//private ITEM_TYPE (String name, String description, String cost,
 			//	String weight, boolean isFood, boolean isPlant, int foodFactor) {
-		private ITEM_TYPE (String type, boolean isFood, boolean isPlant, int foodFactor) {
-			String reference = type;
+		private ITEM_TYPE (String type, boolean isFood, boolean isPlant) {
 			this.name = ConstantStore.get("ITEMS", type + "_NAME");
 			this.description = ConstantStore.get("ITEMS", type + "_DESCRIPTION");
 			this.cost = Integer.parseInt(ConstantStore.get("ITEMS", type + "_COST"));
 			this.weight = Double.parseDouble(ConstantStore.get("ITEMS", type + "_WEIGHT"));
 			this.isFood = isFood;
 			this.isPlant = isPlant;
-			this.foodFactor = foodFactor;
+			this.foodFactor = Integer.parseInt(ConstantStore.get("ITEMS", type + "_FF"));
 		}
 		
 		/**
