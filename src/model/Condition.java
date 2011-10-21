@@ -57,21 +57,20 @@ public class Condition {
 	/**
 	 * Increase the current value by a desired amount.
 	 * @param amount Amount to increase the current value
-	 * @return Success status (true for success, false for fail)
 	 */
-	public boolean increase(int amount) {
+	public void increase(int amount) {
 		if(amount <= 0) {
 			Logger.log("Not an increment", Logger.Level.ERROR);
-			return false;
+			return;
 		}
 		else if(current + amount > max) {
 			current = max;
 			Logger.log("Increment exceeded max - set to max", Logger.Level.WARNING);
-			return true;
+			return;
 		}
 		else {
 			current += amount;
-			return true;
+			return;
 		}
 	}
 	
@@ -94,21 +93,20 @@ public class Condition {
 	/**
 	 * Decrease the current value by a desired amount.
 	 * @param amount Amount to decrease the current value
-	 * @return Success status (true for success, false for fail)
 	 */
-	public boolean decrease (int amount) {
+	public void decrease (int amount) {
 		if(amount <= 0) {
 			Logger.log("Not a decrement", Logger.Level.ERROR);
-			return false;
+			return;
 		}
 		else if(current - amount < min) {
 			current = min;
 			Logger.log("Decrement exceeded min - set to min", Logger.Level.WARNING);
-			return true;
+			return;
 		}
 		else {
 			current -= amount;
-			return true;
+			return;
 		}
 	}
 	

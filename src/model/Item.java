@@ -66,7 +66,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @return The base cost of the item
 	 */
 	public int getCost() {
-		return (int)(baseCost * status.getPercentage());
+		return (int) (baseCost * status.getPercentage());
 	}
 	
 	/**
@@ -88,12 +88,11 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @param amount The amount by which to increase the status
 	 * @return True if successful, false otherwise
 	 */
-	public boolean increaseStatus(int amount) {
-		final boolean returned = status.increase(amount);
+	public void increaseStatus(int amount) {
+		status.increase(amount);
 		if (status.getCurrent() == status.getMax()) {
 			this.isStackable = true;
 		}
-		return returned;
 	}
 	
 	/**
@@ -102,12 +101,11 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @param amount The amount by which to decrease the status
 	 * @return True if successful, false otherwise
 	 */
-	public boolean decreaseStatus(int amount) {
-		final boolean returned = status.decrease(amount);
+	public void decreaseStatus(int amount) {
+		status.decrease(amount);
 		if (status.getCurrent() < status.getMax()) {
 			this.isStackable = false;
 		}
-		return returned;
 	}
 	
 	/**
@@ -192,9 +190,9 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		
 		private final double weight;
 		
-		private boolean isFood, isPlant;
+		private final boolean isFood, isPlant;
 		
-		private int foodFactor;
+		private final int foodFactor;
 		
 		/**
 		 * Makes the item type
@@ -253,7 +251,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		 * Whether or not the item is food
 		 * @return Is the item food?
 		 */
-		public boolean getIsFood() {
+		public boolean isFood() {
 			return isFood;
 		}
 		
@@ -269,7 +267,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 		 * Is the item a plant
 		 * @return Is it a plant?
 		 */
-		public boolean getIsPlant() {
+		public boolean isPlant() {
 			return isPlant;
 		}
 	}

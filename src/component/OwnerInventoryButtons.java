@@ -155,16 +155,9 @@ public class OwnerInventoryButtons {
 	 * @param items List of Items to add to the inventory
 	 * @return Whether or not the addition was successful
 	 */
-	public boolean addItemToInventory(List<Item> items) {
-		boolean success = false;
-		
-		success = inventoried.addItemsToInventory(items);
-		
-		if (success) {
-			updateGraphics();
-		}
-		
-		return success;
+	public void addItemToInventory(List<Item> items) {
+		inventoried.addItemsToInventory(items);
+		updateGraphics();
 	}
 	
 	/**

@@ -146,7 +146,7 @@ public class Party implements HUDDataSource {
 	 * @param buyer The thing that wants the items in its inventory
 	 * @return True if successful
 	 */
-	public boolean buyItemForInventory(List<Item> items, Inventoried buyer) {
+	public void buyItemForInventory(List<Item> items, Inventoried buyer) {
 		int cost = 0;
 		final Item.ITEM_TYPE itemType = items.get(0).getType();
 		final int numberOf = items.size();
@@ -158,9 +158,9 @@ public class Party implements HUDDataSource {
 		if (money > cost && buyer.canGetItem(itemType, numberOf)) {
 			buyer.addItemsToInventory(items);
 			money -= cost;
-			return true;
+			return;
 		} else {
-			return false;
+			return;
 		}
 	}
 	
@@ -346,13 +346,13 @@ public class Party implements HUDDataSource {
 		boolean vehicleHasFood = false;
 		
 		for (Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
-			if (itemType.getIsFood()) {
+			if (itemType.isFood()) {
 				personHasFood = true;
 			}
 		}
 		if(!personHasFood) {
 			for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
-				if (itemType.getIsFood()) {
+				if (itemType.isFood()) {
 					vehicleHasFood = true;
 				}
 			}
@@ -373,7 +373,7 @@ public class Party implements HUDDataSource {
 				donator.getInventory().getPopulatedSlots();
 			
 			for (Item.ITEM_TYPE itemType : typeList) {
-				if (itemType.getIsFood() && firstFood == null) {
+				if (itemType.isFood() && firstFood == null) {
 					firstFood = itemType;
 				}
 			}
@@ -385,7 +385,7 @@ public class Party implements HUDDataSource {
 			int foodFactor = food.getType().getFoodFactor();
 			
 			//Do some handling for party member skills, such as cooking
-			if(food.getType().getIsPlant() && getSkills().contains(Person.Skill.BOTANY)) {
+			if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
 				foodFactor += 1;
 			}
 			if(getSkills().contains(Person.Skill.COOKING)) {

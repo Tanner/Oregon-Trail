@@ -163,7 +163,7 @@ public class SceneSelectorScene extends Scene {
 		
 		for(Person person : people) {
 			ArrayList<Person.Skill> personSkill = new ArrayList<Person.Skill>();
-			person.changeProfession(Person.Profession.values()[random.nextInt(Person.Profession.values().length)]);
+			person.setProfession(Person.Profession.values()[random.nextInt(Person.Profession.values().length)]);
 	
 			int skillPoints = 0;
 			for (Person.Skill tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];

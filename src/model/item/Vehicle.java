@@ -48,8 +48,8 @@ public abstract class Vehicle extends Item implements Inventoried{
 	 * @param amount The amount by which to increase the status
 	 * @return whether the increase worked or not
 	 */
-	public boolean increaseStatus(int amount) {
-		return status.increase(amount);
+	public void increaseStatus(int amount) {
+		status.increase(amount);
 	}
 	
 	/**
@@ -57,8 +57,8 @@ public abstract class Vehicle extends Item implements Inventoried{
 	 * @param amount The amount by which to decrease the status
 	 * @return whether the decrease worked or not
 	 */
-	public boolean decreaseStatus(int amount) {
-		return status.decrease(amount);
+	public void decreaseStatus(int amount) {
+		status.decrease(amount);
 	}
 	
 	/**
@@ -70,15 +70,15 @@ public abstract class Vehicle extends Item implements Inventoried{
 	}
 	
 	@Override
-	public boolean addItemsToInventory(List<Item> items) {
-		return cargo.addItem(items);
+	public void addItemsToInventory(List<Item> items) {
+		cargo.addItem(items);
 	}
 	
 	@Override
-	public boolean addItemToInventory(Item item) {
+	public void addItemToInventory(Item item) {
 		ArrayList<Item> itemToAdd = new ArrayList<Item>();
 		itemToAdd.add(item);
-		return cargo.addItem(itemToAdd);
+		cargo.addItem(itemToAdd);
 	}
 	
 	/**

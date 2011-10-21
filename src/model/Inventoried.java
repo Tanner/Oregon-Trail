@@ -7,16 +7,14 @@ public interface Inventoried {
 	/**
 	 * Adds the items to inventory.
 	 * @param itemsToAdd The items to add to the inventory
-	 * @return True if successful
 	 */
-	boolean addItemsToInventory(List<Item> itemsToAdd);
+	void addItemsToInventory(List<Item> itemsToAdd);
 	
 	/**
 	 * Adds a single item to inventory.
 	 * @param item The items to add to the inventory
-	 * @return True if successful
 	 */
-	boolean addItemToInventory(Item item);
+	void addItemToInventory(Item item);
 	
 	/**
 	 * Removes the item from inventory.

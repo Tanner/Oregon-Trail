@@ -106,9 +106,9 @@ public class Inventory {
 	 * @param itemsToAdd The items to add
 	 * @return True if successful, false otherwise
 	 */
-	public boolean addItem(List<Item> itemsToAdd) {
+	public void addItem(List<Item> itemsToAdd) {
 		if(itemsToAdd.size() == 0) {
-			return false;
+			return;
 		}
 		final Item.ITEM_TYPE itemType = itemsToAdd.get(0).getType();
 		if(canAddItems(itemType, itemsToAdd.size())) {
@@ -122,10 +122,10 @@ public class Inventory {
 					currentSize += 1;
 				}
 			}
-			return true;
+			return;
 		} else {
 			Logger.log("Add item failed", Logger.Level.INFO);
-			return false;
+			return;
 		}
 	}
 
