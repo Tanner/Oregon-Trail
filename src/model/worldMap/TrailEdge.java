@@ -15,12 +15,17 @@ public class TrailEdge implements Conditioned {
 	private int dangerLevel;	
 	//length of the trail.  calculated by the distance between the two location nodes.
 	private float length;
+	private static int edgeCount;
+
+	//unique id corresponding to this edge.
+	private final int ID;
 	
 	
 	public TrailEdge(String name, LocationNode destination, LocationNode origin){
 		this.destination = destination;
 		this.origin = origin;
 		this.name = name;
+		this.ID = TrailEdge.edgeCount++;
 	}
 
 	@Override

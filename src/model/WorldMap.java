@@ -11,6 +11,8 @@ public class WorldMap {
 	private LocationNode mapHead;
 	//points to nearest locationNode ahead of party, or current location
 	private LocationNode currDestination;
+	//final destination - Portland Oregon
+	private LocationNode finalDestination;
 	//points to trailEdge most recently occupied by party
 	private TrailEdge currTrail;
 	
@@ -20,8 +22,9 @@ public class WorldMap {
 	 * @param numTrails the number of possible directed trails - not all will be travelled.
 	 */
 	public WorldMap(int numNodes, int numTrails){
-		
-		
+		this.mapHead = new LocationNode("Independence", 50, 30, 3);
+		this.currDestination = this.mapHead;
+		this.finalDestination = new LocationNode("Portland", 100,100,0);
 	}
 	
 	public WorldMap(){

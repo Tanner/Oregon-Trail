@@ -9,7 +9,7 @@ public class LocationNode {
 	public final double WORLD_LATITUDE;
 	public final double WORLD_LONGITUDE;
 	public final int LOCATION_INDEX;
-	private static int indexCount;
+	private static int nodeCount;
 	
 	private String locationName;
 	private List<TrailEdge> outBoundTrails;
@@ -22,7 +22,7 @@ public class LocationNode {
 	 * @param trails number of trails exiting this location
 	 */
 	public LocationNode(String locationName, int Latitude, int Longitude, int trails){
-		LOCATION_INDEX = LocationNode.indexCount++;
+		LOCATION_INDEX = LocationNode.nodeCount++;
 		//until we can get a nice source for lat and long data
 		WORLD_LATITUDE = Latitude;
 		WORLD_LONGITUDE = Longitude;
@@ -31,11 +31,20 @@ public class LocationNode {
 	}
 	
 	public LocationNode(int Latitude, int Longitude, int trails){
-		//makes unique name for location, temporarily, until we can manufacture them.
-		this("Location " + new Integer(LocationNode.indexCount).toString(),Latitude, Longitude, trails);
+		//makes unique name for location, temporarily, until we can make them prettier.
+		this("Location " + new Integer(LocationNode.nodeCount).toString(),Latitude, Longitude, trails);
 		
 	}
 
+	/**
+	 * adds a new, leaving, {@code TrailEdge} to this {@code LocationNode}
+	 * @param newTrail
+	 */
+	
+	public void addTrail(TrailEdge newTrail){
+		this.outBoundTrails.add(newTrail);
+	}
+	
 	/**
 	 * returns the string representation of this location
 	 */
