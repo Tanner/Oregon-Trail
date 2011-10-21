@@ -200,6 +200,7 @@ public class PartyCreationScene extends Scene {
 		// Ration Selection
 		int labelWidth = 100;
 		Label rationsLabel = new Label(container, labelWidth, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "RATIONS_LABEL"));
+		rationsLabel.setAlignment(Alignment.LEFT);
 		mainLayer.add(rationsLabel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, PADDING, -PADDING);
 		
 		int numOfRations = Party.Rations.values().length;
@@ -212,6 +213,7 @@ public class PartyCreationScene extends Scene {
 		
 		// Pace Selection
 		Label paceLabel = new Label(container, labelWidth, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PACE_LABEL"));
+		paceLabel.setAlignment(Alignment.LEFT);
 		mainLayer.add(paceLabel, rationsLabel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, -PADDING);
 		
 		int numOfPaces = Party.Pace.values().length;
