@@ -214,7 +214,7 @@ public class StoreScene extends Scene {
 		partyMoney.setAlignment(Label.Alignment.CENTER);
 		
 		//Create cancel & inventory buttons
-		tempLabel = new Label(container, fieldFont, Color.white, "Cancel");
+		tempLabel = new Label(container, fieldFont, Color.white, "Leave");
 		cancelButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		cancelButton.addListener(new ButtonListener());
 		
