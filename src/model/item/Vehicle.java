@@ -10,13 +10,9 @@ import model.Item;
 
 /**
  * A vehicle is anything that is classified as a vehicle
- * @author Null && Void
- *
  */
 public class Vehicle extends Item implements Inventoried{
-/**
- * Abstract class to design a vehicle
- */
+
 	private final Condition status;
 
 	private final Inventory cargo;

@@ -8,7 +8,6 @@ import core.Logger;
 /**
  * Person consists of a list of skills the person is proficient with as well
  * as their name, and what their profession is called.
- * @author Null && Void
  */
 public class Person implements Conditioned, Inventoried {
 	

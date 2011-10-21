@@ -4,22 +4,19 @@ import java.util.List;
 
 /**
  * Interface for objects with inventories
- * @author Null && Void
- *
  */
 public interface Inventoried {
-	
 	/**
 	 * Adds the items to inventory.
 	 * @param itemsToAdd The items to add to the inventory
 	 */
-	void addItemsToInventory(List<Item> itemsToAdd);
+	public void addItemsToInventory(List<Item> itemsToAdd);
 	
 	/**
 	 * Adds a single item to inventory.
 	 * @param item The items to add to the inventory
 	 */
-	void addItemToInventory(Item item);
+	public void addItemToInventory(Item item);
 	
 	/**
 	 * Removes the item from inventory.
@@ -27,7 +24,7 @@ public interface Inventoried {
 	 * @param quantity The number of items to remove
 	 * @return True if successful
 	 */
-	List<Item> removeItemFromInventory(Item.ITEM_TYPE itemType, int quantity);
+	public List<Item> removeItemFromInventory(Item.ITEM_TYPE itemType, int quantity);
 	
 	/**
 	 * Returns whether or not the number of a specific item type 
@@ -36,35 +33,35 @@ public interface Inventoried {
 	 * @param numberOf The number of items to test with
 	 * @return True if successful.
 	 */
-	boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf);
+	public boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf);
 	
 	/**
 	 * The name of the inventoried person.
 	 * @return The name
 	 */
-	String getName();
+	public String getName();
 	
 	/**
 	 * The inventory of the inventoried person.
 	 * @return The inventory
 	 */
-	Inventory getInventory();
+	public Inventory getInventory();
 	
 	/**
 	 * The max size of the inventory.
 	 * @return The max size.
 	 */
-	int getMaxSize();
+	public int getMaxSize();
 	
 	/**
 	 * Returns the current carried weight
 	 * @return The current carried weight
 	 */
-	double getWeight();
+	public double getWeight();
 	
 	/**
 	 * Returns the max weight of the inventory
 	 * @return The max weight
 	 */
-	double getMaxWeight();
+	public double getMaxWeight();
 }

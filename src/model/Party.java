@@ -11,7 +11,6 @@ import core.Logger.Level;
 
 /**
  * Party class that contains an array of persons that are members.
- * @author Null && Void
  */
 public class Party implements HUDDataSource {
 	

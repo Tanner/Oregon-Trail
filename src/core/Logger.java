@@ -7,8 +7,6 @@ import java.util.Date;
 
 /**
  * Log messages to a file.
- * 
- * @author Tanner Smith
  */
 public class Logger {
 	private static String file = "log.txt";

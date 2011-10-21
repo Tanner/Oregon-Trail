@@ -8,10 +8,8 @@ import core.Logger;
 
 /**
  * Inventory with an list that holds all the arrayLists of items in the inventory.
- * @author Null && Void
  */
 public class Inventory {
-	
 	private final List<PriorityQueue<Item>> slots;
 	
 	private final int MAX_SIZE;

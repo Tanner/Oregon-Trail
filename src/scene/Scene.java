@@ -16,8 +16,6 @@ import component.Positionable.ReferencePoint;
 
 /**
  * How the game displays information to the player.  Inherited by the containers which execute the game functionality
- * @author NULL&&void
- *
  */
 public abstract class Scene extends BasicGameState implements ModalListener {
 	protected static GameContainer container;

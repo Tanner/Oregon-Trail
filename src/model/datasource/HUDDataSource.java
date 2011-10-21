@@ -7,8 +7,6 @@ import model.Condition;
  * 
  * Allows {@code HUD} to get data without being able to modify the data 
  * (which it shouldn't).
- * 
- * @author Null && Void
  */
 public interface HUDDataSource {
 	/**

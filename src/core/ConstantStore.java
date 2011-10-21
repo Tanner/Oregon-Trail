@@ -8,8 +8,6 @@ import org.newdawn.slick.Color;
 
 /**
  * Class to hold constants used by the game
- * 
- * @author NULL&void
  */
 public final class ConstantStore {
 	/**

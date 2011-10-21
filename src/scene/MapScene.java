@@ -1,6 +1,3 @@
-/**
- * 
- */
 package scene;
 
 import org.newdawn.slick.GameContainer;
@@ -8,8 +5,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * @author 
- *
+ * Shows a map to the user.
  */
 public class MapScene extends Scene {
 
@@ -31,5 +27,4 @@ public class MapScene extends Scene {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }

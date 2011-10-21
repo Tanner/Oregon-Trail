@@ -17,9 +17,7 @@ import component.Positionable;
 import core.*;
 
 /**
- * the scene which represents a town
- * @author NULL&&void
- *
+ * The scene which represents a town.
  */
 public class TownScene extends Scene {
 	public static final SceneID ID = SceneID.TOWN;

@@ -3,9 +3,7 @@ package model;
 import core.Logger;
 
 /**
- * Player class contains party.  Can be passed or set manually.
- * 
- * @author George Johnston
+ * Player class contains party. Can be passed or set manually.
  */
 public class Player {
 	private Party party;
