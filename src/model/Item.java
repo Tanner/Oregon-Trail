@@ -9,19 +9,11 @@ import core.ConstantStore;
  * is weight.
  * @author Null && Void
  */
-public abstract class Item implements Conditioned, Comparable<Item>{
-	
-	private final String name;
-
-	private final String description;
+public class Item implements Conditioned, Comparable<Item>{
 	
 	private final Condition status;
 	
-	private final double weight; //This is the individual unit weight
-	
 	private boolean isStackable = true;
-	
-	private final int baseCost;
 	
 	private final ITEM_TYPE type;
 	
@@ -155,11 +147,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @param type The type of the item
 	 */
 	public Item(ITEM_TYPE type) {
-		this.name = type.getName();
-		this.description = type.getDescription();
 		this.status = new Condition(100);
-		this.weight = type.getWeight();
-		this.baseCost = type.getCost();
 		this.type = type;
 	}
 
@@ -168,7 +156,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @return The item's name
 	 */
 	public String getName() {
-		return name;
+		return type.getName();
 	}
 
 	/**
@@ -176,7 +164,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @return The item's description
 	 */
 	public String getDescription() {
-		return description;
+		return type.getDescription();
 	}
 
 	/**
@@ -185,7 +173,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @return The base cost of the item
 	 */
 	public int getCost() {
-		return (int) (baseCost * status.getPercentage());
+		return (int) (type.getCost() * status.getPercentage());
 	}
 	
 	/**
@@ -230,7 +218,7 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * @return The weight of the item
 	 */
 	public double getWeight() {
-		return weight;
+		return type.getWeight();
 	}
 	
 	/**
