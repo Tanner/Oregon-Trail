@@ -1,6 +1,9 @@
 package model;
 
 import model.worldMap.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -13,6 +16,8 @@ public class WorldMap {
 	private final int MAX_TRAILS_OUT = 3;  
 	/**maximum number of "levels" of travel west - only portland has this as its rank.  edges can only go to edges with equal or higher rank than their origin node*/
 	private final int MAX_RANK = 10;
+	/**width of map in miles*/
+	private final int MAP_WIDTH = 1000;
 	/**points to starting city - references entire map*/
 	private LocationNode mapHead;
 	/**points to nearest locationNode ahead of party, or current location*/
@@ -42,26 +47,7 @@ public class WorldMap {
 	}
 
 	
-	/** 
-	 * recursively build our node map - every location has a rank, denoting how far west it is.  we start at rank 0, we end at rank MAX_RANK.
-	 * no edge can connect to a node with a lesser rank.
-	 * 
-	 * @param src the node we're going to build off.
-	 * @return the last node we built
-	 */
-	private LocationNode generateMapLocations (LocationNode src, int num){
-		if (num == 1){//if we're at num = 1 then we need to link up to portland
-		
-		}
-		//iterate through arraylist of trails from this node, to build all next nodes
 
-		for (int numEdge = 0; numEdge < src.getOutboundTrails().size(); numEdge++){
-			
-		}
-		 
-		return src;
-		
-	}
 	/**
 	 * Makes the random map, using the given number of nodes and edges, with a fun and fancy algorithm that first
 	 * makes all the nodes with a single edge linking them, and then adds connections until out of edges
@@ -70,6 +56,10 @@ public class WorldMap {
 	 * @param numTrails number of trails linking locations - will be forced to be enough to at least link all locations
 	 */
 	private void generateMap(int numLocations, int numTrails){
+		//build a temporary list to hold the generated locations
+		List<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
+		//temp array holding number of locations at each rank, indexed by rank
+		int[] numRank = new int[MAX_RANK];
 		//manufacture random object - make constant seeded now for testing purposes
 		Random mapRand = new Random(12345);
 		//num of edges from current location - will be between 1 and MAX_TRAILS_OUT
@@ -81,7 +71,13 @@ public class WorldMap {
 		this.mapHead = new LocationNode("Independence", 50, 30, numExitTrails, 0);
 		this.currDestination = this.mapHead;
 		this.finalDestination = new LocationNode("Portland", 100,100,0, MAX_RANK);
-		generateMapLocations(this.mapHead, numLocations - 2);
+		tempLocationStore.add(0, mapHead);
+		tempLocationStore.add(numLocations-1, this.finalDestination);
+		for(int i = 1; i < numLocations-1; i++){
+			
+			//LocationNode tempNode = new LocationNode()
+			
+		}//for all locations make a node
 					
 			
 			
