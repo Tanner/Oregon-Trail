@@ -6,6 +6,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
+import scene.Scene;
+
 import component.sprite.Sprite;
 
 import core.ConstantStore;
@@ -117,6 +119,8 @@ public class Button extends Component implements Disableable {
 		}
 		
 		super.mouseReleased(button, mx, my);
+		
+		Scene.showTooltip(mx, my, this, "foo");
 		
  		if (button == 0 && isMouseOver() && !disabled && active) {
 			notifyListeners();
