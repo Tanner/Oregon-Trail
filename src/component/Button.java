@@ -189,6 +189,14 @@ public class Button extends Component implements Disableable {
 		label.setText(text);
 	}
 	
+	/**
+	 * Gets the text in this button.
+	 * @return Text in the button
+	 */
+	public String getText() {
+		return label.getText();
+	}
+	
 	@Override
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
