@@ -16,7 +16,8 @@ public class ComponentConditionGroup <T extends Component> extends Component {
 	protected ConditionBar conditionBar;
 	
 	/**
-	 * Construct a {@code ComponentConditionGroup} with a {@code GUIContext}, width, height, {@code Font}, {@code Component}, and a {@code Condition}.
+	 * Construct a {@code ComponentConditionGroup} with a {@code GUIContext},
+	 * width, height, {@code Font}, {@code Component}, and a {@code Condition}.
 	 * @param container The container for this {@code Component}
 	 * @param width Width
 	 * @param height Height

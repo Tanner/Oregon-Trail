@@ -22,7 +22,7 @@ public class LocationNode {
 		WORLD_LATITUDE = Latitude;
 		WORLD_LONGITUDE = Longitude;
 		
-		townName = "Town " + new Integer(LOCATION_INDEX).toString();
+		townName = "Town " + LOCATION_INDEX;
 
 		outBoundTrails = new ArrayList<TrailEdge>();
 	}

@@ -148,7 +148,7 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 			if (y > container.getHeight() >> 1) {
 				referencePoint = ReferencePoint.BOTTOMRIGHT;
 			} else {
-				referencePoint = ReferencePoint.TOPRIGHT;	
+				referencePoint = ReferencePoint.TOPRIGHT;
 			}
 		}
 		tooltip.setPosition(new Vector2f(x, y), referencePoint);

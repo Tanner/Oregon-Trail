@@ -19,7 +19,7 @@ public class Label extends Component {
 		CENTER,
 		TOP
 	}
-	ArrayList<String> lines;
+	private ArrayList<String> lines;
 	private String text;
 	private Font font;
 	private Color c;
