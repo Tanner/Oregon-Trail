@@ -3,12 +3,16 @@ package scene;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.HUD;
+import component.Component;
 import component.Modal;
 import component.ModalListener;
+import component.Tooltip;
+import component.Positionable.ReferencePoint;
 
 /**
  * How the game displays information to the player.  Inherited by the containers which execute the game functionality
@@ -16,15 +20,16 @@ import component.ModalListener;
  *
  */
 public abstract class Scene extends BasicGameState implements ModalListener {
-	protected GameContainer container;
+	protected static GameContainer container;
 	protected SceneLayer backgroundLayer;
 	protected SceneLayer mainLayer;
 	protected SceneLayer hudLayer;
 	protected SceneLayer modalLayer;
+	private static Tooltip tooltip;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		this.container = container;
+		Scene.container = container;
 		
 		backgroundLayer = new SceneLayer(container);
 		mainLayer = new SceneLayer(container);
@@ -38,10 +43,18 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 		mainLayer.render(container, g);
 		hudLayer.render(container, g);
 		modalLayer.render(container, g);
+		
+		if (tooltip != null) {
+			tooltip.render(container, g);
+		}
 	}
 
 	@Override
-	public abstract void update(GameContainer container, StateBasedGame game, int delta) throws SlickException;
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		if (tooltip != null && !tooltip.getOwner().getArea().includes(tooltip.getX(), tooltip.getY())) {
+			tooltip = null;
+		}
+	}
 
 	/**
 	 * Activates a modal screen 
@@ -103,4 +116,11 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	
 	@Override
 	public abstract int getID();
+	
+	public static void showTooltip(int x, int y, Component owner, String message) {
+		if (tooltip == null || tooltip.getOwner() != owner) {
+			tooltip = new Tooltip(container, 50, 50, owner, message);
+			tooltip.setPosition(new Vector2f(x, y), ReferencePoint.TOPLEFT);
+		}
+	}
 }

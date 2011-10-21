@@ -17,7 +17,7 @@ import scene.*;
 
 
 public class TrailTestScene extends Scene {
-	public static final SceneID ID = SceneID.TRAILTESTSCENE;
+	public static final SceneID ID = SceneID.TRAILTEST;
 	private static final int PADDING = 10;
 	private static final int REGULAR_BUTTON_HEIGHT = 30;
 	private static final int BUTTON_WIDTH = 200;
