@@ -43,14 +43,14 @@ public class StoreScene extends Scene {
 	private Modal failedBuyModal;
 	
 	private List<Item> currentPurchase;
-	private List<Inventoried> currentBuyers;
+	private List<Inventoried> currentParty;
 	
 	private Item.ITEM_TYPE currentItem = null;
 	private Item.ITEM_TYPE hoverItem = null;
 	
 	String tempDescription = "This is an item description.\nIt is a good item, maybe a sonic screwdriver.\n\nYep.";
 	Inventory inv;
-	Party p;
+	Party party;
 	
 	/**
 	 * This method sets up
@@ -58,7 +58,7 @@ public class StoreScene extends Scene {
 	 * @param storeInventory The inventory the store will use (passed from GameDirector)
 	 */
 	public StoreScene (Party p, Inventory storeInventory) {
-		this.p = p;
+		this.party = p;
 		this.inv = storeInventory;
 	}
 	
@@ -152,9 +152,9 @@ public class StoreScene extends Scene {
 				inv.addItem(currentPurchase);
 			} else {
 				int[] buyer = buyModal.getSegmentedControl().getSelection();
-				p.buyItemForInventory(currentPurchase, currentBuyers.get(buyer[0]));
+				party.buyItemForInventory(currentPurchase, currentParty.get(buyer[0]));
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
-				partyMoney.setText("Party's Money: $ " + p.getMoney());
+				partyMoney.setText("Party's Money: $ " + party.getMoney());
 			}
 		}
 	}
@@ -162,8 +162,11 @@ public class StoreScene extends Scene {
 	@Override
 	public void start() {
 		super.start();
-		if ( partyMoney != null )
-			partyMoney.setText("Party's Money: $" + p.getMoney());
+			for (Item.ITEM_TYPE item : inv.getPopulatedSlots() ) {
+				storeInventory[getButtonIndex(item)].setMax(inv.getNumberOf(item));
+				storeInventory[getButtonIndex(item)].setCount(inv.getNumberOf(item));
+			}
+			partyMoney.setText("Party's Money: $" + party.getMoney());
 	}
 	
 	/**
@@ -201,7 +204,7 @@ public class StoreScene extends Scene {
 		storeInventoryButtons = new Panel(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, INVENTORY_BUTTON_HEIGHT * 4 + PADDING * 3);
 		
 		//Create money label
-		partyMoney = new Label(container, storeInventoryButtons.getWidth(), BUTTON_HEIGHT, fieldFont, Color.white, "Party's Money: $" + p.getMoney());
+		partyMoney = new Label(container, storeInventoryButtons.getWidth(), BUTTON_HEIGHT, fieldFont, Color.white, "Party's Money: $" + party.getMoney());
 		partyMoney.setAlignment(Label.Alignment.CENTER);
 		
 		//Create cancel & inventory buttons
@@ -256,7 +259,7 @@ public class StoreScene extends Scene {
 		itemDescription[4].setText("Quantity: " + count);
 		itemDescription[5].setText("Total Weight: " + count * currentItem.getWeight());
 		itemDescription[6].setText("Total Cost: $" + count * currentItem.getCost());
-		partyMoney.setText("Party's Money: $" + p.getMoney());
+		partyMoney.setText("Party's Money: $" + party.getMoney());
 	}
 	
 	/**
@@ -265,20 +268,21 @@ public class StoreScene extends Scene {
 	 */
 	private int makePurchase() {
 		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
-		currentBuyers = p.canGetItem(currentItem, itemCount);
+		List<Inventoried> currentBuyers = party.canGetItem(currentItem, itemCount);
+		System.out.println(currentBuyers);
 		//The player doesn't have a wagon and is trying to buy one
-		if ( currentItem == Item.ITEM_TYPE.WAGON && p.getVehicle() == null ) {
+		if ( currentItem == Item.ITEM_TYPE.WAGON && party.getVehicle() == null ) {
 			//The player tries to buy too many wagons
-			if ( itemCount > 1 && p.getMoney() >= Item.ITEM_TYPE.WAGON.getCost()) {
+			if ( itemCount > 1 && party.getMoney() >= Item.ITEM_TYPE.WAGON.getCost()) {
 				String errorText = "Please buy a single wagon first!";
 				failedBuyModal = new Modal(container, this, errorText, "Ok");
 				return -1;
 			}
 			//The player is able to buy the wagon
-			else if ( p.getMoney() > currentItem.getCost() ) {
-				p.setVehicle(new Wagon());
+			else if ( party.getMoney() > currentItem.getCost() ) {
+				party.setVehicle(new Wagon());
 				inv.removeItem(currentItem, 1);
-				p.setMoney(p.getMoney() - Item.ITEM_TYPE.WAGON.getCost());
+				party.setMoney(party.getMoney() - Item.ITEM_TYPE.WAGON.getCost());
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
 				updateLabels(currentItem);
 				return 1;
@@ -292,7 +296,7 @@ public class StoreScene extends Scene {
 		//Display modal if the user can not buy the currently selected item
 		} else if ( currentBuyers.size() == 0 ) {
 			String errorText;
-			if (p.getMoney() < itemCount * currentItem.getCost()) {
+			if (party.getMoney() < itemCount * currentItem.getCost()) {
 				errorText = "You don't have enough money for this purchase.";
 			} else {
 				errorText = "No one can carry that much weight!";
@@ -302,11 +306,46 @@ public class StoreScene extends Scene {
 		//Make the purchase
 		} else {
 			currentPurchase = inv.removeItem(currentItem, itemCount);
-			String[] names = new String[currentBuyers.size()];
-			for (int i = 0; i < names.length; i++) {
-				names[i] = currentBuyers.get(i).getName();
+			
+			//Get a list of all the actual party members and vehicle if it exists
+			currentParty = new ArrayList<Inventoried>();
+			currentParty.addAll(party.getPartyMembers());
+			if ( party.getVehicle() != null)
+				currentParty.add(party.getVehicle());
+			
+			//Get all of the people that can't buy the current item,
+			//and move them to the back of the list
+			List<Inventoried> disabledList = new ArrayList<Inventoried>();
+			List<Inventoried> enabledList = new ArrayList<Inventoried>();
+			for (int i = 0; i < currentParty.size(); i++) {
+				Inventoried currentPerson = currentParty.get(i);
+				boolean found = false;
+				for (int j = 0; j < currentBuyers.size() && !found; j++) {
+					if ( currentPerson == currentBuyers.get(j) ) {
+						found = true;
+					}
+				}
+				if ( !found )
+					disabledList.add(currentPerson);
+				else
+					enabledList.add(currentPerson);
 			}
-			SegmentedControl choosePlayer = new SegmentedControl(container, 400, 200, 3, 2, 20, true, 1, names);
+			currentParty.clear();
+			currentParty.addAll(enabledList);
+			currentParty.addAll(disabledList);
+			
+			int[] disabled = new int[disabledList.size()];
+			for (int i = 0; i < disabledList.size(); i++)
+				disabled[i] = currentParty.size() - 1 - i;
+			
+			//Get the names of the people in the party
+			String[] names = new String[currentParty.size()];
+			for (int i = 0; i < names.length; i++) {
+				names[i] = currentParty.get(i).getName();
+			}
+			
+			SegmentedControl choosePlayer = new SegmentedControl(container, 600, 200, 3, 2, 20, true, 1, names);
+			choosePlayer.setDisabled(disabled);
 			buyModal = new Modal(container, this, "Choose who will buy this item", choosePlayer, "Buy", "Cancel");
 			return 0;
 		}
