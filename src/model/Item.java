@@ -7,7 +7,6 @@ import core.ConstantStore;
  * An item contains it's own condition as well as a 
  * name, description, and weight.  The only modifiable aspect
  * is weight.
- * @author Null && Void
  */
 public class Item implements Conditioned, Comparable<Item>{
 	

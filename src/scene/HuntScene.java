@@ -1,8 +1,4 @@
-/**
- * 
- */
 package scene;
-
 
 import model.Party;
 import model.Person;
@@ -36,8 +32,7 @@ import core.GameDirector;
 import core.Logger;
 
 /**
- * @author 
- *
+ * Hunt scene is where you kill animals and get food.
  */
 public class HuntScene extends Scene {
 	public static final SceneID ID = SceneID.HUNT;

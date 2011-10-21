@@ -1,15 +1,10 @@
 package model.item;
 
-
-
 import model.Item;
 /**
- * ammo for a gun
- * @author NULL&void
- *
+ * Ammo for a gun.
  */
 public class Bullet extends Item {
-	
 	/**
 	 * Makes a bullet
 	 */

@@ -4,7 +4,6 @@ import core.Logger;
 
 /**
  * Holds all game data.
- * @author Null && Void
  */
 public class Game {
 	
