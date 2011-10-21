@@ -20,12 +20,20 @@ public class TrailEdge implements Conditioned {
 	//unique id corresponding to this edge.
 	private final int ID;
 	
+	/**
+	 * Make a trail edge that will connect two locationNodes
+	 * @param name
+	 * @param destination
+	 * @param origin
+	 * @param dangerLevel
+	 */
 	
-	public TrailEdge(String name, LocationNode destination, LocationNode origin){
+	public TrailEdge(String name, LocationNode destination, LocationNode origin, int dangerLevel){
 		this.destination = destination;
 		this.origin = origin;
 		this.name = name;
 		this.ID = TrailEdge.edgeCount++;
+		this.dangerLevel = dangerLevel;
 	}
 
 	@Override
@@ -34,10 +42,10 @@ public class TrailEdge implements Conditioned {
 	}
 
 
-	public String toSring(){
+	public String toString(){
 		
-		return "Trail to ";
+		return "Trail to "+ this.destination.toString();
 	}
 	
 	
-}
+}// class TrailEdge
