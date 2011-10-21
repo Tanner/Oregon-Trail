@@ -14,16 +14,26 @@ public class LocationNode {
 	private String locationName;
 	private List<TrailEdge> outBoundTrails;
 	
-	
-	public LocationNode(int Latitude, int Longitude, int trails){
+	/**
+	 * Constructor for making a {@code LocationNode}
+	 * @param locationName
+	 * @param Latitude
+	 * @param Longitude
+	 * @param trails
+	 */
+	public LocationNode(String locationName, int Latitude, int Longitude, int trails){
 		LOCATION_INDEX = LocationNode.indexCount++;
 		//until we can get a nice source for lat and long data
 		WORLD_LATITUDE = Latitude;
 		WORLD_LONGITUDE = Longitude;
+		this.outBoundTrails = new ArrayList<TrailEdge>(trails);
+		this.locationName = locationName;
+	}
+	
+	public LocationNode(int Latitude, int Longitude, int trails){
+		//makes unique name for location, temporarily, until we can manufacture them.
+		this("Location " + new Integer(LocationNode.indexCount).toString(),Latitude, Longitude, trails);
 		
-
-		locationName = "Location " + new Integer(LOCATION_INDEX).toString();
-		outBoundTrails = new ArrayList<TrailEdge>(trails);
 	}
 
 	/**
