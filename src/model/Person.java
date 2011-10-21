@@ -8,6 +8,7 @@ import core.Logger;
 /**
  * Person consists of a list of skills the person is proficient with as well
  * as their name, and what their profession is called.
+ * @author Null && Void
  */
 public class Person implements Conditioned, Inventoried{
 	
@@ -60,6 +61,7 @@ public class Person implements Conditioned, Inventoried{
 		/**
 		 * Sets the cost of the skill as designated
 		 * @param cost The cost of the skill (defined above)
+		 * @param name The name of the skill
 		 */
 		private Skill(int cost, String name) {
 			this.cost = cost;
@@ -123,7 +125,8 @@ public class Person implements Conditioned, Inventoried{
 		/**
 		 * Assigns money multiplier and starting skill to each profession
 		 * @param moneyDivider Gold divided by and score multiplied by this 
-		 * @param startSkill Skill the profession starts with
+		 * @param startingSkill Skill the profession starts with
+		 * @param name The profession's name
 		 */
 		private Profession(float moneyDivider, Skill startingSkill, String name) {
 			this.moneyDivider = moneyDivider;
@@ -172,7 +175,6 @@ public class Person implements Conditioned, Inventoried{
 	/**
 	 * Establish this party member's profession
 	 * @param profession the desired profession
-	 * @return successful completion of operation
 	 */
 	public void setProfession(Profession profession) {
 		//This will only happen during party creation when the skills haven't been chosen yet.
@@ -207,7 +209,6 @@ public class Person implements Conditioned, Inventoried{
 	
 	/**
 	 * Clears the persons skills
-	 * @return True is successful, false otherwise
 	 */
 	public void clearSkills() {
 		for (int i = skills.size() - 1; i >= 0; i--) {
@@ -218,6 +219,10 @@ public class Person implements Conditioned, Inventoried{
 		}
 	}
 	
+	/**
+	 * Adds a new skill to the person
+	 * @param newSkill The skill to add
+	 */
 	public void addSkill(Skill newSkill) {
 		if(skills.contains(newSkill)) {
 			Logger.log(this.name + " already has the skill " 
@@ -238,7 +243,6 @@ public class Person implements Conditioned, Inventoried{
 	/**
 	 * Adds a skill to this person's skill set
 	 * @param newSkill skill to be added
-	 * @return successful completion of this operation
 	 */
 	public void buySkill(Skill newSkill){
 		if(skills.contains(newSkill)) {
@@ -270,7 +274,6 @@ public class Person implements Conditioned, Inventoried{
 	/**
 	 * Removes skill from person's skill set	
 	 * @param oldSkill skill to be removed
-	 * @return Successful completion of operation
 	 */
 	public void removeSkill(Skill oldSkill) {
 		if (!this.skills.contains(oldSkill)) {
@@ -302,6 +305,10 @@ public class Person implements Conditioned, Inventoried{
 		return name;
 	}
 	
+	/**
+	 * Sets the name of the person
+	 * @param name The name of the person
+	 */
 	public void setName(String name) {
 		this.name = name;
 		Logger.log("Name changed to " + name, Logger.Level.INFO);
@@ -382,7 +389,6 @@ public class Person implements Conditioned, Inventoried{
 	/**
 	 * Decreases health by amount
 	 * @param amount The amount
-	 * @return True if successful
 	 */
 	public void decreaseHealth(int amount) {
 		health.decrease(amount);
@@ -391,7 +397,6 @@ public class Person implements Conditioned, Inventoried{
 	/**
 	 * Increases health by amount
 	 * @param amount The amount
-	 * @return True if successful
 	 */
 	public void increaseHealth(int amount) {
 		health.increase(amount);

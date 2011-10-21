@@ -47,7 +47,7 @@ public class Player {
 	
 	/**
 	 * String representation of the player.
-	 * return the string
+	 * @return the string
 	 */
 	public String toString() {
 		return party.toString();

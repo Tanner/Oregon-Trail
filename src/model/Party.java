@@ -11,6 +11,7 @@ import core.Logger.Level;
 
 /**
  * Party class that contains an array of persons that are members.
+ * @author Null && Void
  */
 public class Party implements HUDDataSource {
 	
@@ -109,7 +110,7 @@ public class Party implements HUDDataSource {
 	/**
 	 * If people are present before party is created, this constructor is used
 	 * @param currentPace The current pace of the party
-	 * @param rations The current rations of the party
+	 * @param currentRations The current rations of the party
 	 * @param party Array of people to be initialized into party
 	 */
 	public Party(Pace currentPace, Rations currentRations, List<Person> party) {
@@ -144,7 +145,6 @@ public class Party implements HUDDataSource {
 	 * Buys the item (pays for it) and then gives it to the designated buyer.
 	 * @param items The items to buy
 	 * @param buyer The thing that wants the items in its inventory
-	 * @return True if successful
 	 */
 	public void buyItemForInventory(List<Item> items, Inventoried buyer) {
 		int cost = 0;
@@ -167,7 +167,7 @@ public class Party implements HUDDataSource {
 	/**
 	 * Returns a list of inventoried things that can but the designated items.
 	 * @param itemType The item type that is being tested
-	 * @numberOf The number of items to try with
+	 * @param numberOf The number of items to try with
 	 * @return The list of people
 	 */
 	public List<Inventoried> canGetItem(Item.ITEM_TYPE itemType, int numberOf) {

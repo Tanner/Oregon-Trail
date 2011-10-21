@@ -6,6 +6,7 @@ import core.Logger;
  * A condition with a min and max value and also a current value.
  */
 public class Condition {
+
 	private int min, max, current;
 	
 	/**

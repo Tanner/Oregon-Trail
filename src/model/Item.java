@@ -86,7 +86,6 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * Increases the item's status by a specific amount. 
 	 * Returns false if the increase fails.
 	 * @param amount The amount by which to increase the status
-	 * @return True if successful, false otherwise
 	 */
 	public void increaseStatus(int amount) {
 		status.increase(amount);
@@ -99,7 +98,6 @@ public abstract class Item implements Conditioned, Comparable<Item>{
 	 * Decreases the item's status by a specific amount.  
 	 * Returns false if the decrease fails.
 	 * @param amount The amount by which to decrease the status
-	 * @return True if successful, false otherwise
 	 */
 	public void decreaseStatus(int amount) {
 		status.decrease(amount);

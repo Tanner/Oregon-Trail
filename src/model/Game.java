@@ -6,7 +6,9 @@ import core.Logger;
  * Holds all game data.
  */
 public class Game {
+	
 	private final Player player;
+	
 	private final WorldMap worldMap;
 	
 	/**

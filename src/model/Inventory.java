@@ -104,7 +104,6 @@ public class Inventory {
 	/**
 	 * Adds the item to the inventory.
 	 * @param itemsToAdd The items to add
-	 * @return True if successful, false otherwise
 	 */
 	public void addItem(List<Item> itemsToAdd) {
 		if(itemsToAdd.size() == 0) {

@@ -2,6 +2,11 @@ package model;
 
 import java.util.List;
 
+/**
+ * Interface for objects with inventories
+ * @author Null && Void
+ *
+ */
 public interface Inventoried {
 	
 	/**
