@@ -9,6 +9,10 @@ import model.Item;
  *
  */
 public class Meat extends Item {
+	
+	/**
+	 * Makes meat
+	 */
 	public Meat() {
 		super(ConstantStore.get("ITEMS", "MEAT_NAME"), 
 			  ConstantStore.get("ITEMS", "MEAT_DESCRIPTION"), new Condition(100),

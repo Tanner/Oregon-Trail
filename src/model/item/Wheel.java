@@ -11,6 +11,9 @@ import core.ConstantStore;
  */
 public class Wheel extends Item {
 
+	/**
+	 * Makes a wheel
+	 */
 	public Wheel() {
 		super(ConstantStore.get("ITEMS", "WHEEL_NAME"), 
 			  ConstantStore.get("ITEMS", "WHEEL_DESCRIPTION"), new Condition(100),

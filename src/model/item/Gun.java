@@ -9,6 +9,10 @@ import model.Item;
  *
  */
 public class Gun extends Item {
+	
+	/**
+	 * Makes a gun
+	 */
 	public Gun() {
 		super(ConstantStore.get("ITEMS", "GUN_NAME"), 
 			  ConstantStore.get("ITEMS", "GUN_DESCRIPTION"), new Condition(100),

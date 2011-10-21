@@ -9,6 +9,10 @@ import model.Item;
  *
  */
 public class Bullet extends Item {
+	
+	/**
+	 * Makes a bullet
+	 */
 	public Bullet() {
 		super(ConstantStore.get("ITEMS", "BULLET_NAME"), 
 			  ConstantStore.get("ITEMS", "BULLET_DESCRIPTION"), new Condition(100),

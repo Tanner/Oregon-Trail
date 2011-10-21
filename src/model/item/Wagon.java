@@ -11,6 +11,10 @@ import model.Item;
  */
 
 public class Wagon extends Vehicle {
+	
+	/**
+	 * Makes a wagon
+	 */
 	public Wagon() {
 		super(ConstantStore.get("ITEMS", "WAGON_NAME"),
 				ConstantStore.get("ITEMS", "WAGON_DESCRIPTION"), new Condition(100), 2000,

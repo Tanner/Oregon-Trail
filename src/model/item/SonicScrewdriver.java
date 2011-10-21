@@ -9,6 +9,10 @@ import core.ConstantStore;
  *
  */
 public class SonicScrewdriver extends Item {
+	
+	/**
+	 * Makes a sonic
+	 */
 	public SonicScrewdriver() {
 			super(ConstantStore.get("ITEMS", "SONIC_NAME"), 
 				  ConstantStore.get("ITEMS", "SONIC_DESCRIPTION"), new Condition(100),
