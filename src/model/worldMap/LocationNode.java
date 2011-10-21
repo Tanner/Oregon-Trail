@@ -11,21 +11,27 @@ public class LocationNode {
 	public final int LOCATION_INDEX;
 	private static int indexCount;
 	
-
-	private String townName;
+	private String locationName;
 	private List<TrailEdge> outBoundTrails;
 	
 	
-	public LocationNode(int Latitude, int Longitude){
+	public LocationNode(int Latitude, int Longitude, int trails){
 		LOCATION_INDEX = LocationNode.indexCount++;
 		//until we can get a nice source for lat and long data
 		WORLD_LATITUDE = Latitude;
 		WORLD_LONGITUDE = Longitude;
 		
-		townName = "Town " + new Integer(LOCATION_INDEX).toString();
+		locationName = "Location " + new Integer(LOCATION_INDEX).toString();
 
-		outBoundTrails = new ArrayList<TrailEdge>();
+		outBoundTrails = new ArrayList<TrailEdge>(trails);
 	}
 
+	/**
+	 * returns the string representation of this location
+	 */
+	public String toString(){
+		
+		return this.locationName;
+	}
 	
 }
