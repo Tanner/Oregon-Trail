@@ -9,14 +9,7 @@ import scene.*;
 import scene.test.*;
 
 import model.*;
-import model.item.Apple;
-import model.item.Bread;
-import model.item.Bullet;
-import model.item.Gun;
-import model.item.Meat;
-import model.item.SonicScrewdriver;
 import model.item.Wagon;
-import model.item.Wheel;
 
 /**
  * Directs the logical functionality of the game. Sets everything in motion.
@@ -126,32 +119,32 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		Inventory inv = storeInventory;
 		ArrayList<Item> itemToAdd = new ArrayList<Item>();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Apple());
+			itemToAdd.add(new Item(Item.ITEM_TYPE.APPLE));
 		}
 		inv.addItem(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Bread());
+			itemToAdd.add(new Item(Item.ITEM_TYPE.BREAD));
 		}
 		inv.addItem(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Bullet());
+			itemToAdd.add(new Item(Item.ITEM_TYPE.BULLET));
 		}
 		inv.addItem(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Gun());
+			itemToAdd.add(new Item(Item.ITEM_TYPE.GUN));
 		}
 		inv.addItem(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Meat());
+			itemToAdd.add(new Item(Item.ITEM_TYPE.MEAT));
 		}
 		inv.addItem(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new SonicScrewdriver());
+			itemToAdd.add(new Item(Item.ITEM_TYPE.SONIC));
 		}
 		inv.addItem(itemToAdd);
 		itemToAdd.clear();
@@ -161,7 +154,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		inv.addItem(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Wheel());
+			itemToAdd.add(new Item(Item.ITEM_TYPE.WHEEL));
 		}
 		inv.addItem(itemToAdd);
 	}
