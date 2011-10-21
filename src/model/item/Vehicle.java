@@ -27,20 +27,12 @@ public abstract class Vehicle extends Item implements Inventoried{
 
 	/**
 	 * Makes a vehicle to be used to get to oregon
-	 * @param name what this vehicle is to be called
-	 * @param description what kind of vehicle this is
-	 * @param status what is the condition of this vehicle
-	 * @param maxWeight how much can this vehicle hold
-	 * @param weight how much this vehicle is currently carrying
-	 * @param cost how much this vehicle costs purchase  
 	 * @param type The type of vehicle
 	 */
-	public Vehicle(String name, String description, Condition status, 
-			double maxWeight, double weight,
-			int cost, Item.ITEM_TYPE type) {
-	super(name, description, status, weight, cost, type);
+	public Vehicle(double maxWeight, Item.ITEM_TYPE type) {
+		super(type);
+		this.status = new Condition(100);
 		this.MAX_INVENTORY_WEIGHT = maxWeight;
-		this.status = status;
 		this.cargo = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);
 	}
 	

@@ -7,7 +7,8 @@ import java.util.PriorityQueue;
 import core.Logger;
 
 /**
- * Inventory with an ArrayList that holds all the arrayLists of items in the inventory.
+ * Inventory with an list that holds all the arrayLists of items in the inventory.
+ * @author Null && Void
  */
 public class Inventory {
 	
@@ -216,11 +217,11 @@ public class Inventory {
 	 */
 	public String toString() {
 		final List<Item.ITEM_TYPE> popSlots = getPopulatedSlots();
-		String str = "Size: " + popSlots.size() + ". ";
+		StringBuffer str = new StringBuffer("Size: " + popSlots.size() + ". ");
 		for(Item.ITEM_TYPE itemType : popSlots) {
-			str += " # of " + itemType.getName() + "s: " + getNumberOf(itemType);
+			str.append(" # of " + itemType.getName() + "s: " + getNumberOf(itemType));
 		}
 				
-		return str;
+		return str.toString();
 	}
 }

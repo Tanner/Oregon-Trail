@@ -125,7 +125,7 @@ public class Party implements HUDDataSource {
 		this.currentRations = currentRations;
 		this.location = 0;
 		
-		String partyCreationLog = members.size() + " members were created successfully: ";
+		StringBuffer partyCreationLog = new StringBuffer(members.size() + " members were created successfully: ");
 		for (Person person : party) {
 			this.money += person.getProfession().getMoney();
 			Logger.log(person.getName() + " as a " + 
@@ -133,9 +133,9 @@ public class Party implements HUDDataSource {
 					person.getProfession().getMoney() + 
 					" to the party.", Logger.Level.INFO);
 
-			partyCreationLog += person.getName() + " ";
+			partyCreationLog.append(person.getName() + " ");
 		}
-		Logger.log(partyCreationLog, Logger.Level.INFO);
+		Logger.log(partyCreationLog.toString(), Logger.Level.INFO);
 		Logger.log("Party starting money is: $" + money, Logger.Level.INFO);
 		Logger.log("Current pace is: " + this.currentPace + 
 				" and current rations is: " + this.currentRations, Level.INFO);
@@ -287,12 +287,12 @@ public class Party implements HUDDataSource {
 	
 	@Override
 	public String toString() {
-		String str = "Members: ";
+		StringBuffer str = new StringBuffer("Members: ");
 		for (Person person : members) {
-			str += person.toString() + "; ";
+			str.append(person.toString() + "; ");
 		}
-		str += "Money remaining:" + money;
-		return str;
+		str.append("Money remaining:" + money);
+		return str.toString();
 	}
 	
 	/**

@@ -4,6 +4,7 @@ import core.Logger;
 
 /**
  * A condition with a min and max value and also a current value.
+ * @author Null && Void
  */
 public class Condition {
 

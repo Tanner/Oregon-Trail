@@ -10,7 +10,7 @@ import core.Logger;
  * as their name, and what their profession is called.
  * @author Null && Void
  */
-public class Person implements Conditioned, Inventoried{
+public class Person implements Conditioned, Inventoried {
 	
 	private final Condition skillPoints;
 	
@@ -324,15 +324,15 @@ public class Person implements Conditioned, Inventoried{
 
 	@Override
 	public String toString() {
-		String str = "Name: " + name;
+		StringBuffer str = new StringBuffer("Name: " + name);
 		if(profession != null) {
-			 str += ", Profession: " + profession.getName();
+			 str.append(", Profession: " + profession.getName());
 		}
 		for(Skill skill : skills) {
-			str += ", Skill: " + skill.getName();
+			str.append(", Skill: " + skill.getName());
 		}
-		str+= (isMale ? ", Gender: Male" : ", Gender: Female");
-		return str;
+		str.append((isMale ? ", Gender: Male" : ", Gender: Female"));
+		return str.toString();
 	}
 	
 	/**

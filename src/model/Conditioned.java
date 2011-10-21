@@ -3,6 +3,7 @@ package model;
 /**
  * Interface to ensure that something with a condition can 
  * have the percentage gotten for a progress bar.
+ * @author Null && Void
  */
 public interface Conditioned {
 
