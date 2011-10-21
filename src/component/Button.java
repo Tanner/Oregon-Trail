@@ -99,6 +99,19 @@ public class Button extends Component implements Disableable {
 	}
 	
 	@Override
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		if (!isVisible() || !isAcceptingInput()) {
+			return;
+		}
+		
+		super.mouseMoved(oldx, oldy, newx, newy);
+		
+		if (isMouseOver()) {
+			Scene.showTooltip(newx, newy, this, label.getText());
+		}
+	}
+	
+	@Override
 	public void mousePressed(int button, int mx, int my) {
 		if (!isVisible() || !isAcceptingInput()) {
 			return;
@@ -119,9 +132,7 @@ public class Button extends Component implements Disableable {
 		}
 		
 		super.mouseReleased(button, mx, my);
-		
-		Scene.showTooltip(mx, my, this, "foo");
-		
+				
  		if (button == 0 && isMouseOver() && !disabled && active) {
 			notifyListeners();
 			input.consumeEvent();

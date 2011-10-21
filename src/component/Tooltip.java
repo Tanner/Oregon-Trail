@@ -16,11 +16,16 @@ public class Tooltip extends Component {
 		
 		Label label = new Label(context, width, height, GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD), Color.white, message);
 		add(label, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
-		
+				
 		setBackgroundColor(Color.black);
 	}
 	
 	public Component getOwner() {
 		return owner;
+	}
+	
+	@Override
+	public boolean isVisible() {
+		return true;
 	}
 }
