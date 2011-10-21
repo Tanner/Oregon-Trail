@@ -154,6 +154,9 @@ public class SceneSelectorScene extends Scene {
 			}
 		}
 		
+		/**
+		 * Warn the user that they need a party to continnue.
+		 */
 		private void warnBecauseNoParty() {
 			showModal((new Modal(container, SceneSelectorScene.this, ConstantStore.get("SCENE_SELECTOR_SCENE", "ERR_NO_PARTY_FOR_SCENE"), ConstantStore.get("GENERAL", "OK"))));
 		}
@@ -173,22 +176,27 @@ public class SceneSelectorScene extends Scene {
 		people.add(new Person("Carl"));
 		people.add(new Person("Diane"));
 		
-		for(Person person : people) {
+		for (Person person : people) {
 			ArrayList<Person.Skill> personSkill = new ArrayList<Person.Skill>();
 			person.setProfession(Person.Profession.values()[random.nextInt(Person.Profession.values().length)]);
 	
 			int skillPoints = 0;
-			for (Person.Skill tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];
-			tempSkill != Person.Skill.NONE && personSkill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120; 
-			tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)]) {
-				if(!personSkill.contains(tempSkill)){
+			
+			// Randomly assign some skills
+			Person.Skill tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];
+			while (tempSkill != Person.Skill.NONE && personSkill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120) {
+				if (!personSkill.contains(tempSkill)) {
 					personSkill.add(tempSkill);
 					skillPoints += tempSkill.getCost();
 				}
+				
+				tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];
 			}
-			for(Person.Skill skill : personSkill) {
+			
+			for (Person.Skill skill : personSkill) {
 				person.addSkill(skill);
 			}
+			
 			Wheel wheel = new Wheel();
 			ArrayList<Item> itemsToAdd = new ArrayList<Item>();
 			wheel.decreaseStatus(random.nextInt(100));
@@ -208,24 +216,12 @@ public class SceneSelectorScene extends Scene {
 				itemsToAdd.add(bread);
 				person.addItemsToInventory(itemsToAdd);
 			}
-//			
-//			Apple apple = new Apple(1);
-//			person.addToInventory(apple);
 			
-			//randomly hurt party members
+			// Randomly hurt party members
 			person.decreaseHealth(random.nextInt(100));
 		}
 		
 		Vehicle vehicle = new Wagon();
-//		for (int i = 0; i < vehicle.getInventory().getMaxSize() - 5; i++) {
-//			Item sonic = new SonicScrewdriver(1);
-//			sonic.decreaseStatus(random.nextInt(100));
-//			vehicle.addToInventory(sonic);
-//		}
-		
-//		for (int i = 0; i < 5; i++) {
-//			vehicle.addToInventory(new SonicScrewdriver(i));
-//		}
 		vehicle.addItemToInventory(new Bread());
 		
 		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];
