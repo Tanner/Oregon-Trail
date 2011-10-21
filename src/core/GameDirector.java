@@ -107,6 +107,8 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 			return new TrailTestScene(game.getPlayer().getParty());
 		case HUNT :
 			return new HuntScene(game.getPlayer().getParty());
+		case TRAIL :
+			return new TrailScene(game.getPlayer().getParty());
 		}
 		
 		return null;
@@ -195,6 +197,9 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		} else if (id == SceneID.HUNT) {
 			//Requested Hunt scene
 			newScene = new HuntScene(game.getPlayer().getParty());
+		} else if (id == SceneID.TRAIL) {
+			//Requested Trail scene
+			newScene = new TrailScene(game.getPlayer().getParty());
 		}
 		
 		if (newScene != null) {
