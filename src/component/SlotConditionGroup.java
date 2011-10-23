@@ -10,6 +10,8 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
+import core.ConstantStore;
+
 /**
  * A group consisting of a {@code CountingButton} and {@code ConditionBar}.
  * 
@@ -91,7 +93,7 @@ public class SlotConditionGroup extends ComponentConditionGroup<Counter> {
 		this.currentMode = currentMode;
 		
 		if (currentMode == Mode.TRANSFER) {
-			component.setText("Free");
+			component.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "FREE"));
 			component.setHideCount(true);
 			component.setDisabled(false);
 			
