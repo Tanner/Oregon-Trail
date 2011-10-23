@@ -1,7 +1,5 @@
 package model.datasource;
 
-import model.Condition;
-
 /**
  * Data Source for the {@code HUD}
  * 
@@ -10,14 +8,8 @@ import model.Condition;
  */
 public interface HUDDataSource {
 	/**
-	 * Get the overall {@code Party} health as far as {@code Person} go.
-	 * @return Overall condition health for party members
+	 * Returns the money
+	 * @return the party's money
 	 */
-	Condition getPartyMembersHealth();
-	
-	/**
-	 * Get the status for the {@code Vehicle}.
-	 * @return Condition of the vehicle
-	 */
-	Condition getVehicleStatus();
+	public int getMoney();
 }
