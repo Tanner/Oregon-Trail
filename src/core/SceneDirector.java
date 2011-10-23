@@ -36,6 +36,13 @@ public class SceneDirector extends StateBasedGame {
 	 * @param animated Boolean value whether to animate transition
 	 */
 	public void pushScene(Scene scene, boolean animated, Transition transitionOut, Transition transitionIn) {
+		// Don't add a Scene if there's already a Scene on the stack of the same type
+		for (Scene sceneOnStack : scenes) {
+			if (sceneOnStack.getID() == scene.getID()) {
+				return;
+			}
+		}
+		
 		if (scenes.size() > 0) {
 			scenes.peek().pause();
 		}
