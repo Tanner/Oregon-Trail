@@ -91,7 +91,7 @@ public class HUD extends Component {
 	 * @param money Amount of money to display
 	 */
 	public void setMoney(int money) {
-		moneyLabel.setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + money);
+		moneyLabel.setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", money));
 	}
 	
 	/**
