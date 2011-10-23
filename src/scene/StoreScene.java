@@ -28,7 +28,7 @@ public class StoreScene extends Scene {
 	private final int PADDING = 20;
 	private final int WIDE_PADDING = PADDING * 2;
 	private final int BUTTON_WIDTH = 260;
-	private final int BUTTON_HEIGHT = 45;
+	private final int REGULAR_BUTTON_HEIGHT = 30;
 	private final int INVENTORY_BUTTON_WIDTH = 130;
 	private final int INVENTORY_BUTTON_HEIGHT = 90;
 	private final Color BACKGROUND_COLOR = new Color(0x0C5DA5);
@@ -73,11 +73,11 @@ public class StoreScene extends Scene {
 		
 		mainLayer.add(partyMoney, storeInventoryButtons.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
 
-		mainLayer.add(textPanel, storeInventoryButtons.getPosition(ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.TOPLEFT, WIDE_PADDING, 0);
+		mainLayer.add(textPanel, mainLayer.getPosition(ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.TOPRIGHT, -PADDING, PADDING);
 		textPanel.addAsColumn(itemDescription, textPanel.getPosition(ReferencePoint.TOPLEFT), PADDING, PADDING, PADDING);
 		
-		mainLayer.add(clearButton, textPanel.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
-		mainLayer.add(buyButton, clearButton.getPosition(ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING / 2);
+		mainLayer.add(clearButton, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
+		mainLayer.add(buyButton, clearButton.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPRIGHT, -PADDING, 0);
 		
 		Vector2f cancelPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BOTTOMLEFT).getX(), buyButton.getPosition(ReferencePoint.TOPLEFT).getY());
 		Vector2f inventoryPos = new Vector2f(storeInventoryButtons.getPosition(ReferencePoint.BOTTOMRIGHT).getX(), buyButton.getPosition(ReferencePoint.TOPLEFT).getY());
@@ -184,6 +184,10 @@ public class StoreScene extends Scene {
 		List<Item.ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
 		buttonMap = new ArrayList<Item.ITEM_TYPE>();
 		
+		//Create money label
+		partyMoney = new Label(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, "Party's Money: $" + party.getMoney());
+		partyMoney.setAlignment(Label.Alignment.CENTER);
+		
 		storeInventory = new Counter[inventorySlots.size()];
 		for (int i = 0; i < inventorySlots.size(); i++) {
 			Item.ITEM_TYPE currentType = inventorySlots.get(i);
@@ -207,36 +211,24 @@ public class StoreScene extends Scene {
 			storeInventory[i].setCountUpOnLeftClick(false);
 			storeInventory[i].addListener(new InventoryListener(currentType));
 		}
-		storeInventoryButtons = new Panel(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, INVENTORY_BUTTON_HEIGHT * 4 + PADDING * 3);
 		
-		//Create money label
-		partyMoney = new Label(container, storeInventoryButtons.getWidth(), BUTTON_HEIGHT, fieldFont, Color.white, "Party's Money: $" + party.getMoney());
-		partyMoney.setAlignment(Label.Alignment.CENTER);
+		storeInventoryButtons = new Panel(container,
+				INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3,
+				container.getHeight() - REGULAR_BUTTON_HEIGHT - partyMoney.getHeight() - PADDING * 4);
 		
 		//Create cancel & inventory buttons
 		tempLabel = new Label(container, fieldFont, Color.white, "Leave");
-		cancelButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		cancelButton = new Button(container, BUTTON_WIDTH, REGULAR_BUTTON_HEIGHT, tempLabel);
 		cancelButton.addListener(new ButtonListener());
 		
 		tempLabel = new Label(container, fieldFont, Color.white, "Inventory");
-		inventoryButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		inventoryButton = new Button(container, BUTTON_WIDTH, REGULAR_BUTTON_HEIGHT, tempLabel);
 		inventoryButton.addListener(new ButtonListener());
-		
-		//Create clear & buy buttons
-		tempLabel = new Label(container, fieldFont, Color.white, "Clear");
-		clearButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
-		clearButton.addListener(new ButtonListener());
-		clearButton.setDisabled(true);
-		
-		tempLabel = new Label(container, fieldFont, Color.white, "Buy");
-		buyButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
-		buyButton.addListener(new ButtonListener());
-		buyButton.setDisabled(true);
 
 		//Create item description text labels
 		itemDescription = new Label[7];
 		
-		int textPanelWidth = mainLayer.getWidth() - (int) storeInventoryButtons.getPosition(ReferencePoint.TOPRIGHT).getX() - PADDING - WIDE_PADDING * 2;
+		int textPanelWidth = mainLayer.getWidth() - (int) storeInventoryButtons.getPosition(ReferencePoint.TOPRIGHT).getX() - PADDING * 3;
 		int textPanelLabelWidth = textPanelWidth - PADDING * 2;
 		itemDescription[0] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[0].setAlignment(Label.Alignment.CENTER);
@@ -248,7 +240,18 @@ public class StoreScene extends Scene {
 		itemDescription[4] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[5] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
 		itemDescription[6] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
-		textPanel = new Panel(container, textPanelWidth, storeInventoryButtons.getHeight(), TEXT_PANEL_COLOR);
+		textPanel = new Panel(container, textPanelWidth, container.getHeight() - REGULAR_BUTTON_HEIGHT - PADDING * 3, TEXT_PANEL_COLOR);
+		
+		//Create clear & buy buttons
+		tempLabel = new Label(container, fieldFont, Color.white, "Clear");
+		clearButton = new Button(container, textPanelWidth / 2 - PADDING / 2, REGULAR_BUTTON_HEIGHT, tempLabel);
+		clearButton.addListener(new ButtonListener());
+		clearButton.setDisabled(true);
+		
+		tempLabel = new Label(container, fieldFont, Color.white, "Buy");
+		buyButton = new Button(container, textPanelWidth / 2 - PADDING / 2, REGULAR_BUTTON_HEIGHT, tempLabel);
+		buyButton.addListener(new ButtonListener());
+		buyButton.setDisabled(true);
 	}
 	
 	/**
