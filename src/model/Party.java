@@ -307,7 +307,8 @@ public class Party implements HUDDataSource {
 	 * Steps the player forward through the game.
 	 * @return the distance travelled with the walk
 	 */
-	public int walk() {
+	public List<String> walk() {
+		List<String> messages = new ArrayList<String>();
 		location += 2 * getPace().getSpeed();
 		
 		final List<Person> deathList = new ArrayList<Person>();
@@ -322,9 +323,11 @@ public class Party implements HUDDataSource {
 			}
 		}
 		for (Person person : deathList) {
+			messages.add(person.getName() + " has died!");
 			members.remove(person);
 		}
-		return location;
+		messages.add("Current Distance travelled = " + location);
+		return messages;
 	}
 
 	/**

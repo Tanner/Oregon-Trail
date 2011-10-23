@@ -15,7 +15,9 @@ public class SceneLayer extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
+		g.setWorldClip(getX(), getY(), container.getWidth(), getHeight());
 		super.render(container, g);
+		g.clearWorldClip();
 		
 		g.translate(getX(), getY());
 	}

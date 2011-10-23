@@ -6,7 +6,12 @@ import java.util.Map;
 import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.state.transition.RotateTransition;
+import org.newdawn.slick.state.transition.Transition;
 
 import scene.*;
 import scene.test.*;
@@ -114,6 +119,8 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 			return new HuntScene(game.getPlayer().getParty());
 		case TRAIL :
 			return new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
+		case GAMEOVER :
+			return new GameOverScene();
 		}
 		
 		return null;
@@ -172,10 +179,17 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	@Override
 	public void requestScene(SceneID id, Scene lastScene) {
 		Scene newScene = null;
+		Transition outTransition = null;
+		Transition inTransition = null;
+		
 		if (id == SceneID.SCENESELECTOR) {
-			// Requested scene selector
-			newScene = new SceneSelectorScene(game.getPlayer());
-		} else if (lastScene instanceof MainMenuScene) {
+			newScene = sceneForSceneID(id);
+		} else if (id == SceneID.GAMEOVER) {
+			newScene = sceneForSceneID(id);
+			inTransition = new RotateTransition(Color.black);
+		}
+		
+		else if (lastScene instanceof MainMenuScene) {
 			// Last scene was Main Menu Scene
 			if (id == SceneID.PARTYCREATION) {
 				// Requested Party Creation Scene
@@ -208,8 +222,14 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		}
 		
 		if (newScene != null) {
-			// If scene was actually created
-			sceneDirector.pushScene(newScene, true);
+			if (outTransition == null) {
+				outTransition = new FadeOutTransition(Color.black);
+			}
+			if (inTransition == null) {
+				inTransition = new FadeInTransition(Color.black);
+			}
+			
+			sceneDirector.pushScene(newScene, true, outTransition, inTransition);
 		}
 	}
 	
@@ -223,7 +243,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		
 		sceneDirector.popScene(true);
 		if (newScene != null) {
-			sceneDirector.pushScene(newScene, true);
+			sceneDirector.pushScene(newScene, true, null, null);
 		}
 	}
 	
@@ -264,9 +284,9 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	 */
 	private int getProbability(SceneID scene) {
 		if (scene == SceneID.STORE) {
-			return random.nextInt(10);
+			return random.nextInt(10) + 10;
 		} else if (scene == SceneID.PARTYINVENTORY) {
-			return random.nextInt(10);
+			return random.nextInt(10) + 10;
 		} else {
 			return random.nextInt(50) + 50;
 		}

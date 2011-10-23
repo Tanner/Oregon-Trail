@@ -35,7 +35,7 @@ public class SceneDirector extends StateBasedGame {
 	 * @param scene {@code Scene} to present
 	 * @param animated Boolean value whether to animate transition
 	 */
-	public void pushScene(Scene scene, boolean animated) {
+	public void pushScene(Scene scene, boolean animated, Transition transitionOut, Transition transitionIn) {
 		if (scenes.size() > 0) {
 			scenes.peek().pause();
 		}
@@ -49,7 +49,7 @@ public class SceneDirector extends StateBasedGame {
 		}
 		
 		if (animated) {
-			enterState(scenes.peek().getID(), new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+			enterState(scenes.peek().getID(), transitionOut, transitionIn);
 		} else {
 			enterState(scenes.peek().getID());
 		}
@@ -83,7 +83,7 @@ public class SceneDirector extends StateBasedGame {
 	 */
 	public void replaceStackWithScene(Scene scene) {
 		scenes.removeAllElements();
-		pushScene(scene, false);
+		pushScene(scene, false, null, null);
 	}
 	
 	@Override
