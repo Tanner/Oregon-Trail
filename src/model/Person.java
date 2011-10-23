@@ -425,4 +425,9 @@ public class Person implements Conditioned, Inventoried {
 	public double getWeight() {
 		return inventory.getWeight();
 	}
+
+	public void increaseSkillPoints(int amount) {
+		skillPoints.increase(amount);
+		
+	}
 }

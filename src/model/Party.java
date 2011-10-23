@@ -27,7 +27,7 @@ public class Party implements HUDDataSource {
 	
 	private int location;
 
-	private List<Animal> animals;
+	private List<Animal> animals =  new ArrayList<Animal>();
 	
 	/**
 	 * 
@@ -316,6 +316,7 @@ public class Party implements HUDDataSource {
 		
 		final List<Person> deathList = new ArrayList<Person>();
 		for (Person person : members) {
+			person.increaseSkillPoints((int) (getPace().getSpeed() / 10));
 			healToBreakpoint(person);
 			person.decreaseHealth(getPace().getSpeed());
 			Logger.log(checkHungerStatus(person), Logger.Level.INFO);
@@ -325,9 +326,23 @@ public class Party implements HUDDataSource {
 				healToBreakpoint(person);
 			}
 		}
+		List<Animal> slaughterHouse = new ArrayList<Animal>();
+		for (Animal animal : animals) {
+			feedAnimal(animal);
+			animal.decreaseStatus(getPace().getSpeed());
+			if(animal.getStatus().getCurrent() == 0) {
+				vehicle.addItemsToInventory(animal.killForFood());
+				slaughterHouse.add(animal);
+			} else {
+				feedAnimal(animal);
+			}
+		}
 		for (Person person : deathList) {
 			messages.add(person.getName() + " has died!");
 			members.remove(person);
+		}
+		for (Animal animal : slaughterHouse) {
+			animals.remove(animal);
 		}
 		messages.add("Current Distance Travelled: " + String.format("%,d", location));
 		return messages;
@@ -336,7 +351,7 @@ public class Party implements HUDDataSource {
 	private double getMoveModifier() {
 		double moveModifier = 1;
 		for(Animal animal: getAnimals()) {
-			moveModifier += animal.getMoveFactor() / 10;
+			moveModifier += (double) animal.getMoveFactor() / 10;
 		}
 		return moveModifier;
 	}
@@ -423,6 +438,70 @@ public class Party implements HUDDataSource {
 				//we don't have enough status in the food to completely heal the person, so eat it all.
 				person.increaseHealth(food.getStatus().getCurrent() * foodFactor);
 				healToBreakpoint(person); //Recursively call the function to ensure we eat as much as possible.
+			}
+		}
+	}
+	
+	public void feedAnimal(Animal animal) {
+		// Figure out how much restoration is needed.
+		int restoreNeeded = 0;
+		
+		if (animal.getStatus().getCurrent() < getRations().getBreakpoint()) {
+			restoreNeeded = getRations().getBreakpoint() - 
+			animal.getStatus().getCurrent();
+		
+		}
+		
+		//See if there is feed available
+		boolean vehicleHasFood = false;
+		
+		for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
+			if (itemType.isPlant()) {
+					vehicleHasFood = true;
+			}
+		}
+		
+		Inventoried donator = vehicleHasFood ? vehicle : null;
+		
+		if (restoreNeeded > 0 && donator != null) {
+			//If we need restoration, and have food
+			Item.ITEM_TYPE firstFood = null;
+			final List<Item.ITEM_TYPE> typeList = 
+				donator.getInventory().getPopulatedSlots();
+			
+			for (Item.ITEM_TYPE itemType : typeList) {
+				if (itemType.isFood() && firstFood == null) {
+					firstFood = itemType;
+				}
+			}
+			
+			final List<Item> foodList = 
+				donator.removeItemFromInventory(firstFood, 1);
+			
+			final Item food = foodList.get(0);
+			int foodFactor = food.getType().getFoodFactor() * 3;
+			
+			//Do some handling for party member skills, such as cooking
+			if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
+				foodFactor += 3;
+			}
+			if(getSkills().contains(Person.Skill.COOKING)) {
+				foodFactor += 3;
+			}
+
+			final int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
+			
+			if (food.getStatus().getCurrent() > foodToEat) {
+				//If there is enough condition in the food to feed the person completely, heal them and eat
+				
+				animal.increaseStatus(foodToEat * foodFactor);
+				food.decreaseStatus(foodToEat);
+				donator.addItemToInventory(food); //puts the item back in inventory
+				//Food status down, person health up
+			} else {
+				//we don't have enough status in the food to completely heal the person, so eat it all.
+				animal.increaseStatus(food.getStatus().getCurrent() * foodFactor);
+				feedAnimal(animal); //Recursively call the function to ensure we eat as much as possible.
 			}
 		}
 	}
