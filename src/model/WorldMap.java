@@ -55,8 +55,30 @@ public class WorldMap {
 	}
 
 	
-	private void generateLocationNode(){
+	private LocationNode generateLocationNode(Random mapRand, int curRank, int numExitTrails){
 		
+		
+		int tmpZ =  mapRand.nextInt(MAX_X/MAX_RANK) - (MAX_X/(2 * MAX_RANK));
+		int tmpX = MAX_X - (((MAX_X/MAX_RANK) * (curRank)) + tmpZ);
+		while(tmpX < 10){
+			tmpX += mapRand.nextInt(MAX_X/MAX_RANK);
+			}
+		while(tmpX > MAX_X){
+			tmpX -= mapRand.nextInt(MAX_X/MAX_RANK);
+			}
+			//derive y coord of this location on map - should give some range of y between MAX_Y and 0
+			//MAX_Y/MAX_RANK divies y up into maxrank pieces
+			//mapRand of MAXRANK finds the correct general "rank zone"
+			// final component : (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK)) determines offset within zone
+		tmpZ =  mapRand.nextInt(MAX_Y/MAX_RANK) - (MAX_Y/(2 * MAX_RANK));
+		int tmpY = MAX_Y - (((MAX_Y/MAX_RANK) *  (curRank)) + tmpZ);			
+		while(tmpY > MAX_Y){
+			tmpY -= mapRand.nextInt(MAX_Y/MAX_RANK);
+			}
+
+		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
+		LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, curRank);
+		return tempNode;
 		
 	}
 	/**
@@ -90,24 +112,8 @@ public class WorldMap {
 		
 		//need to build base set of nodes - must have at least 1 per rank to get from independence to portland
 		for (int i = 1; i < MAX_RANK; i++){
-
-			int tmpZ =  mapRand.nextInt(MAX_X/MAX_RANK) - (MAX_X/(2 * MAX_RANK));
-			int tmpX = MAX_X - (((MAX_X/MAX_RANK) * (i)) + tmpZ);
-			while(tmpX < 10){
-				tmpX += mapRand.nextInt(MAX_X/MAX_RANK);
-				}
-			while(tmpX > MAX_X){
-				tmpX -= mapRand.nextInt(MAX_X/MAX_RANK);
-				}
-				//derive y coord of this location on map - should give some range of y between MAX_Y and 0
-				//MAX_Y/MAX_RANK divies y up into maxrank pieces
-				//mapRand of MAXRANK finds the correct general "rank zone"
-				// final component : (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK)) determines offset within zone
-			int tmpY = (MAX_Y/MAX_RANK) * (mapRand.nextInt(MAX_RANK)) + (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK));			
-
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
-			LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, i);
-			tempLocationStore.add(tempNode);
+			tempLocationStore.add(generateLocationNode(mapRand,i,numExitTrails));
 		}//for loop to build initial path
 		
 		//build rest of random map
@@ -115,30 +121,16 @@ public class WorldMap {
 			
 			int curRankIter = i % (MAX_RANK - 1);
 			int curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter-1 : curRankIter;
-				//derive x coord of this location on map - should give range of MAX_X to 0 in "clumps" clustered around MAX_X/MAX_RANK
-			int tmpZ =  mapRand.nextInt(MAX_X/2 * MAX_RANK) - (MAX_X/(MAX_RANK));
-			int tmpX = MAX_X - (((MAX_X/MAX_RANK) * (curRank)) + tmpZ);
-			while(tmpX < 10){
-				tmpX += mapRand.nextInt(MAX_X/MAX_RANK);
-				}
-			while(tmpX > MAX_X){
-				tmpX -= mapRand.nextInt(MAX_X/MAX_RANK);
-				}
-			//derive y coord of this location on map - should give some range of y between MAX_Y and 0
-			//MAX_Y/MAX_RANK divies y up into maxrank pieces
-			//mapRand of MAXRANK finds the correct general "rank zone"
-			// final component : (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK)) determines offset within zone
-			int tmpY = (MAX_Y/MAX_RANK) * (mapRand.nextInt(MAX_RANK)) + (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK));			
-	
 			//number of trails out of location : 1 to MaxTrailsOut constant
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
-			LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, curRank);
-			tempLocationStore.add(tempNode);	
+			tempLocationStore.add(generateLocationNode(mapRand,curRank,numExitTrails));
 		}//for all locations make a node
 		tempLocationStore.add(finalDestination);
 		for (int i = 0; i < tempLocationStore.size(); i++){
 			System.out.printf("%dth location : %s \n ", (i+1), tempLocationStore.get(i));
-			System.out.println(tempLocationStore.get(i).debugToString());
+			if (tempLocationStore.get(i).getRank() == 0){
+				System.out.println(tempLocationStore.get(i).debugToString());				
+			}
 			System.out.println();		
 		}//for loop to print out tempLocationStore
 	}
