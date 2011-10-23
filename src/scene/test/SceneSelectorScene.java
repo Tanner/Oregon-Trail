@@ -62,12 +62,12 @@ public class SceneSelectorScene extends Scene {
 		// Create all the buttons for the scenes
 		buttons = new ArrayList<Button>();
 		for (SceneID scene : scenes) {
-			buttons.add(new Button(container, width, height, new Label(container, fieldFont, Color.white, scene.getName())));
+			buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, scene.getName())));
 		}
 		
 		// Create extra function button
-		buttons.add(new Button(container, width, height, new Label(container, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "ADD_PARTY"))));
-		buttons.add(new Button(container, width, height, new Label(container, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))));
+		buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "ADD_PARTY"))));
+		buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))));
 		
 		// Add listeners to buttons and make an array
 		ButtonListener buttonListener = new ButtonListener();
