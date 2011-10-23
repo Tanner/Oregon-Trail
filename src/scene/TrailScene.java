@@ -74,7 +74,7 @@ public class TrailScene extends Scene {
 			GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this);
 
 			hud.updatePartyInformation();
-			hud.addNotification("Distance Travelled: " + String.format("%,d", party.getLocation()));
+			hud.addNotifications(notifications);
 		}
 		
 		if (timeElapsed % (STEP_WAIT_TIME / 2) < timeElapsed) {

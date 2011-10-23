@@ -1,6 +1,7 @@
 package component;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import model.datasource.HUDDataSource;
@@ -116,6 +117,16 @@ public class HUD extends Component {
 	 */
 	public void addNotification(String message) {
 		notificationQueue.add(message);
+	}
+
+	/**
+	 * Adds a bunch of notification onto the queue.
+	 * @param messages List of new messages to show
+	 */
+	public void addNotifications(List<String> messages) {
+		for (String message : messages) {
+			addNotification(message);
+		}
 	}
 	
 	/**
