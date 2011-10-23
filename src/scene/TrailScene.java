@@ -61,15 +61,16 @@ public class TrailScene extends Scene {
 		if (timeElapsed % STEP_WAIT_TIME < timeElapsed) {
 			timeElapsed = 0;
 
-			List<String> notifications = party.walk();
+			//List<String> notifications = party.walk();
+			party.walk();
 			if(party.getPartyMembers().isEmpty()) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this);
 			}
 			Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
 			GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this);
 
 			hud.updatePartyInformation();
-			hud.setNotification("Distance Travelled: " + String.format("%,d", distance));
+			hud.setNotification("Distance Travelled: " + String.format("%,d", party.getLocation()));
 		}
 	}
 	
