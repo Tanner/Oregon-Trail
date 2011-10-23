@@ -6,6 +6,8 @@ import model.RandomEncounterTable;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.gui.AbstractComponent;
+import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.HUD;
@@ -28,6 +30,8 @@ public class TrailScene extends Scene {
 	private Party party;
 	private RandomEncounterTable randomEncounterTable;
 	
+	private HUD hud;
+	
 	public TrailScene(Party party, RandomEncounterTable randomEncounterTable) {
 		this.party = party;
 		this.randomEncounterTable = randomEncounterTable;
@@ -42,7 +46,8 @@ public class TrailScene extends Scene {
 		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		backgroundLayer.add(trees, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 
-		showHUD(new HUD(container, party));
+		hud = new HUD(container, party, new HUDListener());
+		showHUD(hud);
 	}
 		
 	@Override
@@ -53,17 +58,28 @@ public class TrailScene extends Scene {
 		timeElapsed += delta;
 		if (timeElapsed % STEP_WAIT_TIME < timeElapsed) {
 			timeElapsed = 0;
+
 			distance = party.walk();
 			if(party.getPartyMembers().isEmpty()) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, this);
 			}
 			Logger.log("Current distance travelled = " + distance, Logger.Level.INFO);
 			GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this);
+
+			hud.updatePartyInformation();
+			hud.setNotification("Distance Travelled: "+distance);
 		}
 	}
 	
 	@Override
 	public int getID() {
 		return ID.ordinal();
+	}
+	
+	private class HUDListener implements ComponentListener {
+		@Override
+		public void componentActivated(AbstractComponent component) {
+			GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, TrailScene.this);
+		}
 	}
 }

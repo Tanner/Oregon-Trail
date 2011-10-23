@@ -426,34 +426,4 @@ public class Party implements HUDDataSource {
 			return null;
 		}
 	}
-
-	@Override
-	public Condition getPartyMembersHealth() {
-		int currentSum = 0;
-		int maxSum = 0;
-		int minSum = 0;
-		
-		if (members != null && members.size() > 0) {
-			for (Person person : members) {
-				Condition health = person.getHealth();
-				currentSum += health.getCurrent();
-				maxSum += health.getMax();
-				minSum += health.getMin();
-			}
-			
-			final int size = members.size();
-			return new Condition(minSum / size, maxSum / size, currentSum / size);
-		}
-		
-		return null;
-	}
-
-	@Override
-	public Condition getVehicleStatus() {
-		if (vehicle != null) {
-			return vehicle.getStatus();
-		}
-		
-		return null;
-	}
 }
