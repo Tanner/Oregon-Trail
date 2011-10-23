@@ -362,19 +362,17 @@ public class Person implements Conditioned, Inventoried {
 	
 	@Override
 	public void addItemsToInventory(List<Item> items) {
-		inventory.addItem(items);
+		inventory.addItemsToInventory(items);
 	}
 	
 	@Override
 	public void addItemToInventory(Item item) {
-		final List<Item> itemToAdd = new ArrayList<Item>();
-		itemToAdd.add(item);
-		inventory.addItem(itemToAdd);
+		inventory.addItemToInventory(item);
 	}
 
 	@Override
 	public List<Item> removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
-		return inventory.removeItem(itemIndex, quantity);
+		return inventory.removeItemFromInventory(itemIndex, quantity);
 	}
 	
 	/**
@@ -408,7 +406,7 @@ public class Person implements Conditioned, Inventoried {
 	
 	@Override
 	public boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
-		return inventory.canAddItems(itemType, numberOf);
+		return inventory.canGetItems(itemType, numberOf);
 	}
 
 	@Override

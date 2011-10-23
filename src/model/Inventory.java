@@ -12,7 +12,7 @@ import core.Logger;
 /**
  * Inventory with an list that holds all the arrayLists of items in the inventory.
  */
-public class Inventory {
+public class Inventory{
 	private final List<PriorityQueue<Item>> slots;
 	
 	private final int MAX_SIZE;
@@ -86,7 +86,7 @@ public class Inventory {
 	 * @param numberOf The number of items to test with
 	 * @return True if successful
 	 */
-	public boolean canAddItems(Item.ITEM_TYPE itemType, int numberOf) {
+	public boolean canGetItems(Item.ITEM_TYPE itemType, int numberOf) {
 		if(numberOf == 0) {
 			return false;
 		}
@@ -107,15 +107,15 @@ public class Inventory {
 	 * Adds the item to the inventory.
 	 * @param itemsToAdd The items to add
 	 */
-	public void addItem(List<Item> itemsToAdd) {
+	public void addItemsToInventory(List<Item> itemsToAdd) {
 		if(itemsToAdd.size() == 0) {
 			return;
 		}
 		final Item.ITEM_TYPE itemType = itemsToAdd.get(0).getType();
-		if(canAddItems(itemType, itemsToAdd.size())) {
+		if(canGetItems(itemType, itemsToAdd.size())) {
 			for(Item item : itemsToAdd) {
 				slots.get(itemType.ordinal()).add(item);
-				Logger.log(item.getName() + " added.", Logger.Level.INFO);
+				Logger.log(item.getName() + " added.", Logger.Level.DEBUG);
 			}
 			currentSize = 0;
 			for(PriorityQueue<Item> slot : slots) {
@@ -125,9 +125,15 @@ public class Inventory {
 			}
 			return;
 		} else {
-			Logger.log("Add item failed", Logger.Level.INFO);
+			Logger.log("Add item failed", Logger.Level.DEBUG);
 			return;
 		}
+	}
+		
+	public void addItemToInventory(Item item) {
+		final List<Item> itemToAdd = new ArrayList<Item>();
+		itemToAdd.add(item);
+		addItemsToInventory(itemToAdd);
 	}
 
 	/**
@@ -136,7 +142,7 @@ public class Inventory {
 	 * @param quantity The number of the item to remvove
 	 * @return The removed items.
 	 */
-	public List<Item> removeItem(Item.ITEM_TYPE itemType, int quantity) {
+	public List<Item> removeItemFromInventory(Item.ITEM_TYPE itemType, int quantity) {
 		List<Item> removedItems = new ArrayList<Item>();
 		final int itemIndex = itemType.ordinal();
 		if(slots.get(itemIndex).size() < quantity) {
@@ -249,5 +255,9 @@ public class Inventory {
 		}
 				
 		return str.toString();
+	}
+
+	public double getMaxWeight() {
+		return MAX_WEIGHT;
 	}
 }

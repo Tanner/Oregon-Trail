@@ -36,12 +36,6 @@ public interface Inventoried {
 	boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf);
 	
 	/**
-	 * The name of the inventoried person.
-	 * @return The name
-	 */
-	String getName();
-	
-	/**
 	 * The inventory of the inventoried person.
 	 * @return The inventory
 	 */
@@ -64,4 +58,10 @@ public interface Inventoried {
 	 * @return The max weight
 	 */
 	double getMaxWeight();
+	
+	/**
+	 * Returns the name of the inventoried person
+	 * @return the name
+	 */
+	String getName();
 }

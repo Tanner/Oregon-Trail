@@ -152,7 +152,7 @@ public class StoreScene extends Scene {
 		
 		if (modal == buyModal) {
 			if (cancelled) {
-				inv.addItem(currentPurchase);
+				inv.addItemsToInventory(currentPurchase);
 			} else {
 				int[] buyer = buyModal.getSegmentedControl().getSelection();
 				party.buyItemForInventory(currentPurchase, currentParty.get(buyer[0]));
@@ -294,7 +294,7 @@ public class StoreScene extends Scene {
 				//The player is able to buy the wagon
 				
 				party.setVehicle(new Wagon());
-				inv.removeItem(currentItem, 1);
+				inv.removeItemFromInventory(currentItem, 1);
 				party.setMoney(party.getMoney() - Item.ITEM_TYPE.WAGON.getCost());
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
 				updateLabels(currentItem);
@@ -321,7 +321,7 @@ public class StoreScene extends Scene {
 			return -1;
 		} else {
 			//Make the purchase
-			currentPurchase = inv.removeItem(currentItem, itemCount);
+			currentPurchase = inv.removeItemFromInventory(currentItem, itemCount);
 			
 			//Get a list of all the actual party members and vehicle if it exists
 			currentParty = new ArrayList<Inventoried>();

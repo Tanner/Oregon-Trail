@@ -1,6 +1,5 @@
 package model.item;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.Condition;
@@ -54,24 +53,22 @@ public class Vehicle extends Item implements Inventoried{
 	
 	@Override
 	public void addItemsToInventory(List<Item> items) {
-		cargo.addItem(items);
+		cargo.addItemsToInventory(items);
 	}
 	
 	@Override
 	public void addItemToInventory(Item item) {
-		final List<Item> itemToAdd = new ArrayList<Item>();
-		itemToAdd.add(item);
-		cargo.addItem(itemToAdd);
+		cargo.addItemToInventory(item);
 	}
 	
 	@Override
 	public List<Item> removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
-		return cargo.removeItem(itemIndex, quantity);
+		return cargo.removeItemFromInventory(itemIndex, quantity);
 	}
 	
 	@Override
 	public boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
-		return cargo.canAddItems(itemType, numberOf);
+		return cargo.canGetItems(itemType, numberOf);
 	}
 	
 	@Override

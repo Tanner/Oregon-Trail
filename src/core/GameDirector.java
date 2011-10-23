@@ -135,42 +135,42 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
 			itemToAdd.add(new Item(Item.ITEM_TYPE.APPLE));
 		}
-		inv.addItem(itemToAdd);
+		inv.addItemsToInventory(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
 			itemToAdd.add(new Item(Item.ITEM_TYPE.BREAD));
 		}
-		inv.addItem(itemToAdd);
+		inv.addItemsToInventory(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
 			itemToAdd.add(new Item(Item.ITEM_TYPE.AMMO));
 		}
-		inv.addItem(itemToAdd);
+		inv.addItemsToInventory(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
 			itemToAdd.add(new Item(Item.ITEM_TYPE.GUN));
 		}
-		inv.addItem(itemToAdd);
+		inv.addItemsToInventory(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
 			itemToAdd.add(new Item(Item.ITEM_TYPE.MEAT));
 		}
-		inv.addItem(itemToAdd);
+		inv.addItemsToInventory(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
 			itemToAdd.add(new Item(Item.ITEM_TYPE.SONIC));
 		}
-		inv.addItem(itemToAdd);
+		inv.addItemsToInventory(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
 			itemToAdd.add(new Wagon());
 		}
-		inv.addItem(itemToAdd);
+		inv.addItemsToInventory(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
 			itemToAdd.add(new Item(Item.ITEM_TYPE.WHEEL));
 		}
-		inv.addItem(itemToAdd);
+		inv.addItemsToInventory(itemToAdd);
 	}
 
 	/*----------------------

@@ -239,7 +239,7 @@ public class PartyInventoryScene extends Scene {
 	 */
 	public boolean canAddItemToBin(ITEM_TYPE item) {
 		for (int i = 0; i < binInventory.length; i++) {
-			if (!binInventory[i].canAddItems(item, 1)) {
+			if (!binInventory[i].canGetItems(item, 1)) {
 				return false;
 			}
 		}
@@ -256,7 +256,7 @@ public class PartyInventoryScene extends Scene {
 			
 			if (populated.size() > 0) {
 				ITEM_TYPE itemToRemove = populated.get(0);
-				List<Item> itemsRemoved = binInventory[i].removeItem(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
+				List<Item> itemsRemoved = binInventory[i].removeItemFromInventory(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
 				
 				if (i != party.getPartyMembers().size()) {
 					// If the item belongs to a person
@@ -321,7 +321,7 @@ public class PartyInventoryScene extends Scene {
 		
 		List<Item> items = new ArrayList<Item>();
 		for (int i = 0; i < binInventory.length; i++) {
-			items.addAll(binInventory[i].removeItem(itemType, binInventory[i].getNumberOf(itemType)));
+			items.addAll(binInventory[i].removeItemFromInventory(itemType, binInventory[i].getNumberOf(itemType)));
 		}
 		
 		return items;
@@ -368,7 +368,7 @@ public class PartyInventoryScene extends Scene {
 						return;
 					}
 					
-					storeInventory.addItem(items);
+					storeInventory.addItemsToInventory(items);
 					emptyBin();
 					
 					party.setMoney(party.getMoney() + items.size() * items.get(0).getCost());
@@ -438,7 +438,7 @@ public class PartyInventoryScene extends Scene {
 			// Also remove the item from the person's inventory
 			List<Item> itemsRemoved = ownerInventoryButtons.removeItemFromInventory(item, 1);
 			
-			binInventory[binInventoryIndex].addItem(itemsRemoved);
+			binInventory[binInventoryIndex].addItemsToInventory(itemsRemoved);
 			
 			updateBinButton();
 		}
