@@ -137,6 +137,30 @@ public class SceneSelectorScene extends Scene {
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.HUNT, SceneSelectorScene.this);
+			} else if (buttonText.equals(SceneID.TRAIL.getName())) {
+				// Trail
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;		
+				}
+				
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, SceneSelectorScene.this);
+			} else if (buttonText.equals(SceneID.PARTYMANAGEMENTSCENE.getName())) {
+				// Party Management Scene
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;		
+				}
+				
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, SceneSelectorScene.this);
+			} else if (buttonText.equals(SceneID.GAMEOVER.getName())) {
+				// Game Over
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;		
+				}
+				
+				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, SceneSelectorScene.this);
 			} else if (buttonText.equals(SceneID.COMPONENTTEST.getName())) {
 				// Component Test
 				GameDirector.sharedSceneListener().requestScene(SceneID.COMPONENTTEST, SceneSelectorScene.this);
@@ -148,25 +172,7 @@ public class SceneSelectorScene extends Scene {
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this);	
-			} else if (buttonText.equals(SceneID.TRAIL.getName())) {
-				// Trail Test
-				if (player.getParty() == null) {
-					warnBecauseNoParty();
-					return;		
-				}
-				
-				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, SceneSelectorScene.this);
-			} else if (buttonText.equals(SceneID.GAMEOVER.getName())) {
-				// Trail Test
-				if (player.getParty() == null) {
-					warnBecauseNoParty();
-					return;		
-				}
-				
-				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, SceneSelectorScene.this);
-			}
-			
-			else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))) {
+			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))) {
 				player.setParty(null);
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "ADD_PARTY"))) {
 				player.setParty(makeRandomParty());

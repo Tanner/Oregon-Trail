@@ -8,11 +8,12 @@ public enum SceneID {
 	PARTYINVENTORY ("Party Inventory"),
 	TOWN ("Town"),
 	HUNT ("Hunt"),
+	TRAIL ("Trail"),
+	PARTYMANAGEMENTSCENE ("Party Management"),
+	GAMEOVER ("Game Over"),
 	SCENESELECTOR ("Scene Selector"),
 	COMPONENTTEST ("Component Test"),
-	TRAILTEST ("Trail Test"),
-	TRAIL ("Trail"),
-	GAMEOVER ("Game Over");
+	TRAILTEST ("Trail Test");
 	
 	private final String name;
 	

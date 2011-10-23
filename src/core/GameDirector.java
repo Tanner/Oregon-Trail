@@ -1,6 +1,5 @@
 package core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +15,6 @@ import scene.*;
 import scene.test.*;
 
 import model.*;
-import model.item.Wagon;
 
 /**
  * Directs the logical functionality of the game. Sets everything in motion.
@@ -108,16 +106,18 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 			return new PartyInventoryScene(game.getPlayer().getParty());
 		case SCENESELECTOR:
 			return new SceneSelectorScene(game.getPlayer());
+		case HUNT:
+			return new HuntScene(game.getPlayer().getParty());
+		case TRAIL:
+			return new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
+		case PARTYMANAGEMENTSCENE:
+			return new PartyManagementScene(game.getPlayer().getParty());
+		case GAMEOVER:
+			return new GameOverScene();
 		case COMPONENTTEST:
 			return new ComponentTestScene();
 		case TRAILTEST:
 			return new TrailTestScene(game.getPlayer().getParty());
-		case HUNT :
-			return new HuntScene(game.getPlayer().getParty());
-		case TRAIL :
-			return new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
-		case GAMEOVER :
-			return new GameOverScene();
 		}
 		
 		return null;
@@ -137,9 +137,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		} else if (id == SceneID.GAMEOVER) {
 			newScene = sceneForSceneID(id);
 			inTransition = new RotateTransition(Color.black);
-		}
-		
-		else if (lastScene instanceof MainMenuScene) {
+		} else if (lastScene instanceof MainMenuScene) {
 			// Last scene was Main Menu Scene
 			if (id == SceneID.PARTYCREATION) {
 				// Requested Party Creation Scene
@@ -169,6 +167,9 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		} else if (id == SceneID.TRAIL) {
 			//Requested Trail scene
 			newScene = new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
+		} else if (id == SceneID.PARTYMANAGEMENTSCENE) {
+			//Requested Party Management Scene scene
+			newScene = new PartyManagementScene(game.getPlayer().getParty());
 		}
 		
 		if (newScene != null) {
