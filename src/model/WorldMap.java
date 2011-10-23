@@ -12,6 +12,8 @@ import java.util.Random;
  */
 public class WorldMap {
 
+	private final int TESTRANK = 1;  
+
 	/**weight of ranking assignment in random generator - 2 is 50 50 chance for same rank or next rank, higher numbers weight toward next rank*/
 	private final int RANK_WEIGHT = 3;  
 	/**maximum number of exiting trails each location can have*/
@@ -57,9 +59,9 @@ public class WorldMap {
 	
 	private LocationNode generateLocationNode(Random mapRand, int curRank, int numExitTrails){
 		
-		
+		//curRank = TESTRANK;
 		int tmpZ =  mapRand.nextInt(MAX_X/MAX_RANK) - (MAX_X/(2 * MAX_RANK));
-		int tmpX = MAX_X - (((MAX_X/MAX_RANK) * (curRank)) + tmpZ);
+		int tmpX = MAX_X - ((MAX_X/MAX_RANK) * (curRank) + tmpZ);
 		while(tmpX < 10){
 			tmpX += mapRand.nextInt(MAX_X/MAX_RANK);
 			}
@@ -71,7 +73,7 @@ public class WorldMap {
 			//mapRand of MAXRANK finds the correct general "rank zone"
 			// final component : (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK)) determines offset within zone
 		tmpZ =  mapRand.nextInt(MAX_Y/MAX_RANK) - (MAX_Y/(2 * MAX_RANK));
-		int tmpY = MAX_Y - (((MAX_Y/MAX_RANK) *  (curRank)) + tmpZ);			
+		int tmpY = MAX_Y - ((mapRand.nextInt(MAX_Y/MAX_RANK) ) * curRank + tmpZ);			
 		while(tmpY > MAX_Y){
 			tmpY -= mapRand.nextInt(MAX_Y/MAX_RANK);
 			}
@@ -119,7 +121,7 @@ public class WorldMap {
 		//build rest of random map
 		for(int i = MAX_RANK; i < numLocations-1; i++){
 			
-			int curRankIter = i % (MAX_RANK - 1);
+			int curRankIter = i % (MAX_RANK - 1) + 1;
 			int curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter-1 : curRankIter;
 			//number of trails out of location : 1 to MaxTrailsOut constant
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
@@ -128,9 +130,9 @@ public class WorldMap {
 		tempLocationStore.add(finalDestination);
 		for (int i = 0; i < tempLocationStore.size(); i++){
 			System.out.printf("%dth location : %s \n ", (i+1), tempLocationStore.get(i));
-			if (tempLocationStore.get(i).getRank() == 0){
+//			if (tempLocationStore.get(i).getRank() == TESTRANK){
 				System.out.println(tempLocationStore.get(i).debugToString());				
-			}
+//			}
 			System.out.println();		
 		}//for loop to print out tempLocationStore
 	}
