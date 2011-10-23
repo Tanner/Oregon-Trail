@@ -388,9 +388,11 @@ public class PartyInventoryScene extends Scene {
 				if (currentMode == Mode.NORMAL) {
 					currentMode = Mode.TRANSFER;
 					transferButton.setText(ConstantStore.get("GENERAL", "CANCEL"));
+					binButton.setDisabled(true);
 				} else {
 					currentMode = Mode.NORMAL;
 					transferButton.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
+					binButton.setDisabled(false);
 				}
 				
 				updateGraphics();
@@ -408,6 +410,10 @@ public class PartyInventoryScene extends Scene {
 	private class OwnerInventoryButtonsListener implements ItemListener {
 		@Override
 		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons, ITEM_TYPE item) {
+			if (currentMode == Mode.TRANSFER) {
+				return;
+			}
+			
 			// User wants to add items to the bin, check to see if the bin can hold it
 			if (!canAddItemToBin(item)) {
 				Logger.log("Bin cannot hold " + item + " at the moment", Logger.Level.INFO);
@@ -456,6 +462,7 @@ public class PartyInventoryScene extends Scene {
 				
 				// Reset everything
 				currentMode = Mode.NORMAL;
+				binButton.setDisabled(false);
 				transferButton.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
 				
 				updateGraphics();

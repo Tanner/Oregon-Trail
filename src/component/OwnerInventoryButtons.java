@@ -237,7 +237,7 @@ public class OwnerInventoryButtons {
 			
 			if (PartyInventoryScene.getCurrentMode() == PartyInventoryScene.Mode.NORMAL) {
 				listener.itemButtonPressed(OwnerInventoryButtons.this, item);
-			} else {
+			} else if (slotConditionGroup.getCurrentMode() == SlotConditionGroup.Mode.TRANSFER) {
 				listener.itemButtonPressed(OwnerInventoryButtons.this);
 			}
 			
