@@ -54,6 +54,11 @@ public class WorldMap {
 		this(60,200);
 	}
 
+	
+	private void generateLocationNode(){
+		
+		
+	}
 	/**
 	 * Makes the random map, using the given number of nodes and edges, with a fun and fancy algorithm that first
 	 * makes all the nodes with a single edge linking them, and then adds connections until out of edges
@@ -111,7 +116,7 @@ public class WorldMap {
 			int curRankIter = i % (MAX_RANK - 1);
 			int curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter-1 : curRankIter;
 				//derive x coord of this location on map - should give range of MAX_X to 0 in "clumps" clustered around MAX_X/MAX_RANK
-			int tmpZ =  mapRand.nextInt(MAX_X/MAX_RANK) - (MAX_X/(2 * MAX_RANK));
+			int tmpZ =  mapRand.nextInt(MAX_X/2 * MAX_RANK) - (MAX_X/(MAX_RANK));
 			int tmpX = MAX_X - (((MAX_X/MAX_RANK) * (curRank)) + tmpZ);
 			while(tmpX < 10){
 				tmpX += mapRand.nextInt(MAX_X/MAX_RANK);
