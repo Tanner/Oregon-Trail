@@ -21,24 +21,25 @@ public class RandomEncounterTable {
 		encounterProb = encounterMap;
 	}
 		
-	SceneID getRandomEncounter() {
+	public SceneID getRandomEncounter() {
 		int total = 0;
 		SceneID nextScene = null;
 		boolean sceneFound = false;
 		for(SceneID scene : encounterProb.keySet()) {
 			total+= encounterProb.get(scene);
 		}
-		random.nextInt(total);
+		int roll = random.nextInt(total);
+		
 		for(SceneID scene : encounterProb.keySet()) {
 			if (!sceneFound) {
-				if(encounterProb.get(scene) < total && scene != SceneID.TRAIL) {
+				if(encounterProb.get(scene) > roll && scene != SceneID.TRAIL) {
 					nextScene = scene;
 					sceneFound = true;
-				} else if (encounterProb.get(scene) < total && scene == SceneID.TRAIL) {
+				} else if (encounterProb.get(scene) > roll && scene == SceneID.TRAIL) {
 					nextScene = null;
 					sceneFound = true;
 				} else {
-					total -= encounterProb.get(scene);			
+					roll -= encounterProb.get(scene);			
 				}
 			}
 		}
