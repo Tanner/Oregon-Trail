@@ -74,6 +74,7 @@ public class HUD extends Component {
 	 * Update the party information on the screen (date and money).
 	 */
 	public void updatePartyInformation() {
+		setDate("Fake Date");
 		setMoney(data.getMoney());
 	}
 	
