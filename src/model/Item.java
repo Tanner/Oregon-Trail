@@ -19,7 +19,7 @@ public class Item implements Conditioned, Comparable<Item>{
 	public enum ITEM_TYPE {
 		APPLE ("APPLE", true, true),
 		BREAD ("BREAD", true, false),
-		BULLET ("BULLET", false, false),
+		AMMO ("AMMO", false, false),
 		GUN ("GUN", false, false),
 		MEAT ("MEAT", true, false),
 		SONIC ("SONIC", false, false),

@@ -136,7 +136,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		inv.addItem(itemToAdd);
 		itemToAdd.clear();
 		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Item(Item.ITEM_TYPE.BULLET));
+			itemToAdd.add(new Item(Item.ITEM_TYPE.AMMO));
 		}
 		inv.addItem(itemToAdd);
 		itemToAdd.clear();
@@ -263,7 +263,13 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	 * @return The probability
 	 */
 	private int getProbability(SceneID scene) {
-		return random.nextInt(100); 
+		if (scene == SceneID.STORE) {
+			return random.nextInt(10);
+		} else if (scene == SceneID.PARTYINVENTORY) {
+			return random.nextInt(10);
+		} else {
+			return random.nextInt(50) + 50;
+		}
 	}
 	/*----------------------
 	  SceneDirectorDelegate

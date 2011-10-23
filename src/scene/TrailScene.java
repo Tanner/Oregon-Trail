@@ -11,6 +11,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.HUD;
 import component.Positionable.ReferencePoint;
 import component.sprite.ParallaxSprite;
+import core.GameDirector;
+import core.Logger;
 
 public class TrailScene extends Scene {
 	public static final SceneID ID = SceneID.TRAIL;
@@ -18,6 +20,8 @@ public class TrailScene extends Scene {
 	
 	private ParallaxSprite ground;
 	private ParallaxSprite trees;
+	
+	private int distance = 0;
 	
 	private int timeElapsed;
 	
@@ -47,8 +51,14 @@ public class TrailScene extends Scene {
 		trees.move(delta);
 		
 		timeElapsed += delta;
-		if (timeElapsed % STEP_WAIT_TIME == 0) {
+		if (timeElapsed % STEP_WAIT_TIME < timeElapsed) {
 			timeElapsed = 0;
+			distance = party.walk();
+			if(party.getPartyMembers().isEmpty()) {
+				GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, this);
+			}
+			Logger.log("Current distance travelled = " + distance, Logger.Level.INFO);
+			GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this);
 		}
 	}
 	
