@@ -216,14 +216,14 @@ public class SceneSelectorScene extends Scene {
 				person.addSkill(skill);
 			}
 			
-			addRandomItems(person);
+			Inventory.addRandomItems(person);
 			
 			// Randomly hurt party members
 			person.decreaseHealth(random.nextInt(100));
 		}
 		
 		Vehicle vehicle = new Wagon();
-		addRandomItems(vehicle);
+		Inventory.addRandomItems(vehicle);
 		
 		List<Animal> animalList = new ArrayList<Animal>();
 		for(int i = 0; i < 4; i++) {
@@ -240,27 +240,6 @@ public class SceneSelectorScene extends Scene {
 		party.addAnimals(animalList);
 		
 		return party;
-	}
-	
-	public void addRandomItems(Inventoried inventoried) {
-		Random random = new Random();
-		
-		int numberOfItemsToAdd = random.nextInt(inventoried.getMaxSize()) + 2;
-		
-		for (int i = 0; i < numberOfItemsToAdd; i++) {
-			Item item;
-			int attempts = 0;
-			do {
-				int randomItem = random.nextInt(ITEM_TYPE.values().length);
-				item = new Item(ITEM_TYPE.values()[randomItem]);
-				
-				attempts++;
-			} while(!inventoried.canGetItem(item.getType(), 1) && attempts < ITEM_TYPE.values().length);
-			
-			item.decreaseStatus(random.nextInt(101));
-			
-			inventoried.addItemToInventory(item);
-		}
 	}
 
 	@Override

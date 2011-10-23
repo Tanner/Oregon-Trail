@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Random;
+
+import model.Item.ITEM_TYPE;
 
 import core.Logger;
 
@@ -207,6 +210,31 @@ public class Inventory {
 		}
 		
 		currentSize = 0;
+	}
+	
+	/**
+	 * Add random items to an {@code Inventoried} instance.
+	 * @param inventoried Inventoried to add items to
+	 */
+	public static void addRandomItems(Inventoried inventoried) {
+		Random random = new Random();
+		
+		int numberOfItemsToAdd = random.nextInt(inventoried.getMaxSize()) + 2;
+		
+		for (int i = 0; i < numberOfItemsToAdd; i++) {
+			Item item;
+			int attempts = 0;
+			do {
+				int randomItem = random.nextInt(ITEM_TYPE.values().length);
+				item = new Item(ITEM_TYPE.values()[randomItem]);
+				
+				attempts++;
+			} while(!inventoried.canGetItem(item.getType(), 1) && attempts < ITEM_TYPE.values().length);
+			
+			item.decreaseStatus(random.nextInt(101));
+			
+			inventoried.addItemToInventory(item);
+		}
 	}
 	
 	/**

@@ -21,8 +21,7 @@ import core.*;
  * A scene that displays an inventory, and allows the user to
  * purchase items.
  */
-public class StoreScene extends Scene {
-	
+public class StoreScene extends Scene {	
 	public static final SceneID ID = SceneID.STORE;
 	
 	private final int PADDING = 20;
