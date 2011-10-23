@@ -103,13 +103,18 @@ public final class ConstantStore {
 		itemMap.put("MEAT_NAME", "Meat");
 		itemMap.put("MEAT_DESCRIPTION", "Food noms - ohm nom nom.");
 		itemMap.put("MEAT_WEIGHT", "25");
-		itemMap.put("MEAT_COST", "75");
+		itemMap.put("MEAT_COST", "15");
 		itemMap.put("MEAT_FF", "4");
 		itemMap.put("WAGON_NAME", "Wagon");
 		itemMap.put("WAGON_DESCRIPTION", "This is a trusty wooden wagon.");
 		itemMap.put("WAGON_WEIGHT", "200");
 		itemMap.put("WAGON_COST", "2000");
 		itemMap.put("WAGON_FF", "0");
+		itemMap.put("OX_NAME", "Ox");
+		itemMap.put("OX_DESCRIPTION", "MOOO!");
+		itemMap.put("OX_WEIGHT", "200");
+		itemMap.put("OX_COST", "100");
+		itemMap.put("OX_FF", "0");
 		literalMap.put("ITEMS", itemMap);
 		
 		// General

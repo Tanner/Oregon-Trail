@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.datasource.HUDDataSource;
+import model.item.Animal;
 import model.item.Vehicle;
 
 import core.Logger;
@@ -25,6 +26,8 @@ public class Party implements HUDDataSource {
 	private Vehicle vehicle;
 	
 	private int location;
+
+	private List<Animal> animals;
 	
 	/**
 	 * 
@@ -309,7 +312,7 @@ public class Party implements HUDDataSource {
 	 */
 	public List<String> walk() {
 		List<String> messages = new ArrayList<String>();
-		location += 2 * getPace().getSpeed();
+		location += 2 * getPace().getSpeed() * getMoveModifier();
 		
 		final List<Person> deathList = new ArrayList<Person>();
 		for (Person person : members) {
@@ -328,6 +331,18 @@ public class Party implements HUDDataSource {
 		}
 		messages.add("Current Distance Travelled: " + String.format("%,d", location));
 		return messages;
+	}
+
+	private double getMoveModifier() {
+		double moveModifier = 1;
+		for(Animal animal: getAnimals()) {
+			moveModifier += animal.getMoveFactor() / 10;
+		}
+		return moveModifier;
+	}
+
+	private List<Animal> getAnimals() {
+		return animals;
 	}
 
 	/**
@@ -428,5 +443,9 @@ public class Party implements HUDDataSource {
 		else {
 			return null;
 		}
+	}
+
+	public void addAnimals(List<Animal> animalList) {
+		animals.addAll(animalList);
 	}
 }

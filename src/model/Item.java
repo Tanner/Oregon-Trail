@@ -24,7 +24,8 @@ public class Item implements Conditioned, Comparable<Item>{
 		MEAT ("MEAT", true, false),
 		SONIC ("SONIC", false, false),
 		WAGON ("WAGON", false, false),
-		WHEEL ("WHEEL", false, false);
+		WHEEL ("WHEEL", false, false),
+		OX ("OX", false, false);
 		
 		private final String name;
 	

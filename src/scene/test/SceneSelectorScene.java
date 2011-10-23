@@ -225,11 +225,19 @@ public class SceneSelectorScene extends Scene {
 		Vehicle vehicle = new Wagon();
 		addRandomItems(vehicle);
 		
+		List<Animal> animalList = new ArrayList<Animal>();
+		for(int i = 0; i < 4; i++) {
+			Animal animal = new Animal(ITEM_TYPE.OX);
+			animalList.add(animal);
+		}
+		
+		
 		Party.Pace pace = Party.Pace.values()[random.nextInt(Party.Pace.values().length)];
 		Party.Rations rations = Party.Rations.values()[random.nextInt(Party.Rations.values().length)];
 
 		Party party = new Party(pace, rations, people);
 		party.setVehicle(vehicle);
+		party.addAnimals(animal);
 		
 		return party;
 	}
