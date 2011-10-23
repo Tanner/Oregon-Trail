@@ -326,7 +326,7 @@ public class Party implements HUDDataSource {
 			messages.add(person.getName() + " has died!");
 			members.remove(person);
 		}
-		messages.add("Current Distance travelled = " + location);
+		messages.add("Current Distance Travelled: " + String.format("%,d", location));
 		return messages;
 	}
 
