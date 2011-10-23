@@ -128,6 +128,11 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		
 		for (Component component : components) {
 			component.render(container, g);
+			
+			if (GameDirector.DEBUG_MODE) {
+				g.setColor(Color.red);
+				g.drawRect(component.getX(), component.getY(), component.getWidth() - 1, component.getHeight() - 1);
+			}
 		}
 		
 		g.setClip((Rectangle) getArea());
@@ -159,11 +164,6 @@ public abstract class Component extends AbstractComponent implements Positionabl
 				getHeight());
 		
 		g.clearClip();
-		
-		if (GameDirector.DEBUG_MODE) {
-			g.setColor(Color.red);
-			g.drawRect(getX(), getY(), getWidth(), getHeight());
-		}
 	}
 	
 	public void setParentComponent(Component component) {

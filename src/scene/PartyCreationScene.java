@@ -125,7 +125,7 @@ public class PartyCreationScene extends Scene {
 			ReferencePoint newPersonButtonReferencePoint = (i == 0) ? ReferencePoint.TOPLEFT :ReferencePoint.TOPRIGHT;
 			int newPersonButtonPaddingY = (i == 0) ? PADDING : 0;
 			
-			newPersonButtons[i] = new Button(container, buttonWidth, NEW_PERSON_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NEW_PLAYER")));
+			newPersonButtons[i] = new Button(container, buttonWidth, NEW_PERSON_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "NEW_PERSON")));
 			newPersonButtons[i].addListener(componentListener);
 			mainLayer.add(newPersonButtons[i], newPersonButton.getPosition(newPersonButtonReferencePoint), Positionable.ReferencePoint.TOPLEFT, PADDING, newPersonButtonPaddingY);
 			
