@@ -1,5 +1,7 @@
 package scene;
 
+import java.util.List;
+
 import model.Party;
 import model.RandomEncounterTable;
 
@@ -59,11 +61,11 @@ public class TrailScene extends Scene {
 		if (timeElapsed % STEP_WAIT_TIME < timeElapsed) {
 			timeElapsed = 0;
 
-			distance = party.walk();
+			List<String> notifications = party.walk();
 			if(party.getPartyMembers().isEmpty()) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, this);
 			}
-			Logger.log("Current distance travelled = " + distance, Logger.Level.INFO);
+			Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
 			GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this);
 
 			hud.updatePartyInformation();
