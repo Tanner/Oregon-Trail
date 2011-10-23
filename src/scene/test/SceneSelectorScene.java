@@ -237,7 +237,7 @@ public class SceneSelectorScene extends Scene {
 
 		Party party = new Party(pace, rations, people);
 		party.setVehicle(vehicle);
-		party.addAnimals(animal);
+		party.addAnimals(animalList);
 		
 		return party;
 	}
