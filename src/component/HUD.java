@@ -1,5 +1,8 @@
 package component;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import model.datasource.HUDDataSource;
 
 import org.newdawn.slick.Color;
@@ -27,6 +30,8 @@ public class HUD extends Component {
 	private Label moneyLabel;
 	private Label notificationLabel;
 	
+	private Queue<String> notificationQueue;
+	
 	private HUDDataSource data;
 	
 	/**
@@ -38,6 +43,8 @@ public class HUD extends Component {
 		super(context, context.getWidth(), HEIGHT);
 		
 		this.data = data;
+		
+		notificationQueue = new LinkedList<String>();
 		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
@@ -79,6 +86,15 @@ public class HUD extends Component {
 	}
 	
 	/**
+	 * Update the notification bar.
+	 */
+	public void updateNotifications() {
+		if (!notificationQueue.isEmpty()) {
+			setNotification(notificationQueue.remove());
+		}
+	}
+	
+	/**
 	 * Set the date label's contents.
 	 * @param date New string from date label
 	 */
@@ -95,10 +111,18 @@ public class HUD extends Component {
 	}
 	
 	/**
+	 * Adds a notification onto the queue.
+	 * @param message New message to show
+	 */
+	public void addNotification(String message) {
+		notificationQueue.add(message);
+	}
+	
+	/**
 	 * Set the notification for the notification bar.
 	 * @param message New message to show
 	 */
-	public void setNotification(String message) {
+	private void setNotification(String message) {
 		notificationLabel.setText(message);
 	}
 }
