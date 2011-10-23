@@ -1,6 +1,7 @@
 package scene;
 
 import model.Party;
+import model.RandomEncounterTable;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -18,9 +19,11 @@ public class TrailScene extends Scene {
 	Sprite clouds1, clouds2;
 	Sprite wagon;
 	private Party party;
+	private RandomEncounterTable randomEncounterTable;
 	private int backgroundCounter, treesCounter, cloudsCounter;
-	public TrailScene(Party party) {
+	public TrailScene(Party party, RandomEncounterTable randomEncounterTable) {
 		this.party = party;
+		this.randomEncounterTable = randomEncounterTable;
 		backgroundCounter = 0;
 		treesCounter = 0;
 		cloudsCounter = 0;

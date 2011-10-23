@@ -1,6 +1,9 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
@@ -24,6 +27,8 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	
 	private SceneDirector sceneDirector;
 	private AppGameContainer container;
+	
+	private Random random;
 	
 	private Game game;
 	private WorldMap worldMap;
@@ -108,7 +113,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		case HUNT :
 			return new HuntScene(game.getPlayer().getParty());
 		case TRAIL :
-			return new TrailScene(game.getPlayer().getParty());
+			return new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
 		}
 		
 		return null;
@@ -199,7 +204,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 			newScene = new HuntScene(game.getPlayer().getParty());
 		} else if (id == SceneID.TRAIL) {
 			//Requested Trail scene
-			newScene = new TrailScene(game.getPlayer().getParty());
+			newScene = new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
 		}
 		
 		if (newScene != null) {
@@ -232,6 +237,34 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		sceneDirector.replaceStackWithScene(sceneForSceneID(SceneID.SCENESELECTOR));
 	}
 	
+	/**
+	 * Gets the encounter list to populate the trail scenes random encounter table
+	 * @return The mapping of scene types to probabilities
+	 */
+	private Map<SceneID, Integer> getEncounterList() {
+		Map<SceneID, Integer> encounterList = new HashMap<SceneID, Integer>();
+		/*
+		for(SceneID scene : SceneID.values()) {
+			if(scene.isRandomEncounter()) {
+				encounterList.add(scene);
+			}
+		}
+		 */
+		encounterList.put(SceneID.STORE, getProbability(SceneID.STORE));
+		encounterList.put(SceneID.PARTYINVENTORY, getProbability(SceneID.PARTYINVENTORY));
+		encounterList.put(SceneID.TRAIL, getProbability(SceneID.TRAIL));
+		
+		return encounterList;
+	}
+	
+	/**
+	 * Probability generator for trail scene random encounter table construction
+	 * @param scene The scene to get the probability of
+	 * @return The probability
+	 */
+	private int getProbability(SceneID scene) {
+		return random.nextInt(100); 
+	}
 	/*----------------------
 	  SceneDirectorDelegate
 	  ----------------------*/
