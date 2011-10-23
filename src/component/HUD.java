@@ -4,11 +4,9 @@ import model.datasource.HUDDataSource;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
-import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
-import component.Label.Alignment;
 import component.Label.VerticalAlignment;
 
 import core.ConstantStore;
@@ -72,18 +70,33 @@ public class HUD extends Component {
 		updatePartyInformation();
 	}
 	
+	/**
+	 * Update the party information on the screen (date and money).
+	 */
 	public void updatePartyInformation() {
 		setMoney(data.getMoney());
 	}
 	
+	/**
+	 * Set the date label's contents.
+	 * @param date New string from date label
+	 */
 	public void setDate(String date) {
 		dateLabel.setText(date);
 	}
 	
+	/**
+	 * Set the money label's contents.
+	 * @param money Amount of money to display
+	 */
 	public void setMoney(int money) {
 		moneyLabel.setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + money);
 	}
 	
+	/**
+	 * Set the notification for the notification bar.
+	 * @param message New message to show
+	 */
 	public void setNotification(String message) {
 		notificationLabel.setText(message);
 	}
