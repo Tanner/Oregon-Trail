@@ -14,9 +14,12 @@ import component.sprite.ParallaxSprite;
 
 public class TrailScene extends Scene {
 	public static final SceneID ID = SceneID.TRAIL;
+	private static final int STEP_WAIT_TIME = 1000;
 	
 	private ParallaxSprite ground;
 	private ParallaxSprite trees;
+	
+	private int timeElapsed;
 	
 	private Party party;
 	private RandomEncounterTable randomEncounterTable;
@@ -42,6 +45,11 @@ public class TrailScene extends Scene {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		ground.move(delta);
 		trees.move(delta);
+		
+		timeElapsed += delta;
+		if (timeElapsed % STEP_WAIT_TIME == 0) {
+			timeElapsed = 0;
+		}
 	}
 	
 	@Override
