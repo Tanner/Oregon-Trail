@@ -68,14 +68,14 @@ public class WorldMap {
 		int[] numRankAra = new int[MAX_RANK];
 			//current node's rank as we're building the node list
 			//manufacture random object - make constant seeded now for testing purposes
-		Random mapRand = new Random(12345);
+		Random mapRand = new Random(11111);
 			//num of edges from current location - will be between 1 and MAX_TRAILS_OUT
 		int numExitTrails;
 		
 			//number of trails out of Independence : 1 to MaxTrailsOut constant
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 			//build beginning and final locations
-		this.mapHead = new LocationNode("Independence", MAX_X, MAX_Y/2, numExitTrails, 0);
+		this.mapHead = new LocationNode("Independence", MAX_X, MAX_Y, numExitTrails, 0);
 		this.finalDestination = new LocationNode("Portland", 0,0,0, MAX_RANK);
 		
 		numRankAra[0] = 1;
@@ -94,8 +94,11 @@ public class WorldMap {
 			while(tmpX > MAX_X){
 				tmpX -= mapRand.nextInt(MAX_X/MAX_RANK);
 				}
-				//derive y coord of this location on map - should give some range of y between -MAX_Y/2 and MAX_Y/2
-			int tmpY = (MAX_Y/MAX_RANK) * (mapRand.nextInt(MAX_RANK) - (MAX_RANK/2)) + (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK));			
+				//derive y coord of this location on map - should give some range of y between MAX_Y and 0
+				//MAX_Y/MAX_RANK divies y up into maxrank pieces
+				//mapRand of MAXRANK finds the correct general "rank zone"
+				// final component : (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK)) determines offset within zone
+			int tmpY = (MAX_Y/MAX_RANK) * (mapRand.nextInt(MAX_RANK)) + (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK));			
 
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 			LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, i);
@@ -105,7 +108,7 @@ public class WorldMap {
 		//build rest of random map
 		for(int i = MAX_RANK; i < numLocations-1; i++){
 			
-			int curRankIter = i % (MAX_RANK - 1) + 1;
+			int curRankIter = i % (MAX_RANK - 1);
 			int curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter-1 : curRankIter;
 				//derive x coord of this location on map - should give range of MAX_X to 0 in "clumps" clustered around MAX_X/MAX_RANK
 			int tmpZ =  mapRand.nextInt(MAX_X/MAX_RANK) - (MAX_X/(2 * MAX_RANK));
@@ -116,8 +119,11 @@ public class WorldMap {
 			while(tmpX > MAX_X){
 				tmpX -= mapRand.nextInt(MAX_X/MAX_RANK);
 				}
-				//derive y coord of this location on map - should give some range of y between -MAX_Y/2 and MAX_Y/2
-			int tmpY = (MAX_Y/MAX_RANK) * (mapRand.nextInt(MAX_RANK) - (MAX_RANK/2)) + (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK));			
+			//derive y coord of this location on map - should give some range of y between MAX_Y and 0
+			//MAX_Y/MAX_RANK divies y up into maxrank pieces
+			//mapRand of MAXRANK finds the correct general "rank zone"
+			// final component : (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK)) determines offset within zone
+			int tmpY = (MAX_Y/MAX_RANK) * (mapRand.nextInt(MAX_RANK)) + (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK));			
 	
 			//number of trails out of location : 1 to MaxTrailsOut constant
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
