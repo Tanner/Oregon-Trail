@@ -34,7 +34,7 @@ public final class ConstantStore {
 		
 		// Player Creation Scene
 		Map<String, String> partyCreationScene = new HashMap<String, String>();
-		partyCreationScene.put("NEW_PLAYER", "New Player");
+		partyCreationScene.put("NEW_PERSON", "New Person");
 		partyCreationScene.put("NAME_PLACEHOLDER", "Name");
 		partyCreationScene.put("NO_PROFESSION_LABEL", "No Profession");
 		partyCreationScene.put("CHANGE_SKILL", "Change Skills");
