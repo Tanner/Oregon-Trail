@@ -229,7 +229,7 @@ public class PartyCreationScene extends Scene {
 		confirmButton.addListener(componentListener);
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
 		
-		backgroundLayer.add(new Panel(container, new Image("resources/dark_dirt.png")));
+		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/dark_dirt.png")));
 		
 		enableNextPersonField();
 	}

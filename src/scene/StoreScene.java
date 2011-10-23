@@ -189,7 +189,7 @@ public class StoreScene extends Scene {
 			Item.ITEM_TYPE currentType = inventorySlots.get(i);
 			buttonMap.add(currentType);
 			tempLabel = new Label(container, fieldFont, Color.white, currentType.getName());
-			String itemImagePath = "resources/icons/items/" + currentType.toString().toLowerCase() + ".png";
+			String itemImagePath = "resources/graphics/icons/items/" + currentType.toString().toLowerCase() + ".png";
 			Sprite sprite = null;
 			
 			if (new File(itemImagePath).exists()) {

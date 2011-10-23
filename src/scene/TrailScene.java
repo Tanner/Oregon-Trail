@@ -28,8 +28,8 @@ public class TrailScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);		
-		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/trail.png", false, Image.FILTER_NEAREST), 300);
-		trees = new ParallaxSprite(container, container.getWidth(), new Image("resources/trees.png"), 900);
+		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), 300);
+		trees = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/test/trees.png"), 900);
 		
 		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		backgroundLayer.add(trees, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);

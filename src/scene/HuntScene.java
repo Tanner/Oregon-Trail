@@ -75,14 +75,14 @@ public class HuntScene extends Scene {
 		mainLayer.add(infoLabel, infoLabel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
 
 		
-		Image leftImage = new Image("resources/marioLeft.png");
-		Image rightImage = new Image("resources/marioRight.png");
+		Image leftImage = new Image("resources/graphics/test/marioLeft.png");
+		Image rightImage = new Image("resources/graphics/test/marioRight.png");
 		toonHunter = new Sprite(container, leftImage, rightImage);
 		toonHunter.setScale(0.1f);
 		
 		mainLayer.add(toonHunter, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -5);
 		
-		backgroundLayer.add(new Panel(container, new Image("resources/dark_dirt.png")));
+		backgroundLayer.add(new Panel(container, new Image("resources/backgrounds/dark_dirt.png")));
 
 		
 	}
