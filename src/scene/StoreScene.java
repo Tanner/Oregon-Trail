@@ -218,11 +218,11 @@ public class StoreScene extends Scene {
 		
 		//Create cancel & inventory buttons
 		tempLabel = new Label(container, fieldFont, Color.white, "Leave");
-		cancelButton = new Button(container, BUTTON_WIDTH, REGULAR_BUTTON_HEIGHT, tempLabel);
+		cancelButton = new Button(container, (container.getWidth() - PADDING * 4) / 4, REGULAR_BUTTON_HEIGHT, tempLabel);
 		cancelButton.addListener(new ButtonListener());
 		
 		tempLabel = new Label(container, fieldFont, Color.white, "Inventory");
-		inventoryButton = new Button(container, BUTTON_WIDTH, REGULAR_BUTTON_HEIGHT, tempLabel);
+		inventoryButton = new Button(container, cancelButton.getWidth(), REGULAR_BUTTON_HEIGHT, tempLabel);
 		inventoryButton.addListener(new ButtonListener());
 
 		//Create item description text labels
