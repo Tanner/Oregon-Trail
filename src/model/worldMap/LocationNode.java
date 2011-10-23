@@ -51,22 +51,29 @@ public class LocationNode {
 		this.rank = rank;
 	}
 	
-	public LocationNode(String name, int xPos, int yPos, int trails, int rank){
+	/**
+	 * Constructor for making a {@code LocationNode}
+	 * @param name
+	 * @param xPos
+	 * @param yPos
+	 * @param trails
+	 * @param rank
+	 */
+	public LocationNode(String locationName, int xPos, int yPos, int trails, int rank){
 		//makes unique name for location, temporarily, until we can make them prettier.
-		this(name, xPos, yPos, 0, 90, trails, rank);
+		this(locationName, xPos, yPos, 0, 90, trails, rank);
 		
 	}
 	
 	public LocationNode(int xPos, int yPos, int trails, int rank){
 		//makes unique name for location, temporarily, until we can make them prettier.
-		this("Location " + LocationNode.nodeCount ,xPos, yPos, 0, 90, trails, rank);
-		
+		this("Location " + LocationNode.nodeCount ,xPos, yPos, 0, 90, trails, rank);	
 	}
 	
 	
-	public LocationNode(String name, int xPos, int yPos, int trails){
+	public LocationNode(String locationName, int xPos, int yPos, int trails){
 		//makes unique name for location, temporarily, until we can make them prettier.
-		this(name, xPos, yPos, 0, 90, trails, 0);
+		this(locationName, xPos, yPos, 0, 90, trails, 0);
 		
 	}
 
@@ -120,10 +127,10 @@ public class LocationNode {
 	public String debugToString(){
 		String retVal;
 		int numTrails = this.outboundTrails.size();
-		retVal = "Name : " + this.locationName + " X pos : " + this.MAP_XPOS + " Y pos : " + this.MAP_YPOS + "\n";
-		retVal += "World Lat : " + this.WORLD_LATITUDE + " World Long : " + this.WORLD_LONGITUDE + " \n";
-		retVal += "Internal ID : " + this.ID + "Total Nodes currently made : " + LocationNode.nodeCount + " \n";
-		retVal += "Rank : " + this.rank + "Total Exit Trail Count : " + numTrails + " \n";
+		retVal = "\nName : \t" + this.locationName + "\t| X pos : \t" + this.MAP_XPOS + " \t| Y pos : \t" + this.MAP_YPOS + "\n";
+		retVal += "World Lat : \t" + this.WORLD_LATITUDE + "\t| World Long : " + this.WORLD_LONGITUDE + " \n";
+		retVal += "Internal ID : \t" + this.ID + "\t| Total Nodes currently made : \t" + LocationNode.nodeCount + " \n";
+		retVal += "Rank : \t\t" + this.rank + "\t| Total Exit Trail Count : \t" + numTrails + " \n";
 		
 		if (numTrails == 0){
 			retVal += "\tNo trails implemented \n";

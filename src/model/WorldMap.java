@@ -62,7 +62,7 @@ public class WorldMap {
 	 * @param numTrails number of trails linking locations - will be forced to be enough to at least link all locations
 	 */
 	private void generateMap(int numLocations, int numTrails){
-			//build a temporary list to hold the generated locations
+			//build a temporary list to hold the generated locations, from which to build the map by adding edges
 		List<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
 			//temp array holding number of locations at each rank, indexed by rank
 		int[] numRankAra = new int[MAX_RANK];
@@ -82,12 +82,33 @@ public class WorldMap {
 		numRankAra[MAX_RANK - 1] = 1;
 		
 		tempLocationStore.add(mapHead);
-		for(int i = 1; i < numLocations-1; i++){
+		
+		//need to build base set of nodes - must have at least 1 per rank to get from independence to portland
+		for (int i = 1; i < MAX_RANK; i++){
+
+			int tmpZ =  mapRand.nextInt(MAX_X/MAX_RANK) - (MAX_X/(2 * MAX_RANK));
+			int tmpX = MAX_X - (((MAX_X/MAX_RANK) * (i)) + tmpZ);
+			while(tmpX < 10){
+				tmpX += mapRand.nextInt(MAX_X/MAX_RANK);
+				}
+			while(tmpX > MAX_X){
+				tmpX -= mapRand.nextInt(MAX_X/MAX_RANK);
+				}
+				//derive y coord of this location on map - should give some range of y between -MAX_Y/2 and MAX_Y/2
+			int tmpY = (MAX_Y/MAX_RANK) * (mapRand.nextInt(MAX_RANK) - (MAX_RANK/2)) + (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK));			
+
+			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
+			LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, i);
+			tempLocationStore.add(tempNode);
+		}//for loop to build initial path
+		
+		//build rest of random map
+		for(int i = MAX_RANK; i < numLocations-1; i++){
 			
 			int curRankIter = i % (MAX_RANK - 1) + 1;
 			int curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter-1 : curRankIter;
 				//derive x coord of this location on map - should give range of MAX_X to 0 in "clumps" clustered around MAX_X/MAX_RANK
-				int tmpZ =  mapRand.nextInt(MAX_X/MAX_RANK) - (MAX_X/(2 * MAX_RANK));
+			int tmpZ =  mapRand.nextInt(MAX_X/MAX_RANK) - (MAX_X/(2 * MAX_RANK));
 			int tmpX = MAX_X - (((MAX_X/MAX_RANK) * (curRank)) + tmpZ);
 			while(tmpX < 10){
 				tmpX += mapRand.nextInt(MAX_X/MAX_RANK);
@@ -101,12 +122,25 @@ public class WorldMap {
 			//number of trails out of location : 1 to MaxTrailsOut constant
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 			LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, curRank);
-			tempLocationStore.add(tempNode);
-			
-			
+			tempLocationStore.add(tempNode);	
 		}//for all locations make a node
 		tempLocationStore.add(finalDestination);
+		for (int i = 0; i < tempLocationStore.size(); i++){
+			System.out.printf("%dth location : %s \n ", (i+1), tempLocationStore.get(i));
+			System.out.println(tempLocationStore.get(i).debugToString());
+			System.out.println();		
+		}//for loop to print out tempLocationStore
+	}
+	
+	/**
+	 * returns a string representation of this map, by iterating through each node .
+	 * @return the string representation
+	 */
+	
+	public String toString(){
+		String resString = "";
 		
+		return resString;
 	}
 	
 	
