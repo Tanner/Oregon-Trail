@@ -64,8 +64,7 @@ public final class ConstantStore {
 		
 		// HUD
 		Map<String, String> hudScene = new HashMap<String, String>();
-		hudScene.put("MEMBERS_HEALTH", "Members");
-		hudScene.put("VEHICLE_HEALTH", "Vehicle");
+		hudScene.put("MENU", "Menu");
 		literalMap.put("HUD_SCENE", hudScene);
 		
 		// Items

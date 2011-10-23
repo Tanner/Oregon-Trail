@@ -51,7 +51,7 @@ public class HUD extends Component {
 		
 		int height = HEIGHT - (2 * MARGIN);
 		
-		Label menuLabel = new Label(context, fieldFont, Color.white, "Menu");
+		Label menuLabel = new Label(context, fieldFont, Color.white, ConstantStore.get("HUD_SCENE", "MENU"));
 		menuButton = new Button(context, menuLabel.getWidth() + (2 * MARGIN), height, menuLabel);
 		menuButton.addListener(listener);
 		add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
@@ -64,7 +64,7 @@ public class HUD extends Component {
 		
 		int notificationWidth = context.getWidth() - menuButton.getWidth() - INFO_WIDTH -  MARGIN * 4;
 		
-		notificationLabel = new Label(context, notificationWidth, height, fieldFont, Color.white, "Oh hai");
+		notificationLabel = new Label(context, notificationWidth, height, fieldFont, Color.white, "");
 		notificationLabel.setVerticalAlignment(VerticalAlignment.CENTER);
 		notificationLabel.setBackgroundColor(Color.black);
 		notificationLabel.setBorderColor(Color.lightGray);
