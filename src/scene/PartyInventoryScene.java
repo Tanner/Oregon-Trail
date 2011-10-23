@@ -129,7 +129,7 @@ public class PartyInventoryScene extends Scene {
 		// Create Vehicle inventories (if one exists)
 		if (vehicle != null) {
 			int lastOddIndex = personPanels.length - 1;
-			if (lastOddIndex % 2 != 0) {
+			if (lastOddIndex > 0 && lastOddIndex % 2 != 0) {
 				lastOddIndex--;
 			}
 			Positionable locationReference = personPanels[lastOddIndex];
