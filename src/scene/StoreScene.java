@@ -194,7 +194,7 @@ public class StoreScene extends Scene {
 			
 			if (new File(itemImagePath).exists()) {
 				try {
-					sprite = new Sprite(container, new Image(itemImagePath, false, Image.FILTER_NEAREST));
+					sprite = new Sprite(container, 48, new Image(itemImagePath, false, Image.FILTER_NEAREST));
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
