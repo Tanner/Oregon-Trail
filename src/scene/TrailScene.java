@@ -8,6 +8,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.HUD;
 import component.Positionable.ReferencePoint;
 import component.sprite.ParallaxSprite;
 
@@ -33,6 +34,8 @@ public class TrailScene extends Scene {
 		
 		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		backgroundLayer.add(trees, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
+
+		showHUD(new HUD(container, party));
 	}
 		
 	@Override
