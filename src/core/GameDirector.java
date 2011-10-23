@@ -28,7 +28,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	private SceneDirector sceneDirector;
 	private AppGameContainer container;
 	
-	private Random random;
+	private Random random = new Random();
 	
 	private Game game;
 	private WorldMap worldMap;
