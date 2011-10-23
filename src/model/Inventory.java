@@ -219,13 +219,12 @@ public class Inventory{
 	}
 	
 	/**
-	 * Add random items to an {@code Inventoried} instance.
-	 * @param inventoried Inventoried to add items to
+	 * Add random items to this inventory.
 	 */
-	public static void addRandomItems(Inventoried inventoried) {
+	public void addRandomItems() {
 		Random random = new Random();
 		
-		int numberOfItemsToAdd = random.nextInt(inventoried.getMaxSize()) + 2;
+		int numberOfItemsToAdd = random.nextInt(getMaxSize()) + 2;
 		
 		for (int i = 0; i < numberOfItemsToAdd; i++) {
 			Item item;
@@ -235,11 +234,11 @@ public class Inventory{
 				item = new Item(ITEM_TYPE.values()[randomItem]);
 				
 				attempts++;
-			} while(!inventoried.canGetItem(item.getType(), 1) && attempts < ITEM_TYPE.values().length);
+			} while(!canGetItems(item.getType(), 1) && attempts < ITEM_TYPE.values().length);
 			
 			item.decreaseStatus(random.nextInt(101));
 			
-			inventoried.addItemToInventory(item);
+			addItemToInventory(item);
 		}
 	}
 	

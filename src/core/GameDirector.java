@@ -3,7 +3,6 @@ package core;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
@@ -33,8 +32,6 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	private SceneDirector sceneDirector;
 	private AppGameContainer container;
 	
-	private Random random = new Random();
-	
 	private Game game;
 	private WorldMap worldMap;
 	private Inventory storeInventory = new Inventory(8, 10000);
@@ -48,7 +45,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		 fontManager = new FontManager();
 
 		 sceneDirector = new SceneDirector("Oregon Trail", this);
-		 makeInitialStoreInventory();
+		 storeInventory.addRandomItems();
 		 worldMap = new WorldMap();
 		 game = new Game(worldMap);
 	}
@@ -124,53 +121,6 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		}
 		
 		return null;
-	}
-	
-	/**
-	 * This method initializes the stores inventory.
-	 */
-	private void makeInitialStoreInventory() {
-		Inventory inv = storeInventory;
-		ArrayList<Item> itemToAdd = new ArrayList<Item>();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Item(Item.ITEM_TYPE.APPLE));
-		}
-		inv.addItemsToInventory(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Item(Item.ITEM_TYPE.BREAD));
-		}
-		inv.addItemsToInventory(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Item(Item.ITEM_TYPE.AMMO));
-		}
-		inv.addItemsToInventory(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Item(Item.ITEM_TYPE.GUN));
-		}
-		inv.addItemsToInventory(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Item(Item.ITEM_TYPE.MEAT));
-		}
-		inv.addItemsToInventory(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Item(Item.ITEM_TYPE.SONIC));
-		}
-		inv.addItemsToInventory(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Wagon());
-		}
-		inv.addItemsToInventory(itemToAdd);
-		itemToAdd.clear();
-		for (int i = 0; i < 1 + Math.random() * 10; i++) {
-			itemToAdd.add(new Item(Item.ITEM_TYPE.WHEEL));
-		}
-		inv.addItemsToInventory(itemToAdd);
 	}
 
 	/*----------------------

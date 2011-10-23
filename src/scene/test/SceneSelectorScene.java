@@ -216,14 +216,14 @@ public class SceneSelectorScene extends Scene {
 				person.addSkill(skill);
 			}
 			
-			Inventory.addRandomItems(person);
+			person.getInventory().addRandomItems();
 			
 			// Randomly hurt party members
 			person.decreaseHealth(random.nextInt(100));
 		}
 		
 		Vehicle vehicle = new Wagon();
-		Inventory.addRandomItems(vehicle);
+		vehicle.getInventory().addRandomItems();
 		
 		List<Animal> animalList = new ArrayList<Animal>();
 		for(int i = 0; i < 4; i++) {
