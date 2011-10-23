@@ -269,9 +269,10 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 				encounterList.add(scene);
 			}
 		}
-		 */
+		
 		encounterList.put(SceneID.STORE, getProbability(SceneID.STORE));
 		encounterList.put(SceneID.PARTYINVENTORY, getProbability(SceneID.PARTYINVENTORY));
+		*/
 		encounterList.put(SceneID.TRAIL, getProbability(SceneID.TRAIL));
 		
 		return encounterList;
@@ -283,13 +284,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	 * @return The probability
 	 */
 	private int getProbability(SceneID scene) {
-		if (scene == SceneID.STORE) {
-			return random.nextInt(10) + 10;
-		} else if (scene == SceneID.PARTYINVENTORY) {
-			return random.nextInt(10) + 10;
-		} else {
-			return random.nextInt(50) + 50;
-		}
+		return 1;
 	}
 	/*----------------------
 	  SceneDirectorDelegate
