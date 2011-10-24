@@ -39,12 +39,14 @@ public class SceneSelectorScene extends Scene {
 	private List<Button> buttons;
 	
 	private Player player;
+	private Game game;
 	
 	/**
 	 * Creates the scene which selects the scene by which the player can select the scene they wish this scene to select 
 	 */
-	public SceneSelectorScene(Player player) {
-		this.player = player;
+	public SceneSelectorScene(Game game) {
+		this.player = game.getPlayer();
+		this.game = game;
 	}
 	
 	@Override
@@ -66,8 +68,8 @@ public class SceneSelectorScene extends Scene {
 		}
 		
 		// Create extra function button
-		buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "ADD_PARTY"))));
-		buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))));
+		buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_GAME"))));
+		buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_PARTY"))));
 		
 		// Add listeners to buttons and make an array
 		ButtonListener buttonListener = new ButtonListener();
@@ -172,9 +174,9 @@ public class SceneSelectorScene extends Scene {
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this);	
-			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "REMOVE_PARTY"))) {
-				player.setParty(null);
-			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "ADD_PARTY"))) {
+			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_GAME"))) {
+				game.reset();
+			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_PARTY"))) {
 				player.setParty(makeRandomParty());
 			}
 		}

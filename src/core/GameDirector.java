@@ -32,8 +32,6 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	
 	private Game game;
 	private WorldMap worldMap;
-	private Inventory storeInventory = new Inventory(8, 10000);
-	
 	/**
 	 * Constructs a game director object.
 	 */
@@ -43,9 +41,9 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		 fontManager = new FontManager();
 
 		 sceneDirector = new SceneDirector("Oregon Trail", this);
-		 storeInventory.addRandomItems();
 		 worldMap = new WorldMap();
 		 game = new Game(worldMap);
+		 game.getStoreInventory().addRandomItems();
 	}
 	
 	/**
@@ -101,11 +99,11 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		case TOWN:
 			return new TownScene(game.getPlayer().getParty());
 		case STORE:
-			return new StoreScene(game.getPlayer().getParty(), storeInventory);
+			return new StoreScene(game.getPlayer().getParty(), game.getStoreInventory());
 		case PARTYINVENTORY:
 			return new PartyInventoryScene(game.getPlayer().getParty());
 		case SCENESELECTOR:
-			return new SceneSelectorScene(game.getPlayer());
+			return new SceneSelectorScene(game);
 		case HUNT:
 			return new HuntScene(game.getPlayer().getParty());
 		case TRAIL:
@@ -147,7 +145,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 			// Last scene was Town Scene
 			if (id == SceneID.STORE) {
 				// Requested Store Scene
-				newScene = new StoreScene(game.getPlayer().getParty(), storeInventory);
+				newScene = new StoreScene(game.getPlayer().getParty(), game.getStoreInventory());
 			}
 		} else if (lastScene instanceof StoreScene) {
 			// Last scene was Store Scene

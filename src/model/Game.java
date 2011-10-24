@@ -10,6 +10,9 @@ public class Game {
 	
 	private final WorldMap worldMap;
 	
+	private Inventory storeInventory = new Inventory(8, 10000);
+	
+	
 	/**
 	 * Constructs an new Game with a {@code WorldMap}.
 	 * @param worldMap The games world map
@@ -20,6 +23,7 @@ public class Game {
 		if(player != null){
 			Logger.log("Player was created successfully", Logger.Level.INFO);
 		}
+		storeInventory.addRandomItems();
 	}
 	
 	/**
@@ -37,4 +41,23 @@ public class Game {
 	public String toString() {
 		return null;
 	}
+
+	public Inventory getStoreInventory() {
+		return storeInventory;
+	}
+	
+	public void setStoreInventory(Inventory storeInventory) {
+		this.storeInventory = storeInventory;
+	}
+	
+	public WorldMap getWorldMap() {
+		return worldMap;
+	}
+
+	public void reset() {
+		storeInventory.clear();
+		storeInventory.addRandomItems();
+		player.setParty(null);
+	}
+
 }
