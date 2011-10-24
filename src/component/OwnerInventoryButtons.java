@@ -85,7 +85,7 @@ public class OwnerInventoryButtons {
 			Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 			
 			Sprite sprite = new Sprite(container, 48, 48);
-			Label label = new Label(container, ITEM_BUTTON_WIDTH, fieldFont, Color.white, "");
+			Label label = new Label(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, fieldFont, Color.white, "");
 			label.setAlignment(Alignment.CENTER);
 			
 			Counter button = new Counter(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, sprite, label);
