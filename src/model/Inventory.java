@@ -93,10 +93,10 @@ public class Inventory{
 		
 		final double weight = itemType.getWeight() * numberOf;
 		if(getWeight() + weight > MAX_WEIGHT) {
-			Logger.log("Not enough weight capacity", Logger.Level.INFO);
+			Logger.log("Not enough weight capacity", Logger.Level.DEBUG);
 			return false;
 		} else if (currentSize == MAX_SIZE && getNumberOf(itemType) == 0) {
-			Logger.log("Not enough slots open", Logger.Level.INFO);
+			Logger.log("Not enough slots open", Logger.Level.DEBUG);
 			return false;
 		} else {
 			return true;
@@ -146,13 +146,13 @@ public class Inventory{
 		List<Item> removedItems = new ArrayList<Item>();
 		final int itemIndex = itemType.ordinal();
 		if(slots.get(itemIndex).size() < quantity) {
-			Logger.log("Not enough items to remove", Logger.Level.INFO);
+			Logger.log("Not enough items to remove", Logger.Level.DEBUG);
 			removedItems = null;
 		} else {
 			for(int i = 0; i < quantity; i++) {
 				removedItems.add(slots.get(itemIndex).poll());
 			}
-			Logger.log("Items removed successfully", Logger.Level.INFO);
+			Logger.log("Items removed successfully", Logger.Level.DEBUG);
 		}
 		
 		currentSize = 0;

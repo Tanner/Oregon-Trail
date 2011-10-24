@@ -319,7 +319,7 @@ public class Party implements HUDDataSource {
 			person.increaseSkillPoints((int) (getPace().getSpeed() / 10));
 			healToBreakpoint(person);
 			person.decreaseHealth(getPace().getSpeed());
-			Logger.log(checkHungerStatus(person), Logger.Level.INFO);
+			Logger.log(checkHungerStatus(person), Logger.Level.DEBUG);
 			if(person.getHealth().getCurrent() == 0) {
 				deathList.add(person);
 			} else {
