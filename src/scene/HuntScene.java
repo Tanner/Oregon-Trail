@@ -8,6 +8,7 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -24,6 +25,7 @@ import component.OwnerInventoryButtons;
 import component.Panel;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
+import component.sprite.AnimatingSprite;
 import component.sprite.Sprite;
 
 import core.ConstantStore;
@@ -41,8 +43,7 @@ public class HuntScene extends Scene {
 	private Person hunter;
 	
 	private Image ground;
-	private Sprite toonHunter;
-	
+	private AnimatingSprite toonHunter;
 	
 	/**
 	 * Constructs a {@code HuntScene} with a {@code Person} who will be the hunter
@@ -71,20 +72,16 @@ public class HuntScene extends Scene {
 		Font h2 = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.H2);
 		
 		Label infoLabel = new Label(container, h2, Color.white, "Just making the hunt scene");
-		
-		mainLayer.add(infoLabel, infoLabel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
-
+		mainLayer.add(infoLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
 		
 		Image leftImage = new Image("resources/graphics/test/marioLeft.png");
 		Image rightImage = new Image("resources/graphics/test/marioRight.png");
-		toonHunter = new Sprite(container, leftImage, rightImage);
-		toonHunter.setScale(0.1f);
+		toonHunter = new AnimatingSprite(container, new Animation(new Image[]{leftImage}, 1), new Animation(new Image[]{rightImage}, 1));
+//		toonHunter.setScale(0.1f);
 		
-		mainLayer.add(toonHunter, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -5);
+		mainLayer.add(toonHunter, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -5);
 		
-		backgroundLayer.add(new Panel(container, new Image("resources/backgrounds/dark_dirt.png")));
-
-		
+		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/dark_dirt.png")));
 	}
 	
 	
@@ -94,7 +91,7 @@ public class HuntScene extends Scene {
 	 */
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+		toonHunter.update(container, delta);
 	}
 
 	@Override
