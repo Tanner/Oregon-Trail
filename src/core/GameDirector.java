@@ -60,6 +60,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 			container = new AppGameContainer(sceneDirector);
 			container.setDisplayMode(1024, 576, false);
 			container.setTargetFrameRate(60);
+			container.setAlwaysRender(true);
 			container.setShowFPS(false);
 			container.start();
 		} catch (SlickException e) {
