@@ -11,6 +11,7 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
+import component.Label.Alignment;
 import component.Label.VerticalAlignment;
 
 import core.ConstantStore;
@@ -67,13 +68,13 @@ public class HUD extends Component {
 		notificationLabel = new Label(context, notificationWidth, height, fieldFont, Color.white, "");
 		notificationLabel.setVerticalAlignment(VerticalAlignment.CENTER);
 		notificationLabel.setBackgroundColor(Color.black);
-		notificationLabel.setBorderColor(Color.lightGray);
-		notificationLabel.setBorderWidth(2);
 		add(notificationLabel, menuButton.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPLEFT, MARGIN, 0);
 		
 		setBackgroundColor(Color.gray);
 		setBevelWidth(2);
 		setBevel(Component.BevelType.OUT);
+		setBottomBorderWidth(2);
+		setBorderColor(Color.black);
 		
 		updatePartyInformation();
 	}
