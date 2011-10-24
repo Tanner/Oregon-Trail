@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -11,6 +12,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
+import org.newdawn.slick.state.StateBasedGame;
 
 import core.GameDirector;
 
@@ -19,6 +21,13 @@ import core.GameDirector;
  * width, and height.
  */
 public abstract class Component extends AbstractComponent implements Positionable {
+	public static enum DebugMode {
+		NONE,
+		VISIBLE,
+		ALL
+	}
+	private static DebugMode debugMode;
+	
 	public static enum BevelType {
 		NONE,
 		IN,
@@ -129,8 +138,12 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		for (Component component : components) {
 			component.render(container, g);
 			
-			if (GameDirector.DEBUG_MODE) {
-				g.setColor(Color.red);
+			if (debugMode == DebugMode.ALL || debugMode == DebugMode.VISIBLE && component.isVisible()) {
+				if (component.isVisible()) {
+					g.setColor(Color.red);
+				} else {
+					g.setColor(Color.yellow);
+				}
 				g.drawRect(component.getX(), component.getY(), component.getWidth() - 1, component.getHeight() - 1);
 			}
 		}
@@ -508,5 +521,15 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 */
 	public boolean isMouseOver() {
 		return mouseOver;
+	}
+
+	public static void changeDebugMode() {
+		if (debugMode == DebugMode.NONE) {
+			debugMode = DebugMode.VISIBLE;
+		} else if (debugMode == DebugMode.VISIBLE) {
+			debugMode = DebugMode.ALL;
+		} else {
+			debugMode = DebugMode.NONE;
+		}
 	}
 }

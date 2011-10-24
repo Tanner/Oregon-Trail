@@ -6,6 +6,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.state.transition.* ;
 
+import component.Component;
+
 import scene.*;
 
 /**
@@ -136,7 +138,7 @@ public class SceneDirector extends StateBasedGame {
 		if (c == '+') {
 			GameDirector.sharedSceneListener().showSceneSelector();
 		} else if (c == '-') {
-			GameDirector.DEBUG_MODE = !GameDirector.DEBUG_MODE;
+			Component.changeDebugMode();
 		}
 	}
 }
