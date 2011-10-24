@@ -112,7 +112,7 @@ public class Label extends Component {
 		
 		for (int i = 0; i < lines.size(); i++) {
 			if (alignment == Alignment.CENTER) {
-				font.drawString(getX() + (getWidth() - font.getWidth(lines.get(i))) / 2,
+				font.drawString(getX() + 1 + (getWidth() - font.getWidth(lines.get(i))) / 2,
 						startY + (font.getLineHeight()) * i,
 						lines.get(i), c);
 			} else if (alignment == Alignment.LEFT){
