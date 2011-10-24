@@ -321,6 +321,7 @@ public class Party implements HUDDataSource {
 			person.decreaseHealth(getPace().getSpeed());
 			Logger.log(checkHungerStatus(person), Logger.Level.DEBUG);
 			if(person.getHealth().getCurrent() == 0) {
+				vehicle.addItemsToInventory(person.killForFood());
 				deathList.add(person);
 			} else {
 				healToBreakpoint(person);

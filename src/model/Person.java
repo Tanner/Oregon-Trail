@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import model.Item.ITEM_TYPE;
 
 import core.Logger;
 
@@ -28,6 +31,8 @@ public class Person implements Conditioned, Inventoried {
 	private static final int BASE_SKILL_POINTS = 70;
 	
 	private final Inventory inventory;
+
+	private double weight;
 	
 	public static final int MAX_INVENTORY_SIZE = 5;
 	
@@ -169,6 +174,8 @@ public class Person implements Conditioned, Inventoried {
 		this.health = new Condition(100);
 		Logger.log(name + " was created", Logger.Level.INFO);
 		this.inventory = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);
+		Random random = new Random();
+		this.weight = random.nextInt(100) + 90;
 	}
 	
 	/**
@@ -427,5 +434,14 @@ public class Person implements Conditioned, Inventoried {
 	public void increaseSkillPoints(int amount) {
 		skillPoints.increase(amount);
 		
+	}
+
+	public List<Item> killForFood() {
+		int numberOf = (int) (this.weight / ITEM_TYPE.STRANGEMEAT.getWeight());
+		List<Item> itemList = new ArrayList<Item>();
+		for(int i = 0; i < numberOf; i++) {
+			itemList.add(new Item(ITEM_TYPE.STRANGEMEAT));
+		}		
+		return itemList;
 	}
 }
