@@ -328,14 +328,14 @@ public class Party implements HUDDataSource {
 		for (Person person : members) {
 			person.increaseSkillPoints((int) (getPace().getSpeed() / 10));
 			person.decreaseHealth(getPace().getSpeed());
-			if(checkHungerStatus(person) != null) {
-				messages.add(checkHungerStatus(person));
-			}
 			if(person.getHealth().getCurrent() == 0) {
 				vehicle.addItemsToInventory(person.killForFood());
 				deathList.add(person);
 			} else {
 				heal(person, getRations().getRationAmount());
+			}
+			if(checkHungerStatus(person) != null) {
+				messages.add(checkHungerStatus(person));
 			}
 		}
 		for (Person person : deathList) {
@@ -589,7 +589,7 @@ public class Party implements HUDDataSource {
 		if(currentHealth == 0) {
 			return person.getName() + " has died of starvation!";
 		}
-		else if(person.getHealth().getCurrent() < 2 * getPace().getSpeed()) {
+		else if(person.getHealth().getCurrent() < getPace().getSpeed()) {
 			return person.getName() + " is in danger of starvation.";
 		}
 		else {
