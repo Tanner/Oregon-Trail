@@ -26,7 +26,7 @@ public class MainMenuScene extends Scene {
 		
 		//mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -5);
 		
-		Sprite logoSprite = new Sprite(container, 400, new Image("resources/graphics/logo.png", false, Image.FILTER_NEAREST));
+		Sprite logoSprite = new Sprite(container, 480, new Image("resources/graphics/logo.png", false, Image.FILTER_NEAREST));
 				
 		mainLayer.add(logoSprite, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -logoSprite.getHeight() / 4 - 20);
 		mainLayer.add(subtitleLabel, logoSprite.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 20);
