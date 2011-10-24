@@ -5,6 +5,7 @@ import java.util.List;
 import model.Party;
 import model.RandomEncounterTable;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -13,6 +14,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.HUD;
+import component.Panel;
 import component.Positionable.ReferencePoint;
 import component.sprite.ParallaxSprite;
 import core.GameDirector;
@@ -43,11 +45,12 @@ public class TrailScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);		
-		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), 300);
-		trees = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/test/trees.png"), 900);
+		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), 300);
+		trees = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 300);
 		
+		backgroundLayer.add(new Panel(container, new Color(0x66a9c4)));
 		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
-		backgroundLayer.add(trees, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
+		backgroundLayer.add(trees, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, 30);
 
 		hud = new HUD(container, party, new HUDListener());
 		showHUD(hud);

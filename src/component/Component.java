@@ -84,7 +84,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 			if (beveled == BevelType.NONE) {
 				g.fillRect(getX(), getY(), getWidth(), getHeight());
 			} else {
-				Color brightColor = backgroundColor.brighter(0.1f);
+				Color brightColor = backgroundColor.brighter(0.2f);
 				Color darkColor = backgroundColor.darker(0.2f);
 				
 				g.setColor(backgroundColor);
