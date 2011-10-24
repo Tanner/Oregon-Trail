@@ -31,7 +31,7 @@ public class MainMenuScene extends Scene {
 		mainLayer.add(logoSprite, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -logoSprite.getHeight() / 4 - 20);
 		mainLayer.add(subtitleLabel, logoSprite.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 20);
 		
-		backgroundLayer.add(new Panel(container, new Image("resources/graphics/ground/trail.png")));
+		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/dark_dirt.png")));
 	}
 
 	@Override
