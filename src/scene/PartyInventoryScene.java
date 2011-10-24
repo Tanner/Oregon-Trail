@@ -407,6 +407,12 @@ public class PartyInventoryScene extends Scene {
 					
 					party.setMoney(party.getMoney() + items.size() * items.get(0).getCost());
 				} else if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.DROP) {
+					if (getBinSize() <= 0) {
+						// Nothing in the bin, so we can't drop
+						showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN"), ConstantStore.get("GENERAL", "OK")));
+						return;
+					}
+					
 					// Ok, drop... Just empty the bin...
 					emptyBin();
 				}
