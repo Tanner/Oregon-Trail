@@ -1,14 +1,19 @@
 package component;
 
+import java.io.File;
+
 import model.Condition;
 import model.Item.ITEM_TYPE;
 
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
+
+import component.sprite.Sprite;
 
 import core.ConstantStore;
 
@@ -70,7 +75,26 @@ public class SlotConditionGroup extends ComponentConditionGroup<Counter> {
 		
 		this.item = item;
 		
+		String itemImagePath = "resources/graphics/icons/items/" + item.toString().toLowerCase() + ".png";
+		Sprite sprite = null;
+		
+		if (new File(itemImagePath).exists()) {
+			try {
+				sprite = new Sprite(container, 48, new Image(itemImagePath, false, Image.FILTER_NEAREST));
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		component.setSprite(sprite);
 		component.setText(name);
+		if (sprite != null) {
+			component.setShowSprite(true);
+			component.setShowLabel(false);
+		} else {
+			component.setShowLabel(true);
+			component.setShowSprite(false);
+		}
 		component.setCount(amount);
 		component.setMax(amount);
 		
@@ -109,6 +133,8 @@ public class SlotConditionGroup extends ComponentConditionGroup<Counter> {
 			component.setText("None");
 		}
 		
+		component.setShowLabel(disabled);
+		component.setShowSprite(!disabled);
 		component.setHideCount(disabled);
 	}
 	

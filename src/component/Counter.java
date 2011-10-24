@@ -239,5 +239,17 @@ public class Counter extends Component implements Disableable {
 	public void setText(String text) {
 		button.setText(text);
 	}
+	
+	public void setSprite(Sprite sprite) {
+		button.setSprite(sprite);
+	}
+
+	public void setShowLabel(boolean showLabel) {
+		button.setShowLabel(showLabel);
+	}
+	
+	public void setShowSprite(boolean showSprite) {
+		button.setShowSprite(showSprite);
+	}
 }
 

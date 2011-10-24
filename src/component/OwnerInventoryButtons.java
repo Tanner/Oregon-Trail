@@ -1,5 +1,6 @@
 package component;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import model.Item.ITEM_TYPE;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -20,6 +23,7 @@ import scene.PartyInventoryScene.Mode;
 
 import component.Label.Alignment;
 import component.Positionable.ReferencePoint;
+import component.sprite.Sprite;
 import core.FontManager;
 import core.GameDirector;
 
@@ -30,7 +34,7 @@ import core.GameDirector;
  */
 public class OwnerInventoryButtons {
 	private static final int ITEM_BUTTON_WIDTH = 80;
-	private static final int ITEM_BUTTON_HEIGHT = 40;
+	private static final int ITEM_BUTTON_HEIGHT = 60;
 	private static final int ITEM_CONDITION_BAR_HEIGHT = 5;
 	private static final int CONDITION_BAR_PADDING = 4;
 	private static final int NAME_PADDING = 10;
@@ -82,10 +86,11 @@ public class OwnerInventoryButtons {
 			
 			Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 			
+			Sprite sprite = new Sprite(container, 48, 48);
 			Label label = new Label(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, fieldFont, Color.white, "");
 			label.setAlignment(Alignment.CENTER);
 			
-			Counter button = new Counter(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, label);
+			Counter button = new Counter(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, sprite, label);
 			button.setCountUpOnLeftClick(false);
 			button.setDisableAutoCount(true);
 			
@@ -128,7 +133,7 @@ public class OwnerInventoryButtons {
 		int maxInventorySize = inventoried.getInventory().getMaxSize();
 
 		for (int i = 0; i < maxInventorySize; i++) {
-			if (i < slots.size()) {
+			if (i < slots.size()) {				
 				String name = slots.get(i).getName();
 				int amount = inventoried.getInventory().getNumberOf(slots.get(i));
 				Condition condition = inventoried.getInventory().getConditionOf(slots.get(i));

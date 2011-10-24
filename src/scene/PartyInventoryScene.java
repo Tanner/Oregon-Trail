@@ -49,7 +49,7 @@ public class PartyInventoryScene extends Scene {
 	private static final int NUM_COLS = 2;
 	private static final int BUTTON_HEIGHT = 30;
 	
-	private static final int BIN_BUTTON_HEIGHT = 100;
+	private static final int BIN_BUTTON_HEIGHT = 120;
 	
 	private Party party;
 	private Inventory[] binInventory;
@@ -175,10 +175,8 @@ public class PartyInventoryScene extends Scene {
 		binButton.setDisableAutoCount(true);
 		binButton.addListener(new ButtonListener());
 		
-		int xOffset = ((container.getWidth() - 2 * PADDING) / 2) - (buttonWidth / 2);
-		int yOffset = (int)((personPanels[personPanels.length - 1].getPosition(ReferencePoint.BOTTOMLEFT).y + PADDING + BUTTON_HEIGHT - closeButton.getPosition(ReferencePoint.TOPLEFT).y) / 2) + (BIN_BUTTON_HEIGHT / 2); 
-		
-		mainLayer.add(binButton, closeButton.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, xOffset, yOffset);
+		int yOffset = (int)(closeButton.getPosition(ReferencePoint.TOPLEFT).getY() - mainLayer.getPosition(ReferencePoint.CENTERCENTER).getY()) - PADDING;
+		mainLayer.add(binButton, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.BOTTOMCENTER, 0, yOffset);
 		
 		int numberOfBinPockets = playerInventoryButtons.length;
 		numberOfBinPockets += vehicleInventoryButtons != null ? 1 : 0;
@@ -215,8 +213,17 @@ public class PartyInventoryScene extends Scene {
 			}
 		}
 		
-		binButton.setCount(amount);
-		binButton.setText(name);
+		if (amount == 0) {
+			binButton.setCount(0);
+			binButton.setText("");
+			binButton.setHideCount(true);
+			binButton.setDisabled(true);
+		} else {
+			binButton.setCount(amount);
+			binButton.setText(name);
+			binButton.setHideCount(true);
+			binButton.setDisabled(false);
+		}
 	}
 	
 	/**

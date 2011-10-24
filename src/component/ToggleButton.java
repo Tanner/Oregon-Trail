@@ -21,17 +21,6 @@ public class ToggleButton extends Button {
 		disableAutoToggle = false;
 	}
 	
-	/**
-	 * Creates a {@code ToggleButton} with a label.
-	 * @param context The GUI context
-	 * @param label A label
-	 */
-	public ToggleButton(GUIContext context, Label label) {
-		super(context, label);
-		
-		disableAutoToggle = false;
-	}
-	
 	@Override
 	public void mousePressed(int button, int mx, int my) {
 		if (!isVisible() || !isAcceptingInput()) {
