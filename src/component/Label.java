@@ -142,7 +142,7 @@ public class Label extends Component {
 			while (wordScan.hasNext()) {
 				String nextWord = wordScan.next();
 
-				if (currentLine != maxLines && font.getWidth(currentText + nextWord) > getWidth() ) {.
+				if (currentLine != maxLines && font.getWidth(currentText + nextWord) > getWidth() ) {
 					lines.add(currentLine, currentText.trim());
 					currentText = "";
 					currentLine++;
