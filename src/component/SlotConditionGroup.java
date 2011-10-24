@@ -99,6 +99,9 @@ public class SlotConditionGroup extends ComponentConditionGroup<Counter> {
 		component.setMax(amount);
 		
 		conditionBar.setCondition(condition);
+		
+		component.setTooltipEnabled(true);
+		component.setTooltipMessage(name);
 	}
 	
 	/**

@@ -7,10 +7,12 @@ import org.newdawn.slick.gui.GUIContext;
 import component.Component;
 
 public class SceneLayer extends Component {
-		
-	public SceneLayer(GUIContext container) {
+	private Scene scene;
+	
+	public SceneLayer(GUIContext container, Scene scene) {
 		super(container, container.getWidth(), container.getHeight());
 		setLocation(0, 0);
+		setVisible(true);
 	}
 
 	@Override
@@ -22,12 +24,11 @@ public class SceneLayer extends Component {
 		g.translate(getX(), getY());
 	}
 	
-	public void add(Component component) {
+	public void add(Component component) { 
 		components.add(component);
 		component.setParentComponent(this);
 	}
 	
-	@Override
 	public boolean isVisible() {
 		return true;
 	}

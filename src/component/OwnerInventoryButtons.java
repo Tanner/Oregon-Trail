@@ -121,6 +121,9 @@ public class OwnerInventoryButtons {
 		weightBar.setDisableText(false);
 		panel.add(weightBar, itemPanel.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.BOTTOMRIGHT, 0, -NAME_PADDING);
 		
+		weightBar.setTooltipEnabled(true);
+		weightBar.setTooltipMessage(String.format("%d / %d", getWeightCondition().getCurrent(), getWeightCondition().getMax()));
+		
 		updateGraphics();
 	}
 	

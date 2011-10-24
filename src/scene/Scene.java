@@ -18,21 +18,24 @@ import component.Positionable.ReferencePoint;
  * How the game displays information to the player.  Inherited by the containers which execute the game functionality
  */
 public abstract class Scene extends BasicGameState implements ModalListener {
-	protected static GameContainer container;
+	protected static GameContainer container;	
+	private static Tooltip tooltip;
+	
 	protected SceneLayer backgroundLayer;
 	protected SceneLayer mainLayer;
 	protected SceneLayer hudLayer;
 	protected SceneLayer modalLayer;
-	private static Tooltip tooltip;
-
+	
+	private boolean active;
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		Scene.container = container;
 		
-		backgroundLayer = new SceneLayer(container);
-		mainLayer = new SceneLayer(container);
-		hudLayer = new SceneLayer(container);
-		modalLayer = new SceneLayer(container);
+		backgroundLayer = new SceneLayer(container, this);
+		mainLayer = new SceneLayer(container, this);
+		hudLayer = new SceneLayer(container, this);
+		modalLayer = new SceneLayer(container, this);
 	}
 
 	@Override
@@ -98,6 +101,7 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	public void start() {
 		mainLayer.setAcceptingInput(true);
 		modalLayer.setAcceptingInput(true);
+		setActive(true);
 	}
 	
 	/**
@@ -106,6 +110,9 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	public void pause() {
 		mainLayer.setAcceptingInput(false);
 		modalLayer.setAcceptingInput(false);
+		setActive(false);
+		
+		removeTooltip();
 	}
 	
 	/**
@@ -114,6 +121,9 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	public void stop() {
 		mainLayer.setAcceptingInput(false);
 		modalLayer.setAcceptingInput(false);
+		setActive(false);
+		
+		removeTooltip();
 	}
 	
 	@Override
@@ -121,12 +131,16 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	
 	public static void showTooltip(int x, int y, Component owner, String message) {
 		if (tooltip != null) {
-			if (tooltip.getOwner() != owner) {
+			if (tooltip.getOwner() != owner && owner.isVisible()) {
 				tooltip = new Tooltip(container, owner, message);
 			}
 			
-			setTooltipPosition(x, y);
-		} else {
+			if (tooltip.getOwner().isVisible()) {
+				setTooltipPosition(x, y);
+			} else{
+				removeTooltip();
+			}
+		} else if (owner.isVisible()){
 			tooltip = new Tooltip(container, owner, message);
 			setTooltipPosition(x, y);
 		}
@@ -150,5 +164,13 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 			}
 		}
 		tooltip.setPosition(new Vector2f(x, y), referencePoint);
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	private void setActive(boolean active) {
+		this.active = active;
 	}
 }

@@ -517,11 +517,11 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		
 		super.mouseMoved(oldx, oldy, newx, newy);
 		
-		if (tooltipEnabled) {
+		this.mouseOver = getArea().contains(newx, newy);
+		
+		if (isMouseOver() && tooltipEnabled) {
 			Scene.showTooltip(newx, newy, this, tooltipMessage);
 		}
-				
-		this.mouseOver = getArea().contains(newx, newy);
 	}
 	
 	/**

@@ -91,6 +91,7 @@ public class SceneDirector extends StateBasedGame {
 	 * @param scene Scene to be added after
 	 */
 	public void replaceStackWithScene(Scene scene) {
+		scenes.peek().stop();
 		scenes.removeAllElements();
 		pushScene(scene, false, null, null);
 	}
