@@ -59,7 +59,7 @@ public class Item implements Conditioned, Comparable<Item>{
 			this.weight = Double.parseDouble(ConstantStore.get("ITEMS", type + "_WEIGHT"));
 			this.isFood = isFood;
 			this.isPlant = isPlant;
-			this.foodFactor = Integer.parseInt(ConstantStore.get("ITEMS", type + "_FF"));
+			this.foodFactor = Integer.parseInt(ConstantStore.get("ITEMS", type + "_FOOD_FACTOR"));
 		}
 		
 		/**
