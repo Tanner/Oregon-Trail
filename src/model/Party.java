@@ -34,9 +34,9 @@ public class Party implements HUDDataSource {
 	 * The possible values of the party's pace
 	 */
 	public enum Pace{
-		STEADY ("Steady", 10),
-		STRENUOUS ("Strenuous", 20),
-		GRUELING ("Grueling", 30);
+		STEADY ("Steady", 20),
+		STRENUOUS ("Strenuous", 40),
+		GRUELING ("Grueling", 60);
 		
 		private final String name;
 
@@ -71,21 +71,21 @@ public class Party implements HUDDataSource {
 	 */	
 	public enum Rations {
 		FILLING ("Filling", 100),
-		MEAGER ("Meager", 75),
-		BAREBONES ("Barebones", 50);
+		MEAGER ("Meager", 50),
+		BAREBONES ("Barebones", 25);
 		
 		private final String name;
 
-		private final int breakpoint;
+		private final int rationAmount;
 		
 		/**
 		 * Construct a new Ration
 		 * @param name The name of the rations
-		 * @param breakpoint The goal stable health for the party members
+		 * @param rationAmount The goal stable health for the party members
 		 */
-		private Rations(String name, int breakpoint) {
+		private Rations(String name, int rationAmount) {
 			this.name = name;
-			this.breakpoint = breakpoint;
+			this.rationAmount = rationAmount;
 		}
 		
 		@Override
@@ -97,8 +97,8 @@ public class Party implements HUDDataSource {
 		 * Returns the breakpoint.
 		 * @return The breakpoint value
 		 */
-		public int getBreakpoint() {
-			return breakpoint;
+		public int getRationAmount() {
+			return rationAmount;
 		}
 	}
 
@@ -312,30 +312,30 @@ public class Party implements HUDDataSource {
 	 */
 	public List<String> walk() {
 		List<String> messages = new ArrayList<String>();
-		location += 2 * getPace().getSpeed() * getMoveModifier();
+		location += getPace().getSpeed() * getMoveModifier();
 		
-		final List<Person> deathList = new ArrayList<Person>();
-		for (Person person : members) {
-			person.increaseSkillPoints((int) (getPace().getSpeed() / 10));
-			healToBreakpoint(person);
-			person.decreaseHealth(getPace().getSpeed());
-			Logger.log(checkHungerStatus(person), Logger.Level.DEBUG);
-			if(person.getHealth().getCurrent() == 0) {
-				vehicle.addItemsToInventory(person.killForFood());
-				deathList.add(person);
-			} else {
-				healToBreakpoint(person);
-			}
-		}
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
 		for (Animal animal : animals) {
-			feedAnimal(animal);
 			animal.decreaseStatus(getPace().getSpeed());
 			if(animal.getStatus().getCurrent() == 0) {
 				vehicle.addItemsToInventory(animal.killForFood());
 				slaughterHouse.add(animal);
 			} else {
-				feedAnimal(animal);
+				grazeAnimal(animal);
+			}
+		}
+		List<Person> deathList = new ArrayList<Person>();
+		for (Person person : members) {
+			person.increaseSkillPoints((int) (getPace().getSpeed() / 10));
+			person.decreaseHealth(getPace().getSpeed());
+			if(checkHungerStatus(person) != null) {
+				messages.add(checkHungerStatus(person));
+			}
+			if(person.getHealth().getCurrent() == 0) {
+				vehicle.addItemsToInventory(person.killForFood());
+				deathList.add(person);
+			} else {
+				heal(person, getRations().getRationAmount());
 			}
 		}
 		for (Person person : deathList) {
@@ -362,19 +362,87 @@ public class Party implements HUDDataSource {
 	}
 
 	/**
-	 * Heals the person until they are at their designated breakpoint.
+	 * Heals the person by the designated amount.
 	 * @param person The person to feed
+	 * @param amount the amount to feed them
 	 */
-	public void healToBreakpoint (Person person) {
+	public void heal (Person person, int amount) {
 		// Figure out how much restoration is needed.
-		int restoreNeeded = 0;
+		int restoreNeeded = amount;
+				
+		// Find out if the person has any food
+		boolean personHasFood = false;
+		boolean vehicleHasFood = false;
 		
-		if (person.getHealth().getCurrent() < getRations().getBreakpoint()) {
-			restoreNeeded = getRations().getBreakpoint() - 
-			person.getHealth().getCurrent();
-		
+		for (Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
+			if (itemType.isFood()) {
+				personHasFood = true;
+			}
+		}
+		if(!personHasFood) {
+			for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
+				if (itemType.isFood()) {
+					vehicleHasFood = true;
+				}
+			}
 		}
 		
+		Inventoried donator = null;
+		if (personHasFood) {
+			donator = person;
+		}
+		else if (!personHasFood && vehicleHasFood){
+			donator = vehicle;
+		}
+		
+		if (restoreNeeded > 0 && donator != null) {
+			//If we need restoration, and have food
+			Item.ITEM_TYPE firstFood = null;
+			final List<Item.ITEM_TYPE> typeList = 
+				donator.getInventory().getPopulatedSlots();
+			
+			for (Item.ITEM_TYPE itemType : typeList) {
+				if (itemType.isFood() && firstFood == null) {
+					firstFood = itemType;
+				}
+			}
+			
+			final List<Item> foodList = 
+				donator.removeItemFromInventory(firstFood, 1);
+			
+			final Item food = foodList.get(0);
+			int foodFactor = food.getType().getFoodFactor();
+			
+			//Do some handling for party member skills, such as cooking
+			if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
+				foodFactor += 1;
+			}
+			if(getSkills().contains(Person.Skill.COOKING)) {
+				foodFactor += 1;
+			}
+
+			final int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
+			
+			if (food.getStatus().getCurrent() > foodToEat) {
+				//If there is enough condition in the food to feed the person completely, heal them and eat
+				
+				person.increaseHealth(foodToEat * foodFactor);
+				food.decreaseStatus(foodToEat);
+				donator.addItemToInventory(food); //puts the item back in inventory
+				//Food status down, person health up
+			} else {
+				//we don't have enough status in the food to completely heal the person, so eat it all.
+				int restoreAmount = food.getStatus().getCurrent() * foodFactor;
+				person.increaseHealth(restoreAmount);
+				heal(person, restoreNeeded - restoreAmount); //Recursively call the function to ensure we eat as much as possible.
+			}
+		}
+	}
+	
+	public void healToFull(Person person) {
+		// Figure out how much restoration is needed.
+		int restoreNeeded = person.getHealth().getMax() - person.getHealth().getCurrent();
+				
 		// Find out if the person has any food
 		boolean personHasFood = false;
 		boolean vehicleHasFood = false;
@@ -438,17 +506,21 @@ public class Party implements HUDDataSource {
 			} else {
 				//we don't have enough status in the food to completely heal the person, so eat it all.
 				person.increaseHealth(food.getStatus().getCurrent() * foodFactor);
-				healToBreakpoint(person); //Recursively call the function to ensure we eat as much as possible.
+				healToFull(person); //Recursively call the function to ensure we eat as much as possible.
 			}
 		}
+	}
+	
+	public void grazeAnimal(Animal animal) {
+		animal.getStatus().increase(50);
 	}
 	
 	public void feedAnimal(Animal animal) {
 		// Figure out how much restoration is needed.
 		int restoreNeeded = 0;
 		
-		if (animal.getStatus().getCurrent() < getRations().getBreakpoint()) {
-			restoreNeeded = getRations().getBreakpoint() - 
+		if (animal.getStatus().getCurrent() < getRations().getRationAmount()) {
+			restoreNeeded = getRations().getRationAmount() - 
 			animal.getStatus().getCurrent();
 		
 		}
