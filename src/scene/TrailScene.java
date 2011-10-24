@@ -21,7 +21,7 @@ import core.Logger;
 public class TrailScene extends Scene {
 	public static final SceneID ID = SceneID.TRAIL;
 	
-	private static final int CLICK_WAIT_TIME = 500;
+	private static final int CLICK_WAIT_TIME = 1000;
 	private static final int STEP_COUNT_TRIGGER = 2;
 	
 	private int clickCounter;
@@ -64,14 +64,11 @@ public class TrailScene extends Scene {
 		
 		if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
 			clickCounter++;
+			hud.updateNotifications();
 			timeElapsed = 0;
 		}
-		
-		if (clickCounter % 1 == 0) {
-			hud.updateNotifications();
-		}
 
-		if (clickCounter != 0 && clickCounter % STEP_COUNT_TRIGGER == 0) {
+		if (clickCounter == STEP_COUNT_TRIGGER) {
 			List<String> notifications = party.walk();
 			
 			if (party.getPartyMembers().isEmpty()) {
