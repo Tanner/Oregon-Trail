@@ -67,11 +67,19 @@ public final class ConstantStore {
 		Map<String, String> storeScene = new HashMap<String, String>();
 		storeScene.put("WEIGHT", "Weight: ");
 		storeScene.put("POUNDS", " lbs");
-		storeScene.put("COST", "Cost: $");
+		storeScene.put("COST", "Cost: ");
 		storeScene.put("QUANTITY", "Quantity: ");
 		storeScene.put("TOTAL_WEIGHT", "Total Weight: ");
-		storeScene.put("TOTAL_COST", "Total Cost: $");
-		storeScene.put("PARTY_MONEY", "Party's Money: $");
+		storeScene.put("TOTAL_COST", "Total Cost: ");
+		storeScene.put("PARTY_MONEY", "Party's Money: ");
+		storeScene.put("INVENTORY", "Inventory");
+		storeScene.put("CLEAR", "Clear");
+		storeScene.put("BUY", "Buy");
+		storeScene.put("PICK_RECEIVER", "Choose who will buy this item.");
+		storeScene.put("ERR_TOO_MANY_WAGON", "Please buy a single wagon first.");
+		storeScene.put("ERR_NOT_ENOUGH_MONEY_FOR_WAGON", "You don't have enough money to buy a wagon.\nBetter prepare to make it on foot.");
+		storeScene.put("ERR_NOT_ENOUGH_MONEY", "You don't have enough money for this purchase.");
+		storeScene.put("ERR_CANT_CARRY", "No one can carry that weight.");
 		literalMap.put("STORE_SCENE", storeScene);
 		
 		// HUD
@@ -140,6 +148,7 @@ public final class ConstantStore {
 		general.put("OK", "Ok");
 		general.put("CANCEL", "Cancel");
 		general.put("CLOSE", "Close");
+		general.put("LEAVE", "Leave");
 		general.put("PROFESSION", "Profession");
 		literalMap.put("GENERAL", general);
 
