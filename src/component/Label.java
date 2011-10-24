@@ -47,7 +47,7 @@ public class Label extends Component {
 		verticalAlignment = VerticalAlignment.CENTER;
 		clip = true;
 		lines = new ArrayList<String>();
-		lines = parseLines(font, getWidth(), text);
+		parseLines();
 	}
 	
 	/**
@@ -130,9 +130,7 @@ public class Label extends Component {
 	 * makes sure lines do not extend over the given label
 	 * width.
 	 */
-	public static ArrayList<String> parseLines(Font font, int width, String text) {
-		ArrayList<String> lines = new ArrayList<String>();
-		
+	public void parseLines() {
 		Scanner lineScan = new Scanner(text);
 		Scanner wordScan;
 		
@@ -157,7 +155,6 @@ public class Label extends Component {
 			currentLine++;
 		}
 		
-		return lines;
 	}
 	
 	/**
@@ -191,7 +188,7 @@ public class Label extends Component {
 	public void setText(String text) {
 		this.text = text;
 		this.lines.clear();
-		lines = parseLines(font, getWidth(), text);
+		parseLines();
 	}
 	
 	/**
