@@ -22,7 +22,7 @@ public final class ConstantStore {
 		// Main Menu
 		Map<String, String> mainMenu = new HashMap<String, String>();
 		mainMenu.put("TITLE", "Oregon Trail");
-		mainMenu.put("PRESS_ENTER", "Press Enter to Start");
+		mainMenu.put("NEW_GAME", "New Game");
 		literalMap.put("MAIN_MENU", mainMenu);
 		
 		// Scene Selector Scene

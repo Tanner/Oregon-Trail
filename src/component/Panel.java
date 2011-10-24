@@ -6,6 +6,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
+import component.sprite.Sprite;
+
 /**
  * {@code Panel} inherits from {@code Component} to draw a background color or image.
  */
@@ -55,6 +57,7 @@ public class Panel extends Component {
 		super(context, width, height);
 		
 		this.backgroundImage = backgroundImage;
+		add(new Sprite(context, context.getWidth(), backgroundImage), getPosition(Positionable.ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT);
 	}
 	
 	/**
@@ -65,7 +68,7 @@ public class Panel extends Component {
 	public Panel(GUIContext context, Image backgroundImage) {
 		this(context, context.getWidth(), context.getHeight(), backgroundImage);
 	}
-
+	
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
 		if (!isVisible()) {
@@ -73,9 +76,5 @@ public class Panel extends Component {
 		}
 		
 		super.render(container, g);
-		
-		if (backgroundImage != null) {
-			g.drawImage(backgroundImage, getX(), getY());
-		}
 	}
 }
