@@ -39,7 +39,7 @@ public class Label extends Component {
 	 * @param text The text to draw
 	 */
 	public Label(GUIContext context, int width, int height, Font font, Color c, String text) {
-		super (context, width, height);
+		super(context, width, height);
 		this.font = font;
 		this.c = c;
 		this.text = text;
@@ -47,7 +47,7 @@ public class Label extends Component {
 		verticalAlignment = VerticalAlignment.CENTER;
 		clip = true;
 		lines = new ArrayList<String>();
-		parseLines();
+		lines = parseLines(font, getWidth(), text);
 	}
 	
 	/**
@@ -130,7 +130,9 @@ public class Label extends Component {
 	 * makes sure lines do not extend over the given label
 	 * width.
 	 */
-	public void parseLines() {
+	public static ArrayList<String> parseLines(Font font, int width, String text) {
+		ArrayList<String> lines = new ArrayList<String>();
+		
 		Scanner lineScan = new Scanner(text);
 		Scanner wordScan;
 		
@@ -141,17 +143,21 @@ public class Label extends Component {
 			wordScan = new Scanner(lineScan.nextLine());
 			while (wordScan.hasNext()) {
 				String nextWord = wordScan.next();
-				if (currentLine != maxLines && font.getWidth(currentText + nextWord) > getWidth() ) {
+
+				if (currentLine != maxLines && font.getWidth(currentText + nextWord) > getWidth() ) {.
 					lines.add(currentLine, currentText.trim());
 					currentText = "";
 					currentLine++;
 				}
 				currentText += nextWord + " ";
 			}
+			
 			lines.add(currentLine, currentText.trim());
 			currentText = "";
 			currentLine++;
 		}
+		
+		return lines;
 	}
 	
 	/**
@@ -185,7 +191,7 @@ public class Label extends Component {
 	public void setText(String text) {
 		this.text = text;
 		this.lines.clear();
-		parseLines();
+		lines = parseLines(font, getWidth(), text);
 	}
 	
 	/**
