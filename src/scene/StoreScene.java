@@ -195,16 +195,16 @@ public class StoreScene extends Scene {
 			tempLabel = new Label(container, fieldFont, Color.white, currentType.getName());
 			String itemImagePath = "resources/graphics/icons/items/" + currentType.toString().toLowerCase() + ".png";
 			Sprite sprite = null;
-			
 			if (new File(itemImagePath).exists()) {
 				try {
 					sprite = new Sprite(container, 48, new Image(itemImagePath, false, Image.FILTER_NEAREST));
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
-				storeInventory[i] = new Counter(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, sprite, tempLabel);
-			} else {
-				storeInventory[i] = new Counter(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, tempLabel);
+			}
+			storeInventory[i] = new Counter(container, INVENTORY_BUTTON_WIDTH, INVENTORY_BUTTON_HEIGHT, sprite, tempLabel);
+			if (sprite != null) {
+				storeInventory[i].setShowLabel(false);
 			}
 			storeInventory[i].setMax(inv.getNumberOf(currentType));
 			storeInventory[i].setCount(inv.getNumberOf(currentType));
