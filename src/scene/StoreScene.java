@@ -157,7 +157,7 @@ public class StoreScene extends Scene {
 				int[] buyer = buyModal.getSegmentedControl().getSelection();
 				party.buyItemForInventory(currentPurchase, currentParty.get(buyer[0]));
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
-				partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", party.getMoney()));
+				updatePartyMoneyLabel();
 			}
 		}
 	}
@@ -169,7 +169,7 @@ public class StoreScene extends Scene {
 				storeInventory[getButtonIndex(item)].setMax(inv.getNumberOf(item));
 				storeInventory[getButtonIndex(item)].setCount(inv.getNumberOf(item));
 			}
-			partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", party.getMoney()));
+		updatePartyMoneyLabel();
 	}
 	
 	/**
@@ -184,8 +184,9 @@ public class StoreScene extends Scene {
 		buttonMap = new ArrayList<Item.ITEM_TYPE>();
 		
 		//Create money label
-		partyMoney = new Label(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, "Party's Money: $" + party.getMoney());
+		partyMoney = new Label(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white,"");
 		partyMoney.setAlignment(Label.Alignment.CENTER);
+		updatePartyMoneyLabel();
 		
 		storeInventory = new Counter[inventorySlots.size()];
 		for (int i = 0; i < inventorySlots.size(); i++) {
@@ -270,9 +271,12 @@ public class StoreScene extends Scene {
 		itemDescription[4].setText(ConstantStore.get("STORE_SCENE", "QUANTITY") + count);
 		itemDescription[5].setText(ConstantStore.get("STORE_SCENE", "TOTAL_WEIGHT") + count * currentItem.getWeight() + " " + ConstantStore.get("GENERAL", "WEIGHT_UNIT"));
 		itemDescription[6].setText(ConstantStore.get("STORE_SCENE", "TOTAL_COST") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + count * currentItem.getCost());
-		partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + party.getMoney());
+		updatePartyMoneyLabel();
 	}
 	
+	private void updatePartyMoneyLabel() {
+		partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", party.getMoney()));
+	}
 	/**
 	 * Check the validity of a current purchase after the Buy button has been pressed.
 	 * @return -1 if a failed purchase, 0 if purchase can proceed, 1 if you handled the case inside this method
