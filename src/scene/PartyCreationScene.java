@@ -111,8 +111,12 @@ public class PartyCreationScene extends Scene {
 			professionLabels[i] = Person.Profession.values()[i].toString();
 			
 			int money = Person.Profession.values()[i].getMoney();
-			String moneyString = "Money: " + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", money);
-			professionTooltips[i] = moneyString;
+			Person.Skill startingSkill = Person.Profession.values()[i].getStartingSkill();
+			
+			String moneyString = ConstantStore.get("PARTY_CREATION_SCENE", "PROFESSIONS_TOOLTIP_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", money);
+			String skillString = ConstantStore.get("PARTY_CREATION_SCENE", "PROFESSIONS_TOOLTIP_SKILL") + startingSkill;
+			
+			professionTooltips[i] = moneyString + "\n" + skillString;
 		}
 		professionSegmentedControl = new SegmentedControl(container, 800, 200, 5, 5, 5, true, 1, professionLabels);
 		professionSegmentedControl.setTooltips(professionTooltips);
