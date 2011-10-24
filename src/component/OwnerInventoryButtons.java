@@ -1,6 +1,5 @@
 package component;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,6 @@ import model.Item.ITEM_TYPE;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -158,6 +155,7 @@ public class OwnerInventoryButtons {
 		}
 		
 		weightBar.setCondition(getWeightCondition());
+		weightBar.setTooltipMessage(String.format("%d / %d", getWeightCondition().getCurrent(), getWeightCondition().getMax()));
 	}
 	
 	/**
