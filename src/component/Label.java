@@ -154,7 +154,18 @@ public class Label extends Component {
 			currentText = "";
 			currentLine++;
 		}
+	}
+	
+	public static int getNumberOfNewlines(String text) {
+		Scanner scanner = new Scanner(text);
 		
+		int count = 0;
+		while (scanner.hasNextLine()) {
+			scanner.nextLine();
+			count++;
+		}
+		
+		return count;
 	}
 	
 	/**
