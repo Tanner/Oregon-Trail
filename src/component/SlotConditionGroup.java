@@ -124,6 +124,9 @@ public class SlotConditionGroup extends ComponentConditionGroup<Counter> {
 			component.setHideCount(true);
 			component.setDisabled(false);
 			
+			component.setShowLabel(true);
+			component.setShowSprite(false);
+			
 			conditionBar.setVisible(false);
 		}
 	}

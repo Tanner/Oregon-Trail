@@ -157,7 +157,7 @@ public class StoreScene extends Scene {
 				int[] buyer = buyModal.getSegmentedControl().getSelection();
 				party.buyItemForInventory(currentPurchase, currentParty.get(buyer[0]));
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
-				partyMoney.setText("Party's Money: $" + String.format("%,d", party.getMoney()));
+				partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", party.getMoney()));
 			}
 		}
 	}
@@ -169,7 +169,7 @@ public class StoreScene extends Scene {
 				storeInventory[getButtonIndex(item)].setMax(inv.getNumberOf(item));
 				storeInventory[getButtonIndex(item)].setCount(inv.getNumberOf(item));
 			}
-			partyMoney.setText("Party's Money: $" + String.format("%,d", party.getMoney()));
+			partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", party.getMoney()));
 	}
 	
 	/**
@@ -216,11 +216,11 @@ public class StoreScene extends Scene {
 				container.getHeight() - REGULAR_BUTTON_HEIGHT - partyMoney.getHeight() - PADDING * 4);
 		
 		//Create cancel & inventory buttons
-		tempLabel = new Label(container, fieldFont, Color.white, "Leave");
+		tempLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "LEAVE"));
 		cancelButton = new Button(container, (container.getWidth() - PADDING * 4) / 4, REGULAR_BUTTON_HEIGHT, tempLabel);
 		cancelButton.addListener(new ButtonListener());
 		
-		tempLabel = new Label(container, fieldFont, Color.white, "Inventory");
+		tempLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("STORE_SCENE", "INVENTORY"));
 		inventoryButton = new Button(container, cancelButton.getWidth(), REGULAR_BUTTON_HEIGHT, tempLabel);
 		inventoryButton.addListener(new ButtonListener());
 
@@ -242,12 +242,12 @@ public class StoreScene extends Scene {
 		textPanel = new Panel(container, textPanelWidth, container.getHeight() - REGULAR_BUTTON_HEIGHT - PADDING * 3, TEXT_PANEL_COLOR);
 		
 		//Create clear & buy buttons
-		tempLabel = new Label(container, fieldFont, Color.white, "Clear");
+		tempLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("STORE_SCENE", "CLEAR"));
 		clearButton = new Button(container, textPanelWidth / 2 - PADDING / 2, REGULAR_BUTTON_HEIGHT, tempLabel);
 		clearButton.addListener(new ButtonListener());
 		clearButton.setDisabled(true);
 		
-		tempLabel = new Label(container, fieldFont, Color.white, "Buy");
+		tempLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("STORE_SCENE", "BUY"));
 		buyButton = new Button(container, textPanelWidth / 2 - PADDING / 2, REGULAR_BUTTON_HEIGHT, tempLabel);
 		buyButton.addListener(new ButtonListener());
 		buyButton.setDisabled(true);
@@ -265,12 +265,12 @@ public class StoreScene extends Scene {
 		itemDescription[0].setText(currentItem.getName());
 		itemDescription[1].setText(currentItem.getDescription());
 		itemDescription[2].setText(ConstantStore.get("STORE_SCENE", "WEIGHT") +
-				currentItem.getWeight() + ConstantStore.get("STORE_SCENE", "POUNDS"));
-		itemDescription[3].setText(ConstantStore.get("STORE_SCENE", "COST") + currentItem.getCost());
+				currentItem.getWeight() + " " + ConstantStore.get("GENERAL", "WEIGHT_UNIT"));
+		itemDescription[3].setText(ConstantStore.get("STORE_SCENE", "COST") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + currentItem.getCost());
 		itemDescription[4].setText(ConstantStore.get("STORE_SCENE", "QUANTITY") + count);
-		itemDescription[5].setText(ConstantStore.get("STORE_SCENE", "TOTAL_WEIGHT") + count * currentItem.getWeight());
-		itemDescription[6].setText(ConstantStore.get("STORE_SCENE", "TOTAL_COST") + count * currentItem.getCost());
-		partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + party.getMoney());
+		itemDescription[5].setText(ConstantStore.get("STORE_SCENE", "TOTAL_WEIGHT") + count * currentItem.getWeight() + " " + ConstantStore.get("GENERAL", "WEIGHT_UNIT"));
+		itemDescription[6].setText(ConstantStore.get("STORE_SCENE", "TOTAL_COST") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + count * currentItem.getCost());
+		partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + party.getMoney());
 	}
 	
 	/**
@@ -286,9 +286,7 @@ public class StoreScene extends Scene {
 		if (currentItem == Item.ITEM_TYPE.WAGON && party.getVehicle() == null ) {
 			if (itemCount > 1 && party.getMoney() >= Item.ITEM_TYPE.WAGON.getCost()) {
 				//The player tries to buy too many wagons
-				
-				String errorText = "Please buy a single wagon first!";
-				failedBuyModal = new Modal(container, this, errorText, "Ok");
+				failedBuyModal = new Modal(container, this, ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_WAGON"), ConstantStore.get("GENERAL", "OK"));
 				return -1;
 			} else if ( party.getMoney() > currentItem.getCost() ) {
 				//The player is able to buy the wagon
@@ -301,10 +299,7 @@ public class StoreScene extends Scene {
 				return 1;
 			} else {
 				//The player doesn't have enough money to buy a wagon at all
-				
-				String errorText = "You don't have enough money to buy a wagon."
-						+ "\nBetter prepare to make it on foot.";
-				failedBuyModal = new Modal(container, this, errorText, "Ok");
+				failedBuyModal = new Modal(container, this, ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY_FOR_WAGON"), ConstantStore.get("GENERAL", "OK"));
 				return -1;
 			}
 		} else if (currentBuyers.size() == 0) {
@@ -312,11 +307,11 @@ public class StoreScene extends Scene {
 			
 			String errorText;
 			if (party.getMoney() < itemCount * currentItem.getCost()) {
-				errorText = "You don't have enough money for this purchase.";
+				errorText = ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY");
 			} else {
-				errorText = "No one can carry that much weight!";
+				errorText = ConstantStore.get("STORE_SCENE", "ERR_CANT_CARRY");
 			}
-			failedBuyModal = new Modal(container, this, errorText, "Ok");
+			failedBuyModal = new Modal(container, this, errorText, ConstantStore.get("GENERAL", "OK"));
 			
 			return -1;
 		} else {
@@ -365,7 +360,7 @@ public class StoreScene extends Scene {
 			
 			SegmentedControl choosePlayer = new SegmentedControl(container, 600, 200, 3, 2, 20, true, 1, names);
 			choosePlayer.setDisabled(disabled);
-			buyModal = new Modal(container, this, "Choose who will buy this item", choosePlayer, "Buy", "Cancel");
+			buyModal = new Modal(container, this, ConstantStore.get("STORE_SCENE", "PICK_RECEIVER"), choosePlayer, ConstantStore.get("STORE_SCENE", "BUY"), ConstantStore.get("GENERAL", "CANCEL"));
 			return 0;
 		}
 	}

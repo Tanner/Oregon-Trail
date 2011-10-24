@@ -152,17 +152,28 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	
 	private static void setTooltipPosition(int x, int y) {
 		ReferencePoint referencePoint = ReferencePoint.TOPLEFT;
-		if (x < container.getWidth() >> 1) {
-			if (y > container.getHeight() >> 1) {
-				referencePoint = ReferencePoint.BOTTOMLEFT;
+		
+		final int BOTTOM_OFFSET = 20;
+		final int TOP_OFFSET = 10;
+		
+		if (x + tooltip.getWidth() >= container.getWidth()) {
+			if (y + BOTTOM_OFFSET + tooltip.getHeight() >= container.getHeight()) {
+				referencePoint = ReferencePoint.BOTTOMRIGHT;
+				y -= TOP_OFFSET;
+			} else {
+				referencePoint = ReferencePoint.TOPRIGHT;
+				y += BOTTOM_OFFSET;
 			}
 		} else {
-			if (y > container.getHeight() >> 1) {
-				referencePoint = ReferencePoint.BOTTOMRIGHT;
+			if (y + BOTTOM_OFFSET + tooltip.getHeight() >= container.getHeight()) {
+				referencePoint = ReferencePoint.BOTTOMLEFT;
+				y -= TOP_OFFSET;
 			} else {
-				referencePoint = ReferencePoint.TOPRIGHT;	
+				referencePoint = ReferencePoint.TOPLEFT;
+				y += BOTTOM_OFFSET;
 			}
 		}
+		
 		tooltip.setPosition(new Vector2f(x, y), referencePoint);
 	}
 

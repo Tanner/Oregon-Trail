@@ -66,12 +66,19 @@ public final class ConstantStore {
 		// Store Scene
 		Map<String, String> storeScene = new HashMap<String, String>();
 		storeScene.put("WEIGHT", "Weight: ");
-		storeScene.put("POUNDS", " lbs");
-		storeScene.put("COST", "Cost: $");
+		storeScene.put("COST", "Cost: ");
 		storeScene.put("QUANTITY", "Quantity: ");
 		storeScene.put("TOTAL_WEIGHT", "Total Weight: ");
-		storeScene.put("TOTAL_COST", "Total Cost: $");
-		storeScene.put("PARTY_MONEY", "Party's Money: $");
+		storeScene.put("TOTAL_COST", "Total Cost: ");
+		storeScene.put("PARTY_MONEY", "Party's Money: ");
+		storeScene.put("INVENTORY", "Inventory");
+		storeScene.put("CLEAR", "Clear");
+		storeScene.put("BUY", "Buy");
+		storeScene.put("PICK_RECEIVER", "Choose who will buy this item.");
+		storeScene.put("ERR_TOO_MANY_WAGON", "Please buy a single wagon first.");
+		storeScene.put("ERR_NOT_ENOUGH_MONEY_FOR_WAGON", "You don't have enough money to buy a wagon.\nBetter prepare to make it on foot.");
+		storeScene.put("ERR_NOT_ENOUGH_MONEY", "You don't have enough money for this purchase.");
+		storeScene.put("ERR_CANT_CARRY", "No one can carry that weight.");
 		literalMap.put("STORE_SCENE", storeScene);
 		
 		// HUD
@@ -85,52 +92,52 @@ public final class ConstantStore {
 		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
 		itemMap.put("WHEEL_WEIGHT", "5");
 		itemMap.put("WHEEL_COST", "75");
-		itemMap.put("WHEEL_FF", "0");
+		itemMap.put("WHEEL_FOOD_FACTOR", "0");
 		itemMap.put("SONIC_NAME", "Sonic");
 		itemMap.put("SONIC_DESCRIPTION", "Weeeweeeveeeeweee");
 		itemMap.put("SONIC_WEIGHT", "0.5");
 		itemMap.put("SONIC_COST", "100");
-		itemMap.put("SONIC_FF", "0");
+		itemMap.put("SONIC_FOOD_FACTOR", "0");
 		itemMap.put("APPLE_NAME", "Apple");
 		itemMap.put("APPLE_DESCRIPTION", "Its an Apple.");
 		itemMap.put("APPLE_WEIGHT", "1.5");
 		itemMap.put("APPLE_COST", "2");
-		itemMap.put("APPLE_FF", "1");
+		itemMap.put("APPLE_FOOD_FACTOR", "1");
 		itemMap.put("BREAD_NAME", "Bread");
 		itemMap.put("BREAD_DESCRIPTION", "Its the finest bread ever.");
 		itemMap.put("BREAD_WEIGHT", "1.0");
 		itemMap.put("BREAD_COST", "4");
-		itemMap.put("BREAD_FF", "2");
+		itemMap.put("BREAD_FOOD_FACTOR", "2");
 		itemMap.put("GUN_NAME", "Gun");
 		itemMap.put("GUN_DESCRIPTION", "Bang! Bang bang bang!");
 		itemMap.put("GUN_WEIGHT", "5.0");
 		itemMap.put("GUN_COST", "50");
-		itemMap.put("GUN_FF", "0");
+		itemMap.put("GUN_FOOD_FACTOR", "0");
 		itemMap.put("AMMO_NAME", "Bullet");
 		itemMap.put("AMMO_DESCRIPTION", "For a gun.");
 		itemMap.put("AMMO_WEIGHT", "0.25");
 		itemMap.put("AMMO_COST", "2");
-		itemMap.put("AMMO_FF", "0");
+		itemMap.put("AMMO_FOOD_FACTOR", "0");
 		itemMap.put("MEAT_NAME", "Meat");
 		itemMap.put("MEAT_DESCRIPTION", "Food noms - ohm nom nom.");
 		itemMap.put("MEAT_WEIGHT", "25");
 		itemMap.put("MEAT_COST", "15");
-		itemMap.put("MEAT_FF", "4");
+		itemMap.put("MEAT_FOOD_FACTOR", "4");
 		itemMap.put("WAGON_NAME", "Wagon");
 		itemMap.put("WAGON_DESCRIPTION", "This is a trusty wooden wagon.");
 		itemMap.put("WAGON_WEIGHT", "200");
 		itemMap.put("WAGON_COST", "2000");
-		itemMap.put("WAGON_FF", "0");
+		itemMap.put("WAGON_FOOD_FACTOR", "0");
 		itemMap.put("OX_NAME", "Ox");
 		itemMap.put("OX_DESCRIPTION", "MOOO!");
 		itemMap.put("OX_WEIGHT", "200");
 		itemMap.put("OX_COST", "100");
-		itemMap.put("OX_FF", "0");
+		itemMap.put("OX_FOOD_FACTOR", "0");
 		itemMap.put("STRANGE_MEAT_NAME", "Strange Meat");
 		itemMap.put("STRANGE_MEAT_DESCRIPTION", "I don't want to know where this came from...");
 		itemMap.put("STRANGE_MEAT_WEIGHT", "25");
 		itemMap.put("STRANGE_MEAT_COST", "15");
-		itemMap.put("STRANGE_MEAT_FF", "3");
+		itemMap.put("STRANGE_MEAT_FOOD_FACTOR", "3");
 		literalMap.put("ITEMS", itemMap);
 		
 		// General
@@ -140,7 +147,9 @@ public final class ConstantStore {
 		general.put("OK", "Ok");
 		general.put("CANCEL", "Cancel");
 		general.put("CLOSE", "Close");
+		general.put("LEAVE", "Leave");
 		general.put("PROFESSION", "Profession");
+		general.put("WEIGHT_UNIT", "lbs");
 		literalMap.put("GENERAL", general);
 
 		LITERALS = Collections.unmodifiableMap(literalMap);
