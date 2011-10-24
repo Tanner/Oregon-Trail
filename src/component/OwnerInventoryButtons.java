@@ -21,6 +21,7 @@ import scene.PartyInventoryScene.Mode;
 import component.Label.Alignment;
 import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
+import core.ConstantStore;
 import core.FontManager;
 import core.GameDirector;
 
@@ -115,12 +116,10 @@ public class OwnerInventoryButtons {
 		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, NAME_PADDING);
 		
 		weightBar = new ConditionBar(container, ITEM_BUTTON_WIDTH * 2 + PADDING, nameLabel.getHeight(), getWeightCondition(), font);
+		weightBar.setTooltipEnabled(true);
 		weightBar.setDisableText(false);
 		panel.add(weightBar, itemPanel.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.BOTTOMRIGHT, 0, -NAME_PADDING);
-		
-		weightBar.setTooltipEnabled(true);
-		weightBar.setTooltipMessage(String.format("%d / %d", getWeightCondition().getCurrent(), getWeightCondition().getMax()));
-		
+				
 		updateGraphics();
 	}
 	
@@ -155,7 +154,9 @@ public class OwnerInventoryButtons {
 		}
 		
 		weightBar.setCondition(getWeightCondition());
-		weightBar.setTooltipMessage(String.format("%d / %d", getWeightCondition().getCurrent(), getWeightCondition().getMax()));
+		
+		String text = "%d / %d " + ConstantStore.get("GENERAL", "WEIGHT_UNIT");
+		weightBar.setTooltipMessage(String.format(text, getWeightCondition().getCurrent(), getWeightCondition().getMax()));
 	}
 	
 	/**
