@@ -14,8 +14,10 @@ public class Tooltip extends Label {
 	public Tooltip(GUIContext context, Component owner, String message) {
 		super(context,
 				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD).getWidth(message) + PADDING * 2,
-				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD).getLineHeight() + PADDING * 2,
-				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD), Color.white, message);
+				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD).getLineHeight() * Label.parseLines(GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD), GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD).getWidth(message) + PADDING * 2, message).size() + PADDING * 2,
+				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD), 
+				Color.white,
+				message);
 		
 		this.owner = owner;
 				
