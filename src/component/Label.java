@@ -136,12 +136,12 @@ public class Label extends Component {
 		
 		String currentText = "";
 		int currentLine = 0;
-		
+		int maxLines = (int) (getHeight() / getFontHeight()) - 1;
 		while ( lineScan.hasNext() ) {
 			wordScan = new Scanner(lineScan.nextLine());
 			while (wordScan.hasNext()) {
 				String nextWord = wordScan.next();
-				if ( font.getWidth(currentText + nextWord) > getWidth() ) {
+				if (  currentLine != maxLines && font.getWidth(currentText + nextWord) > getWidth() ) {
 					lines.add(currentLine, currentText.trim());
 					currentText = "";
 					currentLine++;
