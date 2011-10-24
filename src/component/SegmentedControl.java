@@ -230,6 +230,17 @@ public class SegmentedControl extends Component {
 		}
 	}
 	
+	public void setTooltips(String[] tooltips) {
+		if (tooltips.length != STATES) {
+			return;
+		}
+		
+		for (int i = 0; i < STATES; i++) {
+			buttons[i].setTooltipEnabled(true);
+			buttons[i].setTooltipMessage(tooltips[i]);
+		}
+	}
+	
 	/**
 	 * Listener for the buttons of {@code SegmentedControl}.
 	 */

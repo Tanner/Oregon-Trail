@@ -13,7 +13,6 @@ import core.Logger;
  * as their name, and what their profession is called.
  */
 public class Person implements Conditioned, Inventoried {
-	
 	private final Condition skillPoints;
 	
 	private final Condition health;
