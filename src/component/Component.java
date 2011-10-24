@@ -504,6 +504,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	public void setAcceptingInput(boolean acceptingInput) {
 		super.setAcceptingInput(acceptingInput);
 		
+		if (!acceptingInput) {
+			mouseOver = false;
+		}
+		
 		for (Component c : components) {
 			c.setAcceptingInput(acceptingInput);
 		}
