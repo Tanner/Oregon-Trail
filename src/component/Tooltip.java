@@ -6,16 +6,18 @@ import org.newdawn.slick.gui.GUIContext;
 import core.GameDirector;
 import core.FontManager.FontID;
 
-public class Tooltip extends Component {
+public class Tooltip extends Label {
+	private static final int PADDING = 5;
+	
 	private Component owner;
 
-	public Tooltip(GUIContext context, int width, int height, Component owner, String message) {
-		super(context, width, height);
+	public Tooltip(GUIContext context, Component owner, String message) {
+		super(context,
+				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD).getWidth(message) + PADDING * 2,
+				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD).getLineHeight() + PADDING * 2,
+				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD), Color.white, message);
 		
 		this.owner = owner;
-		
-		Label label = new Label(context, width, height, GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD), Color.white, message);
-		add(label, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 				
 		setBackgroundColor(Color.black);
 	}

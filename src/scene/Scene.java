@@ -122,12 +122,12 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	public static void showTooltip(int x, int y, Component owner, String message) {
 		if (tooltip != null) {
 			if (tooltip.getOwner() != owner) {
-				tooltip = new Tooltip(container, 200, 50, owner, message);
+				tooltip = new Tooltip(container, owner, message);
 			}
 			
 			setTooltipPosition(x, y);
 		} else {
-			tooltip = new Tooltip(container, 200, 50, owner, message);
+			tooltip = new Tooltip(container, owner, message);
 			setTooltipPosition(x, y);
 		}
 	}

@@ -14,6 +14,8 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
 
+import scene.Scene;
+
 import core.GameDirector;
 
 /**
@@ -52,7 +54,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	protected List<Component> components;
 	private boolean mouseOver;
 	private boolean visible;
-		
+	
+	private boolean tooltipEnabled;
+	private String tooltipMessage;
+	
 	/**
 	 * Constructs a {@code Component} with a width and height.
 	 * @param context The Gui Context
@@ -511,6 +516,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 		
 		super.mouseMoved(oldx, oldy, newx, newy);
+		
+		if (tooltipEnabled) {
+			Scene.showTooltip(newx, newy, this, tooltipMessage);
+		}
 				
 		this.mouseOver = getArea().contains(newx, newy);
 	}
@@ -531,5 +540,25 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		} else {
 			debugMode = DebugMode.NONE;
 		}
+	}
+
+	public boolean isTooltipEnabled() {
+		return tooltipEnabled;
+	}
+
+	public void setTooltipEnabled(boolean tooltipEnabled) {
+		this.tooltipEnabled = tooltipEnabled;
+		
+		if (tooltipMessage == null) {
+			setTooltipMessage("");
+		}
+	}
+
+	public String getTooltipMessage() {
+		return tooltipMessage;
+	}
+
+	public void setTooltipMessage(String tooltipMessage) {
+		this.tooltipMessage = tooltipMessage;
 	}
 }
