@@ -1,5 +1,6 @@
 package scene;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import model.item.Vehicle;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -28,6 +30,7 @@ import component.OwnerInventoryButtons;
 import component.Panel;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
+import component.sprite.Sprite;
 
 import core.ConstantStore;
 import core.FontManager;
@@ -186,6 +189,8 @@ public class PartyInventoryScene extends Scene {
 			binInventory[i] = new Inventory(1, Integer.MAX_VALUE);
 		}
 		
+		updateBinButton();
+		
 		backgroundLayer.add(new Panel(container, new Color(0x3b2d59)));
 	}
 	
@@ -215,13 +220,35 @@ public class PartyInventoryScene extends Scene {
 		
 		if (amount == 0) {
 			binButton.setCount(0);
-			binButton.setText("");
+			binButton.setShowLabel(false);
+			binButton.setShowSprite(false);
 			binButton.setHideCount(true);
 			binButton.setDisabled(true);
 		} else {
-			binButton.setCount(amount);
+			String itemImagePath = "resources/graphics/icons/items/" + getBinItemType().toString().toLowerCase() + ".png";
+			Sprite sprite = null;
+			
+			if (new File(itemImagePath).exists()) {
+				try {
+					sprite = new Sprite(container, 48, new Image(itemImagePath, false, Image.FILTER_NEAREST));
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			binButton.setSprite(sprite);
 			binButton.setText(name);
-			binButton.setHideCount(true);
+			
+			if (sprite != null) {
+				binButton.setShowSprite(true);
+				binButton.setShowLabel(false);
+			} else {
+				binButton.setShowLabel(true);
+				binButton.setShowSprite(false);
+			}
+
+			binButton.setCount(amount);
+			binButton.setHideCount(false);
 			binButton.setDisabled(false);
 		}
 	}
