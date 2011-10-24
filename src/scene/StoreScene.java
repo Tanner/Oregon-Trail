@@ -406,7 +406,7 @@ public class StoreScene extends Scene {
 			if (source == cancelButton) {
 				GameDirector.sharedSceneListener().sceneDidEnd(StoreScene.this);
 			} else if (source == inventoryButton) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, StoreScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, StoreScene.this, false);
 			} else if (source == buyButton) {
 				int successCode = makePurchase();
 				if (successCode == 0) {

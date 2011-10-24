@@ -125,7 +125,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	  SceneDelegate
 	  ----------------------*/
 	@Override
-	public void requestScene(SceneID id, Scene lastScene) {
+	public void requestScene(SceneID id, Scene lastScene, boolean popLastScene) {
 		Scene newScene = null;
 		Transition outTransition = null;
 		Transition inTransition = null;
@@ -141,6 +141,9 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 				// Requested Party Creation Scene
 				newScene = new PartyCreationScene(game.getPlayer());
 			}
+		} else if (lastScene instanceof PartyCreationScene) {
+			// Last scene was Party Creation Scene
+			newScene = new TownScene(game.getPlayer().getParty());
 		} else if (lastScene instanceof TownScene) {
 			// Last scene was Town Scene
 			if (id == SceneID.STORE) {
@@ -178,22 +181,13 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 				inTransition = new FadeInTransition(Color.black);
 			}
 			
-			sceneDirector.pushScene(newScene, true, outTransition, inTransition);
+			sceneDirector.pushScene(newScene, popLastScene, true, outTransition, inTransition);
 		}
 	}
 	
 	@Override
 	public void sceneDidEnd(Scene scene) {
-		Scene newScene = null;
-		if (scene instanceof PartyCreationScene) {
-			// Last scene was Party Creation Scene
-			newScene = new TownScene(game.getPlayer().getParty());
-		}
-		
 		sceneDirector.popScene(true);
-		if (newScene != null) {
-			sceneDirector.pushScene(newScene, true, null, null);
-		}
 	}
 	
 	@Override

@@ -35,9 +35,12 @@ public class SceneDirector extends StateBasedGame {
 	 * Push a {@code Scene} on the stack. Present the {@code Scene} with an animated
 	 * transition if animated is {@code true}.
 	 * @param scene {@code Scene} to present
+	 * @param popLastScene Boolean value whether to pop last scene
 	 * @param animated Boolean value whether to animate transition
+	 * @param transitionOut Transition for animating out last scene
+	 * @param transitionIn Transition for animating in new scene
 	 */
-	public void pushScene(Scene scene, boolean animated, Transition transitionOut, Transition transitionIn) {
+	public void pushScene(Scene scene, boolean popLastScene, boolean animated, Transition transitionOut, Transition transitionIn) {
 		// Don't add a Scene if there's already a Scene on the stack of the same type
 		for (Scene sceneOnStack : scenes) {
 			if (sceneOnStack.getID() == scene.getID()) {
@@ -64,6 +67,11 @@ public class SceneDirector extends StateBasedGame {
 		}
 		
 		scenes.peek().start();
+		
+		if (popLastScene) {
+			scenes.get(scenes.size()-2).stop();
+			scenes.remove(scenes.size()-2);
+		}
 	}
 	
 	/**
@@ -72,15 +80,17 @@ public class SceneDirector extends StateBasedGame {
 	 * @param animated Boolean value whether to animate transition
 	 */
 	public void popScene(boolean animated) {
-		if (scenes.size() > 1) {
-			scenes.peek().stop();
-			scenes.pop();
+		if (scenes.size() <= 1) {
+			return;
+		}
 		
-			if (animated) {
-				enterState(scenes.peek().getID(), new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-			} else {
-				enterState(scenes.peek().getID());
-			}
+		scenes.peek().stop();
+		scenes.pop();
+	
+		if (animated) {
+			enterState(scenes.peek().getID(), new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+		} else {
+			enterState(scenes.peek().getID());
 		}
 
 		scenes.peek().start();
@@ -93,7 +103,7 @@ public class SceneDirector extends StateBasedGame {
 	public void replaceStackWithScene(Scene scene) {
 		scenes.peek().stop();
 		scenes.removeAllElements();
-		pushScene(scene, false, null, null);
+		pushScene(scene, false, false, null, null);
 	}
 	
 	@Override

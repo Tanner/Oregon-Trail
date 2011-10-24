@@ -59,12 +59,17 @@ public class MainMenuScene extends Scene {
 		return ID.ordinal();
 	}
 	
+	public void stop() {
+		super.stop();
+		
+		sound.stop();
+	}
+	
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent source) {
 			if (source == newGameButton) {
-				sound.stop();
-				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYCREATION, MainMenuScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYCREATION, MainMenuScene.this, true);
 			}
 		}
 		

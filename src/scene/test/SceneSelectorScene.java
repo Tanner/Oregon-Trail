@@ -103,10 +103,10 @@ public class SceneSelectorScene extends Scene {
 			
 			if (buttonText.equals(SceneID.MAINMENU.getName())) {
 				// Main Menu
-				GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.PARTYCREATION.getName())) {
 				// Party Creation
-				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYCREATION, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYCREATION, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.TOWN.getName())) {
 				// Town
 				if (player.getParty() == null) {
@@ -114,7 +114,7 @@ public class SceneSelectorScene extends Scene {
 					return;
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.STORE.getName())) {
 				// Store
 				if (player.getParty() == null) {
@@ -122,7 +122,7 @@ public class SceneSelectorScene extends Scene {
 					return;
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.STORE, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.STORE, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.PARTYINVENTORY.getName())) {
 				// Party Inventory
 				if (player.getParty() == null) {
@@ -130,7 +130,7 @@ public class SceneSelectorScene extends Scene {
 					return;
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.HUNT.getName())) {
 				// Hunt
 				if (player.getParty() == null) {
@@ -138,7 +138,7 @@ public class SceneSelectorScene extends Scene {
 					return;		
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.HUNT, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.HUNT, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.TRAIL.getName())) {
 				// Trail
 				if (player.getParty() == null) {
@@ -146,7 +146,7 @@ public class SceneSelectorScene extends Scene {
 					return;		
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.PARTYMANAGEMENTSCENE.getName())) {
 				// Party Management Scene
 				if (player.getParty() == null) {
@@ -154,7 +154,7 @@ public class SceneSelectorScene extends Scene {
 					return;		
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.GAMEOVER.getName())) {
 				// Game Over
 				if (player.getParty() == null) {
@@ -162,10 +162,10 @@ public class SceneSelectorScene extends Scene {
 					return;		
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.COMPONENTTEST.getName())) {
 				// Component Test
-				GameDirector.sharedSceneListener().requestScene(SceneID.COMPONENTTEST, SceneSelectorScene.this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.COMPONENTTEST, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.TRAILTEST.getName())) {
 				// Trail Test
 				if (player.getParty() == null) {
@@ -173,7 +173,7 @@ public class SceneSelectorScene extends Scene {
 					return;		
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this);	
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this, false);	
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_GAME"))) {
 				game.reset();
 				player = game.getPlayer();

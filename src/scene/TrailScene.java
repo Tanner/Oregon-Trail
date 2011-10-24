@@ -75,10 +75,10 @@ public class TrailScene extends Scene {
 			List<String> notifications = party.walk();
 			
 			if (party.getPartyMembers().isEmpty()) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this);
+				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
 			}
 			Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
-			GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this);
+			GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this, false);
 
 			hud.updatePartyInformation();
 			hud.addNotifications(notifications);
@@ -95,7 +95,7 @@ public class TrailScene extends Scene {
 	private class HUDListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
-			GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, TrailScene.this);
+			GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, TrailScene.this, false);
 		}
 	}
 }

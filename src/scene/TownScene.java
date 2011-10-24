@@ -56,7 +56,7 @@ public class TownScene extends Scene {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ENTER) {
-			GameDirector.sharedSceneListener().requestScene(SceneID.STORE, this);
+			GameDirector.sharedSceneListener().requestScene(SceneID.STORE, this, false);
 		}
 	}
 

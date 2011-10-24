@@ -11,7 +11,7 @@ public interface SceneListener {
 	 * Request a new {@code Scene} to be presented.
 	 * @param id The ID for the scene requested
 	 */
-	public void requestScene(SceneID id, Scene lastScene);
+	public void requestScene(SceneID id, Scene lastScene, boolean popLastScene);
 	
 	/**
 	 * Handle scene ending.
