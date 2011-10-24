@@ -23,6 +23,7 @@ public class MainMenuScene extends Scene {
 	
 	private Button newGameButton;
 	Music sound;
+	Sound sound2;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -41,8 +42,11 @@ public class MainMenuScene extends Scene {
 		
 		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/map.png", false, Image.FILTER_NEAREST)));
 		
+		//SOUND!!!
 		sound = new Music("resources/music/GBUogg.ogg");
+		//sound2 = new Sound("resources/music/smoothogg2.ogg");
 		sound.loop();
+		//sound2.play();
 	}
 
 	@Override
