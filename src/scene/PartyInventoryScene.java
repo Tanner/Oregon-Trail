@@ -429,10 +429,12 @@ public class PartyInventoryScene extends Scene {
 					currentMode = Mode.TRANSFER;
 					transferButton.setText(ConstantStore.get("GENERAL", "CANCEL"));
 					binButton.setDisabled(true);
+					functionButton.setDisabled(true);
 				} else {
 					currentMode = Mode.NORMAL;
 					transferButton.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
 					binButton.setDisabled(false);
+					functionButton.setDisabled(false);
 				}
 				
 				updateGraphics();
@@ -503,6 +505,7 @@ public class PartyInventoryScene extends Scene {
 				// Reset everything
 				currentMode = Mode.NORMAL;
 				binButton.setDisabled(false);
+				functionButton.setDisabled(false);
 				transferButton.setText(ConstantStore.get("PARTY_INVENTORY_SCENE", "TRANSFER"));
 				
 				updateGraphics();
