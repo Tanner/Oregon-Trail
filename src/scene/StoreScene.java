@@ -265,10 +265,10 @@ public class StoreScene extends Scene {
 		itemDescription[0].setText(currentItem.getName());
 		itemDescription[1].setText(currentItem.getDescription());
 		itemDescription[2].setText(ConstantStore.get("STORE_SCENE", "WEIGHT") +
-				currentItem.getWeight() + ConstantStore.get("STORE_SCENE", "POUNDS"));
+				currentItem.getWeight() + " " + ConstantStore.get("GENERAL", "WEIGHT_UNIT"));
 		itemDescription[3].setText(ConstantStore.get("STORE_SCENE", "COST") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + currentItem.getCost());
 		itemDescription[4].setText(ConstantStore.get("STORE_SCENE", "QUANTITY") + count);
-		itemDescription[5].setText(ConstantStore.get("STORE_SCENE", "TOTAL_WEIGHT") + count * currentItem.getWeight());
+		itemDescription[5].setText(ConstantStore.get("STORE_SCENE", "TOTAL_WEIGHT") + count * currentItem.getWeight() + " " + ConstantStore.get("GENERAL", "WEIGHT_UNIT"));
 		itemDescription[6].setText(ConstantStore.get("STORE_SCENE", "TOTAL_COST") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + count * currentItem.getCost());
 		partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + party.getMoney());
 	}

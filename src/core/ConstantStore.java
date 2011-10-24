@@ -66,7 +66,6 @@ public final class ConstantStore {
 		// Store Scene
 		Map<String, String> storeScene = new HashMap<String, String>();
 		storeScene.put("WEIGHT", "Weight: ");
-		storeScene.put("POUNDS", " lbs");
 		storeScene.put("COST", "Cost: ");
 		storeScene.put("QUANTITY", "Quantity: ");
 		storeScene.put("TOTAL_WEIGHT", "Total Weight: ");
@@ -150,6 +149,7 @@ public final class ConstantStore {
 		general.put("CLOSE", "Close");
 		general.put("LEAVE", "Leave");
 		general.put("PROFESSION", "Profession");
+		general.put("WEIGHT_UNIT", "lbs");
 		literalMap.put("GENERAL", general);
 
 		LITERALS = Collections.unmodifiableMap(literalMap);
