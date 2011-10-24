@@ -261,16 +261,16 @@ public class StoreScene extends Scene {
 	 */
 	private void updateLabels(Item.ITEM_TYPE currentItem) {
 		int count = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
-		
-		//TODO: These text prefixes should be in ConstantStore
+	
 		itemDescription[0].setText(currentItem.getName());
 		itemDescription[1].setText(currentItem.getDescription());
-		itemDescription[2].setText("Weight: " + currentItem.getWeight() + " lbs");
-		itemDescription[3].setText("Cost: $" + currentItem.getCost());
-		itemDescription[4].setText("Quantity: " + count);
-		itemDescription[5].setText("Total Weight: " + count * currentItem.getWeight());
-		itemDescription[6].setText("Total Cost: $" + count * currentItem.getCost());
-		partyMoney.setText("Party's Money: $" + party.getMoney());
+		itemDescription[2].setText(ConstantStore.get("STORE_SCENE", "WEIGHT") +
+				currentItem.getWeight() + ConstantStore.get("STORE_SCENE", "POUNDS"));
+		itemDescription[3].setText(ConstantStore.get("STORE_SCENE", "COST") + currentItem.getCost());
+		itemDescription[4].setText(ConstantStore.get("STORE_SCENE", "QUANTITY") + count);
+		itemDescription[5].setText(ConstantStore.get("STORE_SCENE", "TOTAL_WEIGHT") + count * currentItem.getWeight());
+		itemDescription[6].setText(ConstantStore.get("STORE_SCENE", "TOTAL_COST") + count * currentItem.getCost());
+		partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + party.getMoney());
 	}
 	
 	/**
