@@ -1,5 +1,6 @@
 package scene;
 
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -21,6 +22,7 @@ public class MainMenuScene extends Scene {
 	public static final SceneID ID = SceneID.MAINMENU;
 	
 	private Button newGameButton;
+	Music sound;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -38,6 +40,9 @@ public class MainMenuScene extends Scene {
 		mainLayer.add(newGameButton, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -75);
 		
 		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/map.png", false, Image.FILTER_NEAREST)));
+		
+		sound = new Music("resources/music/GBUogg.ogg");
+		sound.loop();
 	}
 
 	@Override
@@ -54,6 +59,7 @@ public class MainMenuScene extends Scene {
 		@Override
 		public void componentActivated(AbstractComponent source) {
 			if (source == newGameButton) {
+				sound.stop();
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYCREATION, MainMenuScene.this);
 			}
 		}
