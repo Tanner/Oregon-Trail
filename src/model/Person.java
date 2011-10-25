@@ -93,31 +93,31 @@ public class Person implements Conditioned, Inventoried {
 	 * 
 	 */
 	public static enum Profession {
-		BANKER (1, Skill.COMMERCE, "Banker"),
-		DOCTOR (1.2f, Skill.MEDICAL, "Doctor"),
-		MERCHANT (1.4f, Skill.COMMERCE, "Merchant"),
-		PHARMACIST (1.6f, Skill.MEDICAL, "Pharmacist"),
-		WAINWRIGHT (1.8f, Skill.CARPENTRY, "Wainwright"),
-		GUNSMITH (2, Skill.SHARPSHOOTING, "Gunsmith"),
-		BLACKSMITH (2.2f, Skill.BLACKSMITHING, "Blacksmith"),
-		MASON (2.4f, Skill.CARPENTRY, "Mason"),
-		WHEELWRIGHT (2.6f, Skill.CARPENTRY, "Wheelwright"),
-		CARPENTER (2.8f, Skill.CARPENTRY, "Carpenter"),
-		SADDLEMAKER (3, Skill.FARMING, "Saddlemaker"),
-		BRICKMAKER (3.2f, Skill.CARPENTRY, "Brickmaker"),
-		PROSPECTOR (3.4f, Skill.RIVERWORK, "Prospector"),
-		TRAPPER (3.6f, Skill.TRACKING, "Trapper"),
-		SURVEYOR (3.8f, Skill.RIVERWORK, "Surveyor"),
-		SHOEMAKER (4, Skill.SEWING, "Shoemaker"),
-		JOURNALIST (4.1f, Skill.NONE, "Journalist"),
-		PRINTER (4.2f, Skill.COMMERCE, "Printer"),
-		BUTCHER (4.3f, Skill.COOKING, "Butcher"),
-		BAKER (4.4f, Skill.COOKING, "Baker"),
-		TAILOR (4.5f, Skill.SEWING, "Tailor"),
-		FARMER (4.5f, Skill.FARMING, "Farmer"),
-		PASTOR (4.6f, Skill.NONE, "Pastor"),
-		ARTIST (4.8f, Skill.MUSICAL, "Artist"),
-		TEACHER (5, Skill.NONE, "Teacher");
+		BANKER (1, Skill.COMMERCE, "Banker", null),
+		DOCTOR (1.2f, Skill.MEDICAL, "Doctor", null),
+		MERCHANT (1.4f, Skill.COMMERCE, "Merchant", null),
+		PHARMACIST (1.6f, Skill.MEDICAL, "Pharmacist", null),
+		WAINWRIGHT (1.8f, Skill.CARPENTRY, "Wainwright", ITEM_TYPE.WHEEL),
+		GUNSMITH (2, Skill.SHARPSHOOTING, "Gunsmith", ITEM_TYPE.GUN),
+		BLACKSMITH (2.2f, Skill.BLACKSMITHING, "Blacksmith", null),
+		MASON (2.4f, Skill.CARPENTRY, "Mason", null),
+		WHEELWRIGHT (2.6f, Skill.CARPENTRY, "Wheelwright", ITEM_TYPE.WHEEL),
+		CARPENTER (2.8f, Skill.CARPENTRY, "Carpenter", ITEM_TYPE.WHEEL),
+		SADDLEMAKER (3, Skill.FARMING, "Saddlemaker", null),
+		BRICKMAKER (3.2f, Skill.CARPENTRY, "Brickmaker", null),
+		PROSPECTOR (3.4f, Skill.RIVERWORK, "Prospector", null),
+		TRAPPER (3.6f, Skill.TRACKING, "Trapper", null),
+		SURVEYOR (3.8f, Skill.RIVERWORK, "Surveyor", null),
+		SHOEMAKER (4, Skill.SEWING, "Shoemaker", null),
+		JOURNALIST (4.1f, Skill.NONE, "Journalist", null),
+		PRINTER (4.2f, Skill.COMMERCE, "Printer", null),
+		BUTCHER (4.3f, Skill.COOKING, "Butcher", ITEM_TYPE.MEAT),
+		BAKER (4.4f, Skill.COOKING, "Baker", ITEM_TYPE.BREAD),
+		TAILOR (4.5f, Skill.SEWING, "Tailor", null),
+		FARMER (4.5f, Skill.FARMING, "Farmer", ITEM_TYPE.APPLE),
+		PASTOR (4.6f, Skill.NONE, "Pastor", null),
+		ARTIST (4.8f, Skill.MUSICAL, "Artist", null),
+		TEACHER (5, Skill.NONE, "Teacher", null);
 		
 		private final float moneyDivider;
 	
@@ -125,16 +125,19 @@ public class Person implements Conditioned, Inventoried {
 		
 		private final String name;
 		
+		private final ITEM_TYPE startingItem;
+		
 		/**
 		 * Assigns money multiplier and starting skill to each profession
 		 * @param moneyDivider Gold divided by and score multiplied by this 
 		 * @param startingSkill Skill the profession starts with
 		 * @param name The profession's name
 		 */
-		private Profession(float moneyDivider, Skill startingSkill, String name) {
+		private Profession(float moneyDivider, Skill startingSkill, String name, ITEM_TYPE itemType) {
 			this.moneyDivider = moneyDivider;
 			this.startingSkill = startingSkill;
 			this.name = name;
+			this.startingItem = itemType;
 		}
 		
 		/**
@@ -151,6 +154,10 @@ public class Person implements Conditioned, Inventoried {
 		 */
 		public Skill getStartingSkill() {
 			return startingSkill;
+		}
+		
+		public ITEM_TYPE getStartingItem() {
+			return startingItem;
 		}
 		
 		/**
@@ -187,6 +194,8 @@ public class Person implements Conditioned, Inventoried {
 			this.profession = profession;
 			Logger.log(this.name + " became a " + this.profession, Logger.Level.INFO);
 			addSkill(profession.getStartingSkill());
+			inventory.clear();
+			addItemToInventory(new Item(profession.getStartingItem()));
 			return;
 		} else if (this.profession == profession) {
 			Logger.log(this.name + " is already a " + profession, Logger.Level.INFO);
@@ -197,6 +206,8 @@ public class Person implements Conditioned, Inventoried {
 					this.profession + " and lost all current skills", Logger.Level.INFO);
 			this.profession = null;
 			setProfession(profession);
+			inventory.clear();
+			addItemToInventory(new Item(profession.getStartingItem()));
 			return;
 		} else {
 			Logger.log("Don't know what happened", Logger.Level.INFO);

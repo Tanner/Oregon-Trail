@@ -122,7 +122,7 @@ public final class ConstantStore {
 		itemMap.put("AMMO_FOOD_FACTOR", "0");
 		itemMap.put("MEAT_NAME", "Meat");
 		itemMap.put("MEAT_DESCRIPTION", "Food noms - ohm nom nom.");
-		itemMap.put("MEAT_WEIGHT", "25");
+		itemMap.put("MEAT_WEIGHT", "1");
 		itemMap.put("MEAT_COST", "15");
 		itemMap.put("MEAT_FOOD_FACTOR", "4");
 		itemMap.put("WAGON_NAME", "Wagon");
