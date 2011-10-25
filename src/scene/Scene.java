@@ -95,30 +95,15 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 		hudLayer.add(hud);
 	}
 	
-	/**
-	 * Things to do when the Scene is started.
-	 */
-	public void start() {
+	@Override
+	public void enter(GameContainer container, StateBasedGame game)  {
 		mainLayer.setAcceptingInput(true);
 		modalLayer.setAcceptingInput(true);
 		setActive(true);
 	}
 	
-	/**
-	 * Things to do when the Scene is paused.
-	 */
-	public void pause() {
-		mainLayer.setAcceptingInput(false);
-		modalLayer.setAcceptingInput(false);
-		setActive(false);
-		
-		removeTooltip();
-	}
-	
-	/**
-	 * Things to do when the Scene is stopped.
-	 */
-	public void stop() {
+	@Override
+	public void leave(GameContainer container, StateBasedGame game)  {
 		mainLayer.setAcceptingInput(false);
 		modalLayer.setAcceptingInput(false);
 		setActive(false);

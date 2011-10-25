@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -31,6 +32,8 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	
 	private Game game;
 	private WorldMap worldMap;
+
+	private Music music;
 	/**
 	 * Constructs a game director object.
 	 */
@@ -229,6 +232,19 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	private int getProbability(SceneID scene) {
 		return 1;
 	}
+	
+	@Override
+	public void playMusic(Music music) {
+		this.music = music;
+		this.music.loop();
+	}
+	
+	public void stopMusic() {
+		if (this.music != null) {
+			this.music.fade(1000, 0, true);
+		}
+	}
+	
 	/*----------------------
 	  SceneDirectorDelegate
 	  ----------------------*/

@@ -22,31 +22,23 @@ public class MainMenuScene extends Scene {
 	public static final SceneID ID = SceneID.MAINMENU;
 	
 	private Button newGameButton;
-	Music sound;
-	Sound sound2;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
+		GameDirector.sharedSceneListener().playMusic(new Music("resources/music/GBUogg.ogg"));
+		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		newGameButton = new Button(container, 240, 60, new Label(container, fieldFont, Color.white, ConstantStore.get("MAIN_MENU", "NEW_GAME")));
 		newGameButton.addListener(new ButtonListener());
-		
-		//mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -5);
-		
+				
 		Sprite logoSprite = new Sprite(container, 480, new Image("resources/graphics/logo.png", false, Image.FILTER_NEAREST));
 				
 		mainLayer.add(logoSprite, mainLayer.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 75);
 		mainLayer.add(newGameButton, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -75);
 		
 		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/map.png", false, Image.FILTER_NEAREST)));
-		
-		//SOUND!!!
-		sound = new Music("resources/music/GBUogg.ogg");
-		//sound2 = new Sound("resources/music/smoothogg2.ogg");
-		sound.loop();
-		//sound2.play();
 	}
 
 	@Override
@@ -57,12 +49,6 @@ public class MainMenuScene extends Scene {
 	@Override
 	public int getID() {
 		return ID.ordinal();
-	}
-	
-	public void stop() {
-		super.stop();
-		
-		sound.stop();
 	}
 	
 	private class ButtonListener implements ComponentListener {

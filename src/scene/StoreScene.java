@@ -163,8 +163,8 @@ public class StoreScene extends Scene {
 	}
 	
 	@Override
-	public void start() {
-		super.start();
+	public void enter(GameContainer container, StateBasedGame game)  {
+		super.enter(container, game) ;
 			for (Item.ITEM_TYPE item : inv.getPopulatedSlots() ) {
 				storeInventory[getButtonIndex(item)].setMax(inv.getNumberOf(item));
 				storeInventory[getButtonIndex(item)].setCount(inv.getNumberOf(item));

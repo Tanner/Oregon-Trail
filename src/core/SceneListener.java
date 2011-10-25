@@ -1,5 +1,7 @@
 package core;
 
+import org.newdawn.slick.Music;
+
 import scene.Scene;
 import scene.SceneID;
 
@@ -29,4 +31,8 @@ public interface SceneListener {
 	 * @return A {@code FontManager} object
 	 */
 	public FontManager getFontManager();
+	
+	public void playMusic(Music music);
+	
+	public void stopMusic();
 }

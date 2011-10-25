@@ -7,7 +7,9 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Panel;
@@ -35,7 +37,7 @@ public class TownScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		
+				
 		Font h1 = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.H1);
 		Font h2 = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.H2);
 		
@@ -46,6 +48,16 @@ public class TownScene extends Scene {
 		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
 		
 		backgroundLayer.add(new Panel(container, new Color(0x003e84)));
+	}
+	
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) {
+		try {
+			GameDirector.sharedSceneListener().playMusic(new Music("resources/music/smoothogg2.ogg"));
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

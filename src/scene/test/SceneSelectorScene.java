@@ -53,6 +53,8 @@ public class SceneSelectorScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
+		GameDirector.sharedSceneListener().stopMusic();
+		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		
 		SceneID scenes[] = SceneID.values();
@@ -84,8 +86,6 @@ public class SceneSelectorScene extends Scene {
 		mainLayer.addAsGrid(buttonsToAdd, mainLayer.getPosition(Positionable.ReferencePoint.TOPLEFT), size, size, MARGIN, MARGIN, MARGIN, MARGIN);
 		
 		backgroundLayer.add(new Panel(container, Color.black));
-		
-		start();
 	}
 	
 	@Override

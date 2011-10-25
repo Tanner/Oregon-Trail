@@ -48,10 +48,6 @@ public class SceneDirector extends StateBasedGame {
 			}
 		}
 		
-		if (scenes.size() > 0) {
-			scenes.peek().pause();
-		}
-		
 		scenes.push(scene);
 		addState(scene);
 		try {
@@ -65,11 +61,8 @@ public class SceneDirector extends StateBasedGame {
 		} else {
 			enterState(scenes.peek().getID());
 		}
-		
-		scenes.peek().start();
-		
+				
 		if (popLastScene) {
-			scenes.get(scenes.size()-2).stop();
 			scenes.remove(scenes.size()-2);
 		}
 	}
@@ -84,7 +77,6 @@ public class SceneDirector extends StateBasedGame {
 			return;
 		}
 		
-		scenes.peek().stop();
 		scenes.pop();
 	
 		if (animated) {
@@ -92,8 +84,6 @@ public class SceneDirector extends StateBasedGame {
 		} else {
 			enterState(scenes.peek().getID());
 		}
-
-		scenes.peek().start();
 	}
 	
 	/**
@@ -101,7 +91,6 @@ public class SceneDirector extends StateBasedGame {
 	 * @param scene Scene to be added after
 	 */
 	public void replaceStackWithScene(Scene scene) {
-		scenes.peek().stop();
 		scenes.removeAllElements();
 		pushScene(scene, false, false, null, null);
 	}
