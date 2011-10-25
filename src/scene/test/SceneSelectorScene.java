@@ -24,6 +24,7 @@ import component.Positionable;
 import core.ConstantStore;
 import core.FontManager;
 import core.GameDirector;
+import core.SoundStore;
 
 import scene.Scene;
 import scene.SceneID;
@@ -52,8 +53,8 @@ public class SceneSelectorScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		
-		GameDirector.sharedSceneListener().stopMusic();
+
+		SoundStore.get().stopMusic();
 		
 		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
 		

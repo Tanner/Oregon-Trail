@@ -55,7 +55,7 @@ public class WorldMap {
 	 */
 	public WorldMap(){
 		//make a generic-sized map for initial testing and development 
-		this(60,200);
+		//this(60,200);
 	}
 
 	/**

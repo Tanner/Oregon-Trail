@@ -9,7 +9,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Panel;
@@ -58,7 +57,8 @@ public class TownScene extends Scene {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		try {
-			setMusic(new Music("resources/music/smoothogg2.ogg"));
+			SoundStore.get().setMusic(new Music("resources/music/smoothogg2.ogg"));
+			SoundStore.get().playMusic();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
