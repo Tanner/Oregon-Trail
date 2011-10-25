@@ -33,12 +33,16 @@ public class SoundStore {
 		
 	}
 	
+	public void loopMusic() {
+		music.loop();
+	}
+	
 	public void playMusic() {
-		this.music.play();
+		music.play();
 	}
 	
 	public void stopMusic() {
-		this.music.stop();
+		music.stop();
 	}
 	
 	public void addToSounds(Sound sound, String name) {
