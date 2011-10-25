@@ -3,7 +3,9 @@ package model;
 import model.worldMap.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -56,33 +58,49 @@ public class WorldMap {
 		this(60,200);
 	}
 
-	
+	/**
+	 * generates the actual {@LocationNode} based on the random value
+	 * @param mapRand
+	 * @param curRank
+	 * @param numExitTrails
+	 * @return
+	 */
 	private LocationNode generateLocationNode(Random mapRand, int curRank, int numExitTrails){
 		
 		//curRank = TESTRANK;
 		int tmpZ =  mapRand.nextInt(MAX_X/MAX_RANK) - (MAX_X/(2 * MAX_RANK));
-		int tmpX = MAX_X - ((MAX_X/MAX_RANK) * (curRank) + tmpZ);
+		int tmpX = MAX_X - (((MAX_X/MAX_RANK) * curRank) + tmpZ);
 		while(tmpX < 10){
 			tmpX += mapRand.nextInt(MAX_X/MAX_RANK);
 			}
 		while(tmpX > MAX_X){
 			tmpX -= mapRand.nextInt(MAX_X/MAX_RANK);
 			}
-			//derive y coord of this location on map - should give some range of y between MAX_Y and 0
-			//MAX_Y/MAX_RANK divies y up into maxrank pieces
+			//derive y coord of this location on map - should give some range of y between -MAX_Y/2 and +MAX_Y/2
+			//MAX_Y/MAX_RANK divies y up into maxrank partitions
 			//mapRand of MAXRANK finds the correct general "rank zone"
-			// final component : (mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/MAX_RANK)) determines offset within zone
-		tmpZ =  mapRand.nextInt(MAX_Y/MAX_RANK) - (MAX_Y/(2 * MAX_RANK));
-		int tmpY = MAX_Y - ((mapRand.nextInt(MAX_Y/MAX_RANK) ) * curRank + tmpZ);			
-		while(tmpY > MAX_Y){
+			//final component tmpZ determines offset within zone
+		tmpZ =  mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/ MAX_RANK);  //range : +/- partition size/2
+		//gives a multiplier that is greatest in the middle of the MAX_RANK # of partitions
+		//allows the spread of possible y values of locations to be greatest at the middle of the 
+		//path, with the least spread at the ends
+		int rnkMult = (curRank <= (MAX_RANK/2) ) ? (curRank) : (MAX_RANK - curRank);
+		//multiplier to determine whether above or below the "equator"
+		int tmpW = (mapRand.nextBoolean()) ? (1) : (-1);
+		//actual y value passed to locationNode constructor
+		int tmpY = ((MAX_Y/MAX_RANK) * rnkMult * tmpW)  + tmpZ;  
+		while(tmpY > MAX_Y/2){
 			tmpY -= mapRand.nextInt(MAX_Y/MAX_RANK);
 			}
-
+		while(tmpY <  -1 * (MAX_Y/2)){
+			tmpY += mapRand.nextInt(MAX_Y/MAX_RANK);
+			}
+		//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 		LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, curRank);
-		return tempNode;
-		
+		return tempNode;	
 	}
+	
 	/**
 	 * Makes the random map, using the given number of nodes and edges, with a fun and fancy algorithm that first
 	 * makes all the nodes with a single edge linking them, and then adds connections until out of edges
@@ -91,7 +109,12 @@ public class WorldMap {
 	 * @param numTrails number of trails linking locations - will be forced to be enough to at least link all locations
 	 */
 	private void generateMap(int numLocations, int numTrails){
-			//build a temporary list to hold the generated locations, from which to build the map by adding edges
+		//build a temporary list to hold the generated locations, from which to build the map by adding edges
+		
+		//make a map instead of a list, indexed by locationnode.rank, with value being arraylist of locationnodes.
+		
+		Map<Integer, ArrayList<LocationNode>> mapNodes = new HashMap<Integer, ArrayList<LocationNode>>();
+		
 		List<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
 			//temp array holding number of locations at each rank, indexed by rank
 		int[] numRankAra = new int[MAX_RANK];
@@ -104,7 +127,7 @@ public class WorldMap {
 			//number of trails out of Independence : 1 to MaxTrailsOut constant
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 			//build beginning and final locations
-		this.mapHead = new LocationNode("Independence", MAX_X, MAX_Y, numExitTrails, 0);
+		this.mapHead = new LocationNode("Independence", MAX_X, 0, numExitTrails, 0);
 		this.finalDestination = new LocationNode("Portland", 0,0,0, MAX_RANK);
 		
 		numRankAra[0] = 1;
@@ -115,27 +138,47 @@ public class WorldMap {
 		//need to build base set of nodes - must have at least 1 per rank to get from independence to portland
 		for (int i = 1; i < MAX_RANK; i++){
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
-			tempLocationStore.add(generateLocationNode(mapRand,i,numExitTrails));
+			LocationNode tmp = generateLocationNode(mapRand,i,numExitTrails);
+			tempLocationStore.add(tmp);
+			mapNodes.get(tmp).add(tmp);
 		}//for loop to build initial path
+
 		
 		//build rest of random map
 		for(int i = MAX_RANK; i < numLocations-1; i++){
 			
-			int curRankIter = i % (MAX_RANK - 1) + 1;
-			int curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter-1 : curRankIter;
+			int curRankIter;
+			int curRank ;
+			curRankIter = i % (MAX_RANK - 1) + 1;
+			curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter-1 : curRankIter;
 			//number of trails out of location : 1 to MaxTrailsOut constant
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 			tempLocationStore.add(generateLocationNode(mapRand,curRank,numExitTrails));
 		}//for all locations make a node
 		tempLocationStore.add(finalDestination);
 		for (int i = 0; i < tempLocationStore.size(); i++){
-			System.out.printf("%dth location : %s \n ", (i+1), tempLocationStore.get(i));
-//			if (tempLocationStore.get(i).getRank() == TESTRANK){
+			System.out.printf("%dth location : %s \n", (i+1), tempLocationStore.get(i));
 				System.out.println(tempLocationStore.get(i).debugToString());				
-//			}
-			System.out.println();		
 		}//for loop to print out tempLocationStore
-	}
+
+		//as of here we have all the location nodes.  now need to build map.
+		//by adding edges.  an edge can only go from a location to one with equal or higher 
+		//rank.
+		
+		boolean done = false;
+		
+		//while(!done){
+			
+			
+			
+			
+			
+		//}//while loop
+		
+	
+	}//map generator method
+	
+	
 	
 	/**
 	 * returns a string representation of this map, by iterating through each node .

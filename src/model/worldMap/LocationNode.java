@@ -127,9 +127,9 @@ public class LocationNode {
 	public String debugToString(){
 		String retVal;
 		int numTrails = this.outboundTrails.size();
-		retVal = "\nName : \t" + this.locationName + "\t| X pos : \t" + this.MAP_XPOS + " \t| Y pos : \t" + this.MAP_YPOS + "\n";
-		retVal += "World Lat : \t" + this.WORLD_LATITUDE + "\t| World Long : " + this.WORLD_LONGITUDE + " \n";
-		retVal += "Internal ID : \t" + this.ID + "\t| Total Nodes currently made : \t" + LocationNode.nodeCount + " \n";
+		retVal = "Name : \t" + this.locationName + "\t| X pos : \t" + this.MAP_XPOS + " \t| Y pos : \t" + this.MAP_YPOS + "\n";
+//		retVal += "World Lat : \t" + this.WORLD_LATITUDE + "\t| World Long : " + this.WORLD_LONGITUDE + " \n";
+//		retVal += "Internal ID : \t" + this.ID + "\t| Total Nodes currently made : \t" + LocationNode.nodeCount + " \n";
 		retVal += "Rank : \t\t" + this.rank + "\t| Total Exit Trail Count : \t" + numTrails + " \n";
 		
 		if (numTrails == 0){
