@@ -61,15 +61,12 @@ public class Game {
 
 	public void reset() {
 		storeInventory.clear();
-		System.out.println("THIS HAPPENED");
 		initializeStoreInventory();
 		this.player =  new Player();
-		System.out.println(player.getParty() == null);
 		//this.worldMap = new WorldMap();
 	}
 
 	private void initializeStoreInventory() {
-		System.out.println("This too");
 		Random random = new Random();
 		
 		//Populate the list of item types to allow for ready population of store slots

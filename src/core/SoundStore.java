@@ -43,12 +43,47 @@ public class SoundStore {
 		musics.put(name, music);	
 	}
 
+	public void muteMusic() {
+		for(String name : musics.keySet()) {
+			if (musics.get(name).playing()) {
+				musics.get(name).setVolume(0);
+			}
+		}
+	}
+	
+	public void setMusicVolume(float volume) {
+		volume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
+		for(String name: musics.keySet()) {
+			if(musics.get(name).playing()) {
+				musics.get(name).setVolume(volume);
+			}
+		}
+		
+	}
+	
+	
 	public void loopMusic(String name) {
 		musics.get(name).loop();
 	}
 	
 	public void playMusic(String name) {
+		for(String key: musics.keySet()) {
+			if(musics.get(key).playing()) {
+				musics.get(key).stop();
+			}
+		}
 		musics.get(name).play();
+		setMusicVolume(1);
+	}
+	
+	public void playMusic(String name, float volume) {
+		for(String key: musics.keySet()) {
+			if(musics.get(key).playing()) {
+				musics.get(key).stop();
+			}
+		}
+		musics.get(name).play();
+		setMusicVolume(volume);
 	}
 	
 	public void stopMusic() {
@@ -59,7 +94,7 @@ public class SoundStore {
 		}
 	}
 	
-	public void addToSounds(String name, Sound sound) {
+	private void addToSounds(String name, Sound sound) {
 		sounds.put(name, sound);
 	}
 	

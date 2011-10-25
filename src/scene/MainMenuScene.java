@@ -56,6 +56,7 @@ public class MainMenuScene extends Scene {
 		public void componentActivated(AbstractComponent source) {
 			SoundStore.get().playSound("Click");
 			if (source == newGameButton) {
+				SoundStore.get().setMusicVolume(.25f);
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYCREATION, MainMenuScene.this, true);
 			}
 		}
