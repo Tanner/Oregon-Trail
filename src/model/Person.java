@@ -178,7 +178,7 @@ public class Person implements Conditioned, Inventoried {
 		this.name = name;
 		this.skillPoints = new Condition(0, BASE_SKILL_POINTS, 0);
 		this.health = new Condition(100);
-		Logger.log(name + " was created", Logger.Level.INFO);
+		Logger.log(name + " was created", Logger.Level.DEBUG);
 		this.inventory = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);
 		Random random = new Random();
 		this.weight = random.nextInt(100) + 90;
@@ -192,25 +192,29 @@ public class Person implements Conditioned, Inventoried {
 		//This will only happen during party creation when the skills haven't been chosen yet.
 		if (this.profession == null) {
 			this.profession = profession;
-			Logger.log(this.name + " became a " + this.profession, Logger.Level.INFO);
+			Logger.log(this.name + " became a " + this.profession, Logger.Level.DEBUG);
 			addSkill(profession.getStartingSkill());
 			inventory.clear();
-			addItemToInventory(new Item(profession.getStartingItem()));
+			if(profession.getStartingItem() != null) {
+				addItemToInventory(new Item(profession.getStartingItem()));	
+			}
 			return;
 		} else if (this.profession == profession) {
-			Logger.log(this.name + " is already a " + profession, Logger.Level.INFO);
+			Logger.log(this.name + " is already a " + profession, Logger.Level.DEBUG);
 			return;
 		} else if (this.profession != profession) {
 			this.skills.clear();
 			Logger.log(this.name + " stopped being a " + 
-					this.profession + " and lost all current skills", Logger.Level.INFO);
+					this.profession + " and lost all current skills", Logger.Level.DEBUG);
 			this.profession = null;
 			setProfession(profession);
 			inventory.clear();
-			addItemToInventory(new Item(profession.getStartingItem()));
+			if(profession.getStartingItem() != null) {
+				addItemToInventory(new Item(profession.getStartingItem()));	
+			}
 			return;
 		} else {
-			Logger.log("Don't know what happened", Logger.Level.INFO);
+			Logger.log("Don't know what happened", Logger.Level.DEBUG);
 			return;
 		}
 	}
@@ -242,16 +246,16 @@ public class Person implements Conditioned, Inventoried {
 	public void addSkill(Skill newSkill) {
 		if(skills.contains(newSkill)) {
 			Logger.log(this.name + " already has the skill " 
-					+ newSkill, Logger.Level.INFO);
+					+ newSkill, Logger.Level.DEBUG);
 			return;
 		} else if(newSkill == this.profession.getStartingSkill()) {
 			skills.add(newSkill);
 			Logger.log("As a " + this.profession + " " + 
-					this.name + " gains the skill " + newSkill, Logger.Level.INFO);
+					this.name + " gains the skill " + newSkill, Logger.Level.DEBUG);
 			return;
 		} else {
 			skills.add(newSkill);
-			Logger.log(this.name + " gained the skill " + newSkill, Logger.Level.INFO);
+			Logger.log(this.name + " gained the skill " + newSkill, Logger.Level.DEBUG);
 			return;
 		}
 	}
@@ -263,7 +267,7 @@ public class Person implements Conditioned, Inventoried {
 	public void buySkill(Skill newSkill){
 		if(skills.contains(newSkill)) {
 			Logger.log(this.name + " already has the skill " + 
-					newSkill, Logger.Level.INFO);
+					newSkill, Logger.Level.DEBUG);
 			return;
 		}
 		else {
@@ -271,16 +275,16 @@ public class Person implements Conditioned, Inventoried {
 				Logger.log(this.name + " does not have enough skill points to obtain " + 
 						newSkill + ".  Current skill points: " + 
 						skillPoints.getCurrent() + " Cost of new skill: " + 
-						newSkill.getCost(), Logger.Level.INFO);
+						newSkill.getCost(), Logger.Level.DEBUG);
 			}
 			else {
 				skillPoints.decrease(newSkill.getCost());
 				skills.add(newSkill);
 				Logger.log(this.name + " gained the skill " +
-						newSkill, Logger.Level.INFO);
+						newSkill, Logger.Level.DEBUG);
 				Logger.log(this.name + " has " + 
 						skillPoints.getCurrent() + " skill points remaning.",
-						Logger.Level.INFO);
+						Logger.Level.DEBUG);
 				return;
 			}
 		}
@@ -294,11 +298,11 @@ public class Person implements Conditioned, Inventoried {
 	public void removeSkill(Skill oldSkill) {
 		if (!this.skills.contains(oldSkill)) {
 			Logger.log("Cannot remove a skill that isn't already known.",
-					Logger.Level.INFO);
+					Logger.Level.DEBUG);
 			return;
 		}
 		else if (this.profession.getStartingSkill() == oldSkill) {
-			Logger.log("Cannot remove profession's starting skill", Logger.Level.INFO);
+			Logger.log("Cannot remove profession's starting skill", Logger.Level.DEBUG);
 			return;
 		}
 		else {
@@ -327,7 +331,7 @@ public class Person implements Conditioned, Inventoried {
 	 */
 	public void setName(String name) {
 		this.name = name;
-		Logger.log("Name changed to " + name, Logger.Level.INFO);
+		Logger.log("Name changed to " + name, Logger.Level.DEBUG);
 	}
 	
 	/**
@@ -360,7 +364,7 @@ public class Person implements Conditioned, Inventoried {
 		this.isMale = isMale;
 		
 		Logger.log("Gender changed to " + 
-				(isMale ? "Male" : "Female"), Logger.Level.INFO);
+				(isMale ? "Male" : "Female"), Logger.Level.DEBUG);
 	}
 	
 	/**

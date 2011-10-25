@@ -56,12 +56,7 @@ public class TownScene extends Scene {
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
-		try {
-			SoundStore.get().setMusic(new Music("resources/music/smoothogg2.ogg"));
-			SoundStore.get().loopMusic();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		SoundStore.get().playMusic("Smooth");
 	}
 
 	@Override

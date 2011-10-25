@@ -14,13 +14,14 @@ public class SoundStore {
 	private static SoundStore soundStore;
 	
 	private Map<String, Sound> sounds;
-	private Music music =  null;
+	private Map<String, Music> musics;
 	
 	private SoundStore(){
 		soundStore = this;
 		sounds = new HashMap<String, Sound>();
+		musics = new HashMap<String, Music>();
 		try {
-			addToSounds("Click", new Sound("resources/music/click.ogg"));
+			initialize();
 		} catch (SlickException e) {
 		}
 	}
@@ -32,22 +33,30 @@ public class SoundStore {
 		return soundStore;
 	}
 	
-	public void setMusic(Music music) {
-		music.stop();
-		this.music = music;
-		
+	private void initialize() throws SlickException {
+		addToSounds("Click", new Sound("resources/music/click.ogg"));
+		addToMusic("GBU", new Music("resources/music/GBUogg.ogg"));
+		addToMusic("Smooth", new Music("resources/music/smoothogg2.ogg"));
 	}
 	
-	public void loopMusic() {
-		music.loop();
+	private void addToMusic(String name, Music music) {
+		musics.put(name, music);	
+	}
+
+	public void loopMusic(String name) {
+		musics.get(name).loop();
 	}
 	
-	public void playMusic() {
-		music.play();
+	public void playMusic(String name) {
+		musics.get(name).play();
 	}
 	
 	public void stopMusic() {
-		music.stop();
+		for(String name : musics.keySet()) {
+			if(musics.get(name).playing()) {
+				musics.get(name).stop();
+			}
+		}
 	}
 	
 	public void addToSounds(String name, Sound sound) {
