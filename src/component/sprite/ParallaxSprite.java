@@ -1,5 +1,7 @@
 package component.sprite;
 
+import java.util.Random;
+
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.Image;
 
@@ -10,6 +12,8 @@ import component.Panel;
  * A sprite that shifts a certain amount on the screen and loops around.
  */
 public class ParallaxSprite extends Component {
+	private final int DELTA_X = 1;
+	
 	private Sprite spriteA;
 	private Sprite spriteB;
 	
@@ -18,8 +22,9 @@ public class ParallaxSprite extends Component {
 	
 	private int elapsedTime;
 	private final int maxElapsedTime;
-	
-	private final int DELTA_X = 4;
+
+	private boolean randomXPosition;
+	private Random random;
 	
 	/**
 	 * Constructs a ParallaxSprite with a context, spriteWidth, image, and maxOffset.
@@ -27,23 +32,27 @@ public class ParallaxSprite extends Component {
 	 * @param spriteWidth Width the sprite should be (e.g. for scaling)
 	 * @param image Image to use for the sprite
 	 * @param maxElapsedTime Amount of time to wait until the sprites move (larger means slower)
+	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
 	 */
-	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int maxElapsedTime) {
+	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int maxElapsedTime, boolean randomXPosition) {
 		super(context, context.getWidth(), spriteWidth * image.getHeight() / image.getWidth());
+		
+		this.randomXPosition = randomXPosition;
+		this.maxElapsedTime = maxElapsedTime;
+		
+		random = new Random();
 		
 		spriteA = new Sprite(context, spriteWidth, image);
 		spriteB = new Sprite(context, spriteWidth, image);
 		
-		panelA = new Panel(context, spriteA.getWidth(), spriteA.getHeight());
-		panelA.add(spriteA, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
+		panelA = new Panel(context, context.getWidth(), spriteA.getHeight());
+		panelA.add(spriteA, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(panelA, spriteA), 0);
 		
-		panelB = new Panel(context, spriteB.getWidth(), spriteB.getHeight());
-		panelB.add(spriteB, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
+		panelB = new Panel(context, context.getWidth(), spriteB.getHeight());
+		panelB.add(spriteB, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(panelB, spriteA), 0);
 		
-		add(panelA, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
+		add(panelA, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, 0);
 		add(panelB, panelA.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, context.getWidth(), 0);
-		
-		this.maxElapsedTime = maxElapsedTime;
 	}
 	
 	/**
@@ -61,10 +70,26 @@ public class ParallaxSprite extends Component {
 		
 		if (panelA.getX() > container.getWidth()) {
 			panelA.setLocation(panelB.getX() - container.getWidth(), panelA.getY());
+			
+			spriteA.setPosition(panelA.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, getXOffset(panelA, spriteA), 0);
 		}
 		
 		if (panelB.getX() > container.getWidth()) {
 			panelB.setLocation(panelA.getX() - container.getWidth(), panelB.getY());
+			
+			spriteB.setPosition(panelB.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, getXOffset(panelB, spriteB), 0);
 		}
+	}
+	
+	private int getXOffset(Panel panel, Sprite sprite) {
+		if (randomXPosition) {
+			return random.nextInt(panel.getWidth() - sprite.getWidth() + 1);
+		}
+		
+		return 0;
+	}
+	
+	public int getSpriteWidth() {
+		return spriteA.getWidth();
 	}
 }

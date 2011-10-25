@@ -1,6 +1,9 @@
 package scene;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import model.Party;
 import model.RandomEncounterTable;
@@ -30,7 +33,7 @@ public class TrailScene extends Scene {
 	private int timeElapsed;
 	
 	private ParallaxSprite ground;
-	private ParallaxSprite trees;
+	private ArrayList<ParallaxSprite> trees;
 	
 	private Party party;
 	private RandomEncounterTable randomEncounterTable;
@@ -45,12 +48,20 @@ public class TrailScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);		
-		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), 300);
-		trees = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 300);
 		
 		backgroundLayer.add(new Panel(container, new Color(0x66a9c4)));
+		
+		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), 30, false);
 		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
-		backgroundLayer.add(trees, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, 30);
+		
+		trees = new ArrayList<ParallaxSprite>();
+		
+		for (int i = 0; i < 10; i++) {
+			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 30, true);
+			trees.add(tree);
+
+			backgroundLayer.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, 30);
+		}
 
 		hud = new HUD(container, party, new HUDListener());
 		showHUD(hud);
@@ -61,7 +72,10 @@ public class TrailScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		ground.move(delta);
-		trees.move(delta);
+		
+		for (ParallaxSprite tree : trees) {
+			tree.move(delta);
+		}
 		
 		timeElapsed += delta;
 		
