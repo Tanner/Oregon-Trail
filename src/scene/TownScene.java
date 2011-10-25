@@ -23,7 +23,7 @@ import core.*;
  */
 public class TownScene extends Scene {
 	public static final SceneID ID = SceneID.TOWN;
-	
+		
 	/**
 	 * builds town scene
 	 * @param party where/who the action is
@@ -37,7 +37,7 @@ public class TownScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-				
+						
 		Font h1 = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.H1);
 		Font h2 = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.H2);
 		
@@ -51,18 +51,17 @@ public class TownScene extends Scene {
 	}
 	
 	@Override
-	public void enter(GameContainer container, StateBasedGame game) {
-		try {
-			GameDirector.sharedSceneListener().playMusic(new Music("resources/music/smoothogg2.ogg"));
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		
 	}
 	
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+	public void enter(GameContainer container, StateBasedGame game)  {
+		try {
+			setMusic(new Music("resources/music/smoothogg2.ogg"));
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

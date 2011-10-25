@@ -2,6 +2,7 @@ package scene;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
@@ -13,6 +14,7 @@ import component.Modal;
 import component.ModalListener;
 import component.Tooltip;
 import component.Positionable.ReferencePoint;
+import core.GameDirector;
 
 /**
  * How the game displays information to the player.  Inherited by the containers which execute the game functionality
@@ -27,6 +29,8 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	protected SceneLayer modalLayer;
 	
 	private boolean active;
+	
+	private Music music;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -168,5 +172,12 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 
 	private void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	public void setMusic(Music music) {
+		if (this.music == null) {
+			this.music = music;
+			GameDirector.sharedSceneListener().playMusic(music);	
+		}
 	}
 }
