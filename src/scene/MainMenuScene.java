@@ -54,6 +54,7 @@ public class MainMenuScene extends Scene {
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent source) {
+			SoundStore.get().playSound("Click");
 			if (source == newGameButton) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYCREATION, MainMenuScene.this, true);
 			}

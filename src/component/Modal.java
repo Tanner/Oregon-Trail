@@ -12,6 +12,7 @@ import org.newdawn.slick.Input;
 import core.ConstantStore;
 import core.FontManager;
 import core.GameDirector;
+import core.SoundStore;
 
 /**
  * {@code Modal} inherits from {@code Component} to extend features that provide
@@ -138,6 +139,7 @@ public class Modal extends Component {
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent source) {
+			SoundStore.get().playSound("Click");
 			boolean cancelled = false;
 			if (source == dismissButton) {
 				cancelled = true;

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.newdawn.slick.Music;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 public class SoundStore {
@@ -15,12 +16,16 @@ public class SoundStore {
 	private Map<String, Sound> sounds;
 	private Music music =  null;
 	
-	private SoundStore() {
+	private SoundStore(){
 		soundStore = this;
 		sounds = new HashMap<String, Sound>();
+		try {
+			addToSounds("Click", new Sound("resources/music/click.ogg"));
+		} catch (SlickException e) {
+		}
 	}
 	
-	public static SoundStore get() {
+	public static SoundStore get(){
 		if(soundStore == null) {
 			soundStore = new SoundStore();
 		}
@@ -45,13 +50,13 @@ public class SoundStore {
 		music.stop();
 	}
 	
-	public void addToSounds(Sound sound, String name) {
+	public void addToSounds(String name, Sound sound) {
 		sounds.put(name, sound);
 	}
 	
 	public void playSound(String name) {
 		sounds.get(name).play();
-	}
+		}
 	
 	public void stopSound(String name) {
 		sounds.get(name).stop();
