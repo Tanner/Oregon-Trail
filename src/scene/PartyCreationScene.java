@@ -122,7 +122,7 @@ public class PartyCreationScene extends Scene {
 		professionSegmentedControl = new SegmentedControl(container, 800, 200, 5, 5, 5, true, 1, professionLabels);
 		professionSegmentedControl.setTooltips(professionTooltips);
 		
-		// Create the skill segemented control
+		// Create the skill segmented control
 		int numOfSkills = Person.Skill.values().length - 1;
 		String[] skillLabels = new String[numOfSkills];
 		for (int i = 0; i < numOfSkills; i++) {
