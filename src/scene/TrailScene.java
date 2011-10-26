@@ -51,13 +51,15 @@ public class TrailScene extends Scene {
 		
 		backgroundLayer.add(new Panel(container, new Color(0x66a9c4)));
 		
-		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), 30, false);
+		ParallaxSprite.MAX_DISTANCE = 80;
+		
+		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), 20, false);
 		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		trees = new ArrayList<ParallaxSprite>();
 		
 		for (int i = 0; i < 10; i++) {
-			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 30, true);
+			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 80, true);
 			trees.add(tree);
 
 			backgroundLayer.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, 30);

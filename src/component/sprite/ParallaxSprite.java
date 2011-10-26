@@ -13,6 +13,10 @@ import component.Panel;
  */
 public class ParallaxSprite extends Component {
 	private final int DELTA_X = 1;
+	private static final int NEAR_MAX_ELAPSED_TIME = 1;
+	private static final int FAR_MAX_ELAPSED_TIME = 1000 - NEAR_MAX_ELAPSED_TIME;
+	
+	public static int MAX_DISTANCE = 0;
 	
 	private Sprite spriteA;
 	private Sprite spriteB;
@@ -34,11 +38,12 @@ public class ParallaxSprite extends Component {
 	 * @param maxElapsedTime Amount of time to wait until the sprites move (larger means slower)
 	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
 	 */
-	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int maxElapsedTime, boolean randomXPosition) {
+	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int distance, boolean randomXPosition) {
 		super(context, context.getWidth(), spriteWidth * image.getHeight() / image.getWidth());
 		
 		this.randomXPosition = randomXPosition;
-		this.maxElapsedTime = maxElapsedTime;
+		
+		maxElapsedTime = ((FAR_MAX_ELAPSED_TIME * distance) / MAX_DISTANCE) + NEAR_MAX_ELAPSED_TIME;
 		
 		random = new Random();
 		
