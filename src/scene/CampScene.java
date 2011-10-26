@@ -96,14 +96,14 @@ public class CampScene extends Scene {
 		
 	}
 
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		super.render(container, game, g);
-		for (int i=0;i<5;i++) {
-			g.translate(1,1);
-			system.render();
-		}
-		g.resetTransform();
-	}
+//	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+//		super.render(container, game, g);
+//		for (int i=0;i<5;i++) {
+//			g.translate(1,1);
+//			system.render();
+//		}
+//		g.resetTransform();
+//	}
 	
 	@Override
 	public int getID() {
