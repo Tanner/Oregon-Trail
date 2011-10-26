@@ -29,6 +29,7 @@ public class TrailScene extends Scene {
 	
 	private int clickCounter;
 	private int timeElapsed;
+	private boolean paused;
 	
 	private ParallaxSprite ground;
 	private ArrayList<ParallaxSprite> trees;
@@ -69,12 +70,6 @@ public class TrailScene extends Scene {
 		
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		ground.move(delta);
-		
-		for (ParallaxSprite tree : trees) {
-			tree.move(delta);
-		}
-		
 		timeElapsed += delta;
 		
 		if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
@@ -82,8 +77,20 @@ public class TrailScene extends Scene {
 			hud.updateNotifications();
 			timeElapsed = 0;
 		}
-
-		if (clickCounter == STEP_COUNT_TRIGGER) {
+		
+		ground.move(delta);
+		
+		for (ParallaxSprite tree : trees) {
+			tree.move(delta);
+		}
+		
+		paused = !hud.isNotificationsEmpty();
+		
+		if (paused) {
+			return;
+		}
+		
+		if (clickCounter >= STEP_COUNT_TRIGGER) {
 			List<String> notifications = party.walk();
 			
 			if (party.getPartyMembers().isEmpty()) {

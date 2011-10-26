@@ -129,6 +129,10 @@ public class HUD extends Component {
 		}
 	}
 	
+	public boolean isNotificationsEmpty() {
+		return notificationQueue.isEmpty();
+	}
+	
 	/**
 	 * Set the notification for the notification bar.
 	 * @param message New message to show
