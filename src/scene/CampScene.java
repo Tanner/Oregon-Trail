@@ -76,7 +76,7 @@ public class CampScene extends Scene {
 		buttonPanel.addAsGrid(bottomButtons, buttonPanel.getPosition(ReferencePoint.TOPLEFT), 2, 3, PADDING, PADDING, PADDING, PADDING);
 		mainLayer.add(buttonPanel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT);
 		
-		campFire = new Particle(container, 1, 0, 15);
+		campFire = new Particle(container, 1, 0, 10);
 		campFire.addFire(560, 290, 15);
 		backgroundLayer.add(campFire);
 	}
