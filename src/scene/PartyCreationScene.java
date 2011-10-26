@@ -28,7 +28,7 @@ import component.Positionable.ReferencePoint;
 import component.SegmentedControl;
 import component.TextField;
 import core.ConstantStore;
-import core.FontManager;
+import core.FontStore;
 import core.GameDirector;
 import core.Logger;
 import core.SoundStore;
@@ -99,7 +99,7 @@ public class PartyCreationScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		int buttonWidth = (container.getWidth() - PADDING * (NUM_PEOPLE + 1)) / NUM_PEOPLE;
 
 		componentListener = new SceneComponentListener();

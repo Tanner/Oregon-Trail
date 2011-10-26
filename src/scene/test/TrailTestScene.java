@@ -43,7 +43,7 @@ public class TrailTestScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 
 		partyNames = new Label[persons.size()];
 		partyHealth = new ConditionBar[persons.size()];

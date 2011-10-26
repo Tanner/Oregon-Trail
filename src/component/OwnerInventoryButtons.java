@@ -22,7 +22,7 @@ import component.Label.Alignment;
 import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
 import core.ConstantStore;
-import core.FontManager;
+import core.FontStore;
 /**
  * This class is a group of a {@code Button} and a {@code ConditionBar}.
  * 
@@ -80,7 +80,7 @@ public class OwnerInventoryButtons {
 				padding = 0;
 			}
 			
-			Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+			Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 			
 			Sprite sprite = new Sprite(container, 48, 48);
 			Label label = new Label(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, fieldFont, Color.white, "");

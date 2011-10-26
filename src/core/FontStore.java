@@ -10,7 +10,7 @@ import org.newdawn.slick.SlickException;
 /**
  * Manages fonts for use in the game.
  */
-public class FontManager {
+public class FontStore {
 	
 	public enum FontID {
 		H1,
@@ -19,12 +19,12 @@ public class FontManager {
 		BIG_FIELD
 	}
 	
-	private static FontManager fontManager;
+	private static FontStore fontManager;
 	
 	public static final Map<String, Font> FONTS;
 	
 	static {
-			fontManager = new FontManager();
+			fontManager = new FontStore();
 			FONTS = new HashMap<String, Font>();
 		try {
 			fontManager.init();

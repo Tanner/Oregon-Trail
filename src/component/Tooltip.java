@@ -3,8 +3,8 @@ package component;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.gui.GUIContext;
 
-import core.FontManager;
-import core.FontManager.FontID;
+import core.FontStore;
+import core.FontStore.FontID;
 
 public class Tooltip extends Label {
 	private static final int PADDING = 5;
@@ -13,9 +13,9 @@ public class Tooltip extends Label {
 
 	public Tooltip(GUIContext context, Component owner, String message) {
 		super(context,
-				FontManager.get(FontID.FIELD).getWidth(message) + PADDING * 2,
-				FontManager.get(FontID.FIELD).getLineHeight() * Label.getNumberOfNewlines(message) + PADDING * 2,
-				FontManager.get(FontID.FIELD), 
+				FontStore.get(FontID.FIELD).getWidth(message) + PADDING * 2,
+				FontStore.get(FontID.FIELD).getLineHeight() * Label.getNumberOfNewlines(message) + PADDING * 2,
+				FontStore.get(FontID.FIELD), 
 				Color.white,
 				message);
 		

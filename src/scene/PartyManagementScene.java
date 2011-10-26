@@ -18,7 +18,7 @@ import component.SegmentedControl;
 import component.Positionable.ReferencePoint;
 
 import core.ConstantStore;
-import core.FontManager;
+import core.FontStore;
 import core.GameDirector;
 
 /**
@@ -49,7 +49,7 @@ public class PartyManagementScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		
 		SceneComponentListener componentListener = new SceneComponentListener();
 		

@@ -23,7 +23,7 @@ import model.*;
 public class GameDirector implements SceneListener, SceneDirectorListener {	
 	private static GameDirector sharedDirector;
 	
-	private FontManager fontManager;
+	private FontStore fontManager;
 	
 	private SceneDirector sceneDirector;
 	private AppGameContainer container;
@@ -196,7 +196,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	}
 	
 	@Override
-	public FontManager getFontManager() {
+	public FontStore getFontManager() {
 		return fontManager;
 	}
 	

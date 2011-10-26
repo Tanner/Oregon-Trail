@@ -9,7 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.Label;
 import component.Panel;
 import component.Positionable;
-import core.FontManager;
+import core.FontStore;
 
 public class GameOverScene extends Scene {
 	public static final SceneID ID = SceneID.HUNT;
@@ -18,7 +18,7 @@ public class GameOverScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		Font h1 = FontManager.get(FontManager.FontID.H1);		
+		Font h1 = FontStore.get(FontStore.FontID.H1);		
 		Label titleLabel = new Label(container, h1, Color.red, "Game Over");
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
 		

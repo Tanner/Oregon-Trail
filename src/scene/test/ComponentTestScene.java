@@ -32,7 +32,7 @@ public class ComponentTestScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 				
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 
 		Label textFieldLabel = new Label(container, 300, fieldFont, Color.white, "Text Field");
 		mainLayer.add(textFieldLabel, mainLayer.getPosition(Positionable.ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT, PADDING, PADDING);

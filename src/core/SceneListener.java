@@ -30,7 +30,7 @@ public interface SceneListener {
 	 * Get the font manager.
 	 * @return A {@code FontManager} object
 	 */
-	public FontManager getFontManager();
+	public FontStore getFontManager();
 	
 	//public void playMusic(Music music);
 	

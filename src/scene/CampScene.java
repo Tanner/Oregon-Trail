@@ -12,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.*;
 import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
-import core.FontManager;
+import core.FontStore;
 import core.GameDirector;
 import core.SoundStore;
 
@@ -36,6 +36,7 @@ public class CampScene extends Scene {
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
+		super.enter(container, game);
 		SoundStore.get().loopMusic("Crackling Fire");
 	}
 	
@@ -45,7 +46,7 @@ public class CampScene extends Scene {
 
 		backgroundLayer.add(new Sprite(container, new Image("resources/graphics/backgrounds/camp.png")));
 		
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		
 		buttonPanel = new Panel(container, container.getWidth(), 120, Color.gray);
 		buttonPanel.setBevelWidth(2);

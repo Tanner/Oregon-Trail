@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 import component.Label.Alignment;
 import component.sprite.Sprite;
-import core.FontManager;
+import core.FontStore;
 
 /**
  * {@code CountingButton} inherits from {@code Button} to add a flag that counts up or down.
@@ -43,7 +43,7 @@ public class Counter extends Component implements Disableable {
 		button = new CountingButton(context, width, height, label);
 		add(button, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		countLabel = new Label(container, COUNTING_LABEL_WIDTH, COUNTING_LABEL_HEIGHT, fieldFont, Color.white, "" + count);
 		countLabel.setBackgroundColor(Color.red);
 		countLabel.setAlignment(Alignment.CENTER);
@@ -62,7 +62,7 @@ public class Counter extends Component implements Disableable {
 		button = new CountingButton(context, width, height, sprite, label);
 		add(button, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		countLabel = new Label(container, COUNTING_LABEL_WIDTH, COUNTING_LABEL_HEIGHT, fieldFont, Color.white, "" + count);
 		countLabel.setBackgroundColor(Color.red);
 		countLabel.setAlignment(Alignment.CENTER);

@@ -33,7 +33,7 @@ import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
 
 import core.ConstantStore;
-import core.FontManager;
+import core.FontStore;
 import core.GameDirector;
 import core.Logger;
 
@@ -99,7 +99,7 @@ public class PartyInventoryScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		
 		List<Person> members = party.getPartyMembers();
 		Vehicle vehicle = party.getVehicle();

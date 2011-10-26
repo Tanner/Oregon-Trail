@@ -14,7 +14,7 @@ import org.newdawn.slick.gui.GUIContext;
 import component.Label.VerticalAlignment;
 
 import core.ConstantStore;
-import core.FontManager;
+import core.FontStore;
 /**
  * A HUD holds quick information for the player.
  */
@@ -45,7 +45,7 @@ public class HUD extends Component {
 		
 		notificationQueue = new LinkedList<String>();
 		
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		
 		int height = HEIGHT - (2 * MARGIN);
 		

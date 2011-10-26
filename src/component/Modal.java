@@ -10,7 +10,7 @@ import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.Input;
 
 import core.ConstantStore;
-import core.FontManager;
+import core.FontStore;
 import core.SoundStore;
 
 /**
@@ -44,7 +44,7 @@ public class Modal extends Component {
 		
 		this.listener = listener;
 				
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		this.messageLabel = new Label(container, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		
@@ -81,7 +81,7 @@ public class Modal extends Component {
 		this.listener = listener;
 		this.segmentedControl = segmentedControl;
 				
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		messageLabel = new Label(container, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		

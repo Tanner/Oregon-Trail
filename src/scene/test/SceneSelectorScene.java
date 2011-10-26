@@ -22,7 +22,7 @@ import component.Button;
 import component.Label;
 import component.Positionable;
 import core.ConstantStore;
-import core.FontManager;
+import core.FontStore;
 import core.GameDirector;
 import core.SoundStore;
 
@@ -56,7 +56,7 @@ public class SceneSelectorScene extends Scene {
 
 		SoundStore.get().stopMusic();
 		
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		
 		SceneID scenes[] = SceneID.values();
 		

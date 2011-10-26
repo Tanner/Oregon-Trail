@@ -177,7 +177,7 @@ public class StoreScene extends Scene {
 	 */
 	private void createComponents() {
 		Label tempLabel;
-		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		
 		//Create inventory buttons and a map to which button stands for which inventory item
 		List<Item.ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();

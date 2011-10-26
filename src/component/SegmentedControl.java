@@ -3,7 +3,7 @@ package component;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.*;
 
-import core.FontManager;
+import core.FontStore;
 import core.Logger;
 import core.SoundStore;
 
@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class SegmentedControl extends Component {
 	
-	private Font font = FontManager.get(FontManager.FontID.FIELD);
+	private Font font = FontStore.get(FontStore.FontID.FIELD);
 	private Color color = Color.white;
 	
 	private final int STATES;
