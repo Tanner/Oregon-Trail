@@ -35,7 +35,7 @@ public class Person implements Conditioned, Inventoried {
 	
 	public static final int MAX_INVENTORY_SIZE = 5;
 	
-	private static final double MAX_INVENTORY_WEIGHT = 10;
+	private static final double MAX_INVENTORY_WEIGHT = 100;
 	
 	/**
 	 * Skills named and with skill point cost.
