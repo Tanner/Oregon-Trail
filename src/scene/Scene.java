@@ -32,10 +32,10 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		Scene.container = container;
 		
-		backgroundLayer = new SceneLayer(container, this);
-		mainLayer = new SceneLayer(container, this);
-		hudLayer = new SceneLayer(container, this);
-		modalLayer = new SceneLayer(container, this);
+		backgroundLayer = new SceneLayer(container);
+		mainLayer = new SceneLayer(container);
+		hudLayer = new SceneLayer(container);
+		modalLayer = new SceneLayer(container);
 	}
 
 	@Override

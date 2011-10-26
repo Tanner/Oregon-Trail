@@ -7,9 +7,8 @@ import org.newdawn.slick.gui.GUIContext;
 import component.Component;
 
 public class SceneLayer extends Component {
-	private Scene scene;
 	
-	public SceneLayer(GUIContext container, Scene scene) {
+	public SceneLayer(GUIContext container) {
 		super(container, container.getWidth(), container.getHeight());
 		setLocation(0, 0);
 		setVisible(true);
