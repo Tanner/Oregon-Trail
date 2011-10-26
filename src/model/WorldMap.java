@@ -54,11 +54,20 @@ public class WorldMap {
 	}
 	
 	/**
+	 * Makes a {@code WorldMap} object that tells the game where the party is and what's ahead of them
+	 * @param numNodes the number of possible locations on the map - not all of them will be reachable
+	 * @param numTrails the number of possible directed trails - not all will be traveled.
+	 */	
+	public WorldMap(int numNodes, int numTrails){
+		this(numNodes, numTrails, "");
+	}
+
+	/**
 	 * Makes a {@code WorldMap} object that tells the game where the party is and what's ahead of them, with predefined number of nodes and edges
 	 */
 	public WorldMap(){
 		//make a generic-sized map for initial testing and development 
-		this(60,200,"");
+		this(60,200);
 	}
 	
 	public WorldMap(String devMode){
@@ -120,13 +129,13 @@ public class WorldMap {
 		
 		//make a map instead of a list, indexed by locationnode.rank, with value being arraylist of locationnodes.
 		
-		Map<Integer, ArrayList<LocationNode>> mapNodes = new HashMap<Integer, ArrayList<LocationNode>>();
+		Map<Integer, List<LocationNode>> mapNodes = new HashMap<Integer, List<LocationNode>>();
 		
 		for (int i  = 0; i <= MAX_RANK; i++){
 			mapNodes.put(i, new ArrayList<LocationNode>());
 		}
 		
-		ArrayList<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
+		List<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
 			//temp array holding number of locations at each rank, indexed by rank
 		int[] numRankAra = new int[MAX_RANK];
 			//current node's rank as we're building the node list
@@ -170,37 +179,53 @@ public class WorldMap {
 		tempLocationStore.add(finalDestination);
 		mapNodes.get(finalDestination.getRank()).add(finalDestination);
 
-/*		for (int i = 0; i < tempLocationStore.size(); i++){
-			System.out.printf("%dth location : %s \n", (i+1), tempLocationStore.get(i));
-				System.out.println(tempLocationStore.get(i).debugToString());				
-		}//for loop to print out tempLocationStore
-*/
 		//as of here we have all the location nodes.  now need to build map.
 		//by adding edges.  an edge can only go from a location to one with equal or higher 
 		//rank.
-		if (this.devMode) {
+/*		if (this.devMode) {
 			for (int i = 0; i <= MAX_RANK; i++){
+				System.out.println("Locations at rank "+  i + " : " + mapNodes.get(i).size());
 				for(LocationNode node : mapNodes.get(i)){
 					System.out.println(node.debugToString());
-				}
-				
-			}
-		}
-		
-		boolean done = false;
-		
-		//while(!done){
-			
-			
-			
-			
-			
-		//}//while loop
-		
-	
+				}//for locationnodes
+			}//for each rank
+		}//devmode stub
+*/		
+		//no need to check MAX_RANK - never any location with exit trails at MAX_RANK
+		for (int i = 0; i < MAX_RANK; i++){
+			for(LocationNode node : mapNodes.get(i)){
+				for (int tNum = 0; tNum < node.getTrails(); tNum++){
+					int nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i+1) : i);
+					if (nextRank == MAX_RANK){
+						nextRank = MAX_RANK-1;
+					}
+					TrailEdge newTrail;
+					//if we're at final rank before finish, have all edges go to portland
+					if (i == MAX_RANK-1){
+						//System.out.println("i = " + i + " size = " + mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
+						newTrail = new TrailEdge("Trail from " + node.getLocationName() + " to " + finalDestination.getLocationName(), finalDestination ,node, 1 );
+					} else {
+						//nexttown holds size of arraylist for locations - used as random source to determine where trails go
+						int nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
+						//System.out.println("i = " + i + " size = " + mapNodes.get(nextRank).size() + " random index : " + nextTown + " | Town name : " + mapNodes.get(nextRank).get(nextTown).getLocationName());
+						LocationNode randDestNode = mapNodes.get(nextRank).get(nextTown);
+						newTrail = new TrailEdge("Trail from " + node.getLocationName() + " to " + randDestNode.getLocationName(), randDestNode ,node, 1 );
+					}
+					//System.out.println("\t"+newTrail.toString());
+					//add trail to this location's trail list
+					node.addTrail(newTrail);
+					
+				}//for each trail at location
+			}//for each location at rank
+		}//for each rank
 	}//map generator method
 	
-	
+	/**
+	 * traverses this world map, displaying the map
+	 */
+	public void traverseMap(){
+		
+	}
 	
 	/**
 	 * returns a string representation of this map, by iterating through each node .

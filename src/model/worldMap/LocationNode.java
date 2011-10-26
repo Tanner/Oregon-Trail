@@ -25,6 +25,8 @@ public class LocationNode {
 	private static int nodeCount;
 	/** how far west this location is - a location cannot have a trail leading to a location of lower rank, only equal or greater rank*/
 	private int rank;
+	/** how many outbound trails this location has */
+	private int trails;
 	
 	private String locationName;
 	private List<TrailEdge> outboundTrails;
@@ -46,6 +48,7 @@ public class LocationNode {
 		//eventually want to implement real world lat and long
 		WORLD_LATITUDE = Latitude;
 		WORLD_LONGITUDE = Longitude;
+		this.trails = trails;
 		this.outboundTrails = new ArrayList<TrailEdge>(trails);
 		this.locationName = locationName;
 		this.rank = rank;
@@ -86,6 +89,14 @@ public class LocationNode {
 		this.rank = rank;
 	}
 
+	public int getTrails() {
+		return trails;
+	}
+
+	public void setTrails(int trails) {
+		this.trails = trails;
+	}
+
 	/**
 	 * adds a new, leaving, {@code TrailEdge} to this {@code LocationNode}
 	 * @param newTrail
@@ -111,12 +122,15 @@ public class LocationNode {
 		return this.outboundTrails.get(index);
 	}
 	
+	public String getLocationName(){
+		return this.locationName;
+	}
 	/**
 	 * returns the string representation of this location
 	 */
 	public String toString(){
 		
-		return this.locationName;
+		return this.locationName + " with " + this.trails + " trails";
 	}
 	
 	/**
@@ -128,9 +142,9 @@ public class LocationNode {
 		String retVal;
 		int numTrails = this.outboundTrails.size();
 		retVal = "Name : \t" + this.locationName + "\t| X pos : \t" + this.MAP_XPOS + " \t| Y pos : \t" + this.MAP_YPOS + "\n";
-//		retVal += "World Lat : \t" + this.WORLD_LATITUDE + "\t| World Long : " + this.WORLD_LONGITUDE + " \n";
-//		retVal += "Internal ID : \t" + this.ID + "\t| Total Nodes currently made : \t" + LocationNode.nodeCount + " \n";
-		retVal += "Rank : \t\t" + this.rank + "\t| Total Exit Trail Count : \t" + numTrails + " \n";
+		retVal += "World Lat : \t" + this.WORLD_LATITUDE + "\t| World Long : " + this.WORLD_LONGITUDE + " \n";
+		retVal += "Internal ID : \t" + this.ID + "\t| Total Nodes currently made : \t" + LocationNode.nodeCount + " \n";
+		retVal += "Rank : \t\t" + this.rank + "\t| Total Exit Trail Count : \t" + trails + " \n";
 		
 		if (numTrails == 0){
 			retVal += "\tNo trails implemented \n";
