@@ -17,16 +17,14 @@ public class SceneDirector extends StateBasedGame {
 //	private GameContainer container;
 	
 	private Stack<Scene> scenes;
-	private SceneDirectorListener listener;
 	
 	/**
 	 * Construct a {@code SceneDirector} object with a title for the window.
 	 * 
 	 * @param name Title of the window
 	 */
-	public SceneDirector(String name, SceneDirectorListener listener) {
+	public SceneDirector(String name) {
 		super(name);
-		this.listener = listener;
 		
 		scenes = new Stack<Scene>();
 	}
@@ -103,7 +101,6 @@ public class SceneDirector extends StateBasedGame {
 		scenes.add(mainMenu);
 		addState(mainMenu);
 		
-		listener.sceneDirectorReady();
 	}
 	
 	@Override

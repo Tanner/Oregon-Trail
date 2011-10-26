@@ -20,7 +20,7 @@ import model.*;
  * Directs the logical functionality of the game. Sets everything in motion.
  */
 
-public class GameDirector implements SceneListener, SceneDirectorListener {	
+public class GameDirector implements SceneListener {	
 	private static GameDirector sharedDirector;
 	
 	private FontStore fontManager;
@@ -38,7 +38,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		 
 		 //fontManager = new FontManager();
 
-		 sceneDirector = new SceneDirector("Oregon Trail", this);
+		 sceneDirector = new SceneDirector("Oregon Trail");
 		 worldMap = new WorldMap();
 		 game = new Game(worldMap);
 		 game.getStoreInventory().addRandomItems();
@@ -248,14 +248,6 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		}
 	}
 	*/
-	
-	/*----------------------
-	  SceneDirectorDelegate
-	  ----------------------*/
-	@Override
-	public void sceneDirectorReady() {
-		//fontManager.init();
-	}
 	
 	/*----------------------
 	  Main
