@@ -3,6 +3,7 @@ package scene;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Notification;
 import model.Party;
 import model.RandomEncounterTable;
 
@@ -91,7 +92,7 @@ public class TrailScene extends Scene {
 		}
 		
 		if (clickCounter >= STEP_COUNT_TRIGGER) {
-			List<String> notifications = party.walk();
+			List<Notification> notifications = party.walk();
 			
 			if (party.getPartyMembers().isEmpty()) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
@@ -100,8 +101,17 @@ public class TrailScene extends Scene {
 			GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this, false);
 
 			hud.updatePartyInformation();
-			hud.addNotifications(notifications);
-			
+			List<String> messages = new ArrayList<String>();
+			for(Notification notification : notifications) {
+				if(notification.getIsModal()) {
+					
+				}
+				else {
+					messages.add(notification.getMessage());
+				}
+			}
+			hud.addNotifications(messages);
+		
 			clickCounter = 0;
 		}
 	}

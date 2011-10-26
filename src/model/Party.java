@@ -34,9 +34,9 @@ public class Party implements HUDDataSource {
 	 * The possible values of the party's pace
 	 */
 	public enum Pace{
-		STEADY ("Steady", 20),
-		STRENUOUS ("Strenuous", 40),
-		GRUELING ("Grueling", 60);
+		STEADY ("Steady", 30),
+		STRENUOUS ("Strenuous", 55),
+		GRUELING ("Grueling", 80);
 		
 		private final String name;
 
@@ -71,8 +71,8 @@ public class Party implements HUDDataSource {
 	 */	
 	public enum Rations {
 		FILLING ("Filling", 100),
-		MEAGER ("Meager", 50),
-		BAREBONES ("Barebones", 25);
+		MEAGER ("Meager", 75),
+		BAREBONES ("Barebones", 50);
 		
 		private final String name;
 
@@ -310,8 +310,8 @@ public class Party implements HUDDataSource {
 	 * Steps the player forward through the game.
 	 * @return the distance travelled with the walk
 	 */
-	public List<String> walk() {
-		List<String> messages = new ArrayList<String>();
+	public List<Notification> walk() {
+		List<Notification> messages = new ArrayList<Notification>();
 		location += getPace().getSpeed() * getMoveModifier();
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
@@ -335,17 +335,16 @@ public class Party implements HUDDataSource {
 				heal(person, getRations().getRationAmount());
 			}
 			if(checkHungerStatus(person) != null) {
-				messages.add(checkHungerStatus(person));
+				messages.add(new Notification(checkHungerStatus(person), true));
 			}
 		}
 		for (Person person : deathList) {
-			messages.add(person.getName() + " has died!");
 			members.remove(person);
 		}
 		for (Animal animal : slaughterHouse) {
 			animals.remove(animal);
 		}
-		messages.add("Current Distance Travelled: " + String.format("%,d", location));
+		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", location)));
 		return messages;
 	}
 

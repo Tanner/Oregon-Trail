@@ -237,8 +237,6 @@ public class SceneSelectorScene extends Scene {
 			
 			person.getInventory().addRandomItems();
 			
-			// Randomly hurt party members
-			person.decreaseHealth(random.nextInt(100));
 		}
 		
 		Vehicle vehicle = new Wagon();
