@@ -56,7 +56,7 @@ public class TownScene extends Scene {
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
-		SoundStore.get().playMusic("Smooth");
+		//SoundStore.get().playMusic("Smooth");
 	}
 
 	@Override

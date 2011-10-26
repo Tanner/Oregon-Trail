@@ -35,8 +35,8 @@ public class SoundStore {
 	
 	private void initialize() throws SlickException {
 		addToSounds("Click", new Sound("resources/music/click.ogg"));
-		addToMusic("GBU", new Music("resources/music/GBUogg.ogg"));
-		addToMusic("Smooth", new Music("resources/music/smoothogg2.ogg"));
+		//addToMusic("GBU", new Music("resources/music/GBUogg.ogg"));
+		//addToMusic("Smooth", new Music("resources/music/smoothogg2.ogg"));
 	}
 	
 	private void addToMusic(String name, Music music) {
