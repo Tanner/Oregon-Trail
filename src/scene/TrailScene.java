@@ -114,7 +114,7 @@ public class TrailScene extends Scene {
 	private class HUDListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
-			GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, TrailScene.this, false);
+			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, TrailScene.this, false);
 		}
 	}
 }

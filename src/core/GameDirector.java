@@ -116,7 +116,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		case TRAILTEST:
 			return new TrailTestScene(game.getPlayer().getParty());
 		case CAMP:
-			return new CampScene(game.getPlayer().getParty());
+			return new CampScene();
 		}
 		
 		return null;
@@ -151,6 +151,10 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 				// Requested Store Scene
 				newScene = new StoreScene(game.getPlayer().getParty(), game.getStoreInventory());
 			}
+			if (id == SceneID.TRAIL) {
+			//Requested Trail scene
+			newScene = new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
+			}
 		} else if (lastScene instanceof StoreScene) {
 			// Last scene was Store Scene
 			if (id == SceneID.PARTYINVENTORY) {
@@ -166,12 +170,9 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 		} else if (id == SceneID.HUNT) {
 			//Requested Hunt scene
 			newScene = new HuntScene(game.getPlayer().getParty());
-		} else if (id == SceneID.TRAIL) {
-			//Requested Trail scene
-			newScene = new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
 		} else if (id == SceneID.CAMP) {
 			//Requested Trail scene
-			newScene = new CampScene(game.getPlayer().getParty());
+			newScene = new CampScene();
 		} else if (id == SceneID.PARTYMANAGEMENTSCENE) {
 			//Requested Party Management Scene scene
 			newScene = new PartyManagementScene(game.getPlayer().getParty());

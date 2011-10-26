@@ -12,7 +12,6 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.*;
-import component.Particle;
 import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
 import core.FontManager;
@@ -27,7 +26,6 @@ public class CampScene extends Scene {
 	private static final int BUTTON_WIDTH = 315;
 	private static final int BUTTON_HEIGHT = 30;
 		
-	private HUD hud;
 	private Panel buttonPanel;
 	//1: inventoryButton
 	//2: managementButton
@@ -36,13 +34,7 @@ public class CampScene extends Scene {
 	//5: somethingButton
 	//6: continueButton
 	private Button[] bottomButtons;
-	private Party party;
-	
 	private Particle campFire;
-	
-	public CampScene(Party party) {
-		this.party = party;
-	}
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -71,17 +63,18 @@ public class CampScene extends Scene {
 		bottomButtons[4] = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Continue");
 		bottomButtons[5] = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		
+		ButtonListener listener = new ButtonListener();
+		bottomButtons[0].addListener(listener);
+		bottomButtons[1].addListener(listener);
+		bottomButtons[5].addListener(listener);
+		
 		buttonPanel.addAsGrid(bottomButtons, buttonPanel.getPosition(ReferencePoint.TOPLEFT), 2, 3, PADDING, PADDING, PADDING, PADDING);
 		mainLayer.add(buttonPanel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT);
 		
 		campFire = new Particle(container, 1, 0, 15);
 		campFire.addFire(565, 400, 15);
 		backgroundLayer.add(campFire);
-		
-		hud = new HUD(container, party, new HUDListener());
-		hud.addNotification("Have a nice relaxing night by the campfire");
-		hud.updateNotifications();
-		showHUD(hud);	
 	}
 	
 	@Override
@@ -95,10 +88,17 @@ public class CampScene extends Scene {
 		return ID.ordinal();
 	}
 	
-	private class HUDListener implements ComponentListener {
-		@Override
-		public void componentActivated(AbstractComponent component) {
-			GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
+	/**
+	 * ButtonListener
+	 */
+	private class ButtonListener implements ComponentListener {
+		public void componentActivated(AbstractComponent source) {
+			if (source == bottomButtons[0])
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
+			else if (source == bottomButtons[1])
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, CampScene.this, false);
+			else if (source == bottomButtons[5])
+				GameDirector.sharedSceneListener().sceneDidEnd(CampScene.this);
 		}
 	}
 
