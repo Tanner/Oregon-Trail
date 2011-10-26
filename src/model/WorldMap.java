@@ -203,13 +203,13 @@ public class WorldMap {
 					//if we're at final rank before finish, have all edges go to portland
 					if (i == MAX_RANK-1){
 						//System.out.println("i = " + i + " size = " + mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
-						newTrail = new TrailEdge("Trail from " + node.getLocationName() + " to " + finalDestination.getLocationName(), finalDestination ,node, 1 );
+						newTrail = new TrailEdge("Trail from " + node.getLocationName() + " to " + finalDestination.getLocationName(), finalDestination ,node, mapRand.nextInt(100) );
 					} else {
 						//nexttown holds size of arraylist for locations - used as random source to determine where trails go
 						int nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
 						//System.out.println("i = " + i + " size = " + mapNodes.get(nextRank).size() + " random index : " + nextTown + " | Town name : " + mapNodes.get(nextRank).get(nextTown).getLocationName());
 						LocationNode randDestNode = mapNodes.get(nextRank).get(nextTown);
-						newTrail = new TrailEdge("Trail from " + node.getLocationName() + " to " + randDestNode.getLocationName(), randDestNode ,node, 1 );
+						newTrail = new TrailEdge("Trail from " + node.getLocationName() + " to " + randDestNode.getLocationName(), randDestNode ,node, mapRand.nextInt(100) );
 					}
 					//System.out.println("\t"+newTrail.toString());
 					//add trail to this location's trail list
@@ -218,6 +218,16 @@ public class WorldMap {
 				}//for each trail at location
 			}//for each location at rank
 		}//for each rank
+		if (this.devMode) {
+			for (int i = 0; i <= MAX_RANK; i++){
+				System.out.println("Locations at rank "+  i + " : " + mapNodes.get(i).size());
+				for(LocationNode node : mapNodes.get(i)){
+					System.out.println(node.debugToString());
+				}//for locationnodes
+			}//for each rank
+		}//devmode stub
+		
+
 	}//map generator method
 	
 	/**

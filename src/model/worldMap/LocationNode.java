@@ -130,7 +130,7 @@ public class LocationNode {
 	 */
 	public String toString(){
 		
-		return this.locationName + " with " + this.trails + " trails";
+		return this.locationName + " with " + this.trails + " westward trails";
 	}
 	
 	/**
