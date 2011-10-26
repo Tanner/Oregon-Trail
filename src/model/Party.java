@@ -512,7 +512,7 @@ public class Party implements HUDDataSource {
 	}
 	
 	public void grazeAnimal(Animal animal) {
-		animal.getStatus().increase(50);
+		animal.increaseStatus(50);
 	}
 	
 	public void feedAnimal(Animal animal) {
