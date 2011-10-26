@@ -39,7 +39,7 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	}
 
 	@Override
-	public final void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		backgroundLayer.render(container, g);
 		mainLayer.render(container, g);
 		hudLayer.render(container, g);

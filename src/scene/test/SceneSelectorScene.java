@@ -181,6 +181,14 @@ public class SceneSelectorScene extends Scene {
 				player = game.getPlayer();
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_PARTY"))) {
 				player.setParty(makeRandomParty());
+			} else if (buttonText.equals(SceneID.CAMP.getName())) {
+				// Game Over
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;		
+				}
+				
+				GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, SceneSelectorScene.this, false);
 			}
 		}
 		
