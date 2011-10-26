@@ -15,8 +15,6 @@ import component.Label.VerticalAlignment;
 
 import core.ConstantStore;
 import core.FontManager;
-import core.GameDirector;
-
 /**
  * A HUD holds quick information for the player.
  */
@@ -47,7 +45,7 @@ public class HUD extends Component {
 		
 		notificationQueue = new LinkedList<String>();
 		
-		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
 		
 		int height = HEIGHT - (2 * MARGIN);
 		

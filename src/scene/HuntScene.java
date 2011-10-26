@@ -69,7 +69,7 @@ public class HuntScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
-		Font h2 = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.H2);
+		Font h2 = FontManager.get(FontManager.FontID.H2);
 		
 		Label infoLabel = new Label(container, h2, Color.white, "Just making the hunt scene");
 		mainLayer.add(infoLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);

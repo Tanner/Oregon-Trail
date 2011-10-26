@@ -3,7 +3,7 @@ package component;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.gui.GUIContext;
 
-import core.GameDirector;
+import core.FontManager;
 import core.FontManager.FontID;
 
 public class Tooltip extends Label {
@@ -13,9 +13,9 @@ public class Tooltip extends Label {
 
 	public Tooltip(GUIContext context, Component owner, String message) {
 		super(context,
-				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD).getWidth(message) + PADDING * 2,
-				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD).getLineHeight() * Label.getNumberOfNewlines(message) + PADDING * 2,
-				GameDirector.sharedSceneListener().getFontManager().getFont(FontID.FIELD), 
+				FontManager.get(FontID.FIELD).getWidth(message) + PADDING * 2,
+				FontManager.get(FontID.FIELD).getLineHeight() * Label.getNumberOfNewlines(message) + PADDING * 2,
+				FontManager.get(FontID.FIELD), 
 				Color.white,
 				message);
 		

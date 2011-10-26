@@ -28,7 +28,8 @@ public class MainMenuScene extends Scene {
 		super.init(container, game);
 		//SoundStore.get().loopMusic("GBU");
 		
-		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+		//Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
 		newGameButton = new Button(container, 240, 60, new Label(container, fieldFont, Color.white, ConstantStore.get("MAIN_MENU", "NEW_GAME")));
 		newGameButton.addListener(new ButtonListener());
 				

@@ -46,9 +46,9 @@ public class TownScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 						
-		Font h1 = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.H1);
-		Font h2 = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.H2);
-		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font h1 = FontManager.get(FontManager.FontID.H1);
+		Font h2 = FontManager.get(FontManager.FontID.H2);
+		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
 		
 		Label titleLabel = new Label(container, h1, Color.white, "Town");
 		Label subtitleLabel = new Label(container, h2, Color.white, "Press Enter to Go to Store");

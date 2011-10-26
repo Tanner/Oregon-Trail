@@ -36,7 +36,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	private GameDirector() {
 		 sharedDirector = this;
 		 
-		 fontManager = new FontManager();
+		 //fontManager = new FontManager();
 
 		 sceneDirector = new SceneDirector("Oregon Trail", this);
 		 worldMap = new WorldMap();
@@ -254,7 +254,7 @@ public class GameDirector implements SceneListener, SceneDirectorListener {
 	  ----------------------*/
 	@Override
 	public void sceneDirectorReady() {
-		fontManager.init();
+		//fontManager.init();
 	}
 	
 	/*----------------------

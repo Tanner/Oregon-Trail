@@ -23,8 +23,6 @@ import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
 import core.ConstantStore;
 import core.FontManager;
-import core.GameDirector;
-
 /**
  * This class is a group of a {@code Button} and a {@code ConditionBar}.
  * 
@@ -82,7 +80,7 @@ public class OwnerInventoryButtons {
 				padding = 0;
 			}
 			
-			Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+			Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
 			
 			Sprite sprite = new Sprite(container, 48, 48);
 			Label label = new Label(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, fieldFont, Color.white, "");

@@ -56,7 +56,7 @@ public class SceneSelectorScene extends Scene {
 
 		SoundStore.get().stopMusic();
 		
-		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
 		
 		SceneID scenes[] = SceneID.values();
 		

@@ -4,7 +4,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.gui.*;
 
 import core.FontManager;
-import core.GameDirector;
 import core.Logger;
 import core.SoundStore;
 
@@ -19,7 +18,7 @@ import java.util.*;
  */
 public class SegmentedControl extends Component {
 	
-	private Font font = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+	private Font font = FontManager.get(FontManager.FontID.FIELD);
 	private Color color = Color.white;
 	
 	private final int STATES;

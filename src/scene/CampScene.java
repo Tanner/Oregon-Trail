@@ -1,7 +1,5 @@
 package scene;
 
-import model.Party;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -37,12 +35,17 @@ public class CampScene extends Scene {
 	private Particle campFire;
 	
 	@Override
+	public void enter(GameContainer container, StateBasedGame game)  {
+		SoundStore.get().loopMusic("Crackling Fire");
+	}
+	
+	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		SoundStore.get().loopMusic("Crackling Fire");
+
 		backgroundLayer.add(new Sprite(container, new Image("resources/graphics/backgrounds/camp.png")));
 		
-		Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);
+		Font fieldFont = FontManager.get(FontManager.FontID.FIELD);
 		
 		buttonPanel = new Panel(container, container.getWidth(), 120, Color.gray);
 		buttonPanel.setBevelWidth(2);
@@ -93,6 +96,7 @@ public class CampScene extends Scene {
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
+			SoundStore.get().stopMusic();
 			if (source == bottomButtons[0])
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
 			else if (source == bottomButtons[1])
