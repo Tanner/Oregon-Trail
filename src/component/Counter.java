@@ -5,11 +5,8 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
-
 import component.Label.Alignment;
-import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
-
 import core.FontManager;
 import core.GameDirector;
 

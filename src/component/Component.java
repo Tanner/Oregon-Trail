@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -12,11 +11,8 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
-import org.newdawn.slick.state.StateBasedGame;
 
 import scene.Scene;
-
-import core.GameDirector;
 
 /**
  * {@code Component} provides basic features for GUI elements with an origin,

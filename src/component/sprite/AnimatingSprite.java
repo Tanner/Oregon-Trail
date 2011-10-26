@@ -2,9 +2,7 @@ package component.sprite;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.gui.GUIContext;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class AnimatingSprite extends Sprite {
 	private Animation leftAnimation;

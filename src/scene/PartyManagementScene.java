@@ -15,7 +15,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.Button;
 import component.Label;
 import component.SegmentedControl;
-import component.Label.Alignment;
 import component.Positionable.ReferencePoint;
 
 import core.ConstantStore;

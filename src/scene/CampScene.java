@@ -1,21 +1,14 @@
 package scene;
 
-import java.io.File;
-import java.io.IOException;
-
 import model.Party;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
-import org.newdawn.slick.particles.*;
-import org.newdawn.slick.particles.effects.FireEmitter;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.*;
@@ -33,8 +26,7 @@ public class CampScene extends Scene {
 	private static final int PADDING = 20;
 	private static final int BUTTON_WIDTH = 315;
 	private static final int BUTTON_HEIGHT = 30;
-	private static final int LABEL_WIDTH = 100;
-	
+		
 	private HUD hud;
 	private Panel buttonPanel;
 	//1: inventoryButton

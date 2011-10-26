@@ -11,7 +11,6 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
-import component.Label.Alignment;
 import component.Label.VerticalAlignment;
 
 import core.ConstantStore;
