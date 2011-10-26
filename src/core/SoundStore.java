@@ -13,6 +13,9 @@ public class SoundStore {
 	
 	private static SoundStore soundStore;
 	
+	private float musicVolume = 1;
+	private float soundVolume = 1;
+	
 	private Map<String, Sound> sounds;
 	private Map<String, Music> musics;
 	
@@ -36,32 +39,33 @@ public class SoundStore {
 	private void initialize() throws SlickException {
 		addToSounds("Click", new Sound("resources/music/click.ogg"));
 		addToMusic("Crackling Fire", new Music("resources/music/crackling_fire.ogg"));
-		//addToMusic("GBU", new Music("resources/music/GBUogg.ogg"));
+		addToMusic("GBU", new Music("resources/music/GBUogg.ogg"));
 		//addToMusic("Smooth", new Music("resources/music/smoothogg2.ogg"));
 	}
 	
 	private void addToMusic(String name, Music music) {
 		musics.put(name, music);	
 	}
-
-	public void muteMusic() {
-		for(String name : musics.keySet()) {
-			if (musics.get(name).playing()) {
-				musics.get(name).setVolume(0);
-			}
-		}
+	
+	public void setVolume(float volume) {
+		musicVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
+		soundVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
+		setMusicVolume(musicVolume);
+		setSoundVolume(soundVolume);
 	}
 	
 	public void setMusicVolume(float volume) {
-		volume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
-		for(String name: musics.keySet()) {
+		musicVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
+		for(String name : musics.keySet()) {
 			if(musics.get(name).playing()) {
-				musics.get(name).setVolume(volume);
+				musics.get(name).setVolume(musicVolume);
 			}
 		}
-		
 	}
-	
+
+	public void setSoundVolume(float volume) {
+		soundVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
+	}
 	
 	public void loopMusic(String name) {
 		musics.get(name).loop();
@@ -74,7 +78,6 @@ public class SoundStore {
 			}
 		}
 		musics.get(name).play();
-		setMusicVolume(1);
 	}
 	
 	public void playMusic(String name, float volume) {
@@ -84,7 +87,6 @@ public class SoundStore {
 			}
 		}
 		musics.get(name).play();
-		setMusicVolume(volume);
 	}
 	
 	public void stopMusic() {
@@ -100,8 +102,8 @@ public class SoundStore {
 	}
 	
 	public void playSound(String name) {
-		sounds.get(name).play();
-		}
+		sounds.get(name).play(1, soundVolume);
+	}
 	
 	public void stopSound(String name) {
 		sounds.get(name).stop();
