@@ -14,7 +14,7 @@ public class WorldMapTest {
 
 	@Test
 	public void testWorldMap() {
-		WorldMap myMap = new WorldMap();
+		WorldMap myMap = new WorldMap("testMode");
 //		fail("Not yet implemented"); // TODO
 	}
 

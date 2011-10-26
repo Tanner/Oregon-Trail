@@ -38,6 +38,8 @@ public class WorldMap {
 	private int numLocations;
 	/**number of total trails on map*/
 	private int numTrails;
+	/**dev mode for this class, for testing */
+	private boolean devMode;
 	
 	
 	/**
@@ -45,7 +47,8 @@ public class WorldMap {
 	 * @param numNodes the number of possible locations on the map - not all of them will be reachable
 	 * @param numTrails the number of possible directed trails - not all will be traveled.
 	 */
-	public WorldMap(int numNodes, int numTrails){
+	public WorldMap(int numNodes, int numTrails, String devMode){
+		this.devMode = (devMode.length() == 0) ? false : true;
 		this.generateMap(numNodes, numTrails);
 		this.currDestination = this.mapHead;
 	}
@@ -55,7 +58,11 @@ public class WorldMap {
 	 */
 	public WorldMap(){
 		//make a generic-sized map for initial testing and development 
-		//this(60,200);
+		this(60,200,"");
+	}
+	
+	public WorldMap(String devMode){
+		this(60,200,"devMode");
 	}
 
 	/**
@@ -115,7 +122,11 @@ public class WorldMap {
 		
 		Map<Integer, ArrayList<LocationNode>> mapNodes = new HashMap<Integer, ArrayList<LocationNode>>();
 		
-		List<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
+		for (int i  = 0; i <= MAX_RANK; i++){
+			mapNodes.put(i, new ArrayList<LocationNode>());
+		}
+		
+		ArrayList<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
 			//temp array holding number of locations at each rank, indexed by rank
 		int[] numRankAra = new int[MAX_RANK];
 			//current node's rank as we're building the node list
@@ -129,21 +140,20 @@ public class WorldMap {
 			//build beginning and final locations
 		this.mapHead = new LocationNode("Independence", MAX_X, 0, numExitTrails, 0);
 		this.finalDestination = new LocationNode("Portland", 0,0,0, MAX_RANK);
-		
+
 		numRankAra[0] = 1;
 		numRankAra[MAX_RANK - 1] = 1;
 		
 		tempLocationStore.add(mapHead);
-		
+		mapNodes.get(mapHead.getRank()).add(mapHead);
 		//need to build base set of nodes - must have at least 1 per rank to get from independence to portland
 		for (int i = 1; i < MAX_RANK; i++){
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 			LocationNode tmp = generateLocationNode(mapRand,i,numExitTrails);
 			tempLocationStore.add(tmp);
-			mapNodes.get(tmp).add(tmp);
+			mapNodes.get(i).add(tmp);
 		}//for loop to build initial path
 
-		
 		//build rest of random map
 		for(int i = MAX_RANK; i < numLocations-1; i++){
 			
@@ -153,17 +163,29 @@ public class WorldMap {
 			curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter-1 : curRankIter;
 			//number of trails out of location : 1 to MaxTrailsOut constant
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
-			tempLocationStore.add(generateLocationNode(mapRand,curRank,numExitTrails));
+			LocationNode tmp = generateLocationNode(mapRand,curRank,numExitTrails);
+			tempLocationStore.add(tmp);
+			mapNodes.get(tmp.getRank()).add(tmp);
 		}//for all locations make a node
 		tempLocationStore.add(finalDestination);
-		for (int i = 0; i < tempLocationStore.size(); i++){
+		mapNodes.get(finalDestination.getRank()).add(finalDestination);
+
+/*		for (int i = 0; i < tempLocationStore.size(); i++){
 			System.out.printf("%dth location : %s \n", (i+1), tempLocationStore.get(i));
 				System.out.println(tempLocationStore.get(i).debugToString());				
 		}//for loop to print out tempLocationStore
-
+*/
 		//as of here we have all the location nodes.  now need to build map.
 		//by adding edges.  an edge can only go from a location to one with equal or higher 
 		//rank.
+		if (this.devMode) {
+			for (int i = 0; i <= MAX_RANK; i++){
+				for(LocationNode node : mapNodes.get(i)){
+					System.out.println(node.debugToString());
+				}
+				
+			}
+		}
 		
 		boolean done = false;
 		
