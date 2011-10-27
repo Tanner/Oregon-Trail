@@ -7,6 +7,7 @@ import java.util.Random;
 import model.Notification;
 import model.Party;
 import model.RandomEncounterTable;
+import model.Time;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -51,6 +52,8 @@ public class TrailScene extends Scene {
 	private RandomEncounterTable randomEncounterTable;
 	
 	private HUD hud;
+	
+	private Time time;
 	
 	public TrailScene(Party party, RandomEncounterTable randomEncounterTable) {
 		this.party = party;
@@ -125,6 +128,7 @@ public class TrailScene extends Scene {
 			
 			if (clickCounter >= STEP_COUNT_TRIGGER) {
 				List<Notification> notifications = party.walk();
+				time.advanceTime();
 				
 				if (party.getPartyMembers().isEmpty()) {
 					GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
