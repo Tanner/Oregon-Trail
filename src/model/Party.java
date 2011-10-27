@@ -560,11 +560,12 @@ public class Party implements HUDDataSource {
 			currentHealth = person.getHealth().getCurrent();
 			if(currentHealth == 0) {
 				hasMessage = true;
-				str.append(person.getName() + " has died of starvation!");
+				str.append(person.getName() + " has died of starvation! ");
 			}
-			else if(person.getHealth().getCurrent() < getPace().getSpeed() - getRations().getRationAmount()) {
+			else if(person.getHealth().getCurrent() < (getPace().getSpeed() - 
+					((personHasFood(person) || vehicleHasFood()) ? getRations().getRationAmount() : 0))) {
 				hasMessage = true;
-				str.append(person.getName() + " is in danger of starvation.");
+				str.append(person.getName() + " is in danger of starvation." );
 			}
 		}
 		if (hasMessage) {
