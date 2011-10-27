@@ -38,7 +38,7 @@ public class TrailScene extends Scene {
 	
 	private static final int HILL_DISTANCE_A = 300;
 	private static final int HILL_DISTANCE_B = 600;
-	private static final int CLOUD_DISTANCE = 80;
+	private static final int CLOUD_DISTANCE = 400;
 	private static final int GROUND_DISTANCE = 10;
 	private static final int TREE_DISTANCE = 200;
 	
@@ -87,8 +87,17 @@ public class TrailScene extends Scene {
 		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
 		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		ParallaxSprite cloudsA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/clouds.png", false, Image.FILTER_NEAREST), CLOUD_DISTANCE);
-		parallaxPanel.add(cloudsA, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT);
+		Image cloudAImage = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
+		ParallaxSprite cloudA = new ParallaxSprite(container, cloudAImage, CLOUD_DISTANCE, true);
+		parallaxPanel.add(cloudA, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 20);
+		
+		Image cloudBImage = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
+		ParallaxSprite cloudB = new ParallaxSprite(container, cloudBImage, CLOUD_DISTANCE, true);
+		parallaxPanel.add(cloudB, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 20);
+		
+		Image cloudCImage = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
+		ParallaxSprite cloudC = new ParallaxSprite(container, cloudCImage, CLOUD_DISTANCE, true);
+		parallaxPanel.add(cloudC, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 20);
 		
 		ArrayList<ParallaxSprite>trees = new ArrayList<ParallaxSprite>();
 		
