@@ -156,7 +156,7 @@ public final class ConstantStore {
 		general.put("PROFESSION", "Profession");
 		general.put("WEIGHT_UNIT", "lbs");
 		literalMap.put("GENERAL", general);
-		
+
 		LITERALS = Collections.unmodifiableMap(literalMap);
 		
 		// Colors
@@ -201,7 +201,6 @@ public final class ConstantStore {
 		townNames.add("Fort Coon");
 		townNames.add("Latham");
 		townNames.add("Lincoln");
-		
 	}
 	
 	/**
