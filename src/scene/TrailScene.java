@@ -30,6 +30,7 @@ import component.sprite.ParallaxSpriteLoop;
 import core.ConstantStore;
 import core.GameDirector;
 import core.Logger;
+import core.SoundStore;
 
 public class TrailScene extends Scene {
 	public static final SceneID ID = SceneID.TRAIL;
@@ -121,6 +122,9 @@ public class TrailScene extends Scene {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(!isPaused()) {
 			timeElapsed += delta;
+			if(!SoundStore.get().getPlayingSounds().contains("Steps")) {
+				SoundStore.get().playSound("Steps");
+			}
 			
 			if (skyAnimatingColor != null) {
 				sky.setBackgroundColor(skyAnimatingColor.getColor());
@@ -146,6 +150,7 @@ public class TrailScene extends Scene {
 			}
 			
 			if (clickCounter >= STEP_COUNT_TRIGGER) {
+				
 				List<Notification> notifications = party.walk();
 				time.advanceTime();
 				
@@ -162,6 +167,7 @@ public class TrailScene extends Scene {
 						ChoiceModal campModal = new ChoiceModal(container, this, notification.getMessage());
 						campModal.setDismissButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
 						campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
+						SoundStore.get().stopAllSound();
 						showModal(campModal);
 					} else {
 						messages.add(notification.getMessage());

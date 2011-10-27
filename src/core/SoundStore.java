@@ -52,6 +52,7 @@ public class SoundStore {
 		addToMusic("Crackling Fire", new Music("resources/music/crackling_fire.ogg"));
 		//addToMusic("GBU", new Music("resources/music/GBUogg.ogg"));
 		//addToMusic("Smooth", new Music("resources/music/smoothogg2.ogg"));
+		addToSounds("Steps", new Sound("resources/music/steps.ogg"));
 	}
 	
 	/**
