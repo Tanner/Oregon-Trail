@@ -29,6 +29,7 @@ public class SoundStore {
 		try {
 			initialize();
 		} catch (SlickException e) {
+			System.err.println(e.getStackTrace());
 		}
 	}
 	

@@ -28,8 +28,8 @@ public class FontStore {
 			FONTS = new HashMap<String, Font>();
 		try {
 			fontManager.init();
-		}
-		catch (SlickException se) {
+		} catch (SlickException e) {
+			System.err.println(e.getStackTrace());
 		}
 		
 	}
