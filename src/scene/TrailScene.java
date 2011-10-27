@@ -7,6 +7,7 @@ import java.util.Random;
 import model.Notification;
 import model.Party;
 import model.Time;
+import model.worldMap.TrailEdge;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -48,7 +49,7 @@ public class TrailScene extends Scene {
 	private int clickCounter;
 	private int timeElapsed;
 	private boolean paused;
-	
+		
 	private Panel sky;
 	private ParallaxPanel parallaxPanel;
 	

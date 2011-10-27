@@ -146,6 +146,7 @@ public class GameDirector implements SceneListener {
 			}
 		} else if (lastScene instanceof PartyCreationScene) {
 			// Last scene was Party Creation Scene
+			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
 			newScene = new TownScene(game.getPlayer().getParty());
 		} else if (lastScene instanceof TownScene) {
 			// Last scene was Town Scene
