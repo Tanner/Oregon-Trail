@@ -154,7 +154,7 @@ public final class ConstantStore {
 		general.put("PROFESSION", "Profession");
 		general.put("WEIGHT_UNIT", "lbs");
 		literalMap.put("GENERAL", general);
-
+		
 		LITERALS = Collections.unmodifiableMap(literalMap);
 		
 		// Colors

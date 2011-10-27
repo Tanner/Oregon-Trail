@@ -331,7 +331,9 @@ public class Party implements HUDDataSource {
 		for (Animal animal : animals) {
 			animal.decreaseStatus(getPace().getSpeed() - 75);
 			if(animal.getStatus().getCurrent() == 0) {
-				vehicle.addItemsToInventory(animal.killForFood());
+				if (vehicle != null) {
+					vehicle.addItemsToInventory(animal.killForFood());
+				}
 				slaughterHouse.add(animal);
 			}
 		}
@@ -352,7 +354,9 @@ public class Party implements HUDDataSource {
 				}
 			}
 			if(person.getHealth().getCurrent() == 0) {
-				vehicle.addItemsToInventory(person.killForFood());
+				if (vehicle != null) {
+					vehicle.addItemsToInventory(person.killForFood());
+				}
 				deathList.add(person);
 			}
 		}
@@ -449,9 +453,11 @@ public class Party implements HUDDataSource {
 	}
 	
 	private boolean vehicleHasFood() {
-		for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
-			if (itemType.isFood()) {
-				return true;
+		if (vehicle != null) {
+			for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
+				if (itemType.isFood()) {
+					return true;
+				}
 			}
 		}
 		return false;
