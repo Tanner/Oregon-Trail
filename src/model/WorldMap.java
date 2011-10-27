@@ -28,6 +28,10 @@ public class WorldMap {
 	private final int MAX_Y = 800;
 	/**points to starting city - references entire map*/
 	private LocationNode mapHead;
+	/**points to most recent location*/
+	private LocationNode partyLocation;
+	/**points to most recent trail traversed*/
+	private TrailEdge partyTrail;
 	/**points to nearest locationNode ahead of party, or current location*/
 	private LocationNode currDestination;
 	/**final destination - Portland Oregon*/
@@ -41,7 +45,6 @@ public class WorldMap {
 	/**dev mode for this class, for testing */
 	private boolean devMode;
 	
-	
 	/**
 	 * Makes a {@code WorldMap} object that tells the game where the party is and what's ahead of them
 	 * @param numNodes the number of possible locations on the map - not all of them will be reachable
@@ -53,6 +56,8 @@ public class WorldMap {
 		this.numLocations = numNodes;
 		this.generateMap(numNodes);
 		this.currDestination = this.mapHead;
+		this.partyLocation = this.mapHead;
+		this.partyTrail = null;
 	}
 	
 	/**
@@ -254,10 +259,19 @@ public class WorldMap {
 	}
 	
 	/**
+	 * returns head pointer of the map
+	 * @return the map's head pointer
+	 */
+	public LocationNode getMapHead(){
+		return this.mapHead;
+		
+	}
+	
+	
+	/**
 	 * returns a string representation of this map, by iterating through each node .
 	 * @return the string representation
 	 */
-	
 	public String toString(){
 		String resString = "";
 		

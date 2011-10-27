@@ -19,7 +19,10 @@ public class TrailEdge implements Conditioned {
 	private int dangerLevel;
 	/**length of the trail.  calculated by the distance between the two location nodes.*/
 	private float length;
+	/**total number of edges built*/
 	private static int edgeCount;
+	/**whether or not this edge is visible on player map*/
+	private boolean visible;
 
 	//unique id corresponding to this edge.
 	private final int ID;
@@ -40,6 +43,7 @@ public class TrailEdge implements Conditioned {
 		this.dangerLevel = dangerLevel;
 		this.length = calcDistance(destination.MAP_XPOS, origin.MAP_XPOS, destination.MAP_YPOS, origin.MAP_YPOS);
 		this.milesToGo = new Condition((int) this.length);
+		this.visible = false;
 	}
 
 	private float calcDistance(double destX, double origX, double destY, double origY){
@@ -57,7 +61,7 @@ public class TrailEdge implements Conditioned {
 	}
 	@Override
 	public double getConditionPercentage() {
-		return 0;
+		return milesToGo.getPercentage();
 	}
 
 	@Override
@@ -69,5 +73,8 @@ public class TrailEdge implements Conditioned {
 		milesToGo.decrease(distance);
 	}
 	
+	public LocationNode getDestination(){
+		return this.destination;
+	}
 	
 }// class TrailEdge
