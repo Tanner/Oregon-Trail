@@ -19,7 +19,9 @@ import core.SoundStore;
  */
 public class Modal extends Component {
 	private static final int PADDING = 20;
+	private static int DEFAULT_LABEL_WIDTH = 500;
 	private static final Color OVERLAY_COLOR;
+	
 	
 	static {
 		OVERLAY_COLOR = new Color(0f, 0f, 0f, 0.5f);
@@ -45,7 +47,7 @@ public class Modal extends Component {
 		this.listener = listener;
 				
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
-		this.messageLabel = new Label(container, fieldFont, Color.white, message);
+		this.messageLabel = new Label(container, DEFAULT_LABEL_WIDTH, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		
 		int buttonWidth = 200;
@@ -82,7 +84,7 @@ public class Modal extends Component {
 		this.segmentedControl = segmentedControl;
 				
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
-		messageLabel = new Label(container, fieldFont, Color.white, message);
+		messageLabel = new Label(container, segmentedControl.getWidth(), fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		
 		ButtonListener buttonListener = new ButtonListener();

@@ -60,7 +60,7 @@ public class Label extends Component {
 	 * @param text The text to draw
 	 */
 	public Label(GUIContext context, int width, Font font, Color c, String text) {
-		this(context, width, font.getLineHeight(), font, c, text);
+		this(context, width, calculateHeight(width, text, font), font, c, text);
 	}
 	
 	/**
@@ -122,6 +122,28 @@ public class Label extends Component {
 			}
 		}
 		g.clearClip();
+	}
+	
+	private static int calculateHeight(int width, String text, Font font) {
+		Scanner lineScan = new Scanner(text);
+		Scanner wordScan;
+		
+		String currentText = "";
+		int lines = 0;
+		while ( lineScan.hasNext() ) {
+			wordScan = new Scanner(lineScan.nextLine());
+			while (wordScan.hasNext()) {
+				String nextWord = wordScan.next();
+				if (font.getWidth(currentText + nextWord) > width ) {
+					currentText = "";
+					lines++;
+				}
+				currentText += nextWord + " ";
+			}
+			currentText = "";
+			lines++;
+		}
+		return lines*font.getLineHeight();
 	}
 	
 	/**

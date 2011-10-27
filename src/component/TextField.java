@@ -50,7 +50,7 @@ public class TextField extends Component implements Disableable {
 		setBorderColor(Color.white);
 		setBorderWidth(2);
 		
-		label = new Label(container, width - PADDING * 2, font, Color.white);
+		label = new Label(container, width - PADDING * 2, height, font, Color.white, "");
 		label.setAlignment(Alignment.LEFT);
 		add(label, getPosition(Positionable.ReferencePoint.CENTERLEFT), Positionable.ReferencePoint.CENTERLEFT, PADDING, 0);
 	}
