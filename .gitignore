@@ -33,8 +33,3 @@ local.properties
 
 # PDT-specific
 .buildpath
-
-# sound files
-jogg*.jar
-jorbis*.jar
-
