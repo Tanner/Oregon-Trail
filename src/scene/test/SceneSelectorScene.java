@@ -63,7 +63,7 @@ public class SceneSelectorScene extends Scene {
 		
 		SceneID scenes[] = SceneID.values();
 		
-		int size = (int)Math.ceil(Math.sqrt(scenes.length));
+		int size = (int)Math.ceil(Math.sqrt(scenes.length + 2)); // 2 for reset party and game
 		int height = (container.getHeight() - (size + 1) * MARGIN) / size;
 		int width = (container.getWidth() - (size + 1) * MARGIN) / size;
 		
