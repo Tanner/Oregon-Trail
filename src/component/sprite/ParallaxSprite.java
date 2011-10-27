@@ -14,7 +14,7 @@ import component.Panel;
 public class ParallaxSprite extends Component implements Comparable<ParallaxSprite> {
 	private final int DELTA_X = 1;
 	private static final int NEAR_MAX_ELAPSED_TIME = 1;
-	private static final int FAR_MAX_ELAPSED_TIME = 1000 - NEAR_MAX_ELAPSED_TIME;
+	private static final int FAR_MAX_ELAPSED_TIME = 100 - NEAR_MAX_ELAPSED_TIME;
 	
 	public static int MAX_DISTANCE = 0;
 	
