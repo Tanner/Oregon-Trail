@@ -28,6 +28,7 @@ public class SceneLayer extends Component {
 		component.setParentComponent(this);
 	}
 	
+	@Override
 	public boolean isVisible() {
 		return true;
 	}

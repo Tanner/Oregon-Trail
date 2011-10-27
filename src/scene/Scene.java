@@ -89,10 +89,7 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 		modalLayer.setVisible(true);
 	}
 	
-	/**
-	 * Deactivates a modal screen
-	 * @param the modal by which the activation shall be not
-	 */
+	@Override
 	public void dismissModal(Modal modal, boolean cancelled) {
 		resume();
 		removeTooltip();

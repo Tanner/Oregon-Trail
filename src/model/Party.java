@@ -219,10 +219,7 @@ public class Party implements HUDDataSource {
 		return skillList;
 	}
 
-	/**
-	 * Returns the money
-	 * @return the party's money
-	 */
+	@Override
 	public int getMoney() {
 		return this.money;
 	}

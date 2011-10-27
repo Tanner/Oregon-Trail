@@ -60,10 +60,7 @@ public class TrailEdge implements Conditioned {
 		return 0;
 	}
 
-	/**
-	 * returns the name of this {@code TrailEdge}, currently consisting of its destination location
-	 * @return string holding the name of the destination location
-	 */
+	@Override
 	public String toString(){
 		return "Danger Level : " + this.dangerLevel +  " trail from " + this.origin.getLocationName() + " to "+ this.destination.toString() + "that is " + this.length + " miles long";
 	}

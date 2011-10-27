@@ -456,18 +456,12 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		return new Rectangle(origin.x, origin.y, this.width, this.height);
 	}
 	
-	/**
-	 * Return the width.
-	 * @return The width
-	 */
+	@Override
 	public final int getWidth() {
 		return width;
 	}
 	
-	/**
-	 * Return the height.
-	 * @param height the New
-	 */
+	@Override
 	public final int getHeight() {
 		return height;
 	}
@@ -496,11 +490,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 	}
 	
-	/**
-	 * Set whether this component is accepting input. Also sets all subcomponents
-	 * of this component.
-	 * @param acceptingInput Enables input if {@code true}, disables if {@code false}
-	 */
+	@Override
 	public void setAcceptingInput(boolean acceptingInput) {
 		super.setAcceptingInput(acceptingInput);
 		

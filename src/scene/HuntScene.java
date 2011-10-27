@@ -61,11 +61,7 @@ public class HuntScene extends Scene {
 	}
 	
 	
-	/**
-	 * Initializes the state for the {@code HuntScene} resources
-	 * 
-	 */
-	
+	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
@@ -122,9 +118,7 @@ public class HuntScene extends Scene {
 	}
 	
 	
-	/* (non-Javadoc)
-	 * @see scene.Scene#getID()
-	 */
+	@Override
 	public int getID() {
 		return ID.ordinal();
 	}
