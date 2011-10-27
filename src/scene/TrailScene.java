@@ -17,6 +17,7 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.AnimatingColor;
 import component.HUD;
 import component.Panel;
 import component.ParallaxPanel;
@@ -58,6 +59,7 @@ public class TrailScene extends Scene {
 	private HUD hud;
 	
 	private Time time;
+	private AnimatingColor skyAnimatingColor;
 	
 	public TrailScene(Party party, RandomEncounterTable randomEncounterTable) {
 		this.party = party;
@@ -118,6 +120,10 @@ public class TrailScene extends Scene {
 		if(!isPaused()) {
 			timeElapsed += delta;
 			
+			if (skyAnimatingColor != null) {
+				sky.setBackgroundColor(skyAnimatingColor.getColor());
+			}
+			
 			if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
 				clickCounter++;
 				hud.updateNotifications();
@@ -169,7 +175,7 @@ public class TrailScene extends Scene {
 	}
 	
 	private void adjustForHour(int hour) {
-		sky.setBackgroundColor(skyColorForHour(hour));
+		skyAnimatingColor = new AnimatingColor(sky.getBackgroundColor(), skyColorForHour(hour), CLICK_WAIT_TIME);
 	}
 	
 	private Color skyColorForHour(int hour) {
