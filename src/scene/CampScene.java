@@ -98,12 +98,13 @@ public class CampScene extends Scene {
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
 			SoundStore.get().stopMusic();
-			if (source == bottomButtons[0])
+			if (source == bottomButtons[0]) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
-			else if (source == bottomButtons[1])
+			} else if (source == bottomButtons[1]) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, CampScene.this, false);
-			else if (source == bottomButtons[5])
+			} else if (source == bottomButtons[5]) {
 				GameDirector.sharedSceneListener().sceneDidEnd(CampScene.this);
+			}
 		}
 	}
 

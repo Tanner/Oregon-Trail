@@ -42,16 +42,17 @@ public enum EncounterID {
 	 * @return The created Encounter
 	 */
 	public static Encounter getEncounter(Party party, EncounterID id, int min, int max) {
-		if (id == EncounterID.THIEF)
+		if (id == EncounterID.THIEF) {
 			return new ThiefEncounter(party, min, max);
-		else if (id == EncounterID.ITEM)
+		} else if (id == EncounterID.ITEM) {
 			return new ItemEncounter(party, min, max);
-		else if (id == EncounterID.POTHOLE)
-			return new NullEncounter(party, min, max);
-		else if (id == EncounterID.MESSAGE)
+		} else if (id == EncounterID.POTHOLE) {
+			return new NullEncounter(party, min , max);
+		} else if (id == EncounterID.MESSAGE) {
 			return new MessageEncounter(party, min, max);
-		else
+		} else {
 			return new NullEncounter(party, min, max);
+		}
 
 	}
 }
