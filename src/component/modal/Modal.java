@@ -1,4 +1,4 @@
-package component;
+package component.modal;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -9,13 +9,24 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.Input;
 
+import component.Button;
+import component.Component;
+import component.Label;
+import component.ModalListener;
+import component.Panel;
+import component.Positionable;
+import component.SegmentedControl;
+import component.Label.Alignment;
+import component.Positionable.ReferencePoint;
+
 import core.ConstantStore;
 import core.FontStore;
 import core.SoundStore;
 
 /**
  * {@code Modal} inherits from {@code Component} to extend features that provide
- * functionality to act like a modal that gets input from the user.
+ * functionality to block other elements on the screen and present information
+ * to the user.
  */
 public class Modal extends Component {
 	private static final int PADDING = 20;

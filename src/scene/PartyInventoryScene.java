@@ -24,12 +24,12 @@ import component.Button;
 import component.Counter;
 import component.ItemListener;
 import component.Label;
-import component.Modal;
 import component.Label.Alignment;
 import component.OwnerInventoryButtons;
 import component.Panel;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
+import component.modal.Modal;
 import component.sprite.Sprite;
 
 import core.ConstantStore;

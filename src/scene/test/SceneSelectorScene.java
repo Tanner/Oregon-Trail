@@ -16,11 +16,11 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
-import component.Modal;
 import component.Panel;
 import component.Button;
 import component.Label;
 import component.Positionable;
+import component.modal.Modal;
 import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;

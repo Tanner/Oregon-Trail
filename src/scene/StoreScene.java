@@ -14,6 +14,7 @@ import org.newdawn.slick.gui.*;
 import org.newdawn.slick.state.*;
 import component.*;
 import component.Positionable.ReferencePoint;
+import component.modal.Modal;
 import component.sprite.Sprite;
 import core.*;
 

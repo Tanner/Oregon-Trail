@@ -1,5 +1,7 @@
 package component;
 
+import component.modal.Modal;
+
 /**
  * Interface that can be implemented by classes that listen for {@code Modal} events.
  */
