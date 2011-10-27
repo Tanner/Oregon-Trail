@@ -168,6 +168,7 @@ public final class ConstantStore {
 		colorMap.put("INTERACTIVE_LABEL_DISABLED", Color.gray);
 		colorMap.put("MODAL", Color.darkGray);
 		colorMap.put("MODAL_BORDER", Color.white);
+		colorMap.put("TRANSLUCENT_OVERLAY", new Color(0, 0, 0, .25f));
 
 		COLORS = Collections.unmodifiableMap(colorMap);
 	}
