@@ -174,6 +174,14 @@ public class Inventory{
 	}
 	
 	/**
+	 * Checks to see if the current inventory is empty.
+	 * @return True if the inventory is empty, false otherwise.
+	 */
+	public boolean isEmpty() {
+		return (getCurrentSize() == 0);
+	}
+	
+	/**
 	 * Returns the number of a specific type of item in the inventory
 	 * @param itemType The item type queried
 	 * @return The number of that item type.

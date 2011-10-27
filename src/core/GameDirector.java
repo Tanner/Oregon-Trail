@@ -222,7 +222,7 @@ public class GameDirector implements SceneListener {
 		int min = 0;
 		int max = 0;
 		for ( EncounterID encounter : EncounterID.values() ) {
-			max = max + rand.nextInt(50) * encounter.getFrequency();
+			max = max + 5 * encounter.getFrequency();
 			encounterList[i] = EncounterID.getEncounter(game.getPlayer().getParty(), encounter, min, max);
 			min = ++max;
 			i++;

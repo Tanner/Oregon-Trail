@@ -43,7 +43,7 @@ public enum EncounterID {
 	 */
 	public static Encounter getEncounter(Party party, EncounterID id, int min, int max) {
 		if (id == EncounterID.THIEF)
-			return new NullEncounter(party, min, max);
+			return new ThiefEncounter(party, min, max);
 		else if (id == EncounterID.ITEM)
 			return new ItemEncounter(party, min, max);
 		else if (id == EncounterID.POTHOLE)
