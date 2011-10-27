@@ -5,9 +5,14 @@ import model.Notification;
 import model.Party;
 import model.Item.ITEM_TYPE;
 
+/**
+ * Generates a random number of apples, and gives them to the Party's wagon.
+ * Displays a modal with results of the transaction.
+ */
 public class ItemEncounter extends Encounter {
 
 	private int numItems;
+	
 	public ItemEncounter(Party party, int min, int max) {
 		super(party, min, max);
 	}

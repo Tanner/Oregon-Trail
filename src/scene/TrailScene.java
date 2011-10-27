@@ -172,6 +172,12 @@ public class TrailScene extends Scene {
 		}
 	}
 	
+	/**
+	 * Handle the incoming messages from walk and Encounters, consolidating
+	 * everything into one modal window.
+	 * @param notifications Notifications from walk()
+	 * @param encounterMessage Notifications from encounter
+	 */
 	private void handleNotifications(List<Notification> notifications, String encounterMessage) {
 
 		List<String> messages = new ArrayList<String>();
