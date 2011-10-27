@@ -2,6 +2,7 @@ package scene;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
@@ -181,6 +182,10 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 
 	private void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	public Input getInput() {
+		return container.getInput();
 	}
 	
 	/*
