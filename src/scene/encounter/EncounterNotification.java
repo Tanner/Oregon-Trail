@@ -1,7 +1,6 @@
 package scene.encounter;
 
 import model.Notification;
-import scene.Scene;
 import scene.SceneID;
 
 public class EncounterNotification {

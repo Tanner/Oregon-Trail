@@ -23,7 +23,6 @@ import component.Button;
 import component.Label;
 import component.Positionable;
 import component.modal.MessageModal;
-import component.modal.Modal;
 import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;

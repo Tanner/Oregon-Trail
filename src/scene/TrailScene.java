@@ -22,7 +22,6 @@ import component.Panel;
 import component.ParallaxPanel;
 import component.Positionable.ReferencePoint;
 import component.modal.ChoiceModal;
-import component.modal.MessageModal;
 import component.modal.Modal;
 import component.sprite.ParallaxSprite;
 import component.sprite.ParallaxSpriteLoop;
