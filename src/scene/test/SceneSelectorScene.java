@@ -243,7 +243,7 @@ public class SceneSelectorScene extends Scene {
 		}
 		
 		Vehicle vehicle = new Wagon();
-		for(int i = 0; i < 30; i++) {
+		for(int i = 0; i < 99; i++) {
 			vehicle.addItemToInventory(new Item(ITEM_TYPE.MEAT));
 		}
 		vehicle.getInventory().addRandomItems();
