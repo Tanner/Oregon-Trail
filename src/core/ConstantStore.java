@@ -85,13 +85,8 @@ public final class ConstantStore {
 		
 		// Trail Scene
 		Map<String, String> trailScene = new HashMap<String, String>();
-		storeScene.put("CAMP", "Camp");
+		trailScene.put("CAMP", "Camp");
 		literalMap.put("TRAIL_SCENE", trailScene);
-		
-		// HUD
-		Map<String, String> hudScene = new HashMap<String, String>();
-		hudScene.put("MENU", "Camp");
-		literalMap.put("HUD_SCENE", hudScene);
 		
 		// Items
 		Map<String, String> itemMap = new HashMap<String, String>();

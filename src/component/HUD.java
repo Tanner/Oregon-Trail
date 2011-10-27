@@ -49,7 +49,7 @@ public class HUD extends Component {
 		
 		int height = HEIGHT - (2 * MARGIN);
 		
-		Label menuLabel = new Label(context, fieldFont, Color.white, ConstantStore.get("HUD_SCENE", "MENU"));
+		Label menuLabel = new Label(context, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "CAMP"));
 		menuButton = new Button(context, menuLabel.getWidth() + (2 * MARGIN), height, menuLabel);
 		menuButton.addListener(listener);
 		add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);

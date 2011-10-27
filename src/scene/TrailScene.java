@@ -134,7 +134,7 @@ public class TrailScene extends Scene {
 				for(Notification notification : notifications) {
 					if(notification.getIsModal()) {
 						ChoiceModal campModal = new ChoiceModal(container, this, notification.getMessage());
-						campModal.setDismissButtonText(ConstantStore.get("TRAIL", "CAMP"));
+						campModal.setDismissButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
 						campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
 						showModal(campModal);
 					} else {
