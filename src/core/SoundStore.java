@@ -50,8 +50,8 @@ public class SoundStore {
 	private void initialize() throws SlickException {
 		addToSounds("Click", new Sound("resources/music/click.ogg"));
 		addToMusic("Crackling Fire", new Music("resources/music/crackling_fire.ogg"));
-		//addToMusic("GBU", new Music("resources/music/GBUogg.ogg"));
-		//addToMusic("Smooth", new Music("resources/music/smoothogg2.ogg"));
+		addToMusic("GBU", new Music("resources/music/GBUogg.ogg"));
+		addToMusic("Smooth", new Music("resources/music/smoothogg2.ogg"));
 		addToSounds("Steps", new Sound("resources/music/steps.ogg"));
 	}
 	
