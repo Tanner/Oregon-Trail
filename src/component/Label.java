@@ -257,7 +257,7 @@ public class Label extends Component {
 	
 	/**
 	 * Set the vertical text alignment.
-	 * @param alignment The new text alignment
+	 * @param verticalAlignment The new vertical text alignment
 	 */
 	public void setVerticalAlignment(VerticalAlignment verticalAlignment) {
 		this.verticalAlignment = verticalAlignment;

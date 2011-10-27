@@ -58,7 +58,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * Constructs a {@code Component} with a width and height.
 	 * @param context The Gui Context
 	 * @param width the width of the component
-	 * @param heigh the height of the component
+	 * @param height the height of the component
 	 */
 	public Component(GUIContext context, int width, int height) {
 		super(context);
@@ -382,8 +382,8 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	/**
-	 * Enable/disable a beveled appearance.
-	 * @param beveled Enables beveled appearance if {@code true}, disables if {@code false}
+	 * Sets a beveled appearance.
+	 * @param bevelType The {@code BevelType} to use
 	 */
 	public void setBevel(BevelType bevelType) {
 		this.beveled = bevelType;

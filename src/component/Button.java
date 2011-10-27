@@ -31,7 +31,6 @@ public class Button extends Component implements Disableable {
 	 * @param context The GUI context
 	 * @param width The width
 	 * @param height The height
-	 * @param label A label
 	 */
 	public Button(GUIContext context, int width, int height) {
 		super(context, width, height);

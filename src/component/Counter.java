@@ -27,7 +27,7 @@ public class Counter extends Component implements Disableable {
 	
 	/**
 	 * Constructs a {@code CountingButton} with a width and height.
-	 * @param container The GUI context
+	 * @param context The GUI context
 	 * @param width Width of the button
 	 * @param height Height of the button
 	 * @param label Label for the button
