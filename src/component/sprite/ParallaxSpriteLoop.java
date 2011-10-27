@@ -39,11 +39,11 @@ public class ParallaxSpriteLoop extends ParallaxSprite {
 		}
 		
 		if (super.panel.getX() > container.getWidth()) {
-			super.panel.setLocation(0 - panel.getWidth(), super.panel.getY());
+			super.panel.setPosition(panel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPRIGHT);
 		}
 		
 		if (panel.getX() > container.getWidth()) {
-			panel.setLocation(0 - super.panel.getWidth(), panel.getY());
+			panel.setPosition(super.panel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPRIGHT);
 		}
 	}
 }
