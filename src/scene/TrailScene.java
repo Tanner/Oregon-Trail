@@ -17,6 +17,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.HUD;
+import component.Modal;
 import component.Panel;
 import component.ParallaxPanel;
 import component.Positionable.ReferencePoint;
@@ -85,54 +86,63 @@ public class TrailScene extends Scene {
 		
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		timeElapsed += delta;
-		
-		if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
-			clickCounter++;
-			hud.updateNotifications();
-			timeElapsed = 0;
-		}
-		
-		ground.move(delta);
-		
-		for (ParallaxSprite tree : trees) {
-			tree.move(delta);
-		}
-		
-		paused = !hud.isNotificationsEmpty();
-		
-		if (paused) {
-			return;
-		}
-		
-		if (clickCounter >= STEP_COUNT_TRIGGER) {
-			List<Notification> notifications = party.walk();
+		if(!isPaused()) {
+			timeElapsed += delta;
 			
-			if (party.getPartyMembers().isEmpty()) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
+			if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
+				clickCounter++;
+				hud.updateNotifications();
+				timeElapsed = 0;
 			}
-			Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
-			GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this, false);
-
-			hud.updatePartyInformation();
-			List<String> messages = new ArrayList<String>();
-			for(Notification notification : notifications) {
-				if(notification.getIsModal()) {
-					
-				}
-				else {
-					messages.add(notification.getMessage());
-				}
+			
+			ground.move(delta);
+			
+			for (ParallaxSprite tree : trees) {
+				tree.move(delta);
 			}
-			hud.addNotifications(messages);
-		
-			clickCounter = 0;
+			
+			paused = !hud.isNotificationsEmpty();
+			
+			if (paused) {
+				return;
+			}
+			
+			if (clickCounter >= STEP_COUNT_TRIGGER) {
+				List<Notification> notifications = party.walk();
+				
+				if (party.getPartyMembers().isEmpty()) {
+					GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
+				}
+				Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
+				GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this, false);
+	
+				hud.updatePartyInformation();
+				List<String> messages = new ArrayList<String>();
+				for(Notification notification : notifications) {
+					if(notification.getIsModal()) {
+						showModal(new Modal(container, this, notification.getMessage(), "Camp"));
+					} else {
+						messages.add(notification.getMessage());
+					}
+				}
+				hud.addNotifications(messages);
+			
+				clickCounter = 0;
+			}
 		}
 	}
 	
 	@Override
 	public int getID() {
 		return ID.ordinal();
+	}
+	
+	@Override
+	public void dismissModal(Modal modal, boolean cancelled) {
+		super.dismissModal(modal, cancelled);
+		if(cancelled) {
+			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, this, false);
+		}
 	}
 	
 	private class HUDListener implements ComponentListener {

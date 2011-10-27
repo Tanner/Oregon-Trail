@@ -308,7 +308,7 @@ public class Party implements HUDDataSource {
 	
 	/**
 	 * Steps the player forward through the game.
-	 * @return the distance travelled with the walk
+	 * @return the distance traveled with the walk
 	 */
 	public List<Notification> walk() {
 		List<Notification> messages = new ArrayList<Notification>();
@@ -316,26 +316,36 @@ public class Party implements HUDDataSource {
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
 		for (Animal animal : animals) {
-			animal.decreaseStatus(getPace().getSpeed());
+			animal.decreaseStatus(getPace().getSpeed() - 75);
 			if(animal.getStatus().getCurrent() == 0) {
 				vehicle.addItemsToInventory(animal.killForFood());
 				slaughterHouse.add(animal);
-			} else {
-				grazeAnimal(animal);
 			}
 		}
+		
 		List<Person> deathList = new ArrayList<Person>();
+		int healAmount = 0;
 		for (Person person : members) {
 			person.increaseSkillPoints((int) (getPace().getSpeed() / 10));
-			person.decreaseHealth(getPace().getSpeed());
+			if(!personHasFood(person) && !vehicleHasFood()) {
+				person.decreaseHealth(getPace().getSpeed());
+			} else {
+				healAmount = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount());
+				if(healAmount > 0) {
+					person.increaseHealth(healAmount);
+				}
+				else {
+					person.decreaseHealth(-healAmount);
+				}
+			}
 			if(person.getHealth().getCurrent() == 0) {
 				vehicle.addItemsToInventory(person.killForFood());
 				deathList.add(person);
-			} else {
-				heal(person, getRations().getRationAmount());
+				System.out.println(person.toString());
 			}
-			if(checkHungerStatus(person) != null) {
-				messages.add(new Notification(checkHungerStatus(person), true));
+			
+			if(checkHungerStatus() != null) {
+				messages.add(new Notification(checkHungerStatus(), true));
 			}
 		}
 		for (Person person : deathList) {
@@ -365,235 +375,175 @@ public class Party implements HUDDataSource {
 	 * @param person The person to feed
 	 * @param amount the amount to feed them
 	 */
-	public void heal (Person person, int amount) {
+	private int eatFood(Person person, int amount) {
 		// Figure out how much restoration is needed.
-		int restoreNeeded = amount;
-				
-		// Find out if the person has any food
-		boolean personHasFood = false;
-		boolean vehicleHasFood = false;
-		
-		for (Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
-			if (itemType.isFood()) {
-				personHasFood = true;
-			}
+		int restoreNeeded = getRations().getRationAmount();
+		if(restoreNeeded == 0) {
+			return 0;
 		}
-		if(!personHasFood) {
-			for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
-				if (itemType.isFood()) {
-					vehicleHasFood = true;
-				}
-			}
+				
+		if(!personHasFood(person) && !vehicleHasFood()) {
+			return amount;
 		}
 		
 		Inventoried donator = null;
-		if (personHasFood) {
+		if (personHasFood(person)) {
 			donator = person;
 		}
-		else if (!personHasFood && vehicleHasFood){
+		else if (!personHasFood(person) && vehicleHasFood()){
 			donator = vehicle;
 		}
 		
-		if (restoreNeeded > 0 && donator != null) {
-			//If we need restoration, and have food
-			Item.ITEM_TYPE firstFood = null;
-			final List<Item.ITEM_TYPE> typeList = 
-				donator.getInventory().getPopulatedSlots();
-			
-			for (Item.ITEM_TYPE itemType : typeList) {
-				if (itemType.isFood() && firstFood == null) {
-					firstFood = itemType;
-				}
+		//If we need restoration, and have food
+		Item.ITEM_TYPE firstFood = null;
+		final List<Item.ITEM_TYPE> typeList = 
+			donator.getInventory().getPopulatedSlots();
+		
+		for (Item.ITEM_TYPE itemType : typeList) {
+			if (itemType.isFood() && firstFood == null) {
+				firstFood = itemType;
 			}
-			
-			final List<Item> foodList = 
-				donator.removeItemFromInventory(firstFood, 1);
-			
-			final Item food = foodList.get(0);
-			int foodFactor = food.getType().getFoodFactor();
-			
-			//Do some handling for party member skills, such as cooking
-			if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
-				foodFactor += 1;
-			}
-			if(getSkills().contains(Person.Skill.COOKING)) {
-				foodFactor += 1;
-			}
+		}
+		
+		final List<Item> foodList = 
+			donator.removeItemFromInventory(firstFood, 1);
+		
+		final Item food = foodList.get(0);
+		int foodFactor = food.getType().getFoodFactor();
+		
+		//Do some handling for party member skills, such as cooking
+		if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
+			foodFactor += 1;
+		}
+		if(getSkills().contains(Person.Skill.COOKING)) {
+			foodFactor += 1;
+		}
 
-			final int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
+		final int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
+		
+		if (food.getStatus().getCurrent() > foodToEat) {
+			//If there is enough condition in the food to feed the person completely, heal them and eat
 			
-			if (food.getStatus().getCurrent() > foodToEat) {
-				//If there is enough condition in the food to feed the person completely, heal them and eat
-				
-				person.increaseHealth(foodToEat * foodFactor);
-				food.decreaseStatus(foodToEat);
-				donator.addItemToInventory(food); //puts the item back in inventory
-				//Food status down, person health up
-			} else {
-				//we don't have enough status in the food to completely heal the person, so eat it all.
-				int restoreAmount = food.getStatus().getCurrent() * foodFactor;
-				person.increaseHealth(restoreAmount);
-				heal(person, restoreNeeded - restoreAmount); //Recursively call the function to ensure we eat as much as possible.
-			}
+			//person.increaseHealth(foodToEat * foodFactor);
+			food.decreaseStatus(foodToEat);
+			donator.addItemToInventory(food); //puts the item back in inventory
+			//Food status down, person health up
+			return 0;
+		} else {
+			//we don't have enough status in the food to completely heal the person, so eat it all.
+			int restoreAmount = food.getStatus().getCurrent() * foodFactor;
+			//person.increaseHealth(restoreAmount);
+			return eatFood(person, restoreNeeded - restoreAmount); //Recursively call the function to ensure we eat as much as possible.
 		}
 	}
 	
-	public void healToFull(Person person) {
-		// Figure out how much restoration is needed.
-		int restoreNeeded = person.getHealth().getMax() - person.getHealth().getCurrent();
-				
-		// Find out if the person has any food
-		boolean personHasFood = false;
-		boolean vehicleHasFood = false;
-		
-		for (Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
-			if (itemType.isFood()) {
-				personHasFood = true;
-			}
-		}
-		if(!personHasFood) {
-			for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
-				if (itemType.isFood()) {
-					vehicleHasFood = true;
-				}
-			}
-		}
-		
-		Inventoried donator = null;
-		if (personHasFood) {
-			donator = person;
-		}
-		else if (!personHasFood && vehicleHasFood){
-			donator = vehicle;
-		}
-		
-		if (restoreNeeded > 0 && donator != null) {
-			//If we need restoration, and have food
-			Item.ITEM_TYPE firstFood = null;
-			final List<Item.ITEM_TYPE> typeList = 
-				donator.getInventory().getPopulatedSlots();
-			
-			for (Item.ITEM_TYPE itemType : typeList) {
-				if (itemType.isFood() && firstFood == null) {
-					firstFood = itemType;
-				}
-			}
-			
-			final List<Item> foodList = 
-				donator.removeItemFromInventory(firstFood, 1);
-			
-			final Item food = foodList.get(0);
-			int foodFactor = food.getType().getFoodFactor();
-			
-			//Do some handling for party member skills, such as cooking
-			if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
-				foodFactor += 1;
-			}
-			if(getSkills().contains(Person.Skill.COOKING)) {
-				foodFactor += 1;
-			}
-
-			final int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
-			
-			if (food.getStatus().getCurrent() > foodToEat) {
-				//If there is enough condition in the food to feed the person completely, heal them and eat
-				
-				person.increaseHealth(foodToEat * foodFactor);
-				food.decreaseStatus(foodToEat);
-				donator.addItemToInventory(food); //puts the item back in inventory
-				//Food status down, person health up
-			} else {
-				//we don't have enough status in the food to completely heal the person, so eat it all.
-				person.increaseHealth(food.getStatus().getCurrent() * foodFactor);
-				healToFull(person); //Recursively call the function to ensure we eat as much as possible.
-			}
-		}
-	}
-	
-	public void grazeAnimal(Animal animal) {
-		animal.increaseStatus(50);
-	}
-	
-	public void feedAnimal(Animal animal) {
-		// Figure out how much restoration is needed.
-		int restoreNeeded = 0;
-		
-		if (animal.getStatus().getCurrent() < getRations().getRationAmount()) {
-			restoreNeeded = getRations().getRationAmount() - 
-			animal.getStatus().getCurrent();
-		
-		}
-		
-		//See if there is feed available
-		boolean vehicleHasFood = false;
-		
+	private boolean vehicleHasFood() {
 		for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
-			if (itemType.isPlant()) {
-					vehicleHasFood = true;
+			if (itemType.isFood()) {
+				return true;
 			}
 		}
-		
-		Inventoried donator = vehicleHasFood ? vehicle : null;
-		
-		if (restoreNeeded > 0 && donator != null) {
-			//If we need restoration, and have food
-			Item.ITEM_TYPE firstFood = null;
-			final List<Item.ITEM_TYPE> typeList = 
-				donator.getInventory().getPopulatedSlots();
-			
-			for (Item.ITEM_TYPE itemType : typeList) {
-				if (itemType.isFood() && firstFood == null) {
-					firstFood = itemType;
-				}
-			}
-			
-			final List<Item> foodList = 
-				donator.removeItemFromInventory(firstFood, 1);
-			
-			final Item food = foodList.get(0);
-			int foodFactor = food.getType().getFoodFactor() * 3;
-			
-			//Do some handling for party member skills, such as cooking
-			if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
-				foodFactor += 3;
-			}
-			if(getSkills().contains(Person.Skill.COOKING)) {
-				foodFactor += 3;
-			}
-
-			final int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
-			
-			if (food.getStatus().getCurrent() > foodToEat) {
-				//If there is enough condition in the food to feed the person completely, heal them and eat
-				
-				animal.increaseStatus(foodToEat * foodFactor);
-				food.decreaseStatus(foodToEat);
-				donator.addItemToInventory(food); //puts the item back in inventory
-				//Food status down, person health up
-			} else {
-				//we don't have enough status in the food to completely heal the person, so eat it all.
-				animal.increaseStatus(food.getStatus().getCurrent() * foodFactor);
-				feedAnimal(animal); //Recursively call the function to ensure we eat as much as possible.
-			}
-		}
+		return false;
 	}
+
+	private boolean personHasFood(Person person) {
+		for (Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
+			if (itemType.isFood()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+//	
+//	public void feedAnimal(Animal animal) {
+//		// Figure out how much restoration is needed.
+//		int restoreNeeded = 0;
+//		
+//		if (animal.getStatus().getCurrent() < getRations().getRationAmount()) {
+//			restoreNeeded = getRations().getRationAmount() - 
+//			animal.getStatus().getCurrent();
+//		
+//		}
+//		
+//		//See if there is feed available
+//		boolean vehicleHasFood = false;
+//		
+//		for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
+//			if (itemType.isPlant()) {
+//					vehicleHasFood = true;
+//			}
+//		}
+//		
+//		Inventoried donator = vehicleHasFood ? vehicle : null;
+//		
+//		if (restoreNeeded > 0 && donator != null) {
+//			//If we need restoration, and have food
+//			Item.ITEM_TYPE firstFood = null;
+//			final List<Item.ITEM_TYPE> typeList = 
+//				donator.getInventory().getPopulatedSlots();
+//			
+//			for (Item.ITEM_TYPE itemType : typeList) {
+//				if (itemType.isFood() && firstFood == null) {
+//					firstFood = itemType;
+//				}
+//			}
+//			
+//			final List<Item> foodList = 
+//				donator.removeItemFromInventory(firstFood, 1);
+//			
+//			final Item food = foodList.get(0);
+//			int foodFactor = food.getType().getFoodFactor() * 3;
+//			
+//			//Do some handling for party member skills, such as cooking
+//			if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
+//				foodFactor += 3;
+//			}
+//			if(getSkills().contains(Person.Skill.COOKING)) {
+//				foodFactor += 3;
+//			}
+//
+//			final int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
+//			
+//			if (food.getStatus().getCurrent() > foodToEat) {
+//				//If there is enough condition in the food to feed the person completely, heal them and eat
+//				
+//				animal.increaseStatus(foodToEat * foodFactor);
+//				food.decreaseStatus(foodToEat);
+//				donator.addItemToInventory(food); //puts the item back in inventory
+//				//Food status down, person health up
+//			} else {
+//				//we don't have enough status in the food to completely heal the person, so eat it all.
+//				animal.increaseStatus(food.getStatus().getCurrent() * foodFactor);
+//				feedAnimal(animal); //Recursively call the function to ensure we eat as much as possible.
+//			}
+//		}
+//	}
 	
 	/**
 	 * Determines if a party member is near dying or dead, and alerts the player.
 	 * @param person The person who's status we're checking.
 	 * @return A string with a message about the health status of the person
 	 */
-	public String checkHungerStatus(Person person) {
-		final int currentHealth = person.getHealth().getCurrent();
-		if(currentHealth == 0) {
-			return person.getName() + " has died of starvation!";
+	public String checkHungerStatus() {
+		final StringBuilder str = new StringBuilder();
+		int currentHealth;
+		boolean hasMessage = false;
+		for(Person person : members) {
+			currentHealth = person.getHealth().getCurrent();
+			if(currentHealth == 0) {
+				hasMessage = true;
+				str.append(person.getName() + " has died of starvation!");
+			}
+			else if(person.getHealth().getCurrent() < getPace().getSpeed() - getRations().getRationAmount()) {
+				hasMessage = true;
+				str.append(person.getName() + " is in danger of starvation.");
+			}
 		}
-		else if(person.getHealth().getCurrent() < getPace().getSpeed()) {
-			return person.getName() + " is in danger of starvation.";
+		if (hasMessage) {
+			return str.toString();
 		}
-		else {
-			return null;
-		}
+		return null;
 	}
 
 	public void addAnimals(List<Animal> animalList) {

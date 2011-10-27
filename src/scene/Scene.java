@@ -28,6 +28,8 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	
 	private boolean active;
 	
+	private boolean paused = false;
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		Scene.container = container;
@@ -57,11 +59,24 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	@Override
 	public abstract void update(GameContainer container, StateBasedGame game, int delta) throws SlickException;
 
+	private void pause() {
+		paused = true;
+	}
+	
+	private void resume() {
+		paused = false;
+	}
+	
+	public boolean isPaused() {
+		return paused;
+	}
+	
 	/**
 	 * Activates a modal screen 
 	 * @param modal the screen to be displayed via modality
 	 */
 	public void showModal(Modal modal) {
+		pause();
 		removeTooltip();
 		
 		modalLayer.add(modal);
@@ -79,6 +94,7 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	 * @param the modal by which the activation shall be not
 	 */
 	public void dismissModal(Modal modal, boolean cancelled) {
+		resume();
 		removeTooltip();
 		
 		// Make Modal invisible and set accepting input to false before removing it!
