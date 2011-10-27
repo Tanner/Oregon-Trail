@@ -33,7 +33,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	private Component parentComponent;
-	protected Vector2f origin;
+	private Vector2f origin;
 	private int width;
 	private int height;
 	
