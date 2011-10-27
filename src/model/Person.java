@@ -453,7 +453,7 @@ public class Person implements Conditioned, Inventoried {
 	public List<Item> killForFood() {
 		int numberOf = (int) (this.weight / ITEM_TYPE.STRANGEMEAT.getWeight());
 		List<Item> itemList = new ArrayList<Item>();
-		for(int i = 0; i < (numberOf/2); i++) {
+		for(int i = 0; i < (numberOf / 2); i++) {
 			itemList.add(new Item(ITEM_TYPE.STRANGEMEAT));
 		}		
 		return itemList;

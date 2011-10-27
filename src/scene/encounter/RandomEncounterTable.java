@@ -28,7 +28,7 @@ public class RandomEncounterTable {
 	 */
 	public EncounterNotification getRandomEncounter() {
 
-		int roll = random.nextInt(encounters[encounters.length-1].getMax());
+		int roll = random.nextInt(encounters[encounters.length - 1].getMax());
 		
 		for (int i = 0; i < encounters.length; i++) {
 			if ( encounters[i].isInRange(roll))

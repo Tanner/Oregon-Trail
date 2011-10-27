@@ -28,7 +28,7 @@ public class Time {
 	}
 	
 	public void advanceTime() {
-		time = (time + 1)%24;
+		time = (time + 1) % 24;
 	}
 	
 	public int getTime() {

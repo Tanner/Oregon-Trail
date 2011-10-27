@@ -25,7 +25,7 @@ public class MessageEncounter extends Encounter {
 	@Override
 	protected EncounterNotification makeNotification() {
 		return new EncounterNotification(
-				new Notification(messages[(int) (Math.random()*messages.length)]),
+				new Notification(messages[(int) (Math.random() * messages.length)]),
 				null);
 	}
 

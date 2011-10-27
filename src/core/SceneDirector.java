@@ -61,7 +61,7 @@ public class SceneDirector extends StateBasedGame {
 		}
 				
 		if (popLastScene) {
-			scenes.remove(scenes.size()-2);
+			scenes.remove(scenes.size() - 2);
 		}
 	}
 	

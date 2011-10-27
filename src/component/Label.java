@@ -150,7 +150,7 @@ public class Label extends Component {
 			currentText = "";
 			lines++;
 		}
-		return lines*font.getLineHeight();
+		return lines * font.getLineHeight();
 	}
 	
 	/**

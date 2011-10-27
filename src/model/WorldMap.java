@@ -86,32 +86,32 @@ public class WorldMap {
 	private LocationNode generateLocationNode(Random mapRand, int curRank, int numExitTrails){
 		
 		//curRank = TESTRANK;
-		int tmpZ =  mapRand.nextInt(MAX_X/MAX_RANK) - (MAX_X/(2 * MAX_RANK));
-		int tmpX = MAX_X - (((MAX_X/MAX_RANK) * curRank) + tmpZ);
+		int tmpZ =  mapRand.nextInt(MAX_X / MAX_RANK) - (MAX_X / (2 * MAX_RANK));
+		int tmpX = MAX_X - (((MAX_X / MAX_RANK) * curRank) + tmpZ);
 		while(tmpX < 10){
-			tmpX += mapRand.nextInt(MAX_X/MAX_RANK);
+			tmpX += mapRand.nextInt(MAX_X / MAX_RANK);
 			}
 		while(tmpX > MAX_X){
-			tmpX -= mapRand.nextInt(MAX_X/MAX_RANK);
+			tmpX -= mapRand.nextInt(MAX_X / MAX_RANK);
 			}
 			//derive y coord of this location on map - should give some range of y between -MAX_Y/2 and +MAX_Y/2
 			//MAX_Y/MAX_RANK divies y up into maxrank partitions
 			//mapRand of MAXRANK finds the correct general "rank zone"
 			//final component tmpZ determines offset within zone
-		tmpZ =  mapRand.nextInt(MAX_Y/(2 * MAX_RANK)) - (MAX_Y/ MAX_RANK);  //range : +/- partition size/2
+		tmpZ =  mapRand.nextInt(MAX_Y / (2 * MAX_RANK)) - (MAX_Y / MAX_RANK);  //range : +/- partition size/2
 		//gives a multiplier that is greatest in the middle of the MAX_RANK # of partitions
 		//allows the spread of possible y values of locations to be greatest at the middle of the 
 		//path, with the least spread at the ends
-		int rnkMult = (curRank <= (MAX_RANK/2) ) ? (curRank) : (MAX_RANK - curRank);
+		int rnkMult = (curRank <= (MAX_RANK / 2) ) ? (curRank) : (MAX_RANK - curRank);
 		//multiplier to determine whether above or below the "equator"
 		int tmpW = (mapRand.nextBoolean()) ? (1) : (-1);
 		//actual y value passed to locationNode constructor
-		int tmpY = ((MAX_Y/MAX_RANK) * rnkMult * tmpW)  + tmpZ;  
-		while(tmpY > MAX_Y/2){
-			tmpY -= mapRand.nextInt(MAX_Y/MAX_RANK);
+		int tmpY = ((MAX_Y / MAX_RANK) * rnkMult * tmpW)  + tmpZ;  
+		while(tmpY > MAX_Y / 2){
+			tmpY -= mapRand.nextInt(MAX_Y / MAX_RANK);
 			}
 		while(tmpY <  -1 * (MAX_Y/2)){
-			tmpY += mapRand.nextInt(MAX_Y/MAX_RANK);
+			tmpY += mapRand.nextInt(MAX_Y / MAX_RANK);
 			}
 		//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
