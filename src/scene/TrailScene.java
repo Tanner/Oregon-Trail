@@ -6,6 +6,7 @@ import java.util.Random;
 
 import model.Notification;
 import model.Party;
+import model.Time;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -153,9 +154,10 @@ public class TrailScene extends Scene {
 				if (party.getTrail().getConditionPercentage() == 0.0) {
 					party.setLocation(party.getTrail().getDestination());
 					GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
-				} else {				
+				} else {
 					List<Notification> notifications = party.walk();
-					hud.updatePartyInformation();
+					party.getTime().advanceTime();
+					hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
 					if (party.getPartyMembers().isEmpty()) {
 						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
 					}
@@ -198,6 +200,7 @@ public class TrailScene extends Scene {
 			modalMessage.append(encounterMessage);
 		
 		if (modalMessage.length() != 0) {
+			SoundStore.get().stopAllSound();
 			ChoiceModal campModal = new ChoiceModal(container, this, modalMessage.toString().trim());
 			campModal.setCancelButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
 			campModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONTINUE"));

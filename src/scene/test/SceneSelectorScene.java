@@ -257,7 +257,7 @@ public class SceneSelectorScene extends Scene {
 		Party.Pace pace = Pace.STEADY;
 		Party.Rations rations = Rations.BAREBONES;
 
-		Party party = new Party(pace, rations, people);
+		Party party = new Party(pace, rations, people, new Time());
 		party.setVehicle(vehicle);
 		party.addAnimals(animalList);
 		

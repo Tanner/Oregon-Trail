@@ -3,6 +3,8 @@ package scene.encounter;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.SoundStore;
+
 import model.Inventoried;
 import model.Item.ITEM_TYPE;
 import model.Notification;
@@ -39,7 +41,7 @@ public class ThiefEncounter extends Encounter {
 				itemName = type.getName();
 			}
 		}
-		
+		//SoundStore.get().playMusic("Smooth");
 		return makeNotification();
 
 	}

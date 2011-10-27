@@ -25,8 +25,8 @@ public class HUD extends Component {
 	private static final int INFO_WIDTH = 200;
 	
 	private Button menuButton;
+	private Label timeLabel;
 	private Label dateLabel;
-	private Label moneyLabel;
 	private Label notificationLabel;
 	
 	private Queue<String> notificationQueue;
@@ -54,11 +54,11 @@ public class HUD extends Component {
 		menuButton.addListener(listener);
 		add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
 		
-		dateLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
-		add(dateLabel, getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPRIGHT, -MARGIN, MARGIN);
+		timeLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
+		add(timeLabel, getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPRIGHT, -MARGIN, MARGIN);
 		
-		moneyLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
-		add(moneyLabel, getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, -MARGIN, -MARGIN);
+		dateLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
+		add(dateLabel, getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, -MARGIN, -MARGIN);
 		
 		int notificationWidth = context.getWidth() - menuButton.getWidth() - INFO_WIDTH -  MARGIN * 4;
 		
@@ -72,16 +72,14 @@ public class HUD extends Component {
 		setBevel(Component.BevelType.OUT);
 		setBottomBorderWidth(2);
 		setBorderColor(Color.black);
-		
-		updatePartyInformation();
 	}
 	
 	/**
 	 * Update the party information on the screen (date and money).
 	 */
-	public void updatePartyInformation() {
-		setDate("Fake Date");
-		setMoney(data.getMoney());
+	public void updatePartyInformation(String time, String date) {
+		setTime(time);
+		setDate(date);
 	}
 	
 	/**
@@ -97,16 +95,16 @@ public class HUD extends Component {
 	 * Set the date label's contents.
 	 * @param date New string from date label
 	 */
-	public void setDate(String date) {
-		dateLabel.setText(date);
+	public void setTime(String time) {
+		timeLabel.setText(time);
 	}
 	
 	/**
 	 * Set the money label's contents.
 	 * @param money Amount of money to display
 	 */
-	public void setMoney(int money) {
-		moneyLabel.setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", money));
+	public void setDate(String date) {
+		dateLabel.setText(date);
 	}
 	
 	/**
