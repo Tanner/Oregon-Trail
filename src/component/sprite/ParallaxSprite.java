@@ -60,12 +60,12 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		double distancePercent = 1.0;
 		
 		if (maxDistance - minDistance != 0) {
-			distancePercent = (double)(distance - minDistance) / (maxDistance - minDistance);
+			distancePercent = (double) (distance - minDistance) / (maxDistance - minDistance);
 		}
 		double scaleRange = 1.0 - FAR_SPRITE_SIZE_PERCENTAGE;
 		scale = 1.0 - (distancePercent * scaleRange);
 		
-		spriteWidth = (int)(spriteWidth * scale);
+		spriteWidth = (int) (spriteWidth * scale);
 		
 		sprite = new Sprite(context, spriteWidth, image);
 		

@@ -468,12 +468,12 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	@Override
 	public final int getX() {
-		return (int)origin.getX();
+		return (int) origin.getX();
 	}
 
 	@Override
 	public final int getY() {
-		return (int)origin.getY();
+		return (int) origin.getY();
 	}
 	
 	@Override

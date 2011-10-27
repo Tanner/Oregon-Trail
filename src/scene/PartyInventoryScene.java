@@ -179,7 +179,7 @@ public class PartyInventoryScene extends Scene {
 		binButton.setDisableAutoCount(true);
 		binButton.addListener(new ButtonListener());
 		
-		int yOffset = (int)(closeButton.getPosition(ReferencePoint.TOPLEFT).getY() - mainLayer.getPosition(ReferencePoint.CENTERCENTER).getY()) - PADDING;
+		int yOffset = (int) (closeButton.getPosition(ReferencePoint.TOPLEFT).getY() - mainLayer.getPosition(ReferencePoint.CENTERCENTER).getY()) - PADDING;
 		mainLayer.add(binButton, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.BOTTOMCENTER, 0, yOffset);
 		
 		int numberOfBinPockets = playerInventoryButtons.length;

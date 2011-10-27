@@ -48,7 +48,7 @@ public class Spinner extends Component {
 
 		Label upLabel = new Label(context, font, c, "Up");
 		Label downLabel = new Label(context, font, c, "Down");
-		int butWidth = (int)(font.getWidth("Down") * PADDING);
+		int butWidth = (int) (font.getWidth("Down") * PADDING);
 		label = new Label(context, width - butWidth, height, font, c, fields[0]);
 		label.setBackgroundColor(ConstantStore.COLORS.get("INTERACTIVE_NORMAL"));
 		label.setBorderWidth(2);

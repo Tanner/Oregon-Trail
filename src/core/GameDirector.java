@@ -161,7 +161,7 @@ public class GameDirector implements SceneListener {
 			// Last scene was Store Scene
 			if (id == SceneID.PARTYINVENTORY) {
 				// Requested Party Inventory Scene
-				newScene = new PartyInventoryScene(game.getPlayer().getParty(), ((StoreScene)lastScene).getInventory());
+				newScene = new PartyInventoryScene(game.getPlayer().getParty(), ((StoreScene) lastScene).getInventory());
 			}
 		} else if (lastScene instanceof SceneSelectorScene) {
 			// Last scene was Scene Selector Scene

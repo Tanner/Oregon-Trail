@@ -39,14 +39,14 @@ public class TrailEdge implements Conditioned {
 		this.ID = TrailEdge.edgeCount++;
 		this.dangerLevel = dangerLevel;
 		this.length = calcDistance(destination.MAP_XPOS, origin.MAP_XPOS, destination.MAP_YPOS, origin.MAP_YPOS);
-		this.milesToGo = new Condition((int)this.length);
+		this.milesToGo = new Condition((int) this.length);
 	}
 
 	private float calcDistance(double destX, double origX, double destY, double origY){
 		float result = 0;
 		//capture any spurious math errors or overflow in coords
 		try{
-			result = (float)Math.sqrt((Math.pow((origX - destX),2) + Math.pow((origY - destY), 2)));
+			result = (float) Math.sqrt((Math.pow((origX - destX),2) + Math.pow((origY - destY), 2)));
 		}
 		catch (Exception e){
 			Logger.log("Error calculating distance between two nodes in map generation - bad math in calcDistance", Logger.Level.ERROR);

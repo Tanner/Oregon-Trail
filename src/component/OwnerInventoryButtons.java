@@ -109,7 +109,7 @@ public class OwnerInventoryButtons {
 		
 		Label nameLabel = new Label(container, font, Color.white, inventoried.getName());
 		
-		panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int)nameLabel.getFontHeight());
+		panel = new Panel(container, panelWidth, panelHeight + NAME_PADDING + (int) nameLabel.getFontHeight());
 		panel.add(nameLabel, panel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, 0);
 		panel.add(itemPanel, nameLabel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, NAME_PADDING);
 		
@@ -222,8 +222,8 @@ public class OwnerInventoryButtons {
 	 * @return Condition that represents the weight
 	 */
 	public Condition getWeightCondition() {
-		int weightLeft = (int)(inventoried.getMaxWeight() - inventoried.getWeight());
-		return new Condition(0, (int)inventoried.getMaxWeight(), weightLeft);
+		int weightLeft = (int) (inventoried.getMaxWeight() - inventoried.getWeight());
+		return new Condition(0, (int) inventoried.getMaxWeight(), weightLeft);
 	}
 	
 	/**
@@ -237,7 +237,7 @@ public class OwnerInventoryButtons {
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
-			SlotConditionGroup slotConditionGroup = (SlotConditionGroup)component;
+			SlotConditionGroup slotConditionGroup = (SlotConditionGroup) component;
 			ITEM_TYPE item = slotConditionGroup.getItem();
 			
 			if (PartyInventoryScene.getCurrentMode() == PartyInventoryScene.Mode.NORMAL) {
