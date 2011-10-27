@@ -21,7 +21,7 @@ public class WorldMap {
 	/**maximum number of exiting trails each location can have*/
 	private final int MAX_TRAILS_OUT = 3;  
 	/**maximum number of "levels" of travel west - only portland has this as its rank.  edges can only go to edges with equal or higher rank than their origin node*/
-	private final int MAX_RANK = 10;
+	private final int MAX_RANK = 20;
 	/**width of map in miles*/
 	private final int MAX_X = 2000;
 	/**height of map in miles*/
@@ -236,8 +236,7 @@ public class WorldMap {
 				}//for locationnodes
 			}//for each rank
 		}//devmode stub
-		
-
+	
 	}//map generator method
 	
 	/**
@@ -246,13 +245,12 @@ public class WorldMap {
 	 * @return the random danger level of the trail
 	 */
 	private int randGenTrailDanger(Random mapRand, int trailRank){
-		return mapRand.nextInt(100);
+		int result = mapRand.nextInt(100);			
+		return result;
 	}
-	/**
-	 * traverses this world map, displaying the map
-	 */
-	public void traverseMap(){
-		
+	
+	public int getMaxRank(){
+		return MAX_RANK;
 	}
 	
 	/**

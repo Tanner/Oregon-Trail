@@ -14,6 +14,7 @@ public enum SceneID {
 	SCENESELECTOR ("Scene Selector"),
 	COMPONENTTEST ("Component Test"),
 	TRAILTEST ("Trail Test"),
+	MAP ("Map"),
 	CAMP ("Camp");
 	
 	private final String name;

@@ -117,6 +117,8 @@ public class GameDirector implements SceneListener {
 			return new TrailTestScene(game.getPlayer().getParty());
 		case CAMP:
 			return new CampScene();
+		case MAP:
+			return new MapScene(game.getWorldMap());
 		}
 		
 		return null;
