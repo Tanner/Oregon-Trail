@@ -147,12 +147,13 @@ public class TrailScene extends Scene {
 			}
 			
 			if (clickCounter >= STEP_COUNT_TRIGGER) {
-				if(party.getTrail().getConditionPercentage() == 0.0) {
+				party.getTime().advanceTime();
+				
+				if (party.getTrail().getConditionPercentage() == 0.0) {
 					party.setLocation(party.getTrail().getDestination());
 					GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
 				} else {				
 					List<Notification> notifications = party.walk();
-					party.getTime().advanceTime();
 					hud.updatePartyInformation();
 					if (party.getPartyMembers().isEmpty()) {
 						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
@@ -197,8 +198,8 @@ public class TrailScene extends Scene {
 		
 		if (modalMessage.length() != 0) {
 			ChoiceModal campModal = new ChoiceModal(container, this, modalMessage.toString().trim());
-			campModal.setDismissButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
-			campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
+			campModal.setCancelButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
+			campModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
 			SoundStore.get().stopAllSound();
 			showModal(campModal);
 		}
@@ -245,7 +246,7 @@ public class TrailScene extends Scene {
 	@Override
 	public void dismissModal(Modal modal, boolean cancelled) {
 		super.dismissModal(modal, cancelled);
-		if (!cancelled) {
+		if (cancelled) {
 			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, this, false);
 		}
 	}
