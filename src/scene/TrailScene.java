@@ -174,7 +174,6 @@ public class TrailScene extends Scene {
 					GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
 				} else {
 					List<Notification> notifications = party.walk();
-					party.getTime().advanceTime();
 					hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
 					if (party.getPartyMembers().isEmpty()) {
 						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
@@ -232,8 +231,8 @@ public class TrailScene extends Scene {
 	private void adjustSetting() {
 		int hour = party.getTime().getTime();
 		
-		hud.setDate(party.getTime().get12HourTime());
-	
+		hud.setTime(party.getTime().get12HourTime());
+		hud.setDate(party.getTime().getDayMonthYear());
 		skyAnimatingColor = new AnimatingColor(skyColorForHour(hour-1),
 				skyColorForHour(hour), CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
 		sky.setBackgroundColor(skyAnimatingColor);
