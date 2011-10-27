@@ -49,9 +49,7 @@ public class TrailScene extends Scene {
 	private boolean paused;
 	
 	private Panel sky;
-	private ParallaxSpriteLoop ground;
-	private ParallaxSpriteLoop mountain;
-	private ArrayList<ParallaxSprite> trees;
+	private ParallaxPanel parallaxPanel;
 	
 	private Party party;
 	private RandomEncounterTable randomEncounterTable;
@@ -75,17 +73,20 @@ public class TrailScene extends Scene {
 		sky = new Panel(container, skyColorForHour(time.getTime()));
 		backgroundLayer.add(sky);
 		
-		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
+		parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		
 		ParallaxSprite.MAX_DISTANCE = MOUNTAIN_DISTANCE;
 		
-		ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		mountain = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/mountain.png", false, Image.FILTER_NEAREST), MOUNTAIN_DISTANCE);
-		parallaxPanel.add(mountain, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);		
+		ParallaxSprite mountainA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/mountain_a.png", false, Image.FILTER_NEAREST), MOUNTAIN_DISTANCE);
+		parallaxPanel.add(mountainA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		trees = new ArrayList<ParallaxSprite>();
+		ParallaxSprite mountainB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/mountain_b.png", false, Image.FILTER_NEAREST), MOUNTAIN_DISTANCE * 2);
+		parallaxPanel.add(mountainB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);	
+		
+		ArrayList<ParallaxSprite>trees = new ArrayList<ParallaxSprite>();
 		
 		Random random = new Random();
 		
@@ -135,11 +136,8 @@ public class TrailScene extends Scene {
 				timeElapsed = 0;
 			}
 			
-			ground.move(delta);
-			mountain.move(delta);
-			
-			for (ParallaxSprite tree : trees) {
-				tree.move(delta);
+			for (ParallaxSprite sprite : parallaxPanel.getSprites()) {
+				sprite.move(delta);
 			}
 			
 			paused = !hud.isNotificationsEmpty();

@@ -33,4 +33,8 @@ public class ParallaxPanel extends Panel {
 		components.clear();
 		components.addAll(list);
 	}
+	
+	public ArrayList<ParallaxSprite> getSprites() {
+		return list;
+	}
 }
