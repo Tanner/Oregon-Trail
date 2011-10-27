@@ -46,7 +46,7 @@ public class TrailEdge implements Conditioned {
 		float result = 0;
 		//capture any spurious math errors or overflow in coords
 		try{
-			result = (float) Math.sqrt((Math.pow((origX - destX),2) + Math.pow((origY - destY), 2)));
+			result = (float) Math.sqrt((Math.pow((origX - destX), 2) + Math.pow((origY - destY), 2)));
 		}
 		catch (Exception e){
 			Logger.log("Error calculating distance between two nodes in map generation - bad math in calcDistance", Logger.Level.ERROR);

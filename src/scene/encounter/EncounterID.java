@@ -47,7 +47,7 @@ public enum EncounterID {
 		} else if (id == EncounterID.ITEM) {
 			return new ItemEncounter(party, min, max);
 		} else if (id == EncounterID.POTHOLE) {
-			return new NullEncounter(party, min , max);
+			return new NullEncounter(party, min, max);
 		} else if (id == EncounterID.MESSAGE) {
 			return new MessageEncounter(party, min, max);
 		} else {

@@ -16,7 +16,7 @@ public class NullEncounter extends Encounter {
 
 	@Override
 	protected EncounterNotification makeNotification() {
-		return new EncounterNotification(new Notification("",false), null);
+		return new EncounterNotification(new Notification("", false), null);
 	}
 
 }

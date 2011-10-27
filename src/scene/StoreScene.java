@@ -187,7 +187,7 @@ public class StoreScene extends Scene {
 		buttonMap = new ArrayList<Item.ITEM_TYPE>();
 		
 		//Create money label
-		partyMoney = new Label(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white,"");
+		partyMoney = new Label(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, "");
 		partyMoney.setAlignment(Label.Alignment.CENTER);
 		updatePartyMoneyLabel();
 		
