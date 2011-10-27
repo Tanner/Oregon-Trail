@@ -181,8 +181,9 @@ public class Button extends Component implements Disableable {
  		if (button == 0 && isMouseOver() && !disabled && active) {
 			notifyListeners();
 			input.consumeEvent();
-			setActive(false);
 		}
+ 		
+		setActive(false);
 	}
 	
 	/**

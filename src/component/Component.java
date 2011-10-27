@@ -518,6 +518,28 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 	}
 	
+	@Override
+	public void mousePressed(int button, int mx, int my) {
+		if (!isVisible() || !isAcceptingInput()) {
+			return;
+		}
+		
+		super.mousePressed(button, mx, my);
+		
+		this.mouseOver = getArea().contains(mx, my);
+	}
+	
+	@Override
+	public void mouseReleased(int button, int mx, int my) {
+		if (!isVisible() || !isAcceptingInput()) {
+			return;
+		}
+		
+		super.mouseReleased(button, mx, my);
+		
+		this.mouseOver = getArea().contains(mx, my);
+	}
+	
 	/**
 	 * Return if mouse is over.
 	 * @return {@code true} if mouse is over, {@code false} is not
