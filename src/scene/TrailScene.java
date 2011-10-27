@@ -17,10 +17,11 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.HUD;
-import component.Modal;
 import component.Panel;
 import component.ParallaxPanel;
 import component.Positionable.ReferencePoint;
+import component.modal.MessageModal;
+import component.modal.Modal;
 import component.sprite.ParallaxSprite;
 import core.GameDirector;
 import core.Logger;
@@ -130,7 +131,9 @@ public class TrailScene extends Scene {
 				List<String> messages = new ArrayList<String>();
 				for(Notification notification : notifications) {
 					if(notification.getIsModal()) {
-						showModal(new Modal(container, this, notification.getMessage(), "Camp"));
+						MessageModal campModal = new MessageModal(container, this, notification.getMessage());
+						showModal(campModal);
+						// "Camp"
 					} else {
 						messages.add(notification.getMessage());
 					}

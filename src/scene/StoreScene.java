@@ -14,9 +14,9 @@ import org.newdawn.slick.gui.*;
 import org.newdawn.slick.state.*;
 import component.*;
 import component.Positionable.ReferencePoint;
+import component.modal.ComponentModal;
 import component.modal.MessageModal;
 import component.modal.Modal;
-import component.modal.SegmentedControlModal;
 import component.sprite.Sprite;
 import core.*;
 
@@ -42,7 +42,7 @@ public class StoreScene extends Scene {
 	private Button cancelButton, clearButton, inventoryButton, buyButton;
 	private Label[] itemDescription;
 	private Label partyMoney;
-	private SegmentedControlModal buyModal;
+	private ComponentModal<SegmentedControl> buyModal;
 	private MessageModal failedBuyModal;
 	
 	private List<Item> currentPurchase;
@@ -157,7 +157,7 @@ public class StoreScene extends Scene {
 			if (cancelled) {
 				inv.addItemsToInventory(currentPurchase);
 			} else {
-				int[] buyer = buyModal.getSegmentedControl().getSelection();
+				int[] buyer = buyModal.getComponent().getSelection();
 				party.buyItemForInventory(currentPurchase, currentParty.get(buyer[0]));
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
 				updatePartyMoneyLabel();
@@ -367,7 +367,7 @@ public class StoreScene extends Scene {
 			
 			SegmentedControl choosePlayer = new SegmentedControl(container, 600, 200, 3, 2, 20, true, 1, names);
 			choosePlayer.setDisabled(disabled);
-			buyModal = new SegmentedControlModal(container,
+			buyModal = new ComponentModal<SegmentedControl>(container,
 					this,
 					ConstantStore.get("STORE_SCENE", "PICK_RECEIVER"),
 					choosePlayer);
