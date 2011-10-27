@@ -27,6 +27,8 @@ public class LocationNode {
 	private int rank;
 	/** how many outbound trails this location has */
 	private int trails;
+	/**already part of the trail or not */
+	private boolean onTheTrail;
 	
 	private String locationName;
 	private List<TrailEdge> outboundTrails;
@@ -49,6 +51,7 @@ public class LocationNode {
 		WORLD_LATITUDE = Latitude;
 		WORLD_LONGITUDE = Longitude;
 		this.trails = trails;
+		this.onTheTrail = false;
 		this.outboundTrails = new ArrayList<TrailEdge>(trails);
 		this.locationName = locationName;
 		this.rank = rank;
@@ -79,8 +82,18 @@ public class LocationNode {
 		this(locationName, xPos, yPos, 0, 90, trails, 0);
 		
 	}
-
-
+	
+	public int getID(){
+		return this.ID;
+	}
+	
+	public void setOnTheTrail(boolean onTheTrail){
+		this.onTheTrail = onTheTrail;		
+	}
+	
+	public boolean getOnTheTrail(){
+		return this.onTheTrail;
+	}
 	public int getRank() {
 		return rank;
 	}
@@ -130,7 +143,7 @@ public class LocationNode {
 	 */
 	public String toString(){
 		
-		return this.locationName + " with " + this.trails + " westward trails";
+		return this.locationName + " (which has " + this.trails + " westward trails) ";
 	}
 	
 	/**
