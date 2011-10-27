@@ -18,6 +18,8 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	
 	public static int MAX_DISTANCE = 0;
 	
+	private static final double FAR_SPRITE_SIZE_PERCENTAGE = 0.50;
+	
 	private Sprite spriteA;
 	private Sprite spriteB;
 	
@@ -25,6 +27,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	private Panel panelB;
 	
 	private int distance;
+	private double scale = 1.0;
 	
 	private int elapsedTime;
 	private final int maxElapsedTime;
@@ -40,6 +43,44 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	 * @param maxElapsedTime Amount of time to wait until the sprites move (larger means slower)
 	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
 	 */
+	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int minDistance, int maxDistance, int distance, boolean randomXPosition) {
+		super(context, context.getWidth(), spriteWidth * image.getHeight() / image.getWidth());
+		
+		this.randomXPosition = randomXPosition;
+		
+		maxElapsedTime = ((FAR_MAX_ELAPSED_TIME * distance) / MAX_DISTANCE) + NEAR_MAX_ELAPSED_TIME;
+		
+		random = new Random();
+		
+		this.distance = distance;
+		
+		if (minDistance == 0) {
+			minDistance = 1;
+		}
+		
+		double distancePercent = 1.0;
+		
+		if (maxDistance - minDistance != 0) {
+			distancePercent = (double)(distance - minDistance) / (maxDistance - minDistance);
+		}
+		double scaleRange = 1.0 - FAR_SPRITE_SIZE_PERCENTAGE;
+		scale = 1.0 - (distancePercent * scaleRange);
+		
+		spriteWidth = (int)(spriteWidth * scale);
+		
+		spriteA = new Sprite(context, spriteWidth, image);
+		spriteB = new Sprite(context, spriteWidth, image);
+		
+		panelA = new Panel(context, context.getWidth(), spriteA.getHeight());
+		panelA.add(spriteA, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(panelA, spriteA), 0);
+		
+		panelB = new Panel(context, context.getWidth(), spriteB.getHeight());
+		panelB.add(spriteB, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(panelB, spriteA), 0);
+		
+		add(panelA, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, 0);
+		add(panelB, panelA.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, context.getWidth(), 0);
+	}
+	
 	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int distance, boolean randomXPosition) {
 		super(context, context.getWidth(), spriteWidth * image.getHeight() / image.getWidth());
 		
@@ -104,6 +145,10 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	
 	public int getDistance() {
 		return distance;
+	}
+	
+	public double getScale() {
+		return scale;
 	}
 
 	@Override

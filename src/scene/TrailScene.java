@@ -37,6 +37,9 @@ public class TrailScene extends Scene {
 	private static final int GROUND_DISTANCE = 10;
 	private static final int TREE_DISTANCE = 200;
 	
+	private static final int NUM_TREES = 40;
+	private static final int TREE_OFFSET = 20;
+	
 	private int clickCounter;
 	private int timeElapsed;
 	private boolean paused;
@@ -71,9 +74,9 @@ public class TrailScene extends Scene {
 		
 		Random random = new Random();
 		
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < NUM_TREES; i++) {
 			int distance = random.nextInt(TREE_DISTANCE);
-			int offset = 20;
+			int offset = TREE_OFFSET;
 			
 			if (distance <= TREE_DISTANCE / 3) {
 				distance = random.nextInt(GROUND_DISTANCE);
@@ -81,10 +84,10 @@ public class TrailScene extends Scene {
 				offset += GROUND_DISTANCE - distance;
 			}
 			
-			System.out.print(distance+" ");
-			
-			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), distance, true);
+			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 0, TREE_DISTANCE, distance, true);
 			trees.add(tree);
+			
+			offset -= (int) (tree.getScale() * offset) / 2;
 
 			parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, offset);
 		}
