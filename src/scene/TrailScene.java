@@ -36,6 +36,7 @@ public class TrailScene extends Scene {
 	private static final int CLICK_WAIT_TIME = 1000;
 	private static final int STEP_COUNT_TRIGGER = 2;
 	
+	private static final int MOUNTAIN_DISTANCE = 200;
 	private static final int GROUND_DISTANCE = 10;
 	private static final int TREE_DISTANCE = 200;
 	
@@ -48,6 +49,7 @@ public class TrailScene extends Scene {
 	
 	private Panel sky;
 	private ParallaxSpriteLoop ground;
+	private ParallaxSpriteLoop mountain;
 	private ArrayList<ParallaxSprite> trees;
 	
 	private Party party;
@@ -73,10 +75,13 @@ public class TrailScene extends Scene {
 		
 		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		
-		ParallaxSprite.MAX_DISTANCE = TREE_DISTANCE;
+		ParallaxSprite.MAX_DISTANCE = MOUNTAIN_DISTANCE;
 		
 		ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
+		
+		mountain = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/mountain.png", false, Image.FILTER_NEAREST), MOUNTAIN_DISTANCE);
+		parallaxPanel.add(mountain, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);		
 		
 		trees = new ArrayList<ParallaxSprite>();
 		
@@ -120,6 +125,7 @@ public class TrailScene extends Scene {
 			}
 			
 			ground.move(delta);
+			mountain.move(delta);
 			
 			for (ParallaxSprite tree : trees) {
 				tree.move(delta);
