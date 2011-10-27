@@ -39,6 +39,7 @@ public class TrailScene extends Scene {
 	
 	private static final int MOUNTAIN_DISTANCE_A = 300;
 	private static final int MOUNTAIN_DISTANCE_B = 500;
+	private static final int CLOUD_DISTANCE = 80;
 	private static final int GROUND_DISTANCE = 10;
 	private static final int TREE_DISTANCE = 200;
 	
@@ -89,6 +90,9 @@ public class TrailScene extends Scene {
 		
 		ParallaxSprite mountainB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/mountain_b.png", false, Image.FILTER_NEAREST), MOUNTAIN_DISTANCE_B);
 		parallaxPanel.add(mountainB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
+		
+		ParallaxSprite cloudsA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/clouds.png", false, Image.FILTER_NEAREST), CLOUD_DISTANCE);
+		parallaxPanel.add(cloudsA, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT);
 		
 		ArrayList<ParallaxSprite>trees = new ArrayList<ParallaxSprite>();
 		
