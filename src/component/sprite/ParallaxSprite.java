@@ -20,11 +20,8 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	
 	private static double FAR_SPRITE_SIZE_PERCENTAGE = 0.50;
 	
-	private Sprite spriteA;
-	private Sprite spriteB;
-	
-	private Panel panelA;
-	private Panel panelB;
+	private Sprite sprite;
+	private Panel panel;
 	
 	private int distance;
 	private double scale = 1.0;
@@ -70,17 +67,12 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		
 		spriteWidth = (int)(spriteWidth * scale);
 		
-		spriteA = new Sprite(context, spriteWidth, image);
-		spriteB = new Sprite(context, spriteWidth, image);
+		sprite = new Sprite(context, spriteWidth, image);
 		
-		panelA = new Panel(context, context.getWidth(), spriteA.getHeight());
-		panelA.add(spriteA, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(panelA, spriteA), 0);
+		panel = new Panel(context, context.getWidth(), sprite.getHeight());
+		panel.add(sprite, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(), 0);
 		
-		panelB = new Panel(context, context.getWidth(), spriteB.getHeight());
-		panelB.add(spriteB, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(panelB, spriteA), 0);
-		
-		add(panelA, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, 0);
-		add(panelB, panelA.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, context.getWidth(), 0);
+		add(panel, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, 0);
 	}
 	
 	/**
@@ -102,17 +94,12 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		
 		this.distance = distance;
 		
-		spriteA = new Sprite(context, spriteWidth, image);
-		spriteB = new Sprite(context, spriteWidth, image);
+		sprite = new Sprite(context, spriteWidth, image);
 		
-		panelA = new Panel(context, context.getWidth(), spriteA.getHeight());
-		panelA.add(spriteA, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(panelA, spriteA), 0);
+		panel = new Panel(context, context.getWidth(), sprite.getHeight());
+		panel.add(sprite, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(), 0);
 		
-		panelB = new Panel(context, context.getWidth(), spriteB.getHeight());
-		panelB.add(spriteB, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(panelB, spriteA), 0);
-		
-		add(panelA, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, 0);
-		add(panelB, panelA.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, context.getWidth(), 0);
+		add(panel, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, 0);
 	}
 	
 	/**
@@ -123,25 +110,18 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		elapsedTime += delta;
 		
 		if (elapsedTime > maxElapsedTime) {
-			panelA.setLocation(panelA.getX() + DELTA_X, panelA.getY());
-			panelB.setLocation(panelB.getX() + DELTA_X, panelB.getY());
+			panel.setLocation(panel.getX() + DELTA_X, panel.getY());
 			elapsedTime = 0;
 		}
 		
-		if (panelA.getX() > container.getWidth()) {
-			panelA.setLocation(panelB.getX() - container.getWidth(), panelA.getY());
+		if (sprite.getX() > container.getWidth()) {
+			panel.setLocation(0 - panel.getWidth(), panel.getY());
 			
-			spriteA.setPosition(panelA.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, getXOffset(panelA, spriteA), 0);
-		}
-		
-		if (panelB.getX() > container.getWidth()) {
-			panelB.setLocation(panelA.getX() - container.getWidth(), panelB.getY());
-			
-			spriteB.setPosition(panelB.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, getXOffset(panelB, spriteB), 0);
+			sprite.setPosition(panel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, getXOffset(), 0);
 		}
 	}
 	
-	private int getXOffset(Panel panel, Sprite sprite) {
+	private int getXOffset() {
 		if (randomXPosition) {
 			return random.nextInt(panel.getWidth() - sprite.getWidth() + 1);
 		}
@@ -150,7 +130,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	}
 	
 	public int getSpriteWidth() {
-		return spriteA.getWidth();
+		return sprite.getWidth();
 	}
 	
 	public int getDistance() {
@@ -168,6 +148,6 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	
 	@Override
 	public String toString() {
-		return spriteA + " at " + distance;
+		return sprite + " at " + distance;
 	}
 }
