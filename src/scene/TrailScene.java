@@ -125,6 +125,10 @@ public class TrailScene extends Scene {
 		
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		if(party.getTrail().getConditionPercentage() == 0.0) {
+			party.setLocation(party.getTrail().getDestination());
+			GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
+		}
 		if(!isPaused()) {
 			timeElapsed += delta;
 			if(!SoundStore.get().getPlayingSounds().contains("Steps")) {

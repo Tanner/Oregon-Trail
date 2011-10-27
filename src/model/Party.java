@@ -365,7 +365,7 @@ public class Party implements HUDDataSource {
 		for (Animal animal : slaughterHouse) {
 			animals.remove(animal);
 		}
-		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", location), false));
+		//messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", location), false));
 		return messages;
 	}
 

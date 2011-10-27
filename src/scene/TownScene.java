@@ -29,6 +29,8 @@ public class TownScene extends Scene {
 	private static final int BUTTON_WIDTH = 200;
 	private static final int BUTTON_HEIGHT = 60;
 	
+	private Party party;
+	
 	private Button trailButton;
 	
 	/**
@@ -36,6 +38,7 @@ public class TownScene extends Scene {
 	 * @param party where/who the action is
 	 */
 	public TownScene(Party party) {
+		this.party = party;
 		for (Person p : party.getPartyMembers()) {
 			Logger.log(p.getName() + ", the " + p.getProfession() + ", entered the town.", Logger.Level.INFO);
 		}
@@ -90,7 +93,7 @@ public class TownScene extends Scene {
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			System.out.println("asda");
+			party.setTrail(party.getLocation().getOutBoundTrailByIndex(0));
 			GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, TownScene.this, true);
 		}
 	}
