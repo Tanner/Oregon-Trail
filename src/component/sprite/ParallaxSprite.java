@@ -9,7 +9,7 @@ import component.Component;
 import component.Panel;
 
 /**
- * A sprite that shifts a certain amount on the screen and loops around.
+ * A sprite that shifts a certain amount on the screen and can scale with distance.
  */
 public class ParallaxSprite extends Component implements Comparable<ParallaxSprite> {
 	private final int DELTA_X = 1;
@@ -18,7 +18,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	
 	public static int MAX_DISTANCE = 0;
 	
-	private static final double FAR_SPRITE_SIZE_PERCENTAGE = 0.50;
+	private static double FAR_SPRITE_SIZE_PERCENTAGE = 0.50;
 	
 	private Sprite spriteA;
 	private Sprite spriteB;
@@ -36,11 +36,13 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	private Random random;
 	
 	/**
-	 * Constructs a ParallaxSprite with a context, spriteWidth, image, and maxOffset.
+	 * Constructs a ParallaxSprite with a context, spriteWidth, and image. Sprite scales with distance and can have a random X position.
 	 * @param context Context to use
 	 * @param spriteWidth Width the sprite should be (e.g. for scaling)
 	 * @param image Image to use for the sprite
-	 * @param maxElapsedTime Amount of time to wait until the sprites move (larger means slower)
+	 * @param minDistance The closest this sprite can be to the view
+	 * @param maxDistance The farthest this sprite can be to the view
+	 * @param distance What the distance this sprite should be
 	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
 	 */
 	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int minDistance, int maxDistance, int distance, boolean randomXPosition) {
@@ -81,6 +83,14 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		add(panelB, panelA.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, context.getWidth(), 0);
 	}
 	
+	/**
+	 * Constructs a ParallaxSprite with a context, spriteWidth, and image. Sprite can have a random X position.
+	 * @param context Context to use
+	 * @param spriteWidth Width the sprite should be (e.g. for scaling)
+	 * @param image Image to use for the sprite
+	 * @param distance What the distance this sprite should be
+	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
+	 */
 	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int distance, boolean randomXPosition) {
 		super(context, context.getWidth(), spriteWidth * image.getHeight() / image.getWidth());
 		
@@ -156,6 +166,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		return sprite.distance - this.distance;
 	}
 	
+	@Override
 	public String toString() {
 		return spriteA + " at " + distance;
 	}
