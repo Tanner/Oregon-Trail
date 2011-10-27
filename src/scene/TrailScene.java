@@ -177,11 +177,13 @@ public class TrailScene extends Scene {
 				
 				if (party.getTrail().getConditionPercentage() == 0.0) {
 					party.setLocation(party.getTrail().getDestination());
+					SoundStore.get().stopAllSound();
 					GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
 				} else {
 					List<Notification> notifications = party.walk();
 					hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
 					if (party.getPartyMembers().isEmpty()) {
+						SoundStore.get().stopAllSound();
 						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
 					}
 					Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
@@ -191,6 +193,7 @@ public class TrailScene extends Scene {
 					handleNotifications(notifications, encounterNotification.getNotification().getMessage());
 					
 					if (encounterNotification.getSceneID() != null)
+						SoundStore.get().stopAllSound();
 						GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
 	
 					clickCounter = 0;
@@ -305,6 +308,7 @@ public class TrailScene extends Scene {
 	public void dismissModal(Modal modal, boolean cancelled) {
 		super.dismissModal(modal, cancelled);
 		if (cancelled) {
+			SoundStore.get().stopAllSound();
 			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, this, false);
 		}
 	}
@@ -312,6 +316,7 @@ public class TrailScene extends Scene {
 	private class HUDListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
+			SoundStore.get().stopAllSound();
 			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, TrailScene.this, false);
 		}
 	}

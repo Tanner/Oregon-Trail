@@ -53,7 +53,7 @@ public class Time {
 		Random random = new Random();
 		this.time = random.nextInt(24);
 		this.month = Month.values()[random.nextInt(Month.values().length)];
-		this.day = random.nextInt(month.getNumberOfDays());
+		this.day = random.nextInt(month.getNumberOfDays() - 1) + 1;
 		this.year = random.nextInt(10) + 1860;
 	}
 	public Time(int time, int day, int month, int year) {
