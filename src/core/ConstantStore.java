@@ -83,6 +83,11 @@ public final class ConstantStore {
 		storeScene.put("ERR_CANT_CARRY", "No one can carry that weight.");
 		literalMap.put("STORE_SCENE", storeScene);
 		
+		// Trail Scene
+		Map<String, String> trailScene = new HashMap<String, String>();
+		storeScene.put("CAMP", "Camp");
+		literalMap.put("TRAIL_SCENE", trailScene);
+		
 		// HUD
 		Map<String, String> hudScene = new HashMap<String, String>();
 		hudScene.put("MENU", "Camp");
@@ -148,6 +153,7 @@ public final class ConstantStore {
 		general.put("CONFIRM", "Confirm");
 		general.put("OK", "Ok");
 		general.put("CANCEL", "Cancel");
+		general.put("CONTINUE", "Continue");
 		general.put("CLOSE", "Close");
 		general.put("LEAVE", "Leave");
 		general.put("PROFESSION", "Profession");

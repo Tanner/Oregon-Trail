@@ -24,6 +24,7 @@ import component.modal.ChoiceModal;
 import component.modal.MessageModal;
 import component.modal.Modal;
 import component.sprite.ParallaxSprite;
+import core.ConstantStore;
 import core.GameDirector;
 import core.Logger;
 
@@ -133,8 +134,8 @@ public class TrailScene extends Scene {
 				for(Notification notification : notifications) {
 					if(notification.getIsModal()) {
 						ChoiceModal campModal = new ChoiceModal(container, this, notification.getMessage());
-						campModal.setDismissButtonText("Camp");
-						campModal.setCancelButtonText("Continue");
+						campModal.setDismissButtonText(ConstantStore.get("TRAIL", "CAMP"));
+						campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
 						showModal(campModal);
 					} else {
 						messages.add(notification.getMessage());
