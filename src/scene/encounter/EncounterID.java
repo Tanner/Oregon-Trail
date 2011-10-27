@@ -3,18 +3,26 @@ package scene.encounter;
 import model.Party;
 
 public enum EncounterID {
-	THIEF ("Thief Encounter"),
-	ITEM ("Item Encounter"),
-	POTHOLE ("Pothole Encounter");
+	THIEF ("Thief Encounter", 1),
+	ITEM ("Item Encounter", 1),
+	POTHOLE ("Pothole Encounter", 1),
+	MESSAGE("Message Encounter", 2),
+	NULL ("Null Encounter", 20);
 	
 	private final String name;
+	private final int frequency;
 	
-	private EncounterID(String name) {
+	private EncounterID(String name, int frequency) {
 		this.name = name;
+		this.frequency = frequency;
 	}
 	
 	public String getName() {
 		return name;
+	}
+	
+	public int getFrequency() {
+		return frequency;
 	}
 	
 	public String toString() {
@@ -23,13 +31,15 @@ public enum EncounterID {
 	
 	public static Encounter getEncounter(Party party, EncounterID id, int min, int max) {
 		if (id == EncounterID.THIEF)
-			return new ItemEncounter(party, min, max);
+			return new NullEncounter(party, min, max);
 		else if (id == EncounterID.ITEM)
 			return new ItemEncounter(party, min, max);
 		else if (id == EncounterID.POTHOLE)
-			return new ItemEncounter(party, min, max);
+			return new NullEncounter(party, min, max);
+		else if (id == EncounterID.MESSAGE)
+			return new MessageEncounter(party, min, max);
 		else
-			return new ItemEncounter(party, min, max);
+			return new NullEncounter(party, min, max);
 
 	}
 }

@@ -152,44 +152,50 @@ public class TrailScene extends Scene {
 				
 				List<Notification> notifications = party.walk();
 				time.advanceTime();
-				
+				hud.updatePartyInformation();
 				if (party.getPartyMembers().isEmpty()) {
 					GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
 				}
 				Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
-				//Clean this up//////////////////////////////////////////////////
-				EncounterNotification encounterNotification = null;
-				if ( Math.random() > 0.9) {
-					encounterNotification = randomEncounterTable.getRandomEncounter();				
-				}
-				hud.updatePartyInformation();
-				List<String> messages = new ArrayList<String>();
-				StringBuilder modalMessage = new StringBuilder();
-				for(Notification notification : notifications) {
-					if(notification.getIsModal()) {
-						modalMessage.append(notification.getMessage() + "\n");
-					} else {
-						messages.add(notification.getMessage());
-					}
-				}
 				
-				if ( encounterNotification != null && encounterNotification.getNotification().getMessage() != null)
-					modalMessage.append(encounterNotification.getNotification().getMessage());
+				EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
+					
+				handleNotifications(notifications, encounterNotification.getNotification().getMessage());
 				
-				if (modalMessage.length() != 0) {
-					ChoiceModal campModal = new ChoiceModal(container, this, modalMessage.toString().trim());
-					campModal.setDismissButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
-					campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
-					SoundStore.get().stopAllSound();
-					showModal(campModal);
-				}
-				hud.addNotifications(messages);
-				//Clean this up//////////////////////////////////////////////////
+				if (encounterNotification.getSceneID() != null)
+					GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
+
 				clickCounter = 0;
 			}
 			
 			adjustForHour(time.getTime());
 		}
+	}
+	
+	private void handleNotifications(List<Notification> notifications, String encounterMessage) {
+
+		List<String> messages = new ArrayList<String>();
+		StringBuilder modalMessage = new StringBuilder();
+		for(Notification notification : notifications) {
+			if(notification.getIsModal()) {
+				modalMessage.append(notification.getMessage() + "\n");
+			} else {
+				messages.add(notification.getMessage());
+			}
+		}
+		
+		if (encounterMessage != null)
+			modalMessage.append(encounterMessage);
+		
+		if (modalMessage.length() != 0) {
+			ChoiceModal campModal = new ChoiceModal(container, this, modalMessage.toString().trim());
+			campModal.setDismissButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
+			campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
+			SoundStore.get().stopAllSound();
+			showModal(campModal);
+		}
+		
+		hud.addNotifications(messages);
 	}
 	
 	private void adjustForHour(int hour) {
