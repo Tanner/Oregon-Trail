@@ -369,6 +369,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		return null;
 	}
 	
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
+	
 	/**
 	 * Set the background color.
 	 * @param color The new background color
