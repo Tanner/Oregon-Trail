@@ -31,7 +31,8 @@ public class TrailScene extends Scene {
 	private static final int CLICK_WAIT_TIME = 1000;
 	private static final int STEP_COUNT_TRIGGER = 2;
 	
-	private static final int GROUND_DISTANCE = 0;
+	private static final int GROUND_DISTANCE = 10;
+	private static final int TREE_DISTANCE = 200;
 	
 	private int clickCounter;
 	private int timeElapsed;
@@ -58,7 +59,7 @@ public class TrailScene extends Scene {
 		
 		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		
-		ParallaxSprite.MAX_DISTANCE = 80;
+		ParallaxSprite.MAX_DISTANCE = TREE_DISTANCE;
 		
 		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE, false);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
@@ -67,13 +68,22 @@ public class TrailScene extends Scene {
 		
 		Random random = new Random();
 		
-		for (int i = 0; i < 10; i++) {
-			int distance = random.nextInt(31) + GROUND_DISTANCE + 1;
+		for (int i = 0; i < 20; i++) {
+			int distance = random.nextInt(TREE_DISTANCE);
+			int offset = 20;
+			
+			if (distance <= TREE_DISTANCE / 3) {
+				distance = random.nextInt(GROUND_DISTANCE);
+				
+				offset += GROUND_DISTANCE - distance;
+			}
+			
+			System.out.print(distance+" ");
 			
 			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), distance, true);
 			trees.add(tree);
 
-			parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, 20);
+			parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, offset);
 		}
 
 		hud = new HUD(container, party, new HUDListener());
