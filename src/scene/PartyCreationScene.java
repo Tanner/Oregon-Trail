@@ -24,7 +24,9 @@ import component.Label;
 import component.Label.Alignment;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
+import component.modal.MessageModal;
 import component.modal.Modal;
+import component.modal.SegmentedControlModal;
 import component.SegmentedControl;
 import component.TextField;
 import core.ConstantStore;
@@ -85,8 +87,8 @@ public class PartyCreationScene extends Scene {
 	private Button confirmButton;
 	
 	// Modals
-	private Modal professionModal;
-	private Modal skillModal;
+	private SegmentedControlModal professionModal;
+	private SegmentedControlModal skillModal;
 	
 	// Current person modying index
 	private int currentPersonModifying;
@@ -359,10 +361,10 @@ public class PartyCreationScene extends Scene {
 		
 		if (!cancelled) {
 			if (modal == professionModal) {
-				int[] segmentedControlResults = modal.getSegmentedControl().getSelection();
+				int[] segmentedControlResults = professionModal.getSegmentedControl().getSelection();
 				setProfession(segmentedControlResults);
 			} else if (modal == skillModal) {
-				int[] segmentedControlResults = modal.getSegmentedControl().getSelection();
+				int[] segmentedControlResults = skillModal.getSegmentedControl().getSelection();
 				setSkills(segmentedControlResults);
 			}
 		}
@@ -391,7 +393,7 @@ public class PartyCreationScene extends Scene {
 					for (Person person : people) {
 						if (person.getName().equalsIgnoreCase(personNameTextFields[i].getText())) {
 							// If the name already exists, tell the user
-							showModal(new Modal(container,
+							showModal(new MessageModal(container,
 									PartyCreationScene.this,
 									ConstantStore.get("PARTY_CREATION_SCENE", "ERR_DUP_NAME")));
 							personNameTextFields[i].clear();
@@ -446,7 +448,7 @@ public class PartyCreationScene extends Scene {
 		 */	
 		private void personChangeProfButtonActivated(int i) {
 			professionSegmentedControl.clear();
-			professionModal = new Modal(container,
+			professionModal = new SegmentedControlModal(container,
 					PartyCreationScene.this,
 					ConstantStore.get("PARTY_CREATION_SCENE", "PROFESSION_MODAL"),
 					professionSegmentedControl);
@@ -477,7 +479,7 @@ public class PartyCreationScene extends Scene {
 				skillModalMessage = String.format(ConstantStore.get("PARTY_CREATION_SCENE", "SKILL_MODAL_MESSAGE_NO_SKILL"), people.get(i).getName());
 			}
 			
-			skillModal = new Modal(container,
+			skillModal = new SegmentedControlModal(container,
 					PartyCreationScene.this,
 					skillModalMessage,
 					skillSegmentedControl);
@@ -522,7 +524,7 @@ public class PartyCreationScene extends Scene {
 		 */
 		public void confirmButtonActivated(){
 			if (people.size() == 0) {
-				Modal errorModal = new Modal(container,
+				Modal errorModal = new MessageModal(container,
 						PartyCreationScene.this,
 						ConstantStore.get("PARTY_CREATION_SCENE", "ERR_NO_MEMBERS"));
 				showModal(errorModal);
@@ -531,7 +533,7 @@ public class PartyCreationScene extends Scene {
 			
 			for (Person person : people) {//iterate through party memebers
 				if (person.getProfession() == null) {
-					Modal errorModal = new Modal(container,
+					Modal errorModal = new MessageModal(container,
 							PartyCreationScene.this,
 							ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_PROFESSIONS"));
 					showModal(errorModal);

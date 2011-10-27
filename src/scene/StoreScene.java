@@ -14,7 +14,9 @@ import org.newdawn.slick.gui.*;
 import org.newdawn.slick.state.*;
 import component.*;
 import component.Positionable.ReferencePoint;
+import component.modal.MessageModal;
 import component.modal.Modal;
+import component.modal.SegmentedControlModal;
 import component.sprite.Sprite;
 import core.*;
 
@@ -40,8 +42,8 @@ public class StoreScene extends Scene {
 	private Button cancelButton, clearButton, inventoryButton, buyButton;
 	private Label[] itemDescription;
 	private Label partyMoney;
-	private Modal buyModal;
-	private Modal failedBuyModal;
+	private SegmentedControlModal buyModal;
+	private MessageModal failedBuyModal;
 	
 	private List<Item> currentPurchase;
 	private List<Inventoried> currentParty;
@@ -291,7 +293,7 @@ public class StoreScene extends Scene {
 		if (currentItem == Item.ITEM_TYPE.WAGON && party.getVehicle() == null ) {
 			if (itemCount > 1 && party.getMoney() >= Item.ITEM_TYPE.WAGON.getCost()) {
 				//The player tries to buy too many wagons
-				failedBuyModal = new Modal(container, this, ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_WAGON"));
+				failedBuyModal = new MessageModal(container, this, ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_WAGON"));
 				return -1;
 			} else if ( party.getMoney() > currentItem.getCost() ) {
 				//The player is able to buy the wagon
@@ -304,7 +306,7 @@ public class StoreScene extends Scene {
 				return 1;
 			} else {
 				//The player doesn't have enough money to buy a wagon at all
-				failedBuyModal = new Modal(container, this, ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY_FOR_WAGON"));
+				failedBuyModal = new MessageModal(container, this, ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY_FOR_WAGON"));
 				return -1;
 			}
 		} else if (currentBuyers.size() == 0) {
@@ -316,7 +318,7 @@ public class StoreScene extends Scene {
 			} else {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_CANT_CARRY");
 			}
-			failedBuyModal = new Modal(container, this, errorText);
+			failedBuyModal = new MessageModal(container, this, errorText);
 			
 			return -1;
 		} else {
@@ -365,7 +367,7 @@ public class StoreScene extends Scene {
 			
 			SegmentedControl choosePlayer = new SegmentedControl(container, 600, 200, 3, 2, 20, true, 1, names);
 			choosePlayer.setDisabled(disabled);
-			buyModal = new Modal(container,
+			buyModal = new SegmentedControlModal(container,
 					this,
 					ConstantStore.get("STORE_SCENE", "PICK_RECEIVER"),
 					choosePlayer);
