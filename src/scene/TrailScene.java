@@ -120,7 +120,7 @@ public class TrailScene extends Scene {
 		
 		clickCounter = 0;
 		
-		adjustForHour(time.getTime());
+		adjustSetting();
 	}
 		
 	@Override
@@ -175,7 +175,7 @@ public class TrailScene extends Scene {
 				clickCounter = 0;
 			}
 			
-			adjustForHour(time.getTime());
+			adjustSetting();
 		}
 	}
 	
@@ -211,7 +211,9 @@ public class TrailScene extends Scene {
 		hud.addNotifications(messages);
 	}
 	
-	private void adjustForHour(int hour) {
+	private void adjustSetting() {
+		int hour = time.getTime();
+		
 		hud.setDate("" + hour + ":00");
 		
 		skyAnimatingColor = new AnimatingColor(sky.getBackgroundColor(), skyColorForHour(hour), CLICK_WAIT_TIME);
@@ -220,9 +222,9 @@ public class TrailScene extends Scene {
 	private Color skyColorForHour(int hour) {
 		switch (hour) {
 			case 6:
-				return new Color(0xd09961);
+				return new Color(0x5b6ab8);
 			case 7:
-				return new Color(0xd07e77);
+				return new Color(0x579cdd);
 			case 8:
 				return new Color(0x66a9c4);
 			case 9:
@@ -236,8 +238,9 @@ public class TrailScene extends Scene {
 			case 16:
 			case 17:
 			case 18:
+				return new Color(0xdd90a4);
 			case 19:
-				return new Color(0x6d84be);
+				return new Color(0x4a3b48);
 			default:
 				return Color.black;
 		}
