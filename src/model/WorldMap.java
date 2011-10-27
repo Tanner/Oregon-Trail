@@ -110,7 +110,7 @@ public class WorldMap {
 		while(tmpY > MAX_Y / 2){
 			tmpY -= mapRand.nextInt(MAX_Y / MAX_RANK);
 			}
-		while(tmpY <  -1 * (MAX_Y/2)){
+		while(tmpY <  -1 * (MAX_Y / 2)){
 			tmpY += mapRand.nextInt(MAX_Y / MAX_RANK);
 			}
 		//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
@@ -168,12 +168,12 @@ public class WorldMap {
 		}//for loop to build initial path
 
 		//build rest of random map
-		for(int i = MAX_RANK; i < numLocations-1; i++){
+		for(int i = MAX_RANK; i < numLocations - 1; i++){
 			
 			int curRankIter;
 			int curRank ;
 			curRankIter = i % (MAX_RANK - 1) + 1;
-			curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter-1 : curRankIter;
+			curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter - 1 : curRankIter;
 			//number of trails out of location : 1 to MaxTrailsOut constant
 			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 			LocationNode tmp = generateLocationNode(mapRand, curRank, numExitTrails);
@@ -199,14 +199,14 @@ public class WorldMap {
 		for (int i = 0; i < MAX_RANK; i++){
 			for(LocationNode node : mapNodes.get(i)){
 				for (int tNum = 0; tNum < node.getTrails(); tNum++){
-					int nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i+1) : i);
+					int nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i + 1) : i);
 					if (nextRank == MAX_RANK){
-						nextRank = MAX_RANK-1;
+						nextRank = MAX_RANK - 1;
 					}
 					TrailEdge newTrail;
 					this.numTrails++;
 					//if we're at final rank before finish, have all edges go to portland
-					if (i == MAX_RANK-1){
+					if (i == MAX_RANK - 1){
 						//System.out.println("i = " + i + " size = " + mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
 						node.setTrails(1);
 						newTrail = new TrailEdge("Trail from " + node.getLocationName() + " to " + finalDestination.getLocationName(), finalDestination, node, randGenTrailDanger (mapRand, node.getRank()) );
@@ -215,7 +215,7 @@ public class WorldMap {
 						int nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
 						LocationNode randDestNode = mapNodes.get(nextRank).get(nextTown);
 						while ((randDestNode.getOnTheTrail()) && (randDestNode.getRank() == node.getRank())){
-							nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i+1) : i);
+							nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i + 1) : i);
 							nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
 							randDestNode = mapNodes.get(nextRank).get(nextTown);
 							}
@@ -230,7 +230,7 @@ public class WorldMap {
 		}//for each rank
 		if (this.devMode) {
 			for (int i = 0; i <= MAX_RANK; i++){
-				System.out.println("Locations at rank "+  i + " : " + mapNodes.get(i).size());
+				System.out.println("Locations at rank " +  i + " : " + mapNodes.get(i).size());
 				for(LocationNode node : mapNodes.get(i)){
 					System.out.println(node.debugToString());
 				}//for locationnodes
