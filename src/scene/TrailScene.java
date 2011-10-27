@@ -121,18 +121,14 @@ public class TrailScene extends Scene {
 		clickCounter = 0;
 		
 		adjustSetting();
-	}
+}
 		
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		if(party.getTrail().getConditionPercentage() == 0.0) {
-			party.setLocation(party.getTrail().getDestination());
-			GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
-		}
 		if(!isPaused()) {
 			timeElapsed += delta;
 			if(!SoundStore.get().getPlayingSounds().contains("Steps")) {
-				SoundStore.get().playSound("Steps");
+				//SoundStore.get().playSound("Steps");
 			}
 			
 			if (skyAnimatingColor != null) {
@@ -156,25 +152,30 @@ public class TrailScene extends Scene {
 			}
 			
 			if (clickCounter >= STEP_COUNT_TRIGGER) {
-				
-				List<Notification> notifications = party.walk();
-				time.advanceTime();
-				hud.updatePartyInformation();
-				if (party.getPartyMembers().isEmpty()) {
-					GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
-				}
-				Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
-				
-				EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
+				if(party.getTrail().getConditionPercentage() == 0.0) {
+					party.setLocation(party.getTrail().getDestination());
+					GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
+				} else {				
+					List<Notification> notifications = party.walk();
+					time.advanceTime();
+					hud.updatePartyInformation();
+					if (party.getPartyMembers().isEmpty()) {
+						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
+					}
+					Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
 					
-				handleNotifications(notifications, encounterNotification.getNotification().getMessage());
-				
-				if (encounterNotification.getSceneID() != null)
-					GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
-
-				clickCounter = 0;
+					EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
+						
+					handleNotifications(notifications, encounterNotification.getNotification().getMessage());
+					
+					if (encounterNotification.getSceneID() != null)
+						GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
+	
+					clickCounter = 0;
+				}
 			}
 			
+
 			adjustSetting();
 		}
 	}
@@ -211,12 +212,12 @@ public class TrailScene extends Scene {
 		hud.addNotifications(messages);
 	}
 	
+
 	private void adjustSetting() {
-		int hour = time.getTime();
-		
-		hud.setDate("" + hour + ":00");
-		
-		skyAnimatingColor = new AnimatingColor(sky.getBackgroundColor(), skyColorForHour(hour), CLICK_WAIT_TIME);
+
+		hud.setDate(time.get24HourTime());
+	
+		skyAnimatingColor = new AnimatingColor(sky.getBackgroundColor(), skyColorForHour(time.getTime()), CLICK_WAIT_TIME);
 	}
 	
 	private Color skyColorForHour(int hour) {

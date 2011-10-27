@@ -33,6 +33,8 @@ public class Party implements HUDDataSource {
 
 	private List<Animal> animals =  new ArrayList<Animal>();
 	
+	private int totalDistanceTravelled = 0;
+	
 	/**
 	 * 
 	 * The possible values of the party's pace
@@ -326,6 +328,7 @@ public class Party implements HUDDataSource {
 	public List<Notification> walk() {
 		List<Notification> messages = new ArrayList<Notification>();
 		trail.advance((int)(getPace().getSpeed() * getMoveModifier()));
+		totalDistanceTravelled += (int)(getPace().getSpeed() * getMoveModifier());
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
 		for (Animal animal : animals) {
@@ -369,8 +372,12 @@ public class Party implements HUDDataSource {
 		for (Animal animal : slaughterHouse) {
 			animals.remove(animal);
 		}
-		//messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", location), false));
+		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", getTotalDistanceTravelled()), false));
 		return messages;
+	}
+
+	public int getTotalDistanceTravelled() {
+		return totalDistanceTravelled;
 	}
 
 	private double getMoveModifier() {

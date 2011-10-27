@@ -34,4 +34,12 @@ public class Time {
 	public int getTime() {
 		return time;
 	}
+	
+	public String get24HourTime() {
+		return time + ":00";
+	}
+	
+	public String get12HourTime() {
+		return time + ":00" + (time < 12 ? "am" : "pm");
+	}
 }

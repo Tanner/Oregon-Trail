@@ -2,6 +2,7 @@ package scene;
 
 import model.Party;
 import model.Person;
+import model.worldMap.LocationNode;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -31,14 +32,17 @@ public class TownScene extends Scene {
 	
 	private Party party;
 	
+	private LocationNode location;
+	
 	private Button trailButton;
 	
 	/**
 	 * builds town scene
 	 * @param party where/who the action is
 	 */
-	public TownScene(Party party) {
+	public TownScene(Party party, LocationNode location) {
 		this.party = party;
+		this.location = location;
 		for (Person p : party.getPartyMembers()) {
 			Logger.log(p.getName() + ", the " + p.getProfession() + ", entered the town.", Logger.Level.INFO);
 		}
@@ -73,7 +77,7 @@ public class TownScene extends Scene {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		super.enter(container, game);
-		SoundStore.get().playMusic("Smooth");
+		//SoundStore.get().playMusic("Smooth");
 	}
 
 	@Override
