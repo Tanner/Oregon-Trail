@@ -207,41 +207,43 @@ public final class ConstantStore {
 		//eastern zone names
 		TOWN_NAMES.put(0, townNames);
 		
-		townNames.clear();
-		townNames.add("Westport");
-		townNames.add("Weston");
-		townNames.add("Fort Leavenworth");
-		townNames.add("Atchison");
-		townNames.add("St. Joseph"); 
-		townNames.add("Omaha"); 
-		townNames.add("Topeka");
-		townNames.add("St. Louis"); 
-		townNames.add("Santa Fe");
-		townNames.add("Mount Oread");
-		townNames.add("Fort Kearny");
-		townNames.add("Fort Laramie");
-		townNames.add("Ash Hollow");
-		townNames.add("Casper");
-		townNames.add("Julesburg");
-		townNames.add("Fort Bridger");
-		townNames.add("Cokeville");
-		townNames.add("Goodnight");
-		townNames.add("Deadwood");
-		townNames.add("Tombstone");
-		townNames.add("Julesburg");
-		townNames.add("Fort Coon");
-		townNames.add("Latham");
-		townNames.add("Lincoln");
+
+		List<String> townNames1 = new ArrayList<String>();
+		townNames1.add("Westport");
+		townNames1.add("Weston");
+		townNames1.add("Fort Leavenworth");
+		townNames1.add("Atchison");
+		townNames1.add("St. Joseph"); 
+		townNames1.add("Omaha"); 
+		townNames1.add("Topeka");
+		townNames1.add("St. Louis"); 
+		townNames1.add("Santa Fe");
+		townNames1.add("Mount Oread");
+		townNames1.add("Fort Kearny");
+		townNames1.add("Fort Laramie");
+		townNames1.add("Ash Hollow");
+		townNames1.add("Casper");
+		townNames1.add("Julesburg");
+		townNames1.add("Fort Bridger");
+		townNames1.add("Cokeville");
+		townNames1.add("Goodnight");
+		townNames1.add("Deadwood");
+		townNames1.add("Tombstone");
+		townNames1.add("Julesburg");
+		townNames1.add("Fort Coon");
+		townNames1.add("Latham");
+		townNames1.add("Lincoln");
 
 		//western zone names
 		TOWN_NAMES.put(1, townNames);
+		
+		List<String> townNames2 = new ArrayList<String>();
 
-		townNames.clear();		
-		townNames.add("Fort Vancouver");
-		townNames.add("Whitman Mission");
-		townNames.add("Grande Ronde Outpost");
-		townNames.add("The Dalles");
-		townNames.add("Barlow Gate");
+		townNames2.add("Fort Vancouver");
+		townNames2.add("Whitman Mission");
+		townNames2.add("Grande Ronde Outpost");
+		townNames2.add("The Dalles");
+		townNames2.add("Barlow Gate");
 
 		//oregon zone names		
 		TOWN_NAMES.put(2, townNames);
