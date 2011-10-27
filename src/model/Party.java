@@ -327,8 +327,8 @@ public class Party implements HUDDataSource {
 	 */
 	public List<Notification> walk() {
 		List<Notification> messages = new ArrayList<Notification>();
-		trail.advance((int)(getPace().getSpeed() * getMoveModifier()));
-		totalDistanceTravelled += (int)(getPace().getSpeed() * getMoveModifier());
+		trail.advance((int)(getPace().getSpeed() * getMoveModifier())/4);
+		totalDistanceTravelled += (int)(getPace().getSpeed() * getMoveModifier()/4);
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
 		for (Animal animal : animals) {
