@@ -37,8 +37,8 @@ public class TrailScene extends Scene {
 	private static final int CLICK_WAIT_TIME = 1000;
 	private static final int STEP_COUNT_TRIGGER = 2;
 	
-	private static final int MOUNTAIN_DISTANCE_A = 300;
-	private static final int MOUNTAIN_DISTANCE_B = 500;
+	private static final int HILL_DISTANCE_A = 300;
+	private static final int HILL_DISTANCE_B = 500;
 	private static final int CLOUD_DISTANCE = 80;
 	private static final int GROUND_DISTANCE = 10;
 	private static final int TREE_DISTANCE = 200;
@@ -80,16 +80,16 @@ public class TrailScene extends Scene {
 		
 		parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		
-		ParallaxSprite.MAX_DISTANCE = MOUNTAIN_DISTANCE_B;
+		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
 		
 		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		ParallaxSprite mountainA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/mountain_a.png", false, Image.FILTER_NEAREST), MOUNTAIN_DISTANCE_A);
-		parallaxPanel.add(mountainA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
+		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
+		parallaxPanel.add(hillA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		ParallaxSprite mountainB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/mountain_b.png", false, Image.FILTER_NEAREST), MOUNTAIN_DISTANCE_B);
-		parallaxPanel.add(mountainB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
+		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
+		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		ParallaxSprite cloudsA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/clouds.png", false, Image.FILTER_NEAREST), CLOUD_DISTANCE);
 		parallaxPanel.add(cloudsA, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT);
