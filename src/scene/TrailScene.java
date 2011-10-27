@@ -41,6 +41,7 @@ public class TrailScene extends Scene {
 	private static final int CLOUD_DISTANCE = 400;
 	private static final int GROUND_DISTANCE = 10;
 	private static final int TREE_DISTANCE = 200;
+	private static final int DEER_DISTANCE = 150;
 	
 	private static final int NUM_TREES = 40;
 	private static final int TREE_OFFSET = 20;
@@ -49,6 +50,8 @@ public class TrailScene extends Scene {
 	private static final int CLOUD_OFFSET = 20;
 	private static final int CLOUD_DISTANCE_VARIANCE = 10;
 	private static final int CLOUD_OFFSET_VARIANCE = 10;
+	
+	private static final int DEER_OFFSET = 10;
 	
 	private int clickCounter;
 	private int timeElapsed;
@@ -128,6 +131,9 @@ public class TrailScene extends Scene {
 
 			parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, offset);
 		}
+		
+		ParallaxSprite deer = new ParallaxSprite(container, new Image("resources/graphics/animals/deer.png", false, Image.FILTER_NEAREST), DEER_DISTANCE, true);
+		parallaxPanel.add(deer, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, DEER_OFFSET);
 		
 		// Add to panel stuff and other things
 		backgroundLayer.add(parallaxPanel);
