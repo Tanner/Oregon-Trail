@@ -45,6 +45,7 @@ public class TrailScene extends Scene {
 	private int timeElapsed;
 	private boolean paused;
 	
+	private Panel sky;
 	private ParallaxSprite ground;
 	private ArrayList<ParallaxSprite> trees;
 	
@@ -64,7 +65,10 @@ public class TrailScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);		
 		
-		backgroundLayer.add(new Panel(container, new Color(0x66a9c4)));
+		time = new Time(0);
+		
+		sky = new Panel(container, skyColorForHour(time.getTime()));
+		backgroundLayer.add(sky);
 		
 		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		
@@ -152,6 +156,38 @@ public class TrailScene extends Scene {
 			
 				clickCounter = 0;
 			}
+			
+			adjustForHour(time.getTime());
+		}
+	}
+	
+	private void adjustForHour(int hour) {
+		sky.setBackgroundColor(skyColorForHour(hour));
+	}
+	
+	private Color skyColorForHour(int hour) {
+		switch (hour) {
+			case 6:
+				return new Color(0xd09961);
+			case 7:
+				return new Color(0xd07e77);
+			case 8:
+				return new Color(0x66a9c4);
+			case 9:
+				return new Color(0x66a9dc);
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+			case 14:
+			case 15:
+			case 16:
+			case 17:
+			case 18:
+			case 19:
+				return new Color(0x6d84be);
+			default:
+				return Color.black;
 		}
 	}
 	
