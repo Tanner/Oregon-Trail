@@ -36,7 +36,7 @@ public class TrailScene extends Scene {
 	private static final int STEP_COUNT_TRIGGER = 2;
 	
 	private static final int HILL_DISTANCE_A = 300;
-	private static final int HILL_DISTANCE_B = 500;
+	private static final int HILL_DISTANCE_B = 600;
 	private static final int CLOUD_DISTANCE = 80;
 	private static final int GROUND_DISTANCE = 10;
 	private static final int TREE_DISTANCE = 200;
