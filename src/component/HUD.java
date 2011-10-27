@@ -8,10 +8,13 @@ import model.datasource.HUDDataSource;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.Label.VerticalAlignment;
+import component.sprite.Sprite;
 
 import core.ConstantStore;
 import core.FontStore;
@@ -20,7 +23,7 @@ import core.FontStore;
  */
 public class HUD extends Component {
 	private static final int MARGIN = 10;
-	private static final int HEIGHT = 70;
+	private static final int HEIGHT = 80;
 	
 	private static final int INFO_WIDTH = 200;
 	
@@ -50,7 +53,16 @@ public class HUD extends Component {
 		int height = HEIGHT - (2 * MARGIN);
 		
 		Label menuLabel = new Label(context, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "CAMP"));
+		Sprite fireSprite = null;
+		try {
+			fireSprite = new Sprite(context, 48, new Image("resources/graphics/icons/fire.png", false, Image.FILTER_NEAREST));
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		
 		menuButton = new Button(context, menuLabel.getWidth() + (2 * MARGIN), height, menuLabel);
+		menuButton.setSprite(fireSprite);
+		menuButton.setShowLabel(false);
 		menuButton.addListener(listener);
 		add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
 		
