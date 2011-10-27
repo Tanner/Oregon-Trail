@@ -341,12 +341,10 @@ public class Party implements HUDDataSource {
 			if(person.getHealth().getCurrent() == 0) {
 				vehicle.addItemsToInventory(person.killForFood());
 				deathList.add(person);
-				System.out.println(person.toString());
 			}
-			
-			if(checkHungerStatus() != null) {
-				messages.add(new Notification(checkHungerStatus(), true));
-			}
+		}
+		if(checkHungerStatus() != null) {
+			messages.add(new Notification(checkHungerStatus(), true));
 		}
 		for (Person person : deathList) {
 			members.remove(person);
@@ -354,7 +352,7 @@ public class Party implements HUDDataSource {
 		for (Animal animal : slaughterHouse) {
 			animals.remove(animal);
 		}
-		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", location)));
+		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", location), false));
 		return messages;
 	}
 
