@@ -65,7 +65,7 @@ public class TownScene extends Scene {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+		return;
 	}
 	
 	@Override

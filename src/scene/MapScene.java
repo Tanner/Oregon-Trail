@@ -21,10 +21,8 @@ public class MapScene extends Scene {
 	 * @see scene.Scene#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException {
-		// TODO Auto-generated method stub
-
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		return;
 	}
 
 	/* (non-Javadoc)

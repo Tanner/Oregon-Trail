@@ -115,6 +115,7 @@ public class TrailTestScene extends Scene {
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		return;
 	}
 	
 	private class ButtonListener implements ComponentListener {
