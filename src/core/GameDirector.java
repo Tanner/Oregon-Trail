@@ -2,6 +2,7 @@ package core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
@@ -12,6 +13,7 @@ import org.newdawn.slick.state.transition.RotateTransition;
 import org.newdawn.slick.state.transition.Transition;
 
 import scene.*;
+import scene.encounter.*;
 import scene.test.*;
 
 import model.*;
@@ -211,30 +213,21 @@ public class GameDirector implements SceneListener {
 	 * Gets the encounter list to populate the trail scenes random encounter table
 	 * @return The mapping of scene types to probabilities
 	 */
-	private Map<SceneID, Integer> getEncounterList() {
-		Map<SceneID, Integer> encounterList = new HashMap<SceneID, Integer>();
-		/*
-		for(SceneID scene : SceneID.values()) {
-			if(scene.isRandomEncounter()) {
-				encounterList.add(scene);
-			}
+	private Encounter[] getEncounterList() {
+		int numOfEncounters = EncounterID.values().length;
+		Random rand = new Random();
+		Encounter[] encounterList = new Encounter[numOfEncounters];
+		
+		int i = 0;
+		int min = 0;
+		int max = 0;
+		for ( EncounterID encounter : EncounterID.values() ) {
+			max = max + rand.nextInt(50) * encounter.getFrequency();
+			encounterList[i] = EncounterID.getEncounter(game.getPlayer().getParty(), encounter, min, max);
+			min = ++max;
+			i++;
 		}
-		
-		encounterList.put(SceneID.STORE, getProbability(SceneID.STORE));
-		encounterList.put(SceneID.PARTYINVENTORY, getProbability(SceneID.PARTYINVENTORY));
-		*/
-		encounterList.put(SceneID.TRAIL, getProbability(SceneID.TRAIL));
-		
 		return encounterList;
-	}
-	
-	/**
-	 * Probability generator for trail scene random encounter table construction
-	 * @param scene The scene to get the probability of
-	 * @return The probability
-	 */
-	private int getProbability(SceneID scene) {
-		return 1;
 	}
 
 	/*

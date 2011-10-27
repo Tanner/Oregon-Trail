@@ -6,7 +6,6 @@ import java.util.Random;
 
 import model.Notification;
 import model.Party;
-import model.RandomEncounterTable;
 import model.Time;
 
 import org.newdawn.slick.Color;
@@ -16,7 +15,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
-
+import scene.encounter.*;
 import component.AnimatingColor;
 import component.HUD;
 import component.Panel;
@@ -153,33 +152,56 @@ public class TrailScene extends Scene {
 				
 				List<Notification> notifications = party.walk();
 				time.advanceTime();
-				
+				hud.updatePartyInformation();
 				if (party.getPartyMembers().isEmpty()) {
 					GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
 				}
 				Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
-				GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this, false);
-	
-				hud.updatePartyInformation();
-				List<String> messages = new ArrayList<String>();
-				for(Notification notification : notifications) {
-					if(notification.getIsModal()) {
-						ChoiceModal campModal = new ChoiceModal(container, this, notification.getMessage());
-						campModal.setDismissButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
-						campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
-						SoundStore.get().stopAllSound();
-						showModal(campModal);
-					} else {
-						messages.add(notification.getMessage());
-					}
-				}
-				hud.addNotifications(messages);
-			
+				
+				EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
+					
+				handleNotifications(notifications, encounterNotification.getNotification().getMessage());
+				
+				if (encounterNotification.getSceneID() != null)
+					GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
+
 				clickCounter = 0;
 			}
 			
 			adjustForHour(time.getTime());
 		}
+	}
+	
+	/**
+	 * Handle the incoming messages from walk and Encounters, consolidating
+	 * everything into one modal window.
+	 * @param notifications Notifications from walk()
+	 * @param encounterMessage Notifications from encounter
+	 */
+	private void handleNotifications(List<Notification> notifications, String encounterMessage) {
+
+		List<String> messages = new ArrayList<String>();
+		StringBuilder modalMessage = new StringBuilder();
+		for(Notification notification : notifications) {
+			if(notification.getIsModal()) {
+				modalMessage.append(notification.getMessage() + "\n");
+			} else {
+				messages.add(notification.getMessage());
+			}
+		}
+		
+		if (encounterMessage != null)
+			modalMessage.append(encounterMessage);
+		
+		if (modalMessage.length() != 0) {
+			ChoiceModal campModal = new ChoiceModal(container, this, modalMessage.toString().trim());
+			campModal.setDismissButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
+			campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
+			SoundStore.get().stopAllSound();
+			showModal(campModal);
+		}
+		
+		hud.addNotifications(messages);
 	}
 	
 	private void adjustForHour(int hour) {

@@ -1,11 +1,5 @@
 package component.modal;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.gui.AbstractComponent;
-import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.Input;
 
@@ -14,14 +8,8 @@ import component.Component;
 import component.Label;
 import component.ModalListener;
 import component.Panel;
-import component.Positionable;
-import component.SegmentedControl;
-import component.Label.Alignment;
-import component.Positionable.ReferencePoint;
 
 import core.ConstantStore;
-import core.FontStore;
-import core.SoundStore;
 
 /**
  * {@code Modal} inherits from {@code Component} to extend features that provide
