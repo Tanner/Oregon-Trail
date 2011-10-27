@@ -261,6 +261,9 @@ public class SceneSelectorScene extends Scene {
 		party.setVehicle(vehicle);
 		party.addAnimals(animalList);
 		
+		party.setLocation(game.getWorldMap().getMapHead());
+		party.setTrail(party.getLocation().getOutBoundTrailByIndex(0));
+		
 		return party;
 	}
 

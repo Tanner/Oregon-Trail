@@ -37,8 +37,8 @@ public class TrailScene extends Scene {
 	private static final int CLICK_WAIT_TIME = 1000;
 	private static final int STEP_COUNT_TRIGGER = 2;
 	
-	private static final int MOUNTAIN_DISTANCE_A = 300;
-	private static final int MOUNTAIN_DISTANCE_B = 500;
+	private static final int HILL_DISTANCE_A = 300;
+	private static final int HILL_DISTANCE_B = 500;
 	private static final int CLOUD_DISTANCE = 80;
 	private static final int GROUND_DISTANCE = 10;
 	private static final int TREE_DISTANCE = 200;
@@ -80,16 +80,16 @@ public class TrailScene extends Scene {
 		
 		parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		
-		ParallaxSprite.MAX_DISTANCE = MOUNTAIN_DISTANCE_B;
+		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
 		
 		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		ParallaxSprite mountainA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/mountain_a.png", false, Image.FILTER_NEAREST), MOUNTAIN_DISTANCE_A);
-		parallaxPanel.add(mountainA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
+		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
+		parallaxPanel.add(hillA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		ParallaxSprite mountainB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/mountain_b.png", false, Image.FILTER_NEAREST), MOUNTAIN_DISTANCE_B);
-		parallaxPanel.add(mountainB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
+		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
+		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		ParallaxSprite cloudsA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/clouds.png", false, Image.FILTER_NEAREST), CLOUD_DISTANCE);
 		parallaxPanel.add(cloudsA, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT);
@@ -120,19 +120,15 @@ public class TrailScene extends Scene {
 		
 		clickCounter = 0;
 		
-		adjustForHour(time.getTime());
-	}
+		adjustSetting();
+}
 		
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		if(party.getTrail().getConditionPercentage() == 0.0) {
-			party.setLocation(party.getTrail().getDestination());
-			GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
-		}
 		if(!isPaused()) {
 			timeElapsed += delta;
 			if(!SoundStore.get().getPlayingSounds().contains("Steps")) {
-				SoundStore.get().playSound("Steps");
+				//SoundStore.get().playSound("Steps");
 			}
 			
 			if (skyAnimatingColor != null) {
@@ -156,26 +152,31 @@ public class TrailScene extends Scene {
 			}
 			
 			if (clickCounter >= STEP_COUNT_TRIGGER) {
-				
-				List<Notification> notifications = party.walk();
-				time.advanceTime();
-				hud.updatePartyInformation();
-				if (party.getPartyMembers().isEmpty()) {
-					GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
-				}
-				Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
-				
-				EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
+				if(party.getTrail().getConditionPercentage() == 0.0) {
+					party.setLocation(party.getTrail().getDestination());
+					GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
+				} else {				
+					List<Notification> notifications = party.walk();
+					time.advanceTime();
+					hud.updatePartyInformation();
+					if (party.getPartyMembers().isEmpty()) {
+						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
+					}
+					Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
 					
-				handleNotifications(notifications, encounterNotification.getNotification().getMessage());
-				
-				if (encounterNotification.getSceneID() != null)
-					GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
-
-				clickCounter = 0;
+					EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
+						
+					handleNotifications(notifications, encounterNotification.getNotification().getMessage());
+					
+					if (encounterNotification.getSceneID() != null)
+						GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
+	
+					clickCounter = 0;
+				}
 			}
 			
-			adjustForHour(time.getTime());
+
+			adjustSetting();
 		}
 	}
 	
@@ -211,18 +212,20 @@ public class TrailScene extends Scene {
 		hud.addNotifications(messages);
 	}
 	
-	private void adjustForHour(int hour) {
-		hud.setDate("" + hour + ":00");
-		
-		skyAnimatingColor = new AnimatingColor(sky.getBackgroundColor(), skyColorForHour(hour), CLICK_WAIT_TIME);
+
+	private void adjustSetting() {
+
+		hud.setDate(time.get24HourTime());
+	
+		skyAnimatingColor = new AnimatingColor(sky.getBackgroundColor(), skyColorForHour(time.getTime()), CLICK_WAIT_TIME);
 	}
 	
 	private Color skyColorForHour(int hour) {
 		switch (hour) {
 			case 6:
-				return new Color(0xd09961);
+				return new Color(0x5b6ab8);
 			case 7:
-				return new Color(0xd07e77);
+				return new Color(0x579cdd);
 			case 8:
 				return new Color(0x66a9c4);
 			case 9:
@@ -236,8 +239,9 @@ public class TrailScene extends Scene {
 			case 16:
 			case 17:
 			case 18:
+				return new Color(0xdd90a4);
 			case 19:
-				return new Color(0x6d84be);
+				return new Color(0x4a3b48);
 			default:
 				return Color.black;
 		}

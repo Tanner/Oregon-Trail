@@ -15,6 +15,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -483,9 +484,17 @@ public class PartyInventoryScene extends Scene {
 				binInventoryIndex = binInventory.length - 1;
 			}
 			
+			// Find out if shift key is down,
+			// If so, then add all items to bin
+			int quantity = 1;
+			Input input = PartyInventoryScene.this.getInput();
+			if (input.isKeyDown(Input.KEY_LSHIFT)) {
+				quantity = ownerInventoryButtons.getNumberOfItem(item);
+			}
+			
 			// Add the item to the bin inventory in the correct spot so we know who the source was if we want to remove it from the bin
 			// Also remove the item from the person's inventory
-			List<Item> itemsRemoved = ownerInventoryButtons.removeItemFromInventory(item, 1);
+			List<Item> itemsRemoved = ownerInventoryButtons.removeItemFromInventory(item, quantity);
 			
 			binInventory[binInventoryIndex].addItemsToInventory(itemsRemoved);
 			

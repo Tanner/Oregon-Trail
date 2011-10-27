@@ -43,7 +43,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
 	 */
 	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int minDistance, int maxDistance, int distance, boolean randomXPosition) {
-		super(context, context.getWidth(), spriteWidth * image.getHeight() / image.getWidth());
+		super(context, spriteWidth, spriteWidth * image.getHeight() / image.getWidth());
 		
 		this.randomXPosition = randomXPosition;
 		

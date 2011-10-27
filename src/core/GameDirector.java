@@ -96,7 +96,7 @@ public class GameDirector implements SceneListener {
 		case PARTYCREATION:
 			return new PartyCreationScene(game.getPlayer());
 		case TOWN:
-			return new TownScene(game.getPlayer().getParty());
+			return new TownScene(game.getPlayer().getParty(), worldMap.getCurrLocationNode());
 		case STORE:
 			return new StoreScene(game.getPlayer().getParty(), game.getStoreInventory());
 		case PARTYINVENTORY:
@@ -133,6 +133,13 @@ public class GameDirector implements SceneListener {
 		Transition outTransition = null;
 		Transition inTransition = null;
 		
+		if(game.getPlayer().getParty() != null && game.getPlayer().getParty().getLocation() != null) {
+			worldMap.setCurrLocationNode(game.getPlayer().getParty().getLocation());
+		}
+		if (game.getPlayer().getParty() != null && game.getPlayer().getParty().getLocation() != null) {
+			worldMap.setCurrTrail(game.getPlayer().getParty().getTrail());
+		}
+		
 		if (id == SceneID.SCENESELECTOR) {
 			newScene = sceneForSceneID(id);
 		} else if (id == SceneID.GAMEOVER) {
@@ -147,7 +154,7 @@ public class GameDirector implements SceneListener {
 		} else if (lastScene instanceof PartyCreationScene) {
 			// Last scene was Party Creation Scene
 			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
-			newScene = new TownScene(game.getPlayer().getParty());
+			newScene = new TownScene(game.getPlayer().getParty(), worldMap.getMapHead());
 		} else if (lastScene instanceof TownScene) {
 			// Last scene was Town Scene
 			if (id == SceneID.STORE) {
@@ -181,7 +188,7 @@ public class GameDirector implements SceneListener {
 			//Requested Party Management Scene scene
 			newScene = new PartyManagementScene(game.getPlayer().getParty());
 		} else if (id == SceneID.TOWN) {
-			newScene = new TownScene(game.getPlayer().getParty());
+			newScene = new TownScene(game.getPlayer().getParty(), worldMap.getCurrLocationNode());
 		}
 		
 		if (newScene != null) {

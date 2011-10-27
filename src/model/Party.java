@@ -33,6 +33,8 @@ public class Party implements HUDDataSource {
 
 	private List<Animal> animals =  new ArrayList<Animal>();
 	
+	private int totalDistanceTravelled = 0;
+	
 	/**
 	 * 
 	 * The possible values of the party's pace
@@ -326,12 +328,15 @@ public class Party implements HUDDataSource {
 	public List<Notification> walk() {
 		List<Notification> messages = new ArrayList<Notification>();
 		trail.advance((int)(getPace().getSpeed() * getMoveModifier()));
+		totalDistanceTravelled += (int)(getPace().getSpeed() * getMoveModifier());
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
 		for (Animal animal : animals) {
 			animal.decreaseStatus(getPace().getSpeed() - 75);
 			if(animal.getStatus().getCurrent() == 0) {
-				vehicle.addItemsToInventory(animal.killForFood());
+				if (vehicle != null) {
+					vehicle.addItemsToInventory(animal.killForFood());
+				}
 				slaughterHouse.add(animal);
 			}
 		}
@@ -352,7 +357,9 @@ public class Party implements HUDDataSource {
 				}
 			}
 			if(person.getHealth().getCurrent() == 0) {
-				vehicle.addItemsToInventory(person.killForFood());
+				if (vehicle != null) {
+					vehicle.addItemsToInventory(person.killForFood());
+				}
 				deathList.add(person);
 			}
 		}
@@ -365,8 +372,12 @@ public class Party implements HUDDataSource {
 		for (Animal animal : slaughterHouse) {
 			animals.remove(animal);
 		}
-		//messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", location), false));
+		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", getTotalDistanceTravelled()), false));
 		return messages;
+	}
+
+	public int getTotalDistanceTravelled() {
+		return totalDistanceTravelled;
 	}
 
 	private double getMoveModifier() {
@@ -449,9 +460,11 @@ public class Party implements HUDDataSource {
 	}
 	
 	private boolean vehicleHasFood() {
-		for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
-			if (itemType.isFood()) {
-				return true;
+		if (vehicle != null) {
+			for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
+				if (itemType.isFood()) {
+					return true;
+				}
 			}
 		}
 		return false;
