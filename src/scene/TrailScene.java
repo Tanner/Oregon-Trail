@@ -46,7 +46,9 @@ public class TrailScene extends Scene {
 	private static final int TREE_OFFSET = 20;
 	
 	private static final int NUM_CLOUDS = 5;
+	private static final int CLOUD_OFFSET = 20;
 	private static final int CLOUD_DISTANCE_VARIANCE = 10;
+	private static final int CLOUD_OFFSET_VARIANCE = 10;
 	
 	private int clickCounter;
 	private int timeElapsed;
@@ -103,8 +105,10 @@ public class TrailScene extends Scene {
 			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
 			int cloudImage = random.nextInt(cloudImages.length);
 			
+			int offset = CLOUD_OFFSET + random.nextInt(CLOUD_OFFSET_VARIANCE * 2) - CLOUD_OFFSET_VARIANCE;
+			
 			ParallaxSprite cloud = new ParallaxSprite(container, cloudImages[cloudImage], distance, true);
-			parallaxPanel.add(cloud, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 20);
+			parallaxPanel.add(cloud, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, offset);
 		}
 		
 		// Trees
