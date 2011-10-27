@@ -55,6 +55,9 @@ public class MessageModal extends Modal {
 		@Override
 		public void componentActivated(AbstractComponent source) {
 			boolean cancelled = false;
+			if (source == cancelButton) {
+				cancelled = true;
+			}
 			listener.dismissModal(MessageModal.this, cancelled);
 		} 
 	}

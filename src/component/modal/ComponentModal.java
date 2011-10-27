@@ -75,6 +75,9 @@ public class ComponentModal<T extends Component> extends Modal {
 		@Override
 		public void componentActivated(AbstractComponent source) {
 			boolean cancelled = false;
+			if (source == cancelButton) {
+				cancelled = true;
+			}
 			listener.dismissModal(ComponentModal.this, cancelled);
 		} 
 	}
