@@ -2,6 +2,7 @@ package scene;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import model.Notification;
 import model.Party;
@@ -17,6 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import component.HUD;
 import component.Panel;
+import component.ParallaxPanel;
 import component.Positionable.ReferencePoint;
 import component.sprite.ParallaxSprite;
 import core.GameDirector;
@@ -27,6 +29,8 @@ public class TrailScene extends Scene {
 	
 	private static final int CLICK_WAIT_TIME = 1000;
 	private static final int STEP_COUNT_TRIGGER = 2;
+	
+	private static final int GROUND_DISTANCE = 0;
 	
 	private int clickCounter;
 	private int timeElapsed;
@@ -51,22 +55,30 @@ public class TrailScene extends Scene {
 		
 		backgroundLayer.add(new Panel(container, new Color(0x66a9c4)));
 		
+		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
+		
 		ParallaxSprite.MAX_DISTANCE = 80;
 		
-		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), 20, false);
-		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
+		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE, false);
+		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		trees = new ArrayList<ParallaxSprite>();
 		
+		Random random = new Random();
+		
 		for (int i = 0; i < 10; i++) {
-			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 80, true);
+			int distance = random.nextInt(31) + GROUND_DISTANCE + 1;
+			
+			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), distance, true);
 			trees.add(tree);
 
-			backgroundLayer.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, 30);
+			parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, 20);
 		}
 
 		hud = new HUD(container, party, new HUDListener());
 		showHUD(hud);
+		
+		backgroundLayer.add(parallaxPanel);
 		
 		clickCounter = 0;
 	}

@@ -11,7 +11,7 @@ import component.Panel;
 /**
  * A sprite that shifts a certain amount on the screen and loops around.
  */
-public class ParallaxSprite extends Component {
+public class ParallaxSprite extends Component implements Comparable<ParallaxSprite> {
 	private final int DELTA_X = 1;
 	private static final int NEAR_MAX_ELAPSED_TIME = 1;
 	private static final int FAR_MAX_ELAPSED_TIME = 1000 - NEAR_MAX_ELAPSED_TIME;
@@ -23,6 +23,8 @@ public class ParallaxSprite extends Component {
 	
 	private Panel panelA;
 	private Panel panelB;
+	
+	private int distance;
 	
 	private int elapsedTime;
 	private final int maxElapsedTime;
@@ -46,6 +48,8 @@ public class ParallaxSprite extends Component {
 		maxElapsedTime = ((FAR_MAX_ELAPSED_TIME * distance) / MAX_DISTANCE) + NEAR_MAX_ELAPSED_TIME;
 		
 		random = new Random();
+		
+		this.distance = distance;
 		
 		spriteA = new Sprite(context, spriteWidth, image);
 		spriteB = new Sprite(context, spriteWidth, image);
@@ -96,5 +100,18 @@ public class ParallaxSprite extends Component {
 	
 	public int getSpriteWidth() {
 		return spriteA.getWidth();
+	}
+	
+	public int getDistance() {
+		return distance;
+	}
+
+	@Override
+	public int compareTo(ParallaxSprite sprite) {
+		return sprite.distance - this.distance;
+	}
+	
+	public String toString() {
+		return spriteA + " at " + distance;
 	}
 }

@@ -44,4 +44,9 @@ public class Sprite extends Component {
 	public void setImage(Image image) {
 		this.image = image;
 	}
+	
+	@Override
+	public String toString() {
+		return image.getResourceReference();
+	}
 }
