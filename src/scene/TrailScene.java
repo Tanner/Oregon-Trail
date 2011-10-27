@@ -20,6 +20,7 @@ import component.HUD;
 import component.Panel;
 import component.ParallaxPanel;
 import component.Positionable.ReferencePoint;
+import component.modal.ChoiceModal;
 import component.modal.MessageModal;
 import component.modal.Modal;
 import component.sprite.ParallaxSprite;
@@ -131,9 +132,10 @@ public class TrailScene extends Scene {
 				List<String> messages = new ArrayList<String>();
 				for(Notification notification : notifications) {
 					if(notification.getIsModal()) {
-						MessageModal campModal = new MessageModal(container, this, notification.getMessage());
+						ChoiceModal campModal = new ChoiceModal(container, this, notification.getMessage());
+						campModal.setDismissButtonText("Camp");
+						campModal.setCancelButtonText("Continue");
 						showModal(campModal);
-						// "Camp"
 					} else {
 						messages.add(notification.getMessage());
 					}
