@@ -24,9 +24,9 @@ public class ChoiceModal extends Modal {
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		
 		ButtonListener buttonListener = new ButtonListener();
-		cancelButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CANCEL")));
+		cancelButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, BUTTON_WIDTH, BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("GENERAL", "CANCEL")));
 		cancelButton.addListener(buttonListener);
-		dismissButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "OK")));
+		dismissButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, BUTTON_WIDTH, BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("GENERAL", "OK")));
 		dismissButton.addListener(buttonListener);
 		
 		int panelWidth = PADDING * 2 + messageLabel.getWidth();
