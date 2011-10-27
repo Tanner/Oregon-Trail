@@ -20,7 +20,6 @@ import core.SoundStore;
 public class Modal extends Component {
 	private static final int PADDING = 20;
 	private static int DEFAULT_LABEL_WIDTH = 500;
-	private static final Color OVERLAY_COLOR;
 	
 	private static final int BUTTON_WIDTH = 200;
 	private static final int BUTTON_HEIGHT = 40;
