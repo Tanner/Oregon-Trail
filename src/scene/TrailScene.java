@@ -25,6 +25,7 @@ import component.modal.ChoiceModal;
 import component.modal.MessageModal;
 import component.modal.Modal;
 import component.sprite.ParallaxSprite;
+import component.sprite.ParallaxSpriteLoop;
 import core.ConstantStore;
 import core.GameDirector;
 import core.Logger;
@@ -46,7 +47,7 @@ public class TrailScene extends Scene {
 	private boolean paused;
 	
 	private Panel sky;
-	private ParallaxSprite ground;
+	private ParallaxSpriteLoop ground;
 	private ArrayList<ParallaxSprite> trees;
 	
 	private Party party;
@@ -74,7 +75,7 @@ public class TrailScene extends Scene {
 		
 		ParallaxSprite.MAX_DISTANCE = TREE_DISTANCE;
 		
-		ground = new ParallaxSprite(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE, false);
+		ground = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		trees = new ArrayList<ParallaxSprite>();

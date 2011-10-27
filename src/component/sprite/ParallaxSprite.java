@@ -12,22 +12,22 @@ import component.Panel;
  * A sprite that shifts a certain amount on the screen and can scale with distance.
  */
 public class ParallaxSprite extends Component implements Comparable<ParallaxSprite> {
-	private final int DELTA_X = 1;
-	private static final int NEAR_MAX_ELAPSED_TIME = 1;
-	private static final int FAR_MAX_ELAPSED_TIME = 100 - NEAR_MAX_ELAPSED_TIME;
+	protected final int DELTA_X = 1;
+	protected static final int NEAR_MAX_ELAPSED_TIME = 1;
+	protected static final int FAR_MAX_ELAPSED_TIME = 100 - NEAR_MAX_ELAPSED_TIME;
 	
 	public static int MAX_DISTANCE = 0;
 	
-	private static double FAR_SPRITE_SIZE_PERCENTAGE = 0.50;
+	protected static double FAR_SPRITE_SIZE_PERCENTAGE = 0.50;
 	
-	private Sprite sprite;
-	private Panel panel;
+	protected Sprite sprite;
+	protected Panel panel;
 	
-	private int distance;
-	private double scale = 1.0;
+	protected int distance;
+	protected double scale = 1.0;
 	
-	private int elapsedTime;
-	private final int maxElapsedTime;
+	protected int elapsedTime;
+	protected final int maxElapsedTime;
 
 	private boolean randomXPosition;
 	private Random random;
@@ -100,6 +100,17 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		panel.add(sprite, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(), 0);
 		
 		add(panel, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, 0);
+	}
+	
+	/**
+	 * Constructs a ParallaxSprite with a context, spriteWidth, and image. Sprite can have a random X position.
+	 * @param context Context to use
+	 * @param spriteWidth Width the sprite should be (e.g. for scaling)
+	 * @param image Image to use for the sprite
+	 * @param distance What the distance this sprite should be
+	 */
+	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int distance) {
+		this(context, spriteWidth, image, distance, false);
 	}
 	
 	/**
