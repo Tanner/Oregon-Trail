@@ -196,7 +196,7 @@ public class SceneSelectorScene extends Scene {
 		 * Warn the user that they need a party to continnue.
 		 */
 		private void warnBecauseNoParty() {
-			showModal((new Modal(container, SceneSelectorScene.this, ConstantStore.get("SCENE_SELECTOR_SCENE", "ERR_NO_PARTY_FOR_SCENE"), ConstantStore.get("GENERAL", "OK"))));
+			showModal((new Modal(container, SceneSelectorScene.this, ConstantStore.get("SCENE_SELECTOR_SCENE", "ERR_NO_PARTY_FOR_SCENE"))));
 		}
 	}
 	

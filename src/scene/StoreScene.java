@@ -290,7 +290,7 @@ public class StoreScene extends Scene {
 		if (currentItem == Item.ITEM_TYPE.WAGON && party.getVehicle() == null ) {
 			if (itemCount > 1 && party.getMoney() >= Item.ITEM_TYPE.WAGON.getCost()) {
 				//The player tries to buy too many wagons
-				failedBuyModal = new Modal(container, this, ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_WAGON"), ConstantStore.get("GENERAL", "OK"));
+				failedBuyModal = new Modal(container, this, ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_WAGON"));
 				return -1;
 			} else if ( party.getMoney() > currentItem.getCost() ) {
 				//The player is able to buy the wagon
@@ -303,7 +303,7 @@ public class StoreScene extends Scene {
 				return 1;
 			} else {
 				//The player doesn't have enough money to buy a wagon at all
-				failedBuyModal = new Modal(container, this, ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY_FOR_WAGON"), ConstantStore.get("GENERAL", "OK"));
+				failedBuyModal = new Modal(container, this, ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY_FOR_WAGON"));
 				return -1;
 			}
 		} else if (currentBuyers.size() == 0) {
@@ -315,7 +315,7 @@ public class StoreScene extends Scene {
 			} else {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_CANT_CARRY");
 			}
-			failedBuyModal = new Modal(container, this, errorText, ConstantStore.get("GENERAL", "OK"));
+			failedBuyModal = new Modal(container, this, errorText);
 			
 			return -1;
 		} else {
@@ -364,7 +364,11 @@ public class StoreScene extends Scene {
 			
 			SegmentedControl choosePlayer = new SegmentedControl(container, 600, 200, 3, 2, 20, true, 1, names);
 			choosePlayer.setDisabled(disabled);
-			buyModal = new Modal(container, this, ConstantStore.get("STORE_SCENE", "PICK_RECEIVER"), choosePlayer, ConstantStore.get("STORE_SCENE", "BUY"), ConstantStore.get("GENERAL", "CANCEL"));
+			buyModal = new Modal(container,
+					this,
+					ConstantStore.get("STORE_SCENE", "PICK_RECEIVER"),
+					choosePlayer);
+			buyModal.setDismissButtonText(ConstantStore.get("STORE_SCENE", "BUY"));
 			return 0;
 		}
 	}

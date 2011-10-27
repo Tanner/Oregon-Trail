@@ -22,16 +22,14 @@ public class Modal extends Component {
 	private static int DEFAULT_LABEL_WIDTH = 500;
 	private static final Color OVERLAY_COLOR;
 	
-	
-	static {
-		OVERLAY_COLOR = new Color(0f, 0f, 0f, 0.5f);
-	}
+	private static final int BUTTON_WIDTH = 200;
+	private static final int BUTTON_HEIGHT = 40;
 	
 	private ModalListener listener;
 	private Panel panel;
 	private Label messageLabel;
-	private Button resignButton;
 	private Button dismissButton;
+	private Button cancelButton;
 	private SegmentedControl segmentedControl;
 	
 	/**
@@ -41,8 +39,10 @@ public class Modal extends Component {
 	 * @param message The text for the message
 	 * @param dismissButtonText The text for the dismiss button
 	 */
-	public Modal(GUIContext context, ModalListener listener, String message, String dismissButtonText) {
+	public Modal(GUIContext context, ModalListener listener, String message) {
 		super(context, context.getWidth(), context.getHeight());
+		
+		add(new Panel(context, ConstantStore.COLORS.get("TRANSLUCENT_OVERLAY")), getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
 		this.listener = listener;
 				
@@ -50,20 +50,22 @@ public class Modal extends Component {
 		this.messageLabel = new Label(container, DEFAULT_LABEL_WIDTH, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		
-		int buttonWidth = 200;
-		int buttonHeight = 40;
-		dismissButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, dismissButtonText));
-		dismissButton.addListener(new ButtonListener());
+		ButtonListener buttonListener = new ButtonListener();
+		dismissButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "OK")));
+		dismissButton.addListener(buttonListener);
+		
+		cancelButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CANCEL")));
+		cancelButton.addListener(new ButtonListener());
 		
 		int panelWidth = PADDING * 2 + messageLabel.getWidth();
-		int panelHeight = PADDING * 3 + messageLabel.getHeight() + dismissButton.getHeight();
+		int panelHeight = PADDING * 3 + messageLabel.getHeight() + cancelButton.getHeight();
 		panel = new Panel(container, panelWidth, panelHeight, ConstantStore.COLORS.get("MODAL"));
 		panel.setBorderColor(ConstantStore.COLORS.get("MODAL_BORDER"));
 		panel.setBorderWidth(2);
 		panel.setLocation((getWidth() - panel.getWidth()) / 2, (getHeight() - panel.getHeight() / 2));
 		
 		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
-		panel.add(dismissButton, panel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -PADDING);
+		panel.add(cancelButton, panel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -PADDING);
 		
 		add(panel, getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
 	}
@@ -74,11 +76,13 @@ public class Modal extends Component {
 	 * @param listener The listener
 	 * @param message The text for the message
 	 * @param segmentedControl A segmented control
-	 * @param submitButtonString The text for the submit button
-	 * @param cancelButtonString The text button for the cancel button
+	 * @param dismissButtonText The text for the submit button
+	 * @param cancelButtonText The text button for the cancel button
 	 */
-	public Modal(GUIContext context, ModalListener listener, String message, SegmentedControl segmentedControl, String submitButtonString, String cancelButtonString) {
+	public Modal(GUIContext context, ModalListener listener, String message, SegmentedControl segmentedControl) {
 		super(context, context.getWidth(), context.getHeight());
+		
+		add(new Panel(context, ConstantStore.COLORS.get("TRANSLUCENT_OVERLAY")), getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
 		this.listener = listener;
 		this.segmentedControl = segmentedControl;
@@ -88,16 +92,14 @@ public class Modal extends Component {
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		
 		ButtonListener buttonListener = new ButtonListener();
-		int buttonWidth = 200;
-		int buttonHeight = 40;
-		resignButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, submitButtonString));
-		resignButton.addListener(buttonListener);
-		
-		dismissButton = new Button(container, buttonWidth, buttonHeight, new Label(container, fieldFont, Color.white, cancelButtonString));
+		dismissButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "OK")));
 		dismissButton.addListener(buttonListener);
 		
+		cancelButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "CANCEL")));
+		cancelButton.addListener(buttonListener);
+		
 		int panelWidth = PADDING * 2 + Math.max(segmentedControl.getWidth(), messageLabel.getWidth());
-		int panelHeight = PADDING * 4 + messageLabel.getHeight() + segmentedControl.getHeight() + resignButton.getHeight();
+		int panelHeight = PADDING * 4 + messageLabel.getHeight() + segmentedControl.getHeight() + cancelButton.getHeight();
 		panel = new Panel(container, panelWidth, panelHeight, ConstantStore.COLORS.get("MODAL"));
 		panel.setBorderColor(ConstantStore.COLORS.get("MODAL_BORDER"));
 		panel.setBorderWidth(2);
@@ -105,18 +107,18 @@ public class Modal extends Component {
 		
 		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
 		panel.add(segmentedControl, messageLabel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
-		panel.add(dismissButton, panel.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT, PADDING, -PADDING);
-		panel.add(resignButton, panel.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
+		panel.add(cancelButton, panel.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT, PADDING, -PADDING);
+		panel.add(dismissButton, panel.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
 		
 		add(panel, getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
 	}
 	
-	@Override
-	public void render(GUIContext context, Graphics g) throws SlickException {
-		g.setColor(OVERLAY_COLOR);
-		g.fillRect(getX(), getY(), getWidth(), getHeight());
-		
-		super.render(context, g);
+	public void setDismissButtonText(String text) {
+		dismissButton.setText(text);
+	}
+	
+	public void setCancelButtonText(String text) {
+		cancelButton.setText(text);
 	}
 	
 	@Override
@@ -142,7 +144,7 @@ public class Modal extends Component {
 		public void componentActivated(AbstractComponent source) {
 			SoundStore.get().playSound("Click");
 			boolean cancelled = false;
-			if (source == dismissButton) {
+			if (source == cancelButton) {
 				cancelled = true;
 			}
 			listener.dismissModal(Modal.this, cancelled);

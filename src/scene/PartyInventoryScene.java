@@ -398,7 +398,7 @@ public class PartyInventoryScene extends Scene {
 					
 					if (items == null) {
 						// No items in the bin, so stop
-						showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN"), ConstantStore.get("GENERAL", "OK")));
+						showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN")));
 						return;
 					}
 					
@@ -409,7 +409,7 @@ public class PartyInventoryScene extends Scene {
 				} else if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.DROP) {
 					if (getBinSize() <= 0) {
 						// Nothing in the bin, so we can't drop
-						showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN"), ConstantStore.get("GENERAL", "OK")));
+						showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN")));
 						return;
 					}
 					
@@ -420,7 +420,7 @@ public class PartyInventoryScene extends Scene {
 				// Check if the bin has anything in it before proceeding
 				if (getBinSize() <= 0) {
 					// Nothing in the bin, so we can't transfer.
-					showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN"), ConstantStore.get("GENERAL", "OK")));
+					showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_EMPTY_BIN")));
 					return;
 				}
 				
@@ -513,7 +513,7 @@ public class PartyInventoryScene extends Scene {
 				emptyBin();
 			} else {
 				// Oh noez! They can't do that. Yell at the user and tell them to try again later
-				showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_INV_FAIL"), ConstantStore.get("GENERAL", "OK")));
+				showModal(new Modal(container, PartyInventoryScene.this, ConstantStore.get("PARTY_INVENTORY_SCENE", "ERR_INV_FAIL")));
 			}
 		}
 	}

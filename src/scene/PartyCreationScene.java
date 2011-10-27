@@ -391,7 +391,9 @@ public class PartyCreationScene extends Scene {
 					for (Person person : people) {
 						if (person.getName().equalsIgnoreCase(personNameTextFields[i].getText())) {
 							// If the name already exists, tell the user
-							showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_DUP_NAME"), ConstantStore.get("GENERAL", "OK")));
+							showModal(new Modal(container,
+									PartyCreationScene.this,
+									ConstantStore.get("PARTY_CREATION_SCENE", "ERR_DUP_NAME")));
 							personNameTextFields[i].clear();
 							return 1;
 						}
@@ -447,9 +449,9 @@ public class PartyCreationScene extends Scene {
 			professionModal = new Modal(container,
 					PartyCreationScene.this,
 					ConstantStore.get("PARTY_CREATION_SCENE", "PROFESSION_MODAL"),
-					professionSegmentedControl,
-					ConstantStore.get("GENERAL", "CONFIRM"),
-					ConstantStore.get("GENERAL", "CANCEL"));
+					professionSegmentedControl);
+			professionModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONFIRM"));
+			professionModal.setCancelButtonText(ConstantStore.get("GENERAL", "CANCEL"));
 
 			int[] currentProfession = new int[1];
 			if (people.get(i).getProfession() != null) {
@@ -478,9 +480,9 @@ public class PartyCreationScene extends Scene {
 			skillModal = new Modal(container,
 					PartyCreationScene.this,
 					skillModalMessage,
-					skillSegmentedControl,
-					ConstantStore.get("GENERAL", "CONFIRM"),
-					ConstantStore.get("GENERAL", "CANCEL"));
+					skillSegmentedControl);
+			skillModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONFIRM"));
+			skillModal.setCancelButtonText(ConstantStore.get("GENERAL", "CANCEL"));
 
 			if (people.get(i).getProfession().getStartingSkill() != Person.Skill.NONE) {
 				int[] permanent = new int[1];
@@ -520,13 +522,19 @@ public class PartyCreationScene extends Scene {
 		 */
 		public void confirmButtonActivated(){
 			if (people.size() == 0) {
-				showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_NO_MEMBERS"), ConstantStore.get("GENERAL", "OK")));
+				Modal errorModal = new Modal(container,
+						PartyCreationScene.this,
+						ConstantStore.get("PARTY_CREATION_SCENE", "ERR_NO_MEMBERS"));
+				showModal(errorModal);
 				return;
 			}
 			
 			for (Person person : people) {//iterate through party memebers
 				if (person.getProfession() == null) {
-					showModal(new Modal(container, PartyCreationScene.this, ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_PROFESSIONS"), ConstantStore.get("GENERAL", "OK")));
+					Modal errorModal = new Modal(container,
+							PartyCreationScene.this,
+							ConstantStore.get("PARTY_CREATION_SCENE", "ERR_INCOMPLETE_PROFESSIONS"));
+					showModal(errorModal);
 					Logger.log("Not all party members have professions selected", Logger.Level.INFO);
 					return;
 				}
