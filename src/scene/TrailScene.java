@@ -75,7 +75,7 @@ public class TrailScene extends Scene {
 		
 		ParallaxSprite.MAX_DISTANCE = TREE_DISTANCE;
 		
-		ground = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		trees = new ArrayList<ParallaxSprite>();
