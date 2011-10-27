@@ -34,6 +34,8 @@ public class Party implements HUDDataSource {
 	private List<Animal> animals =  new ArrayList<Animal>();
 	
 	private int totalDistanceTravelled = 0;
+
+	private Time time = new Time(8);
 	
 	/**
 	 * 
@@ -113,6 +115,7 @@ public class Party implements HUDDataSource {
 	 */
 	public Party() {
 		this.members = null;
+		this.time = new Time(8);
 	}
 	
 	/**
@@ -572,5 +575,9 @@ public class Party implements HUDDataSource {
 
 	public void addAnimals(List<Animal> animalList) {
 		animals.addAll(animalList);
+	}
+
+	public Time getTime() {
+		return time;
 	}
 }

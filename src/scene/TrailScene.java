@@ -7,7 +7,6 @@ import java.util.Random;
 import model.Notification;
 import model.Party;
 import model.Time;
-import model.worldMap.TrailEdge;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -58,7 +57,6 @@ public class TrailScene extends Scene {
 	
 	private HUD hud;
 	
-	private Time time;
 	private AnimatingColor skyAnimatingColor;
 	
 	public TrailScene(Party party, RandomEncounterTable randomEncounterTable) {
@@ -73,9 +71,7 @@ public class TrailScene extends Scene {
 		hud = new HUD(container, party, new HUDListener());
 		showHUD(hud);
 		
-		time = new Time(0);
-		
-		sky = new Panel(container, skyColorForHour(time.getTime()));
+		sky = new Panel(container, skyColorForHour(party.getTime().getTime()));
 		backgroundLayer.add(sky);
 		
 		parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
@@ -120,7 +116,7 @@ public class TrailScene extends Scene {
 		
 		clickCounter = 0;
 		
-		adjustSetting();
+		adjustSetting(party.getTime());
 }
 		
 	@Override
@@ -157,7 +153,7 @@ public class TrailScene extends Scene {
 					GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
 				} else {				
 					List<Notification> notifications = party.walk();
-					time.advanceTime();
+					party.getTime().advanceTime();
 					hud.updatePartyInformation();
 					if (party.getPartyMembers().isEmpty()) {
 						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
@@ -176,7 +172,7 @@ public class TrailScene extends Scene {
 			}
 			
 
-			adjustSetting();
+			adjustSetting(party.getTime());
 		}
 	}
 	
@@ -213,7 +209,7 @@ public class TrailScene extends Scene {
 	}
 	
 
-	private void adjustSetting() {
+	private void adjustSetting(Time time) {
 
 		hud.setDate(time.get24HourTime());
 	
