@@ -6,7 +6,6 @@ import java.util.Random;
 
 import model.Notification;
 import model.Party;
-import model.RandomEncounterTable;
 import model.Time;
 
 import org.newdawn.slick.Color;
@@ -16,7 +15,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
-
+import scene.encounter.*;
 import component.AnimatingColor;
 import component.HUD;
 import component.Panel;
@@ -153,22 +152,33 @@ public class TrailScene extends Scene {
 					GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
 				}
 				Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
-				GameDirector.sharedSceneListener().requestScene(randomEncounterTable.getRandomEncounter(), this, false);
-	
+				//Clean this up//////////////////////////////////////////////////
+				EncounterNotification encounterNotification = null;
+				if ( Math.random() > 0.9) {
+					encounterNotification = randomEncounterTable.getRandomEncounter();				
+				}
 				hud.updatePartyInformation();
 				List<String> messages = new ArrayList<String>();
+				StringBuilder modalMessage = new StringBuilder();
 				for(Notification notification : notifications) {
 					if(notification.getIsModal()) {
-						ChoiceModal campModal = new ChoiceModal(container, this, notification.getMessage());
-						campModal.setDismissButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
-						campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
-						showModal(campModal);
+						modalMessage.append(notification.getMessage() + "\n");
 					} else {
 						messages.add(notification.getMessage());
 					}
 				}
+				
+				if ( encounterNotification != null && encounterNotification.getNotification().getMessage() != null)
+					modalMessage.append(encounterNotification.getNotification().getMessage());
+				
+				if (modalMessage.length() != 0) {
+					ChoiceModal campModal = new ChoiceModal(container, this, modalMessage.toString().trim());
+					campModal.setDismissButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
+					campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
+					showModal(campModal);
+				}
 				hud.addNotifications(messages);
-			
+				//Clean this up//////////////////////////////////////////////////
 				clickCounter = 0;
 			}
 			
