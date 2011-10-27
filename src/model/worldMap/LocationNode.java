@@ -38,18 +38,18 @@ public class LocationNode {
 	 * @param locationName String representing name of location
 	 * @param xPos the x position for the location on the world map
 	 * @param yPos the y position for the location on the world map
-	 * @param Latitude Real World(tm) latitude of location (for MapScene manufacture)
-	 * @param Longitude Real World(tm) longitude of location (for MapScene Manufacture)
+	 * @param latitude Real World(tm) latitude of location (for MapScene manufacture)
+	 * @param longitude Real World(tm) longitude of location (for MapScene Manufacture)
 	 * @param trails number of trails exiting this location
 	 */
-	public LocationNode(String locationName, int xPos, int yPos, double Latitude, double Longitude, int trails, int rank){
+	public LocationNode(String locationName, int xPos, int yPos, double latitude, double longitude, int trails, int rank){
 		this.ID = LocationNode.nodeCount++;
 		//until we can get a nice source for lat and long data
 		MAP_XPOS = xPos;
 		MAP_YPOS = yPos;
 		//eventually want to implement real world lat and long
-		WORLD_LATITUDE = Latitude;
-		WORLD_LONGITUDE = Longitude;
+		WORLD_LATITUDE = latitude;
+		WORLD_LONGITUDE = longitude;
 		this.trails = trails;
 		this.onTheTrail = false;
 		this.outboundTrails = new ArrayList<TrailEdge>(trails);
