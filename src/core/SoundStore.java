@@ -62,7 +62,7 @@ public class SoundStore {
 	 * @param music The music itself
 	 */
 	private void addToMusic(String name, Music music) {
-		musics.put(name, music);	
+		musics.put(name, music);
 	}
 	
 	/**

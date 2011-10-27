@@ -20,7 +20,7 @@ import model.*;
  * Directs the logical functionality of the game. Sets everything in motion.
  */
 
-public class GameDirector implements SceneListener {	
+public class GameDirector implements SceneListener {
 	private static GameDirector sharedDirector;
 	
 	private FontStore fontManager;

@@ -16,7 +16,7 @@ public class TrailEdge implements Conditioned {
 	/**name of this edge - currently holds name of destination - "Trail to <location name>"*/
 	private String name;
 	/**describes how hard the transit on this trail will be*/
-	private int dangerLevel;	
+	private int dangerLevel;
 	/**length of the trail.  calculated by the distance between the two location nodes.*/
 	private float length;
 	private static int edgeCount;

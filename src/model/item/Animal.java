@@ -19,7 +19,7 @@ public class Animal extends Item {
 		List<Item> itemList = new ArrayList<Item>();
 		for(int i = 0; i < (numberOf / 10); i++) {
 			itemList.add(new Item(ITEM_TYPE.MEAT));
-		}		
+		}
 		return itemList;
 	}
 	

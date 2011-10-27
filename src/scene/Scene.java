@@ -18,7 +18,7 @@ import component.modal.Modal;
  * How the game displays information to the player.  Inherited by the containers which execute the game functionality
  */
 public abstract class Scene extends BasicGameState implements ModalListener {
-	protected static GameContainer container;	
+	protected static GameContainer container;
 	private static Tooltip tooltip;
 	
 	protected SceneLayer backgroundLayer;

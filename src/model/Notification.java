@@ -15,7 +15,7 @@ public class Notification {
 	}
 	
 	public String getMessage() {
-		return message;		
+		return message;
 	}
 	
 	public boolean getIsModal() {

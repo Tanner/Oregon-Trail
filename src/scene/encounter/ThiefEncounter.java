@@ -37,7 +37,7 @@ public class ThiefEncounter extends Encounter {
 				ITEM_TYPE type = items.get((int) (Math.random() * items.size()));
 				inventory.getInventory().removeItemFromInventory(type, inventory.getInventory().getNumberOf(type));
 				itemName = type.getName();
-			}		
+			}
 		}
 		
 		return makeNotification();

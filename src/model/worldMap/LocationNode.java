@@ -73,7 +73,7 @@ public class LocationNode {
 	
 	public LocationNode(int xPos, int yPos, int trails, int rank){
 		//makes unique name for location, temporarily, until we can make them prettier.
-		this("Location " + LocationNode.nodeCount, xPos, yPos, 0, 90, trails, rank);	
+		this("Location " + LocationNode.nodeCount, xPos, yPos, 0, 90, trails, rank);
 	}
 	
 	
@@ -88,7 +88,7 @@ public class LocationNode {
 	}
 	
 	public void setOnTheTrail(boolean onTheTrail){
-		this.onTheTrail = onTheTrail;		
+		this.onTheTrail = onTheTrail;
 	}
 	
 	public boolean getOnTheTrail(){

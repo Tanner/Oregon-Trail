@@ -84,7 +84,7 @@ public class CampScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		campFire.update(delta);	
+		campFire.update(delta);
 	}
 	
 	@Override

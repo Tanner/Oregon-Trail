@@ -139,7 +139,7 @@ public class SceneSelectorScene extends Scene {
 				// Hunt
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
-					return;		
+					return;
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.HUNT, SceneSelectorScene.this, false);
@@ -147,7 +147,7 @@ public class SceneSelectorScene extends Scene {
 				// Trail
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
-					return;		
+					return;
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, SceneSelectorScene.this, false);
@@ -155,7 +155,7 @@ public class SceneSelectorScene extends Scene {
 				// Party Management Scene
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
-					return;		
+					return;
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, SceneSelectorScene.this, false);
@@ -163,7 +163,7 @@ public class SceneSelectorScene extends Scene {
 				// Game Over
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
-					return;		
+					return;
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, SceneSelectorScene.this, false);
@@ -174,10 +174,10 @@ public class SceneSelectorScene extends Scene {
 				// Trail Test
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
-					return;		
+					return;
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this, false);	
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAILTEST, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_GAME"))) {
 				game.reset();
 				player = game.getPlayer();
@@ -187,7 +187,7 @@ public class SceneSelectorScene extends Scene {
 				// Game Over
 				if (player.getParty() == null) {
 					warnBecauseNoParty();
-					return;		
+					return;
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, SceneSelectorScene.this, false);

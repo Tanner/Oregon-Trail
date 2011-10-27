@@ -22,10 +22,10 @@ public class ItemEncounter extends Encounter {
 		numItems = (int) (Math.random() * 10) + 1;
 		if (party.getVehicle() != null) {
 			for (int i = 0; i < numItems; i++) {
-				party.getVehicle().addItemToInventory(new Item(ITEM_TYPE.APPLE));	
+				party.getVehicle().addItemToInventory(new Item(ITEM_TYPE.APPLE));
 			}
 		}
-		return makeNotification();	
+		return makeNotification();
 	}
 
 	@Override

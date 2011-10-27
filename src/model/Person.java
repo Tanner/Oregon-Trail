@@ -196,7 +196,7 @@ public class Person implements Conditioned, Inventoried {
 			addSkill(profession.getStartingSkill());
 			inventory.clear();
 			if(profession.getStartingItem() != null) {
-				addItemToInventory(new Item(profession.getStartingItem()));	
+				addItemToInventory(new Item(profession.getStartingItem()));
 			}
 			return;
 		} else if (this.profession == profession) {
@@ -210,7 +210,7 @@ public class Person implements Conditioned, Inventoried {
 			setProfession(profession);
 			inventory.clear();
 			if(profession.getStartingItem() != null) {
-				addItemToInventory(new Item(profession.getStartingItem()));	
+				addItemToInventory(new Item(profession.getStartingItem()));
 			}
 			return;
 		} else {
@@ -455,7 +455,7 @@ public class Person implements Conditioned, Inventoried {
 		List<Item> itemList = new ArrayList<Item>();
 		for(int i = 0; i < (numberOf / 2); i++) {
 			itemList.add(new Item(ITEM_TYPE.STRANGEMEAT));
-		}		
+		}
 		return itemList;
 	}
 }

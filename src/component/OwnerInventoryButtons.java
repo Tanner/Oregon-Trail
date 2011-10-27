@@ -130,7 +130,7 @@ public class OwnerInventoryButtons {
 		int maxInventorySize = inventoried.getInventory().getMaxSize();
 
 		for (int i = 0; i < maxInventorySize; i++) {
-			if (i < slots.size()) {				
+			if (i < slots.size()) {
 				String name = slots.get(i).getName();
 				int amount = inventoried.getInventory().getNumberOf(slots.get(i));
 				Condition condition = inventoried.getInventory().getConditionOf(slots.get(i));

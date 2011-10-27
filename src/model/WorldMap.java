@@ -116,7 +116,7 @@ public class WorldMap {
 		//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 		LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, curRank);
-		return tempNode;	
+		return tempNode;
 	}
 	
 	/**
@@ -214,7 +214,7 @@ public class WorldMap {
 						//nexttown holds size of arraylist for locations - used as random source to determine where trails go
 						int nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
 						LocationNode randDestNode = mapNodes.get(nextRank).get(nextTown);
-						while ((randDestNode.getOnTheTrail()) && (randDestNode.getRank() == node.getRank())){	
+						while ((randDestNode.getOnTheTrail()) && (randDestNode.getRank() == node.getRank())){
 							nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i+1) : i);
 							nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
 							randDestNode = mapNodes.get(nextRank).get(nextTown);
@@ -245,7 +245,7 @@ public class WorldMap {
 	 * @return the random danger level of the trail
 	 */
 	private int randGenTrailDanger(Random mapRand, int trailRank){
-		int result = mapRand.nextInt(100);			
+		int result = mapRand.nextInt(100);
 		return result;
 	}
 	
