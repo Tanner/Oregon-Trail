@@ -119,7 +119,7 @@ public class WorldMap {
 			}
 		//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
-		LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(100));
+		LocationNode tempNode = new LocationNode(nameLocation(curRank,mapRand, tmpY),tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(100));
 		return tempNode;
 	}
 	
@@ -136,7 +136,7 @@ public class WorldMap {
 		String retVal;
 		if (curRank <= (MAX_RANK/3)){
 			retVal = (yVal > 0) ? "Nebraska Territory" : "Kansas Territory";			
-		} else if (curRank <= (2*(MAX_RANK/3))) {
+		} else if (curRank <= (3*(MAX_RANK/4))) {
 			retVal = (yVal > 0) ? "Washington Territory" : "Utah Territory";						
 		} else {
 			retVal = "Oregon";
@@ -150,9 +150,13 @@ public class WorldMap {
 	 * @return the name of this city
 	 */
 	
-	private String nameLocation(int rank, Random mapRand){
-		String retVal = "";
+	private String nameLocation(int curRank, Random mapRand, int yVal){
 		
+		String retVal = "";
+		String stateVal = determineState(curRank, yVal);
+		int townNameIndex = mapRand.nextInt(ConstantStore.TOWN_NAMES.size());
+		retVal = ConstantStore.TOWN_NAMES.get(townNameIndex) + ", " + stateVal;
+		//if ()
 		
 		return retVal;
 	}

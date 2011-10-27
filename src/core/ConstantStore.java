@@ -17,9 +17,11 @@ public final class ConstantStore {
 	 */
 	public static final Map<String, Map<String, String>> LITERALS;
 	public static final Map<String, Color> COLORS;
+	public static final Map<Integer,List<String>> TOWN_NAMES;
 	
 	static {
 		Map<String, Map<String, String>> literalMap = new HashMap<String, Map<String, String>>();
+		TOWN_NAMES = new HashMap <Integer, List<String>>();
 		
 		// Main Menu
 		Map<String, String> mainMenu = new HashMap<String, String>();
@@ -201,6 +203,50 @@ public final class ConstantStore {
 		townNames.add("Fort Coon");
 		townNames.add("Latham");
 		townNames.add("Lincoln");
+		
+		//eastern zone names
+		TOWN_NAMES.put(0, townNames);
+		
+		townNames.clear();
+		townNames.add("Westport");
+		townNames.add("Weston");
+		townNames.add("Fort Leavenworth");
+		townNames.add("Atchison");
+		townNames.add("St. Joseph"); 
+		townNames.add("Omaha"); 
+		townNames.add("Topeka");
+		townNames.add("St. Louis"); 
+		townNames.add("Santa Fe");
+		townNames.add("Mount Oread");
+		townNames.add("Fort Kearny");
+		townNames.add("Fort Laramie");
+		townNames.add("Ash Hollow");
+		townNames.add("Casper");
+		townNames.add("Julesburg");
+		townNames.add("Fort Bridger");
+		townNames.add("Cokeville");
+		townNames.add("Goodnight");
+		townNames.add("Deadwood");
+		townNames.add("Tombstone");
+		townNames.add("Julesburg");
+		townNames.add("Fort Coon");
+		townNames.add("Latham");
+		townNames.add("Lincoln");
+
+		//western zone names
+		TOWN_NAMES.put(1, townNames);
+
+		townNames.clear();		
+		townNames.add("Fort Vancouver");
+		townNames.add("Whitman Mission");
+		townNames.add("Grande Ronde Outpost");
+		townNames.add("The Dalles");
+		townNames.add("Barlow Gate");
+
+		//oregon zone names		
+		TOWN_NAMES.put(2, townNames);
+		
+		
 	}
 	
 	/**
