@@ -155,7 +155,7 @@ public class TrailScene extends Scene {
 	@Override
 	public void dismissModal(Modal modal, boolean cancelled) {
 		super.dismissModal(modal, cancelled);
-		if(cancelled) {
+		if (!cancelled) {
 			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, this, false);
 		}
 	}
