@@ -54,10 +54,10 @@ public class HUD extends Component {
 		menuButton.addListener(listener);
 		add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
 		
-		dateLabel = new Label(context, INFO_WIDTH, fieldFont, Color.white, "");
+		dateLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
 		add(dateLabel, getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPRIGHT, -MARGIN, MARGIN);
 		
-		moneyLabel = new Label(context, INFO_WIDTH, fieldFont, Color.white, "");
+		moneyLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
 		add(moneyLabel, getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, -MARGIN, -MARGIN);
 		
 		int notificationWidth = context.getWidth() - menuButton.getWidth() - INFO_WIDTH -  MARGIN * 4;
