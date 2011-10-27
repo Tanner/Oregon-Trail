@@ -20,6 +20,8 @@ public class WorldMap {
 	private final int RANK_WEIGHT = 3;  
 	/**maximum number of exiting trails each location can have*/
 	private final int MAX_TRAILS_OUT = 3;  
+	/**minimum number of exiting trails each location can have*/
+	private final int MIN_TRAILS_OUT = 1;  
 	/**maximum number of "levels" of travel west - only portland has this as its rank.  edges can only go to edges with equal or higher rank than their origin node*/
 	private final int MAX_RANK = 20;
 	/**width of map in miles*/
@@ -28,16 +30,12 @@ public class WorldMap {
 	private final int MAX_Y = 800;
 	/**points to starting city - references entire map*/
 	private LocationNode mapHead;
-	/**points to most recent location*/
-	private LocationNode partyLocation;
-	/**points to most recent trail traversed*/
-	private TrailEdge partyTrail;
-	/**points to nearest locationNode ahead of party, or current location*/
-	private LocationNode currDestination;
-	/**final destination - Portland Oregon*/
-	private LocationNode finalDestination;
 	/**points to trailEdge most recently occupied by party*/
 	private TrailEdge currTrail;
+	/**points to nearest locationNode ahead of party, or current location*/
+	private LocationNode currLocationNode;
+	/**final destination - Portland Oregon*/
+	private LocationNode finalDestination;
 	/**number of total locations on map*/
 	private int numLocations;
 	/**number of total trails on map*/
@@ -54,10 +52,9 @@ public class WorldMap {
 		this.devMode = (devMode.length() == 0) ? false : true;
 		this.numTrails = 0;
 		this.numLocations = numNodes;
-		this.generateMap(numNodes);
-		this.currDestination = this.mapHead;
-		this.partyLocation = this.mapHead;
-		this.partyTrail = null;
+		this.generateMap(this.numLocations);
+		this.currLocationNode = this.mapHead;
+		this.currTrail = null;
 	}
 	
 	/**
@@ -119,8 +116,8 @@ public class WorldMap {
 			tmpY += mapRand.nextInt(MAX_Y / MAX_RANK);
 			}
 		//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
-		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
-		LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, curRank);
+		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
+		LocationNode tempNode = new LocationNode(tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(100));
 		return tempNode;
 	}
 	
@@ -135,14 +132,12 @@ public class WorldMap {
 		//build a temporary list to hold the generated locations, from which to build the map by adding edges
 		
 		//make a map instead of a list, indexed by locationnode.rank, with value being arraylist of locationnodes.
-		
 		Map<Integer, List<LocationNode>> mapNodes = new HashMap<Integer, List<LocationNode>>();
-		
+		//initialize arraylists at each rank location
 		for (int i  = 0; i <= MAX_RANK; i++){
 			mapNodes.put(i, new ArrayList<LocationNode>());
-		}
-		
-		List<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
+		}		
+		//List<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
 			//temp array holding number of locations at each rank, indexed by rank
 		int[] numRankAra = new int[MAX_RANK];
 			//current node's rank as we're building the node list
@@ -152,23 +147,22 @@ public class WorldMap {
 		int numExitTrails;
 		
 			//number of trails out of Independence : 1 to MaxTrailsOut constant
-		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
+		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
 			//build beginning and final locations
-		this.mapHead = new LocationNode("Independence", MAX_X, 0, numExitTrails, 0);
-		this.finalDestination = new LocationNode("Portland", 0, 0, 0, MAX_RANK);
+		this.mapHead = new LocationNode("Independence", MAX_X, 0, numExitTrails);
+		this.finalDestination = new LocationNode("Portland", 0, 0, 0, MAX_RANK, 100);
 
 		//setting mapHead to be "on the trail" - don't want to loop back to home base as we initialize the map structure
 		this.mapHead.setOnTheTrail(true);
 		numRankAra[0] = 1;
 		numRankAra[MAX_RANK - 1] = 1;
 		
-		tempLocationStore.add(mapHead);
+		//tempLocationStore.add(mapHead);
 		mapNodes.get(mapHead.getRank()).add(mapHead);
 		//need to build base set of nodes - must have at least 1 per rank to get from independence to portland
 		for (int i = 1; i < MAX_RANK; i++){
-			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 			LocationNode tmp = generateLocationNode(mapRand, i, numExitTrails);
-			tempLocationStore.add(tmp);
+	//		tempLocationStore.add(tmp);
 			mapNodes.get(i).add(tmp);
 		}//for loop to build initial path
 
@@ -180,26 +174,16 @@ public class WorldMap {
 			curRankIter = i % (MAX_RANK - 1) + 1;
 			curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter - 1 : curRankIter;
 			//number of trails out of location : 1 to MaxTrailsOut constant
-			numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT) + 1;
 			LocationNode tmp = generateLocationNode(mapRand, curRank, numExitTrails);
-			tempLocationStore.add(tmp);
+	//		tempLocationStore.add(tmp);
 			mapNodes.get(tmp.getRank()).add(tmp);
 		}//for all locations make a node
-		tempLocationStore.add(finalDestination);
+	//	tempLocationStore.add(finalDestination);
 		mapNodes.get(finalDestination.getRank()).add(finalDestination);
 
 		//as of here we have all the location nodes.  now need to build map.
 		//by adding edges.  an edge can only go from a location to one with equal or higher 
 		//rank.
-/*		if (this.devMode) {
-			for (int i = 0; i <= MAX_RANK; i++){
-				System.out.println("Locations at rank "+  i + " : " + mapNodes.get(i).size());
-				for(LocationNode node : mapNodes.get(i)){
-					System.out.println(node.debugToString());
-				}//for locationnodes
-			}//for each rank
-		}//devmode stub
-*/		
 		//no need to check MAX_RANK - never any location with exit trails at MAX_RANK
 		for (int i = 0; i < MAX_RANK; i++){
 			for(LocationNode node : mapNodes.get(i)){
@@ -264,16 +248,46 @@ public class WorldMap {
 	 */
 	public LocationNode getMapHead(){
 		return this.mapHead;
-		
 	}
 	
+	/**
+	 * return the current, or most recent, location of the party
+	 * @return the location node most recently visited by the party
+	 */
+	public LocationNode getCurrLocationNode(){
+		return this.currLocationNode;		
+	}
+	
+	/**
+	 * return the current, or most recent, trail traveled by the party
+	 * @return the trail the party most recently traveled
+	 */
+	public TrailEdge getCurrTrail(){
+		return this.currTrail;
+	}
+	
+	/**
+	 * set current location or most recent location node of party
+	 * @param destination most recent/current trail
+	 */
+	public void setCurrLocationNode(LocationNode currLocationNode){
+		this.currLocationNode = currLocationNode;
+	}
+	
+	/**
+	 * set current or most recent trail occupied by party
+	 * @param trailEdge most recent/current trail
+	 */
+	public void setCurrTrail(TrailEdge currTrail){
+		this.currTrail = currTrail;
+	}
 	
 	/**
 	 * returns a string representation of this map, by iterating through each node .
 	 * @return the string representation
 	 */
 	public String toString(){
-		String resString = "";
+		String resString = "I'm a map, I'm a nappy map, and I dance dance dance on " + this.numTrails + " trails to " + this.numLocations + " locations";
 		
 		return resString;
 	}

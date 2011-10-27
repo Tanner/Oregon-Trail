@@ -121,6 +121,6 @@ public class Condition {
 	
 	@Override
 	public String toString() {
-		return "Min: " + min + ", Max: " + max + ", Current: " + current;
+		return "Min: " + min + ", Max: " + max + ", Current: " + current;	
 	}
 }

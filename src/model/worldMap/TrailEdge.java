@@ -3,12 +3,9 @@ package model.worldMap;
 
 import core.Logger;
 import model.Condition;
-import model.Conditioned;
 
-public class TrailEdge implements Conditioned {
+public class TrailEdge extends MapObject {
 	
-	/**how far along the trail the party is*/
-	private Condition milesToGo;
 	/**end point of this edge - destination node*/
 	private LocationNode destination;
 	/**end point of this edge - where we started*/
@@ -21,10 +18,8 @@ public class TrailEdge implements Conditioned {
 	private float length;
 	/**total number of edges built*/
 	private static int edgeCount;
-	/**whether or not this edge is visible on player map*/
-	private boolean visible;
 
-	//unique id corresponding to this edge.
+	/**unique id corresponding to this edge.*/
 	private final int ID;
 	
 	/**
@@ -42,9 +37,8 @@ public class TrailEdge implements Conditioned {
 		this.ID = TrailEdge.edgeCount++;
 		this.dangerLevel = dangerLevel;
 		this.length = calcDistance(destination.MAP_XPOS, origin.MAP_XPOS, destination.MAP_YPOS, origin.MAP_YPOS);
-		this.milesToGo = new Condition((int) this.length);
-		this.visible = false;
-	}
+		this.quality = new Condition((int) this.length);
+		}
 
 	private float calcDistance(double destX, double origX, double destY, double origY){
 		float result = 0;
@@ -59,22 +53,34 @@ public class TrailEdge implements Conditioned {
 		
 		return result;
 	}
-	@Override
-	public double getConditionPercentage() {
-		return milesToGo.getPercentage();
-	}
 
 	@Override
 	public String toString(){
-		return "Danger Level : " + this.dangerLevel +  " trail from " + this.origin.getLocationName() + " to " + this.destination.toString() + "that is " + this.length + " miles long";
+		String retVal = this.name;
+		return retVal;
 	}
-
+	/**
+	 * move along a trail a certain distance
+	 * @param distance the amount to move along the trail
+	 */
 	public void advance(int distance) {
-		milesToGo.decrease(distance);
+		this.quality.decrease(distance);
 	}
 	
+	/**
+	 * return the destination for this trail
+	 * @return the destination node
+	 */
 	public LocationNode getDestination(){
 		return this.destination;
+	}
+
+	@Override
+	public String debugToString() {
+		String retVal = "";
+		retVal += "Danger Level : " + this.dangerLevel + " Trail Edge ID : " + this.ID + " Trail Name : \"" + this.name + "\"\n";
+		retVal += "Trail from " + this.origin.getLocationName() + " to " + this.destination.toString() + "that is " + this.length + " miles long\n";
+		return retVal;
 	}
 	
 }// class TrailEdge
