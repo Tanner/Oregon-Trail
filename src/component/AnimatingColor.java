@@ -5,30 +5,31 @@ import org.newdawn.slick.Color;
 public class AnimatingColor {
 	private Color oldColor;
 	private Color newColor;
-	private float duration;
-	private float progress;
+	private int duration;
+	private int progress;
 	private boolean animating;
 	
-	public AnimatingColor(Color oldColor, Color newColor, float duration) {
+	public AnimatingColor(Color oldColor, Color newColor, int duration) {
 		this.oldColor = oldColor;
 		this.newColor = newColor;
 		
 		this.duration = duration;
-		progress = 0f;
+		progress = 0;
 		animating = true;
 	}
 	
-	public Color getColor() {
+	public Color getColor(int delta) {
 		if (!animating) {
 			return newColor;
 		}
 		
-		progress += 1f;
-		
+		progress += delta;
+						
 		if (progress >= duration) {
 			animating = false;
+			return newColor;
 		}
 		
-		return oldColor.scaleCopy(1f - progress / duration).addToCopy(newColor.scaleCopy(progress / duration));
+		return oldColor.scaleCopy(1f - (float)progress / (float)duration).addToCopy(newColor.scaleCopy((float)progress / (float)duration));
 	}
 }

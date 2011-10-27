@@ -6,7 +6,6 @@ import java.util.Random;
 
 import model.Notification;
 import model.Party;
-import model.Time;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -116,7 +115,7 @@ public class TrailScene extends Scene {
 		
 		clickCounter = 0;
 		
-		adjustSetting(party.getTime());
+		adjustSetting();
 }
 		
 	@Override
@@ -128,7 +127,7 @@ public class TrailScene extends Scene {
 			}
 			
 			if (skyAnimatingColor != null) {
-				sky.setBackgroundColor(skyAnimatingColor.getColor());
+				sky.setBackgroundColor(skyAnimatingColor.getColor(delta));
 			}
 			
 			if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
@@ -168,11 +167,10 @@ public class TrailScene extends Scene {
 						GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
 	
 					clickCounter = 0;
+					
+					adjustSetting();
 				}
 			}
-			
-
-			adjustSetting(party.getTime());
 		}
 	}
 	
@@ -208,12 +206,11 @@ public class TrailScene extends Scene {
 		hud.addNotifications(messages);
 	}
 	
-
-	private void adjustSetting(Time time) {
-
-		hud.setDate(time.get24HourTime());
+	private void adjustSetting() {
+		hud.setDate(party.getTime().get24HourTime());
 	
-		skyAnimatingColor = new AnimatingColor(sky.getBackgroundColor(), skyColorForHour(time.getTime()), CLICK_WAIT_TIME);
+		skyAnimatingColor = new AnimatingColor(skyColorForHour(party.getTime().getTime()-1),
+				skyColorForHour(party.getTime().getTime()), CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
 	}
 	
 	private Color skyColorForHour(int hour) {
@@ -223,20 +220,17 @@ public class TrailScene extends Scene {
 			case 7:
 				return new Color(0x579cdd);
 			case 8:
-				return new Color(0x66a9c4);
 			case 9:
-				return new Color(0x66a9dc);
 			case 10:
 			case 11:
 			case 12:
 			case 13:
 			case 14:
 			case 15:
+				return new Color(0x66a9dc);
 			case 16:
-			case 17:
-			case 18:
 				return new Color(0xdd90a4);
-			case 19:
+			case 17:
 				return new Color(0x4a3b48);
 			default:
 				return Color.black;
