@@ -234,6 +234,10 @@ public class OwnerInventoryButtons {
 		this.listener = listener;
 	}
 
+	public int getNumberOfItem(ITEM_TYPE itemType) {
+		return inventoried.getInventory().getNumberOf(itemType);
+	}
+	
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
