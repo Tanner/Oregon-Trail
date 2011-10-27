@@ -124,6 +124,13 @@ public class Label extends Component {
 		g.clearClip();
 	}
 	
+	/**
+	 * Calculate the height of a label when it is only given a width.
+	 * @param width Width of the label
+	 * @param text Text of the label
+	 * @param font Font of the label
+	 * @return The height the label should be
+	 */
 	private static int calculateHeight(int width, String text, Font font) {
 		Scanner lineScan = new Scanner(text);
 		Scanner wordScan;
