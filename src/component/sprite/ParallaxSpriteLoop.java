@@ -22,7 +22,7 @@ public class ParallaxSpriteLoop extends ParallaxSprite {
 		
 		sprite = new Sprite(context, spriteWidth, image);
 		
-		panel = new Panel(context, context.getWidth(), sprite.getHeight());
+		panel = new Panel(context, spriteWidth, sprite.getHeight());
 		panel.add(sprite, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, 0);
 		
 		add(panel, super.panel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMRIGHT, 0, 0);
