@@ -127,8 +127,9 @@ public class TrailScene extends Scene {
 			}
 			
 			if (skyAnimatingColor != null) {
-				sky.setBackgroundColor(skyAnimatingColor.getColor(delta));
+				skyAnimatingColor.update(delta);
 			}
+			backgroundLayer.update(delta);
 			
 			if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
 				clickCounter++;
@@ -208,10 +209,17 @@ public class TrailScene extends Scene {
 	}
 	
 	private void adjustSetting() {
-		hud.setDate(party.getTime().get24HourTime());
+		int hour = party.getTime().getTime();
+		
+		hud.setDate(party.getTime().get12HourTime());
 	
-		skyAnimatingColor = new AnimatingColor(skyColorForHour(party.getTime().getTime()-1),
-				skyColorForHour(party.getTime().getTime()), CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		skyAnimatingColor = new AnimatingColor(skyColorForHour(hour-1),
+				skyColorForHour(hour), CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		sky.setBackgroundColor(skyAnimatingColor);
+		
+		AnimatingColor backgroundOverlayAnimatingColor = new AnimatingColor(backgroundOverlayColorForHour(hour-1),
+				backgroundOverlayColorForHour(hour), CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		this.backgroundLayer.setOverlayColor(backgroundOverlayAnimatingColor);
 	}
 	
 	private Color skyColorForHour(int hour) {
@@ -235,6 +243,30 @@ public class TrailScene extends Scene {
 				return new Color(0x4a3b48);
 			default:
 				return Color.black;
+		}
+	}
+	
+	private Color backgroundOverlayColorForHour(int hour) {
+		switch (hour) {
+			case 6:
+				return new Color(0, 0, 0, .3f);
+			case 7:
+				return new Color(0, 0, 0, .1f);
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+			case 14:
+			case 15:
+				return new Color(0, 0, 0, 0f);
+			case 16:
+				return new Color(0, 0, 0, .1f);
+			case 17:
+				return new Color(0, 0, 0, .3f);
+			default:
+				return new Color(0, 0, 0, .5f);
 		}
 	}
 	

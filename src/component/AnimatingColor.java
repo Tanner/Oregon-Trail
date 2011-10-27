@@ -2,7 +2,7 @@ package component;
 
 import org.newdawn.slick.Color;
 
-public class AnimatingColor {
+public class AnimatingColor extends Color {
 	private Color oldColor;
 	private Color newColor;
 	private int duration;
@@ -10,6 +10,8 @@ public class AnimatingColor {
 	private boolean animating;
 	
 	public AnimatingColor(Color oldColor, Color newColor, int duration) {
+		super(oldColor);
+		
 		this.oldColor = oldColor;
 		this.newColor = newColor;
 		
@@ -18,18 +20,27 @@ public class AnimatingColor {
 		animating = true;
 	}
 	
-	public Color getColor(int delta) {
+	private void setRGBA(Color color) {
+		this.r = color.r;
+		this.g = color.g;
+		this.b = color.b;
+		this.a = color.a;
+	}
+	
+	public void update(int delta) {
 		if (!animating) {
-			return newColor;
+			setRGBA(newColor);
 		}
 		
 		progress += delta;
 						
 		if (progress >= duration) {
 			animating = false;
-			return newColor;
+			
+			setRGBA(newColor);
 		}
 		
-		return oldColor.scaleCopy(1f - (float)progress / (float)duration).addToCopy(newColor.scaleCopy((float)progress / (float)duration));
+		Color animatingColor = oldColor.scaleCopy(1f - (float)progress / (float)duration).addToCopy(newColor.scaleCopy((float)progress / (float)duration));
+		setRGBA(animatingColor);
 	}
 }
