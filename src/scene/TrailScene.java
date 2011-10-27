@@ -113,6 +113,8 @@ public class TrailScene extends Scene {
 		backgroundLayer.add(parallaxPanel);
 		
 		clickCounter = 0;
+		
+		adjustForHour(time.getTime());
 	}
 		
 	@Override
@@ -175,6 +177,8 @@ public class TrailScene extends Scene {
 	}
 	
 	private void adjustForHour(int hour) {
+		hud.setDate("" + hour + ":00");
+		
 		skyAnimatingColor = new AnimatingColor(sky.getBackgroundColor(), skyColorForHour(hour), CLICK_WAIT_TIME);
 	}
 	
