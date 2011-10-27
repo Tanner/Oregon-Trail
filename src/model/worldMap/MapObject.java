@@ -9,6 +9,9 @@ public abstract class MapObject implements Conditioned {
 	protected boolean visible;
 	/**the "quality" of the location or trail this object represents - either quality of town or distance left to travel of trail*/
 	protected Condition quality;
+	/**the name of this object */
+	protected String name;
+
 
 	public MapObject(){
 		
@@ -19,6 +22,13 @@ public abstract class MapObject implements Conditioned {
 	 */
 	public boolean getVisible(){
 		return this.visible;
+	}
+	
+	public void setName (String name){
+		this.name = name;
+	}
+	public String getName(){
+		return this.name;
 	}
 	
 	/**
@@ -33,10 +43,7 @@ public abstract class MapObject implements Conditioned {
 		return quality.getPercentage();
 	}
 	
-	/**
-	 * for debuging purposes, this will return debug-only related information about the object
-	 * @return the string of debug-related information
-	 */
 	public abstract String debugToString();
+		
 
 }

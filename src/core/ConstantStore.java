@@ -1,7 +1,9 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap; 
+import java.util.List;
 import java.util.Map; 
 
 import org.newdawn.slick.Color;
@@ -172,6 +174,34 @@ public final class ConstantStore {
 		colorMap.put("TRANSLUCENT_OVERLAY", new Color(0, 0, 0, .25f));
 
 		COLORS = Collections.unmodifiableMap(colorMap);
+		
+		//town names
+		List<String> townNames = new ArrayList<String>();
+		townNames.add("Westport");
+		townNames.add("Weston");
+		townNames.add("Fort Leavenworth");
+		townNames.add("Atchison");
+		townNames.add("St. Joseph"); 
+		townNames.add("Omaha"); 
+		townNames.add("Topeka");
+		townNames.add("St. Louis"); 
+		townNames.add("Santa Fe");
+		townNames.add("Mount Oread");
+		townNames.add("Fort Kearny");
+		townNames.add("Fort Laramie");
+		townNames.add("Ash Hollow");
+		townNames.add("Casper");
+		townNames.add("Julesburg");
+		townNames.add("Fort Bridger");
+		townNames.add("Cokeville");
+		townNames.add("Goodnight");
+		townNames.add("Deadwood");
+		townNames.add("Tombstone");
+		townNames.add("Julesburg");
+		townNames.add("Fort Coon");
+		townNames.add("Latham");
+		townNames.add("Lincoln");
+		
 	}
 	
 	/**

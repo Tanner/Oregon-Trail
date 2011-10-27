@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import core.ConstantStore;
+
 
 /**
  * The world map: a collection of locations and paths between.
@@ -122,6 +124,40 @@ public class WorldMap {
 	}
 	
 	/**
+	 * determines the state we're in for a particular range of ranks and y locations
+	 * 0 - .33 * MAX_RANK : Positive y : Nebraska Territory | Negative y : Kansas Territory
+	 * .34-.66 * MAX_RANK : Positive y : Washington Territory | Negative y : Utah Territory
+	 * .67 - 1 * MAX_RANK : Oregon
+	 * @param curRank the rank of this city
+	 * @param yVal the y position of the city on the map
+	 * @return the string representing the state this location resides in
+	 */
+	private String determineState(int curRank, int yVal){
+		String retVal;
+		if (curRank <= (MAX_RANK/3)){
+			retVal = (yVal > 0) ? "Nebraska Territory" : "Kansas Territory";			
+		} else if (curRank <= (2*(MAX_RANK/3))) {
+			retVal = (yVal > 0) ? "Washington Territory" : "Utah Territory";						
+		} else {
+			retVal = "Oregon";
+		}
+		return retVal;
+	}
+	
+	/** 
+	 * build the name of the location being generated 
+	 * @param curRank the current rank of this city
+	 * @return the name of this city
+	 */
+	
+	private String nameLocation(int rank, Random mapRand){
+		String retVal = "";
+		
+		
+		return retVal;
+	}
+	
+	/**
 	 * Makes the random map, using the given number of nodes and edges, with a fun and fancy algorithm that first
 	 * makes all the nodes with a single edge linking them, and then adds connections until out of edges
 	 * 
@@ -149,8 +185,8 @@ public class WorldMap {
 			//number of trails out of Independence : 1 to MaxTrailsOut constant
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
 			//build beginning and final locations
-		this.mapHead = new LocationNode("Independence", MAX_X, 0, numExitTrails);
-		this.finalDestination = new LocationNode("Portland", 0, 0, 0, MAX_RANK, 100);
+		this.mapHead = new LocationNode("Independence, Missouri", MAX_X, 0, numExitTrails);
+		this.finalDestination = new LocationNode("Oregon City, Oregon", 0, 0, 0, MAX_RANK, 100);
 
 		//setting mapHead to be "on the trail" - don't want to loop back to home base as we initialize the map structure
 		this.mapHead.setOnTheTrail(true);
@@ -198,7 +234,7 @@ public class WorldMap {
 					if (i == MAX_RANK - 1){
 						//System.out.println("i = " + i + " size = " + mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
 						node.setTrails(1);
-						newTrail = new TrailEdge("Trail from " + node.getLocationName() + " to " + finalDestination.getLocationName(), finalDestination, node, randGenTrailDanger (mapRand, node.getRank()) );
+						newTrail = new TrailEdge("Trail from " + node.getName() + " to " + finalDestination.getName(), finalDestination, node, randGenTrailDanger (mapRand, node.getRank()) );
 					} else {
 						//nexttown holds size of arraylist for locations - used as random source to determine where trails go
 						int nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
@@ -209,7 +245,7 @@ public class WorldMap {
 							randDestNode = mapNodes.get(nextRank).get(nextTown);
 							}
 						randDestNode.setOnTheTrail(true);
-						newTrail = new TrailEdge("Trail from " + node.getLocationName() + " to " + randDestNode.getLocationName(), randDestNode, node, randGenTrailDanger(mapRand, node.getRank()) );
+						newTrail = new TrailEdge("Trail from " + node.getName() + " to " + randDestNode.getName(), randDestNode, node, randGenTrailDanger(mapRand, node.getRank()) );
 					}
 					//add trail to this location's trail list
 					node.addTrail(newTrail);

@@ -10,8 +10,6 @@ public class TrailEdge extends MapObject {
 	private LocationNode destination;
 	/**end point of this edge - where we started*/
 	private LocationNode origin;
-	/**name of this edge - currently holds name of destination - "Trail to <location name>"*/
-	private String name;
 	/**describes how hard the transit on this trail will be*/
 	private int dangerLevel;
 	/**length of the trail.  calculated by the distance between the two location nodes.*/
@@ -79,7 +77,7 @@ public class TrailEdge extends MapObject {
 	public String debugToString() {
 		String retVal = "";
 		retVal += "Danger Level : " + this.dangerLevel + " Trail Edge ID : " + this.ID + " Trail Name : \"" + this.name + "\"\n";
-		retVal += "Trail from " + this.origin.getLocationName() + " to " + this.destination.toString() + "that is " + this.length + " miles long\n";
+		retVal += "Trail from " + this.origin.getName() + " to " + this.destination.toString() + "that is " + this.length + " miles long\n";
 		return retVal;
 	}
 	
