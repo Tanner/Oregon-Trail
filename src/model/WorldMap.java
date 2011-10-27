@@ -155,7 +155,7 @@ public class WorldMap {
 		String retVal = "";
 		String stateVal = determineState(curRank, yVal);
 		int townNameIndex = mapRand.nextInt(ConstantStore.TOWN_NAMES.size());
-		retVal = ConstantStore.TOWN_NAMES.get(townNameIndex) + ", " + stateVal;
+		retVal = ConstantStore.TOWN_NAMES.get(0).get(townNameIndex) + ", " + stateVal;
 		//if ()
 		
 		return retVal;
