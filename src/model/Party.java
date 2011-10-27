@@ -6,6 +6,7 @@ import java.util.List;
 import model.datasource.HUDDataSource;
 import model.item.Animal;
 import model.item.Vehicle;
+import model.worldMap.TrailEdge;
 
 import core.Logger;
 import core.Logger.Level;
@@ -25,7 +26,7 @@ public class Party implements HUDDataSource {
 	
 	private Vehicle vehicle;
 	
-	private int location;
+	private TrailEdge location;
 
 	private List<Animal> animals =  new ArrayList<Animal>();
 	
@@ -125,7 +126,7 @@ public class Party implements HUDDataSource {
 		this.money = 0;
 		this.currentPace = currentPace;
 		this.currentRations = currentRations;
-		this.location = 0;
+		this.location = null;
 		
 		final StringBuffer partyCreationLog = new StringBuffer(members.size() + 
 				" members were created successfully: ");
@@ -299,7 +300,7 @@ public class Party implements HUDDataSource {
 	 * Returns the current location.
 	 * @return Party's current location
 	 */
-	public int getLocation() {
+	public TrailEdge getLocation() {
 		return location;
 	}
 	
@@ -309,7 +310,7 @@ public class Party implements HUDDataSource {
 	 */
 	public List<Notification> walk() {
 		List<Notification> messages = new ArrayList<Notification>();
-		location += getPace().getSpeed() * getMoveModifier();
+		location.advance((int)(getPace().getSpeed() * getMoveModifier()));
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
 		for (Animal animal : animals) {

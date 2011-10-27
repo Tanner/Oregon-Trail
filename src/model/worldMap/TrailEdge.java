@@ -64,6 +64,10 @@ public class TrailEdge implements Conditioned {
 	public String toString(){
 		return "Danger Level : " + this.dangerLevel +  " trail from " + this.origin.getLocationName() + " to " + this.destination.toString() + "that is " + this.length + " miles long";
 	}
+
+	public void advance(int distance) {
+		milesToGo.decrease(distance);
+	}
 	
 	
 }// class TrailEdge
