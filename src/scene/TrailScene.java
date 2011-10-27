@@ -45,6 +45,9 @@ public class TrailScene extends Scene {
 	private static final int NUM_TREES = 40;
 	private static final int TREE_OFFSET = 20;
 	
+	private static final int NUM_CLOUDS = 5;
+	private static final int CLOUD_DISTANCE_VARIANCE = 10;
+	
 	private int clickCounter;
 	private int timeElapsed;
 	private boolean paused;
@@ -75,34 +78,36 @@ public class TrailScene extends Scene {
 		backgroundLayer.add(sky);
 		
 		parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
+		Random random = new Random();
 		
 		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
 		
+		// Ground
 		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
+		// Hills
 		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
 		parallaxPanel.add(hillA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
 		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		Image cloudAImage = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
-		ParallaxSprite cloudA = new ParallaxSprite(container, cloudAImage, CLOUD_DISTANCE, true);
-		parallaxPanel.add(cloudA, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 20);
+		// Clouds
+		Image[] cloudImages = new Image[3];
+		cloudImages[0] = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
+		cloudImages[1] = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
+		cloudImages[2] = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
 		
-		Image cloudBImage = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
-		ParallaxSprite cloudB = new ParallaxSprite(container, cloudBImage, CLOUD_DISTANCE, true);
-		parallaxPanel.add(cloudB, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 20);
+		for (int i = 0; i < NUM_CLOUDS; i++) {
+			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
+			int cloudImage = random.nextInt(cloudImages.length);
+			
+			ParallaxSprite cloud = new ParallaxSprite(container, cloudImages[cloudImage], distance, true);
+			parallaxPanel.add(cloud, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 20);
+		}
 		
-		Image cloudCImage = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
-		ParallaxSprite cloudC = new ParallaxSprite(container, cloudCImage, CLOUD_DISTANCE, true);
-		parallaxPanel.add(cloudC, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 20);
-		
-		ArrayList<ParallaxSprite>trees = new ArrayList<ParallaxSprite>();
-		
-		Random random = new Random();
-		
+		// Trees
 		for (int i = 0; i < NUM_TREES; i++) {
 			int distance = random.nextInt(TREE_DISTANCE);
 			int offset = TREE_OFFSET;
@@ -114,13 +119,13 @@ public class TrailScene extends Scene {
 			}
 			
 			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 0, TREE_DISTANCE, distance, true);
-			trees.add(tree);
 			
 			offset -= (int) (tree.getScale() * offset) / 2;
 
 			parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, offset);
 		}
 		
+		// Add to panel stuff and other things
 		backgroundLayer.add(parallaxPanel);
 		
 		clickCounter = 0;
