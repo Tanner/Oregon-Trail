@@ -6,6 +6,7 @@ import java.util.List;
 import model.datasource.HUDDataSource;
 import model.item.Animal;
 import model.item.Vehicle;
+import model.worldMap.LocationNode;
 import model.worldMap.TrailEdge;
 
 import core.Logger;
@@ -26,7 +27,9 @@ public class Party implements HUDDataSource {
 	
 	private Vehicle vehicle;
 	
-	private TrailEdge location;
+	private TrailEdge trail;
+	
+	private LocationNode location;
 
 	private List<Animal> animals =  new ArrayList<Animal>();
 	
@@ -300,8 +303,20 @@ public class Party implements HUDDataSource {
 	 * Returns the current location.
 	 * @return Party's current location
 	 */
-	public TrailEdge getLocation() {
+	public LocationNode getLocation() {
 		return location;
+	}
+	
+	public void setLocation(LocationNode location) {
+		this.location = location;
+	}
+	
+	public TrailEdge getTrail() {
+		return trail;
+	}
+	
+	public void setTrail(TrailEdge trailEdge) {
+		this.trail = trailEdge;
 	}
 	
 	/**
@@ -310,7 +325,7 @@ public class Party implements HUDDataSource {
 	 */
 	public List<Notification> walk() {
 		List<Notification> messages = new ArrayList<Notification>();
-		location.advance((int)(getPace().getSpeed() * getMoveModifier()));
+		trail.advance((int)(getPace().getSpeed() * getMoveModifier()));
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
 		for (Animal animal : animals) {
@@ -350,7 +365,7 @@ public class Party implements HUDDataSource {
 		for (Animal animal : slaughterHouse) {
 			animals.remove(animal);
 		}
-		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", location), false));
+		//messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", location), false));
 		return messages;
 	}
 

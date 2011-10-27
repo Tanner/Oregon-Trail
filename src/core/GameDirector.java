@@ -146,6 +146,7 @@ public class GameDirector implements SceneListener {
 			}
 		} else if (lastScene instanceof PartyCreationScene) {
 			// Last scene was Party Creation Scene
+			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
 			newScene = new TownScene(game.getPlayer().getParty());
 		} else if (lastScene instanceof TownScene) {
 			// Last scene was Town Scene
@@ -155,6 +156,7 @@ public class GameDirector implements SceneListener {
 			}
 			if (id == SceneID.TRAIL) {
 			//Requested Trail scene
+			//game.getWorldMap().setCurrTrail(game.getPlayer().getParty().getTrail());
 			newScene = new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
 			}
 		} else if (lastScene instanceof StoreScene) {
@@ -178,6 +180,8 @@ public class GameDirector implements SceneListener {
 		} else if (id == SceneID.PARTYMANAGEMENTSCENE) {
 			//Requested Party Management Scene scene
 			newScene = new PartyManagementScene(game.getPlayer().getParty());
+		} else if (id == SceneID.TOWN) {
+			newScene = new TownScene(game.getPlayer().getParty());
 		}
 		
 		if (newScene != null) {
