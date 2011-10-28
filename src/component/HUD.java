@@ -66,18 +66,18 @@ public class HUD extends Component {
 		menuButton.addListener(listener);
 		add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
 		
-		timeLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
-		add(timeLabel, getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPRIGHT, -MARGIN, MARGIN);
-		
-		dateLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
-		add(dateLabel, getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, -MARGIN, -MARGIN);
-		
 		int notificationWidth = context.getWidth() - menuButton.getWidth() - INFO_WIDTH -  MARGIN * 4;
 		
 		notificationLabel = new Label(context, notificationWidth, height, fieldFont, Color.white, "");
 		notificationLabel.setVerticalAlignment(VerticalAlignment.CENTER);
 		notificationLabel.setBackgroundColor(Color.black);
 		add(notificationLabel, menuButton.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPLEFT, MARGIN, 0);
+		
+		timeLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
+		add(timeLabel, notificationLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.BOTTOMLEFT, MARGIN, - MARGIN / 2);
+		
+		dateLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
+		add(dateLabel, notificationLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.TOPLEFT, MARGIN, MARGIN / 2);
 		
 		setBackgroundColor(Color.gray);
 		setBevelWidth(2);

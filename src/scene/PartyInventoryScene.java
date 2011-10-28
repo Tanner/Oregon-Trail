@@ -488,7 +488,7 @@ public class PartyInventoryScene extends Scene {
 			// If so, then add all items to bin
 			int quantity = 1;
 			Input input = PartyInventoryScene.this.getInput();
-			if (input.isKeyDown(Input.KEY_LSHIFT)) {
+			if (input.isKeyDown(Input.KEY_LSHIFT) || input.isKeyDown(Input.KEY_RSHIFT)) {
 				quantity = ownerInventoryButtons.getNumberOfItem(item);
 			}
 			
