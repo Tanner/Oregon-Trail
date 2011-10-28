@@ -248,7 +248,6 @@ public final class ConstantStore {
 		//oregon zone names		
 		TOWN_NAMES.put(2, townNames);
 		
-		
 	}
 	
 	/**
