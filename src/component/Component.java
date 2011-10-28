@@ -180,6 +180,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		g.clearClip();
 	}
 	
+	public void update(int delta) {
+		
+	}
+	
 	public void setParentComponent(Component component) {
 		this.parentComponent = component;
 	}

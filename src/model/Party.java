@@ -35,7 +35,7 @@ public class Party implements HUDDataSource {
 	
 	private int totalDistanceTravelled = 0;
 
-	private Time time = new Time(8);
+	private Time time;
 	
 	/**
 	 * 
@@ -111,20 +111,12 @@ public class Party implements HUDDataSource {
 	}
 
 	/**
-	 * If party is created before members, this constructor is used.
-	 */
-	public Party() {
-		this.members = null;
-		this.time = new Time(8);
-	}
-	
-	/**
 	 * If people are present before party is created, this constructor is used
 	 * @param currentPace The current pace of the party
 	 * @param currentRations The current rations of the party
 	 * @param party Array of people to be initialized into party
 	 */
-	public Party(Pace currentPace, Rations currentRations, List<Person> party) {
+	public Party(Pace currentPace, Rations currentRations, List<Person> party, Time time) {
 		for (Person person : party) {
 			if (person != null) {
 				members.add(person);
@@ -135,6 +127,7 @@ public class Party implements HUDDataSource {
 		this.currentPace = currentPace;
 		this.currentRations = currentRations;
 		this.location = null;
+		this.time = time;
 		
 		final StringBuffer partyCreationLog = new StringBuffer(members.size() + 
 				" members were created successfully: ");
@@ -560,11 +553,12 @@ public class Party implements HUDDataSource {
 			currentHealth = person.getHealth().getCurrent();
 			if(currentHealth == 0) {
 				hasMessage = true;
-				str.append(person.getName() + " has died of starvation!");
+				str.append(person.getName() + " has died of starvation! ");
 			}
-			else if(person.getHealth().getCurrent() < getPace().getSpeed() - getRations().getRationAmount()) {
+			else if(person.getHealth().getCurrent() < (getPace().getSpeed() - 
+					((personHasFood(person) || vehicleHasFood()) ? getRations().getRationAmount() : 0))) {
 				hasMessage = true;
-				str.append(person.getName() + " is in danger of starvation.");
+				str.append(person.getName() + " is in danger of starvation." );
 			}
 		}
 		if (hasMessage) {

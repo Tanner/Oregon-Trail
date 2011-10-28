@@ -233,16 +233,16 @@ public class StoreScene extends Scene {
 		
 		int textPanelWidth = mainLayer.getWidth() - (int) storeInventoryButtons.getPosition(ReferencePoint.TOPRIGHT).getX() - PADDING * 3;
 		int textPanelLabelWidth = textPanelWidth - PADDING * 2;
-		itemDescription[0] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
+		itemDescription[0] = new Label(container, textPanelLabelWidth, fieldFont.getLineHeight(), fieldFont, Color.white, "");
 		itemDescription[0].setAlignment(Label.Alignment.CENTER);
-		itemDescription[1] = new Label(container, textPanelLabelWidth, 135, fieldFont, Color.white, "");
+		itemDescription[1] = new Label(container, textPanelLabelWidth, 180, fieldFont, Color.white, "");
 		itemDescription[1].setAlignment(Label.Alignment.CENTER);
 		itemDescription[1].setVerticalAlignment(Label.VerticalAlignment.TOP);
-		itemDescription[2] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
-		itemDescription[3] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
-		itemDescription[4] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
-		itemDescription[5] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
-		itemDescription[6] = new Label(container, textPanelLabelWidth, fieldFont, Color.white);
+		itemDescription[2] = new Label(container, textPanelLabelWidth, fieldFont.getLineHeight(), fieldFont, Color.white, "");
+		itemDescription[3] = new Label(container, textPanelLabelWidth, fieldFont.getLineHeight(), fieldFont, Color.white, "");
+		itemDescription[4] = new Label(container, textPanelLabelWidth, fieldFont.getLineHeight(), fieldFont, Color.white, "");
+		itemDescription[5] = new Label(container, textPanelLabelWidth, fieldFont.getLineHeight(), fieldFont, Color.white, "");
+		itemDescription[6] = new Label(container, textPanelLabelWidth, fieldFont.getLineHeight(), fieldFont, Color.white, "");
 		textPanel = new Panel(container, textPanelWidth, container.getHeight() - REGULAR_BUTTON_HEIGHT - PADDING * 3, TEXT_PANEL_COLOR);
 		
 		//Create clear & buy buttons

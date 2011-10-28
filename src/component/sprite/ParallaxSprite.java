@@ -43,7 +43,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
 	 */
 	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int minDistance, int maxDistance, int distance, boolean randomXPosition) {
-		super(context, spriteWidth, spriteWidth * image.getHeight() / image.getWidth());
+		super(context, context.getWidth(), spriteWidth * image.getHeight() / image.getWidth());
 		
 		this.randomXPosition = randomXPosition;
 		
@@ -105,12 +105,33 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	/**
 	 * Constructs a ParallaxSprite with a context, spriteWidth, and image. Sprite can have a random X position.
 	 * @param context Context to use
+	 * @param image Image to use for the sprite
+	 * @param distance What the distance this sprite should be
+	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
+	 */
+	public ParallaxSprite(GUIContext context, Image image, int distance, boolean randomXPosition) {
+		this(context, image.getWidth() * 2, image, distance, randomXPosition);
+	}
+	
+	/**
+	 * Constructs a ParallaxSprite with a context, spriteWidth, and image. Sprite can have a random X position.
+	 * @param context Context to use
 	 * @param spriteWidth Width the sprite should be (e.g. for scaling)
 	 * @param image Image to use for the sprite
 	 * @param distance What the distance this sprite should be
 	 */
 	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int distance) {
 		this(context, spriteWidth, image, distance, false);
+	}
+	
+	/**
+	 * Constructs a ParallaxSprite with a context, spriteWidth, and image. Sprite can have a random X position.
+	 * @param context Context to use
+	 * @param image Image to use for the sprite
+	 * @param distance What the distance this sprite should be
+	 */
+	public ParallaxSprite(GUIContext context, Image image, int distance) {
+		this(context, image, distance, false);
 	}
 	
 	/**

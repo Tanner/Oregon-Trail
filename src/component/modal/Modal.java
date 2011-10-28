@@ -53,6 +53,10 @@ public abstract class Modal extends Component {
 	
 	@Override
 	public void keyReleased(int key, char c) {
+		if (!isVisible() || !isAcceptingInput()) {
+			return;
+		}
+		
 		if (key == Input.KEY_ENTER) {
 			listener.dismissModal(Modal.this, false);
 		}

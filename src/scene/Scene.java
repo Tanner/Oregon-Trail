@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.AnimatingColor;
 import component.HUD;
 import component.Component;
 import component.ModalListener;
@@ -28,8 +29,7 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	protected SceneLayer modalLayer;
 	
 	private boolean active;
-	
-	private boolean paused = false;
+	private boolean paused;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -112,6 +112,7 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		mainLayer.setAcceptingInput(true);
+		hudLayer.setAcceptingInput(true);
 		modalLayer.setAcceptingInput(true);
 		setActive(true);
 	}
@@ -119,10 +120,17 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	@Override
 	public void leave(GameContainer container, StateBasedGame game)  {
 		mainLayer.setAcceptingInput(false);
+		hudLayer.setAcceptingInput(false);
 		modalLayer.setAcceptingInput(false);
 		setActive(false);
 		
 		removeTooltip();
+	}
+	
+	public void disable() {
+		mainLayer.setAcceptingInput(false);
+		hudLayer.setAcceptingInput(false);
+		modalLayer.setAcceptingInput(false);
 	}
 	
 	@Override

@@ -1,8 +1,12 @@
 package scene;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Party;
 import model.Person;
 import model.worldMap.LocationNode;
+import model.worldMap.TrailEdge;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -18,6 +22,8 @@ import component.Panel;
 import component.Label;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
+import component.SegmentedControl;
+import component.modal.*;
 
 import core.*;
 
@@ -36,6 +42,8 @@ public class TownScene extends Scene {
 	
 	private Button trailButton;
 	
+	private ComponentModal<SegmentedControl> trailChoiceModal;
+	
 	/**
 	 * builds town scene
 	 * @param party where/who the action is
@@ -46,6 +54,14 @@ public class TownScene extends Scene {
 		for (Person p : party.getPartyMembers()) {
 			Logger.log(p.getName() + ", the " + p.getProfession() + ", entered the town.", Logger.Level.INFO);
 		}
+		ArrayList<String> trails = new ArrayList<String>();
+		for(TrailEdge trail : location.getOutboundTrails()) {
+			trails.add(trail.getDestination().getName());
+		}
+		String[] trailNames = new String[trails.size()];
+		trails.toArray(trailNames);
+		trailChoiceModal = new ComponentModal<SegmentedControl>(container, this, ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
+				new SegmentedControl(container, 600, 200, 3, 1, 20, true, 1, trails.toArray(trailNames)));
 	}
 	
 	@Override
@@ -97,8 +113,19 @@ public class TownScene extends Scene {
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			party.setTrail(party.getLocation().getOutBoundTrailByIndex(0));
-			GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, TownScene.this, true);
+			showModal(trailChoiceModal);
+		}
+	}
+	
+	@Override
+	public void dismissModal(Modal modal, boolean cancelled) {
+		super.dismissModal(modal, cancelled);
+		
+		if (modal == trailChoiceModal) {
+			if (!cancelled) {
+				party.setTrail(party.getLocation().getOutBoundTrailByIndex(trailChoiceModal.getComponent().getSelection()[0]));
+				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, TownScene.this, true);
+			}
 		}
 	}
 }

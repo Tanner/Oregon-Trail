@@ -37,13 +37,21 @@ public class TrailScene extends Scene {
 	private static final int STEP_COUNT_TRIGGER = 2;
 	
 	private static final int HILL_DISTANCE_A = 300;
-	private static final int HILL_DISTANCE_B = 500;
-	private static final int CLOUD_DISTANCE = 80;
+	private static final int HILL_DISTANCE_B = 600;
+	private static final int CLOUD_DISTANCE = 400;
 	private static final int GROUND_DISTANCE = 10;
 	private static final int TREE_DISTANCE = 200;
+	private static final int DEER_DISTANCE = 150;
 	
 	private static final int NUM_TREES = 40;
 	private static final int TREE_OFFSET = 20;
+	
+	private static final int NUM_CLOUDS = 5;
+	private static final int CLOUD_OFFSET = 20;
+	private static final int CLOUD_DISTANCE_VARIANCE = 10;
+	private static final int CLOUD_OFFSET_VARIANCE = 10;
+	
+	private static final int DEER_OFFSET = 10;
 	
 	private int clickCounter;
 	private int timeElapsed;
@@ -75,25 +83,38 @@ public class TrailScene extends Scene {
 		backgroundLayer.add(sky);
 		
 		parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
+		Random random = new Random();
 		
 		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
 		
+		// Ground
 		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
+		// Hills
 		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
 		parallaxPanel.add(hillA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
 		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		ParallaxSprite cloudsA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/clouds.png", false, Image.FILTER_NEAREST), CLOUD_DISTANCE);
-		parallaxPanel.add(cloudsA, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT);
+		// Clouds
+		Image[] cloudImages = new Image[3];
+		cloudImages[0] = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
+		cloudImages[1] = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
+		cloudImages[2] = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
 		
-		ArrayList<ParallaxSprite>trees = new ArrayList<ParallaxSprite>();
+		for (int i = 0; i < NUM_CLOUDS; i++) {
+			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
+			int cloudImage = random.nextInt(cloudImages.length);
+			
+			int offset = CLOUD_OFFSET + random.nextInt(CLOUD_OFFSET_VARIANCE * 2) - CLOUD_OFFSET_VARIANCE;
+			
+			ParallaxSprite cloud = new ParallaxSprite(container, cloudImages[cloudImage], distance, true);
+			parallaxPanel.add(cloud, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, offset);
+		}
 		
-		Random random = new Random();
-		
+		// Trees
 		for (int i = 0; i < NUM_TREES; i++) {
 			int distance = random.nextInt(TREE_DISTANCE);
 			int offset = TREE_OFFSET;
@@ -105,18 +126,21 @@ public class TrailScene extends Scene {
 			}
 			
 			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 0, TREE_DISTANCE, distance, true);
-			trees.add(tree);
 			
 			offset -= (int) (tree.getScale() * offset) / 2;
 
 			parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, offset);
 		}
 		
+		ParallaxSprite deer = new ParallaxSprite(container, new Image("resources/graphics/animals/deer.png", false, Image.FILTER_NEAREST), DEER_DISTANCE, true);
+		parallaxPanel.add(deer, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, DEER_OFFSET);
+		
+		// Add to panel stuff and other things
 		backgroundLayer.add(parallaxPanel);
 		
 		clickCounter = 0;
 		
-		adjustSetting(party.getTime());
+		adjustSetting();
 }
 		
 	@Override
@@ -128,8 +152,9 @@ public class TrailScene extends Scene {
 			}
 			
 			if (skyAnimatingColor != null) {
-				sky.setBackgroundColor(skyAnimatingColor.getColor());
+				skyAnimatingColor.update(delta);
 			}
+			backgroundLayer.update(delta);
 			
 			if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
 				clickCounter++;
@@ -148,14 +173,17 @@ public class TrailScene extends Scene {
 			}
 			
 			if (clickCounter >= STEP_COUNT_TRIGGER) {
-				if(party.getTrail().getConditionPercentage() == 0.0) {
+				party.getTime().advanceTime();
+				
+				if (party.getTrail().getConditionPercentage() == 0.0) {
 					party.setLocation(party.getTrail().getDestination());
+					SoundStore.get().stopAllSound();
 					GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
-				} else {				
+				} else {
 					List<Notification> notifications = party.walk();
-					party.getTime().advanceTime();
-					hud.updatePartyInformation();
+					hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
 					if (party.getPartyMembers().isEmpty()) {
+						SoundStore.get().stopAllSound();
 						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
 					}
 					Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
@@ -165,14 +193,14 @@ public class TrailScene extends Scene {
 					handleNotifications(notifications, encounterNotification.getNotification().getMessage());
 					
 					if (encounterNotification.getSceneID() != null)
+						SoundStore.get().stopAllSound();
 						GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
 	
 					clickCounter = 0;
+					
+					adjustSetting();
 				}
 			}
-			
-
-			adjustSetting(party.getTime());
 		}
 	}
 	
@@ -198,9 +226,10 @@ public class TrailScene extends Scene {
 			modalMessage.append(encounterMessage);
 		
 		if (modalMessage.length() != 0) {
+			SoundStore.get().stopAllSound();
 			ChoiceModal campModal = new ChoiceModal(container, this, modalMessage.toString().trim());
-			campModal.setDismissButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
-			campModal.setCancelButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
+			campModal.setCancelButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
+			campModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
 			SoundStore.get().stopAllSound();
 			showModal(campModal);
 		}
@@ -208,12 +237,18 @@ public class TrailScene extends Scene {
 		hud.addNotifications(messages);
 	}
 	
-
-	private void adjustSetting(Time time) {
-
-		hud.setDate(time.get24HourTime());
-	
-		skyAnimatingColor = new AnimatingColor(sky.getBackgroundColor(), skyColorForHour(time.getTime()), CLICK_WAIT_TIME);
+	private void adjustSetting() {
+		int hour = party.getTime().getTime();
+		
+		hud.setTime(party.getTime().get12HourTime());
+		hud.setDate(party.getTime().getDayMonthYear());
+		skyAnimatingColor = new AnimatingColor(skyColorForHour(hour-1),
+				skyColorForHour(hour), CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		sky.setBackgroundColor(skyAnimatingColor);
+		
+		AnimatingColor backgroundOverlayAnimatingColor = new AnimatingColor(backgroundOverlayColorForHour(hour-1),
+				backgroundOverlayColorForHour(hour), CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		this.backgroundLayer.setOverlayColor(backgroundOverlayAnimatingColor);
 	}
 	
 	private Color skyColorForHour(int hour) {
@@ -223,23 +258,44 @@ public class TrailScene extends Scene {
 			case 7:
 				return new Color(0x579cdd);
 			case 8:
-				return new Color(0x66a9c4);
 			case 9:
-				return new Color(0x66a9dc);
 			case 10:
 			case 11:
 			case 12:
 			case 13:
 			case 14:
 			case 15:
+				return new Color(0x66a9dc);
 			case 16:
-			case 17:
-			case 18:
 				return new Color(0xdd90a4);
-			case 19:
+			case 17:
 				return new Color(0x4a3b48);
 			default:
 				return Color.black;
+		}
+	}
+	
+	private Color backgroundOverlayColorForHour(int hour) {
+		switch (hour) {
+			case 6:
+				return new Color(0, 0, 0, .3f);
+			case 7:
+				return new Color(0, 0, 0, .1f);
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+			case 14:
+			case 15:
+				return new Color(0, 0, 0, 0f);
+			case 16:
+				return new Color(0, 0, 0, .1f);
+			case 17:
+				return new Color(0, 0, 0, .3f);
+			default:
+				return new Color(0, 0, 0, .5f);
 		}
 	}
 	
@@ -251,7 +307,8 @@ public class TrailScene extends Scene {
 	@Override
 	public void dismissModal(Modal modal, boolean cancelled) {
 		super.dismissModal(modal, cancelled);
-		if (!cancelled) {
+		if (cancelled) {
+			SoundStore.get().stopAllSound();
 			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, this, false);
 		}
 	}
@@ -259,6 +316,7 @@ public class TrailScene extends Scene {
 	private class HUDListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
+			SoundStore.get().stopAllSound();
 			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, TrailScene.this, false);
 		}
 	}

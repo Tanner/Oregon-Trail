@@ -162,9 +162,8 @@ public class GameDirector implements SceneListener {
 				newScene = new StoreScene(game.getPlayer().getParty(), game.getStoreInventory());
 			}
 			if (id == SceneID.TRAIL) {
-			//Requested Trail scene
-			//game.getWorldMap().setCurrTrail(game.getPlayer().getParty().getTrail());
-			newScene = new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
+				//Requested Trail scene
+				newScene = new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
 			}
 		} else if (lastScene instanceof StoreScene) {
 			// Last scene was Store Scene
@@ -192,6 +191,8 @@ public class GameDirector implements SceneListener {
 		}
 		
 		if (newScene != null) {
+			lastScene.disable();
+			
 			if (outTransition == null) {
 				outTransition = new FadeOutTransition(Color.black);
 			}
@@ -205,6 +206,7 @@ public class GameDirector implements SceneListener {
 	
 	@Override
 	public void sceneDidEnd(Scene scene) {
+		scene.disable();
 		sceneDirector.popScene(true);
 	}
 	

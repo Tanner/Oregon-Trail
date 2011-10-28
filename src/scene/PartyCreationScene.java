@@ -8,6 +8,7 @@ import model.Party.Rations;
 import model.Person;
 import model.Person.Skill;
 import model.Player;
+import model.Time;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -545,7 +546,7 @@ public class PartyCreationScene extends Scene {
 			//set initial game values
 			Pace pace = Pace.values()[paceSegmentedControl.getSelection()[0]];
 			Rations rations = Rations.values()[rationsSegmentedControl.getSelection()[0]];
-			player.setParty(new Party(pace, rations, people));
+			player.setParty(new Party(pace, rations, people, new Time()));
 			
 			Logger.log("Confirm button pushed", Logger.Level.INFO);
 			GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, PartyCreationScene.this, true);
