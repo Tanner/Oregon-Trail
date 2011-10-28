@@ -13,7 +13,10 @@ import model.Item.ITEM_TYPE;
  */
 public class ItemEncounter extends Encounter {
 	private enum ITEM_ENCOUNTER_TYPE {
-		APPLE(ITEM_TYPE.APPLE, "You rest by an apple tree and pick up %d %s.");
+		APPLE(ITEM_TYPE.APPLE, "You rest by an apple tree. You pick up %d %3$s."),
+		BREAD(ITEM_TYPE.BREAD, "You find a basket of bread which contains %d %s %s. You decide to take it."),
+		GUN(ITEM_TYPE.GUN, "You find a %d rusted %3$ on the trail. It seems like it still works."),
+		OX(ITEM_TYPE.OX, "You find %d lonely %3$s. You let the %3$s join your party.");
 		
 		private ITEM_TYPE itemType;
 		private String message;
@@ -28,17 +31,19 @@ public class ItemEncounter extends Encounter {
 		}
 		
 		public String getMessage(int number) {
-			String itemName;
-			
-			if (number > 1) {
-				itemName = itemType.getPluralName();
-			} else {
-				itemName = itemType.getName();
-			}
-			
+			String itemName = number > 1 ? itemType.getPluralName() : itemType.getName();
 			itemName = itemName.toLowerCase();
 			
-			return String.format(message, number, itemName);
+			String itemPrefix = "pieces of";
+			
+			if (itemType.getPluralName().equals(itemType.getName())) {
+				// If the plural is the same as the singular
+				if (number == 1) {
+					itemPrefix = "piece of";
+				}
+			}
+			
+			return String.format(message, number, itemPrefix, itemName);
 		}
 	}
 	
@@ -51,7 +56,7 @@ public class ItemEncounter extends Encounter {
 		Random random = new Random();
 		
 		int index = random.nextInt(ITEM_ENCOUNTER_TYPE.values().length);
-		type = ITEM_ENCOUNTER_TYPE.values()[index];
+		type = ITEM_ENCOUNTER_TYPE.OX; //ITEM_ENCOUNTER_TYPE.values()[index];
 	}
 	
 	@Override
@@ -68,7 +73,9 @@ public class ItemEncounter extends Encounter {
 
 	@Override
 	protected EncounterNotification makeNotification() {
-		Notification notification = new Notification(type.getMessage(numItems));
+		String message = type.getMessage(numItems);
+		
+		Notification notification = new Notification(message);
 		return new EncounterNotification(notification, null);
 	}
 
