@@ -2,6 +2,7 @@ package scene.encounter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import core.SoundStore;
 
@@ -14,6 +15,8 @@ import model.item.Vehicle;
 public class ThiefEncounter extends Encounter {
 	
 	private String itemName;
+	
+	private Random random = new Random();
 	
 	public ThiefEncounter(Party party, int min, int max) {
 		super(party, min, max);
@@ -36,8 +39,8 @@ public class ThiefEncounter extends Encounter {
 			if ( !inventory.getInventory().isEmpty() ) {
 				removed = true;
 				List<ITEM_TYPE> items = inventory.getInventory().getPopulatedSlots();
-				ITEM_TYPE type = items.get((int) (Math.random() * items.size()));
-				inventory.getInventory().removeItemFromInventory(type, inventory.getInventory().getNumberOf(type));
+				ITEM_TYPE type = items.get((int) (random.nextDouble() * items.size()));
+				inventory.getInventory().removeItemFromInventory(type, random.nextInt(inventory.getInventory().getNumberOf(type)));
 				itemName = type.getName();
 			}
 		}
