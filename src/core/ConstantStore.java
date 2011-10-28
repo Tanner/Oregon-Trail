@@ -183,34 +183,34 @@ public final class ConstantStore {
 		COLORS = Collections.unmodifiableMap(colorMap);
 		
 		//town names
-		List<String> townNames = new ArrayList<String>();
-		townNames.add("Westport");
-		townNames.add("Weston");
-		townNames.add("Fort Leavenworth");
-		townNames.add("Atchison");
-		townNames.add("St. Joseph"); 
-		townNames.add("Omaha"); 
-		townNames.add("Topeka");
-		townNames.add("St. Louis"); 
-		townNames.add("Santa Fe");
-		townNames.add("Mount Oread");
-		townNames.add("Fort Kearny");
-		townNames.add("Fort Laramie");
-		townNames.add("Ash Hollow");
-		townNames.add("Casper");
-		townNames.add("Julesburg");
-		townNames.add("Fort Bridger");
-		townNames.add("Cokeville");
-		townNames.add("Goodnight");
-		townNames.add("Deadwood");
-		townNames.add("Tombstone");
-		townNames.add("Julesburg");
-		townNames.add("Fort Coon");
-		townNames.add("Latham");
-		townNames.add("Lincoln");
+		List<String> townNames0 = new ArrayList<String>();
+		townNames0.add("Westport");
+		townNames0.add("Weston");
+		townNames0.add("Fort Leavenworth");
+		townNames0.add("Atchison");
+		townNames0.add("St. Joseph"); 
+		townNames0.add("Omaha"); 
+		townNames0.add("Topeka");
+		townNames0.add("St. Louis"); 
+		townNames0.add("Santa Fe");
+		townNames0.add("Mount Oread");
+		townNames0.add("Fort Kearny");
+		townNames0.add("Fort Laramie");
+		townNames0.add("Ash Hollow");
+		townNames0.add("Casper");
+		townNames0.add("Julesburg");
+		townNames0.add("Fort Bridger");
+		townNames0.add("Cokeville");
+		townNames0.add("Goodnight");
+		townNames0.add("Deadwood");
+		townNames0.add("Tombstone");
+		townNames0.add("Julesburg");
+		townNames0.add("Fort Coon");
+		townNames0.add("Latham");
+		townNames0.add("Lincoln");
 		
 		//eastern zone names
-		TOWN_NAMES.put(0, townNames);
+		TOWN_NAMES.put(0, townNames0);
 		
 
 		List<String> townNames1 = new ArrayList<String>();
@@ -240,7 +240,7 @@ public final class ConstantStore {
 		townNames1.add("Lincoln");
 
 		//western zone names
-		TOWN_NAMES.put(1, townNames);
+		TOWN_NAMES.put(1, townNames1);
 		
 		List<String> townNames2 = new ArrayList<String>();
 
@@ -251,7 +251,7 @@ public final class ConstantStore {
 		townNames2.add("Barlow Gate");
 
 		//oregon zone names		
-		TOWN_NAMES.put(2, townNames);
+		TOWN_NAMES.put(2, townNames2);
 		
 	}
 	
