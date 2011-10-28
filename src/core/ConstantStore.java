@@ -100,50 +100,68 @@ public final class ConstantStore {
 		// Items
 		Map<String, String> itemMap = new HashMap<String, String>();
 		itemMap.put("WHEEL_NAME", "Wheel");
+		itemMap.put("WHEEL_PLURAL_NAME", "Wheels");
 		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
 		itemMap.put("WHEEL_WEIGHT", "5");
 		itemMap.put("WHEEL_COST", "75");
 		itemMap.put("WHEEL_FOOD_FACTOR", "0");
+		
 		itemMap.put("SONIC_NAME", "Sonic");
+		itemMap.put("SONIC_PLURAL_NAME", "Sonics");
 		itemMap.put("SONIC_DESCRIPTION", "Weeeweeeveeeeweee");
 		itemMap.put("SONIC_WEIGHT", "0.5");
 		itemMap.put("SONIC_COST", "100");
 		itemMap.put("SONIC_FOOD_FACTOR", "0");
+		
 		itemMap.put("APPLE_NAME", "Apple");
+		itemMap.put("APPLE_PLURAL_NAME", "Apples");
 		itemMap.put("APPLE_DESCRIPTION", "Its an Apple.");
 		itemMap.put("APPLE_WEIGHT", "1.5");
 		itemMap.put("APPLE_COST", "2");
 		itemMap.put("APPLE_FOOD_FACTOR", "1");
+		
 		itemMap.put("BREAD_NAME", "Bread");
+		itemMap.put("BREAD_PLURAL_NAME", "Bread");
 		itemMap.put("BREAD_DESCRIPTION", "Its the finest bread ever.");
 		itemMap.put("BREAD_WEIGHT", "1.0");
 		itemMap.put("BREAD_COST", "4");
 		itemMap.put("BREAD_FOOD_FACTOR", "2");
+		
 		itemMap.put("GUN_NAME", "Gun");
+		itemMap.put("GUN_PLURAL_NAME", "Gun");
 		itemMap.put("GUN_DESCRIPTION", "Bang! Bang bang bang!");
 		itemMap.put("GUN_WEIGHT", "5.0");
 		itemMap.put("GUN_COST", "50");
 		itemMap.put("GUN_FOOD_FACTOR", "0");
+		
 		itemMap.put("AMMO_NAME", "Bullet");
+		itemMap.put("AMMO_PLURAL_NAME", "Bullets");
 		itemMap.put("AMMO_DESCRIPTION", "For a gun.");
 		itemMap.put("AMMO_WEIGHT", "0.25");
 		itemMap.put("AMMO_COST", "2");
 		itemMap.put("AMMO_FOOD_FACTOR", "0");
+		
 		itemMap.put("MEAT_NAME", "Meat");
+		itemMap.put("MEAT_PLURAL_NAME", "Meat");
 		itemMap.put("MEAT_DESCRIPTION", "Food noms - ohm nom nom.");
 		itemMap.put("MEAT_WEIGHT", "1");
 		itemMap.put("MEAT_COST", "15");
 		itemMap.put("MEAT_FOOD_FACTOR", "4");
+		
 		itemMap.put("WAGON_NAME", "Wagon");
+		itemMap.put("WAGON_PLURAL_NAME", "Wagons");
 		itemMap.put("WAGON_DESCRIPTION", "This is a trusty wooden wagon.");
 		itemMap.put("WAGON_WEIGHT", "200");
 		itemMap.put("WAGON_COST", "2000");
 		itemMap.put("WAGON_FOOD_FACTOR", "0");
+		
 		itemMap.put("OX_NAME", "Ox");
+		itemMap.put("OX_PLURAL_NAME", "Oxen");
 		itemMap.put("OX_DESCRIPTION", "MOOO!");
 		itemMap.put("OX_WEIGHT", "200");
 		itemMap.put("OX_COST", "100");
 		itemMap.put("OX_FOOD_FACTOR", "0");
+		
 		itemMap.put("STRANGE_MEAT_NAME", "Strange Meat");
 		itemMap.put("STRANGE_MEAT_DESCRIPTION", "I don't want to know where this came from...");
 		itemMap.put("STRANGE_MEAT_WEIGHT", "25");

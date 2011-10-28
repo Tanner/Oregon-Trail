@@ -29,6 +29,7 @@ public class Item implements Conditioned, Comparable<Item>{
 		STRANGEMEAT ("STRANGE_MEAT", true, false);
 		
 		private final String name;
+		private final String pluralName;
 	
 		private final String description;
 		
@@ -54,6 +55,8 @@ public class Item implements Conditioned, Comparable<Item>{
 			//	String weight, boolean isFood, boolean isPlant, int foodFactor) {
 		private ITEM_TYPE (String type, boolean isFood, boolean isPlant) {
 			this.name = ConstantStore.get("ITEMS", type + "_NAME");
+			this.pluralName = ConstantStore.get("ITEMS", type + "_PLURAL_NAME");
+			
 			this.description = ConstantStore.get("ITEMS", type + "_DESCRIPTION");
 			this.cost = Integer.parseInt(ConstantStore.get("ITEMS", type + "_COST"));
 			this.weight = Double.parseDouble(ConstantStore.get("ITEMS", type + "_WEIGHT"));
@@ -68,6 +71,14 @@ public class Item implements Conditioned, Comparable<Item>{
 		 */
 		public String getName() {
 			return name;
+		}
+		
+		/**
+		 * The plural name of the type
+		 * @return The plural name
+		 */
+		public String getPluralName() {
+			return pluralName;
 		}
 		
 		/**
