@@ -186,10 +186,12 @@ public class TrailScene extends Scene {
 						SoundStore.get().stopAllSound();
 						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
 					}
-					Logger.log("Current distance travelled = " + party.getLocation(), Logger.Level.INFO);
+					Logger.log("Last Town = " + party.getLocation(), Logger.Level.INFO);
+					
+					hud.addNotification("Distance until " + party.getTrail().getDestination().getName() + ": " + String.format("%,d", party.getTrail().getDistanceToGo()));
 					
 					EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
-						
+					
 					handleNotifications(notifications, encounterNotification.getNotification().getMessage());
 					
 					if (encounterNotification.getSceneID() != null)

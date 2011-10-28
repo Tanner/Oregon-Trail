@@ -54,8 +54,7 @@ public class TrailEdge extends MapObject {
 
 	@Override
 	public String toString(){
-		String retVal = this.name;
-		return retVal;
+		return this.name;
 	}
 	/**
 	 * move along a trail a certain distance
@@ -63,6 +62,14 @@ public class TrailEdge extends MapObject {
 	 */
 	public void advance(int distance) {
 		this.quality.decrease(distance);
+	}
+	
+	/**
+	 * Returns the amount of distance left to go for this trail.
+	 * @return Distance left to travel
+	 */
+	public int getDistanceToGo() {
+		return quality.getCurrent();
 	}
 	
 	/**
