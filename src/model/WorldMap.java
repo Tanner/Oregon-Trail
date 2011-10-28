@@ -19,7 +19,7 @@ public class WorldMap {
 	//private final int TESTRANK = 1;  
 
 	/**weight of ranking assignment in random generator - 2 is 50 50 chance for same rank or next rank, higher numbers weight toward next rank*/
-	private final int RANK_WEIGHT = 4;  
+	private final int RANK_WEIGHT = 5;  
 	/**maximum number of exiting trails each location can have*/
 	private final int MAX_TRAILS_OUT = 3;  
 	/**minimum number of exiting trails each location can have*/

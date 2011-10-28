@@ -140,14 +140,14 @@ public class LocationNode extends MapObject {
 	}
 	
 	public String getName(){
-		return this.name;
+		return this.name + " " + this.rank;
 	}
 	/**
 	 * returns the string representation of this location
 	 */
 	public String toString(){
 		
-		return this.name + " (which has " + this.trails + " westward trails) ";
+		return this.name + " Rank : " + this.rank + " (which has " + this.trails + " westward trails) ";
 	}
 	
 	/**
