@@ -56,7 +56,7 @@ public class ItemEncounter extends Encounter {
 		Random random = new Random();
 		
 		int index = random.nextInt(ITEM_ENCOUNTER_TYPE.values().length);
-		type = ITEM_ENCOUNTER_TYPE.OX; //ITEM_ENCOUNTER_TYPE.values()[index];
+		type = ITEM_ENCOUNTER_TYPE.values()[index];
 	}
 	
 	@Override
