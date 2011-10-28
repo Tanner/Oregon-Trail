@@ -163,6 +163,7 @@ public final class ConstantStore {
 		itemMap.put("OX_FOOD_FACTOR", "0");
 		
 		itemMap.put("STRANGE_MEAT_NAME", "Strange Meat");
+		itemMap.put("STRANGE_MEAT_PLURAL_NAME", "Strange Meat");
 		itemMap.put("STRANGE_MEAT_DESCRIPTION", "I don't want to know where this came from...");
 		itemMap.put("STRANGE_MEAT_WEIGHT", "25");
 		itemMap.put("STRANGE_MEAT_COST", "15");
