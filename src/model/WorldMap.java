@@ -144,12 +144,12 @@ public class WorldMap {
 		if (curRank == 0){//treat this as missouri
 			rankIndex = 0;
 			stateVal = "Missouri";		
-		} else if (curRank <= (maxRankDouble/2)){
+		} else if (curRank <= (0.6*maxRankDouble)){
 			rankIndex = (yVal > 0) ? 1 : 2 ;
 			stateVal = (yVal > 0) ? "Nebraska Territory" : "Kansas Territory";			
-		} else if (curRank <= (6*(maxRankDouble/7))) {
-			rankIndex = (yVal > 0) ? 3 : 4 ;
-			stateVal = (yVal > 0) ? "Washington Territory" : "Utah Territory";						
+		} else if (curRank <= (0.9*maxRankDouble)) {
+			rankIndex = (yVal > -50) ? 3 : 4 ;
+			stateVal = (yVal > -50) ? "Washington Territory" : "Utah Territory";						
 		} else {
 			rankIndex = 5;
 			stateVal = "Oregon";
