@@ -19,7 +19,7 @@ public class WorldMap {
 	//private final int TESTRANK = 1;  
 
 	/**weight of ranking assignment in random generator - 2 is 50 50 chance for same rank or next rank, higher numbers weight toward next rank*/
-	private final int RANK_WEIGHT = 3;  
+	private final int RANK_WEIGHT = 4;  
 	/**maximum number of exiting trails each location can have*/
 	private final int MAX_TRAILS_OUT = 3;  
 	/**minimum number of exiting trails each location can have*/
@@ -27,9 +27,9 @@ public class WorldMap {
 	/**maximum number of "levels" of travel west - only portland has this as its rank.  edges can only go to edges with equal or higher rank than their origin node*/
 	private final int MAX_RANK = 20;
 	/**width of map in miles*/
-	private final int MAX_X = 2000;
+	private final int MAX_X = 1200;
 	/**height of map in miles*/
-	private final int MAX_Y = 800;
+	private final int MAX_Y = 600;
 	/**points to starting city - references entire map*/
 	private LocationNode mapHead;
 	/**points to trailEdge most recently occupied by party*/
