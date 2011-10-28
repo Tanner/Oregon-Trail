@@ -60,7 +60,6 @@ public class TownScene extends Scene {
 		}
 		String[] trailNames = new String[trails.size()];
 		trails.toArray(trailNames);
-		System.out.println(trailNames);
 		trailChoiceModal = new ComponentModal<SegmentedControl>(container, this, ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
 				new SegmentedControl(container, 600, 200, 3, 1, 20, true, 1, trails.toArray(trailNames)));
 	}
