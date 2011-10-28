@@ -140,19 +140,23 @@ public class WorldMap {
 		int rankIndex; 
 		String retVal = "";	
 		String stateVal;
-		if (curRank <= (MAX_RANK/3)){
+		double maxRankDouble = (double) MAX_RANK;
+		if (curRank == 0){//treat this as missouri
 			rankIndex = 0;
+			stateVal = "Missouri";		
+		} else if (curRank <= (maxRankDouble/2)){
+			rankIndex = (yVal > 0) ? 1 : 2 ;
 			stateVal = (yVal > 0) ? "Nebraska Territory" : "Kansas Territory";			
-		} else if (curRank <= (3*(MAX_RANK/4))) {
-			rankIndex = 1;
+		} else if (curRank <= (6*(maxRankDouble/7))) {
+			rankIndex = (yVal > 0) ? 3 : 4 ;
 			stateVal = (yVal > 0) ? "Washington Territory" : "Utah Territory";						
 		} else {
-			rankIndex = 2;
+			rankIndex = 5;
 			stateVal = "Oregon";
 		}
 
 		int townNameIndex = mapRand.nextInt(ConstantStore.TOWN_NAMES.get(rankIndex).size());
-		retVal = ConstantStore.TOWN_NAMES.get(0).get(townNameIndex) + ", " + stateVal;
+		retVal = ConstantStore.TOWN_NAMES.get(rankIndex).get(townNameIndex) + ", " + stateVal;
 		//if ()
 		
 		return retVal;
