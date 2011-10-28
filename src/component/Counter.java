@@ -3,6 +3,7 @@ package component;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 import component.Label.Alignment;
@@ -222,15 +223,20 @@ public class Counter extends Component implements Disableable {
 				input.consumeEvent();
 				setActive(false);
 				
+				int countChange = 1;
+				if (input.isKeyDown(Input.KEY_LALT) || input.isKeyDown(Input.KEY_RALT)) {
+					countChange = 10;
+				}
+				
 				if (!disableAutoCount) {
 					if (button == 0 && countUpOnLeftClick && count < max) {
-						setCount(count + 1);
+						setCount(count + countChange);
 					} else if (button != 0 && countUpOnLeftClick && count > min) {
-						setCount(count - 1);
+						setCount(count - countChange);
 					} else if (button == 0 && !countUpOnLeftClick && count > min) {
-						setCount(count - 1);
+						setCount(count - countChange);
 					} else if (button != 0 && !countUpOnLeftClick && count < max) {
-						setCount(count + 1);
+						setCount(count + countChange);
 					}
 				}
 			}
