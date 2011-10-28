@@ -11,7 +11,7 @@ public class MessageEncounter extends Encounter {
 		messages = new String[] 
 				{ "You notice something staring at you from behind the trees.  It might be best to keep moving.",
 				"Your party admires the forest for a bit before moving ahead.",
-				"Your party sings \"Oh! Susanna\" to increase moral.",
+				"Your party sings \"Oh! Susanna\" to increase morale.",
 				"You pause to think about your bright future in Oregon.",
 				"Them yonder hills sure are lookin' familiar.",
 				"I heard our neighbors, the Donners, took this trail a few weeks ahead of us.\nSuch nice, quiet folks."};
