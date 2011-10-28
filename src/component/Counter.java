@@ -13,8 +13,8 @@ import core.FontStore;
  * {@code CountingButton} inherits from {@code Button} to add a flag that counts up or down.
  */
 public class Counter extends Component implements Disableable {
-	private static final int COUNTING_LABEL_WIDTH = 25; 
-	private static final int COUNTING_LABEL_HEIGHT = 25; 
+	private static final int COUNT_LABEL_PADDING = 5;
+	private static final int COUNT_LABEL_X_OFFSET = 10;
 	
 	private int count;
 	private int min = 0;
@@ -43,12 +43,7 @@ public class Counter extends Component implements Disableable {
 		button = new CountingButton(context, width, height, label);
 		add(button, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
-		countLabel = new Label(container, COUNTING_LABEL_WIDTH, COUNTING_LABEL_HEIGHT, fieldFont, Color.white, "" + count);
-		countLabel.setBackgroundColor(Color.red);
-		countLabel.setAlignment(Alignment.CENTER);
-		
-		add(countLabel, getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER);
+		setCount(count);
 	}
 	
 	public Counter(GUIContext context, int width, int height, Sprite sprite, Label label) {
@@ -62,12 +57,7 @@ public class Counter extends Component implements Disableable {
 		button = new CountingButton(context, width, height, sprite, label);
 		add(button, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
-		countLabel = new Label(container, COUNTING_LABEL_WIDTH, COUNTING_LABEL_HEIGHT, fieldFont, Color.white, "" + count);
-		countLabel.setBackgroundColor(Color.red);
-		countLabel.setAlignment(Alignment.CENTER);
-		
-		add(countLabel, this.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERCENTER, 0, 0);
+		setCount(count);
 	}
 	
 	@Override
@@ -130,7 +120,22 @@ public class Counter extends Component implements Disableable {
 	public void setCount(int count) {
 		this.count = count;
 		
-		countLabel.setText("" + count);
+		if (countLabel != null) {
+			remove(countLabel);
+		}
+		
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		String text = "" + count;
+		countLabel = new Label(container,
+				fieldFont.getWidth(text) + COUNT_LABEL_PADDING * 2,
+				fieldFont.getLineHeight(),
+				fieldFont,
+				Color.white,
+				text);
+		countLabel.setBackgroundColor(Color.red);
+		countLabel.setAlignment(Alignment.CENTER);
+		
+		add(countLabel, getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.CENTERRIGHT, COUNT_LABEL_X_OFFSET, 0);
 	}
 	
 	/**
