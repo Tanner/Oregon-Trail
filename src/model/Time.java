@@ -77,8 +77,7 @@ public class Time {
 	
 	public void advanceTime() {
 		time = (time + 1);
-		if ( time >= 24) {
-			time -= 24;
+		if ( time == 23) {
 			day += 1;
 			if (day > month.getNumberOfDays() + (month.equals(Month.FEBRUARY) && 
 				((year%4 == 0 && year%100 != 0) || (year%400) == 0) ? 1 : 0)) {
@@ -88,6 +87,8 @@ public class Time {
 					year += 1;
 				}
 			}
+		} else if (time == 24) {
+			time = 0;
 		}
 	}
 
@@ -100,7 +101,7 @@ public class Time {
 	}
 	
 	public String get12HourTime() {
-		return (time%12 + 1) + ":00" + (time < 12 ? "am" : "pm");
+		return ((time)%12 + 1) + ":00" + ((time < 11 || time == 23)? "am" : "pm");
 	}
 	
 	public String getDayMonthYear() {
