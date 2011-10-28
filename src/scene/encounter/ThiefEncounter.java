@@ -35,12 +35,12 @@ public class ThiefEncounter extends Encounter {
 		boolean removed = false;
 		
 		while (!inventories.isEmpty() && !removed) {
-			Inventoried inventory = inventories.remove((int) (Math.random() * inventories.size()));
+			Inventoried inventory = inventories.remove(random.nextInt(inventories.size()));
 			if ( !inventory.getInventory().isEmpty() ) {
 				removed = true;
 				List<ITEM_TYPE> items = inventory.getInventory().getPopulatedSlots();
 				ITEM_TYPE type = items.get((int) (random.nextDouble() * items.size()));
-				inventory.getInventory().removeItemFromInventory(type, random.nextInt(inventory.getInventory().getNumberOf(type)));
+				inventory.getInventory().removeItemFromInventory(type, random.nextInt(inventory.getInventory().getNumberOf(type))+1);
 				itemName = type.getName();
 			}
 		}
