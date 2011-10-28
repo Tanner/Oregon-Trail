@@ -182,7 +182,7 @@ public final class ConstantStore {
 
 		COLORS = Collections.unmodifiableMap(colorMap);
 		
-		//town names
+		//town names - kansas territory
 		List<String> townNames0 = new ArrayList<String>();
 		townNames0.add("Westport");
 		townNames0.add("Weston");
@@ -209,10 +209,10 @@ public final class ConstantStore {
 		townNames0.add("Latham");
 		townNames0.add("Lincoln");
 		
-		//eastern zone names
+		//kansas territory zone names
 		TOWN_NAMES.put(0, townNames0);
 		
-
+		//town names - nebraska territory
 		List<String> townNames1 = new ArrayList<String>();
 		townNames1.add("Westport");
 		townNames1.add("Weston");
@@ -239,19 +239,80 @@ public final class ConstantStore {
 		townNames1.add("Latham");
 		townNames1.add("Lincoln");
 
-		//western zone names
+		//nebraska territory zone names
 		TOWN_NAMES.put(1, townNames1);
 		
+		//town names - utah territory
 		List<String> townNames2 = new ArrayList<String>();
+		townNames2.add("Westport");
+		townNames2.add("Weston");
+		townNames2.add("Fort Leavenworth");
+		townNames2.add("Atchison");
+		townNames2.add("St. Joseph"); 
+		townNames2.add("Omaha"); 
+		townNames2.add("Topeka");
+		townNames2.add("St. Louis"); 
+		townNames2.add("Santa Fe");
+		townNames2.add("Mount Oread");
+		townNames2.add("Fort Kearny");
+		townNames2.add("Fort Laramie");
+		townNames2.add("Ash Hollow");
+		townNames2.add("Casper");
+		townNames2.add("Julesburg");
+		townNames2.add("Fort Bridger");
+		townNames2.add("Cokeville");
+		townNames2.add("Goodnight");
+		townNames2.add("Deadwood");
+		townNames2.add("Tombstone");
+		townNames2.add("Julesburg");
+		townNames2.add("Fort Coon");
+		townNames2.add("Latham");
+		townNames2.add("Lincoln");
+		
+		//Utah territory zone names
+		TOWN_NAMES.put(2, townNames2);
+		
+		//town names - washington territory
+		List<String> townNames3 = new ArrayList<String>();
+		townNames3.add("Westport");
+		townNames3.add("Weston");
+		townNames3.add("Fort Leavenworth");
+		townNames3.add("Atchison");
+		townNames3.add("St. Joseph"); 
+		townNames3.add("Omaha"); 
+		townNames3.add("Topeka");
+		townNames3.add("St. Louis"); 
+		townNames3.add("Santa Fe");
+		townNames3.add("Mount Oread");
+		townNames3.add("Fort Kearny");
+		townNames3.add("Fort Laramie");
+		townNames3.add("Ash Hollow");
+		townNames3.add("Casper");
+		townNames3.add("Julesburg");
+		townNames3.add("Fort Bridger");
+		townNames3.add("Cokeville");
+		townNames3.add("Goodnight");
+		townNames3.add("Deadwood");
+		townNames3.add("Tombstone");
+		townNames3.add("Julesburg");
+		townNames3.add("Fort Coon");
+		townNames3.add("Latham");
+		townNames3.add("Lincoln");
 
-		townNames2.add("Fort Vancouver");
-		townNames2.add("Whitman Mission");
-		townNames2.add("Grande Ronde Outpost");
-		townNames2.add("The Dalles");
-		townNames2.add("Barlow Gate");
+		//washington territory zone names
+		TOWN_NAMES.put(3, townNames3);
+		
+		//town names - oregon
+		List<String> townNames4 = new ArrayList<String>();
+
+		townNames4.add("Fort Vancouver");
+		townNames4.add("Whitman Mission");
+		townNames4.add("Grande Ronde Outpost");
+		townNames4.add("The Dalles");
+		townNames4.add("Barlow Gate");
 
 		//oregon zone names		
-		TOWN_NAMES.put(2, townNames2);
+		TOWN_NAMES.put(4, townNames4);
 		
 	}
 	
