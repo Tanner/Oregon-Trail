@@ -229,14 +229,10 @@ public class Counter extends Component implements Disableable {
 				}
 				
 				if (!disableAutoCount) {
-					if (button == 0 && countUpOnLeftClick && count < max) {
-						setCount(count + countChange);
-					} else if (button != 0 && countUpOnLeftClick && count > min) {
-						setCount(count - countChange);
-					} else if (button == 0 && !countUpOnLeftClick && count > min) {
-						setCount(count - countChange);
-					} else if (button != 0 && !countUpOnLeftClick && count < max) {
-						setCount(count + countChange);
+					if ((button == 0 && countUpOnLeftClick) || (button != 0 && !countUpOnLeftClick)) {
+						setCount(Math.min(max, count + countChange));
+					} else if ((button != 0 && countUpOnLeftClick) || (button == 0 && !countUpOnLeftClick)) {
+						setCount(Math.max(min, count - countChange));
 					}
 				}
 			}
