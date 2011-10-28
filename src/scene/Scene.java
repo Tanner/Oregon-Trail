@@ -112,6 +112,7 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		mainLayer.setAcceptingInput(true);
+		hudLayer.setAcceptingInput(true);
 		modalLayer.setAcceptingInput(true);
 		setActive(true);
 	}
@@ -119,10 +120,17 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	@Override
 	public void leave(GameContainer container, StateBasedGame game)  {
 		mainLayer.setAcceptingInput(false);
+		hudLayer.setAcceptingInput(false);
 		modalLayer.setAcceptingInput(false);
 		setActive(false);
 		
 		removeTooltip();
+	}
+	
+	public void disable() {
+		mainLayer.setAcceptingInput(false);
+		hudLayer.setAcceptingInput(false);
+		modalLayer.setAcceptingInput(false);
 	}
 	
 	@Override

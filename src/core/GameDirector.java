@@ -191,6 +191,8 @@ public class GameDirector implements SceneListener {
 		}
 		
 		if (newScene != null) {
+			lastScene.disable();
+			
 			if (outTransition == null) {
 				outTransition = new FadeOutTransition(Color.black);
 			}
@@ -204,6 +206,7 @@ public class GameDirector implements SceneListener {
 	
 	@Override
 	public void sceneDidEnd(Scene scene) {
+		scene.disable();
 		sceneDirector.popScene(true);
 	}
 	
