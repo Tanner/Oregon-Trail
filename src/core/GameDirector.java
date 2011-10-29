@@ -187,6 +187,7 @@ public class GameDirector implements SceneListener {
 			//Requested Party Management Scene scene
 			newScene = new PartyManagementScene(game.getPlayer().getParty());
 		} else if (id == SceneID.TOWN) {
+			game.resetStoreInventory(worldMap.getCurrLocationNode());
 			newScene = new TownScene(game.getPlayer().getParty(), worldMap.getCurrLocationNode());
 		}
 		

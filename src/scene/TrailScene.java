@@ -146,6 +146,11 @@ public class TrailScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(!isPaused()) {
+			if (party.getTrail().getConditionPercentage() == 0.0) {
+				party.setLocation(party.getTrail().getDestination());
+				SoundStore.get().stopAllSound();
+				GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
+			} 
 			timeElapsed += delta;
 			if(!SoundStore.get().getPlayingSounds().contains("Steps")) {
 				//SoundStore.get().playSound("Steps");
@@ -174,34 +179,27 @@ public class TrailScene extends Scene {
 			
 			if (clickCounter >= STEP_COUNT_TRIGGER) {
 				party.getTime().advanceTime();
-				
-				if (party.getTrail().getConditionPercentage() == 0.0) {
-					party.setLocation(party.getTrail().getDestination());
+				List<Notification> notifications = party.walk();
+				hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
+				if (party.getPartyMembers().isEmpty()) {
 					SoundStore.get().stopAllSound();
-					GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
-				} else {
-					List<Notification> notifications = party.walk();
-					hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
-					if (party.getPartyMembers().isEmpty()) {
-						SoundStore.get().stopAllSound();
-						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
-					}
-					Logger.log("Last Town = " + party.getLocation(), Logger.Level.INFO);
-					
-					hud.addNotification("Distance until " + party.getTrail().getDestination().getName() + ": " + String.format("%,d", party.getTrail().getDistanceToGo()));
-					
-					EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
-					
-					handleNotifications(notifications, encounterNotification.getNotification().getMessage());
-					
-					if (encounterNotification.getSceneID() != null)
-						SoundStore.get().stopAllSound();
-						GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
-	
-					clickCounter = 0;
-					
-					adjustSetting();
+					GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
 				}
+				Logger.log("Last Town = " + party.getLocation(), Logger.Level.INFO);
+				
+				hud.addNotification("Distance until " + party.getTrail().getDestination().getName() + ": " + String.format("%,d", party.getTrail().getDistanceToGo()));
+				
+				EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
+				
+				handleNotifications(notifications, encounterNotification.getNotification().getMessage());
+				
+				if (encounterNotification.getSceneID() != null)
+					SoundStore.get().stopAllSound();
+					GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
+
+				clickCounter = 0;
+				
+				adjustSetting();
 			}
 		}
 	}

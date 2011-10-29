@@ -245,7 +245,9 @@ public class Inventory{
 			} while(!canGetItems(item.getType(), 1) && attempts < ITEM_TYPE.values().length);
 			
 			item.decreaseStatus(random.nextInt(101));
-			
+			if (item.getType() != ITEM_TYPE.OX && 
+				item.getType() != ITEM_TYPE.STRANGEMEAT && 
+				item.getType() != ITEM_TYPE.WAGON)
 			addItemToInventory(item);
 		}
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import model.Item.ITEM_TYPE;
+import model.worldMap.LocationNode;
 import core.Logger;
 
 /**
@@ -28,7 +29,7 @@ public class Game {
 		if(player != null){
 			Logger.log("Player was created successfully", Logger.Level.INFO);
 		}
-		initializeStoreInventory();
+		resetStoreInventory(worldMap.getMapHead());
 	}
 	
 	/**
@@ -51,23 +52,20 @@ public class Game {
 		return storeInventory;
 	}
 	
-	public void setStoreInventory(Inventory storeInventory) {
-		this.storeInventory = storeInventory;
-	}
-	
 	public WorldMap getWorldMap() {
 		return worldMap;
 	}
 
 	public void reset() {
 		storeInventory.clear();
-		initializeStoreInventory();
 		this.player =  new Player();
-		//this.worldMap = new WorldMap();
+		this.worldMap = new WorldMap();
+		resetStoreInventory(worldMap.getMapHead());
 	}
 
-	private void initializeStoreInventory() {
+	public void resetStoreInventory(LocationNode location) {
 		Random random = new Random();
+		storeInventory.clear();
 		
 		//Populate the list of item types to allow for ready population of store slots
 		List<ITEM_TYPE> startItems = new ArrayList<ITEM_TYPE>();
@@ -77,14 +75,14 @@ public class Game {
 		//Items that wont show up in starting inventory
 		startItems.remove(ITEM_TYPE.STRANGEMEAT);
 		startItems.remove(ITEM_TYPE.SONIC);
-		
+				
 		//Now we fill in the stores inventory.
 		int numberOf;
 		for(ITEM_TYPE itemType : startItems) {
 			if(itemType.isFood()) {
-				numberOf = random.nextInt(50) + 25;
+				numberOf = (random.nextInt(50) + 25)/((location.getRank()/4) + 1);
 			} else {
-				numberOf = random.nextInt(10) + 5;
+				numberOf = (random.nextInt(10) + 5)/((location.getRank()/4) + 1);
 			}
 			
 			for(int i = 0; i < numberOf; i++) {
