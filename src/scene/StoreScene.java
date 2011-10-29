@@ -54,14 +54,17 @@ public class StoreScene extends Scene {
 	private Inventory inv;
 	private Party party;
 	
+	private double priceModifier;
+	
 	/**
 	 * This method sets up
 	 * @param p The players party
 	 * @param storeInventory The inventory the store will use (passed from GameDirector)
 	 */
-	public StoreScene (Party p, Inventory storeInventory) {
+	public StoreScene (Party p, Inventory storeInventory, double priceModifier) {
 		this.party = p;
 		this.inv = storeInventory;
+		this.priceModifier = priceModifier;
 	}
 	
 	@Override
@@ -270,10 +273,10 @@ public class StoreScene extends Scene {
 		itemDescription[1].setText(currentItem.getDescription());
 		itemDescription[2].setText(ConstantStore.get("STORE_SCENE", "WEIGHT") +
 				currentItem.getWeight() + " " + ConstantStore.get("GENERAL", "WEIGHT_UNIT"));
-		itemDescription[3].setText(ConstantStore.get("STORE_SCENE", "COST") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + currentItem.getCost());
+		itemDescription[3].setText(ConstantStore.get("STORE_SCENE", "COST") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + (int)(currentItem.getCost()*priceModifier));
 		itemDescription[4].setText(ConstantStore.get("STORE_SCENE", "QUANTITY") + count);
 		itemDescription[5].setText(ConstantStore.get("STORE_SCENE", "TOTAL_WEIGHT") + count * currentItem.getWeight() + " " + ConstantStore.get("GENERAL", "WEIGHT_UNIT"));
-		itemDescription[6].setText(ConstantStore.get("STORE_SCENE", "TOTAL_COST") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + count * currentItem.getCost());
+		itemDescription[6].setText(ConstantStore.get("STORE_SCENE", "TOTAL_COST") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + count * (int)(currentItem.getCost()*priceModifier));
 		updatePartyMoneyLabel();
 	}
 	
@@ -291,16 +294,16 @@ public class StoreScene extends Scene {
 		
 		//The player doesn't have a wagon and is trying to buy one
 		if (currentItem == Item.ITEM_TYPE.WAGON && party.getVehicle() == null ) {
-			if (itemCount > 1 && party.getMoney() >= Item.ITEM_TYPE.WAGON.getCost()) {
+			if (itemCount > 1 && party.getMoney() >= (int)(Item.ITEM_TYPE.WAGON.getCost()*priceModifier)) {
 				//The player tries to buy too many wagons
 				failedBuyModal = new MessageModal(container, this, ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_WAGON"));
 				return -1;
-			} else if ( party.getMoney() > currentItem.getCost() ) {
+			} else if ( party.getMoney() > (int)(currentItem.getCost()*priceModifier)) {
 				//The player is able to buy the wagon
 				
 				party.setVehicle(new Wagon());
 				inv.removeItemFromInventory(currentItem, 1);
-				party.setMoney(party.getMoney() - Item.ITEM_TYPE.WAGON.getCost());
+				party.setMoney(party.getMoney() - (int)(Item.ITEM_TYPE.WAGON.getCost()*priceModifier));
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
 				updateLabels(currentItem);
 				return 1;
@@ -313,7 +316,7 @@ public class StoreScene extends Scene {
 			//Display modal if the user can not buy the currently selected item
 			
 			String errorText;
-			if (party.getMoney() < itemCount * currentItem.getCost()) {
+			if (party.getMoney() < itemCount * (int)(currentItem.getCost()*priceModifier)) {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY");
 			} else {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_CANT_CARRY");

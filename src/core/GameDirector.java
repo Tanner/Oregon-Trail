@@ -98,7 +98,7 @@ public class GameDirector implements SceneListener {
 		case TOWN:
 			return new TownScene(game.getPlayer().getParty(), worldMap.getCurrLocationNode());
 		case STORE:
-			return new StoreScene(game.getPlayer().getParty(), game.getStoreInventory());
+			return new StoreScene(game.getPlayer().getParty(), game.getStoreInventory(), (1 + worldMap.getCurrLocationNode().getRank()/10));
 		case PARTYINVENTORY:
 			return new PartyInventoryScene(game.getPlayer().getParty());
 		case SCENESELECTOR:
@@ -159,7 +159,7 @@ public class GameDirector implements SceneListener {
 			// Last scene was Town Scene
 			if (id == SceneID.STORE) {
 				// Requested Store Scene
-				newScene = new StoreScene(game.getPlayer().getParty(), game.getStoreInventory());
+				newScene = new StoreScene(game.getPlayer().getParty(), game.getStoreInventory(), (1 + worldMap.getCurrLocationNode().getRank()/10));
 			}
 			if (id == SceneID.TRAIL) {
 				//Requested Trail scene
