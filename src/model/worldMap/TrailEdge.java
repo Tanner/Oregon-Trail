@@ -111,5 +111,13 @@ public class TrailEdge extends MapObject {
 		retVal += "Trail from " + this.origin.getName() + " to " + this.destination.toString() + "that is " + this.length + " miles long\n";
 		return retVal;
 	}
+
+	/**
+	 * Gives a verbal approximation of the trail length
+	 * @return An approximation of the trail length.
+	 */
+	public String getRoughDistance() {
+		return length < 50 ? "Short" : length < 75 ? "Average" : length < 100 ? "Long" : "Endless";
+	}
 	
 }// class TrailEdge
