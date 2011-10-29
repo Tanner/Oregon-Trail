@@ -254,11 +254,11 @@ public class TrailScene extends Scene {
 	}
 	
 	private Color skyColorForHour(int hour) {
-		switch (hour) {
+		switch (hour + 1) {
 			case 6:
-				return new Color(0x5b6ab8);
+				return new Color(0xeba7a4); // light pink
 			case 7:
-				return new Color(0x579cdd);
+				return new Color(0xebd0a4); // light orange
 			case 8:
 			case 9:
 			case 10:
@@ -267,23 +267,25 @@ public class TrailScene extends Scene {
 			case 13:
 			case 14:
 			case 15:
-				return new Color(0x66a9dc);
 			case 16:
-				return new Color(0xdd90a4);
 			case 17:
-				return new Color(0x4a3b48);
+				return new Color(0x579cdd); // light blue
+			case 18:
+			case 19:
+				return new Color(0xdd90a4); // pink
+			case 20:
+				return new Color(0x4a3b48); // dark purple
 			default:
 				return Color.black;
 		}
 	}
 	
 	private Color backgroundOverlayColorForHour(int hour) {
-		switch (hour) {
-			case 6:
-				return new Color(0, 0, 0, .3f);
+		switch (hour + 1) {
 			case 7:
-				return new Color(0, 0, 0, .1f);
+				return new Color(0, 0, 0, .3f);
 			case 8:
+				return new Color(0, 0, 0, .1f);
 			case 9:
 			case 10:
 			case 11:
@@ -291,10 +293,13 @@ public class TrailScene extends Scene {
 			case 13:
 			case 14:
 			case 15:
-				return new Color(0, 0, 0, 0f);
 			case 16:
-				return new Color(0, 0, 0, .1f);
 			case 17:
+				return new Color(0, 0, 0, 0f);
+			case 18:
+			case 19:
+				return new Color(0, 0, 0, .1f);
+			case 20:
 				return new Color(0, 0, 0, .3f);
 			default:
 				return new Color(0, 0, 0, .5f);
