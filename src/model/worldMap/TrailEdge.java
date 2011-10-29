@@ -79,6 +79,21 @@ public class TrailEdge extends MapObject {
 	public LocationNode getDestination(){
 		return this.destination;
 	}
+	
+	/**
+	 * return the danger level of this trail
+	 * @return The danger level of this trail
+	 */
+	public int getDangerLevel () {
+		return this.dangerLevel;
+	}
+	
+	/**
+	 * Return the danger level of the trail as either easy, moderate, challenging, or suicide.
+	 */
+	public String getDangerRating () {
+		return dangerLevel < 25 ? "Easy" : dangerLevel < 50 ? "Moderate" : dangerLevel < 75 ? "Challenging" : "Suicidal";
+	}
 
 	@Override
 	public String debugToString() {

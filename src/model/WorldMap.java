@@ -239,7 +239,7 @@ public class WorldMap {
 					if (i == MAX_RANK - 1){
 						//System.out.println("i = " + i + " size = " + mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
 						node.setTrails(1);
-						newTrail = new TrailEdge("Trail from " + node.getName() + " to " + finalDestination.getName(), finalDestination, node, randGenTrailDanger (mapRand, node.getRank()) );
+						newTrail = new TrailEdge("Trail to " + finalDestination.getName(), finalDestination, node, randGenTrailDanger (mapRand, node.getRank()) );
 					} else {
 						//nexttown holds size of arraylist for locations - used as random source to determine where trails go
 						int nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
@@ -250,7 +250,7 @@ public class WorldMap {
 							randDestNode = mapNodes.get(nextRank).get(nextTown);
 							}
 						randDestNode.setOnTheTrail(true);
-						newTrail = new TrailEdge("Trail from " + node.getName() + " to " + randDestNode.getName(), randDestNode, node, randGenTrailDanger(mapRand, node.getRank()) );
+						newTrail = new TrailEdge("Trail to " + randDestNode.getName(), randDestNode, node, randGenTrailDanger(mapRand, node.getRank()) );
 					}
 					//add trail to this location's trail list
 					node.addTrail(newTrail);

@@ -140,7 +140,7 @@ public class LocationNode extends MapObject {
 	}
 	
 	public String getName(){
-		return this.name + " " + this.rank;
+		return this.name;
 	}
 	/**
 	 * returns the string representation of this location

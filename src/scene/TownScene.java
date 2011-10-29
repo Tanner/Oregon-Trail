@@ -54,14 +54,15 @@ public class TownScene extends Scene {
 		for (Person p : party.getPartyMembers()) {
 			Logger.log(p.getName() + ", the " + p.getProfession() + ", entered the town.", Logger.Level.INFO);
 		}
-		ArrayList<String> trails = new ArrayList<String>();
-		for(TrailEdge trail : location.getOutboundTrails()) {
-			trails.add(trail.getDestination().getName());
+		if(location.getTrails() != 0) {
+			String[] trails = new String[location.getTrails()];
+			for(int i = 0; i < location.getTrails(); i++) {
+				TrailEdge temp = location.getOutBoundTrailByIndex(i);
+				trails[i] = temp.getDangerRating() + " " + temp.getName();
+			}
+			trailChoiceModal = new ComponentModal<SegmentedControl>(container, this, ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
+					new SegmentedControl(container, 700, 200, 3, 1, 20, true, 1, trails));
 		}
-		String[] trailNames = new String[trails.size()];
-		trails.toArray(trailNames);
-		trailChoiceModal = new ComponentModal<SegmentedControl>(container, this, ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
-				new SegmentedControl(container, 600, 200, 3, 1, 20, true, 1, trails.toArray(trailNames)));
 	}
 	
 	@Override
