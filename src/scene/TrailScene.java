@@ -153,7 +153,7 @@ public class TrailScene extends Scene {
 			} 
 			timeElapsed += delta;
 			if(!SoundStore.get().getPlayingSounds().contains("Steps")) {
-				//SoundStore.get().playSound("Steps");
+				SoundStore.get().playSound("Steps");
 			}
 			
 			if (skyAnimatingColor != null) {
@@ -312,6 +312,7 @@ public class TrailScene extends Scene {
 	@Override
 	public void dismissModal(Modal modal, boolean cancelled) {
 		super.dismissModal(modal, cancelled);
+		SoundStore.get().stopMusic();
 		if (cancelled) {
 			SoundStore.get().stopAllSound();
 			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, this, false);

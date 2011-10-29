@@ -37,7 +37,7 @@ public class CampScene extends Scene {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		super.enter(container, game);
-		//SoundStore.get().loopMusic("Crackling Fire");
+		SoundStore.get().loopMusic("Crackling Fire");
 	}
 	
 	@Override
