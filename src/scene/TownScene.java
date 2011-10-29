@@ -61,7 +61,7 @@ public class TownScene extends Scene {
 				trails[i] = temp.getDangerRating() + " " + temp.getName();
 			}
 			trailChoiceModal = new ComponentModal<SegmentedControl>(container, this, ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
-					new SegmentedControl(container, 700, 200, 3, 1, 20, true, 1, trails));
+					new SegmentedControl(container, 750, 200, 3, 1, 20, true, 1, trails));
 		}
 	}
 	

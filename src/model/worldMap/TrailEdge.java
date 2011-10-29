@@ -73,6 +73,15 @@ public class TrailEdge extends MapObject {
 	}
 	
 	/**
+	 * Returns a verbal approximation of distance left to go on the trail
+	 * @return An approximation of the distance left.
+	 */
+	public Object getRoughDistanceToGo() {
+		double current = 1 - quality.getPercentage();
+		return current < .25 ? "Nowhere close to " : current < .5 ? "Getting closer to " : current < .75 ? "More than halfway to " : "Just a little further to ";
+	}
+
+	/**
 	 * return the destination for this trail
 	 * @return the destination node
 	 */

@@ -37,6 +37,9 @@ public class Party implements HUDDataSource {
 
 	private Time time;
 	
+	//TODO: Delete this after condition refactor
+	private double badVariable = 0;
+	
 	/**
 	 * 
 	 * The possible values of the party's pace
@@ -323,8 +326,19 @@ public class Party implements HUDDataSource {
 	 */
 	public List<Notification> walk() {
 		List<Notification> messages = new ArrayList<Notification>();
-		trail.advance((int)(getPace().getSpeed() * getMoveModifier())/4);
-		totalDistanceTravelled += (int)(getPace().getSpeed() * getMoveModifier()/4);
+		double movement = (getPace().getSpeed() * getMoveModifier())/30;
+		
+		//Amount added ensures that badVariable never gets bigger than 1.999~
+		badVariable += movement - (int)movement;
+		
+		//badVariable handles travelling part of a mile in a step
+		if(badVariable > 1) {
+			movement += 1;
+			badVariable -= 1;
+		}
+		
+		trail.advance((int)movement);
+		totalDistanceTravelled += (int)movement;
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
 		for (Animal animal : animals) {

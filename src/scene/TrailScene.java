@@ -187,7 +187,7 @@ public class TrailScene extends Scene {
 				}
 				Logger.log("Last Town = " + party.getLocation(), Logger.Level.INFO);
 				
-				hud.addNotification("Distance until " + party.getTrail().getDestination().getName() + ": " + String.format("%,d", party.getTrail().getDistanceToGo()));
+				hud.addNotification("" + party.getTrail().getRoughDistanceToGo() + party.getTrail().getDestination().getName());
 				
 				EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
 				
