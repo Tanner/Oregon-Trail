@@ -19,17 +19,19 @@ public class WorldMap {
 	//private final int TESTRANK = 1;  
 
 	/**weight of ranking assignment in random generator - 2 is 50 50 chance for same rank or next rank, higher numbers weight toward next rank*/
-	private final int RANK_WEIGHT = 5;  
+	private final int RANK_WEIGHT = 4;  
+	/**maximum danger a trail may have - used as an int seed during construction of the map*/
+	private final int MAX_DANGER = 100;  
 	/**maximum number of exiting trails each location can have*/
 	private final int MAX_TRAILS_OUT = 3;  
 	/**minimum number of exiting trails each location can have*/
 	private final int MIN_TRAILS_OUT = 1;  
 	/**maximum number of "levels" of travel west - only portland has this as its rank.  edges can only go to edges with equal or higher rank than their origin node*/
-	private final int MAX_RANK = 20;
+	private final int MAX_RANK = 15;
 	/**width of map in miles*/
 	private final int MAX_X = 1200;
 	/**height of map in miles*/
-	private final int MAX_Y = 600;
+	private final int MAX_Y = 500;
 	/**points to starting city - references entire map*/
 	private LocationNode mapHead;
 	/**points to trailEdge most recently occupied by party*/
@@ -73,11 +75,11 @@ public class WorldMap {
 	 */
 	public WorldMap(){
 		//make a generic-sized map for initial testing and development 
-		this(120);
+		this(80);
 	}
 	
 	public WorldMap(String devMode){
-		this(120, "devMode");
+		this(80, "devMode");
 	}
 
 	/**
@@ -235,11 +237,12 @@ public class WorldMap {
 					}
 					TrailEdge newTrail;
 					this.numTrails++;
+					int dangerLevel = randGenTrailDanger(mapRand, node.getRank());
 					//if we're at final rank before finish, have all edges go to portland
 					if (i == MAX_RANK - 1){
 						//System.out.println("i = " + i + " size = " + mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
 						node.setTrails(1);
-						newTrail = new TrailEdge("Trail to " + finalDestination.getName(), finalDestination, node, randGenTrailDanger (mapRand, node.getRank()) );
+						newTrail = new TrailEdge("Trail to " + finalDestination.getName(), finalDestination, node, dangerLevel );
 					} else {
 						//nexttown holds size of arraylist for locations - used as random source to determine where trails go
 						int nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
@@ -250,7 +253,7 @@ public class WorldMap {
 							randDestNode = mapNodes.get(nextRank).get(nextTown);
 							}
 						randDestNode.setOnTheTrail(true);
-						newTrail = new TrailEdge("Trail to " + randDestNode.getName(), randDestNode, node, randGenTrailDanger(mapRand, node.getRank()) );
+						newTrail = new TrailEdge("Trail to " + randDestNode.getName(), randDestNode, node, dangerLevel );
 					}
 					//add trail to this location's trail list
 					node.addTrail(newTrail);
@@ -275,7 +278,7 @@ public class WorldMap {
 	 * @return the random danger level of the trail
 	 */
 	private int randGenTrailDanger(Random mapRand, int trailRank){
-		int result = mapRand.nextInt(100);
+		int result = mapRand.nextInt(MAX_DANGER);
 		return result;
 	}
 	

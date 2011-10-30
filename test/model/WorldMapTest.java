@@ -13,6 +13,7 @@ public class WorldMapTest {
 	@Test
 	public void testWorldMap() {
 		WorldMap myMap = new WorldMap("testMode");
+		myMap.toString();
 //		fail("Not yet implemented"); // TODO
 	}
 

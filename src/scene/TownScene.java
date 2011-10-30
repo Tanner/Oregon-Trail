@@ -55,8 +55,8 @@ public class TownScene extends Scene {
 			String[] trails = new String[location.getTrails()];
 			for(int i = 0; i < location.getTrails(); i++) {
 				TrailEdge temp = location.getOutBoundTrailByIndex(i);
-				trails[i] = temp.getDangerRating() + ", " + temp.getRoughDistance() + " " + temp.getName();
-			}
+				trails[i] = temp.getDangerRating() + ", " + temp.getRoughLength() + ", " + temp.getRoughDirection() + temp.getName();
+				}
 			trailChoiceModal = new ComponentModal<SegmentedControl>(container, this, ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
 					new SegmentedControl(container, 850, 200, 3, 1, 20, true, 1, trails));
 		}
