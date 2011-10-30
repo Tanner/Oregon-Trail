@@ -154,7 +154,7 @@ public class OwnerInventoryButtons {
 		weightBar.setCondition(getWeightCondition());
 		
 		String text = "%d / %d " + ConstantStore.get("GENERAL", "WEIGHT_UNIT");
-		weightBar.setTooltipMessage(String.format(text, getWeightCondition().getCurrent(), getWeightCondition().getMax()));
+		weightBar.setTooltipMessage(String.format(text, (int)getWeightCondition().getCurrent(), (int)getWeightCondition().getMax()));
 	}
 	
 	/**
