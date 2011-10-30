@@ -58,17 +58,17 @@ public class TrailEdge extends MapObject {
 	}
 	/**
 	 * move along a trail a certain distance
-	 * @param distance the amount to move along the trail
+	 * @param movement the amount to move along the trail
 	 */
-	public void advance(int distance) {
-		this.quality.decrease(distance);
+	public void advance(double movement) {
+		this.quality.decrease(movement);
 	}
 	
 	/**
 	 * Returns the amount of distance left to go for this trail.
 	 * @return Distance left to travel
 	 */
-	public int getDistanceToGo() {
+	public double getDistanceToGo() {
 		return quality.getCurrent();
 	}
 	

@@ -7,7 +7,7 @@ import core.Logger;
  */
 public class Condition {
 
-	private int min, max, current;
+	private double min, max, current;
 	
 	/**
 	 * Constructor for Condition.
@@ -15,7 +15,7 @@ public class Condition {
 	 * @param max Maximum value for the condition
 	 * @param current Desired current value for the condition
 	 */
-	public Condition(int min, int max, int current) {
+	public Condition(double min, double max, double current) {
 		this.min = min;
 		this.max = max;
 		this.current = current;
@@ -26,7 +26,7 @@ public class Condition {
 	 * @param min Minimum value for the condition
 	 * @param max Maximum value for the condition
 	 */
-	public Condition(int min, int max) {
+	public Condition(double min, double max) {
 		this(min, max, max);
 	}
 	
@@ -35,7 +35,7 @@ public class Condition {
 	 * zero and the current value to the maximum value.
 	 * @param max Maximum value for the condition
 	 */
-	public Condition(int max) {
+	public Condition(double max) {
 		this(0, max, max);
 	}
 	
@@ -43,7 +43,7 @@ public class Condition {
 	 * Get the current value.
 	 * @return Current value
 	 */
-	public int getCurrent() {
+	public double getCurrent() {
 		return current;
 	}
 	
@@ -59,7 +59,7 @@ public class Condition {
 	 * Increase the current value by a desired amount.
 	 * @param amount Amount to increase the current value
 	 */
-	public void increase(int amount) {
+	public void increase(double amount) {
 		if(amount <= 0) {
 			Logger.log("Not an increment", Logger.Level.ERROR);
 			return;
@@ -79,7 +79,7 @@ public class Condition {
 	 * Returns the min value.
 	 * @return The min value
 	 */
-	public int getMin() {
+	public double getMin() {
 		return this.min;
 	}
 	
@@ -87,7 +87,7 @@ public class Condition {
 	 * Returns the max value.
 	 * @return The max value
 	 */
-	public int getMax() {
+	public double getMax() {
 		return this.max;
 	}
 	
@@ -95,7 +95,7 @@ public class Condition {
 	 * Decrease the current value by a desired amount.
 	 * @param amount Amount to decrease the current value
 	 */
-	public void decrease (int amount) {
+	public void decrease (double amount) {
 		if(amount <= 0) {
 			Logger.log("Not a decrement", Logger.Level.ERROR);
 			return;

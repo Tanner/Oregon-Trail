@@ -44,7 +44,7 @@ public class ThiefEncounter extends Encounter {
 				itemName = type.getName();
 			}
 		}
-		SoundStore.get().playMusic("Smooth");
+		SoundStore.get().playSound("Smooth");
 		return makeNotification();
 
 	}

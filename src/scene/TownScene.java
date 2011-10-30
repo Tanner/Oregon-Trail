@@ -1,8 +1,5 @@
 package scene;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import model.Party;
 import model.Person;
 import model.worldMap.LocationNode;
@@ -94,7 +91,6 @@ public class TownScene extends Scene {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		super.enter(container, game);
-		//SoundStore.get().playMusic("Smooth");
 	}
 
 	@Override

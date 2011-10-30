@@ -2,8 +2,10 @@ package core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
@@ -16,8 +18,10 @@ public class SoundStore {
 	private float musicVolume = 1;
 	private float soundVolume = 1;
 	
-	private Map<String, Sound> sounds;
+	public Map<String, Sound> sounds;
 	private Map<String, Music> musics;
+	
+	private Set<String> playingSounds = new HashSet<String>();
 	
 	/**
 	 * Private constructor, creates the singleton
@@ -49,11 +53,22 @@ public class SoundStore {
 	 * @throws SlickException
 	 */
 	private void initialize() throws SlickException {
-		addToSounds("Click", new Sound("resources/music/click.ogg"));
+
 		addToMusic("Crackling Fire", new Music("resources/music/crackling_fire.ogg"));
 		addToMusic("GBU", new Music("resources/music/GBU.ogg"));
-		addToMusic("Smooth", new Music("resources/music/smooth.ogg"));
+		addToSounds("Smooth", new Sound("resources/music/smooth.ogg"));
 		addToSounds("Steps", new Sound("resources/music/steps.ogg"));
+		addToSounds("Click", new Sound("resources/music/click.ogg"));
+	}
+	
+	public List<String> getPlayingMusic() {
+		List<String> nameList = new ArrayList<String>();
+		for(String name : musics.keySet()) {
+			if(musics.get(name).playing()) {
+				nameList.add(name);
+			}
+		}
+		return nameList;
 	}
 	
 	/**
@@ -156,6 +171,7 @@ public class SoundStore {
 	 */
 	public void playSound(String name) {
 		sounds.get(name).play(1, soundVolume);
+		playingSounds.add(name);
 	}
 	
 	/**
@@ -164,20 +180,20 @@ public class SoundStore {
 	 */
 	public void stopSound(String name) {
 		sounds.get(name).stop();
+		playingSounds.remove(name);
 	}
 	
 	/**
 	 * Returns a list of all sounds currently playing
 	 * @return A list of all sounds currently playing
 	 */
-	public List<String> getPlayingSounds() {
-		List<String> nameList = new ArrayList<String>();
-		for(String name : sounds.keySet()) {
-			if(sounds.get(name).playing()) {
-				nameList.add(name);
+	public Set<String> getPlayingSounds() {
+		for(String name : playingSounds) {
+			if(!sounds.get(name).playing()) {
+				playingSounds.remove(name);
 			}
 		}
-		return nameList;
+		return playingSounds;
 	}
 	
 	/**
@@ -185,7 +201,14 @@ public class SoundStore {
 	 */
 	public void stopAllSound() {
 		for(String name : sounds.keySet()) {
-			sounds.get(name).stop();
+			if(sounds.get(name).playing())
+				sounds.get(name).stop();
 		}
+		playingSounds.clear();
+	}
+
+	public void loopSound(String name) {
+		sounds.get(name).loop();
+		
 	}
 }

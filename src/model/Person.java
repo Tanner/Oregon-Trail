@@ -224,7 +224,7 @@ public class Person implements Conditioned, Inventoried {
 	 * @return Remaining skill points
 	 */
 	public int getSkillPoints() {
-		return skillPoints.getCurrent();
+		return (int)skillPoints.getCurrent();
 	}
 	
 	/**

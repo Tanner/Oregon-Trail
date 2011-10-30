@@ -328,17 +328,10 @@ public class Party implements HUDDataSource {
 		List<Notification> messages = new ArrayList<Notification>();
 		double movement = (getPace().getSpeed() * getMoveModifier())/30;
 		
-		//Amount added ensures that badVariable never gets bigger than 1.999~
-		badVariable += movement - (int)movement;
+
 		
-		//badVariable handles travelling part of a mile in a step
-		if(badVariable > 1) {
-			movement += 1;
-			badVariable -= 1;
-		}
-		
-		trail.advance((int)movement);
-		totalDistanceTravelled += (int)movement;
+		trail.advance(movement);
+		totalDistanceTravelled += movement;
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
 		for (Animal animal : animals) {
@@ -463,7 +456,7 @@ public class Party implements HUDDataSource {
 			return 0;
 		} else {
 			//we don't have enough status in the food to completely heal the person, so eat it all.
-			int restoreAmount = food.getStatus().getCurrent() * foodFactor;
+			int restoreAmount = (int)food.getStatus().getCurrent() * foodFactor;
 			//person.increaseHealth(restoreAmount);
 			return eatFood(person, restoreNeeded - restoreAmount); //Recursively call the function to ensure we eat as much as possible.
 		}
@@ -564,7 +557,7 @@ public class Party implements HUDDataSource {
 		int currentHealth;
 		boolean hasMessage = false;
 		for(Person person : members) {
-			currentHealth = person.getHealth().getCurrent();
+			currentHealth = (int)person.getHealth().getCurrent();
 			if(currentHealth == 0) {
 				hasMessage = true;
 				str.append(person.getName() + " has died of starvation! ");
