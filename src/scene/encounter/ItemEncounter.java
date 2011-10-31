@@ -52,6 +52,12 @@ public class ItemEncounter extends Encounter {
 	private int numItems;
 	private ITEM_ENCOUNTER_TYPE type;
 	
+	/**
+	 * Constructs an ItemEncounter with a party, as well as its range of occurrence.
+	 * @param party The party, so the encounter can affect the game
+	 * @param min The beginning of the range of occurrence
+	 * @param max The end of the range of occurrence
+	 */
 	public ItemEncounter(Party party, int min, int max) {
 		super(party, min, max);
 		

@@ -8,16 +8,9 @@ import model.Party;
  * or scene encapsulated in a EncounterNotification
  */
 public abstract class Encounter {
-
 	private int min;
 	private int max;
 	protected Party party;
-	
-	public Encounter() {
-		party = null;
-		min = -1;
-		max = -1;
-	}
 	
 	/**
 	 * Give an Encounter the party, as well as its range of occurrence.
@@ -32,7 +25,7 @@ public abstract class Encounter {
 	}
 	
 	/**
-	 * Check if a certain number lies within an Encounter's range.  Meant to determine
+	 * Check if a certain number lies within an Encounter's range. Meant to determine
 	 * when an encounter occurs.
 	 * @param num A randomly generated number
 	 * @return True if num is in the range of this encounter's min and max
@@ -44,6 +37,7 @@ public abstract class Encounter {
 	}
 	
 	/**
+	 * Return the max occurrence.
 	 * @return The maximum value for the Encounter's range
 	 */
 	public int getMax() {
