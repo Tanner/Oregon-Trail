@@ -16,10 +16,10 @@ import core.ConstantStore;
  */
 public class WorldMap {
 
-	//private final int TESTRANK = 1;  
-
+	/**number of locations on map if none passed to constructor - needs to be static to pass to constructor*/
+	private final static int GEN_LOC = 80;  
 	/**weight of ranking assignment in random generator - 2 is 50 50 chance for same rank or next rank, higher numbers weight toward next rank*/
-	private final int RANK_WEIGHT = 4;  
+	private final int RANK_WEIGHT = 2;  
 	/**maximum danger a trail may have - used as an int seed during construction of the map*/
 	private final int MAX_DANGER = 100;  
 	/**maximum number of exiting trails each location can have*/
@@ -27,7 +27,7 @@ public class WorldMap {
 	/**minimum number of exiting trails each location can have*/
 	private final int MIN_TRAILS_OUT = 1;  
 	/**maximum number of "levels" of travel west - only oregon city has this as its rank.  edges can only go to edges with equal or higher rank than their origin node*/
-	private final int MAX_RANK = 15;
+	private final int MAX_RANK = 25;
 	/**width of map in miles*/
 	private final int MAX_X = 1200;
 	/**height of map in miles*/
@@ -87,11 +87,15 @@ public class WorldMap {
 	 */
 	public WorldMap(){
 		//make a generic-sized map for initial testing and development 
-		this(80);
+		this(GEN_LOC);
 	}
 	
+	/**
+	 * used for testing purposes - generates a list of the objects built into the map to the console
+	 * @param devMode a non-zero length string used to set to devmode
+	 */
 	public WorldMap(String devMode){
-		this(80, "devMode");
+		this(GEN_LOC, devMode);
 	}
 
 	/**
@@ -144,6 +148,12 @@ public class WorldMap {
 	 * 0 - .33 * MAX_RANK : Positive y : Nebraska Territory | Negative y : Kansas Territory
 	 * .34-.66 * MAX_RANK : Positive y : Washington Territory | Negative y : Utah Territory
 	 * .67 - 1 * MAX_RANK : Oregon
+	 * 
+	 * this method will limit the number of duplicate location names in a particular "zone"
+	 * which is the equivalent to particular state or territory.  note names may be duplicated
+	 * between different territories, but shouldn't be duped in the same territory unless all
+	 * other names are taken.
+	 * 
 	 * @param curRank the current rank of this city
 	 * @param yVal the y position of the city on the map
 	 * @return the name of this city
@@ -272,7 +282,18 @@ public class WorldMap {
 						//nexttown holds size of arraylist for locations - used as random source to determine where trails go
 						int nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
 						LocationNode randDestNode = mapNodes.get(nextRank).get(nextTown);
+						//attempt to minimize going to a location that's already on the map and in the same zone as where we
+						//currently are - minimize possibility of moving laterally repeatedly
+
+						
+						/*
 						while ((randDestNode.getOnTheTrail()) && (randDestNode.getRank() == node.getRank())){
+							nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i + 1) : i);
+							nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
+							randDestNode = mapNodes.get(nextRank).get(nextTown);
+							}
+						*/
+						while ((randDestNode.getOnTheTrail()) && (randDestNode.getID() == node.getID())){
 							nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i + 1) : i);
 							nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
 							randDestNode = mapNodes.get(nextRank).get(nextTown);

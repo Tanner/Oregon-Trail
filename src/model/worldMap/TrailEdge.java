@@ -90,14 +90,18 @@ public class TrailEdge extends MapObject {
 	public String getRoughDistanceToGo() {
 		double current = 1 - quality.getPercentage();
 		String str;
-		if (current < .25) {
+		if (current < .05) {
+			str = "Just starting toward ";
+		} else if (current < .25) {
 			str = "Nowhere close to ";
 		} else if (current < .5) {
 			str = "Getting closer to ";
 		} else if (current < .75) {
 			str = "More than halfway to ";
-		} else {
+		} else if (current < .95) {
 			str = "Just a little further to ";
+		} else {
+			str = "On the outskirts of ";
 		}
 		return str;
 	}
@@ -107,13 +111,20 @@ public class TrailEdge extends MapObject {
 	 * @return A string representation of the direction of the trail.
 	 */
 	public String getRoughDirection(){
+		String resStr;
+		
 		if (this.destination.MAP_YPOS > this.origin.MAP_YPOS ) {//northwestern trail
-			return "NW";
+			resStr =  "NW";
 		} else if (this.destination.MAP_YPOS < this.origin.MAP_YPOS ) {
-			return "SW";		
+			resStr =  "SW";		
 		} else {
-			return "W";		
+			resStr =  "W";		
 		}
+		//if the rank between destinations is the same, make only s or n, so return only first char
+		if (this.destination.getRank() == this.origin.getRank()){
+			resStr = resStr.substring(0,0);
+		}	
+		return resStr;
 		
 	}
 	/**
@@ -133,18 +144,21 @@ public class TrailEdge extends MapObject {
 	}
 	
 	/**
-	 * Return the danger level of the trail as either easy, moderate, challenging, or suicide.
+	 * Return the danger level of the trail in terms of how travelled it is
+	 *  - established and well travelled trails are very easy, wilderness and indian lands trails are very difficult
 	 */
 	public String getDangerRating () {
 		String str;
-		if (dangerLevel < .25) {
-			str = "Easy";
+		if (dangerLevel < .05) {
+			str = "Established";
+		} else if (dangerLevel < .25) {
+			str = "Well-Travelled";
 		} else if (dangerLevel < .5) {
-			str = "Moderatey Difficult";
+			str = "Untravelled";
 		} else if (dangerLevel < .75) {
-			str = "Challenging";
+			str = "Wilderness";
 		} else {
-			str = "Suicidal";
+			str = "Indian Lands";
 		}
 		return str;
 	}
@@ -153,7 +167,7 @@ public class TrailEdge extends MapObject {
 	public String debugToString() {
 		String retVal = "";
 		retVal += "Danger Level : " + this.dangerLevel + " Trail Edge ID : " + this.ID + " Trail Name : \"" + this.name + "\"\n";
-		retVal += "Trail from " + this.origin.getName() + " to " + this.destination.toString() + "that is " + this.length + " miles long\n";
+		retVal += "\tTrail from " + this.origin.getName() + " to " + this.destination.toString() + "that is " + this.length + " miles long\n";
 		return retVal;
 	}
 
@@ -164,12 +178,16 @@ public class TrailEdge extends MapObject {
 	 */
 	public String getRoughLength() {
 		String str;
-		if (length < (.25 * TrailEdge.longestTrail)) {
+		if (length < (.05 * TrailEdge.longestTrail)) {
+			str = "Very Short";
+		} else if (length < (.25 * TrailEdge.longestTrail)) {
 			str = "Short";
 		} else if (length < (.5 * TrailEdge.longestTrail)) {
 			str = "Average";
 		} else if (length < (.75 * TrailEdge.longestTrail)) {
 			str = "Long";
+		} else if (length < (.95 * TrailEdge.longestTrail)) {
+			str = "Very Long";
 		} else {
 			str = "Endless";
 		}
