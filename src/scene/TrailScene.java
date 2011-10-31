@@ -77,7 +77,7 @@ public class TrailScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		
+				
 		hud = new HUD(container, party, new HUDListener());
 		showHUD(hud);
 		
@@ -142,15 +142,15 @@ public class TrailScene extends Scene {
 		
 		//build animating party member walking
 		
-		Image[] personWalkingFrame = new Image[4];
-		personWalkingFrame[0] = new Image("resources/graphics/animations/model1a.png", false, Image.FILTER_NEAREST);
-		personWalkingFrame[1] = new Image("resources/graphics/animations/model1b.png", false, Image.FILTER_NEAREST);
-		personWalkingFrame[2] = new Image("resources/graphics/animations/model1c.png", false, Image.FILTER_NEAREST);
-		personWalkingFrame[3] = new Image("resources/graphics/animations/model1d.png", false, Image.FILTER_NEAREST);
-		
-		Animation personWalking = new Animation(personWalkingFrame, 2);
-		
-		AnimatingSprite personTrail = new AnimatingSprite(container, personWalking, personWalking);
+//		Image[] personWalkingFrame = new Image[4];
+//		personWalkingFrame[0] = new Image("resources/graphics/animations/model1a.png", false, Image.FILTER_NEAREST);
+//		personWalkingFrame[1] = new Image("resources/graphics/animations/model1b.png", false, Image.FILTER_NEAREST);
+//		personWalkingFrame[2] = new Image("resources/graphics/animations/model1c.png", false, Image.FILTER_NEAREST);
+//		personWalkingFrame[3] = new Image("resources/graphics/animations/model1d.png", false, Image.FILTER_NEAREST);
+//		
+//		Animation personWalking = new Animation(personWalkingFrame, 2);
+//		
+//		AnimatingSprite personTrail = new AnimatingSprite(container, personWalking, personWalking);
 //		mainLayer.add(personTrail, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -5);
 		clickCounter = 0;
 		

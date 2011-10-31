@@ -47,7 +47,10 @@ public class SceneDirector extends StateBasedGame {
 		}
 		
 		scenes.push(scene);
-		addScene(scene);
+		addState(scene);
+		
+		scenes.peek().prepareToEnter();
+		
 		try {
 			scene.init(this.getContainer(), this);
 		} catch (SlickException e) {
@@ -77,6 +80,8 @@ public class SceneDirector extends StateBasedGame {
 		
 		scenes.pop();
 	
+		scenes.peek().prepareToEnter();
+		
 		if (animated) {
 			enterState(scenes.peek().getID(), new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 		} else {
@@ -99,18 +104,8 @@ public class SceneDirector extends StateBasedGame {
 		
 		MainMenuScene mainMenu = new MainMenuScene();
 		scenes.add(mainMenu);
-		addScene(mainMenu);
-	}
-	
-	/**
-	 * Alternative to {@code StateBasedGame}'s addState(State) method. Prepares
-	 * scene for entry.
-	 * @param scene scene to be added
-	 */
-	private void addScene(Scene scene) {
-		scene.prepareToEnter();
-		
-		super.addState(scene);
+		addState(mainMenu);
+		mainMenu.prepareToEnter();
 	}
 	
 	@Override
