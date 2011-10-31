@@ -20,6 +20,8 @@ public class TrailEdge extends MapObject {
 	private static float longestTrail = 0;
 	/**length of the shortest trail on map*/
 	private static float shortestTrail = 9999;
+	/**length of the shortest trail on map*/
+	private static float totalTrailLength;
 	/**unique id corresponding to this edge.*/
 	private final int ID;
 	
@@ -38,7 +40,7 @@ public class TrailEdge extends MapObject {
 		this.origin = origin;
 		this.ID = TrailEdge.edgeCount++;
 		this.dangerLevel = dangerLevel;
-		this.name ="Trail to " + destination.getName() ; // this.getRoughLength() + ", " + this.getDangerRating() + "," + this.getRoughDirection() + 
+		this.name ="Trail to " + destination.getName(); // this.getRoughLength() + ", " + this.getDangerRating() + "," + this.getRoughDirection() + 
 		this.length = calcDistance(destination.MAP_XPOS, origin.MAP_XPOS, destination.MAP_YPOS, origin.MAP_YPOS);
 		if (this.length > TrailEdge.longestTrail){
 			TrailEdge.longestTrail = this.length;
@@ -47,6 +49,7 @@ public class TrailEdge extends MapObject {
 			TrailEdge.shortestTrail = this.length;
 		}
 		this.quality = new Condition((int) this.length);
+		TrailEdge.totalTrailLength += this.length;
 		}
 
 	private float calcDistance(double destX, double origX, double destY, double origY){
@@ -65,7 +68,7 @@ public class TrailEdge extends MapObject {
 
 	@Override
 	public String toString(){
-		return this.name;
+		return this.getRoughDirection() + " " + this.name + " from " + this.origin;
 	}
 	/**
 	 * move along a trail a certain distance
@@ -173,7 +176,7 @@ public class TrailEdge extends MapObject {
 	@Override
 	public String debugToString() {
 		String retVal = "";
-		retVal += "Danger : " + this.dangerLevel + " Trail ID : " + this.ID + " Trail Name : \"" + this.name + "\" Rank : " + this.origin.getRank() + " to " + this.destination.getRank() + "\n";
+		retVal += "Roughly " + this.getRoughLength() +  "Danger : " + this.dangerLevel + " Trail ID : " + this.ID + " Trail Name : \"" + this.name + "\" Rank : " + this.origin.getRank() + " to " + this.destination.getRank() + "\n";
 		//retVal += "\tTrail from " + this.origin.getName() + " to " + this.destination.toString() + "that is " + this.length + " miles long\n";
 		return retVal;
 	}
@@ -185,15 +188,15 @@ public class TrailEdge extends MapObject {
 	 */
 	public String getRoughLength() {
 		String str;
-		if (length < (.05 * TrailEdge.longestTrail)) {
+		if (length < (.1 * (TrailEdge.totalTrailLength/TrailEdge.edgeCount))) {
 			str = "Very Short";
-		} else if (length < (.25 * TrailEdge.longestTrail)) {
+		} else if (length < (.5 * (TrailEdge.totalTrailLength/TrailEdge.edgeCount))) {
 			str = "Short";
-		} else if (length < (.5 * TrailEdge.longestTrail)) {
+		} else if (length <  (TrailEdge.totalTrailLength/TrailEdge.edgeCount)) {
 			str = "Average";
-		} else if (length < (.75 * TrailEdge.longestTrail)) {
+		} else if (length < (1.5 * (TrailEdge.totalTrailLength/TrailEdge.edgeCount))) {
 			str = "Long";
-		} else if (length < (.95 * TrailEdge.longestTrail)) {
+		} else if (length < (2 * (TrailEdge.totalTrailLength/TrailEdge.edgeCount))) {
 			str = "Very Long";
 		} else {
 			str = "Endless";

@@ -139,9 +139,6 @@ public class LocationNode extends MapObject {
 		return this.outboundTrails.get(index);
 	}
 	
-	public String getName(){
-		return this.name;
-	}
 	/**
 	 * returns the string representation of this location
 	 */

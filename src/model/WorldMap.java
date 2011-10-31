@@ -215,7 +215,6 @@ public class WorldMap {
 		for (int i  = 0; i <= MAX_RANK; i++){
 			mapNodes.put(i, new ArrayList<LocationNode>());
 		}		
-		//List<LocationNode> tempLocationStore = new ArrayList<LocationNode>(numLocations);
 			//temp array holding number of locations at each rank, indexed by rank
 		int[] numRankAra = new int[MAX_RANK];
 			//current node's rank as we're building the node list
@@ -236,12 +235,10 @@ public class WorldMap {
 		numRankAra[MAX_RANK - 1] = 1;
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
 		
-		//tempLocationStore.add(mapHead);
 		mapNodes.get(mapHead.getRank()).add(mapHead);
 		//need to build base set of nodes - must have at least 1 per rank to get from independence to portland
 		for (int i = 1; i < MAX_RANK; i++){
 			LocationNode tmp = generateLocationNode(mapRand, i, numExitTrails);
-	//		tempLocationStore.add(tmp);
 			mapNodes.get(i).add(tmp);
 		}//for loop to build initial path
 
@@ -254,10 +251,8 @@ public class WorldMap {
 			curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter - 1 : curRankIter;
 			//number of trails out of location : 1 to MaxTrailsOut constant
 			LocationNode tmp = generateLocationNode(mapRand, curRank, numExitTrails);
-	//		tempLocationStore.add(tmp);
 			mapNodes.get(tmp.getRank()).add(tmp);
 		}//for all locations make a node
-	//	tempLocationStore.add(finalDestination);
 		mapNodes.get(finalDestination.getRank()).add(finalDestination);
 
 		//as of here we have all the location nodes.  now need to build map.
@@ -271,6 +266,7 @@ public class WorldMap {
 		//trailForward says there's a trail in this set of trails that moves to the next rank 
 		//always want at least 1 trail to move forward
 		boolean trailForward;
+
 		for (int i = 0; i < MAX_RANK; i++){
 			for(LocationNode node : mapNodes.get(i)){
 				trailDest = new ArrayList<Integer>();
@@ -299,7 +295,7 @@ public class WorldMap {
 						LocationNode randDestNode = mapNodes.get(nextRank).get(nextTown);
 						//attempt to minimize going to a location that's already on the map and in the same zone as where we
 						//currently are - minimize possibility of moving laterally repeatedly
-						if ((mapRand.nextInt(100) < 95) || (randDestNode.getID() == (node.getID()))){
+						if ((mapRand.nextInt(100) < 90) || (randDestNode.getID() == (node.getID()))){
 							while (trailDest.contains(randDestNode.getID())){
 								if ((tNum == node.getTrails() - 1) && (!trailForward)) {
 									//force rank to increase by 1 (i.e. go west 1 rank) if we're at the last trail in the list of trails and we haven't gone west yet
