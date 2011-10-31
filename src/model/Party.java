@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Item.ITEM_TYPE;
 import model.datasource.HUDDataSource;
 import model.item.Animal;
 import model.item.Vehicle;
@@ -161,16 +162,22 @@ public class Party implements HUDDataSource {
 		}
 		
 		if (money > cost && buyer.canGetItem(itemType, numberOf)) {
-			buyer.addItemsToInventory(items);
-			money -= cost;
-			return;
+			if(itemType.isAnimal()) {
+				for(int i = 0; i < numberOf; i++) {
+					addAnimals(new Animal(itemType));
+				}
+			} else {
+				buyer.addItemsToInventory(items);
+			}
+				money -= cost;
+				return;
 		} else {
 			return;
 		}
 	}
 	
 	/**
-	 * Returns a list of inventoried things that can but the designated items.
+	 * Returns a list of inventoried things that can buy the designated items.
 	 * @param itemType The item type that is being tested
 	 * @param numberOf The number of items to try with
 	 * @return The list of people
@@ -182,16 +189,19 @@ public class Party implements HUDDataSource {
 			return ableList;
 		}
 		
-		for (Person person : members) {
-			if (person.canGetItem(itemType, numberOf)) {
-				ableList.add(person);
+		if (itemType.isAnimal()) {
+			ableList.add(vehicle);
+		} else {
+			for (Person person : members) {
+				if (person.canGetItem(itemType, numberOf)) {
+					ableList.add(person);
+				}
+			}
+		
+			if (vehicle != null && vehicle.canGetItem(itemType, numberOf)) {
+				ableList.add(vehicle);
 			}
 		}
-		
-		if (vehicle != null && vehicle.canGetItem(itemType, numberOf)) {
-			ableList.add(vehicle);
-		}
-		
 		return ableList;
 	}
 
@@ -478,71 +488,6 @@ public class Party implements HUDDataSource {
 		}
 		return false;
 	}
-
-//	
-//	public void feedAnimal(Animal animal) {
-//		// Figure out how much restoration is needed.
-//		int restoreNeeded = 0;
-//		
-//		if (animal.getStatus().getCurrent() < getRations().getRationAmount()) {
-//			restoreNeeded = getRations().getRationAmount() - 
-//			animal.getStatus().getCurrent();
-//		
-//		}
-//		
-//		//See if there is feed available
-//		boolean vehicleHasFood = false;
-//		
-//		for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
-//			if (itemType.isPlant()) {
-//					vehicleHasFood = true;
-//			}
-//		}
-//		
-//		Inventoried donator = vehicleHasFood ? vehicle : null;
-//		
-//		if (restoreNeeded > 0 && donator != null) {
-//			//If we need restoration, and have food
-//			Item.ITEM_TYPE firstFood = null;
-//			final List<Item.ITEM_TYPE> typeList = 
-//				donator.getInventory().getPopulatedSlots();
-//			
-//			for (Item.ITEM_TYPE itemType : typeList) {
-//				if (itemType.isFood() && firstFood == null) {
-//					firstFood = itemType;
-//				}
-//			}
-//			
-//			final List<Item> foodList = 
-//				donator.removeItemFromInventory(firstFood, 1);
-//			
-//			final Item food = foodList.get(0);
-//			int foodFactor = food.getType().getFoodFactor() * 3;
-//			
-//			//Do some handling for party member skills, such as cooking
-//			if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
-//				foodFactor += 3;
-//			}
-//			if(getSkills().contains(Person.Skill.COOKING)) {
-//				foodFactor += 3;
-//			}
-//
-//			final int foodToEat = (restoreNeeded / foodFactor) + 1; //+1 to ensure that we overshoot
-//			
-//			if (food.getStatus().getCurrent() > foodToEat) {
-//				//If there is enough condition in the food to feed the person completely, heal them and eat
-//				
-//				animal.increaseStatus(foodToEat * foodFactor);
-//				food.decreaseStatus(foodToEat);
-//				donator.addItemToInventory(food); //puts the item back in inventory
-//				//Food status down, person health up
-//			} else {
-//				//we don't have enough status in the food to completely heal the person, so eat it all.
-//				animal.increaseStatus(food.getStatus().getCurrent() * foodFactor);
-//				feedAnimal(animal); //Recursively call the function to ensure we eat as much as possible.
-//			}
-//		}
-//	}
 	
 	/**
 	 * Determines if a party member is near dying or dead, and alerts the player.
@@ -571,8 +516,12 @@ public class Party implements HUDDataSource {
 		return null;
 	}
 
-	public void addAnimals(List<Animal> animalList) {
-		animals.addAll(animalList);
+	public void addAnimals(List<Animal> animals) {
+		animals.addAll(animals);
+	}
+
+	public void addAnimals(Animal animal) {
+		animals.add(animal);
 	}
 
 	public Time getTime() {

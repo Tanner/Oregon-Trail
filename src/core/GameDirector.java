@@ -96,6 +96,7 @@ public class GameDirector implements SceneListener {
 		case PARTYCREATION:
 			return new PartyCreationScene(game.getPlayer());
 		case TOWN:
+			game.resetStoreInventory(worldMap.getCurrLocationNode());
 			return new TownScene(game.getPlayer().getParty(), worldMap.getCurrLocationNode());
 		case STORE:
 			return new StoreScene(game.getPlayer().getParty(), game.getStoreInventory(), (1 + worldMap.getCurrLocationNode().getRank()/10));
@@ -129,7 +130,7 @@ public class GameDirector implements SceneListener {
 	  ----------------------*/
 	@Override
 	public void requestScene(SceneID id, Scene lastScene, boolean popLastScene) {
-		Scene newScene = null;
+		
 		Transition outTransition = null;
 		Transition inTransition = null;
 		
@@ -140,6 +141,23 @@ public class GameDirector implements SceneListener {
 			worldMap.setCurrTrail(game.getPlayer().getParty().getTrail());
 		}
 		
+		Scene newScene = sceneForSceneID(id);
+		
+		if(worldMap.getCurrLocationNode().getRank() == worldMap.getMaxRank()) {
+			newScene = new VictoryScene();
+		}
+		if (newScene instanceof VictoryScene || newScene instanceof GameOverScene) {
+			inTransition = new RotateTransition(Color.black);
+		} else if (newScene instanceof PartyInventoryScene && lastScene instanceof StoreScene) {
+			// Requested Party Inventory Scene
+			newScene = new PartyInventoryScene(game.getPlayer().getParty(), ((StoreScene) lastScene).getInventory());
+		}
+		if (lastScene instanceof PartyCreationScene) {
+			// Last scene was Party Creation Scene
+			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
+		}  
+		
+		/*
 		if (id == SceneID.SCENESELECTOR) {
 			newScene = sceneForSceneID(id);
 		} else if(worldMap.getCurrLocationNode().getRank() == worldMap.getMaxRank()) {
@@ -193,7 +211,7 @@ public class GameDirector implements SceneListener {
 			game.resetStoreInventory(worldMap.getCurrLocationNode());
 			newScene = new TownScene(game.getPlayer().getParty(), worldMap.getCurrLocationNode());
 		}
-		
+		*/
 		if (newScene != null) {
 			lastScene.disable();
 			

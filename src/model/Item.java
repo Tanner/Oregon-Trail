@@ -17,16 +17,16 @@ public class Item implements Conditioned, Comparable<Item>{
 	private final ITEM_TYPE type;
 	
 	public enum ITEM_TYPE {
-		APPLE ("APPLE", true, true),
-		BREAD ("BREAD", true, false),
-		AMMO ("AMMO", false, false),
-		GUN ("GUN", false, false),
-		MEAT ("MEAT", true, false),
-		SONIC ("SONIC", false, false),
-		WAGON ("WAGON", false, false),
-		WHEEL ("WHEEL", false, false),
-		OX ("OX", false, false),
-		STRANGEMEAT ("STRANGE_MEAT", true, false);
+		APPLE ("APPLE", true, true, false),
+		BREAD ("BREAD", true, false, false),
+		AMMO ("AMMO", false, false, false),
+		GUN ("GUN", false, false, false),
+		MEAT ("MEAT", true, false, false),
+		SONIC ("SONIC", false, false, false),
+		WAGON ("WAGON", false, false, false),
+		WHEEL ("WHEEL", false, false, false),
+		OX ("OX", false, false, true),
+		STRANGEMEAT ("STRANGE_MEAT", true, false, false);
 		
 		private final String name;
 		private final String pluralName;
@@ -37,7 +37,7 @@ public class Item implements Conditioned, Comparable<Item>{
 		
 		private final double weight;
 		
-		private final boolean isFood, isPlant;
+		private final boolean isFood, isPlant, isAnimal;
 		
 		private final int foodFactor;
 		
@@ -53,7 +53,7 @@ public class Item implements Conditioned, Comparable<Item>{
 		 */
 		//private ITEM_TYPE (String name, String description, String cost,
 			//	String weight, boolean isFood, boolean isPlant, int foodFactor) {
-		private ITEM_TYPE (String type, boolean isFood, boolean isPlant) {
+		private ITEM_TYPE (String type, boolean isFood, boolean isPlant, boolean isAnimal) {
 			this.name = ConstantStore.get("ITEMS", type + "_NAME");
 			this.pluralName = ConstantStore.get("ITEMS", type + "_PLURAL_NAME");
 			
@@ -62,6 +62,7 @@ public class Item implements Conditioned, Comparable<Item>{
 			this.weight = Double.parseDouble(ConstantStore.get("ITEMS", type + "_WEIGHT"));
 			this.isFood = isFood;
 			this.isPlant = isPlant;
+			this.isAnimal = isAnimal;
 			this.foodFactor = Integer.parseInt(ConstantStore.get("ITEMS", type + "_FOOD_FACTOR"));
 		}
 		
@@ -127,6 +128,14 @@ public class Item implements Conditioned, Comparable<Item>{
 		 */
 		public boolean isPlant() {
 			return isPlant;
+		}
+
+		/**
+		 * Is the item an animal?
+		 * @return Is it an animal
+		 */
+		public boolean isAnimal() {
+			return isAnimal;
 		}
 	}
 
