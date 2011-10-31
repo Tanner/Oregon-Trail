@@ -31,7 +31,6 @@ import component.Panel;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.modal.MessageModal;
-import component.modal.Modal;
 import component.sprite.Sprite;
 
 import core.ConstantStore;

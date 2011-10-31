@@ -36,10 +36,7 @@ public class Party implements HUDDataSource {
 	private int totalDistanceTravelled = 0;
 
 	private Time time;
-	
-	//TODO: Delete this after condition refactor
-	private double badVariable = 0;
-	
+		
 	/**
 	 * 
 	 * The possible values of the party's pace
