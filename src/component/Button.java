@@ -75,6 +75,9 @@ public class Button extends Component implements Disableable {
 		setLabel(label);
 	}
 	
+	/**
+	 * Generates the layout.
+	 */
 	public void layout() {
 		if (label != null && label.isVisible() && sprite != null && sprite.isVisible()) {
 			sprite.setPosition(this.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.BOTTOMCENTER);
@@ -90,6 +93,10 @@ public class Button extends Component implements Disableable {
 		}
 	}
 	
+	/**
+	 * Sets the {@code Label}.
+	 * @param label New Label to use
+	 */
 	public void setLabel(Label label) {
 		if (this.label != null) {
 			remove(this.label);
@@ -104,6 +111,10 @@ public class Button extends Component implements Disableable {
 		layout();
 	}
 	
+	/**
+	 * Sets the {@code Sprite}.
+	 * @param sprite New Sprite to use
+	 */
 	public void setSprite(Sprite sprite) {
 		if (this.sprite != null) {
 			remove(this.sprite);
@@ -118,6 +129,10 @@ public class Button extends Component implements Disableable {
 		layout();
 	}
 	
+	/**
+	 * Sets whether or not the {@code Label} is shown.
+	 * @param showLabel Whether or not the label is shown (true is visible)
+	 */
 	public void setShowLabel(boolean showLabel) {
 		if (this.label == null) {
 			return;
@@ -128,6 +143,10 @@ public class Button extends Component implements Disableable {
 		layout();
 	}
 	
+	/**
+	 * Sets whether or not the {@code Sprite} is shown.
+	 * @param showSprite Whether or not the Sprite is shown (true is visible)
+	 */
 	public void setShowSprite(boolean showSprite) {
 		if (this.sprite == null) {
 			return;
