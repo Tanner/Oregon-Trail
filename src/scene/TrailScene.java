@@ -224,7 +224,7 @@ public class TrailScene extends Scene {
 			modalMessage.append(encounterMessage);
 		
 		if (modalMessage.length() != 0) {
-			SoundStore.get().stopAllSound();
+			SoundStore.get().stopSound("Steps");
 			ChoiceModal campModal = new ChoiceModal(container, this, modalMessage.toString().trim());
 			campModal.setCancelButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
 			campModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
@@ -309,9 +309,8 @@ public class TrailScene extends Scene {
 	@Override
 	public void dismissModal(Modal modal, boolean cancelled) {
 		super.dismissModal(modal, cancelled);
-		SoundStore.get().stopMusic();
+		SoundStore.get().stopAllSound();
 		if (cancelled) {
-			SoundStore.get().stopAllSound();
 			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, this, false);
 		}
 	}

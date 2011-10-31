@@ -59,6 +59,7 @@ public class SoundStore {
 		addToSounds("Smooth", new Sound("resources/music/smooth.ogg"));
 		addToSounds("Steps", new Sound("resources/music/steps.ogg"));
 		addToSounds("Click", new Sound("resources/music/click.ogg"));
+		addToSounds("ItemGet", new Sound("resources/music/itemGet.ogg"));
 	}
 	
 	public List<String> getPlayingMusic() {

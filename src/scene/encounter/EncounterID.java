@@ -7,8 +7,8 @@ import model.Party;
  * Get the name, frequency, as well as generate any requested Encounter.
  */
 public enum EncounterID {
-	THIEF ("Thief Encounter", 1),
-	ITEM ("Item Encounter", 1),
+	THIEF ("Thief Encounter", 100),
+	ITEM ("Item Encounter", 100),
 	POTHOLE ("Pothole Encounter", 1),
 	MESSAGE("Message Encounter", 2),
 	NULL ("Null Encounter", 20);

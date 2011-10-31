@@ -2,6 +2,8 @@ package scene.encounter;
 
 import java.util.Random;
 
+import core.SoundStore;
+
 import model.Item;
 import model.Notification;
 import model.Party;
@@ -68,6 +70,7 @@ public class ItemEncounter extends Encounter {
 				party.getVehicle().addItemToInventory(new Item(type.getItemType()));
 			}
 		}
+		SoundStore.get().playSound("ItemGet");
 		return makeNotification();
 	}
 
