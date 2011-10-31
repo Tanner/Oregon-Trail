@@ -26,7 +26,7 @@ public class MainMenuScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		SoundStore.get().setVolume(100);
+		SoundStore.get().setVolume(.5f);
 		SoundStore.get().loopMusic("GBU");
 		
 		//Font fieldFont = GameDirector.sharedSceneListener().getFontManager().getFont(FontManager.FontID.FIELD);

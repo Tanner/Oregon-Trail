@@ -8,6 +8,7 @@ import model.Item;
 import model.Notification;
 import model.Party;
 import model.Item.ITEM_TYPE;
+import model.item.Animal;
 
 /**
  * Generates a random number of an item, and gives them to the Party's wagon.
@@ -71,7 +72,11 @@ public class ItemEncounter extends Encounter {
 	public EncounterNotification doEncounter() {
 		// Give the party 1 to 10 items
 		numItems = (int) (Math.random() * 10) + 1;
-		if (party.getVehicle() != null) {
+		if (type.getItemType().isAnimal()) {
+			for (int i = 0; i < numItems; i++) {
+				party.addAnimals(new Animal(type.getItemType()));
+			}
+		} else if (party.getVehicle() != null) {
 			for (int i = 0; i < numItems; i++) {
 				party.getVehicle().addItemToInventory(new Item(type.getItemType()));
 			}

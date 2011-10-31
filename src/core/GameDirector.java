@@ -141,7 +141,7 @@ public class GameDirector implements SceneListener {
 			worldMap.setCurrTrail(game.getPlayer().getParty().getTrail());
 		}
 		
-		Scene newScene = sceneForSceneID(id);
+		Scene newScene = id != null ? sceneForSceneID(id): null;
 		
 		if(worldMap.getCurrLocationNode().getRank() == worldMap.getMaxRank()) {
 			newScene = new VictoryScene();
