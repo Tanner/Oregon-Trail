@@ -114,15 +114,15 @@ public class TrailEdge extends MapObject {
 		String resStr;
 		
 		if (this.destination.MAP_YPOS > this.origin.MAP_YPOS ) {//northwestern trail
-			resStr =  "NW";
+			resStr =  "North West";
 		} else if (this.destination.MAP_YPOS < this.origin.MAP_YPOS ) {
-			resStr =  "SW";		
+			resStr =  "South West";		
 		} else {
-			resStr =  "W";		
+			resStr =  "West";		
 		}
 		//if the rank between destinations is the same, make only s or n, so return only first char
 		if (this.destination.getRank() == this.origin.getRank()){
-			resStr = resStr.substring(0,0);
+			resStr = resStr.substring(0,5);
 		}	
 		return resStr;
 		
@@ -133,6 +133,13 @@ public class TrailEdge extends MapObject {
 	 */
 	public LocationNode getDestination(){
 		return this.destination;
+	}
+	/**
+	 * return the origin of this trail
+	 * @return the origin node
+	 */
+	public LocationNode getOrigin(){
+		return this.origin;
 	}
 	
 	/**
@@ -149,13 +156,13 @@ public class TrailEdge extends MapObject {
 	 */
 	public String getDangerRating () {
 		String str;
-		if (dangerLevel < .05) {
+		if (dangerLevel < 5) {
 			str = "Established";
-		} else if (dangerLevel < .25) {
+		} else if (dangerLevel < 25) {
 			str = "Well-Travelled";
-		} else if (dangerLevel < .5) {
+		} else if (dangerLevel < 5) {
 			str = "Untravelled";
-		} else if (dangerLevel < .75) {
+		} else if (dangerLevel < 75) {
 			str = "Wilderness";
 		} else {
 			str = "Indian Lands";
@@ -166,8 +173,8 @@ public class TrailEdge extends MapObject {
 	@Override
 	public String debugToString() {
 		String retVal = "";
-		retVal += "Danger Level : " + this.dangerLevel + " Trail Edge ID : " + this.ID + " Trail Name : \"" + this.name + "\"\n";
-		retVal += "\tTrail from " + this.origin.getName() + " to " + this.destination.toString() + "that is " + this.length + " miles long\n";
+		retVal += "Danger : " + this.dangerLevel + " Trail ID : " + this.ID + " Trail Name : \"" + this.name + "\" Rank : " + this.origin.getRank() + " to " + this.destination.getRank() + "\n";
+		//retVal += "\tTrail from " + this.origin.getName() + " to " + this.destination.toString() + "that is " + this.length + " miles long\n";
 		return retVal;
 	}
 
