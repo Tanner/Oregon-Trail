@@ -11,14 +11,16 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.HUD;
 import component.Component;
 import component.ModalListener;
+import component.SceneLayer;
 import component.Tooltip;
 import component.Positionable.ReferencePoint;
+import component.Visible;
 import component.modal.Modal;
 
 /**
  * How the game displays information to the player.  Inherited by the containers which execute the game functionality
  */
-public abstract class Scene extends BasicGameState implements ModalListener {
+public abstract class Scene extends BasicGameState implements Visible, ModalListener {
 	protected static GameContainer container;
 	private static Tooltip tooltip;
 	
@@ -35,9 +37,13 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 		Scene.container = container;
 		
 		backgroundLayer = new SceneLayer(container);
+		backgroundLayer.setVisibleParent(this);
 		mainLayer = new SceneLayer(container);
+		mainLayer.setVisibleParent(this);
 		hudLayer = new SceneLayer(container);
+		hudLayer.setVisibleParent(this);
 		modalLayer = new SceneLayer(container);
+		modalLayer.setVisibleParent(this);
 	}
 
 	@Override
@@ -69,6 +75,15 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 	
 	public boolean isPaused() {
 		return paused;
+	}
+	
+	public SceneLayer[] getLayers() {
+		return new SceneLayer[] {
+				backgroundLayer,
+				mainLayer,
+				hudLayer,
+				hudLayer
+		};
 	}
 	
 	/**
@@ -108,12 +123,18 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 		hudLayer.add(hud);
 	}
 	
+	/**
+	 * Prepare for entry. Transition is about to start to this scene. 
+	 */
+	public void prepareToEnter() {
+		setActive(true);
+	}
+	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		mainLayer.setAcceptingInput(true);
 		hudLayer.setAcceptingInput(true);
 		modalLayer.setAcceptingInput(true);
-		setActive(true);
 	}
 	
 	@Override
@@ -195,11 +216,14 @@ public abstract class Scene extends BasicGameState implements ModalListener {
 		return container.getInput();
 	}
 	
-	/*
-	public void setMusic(Music music) {
-		if (this.music == null) {
-			this.music = music;
-			GameDirector.sharedSceneListener().playMusic(music);	
+	public void setVisible(boolean visible) {
+		SceneLayer[] layers  = getLayers();
+		for (SceneLayer layer : layers) {
+			layer.setVisible(false);
 		}
-	}*/
+	}
+	
+	public boolean isVisible() {
+		return active;
+	}
 }

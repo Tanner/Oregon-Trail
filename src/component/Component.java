@@ -18,7 +18,7 @@ import scene.Scene;
  * {@code Component} provides basic features for GUI elements with an origin,
  * width, and height.
  */
-public abstract class Component extends AbstractComponent implements Positionable {
+public abstract class Component extends AbstractComponent implements Positionable, Visible {
 	public static enum DebugMode {
 		NONE,
 		VISIBLE,
@@ -32,7 +32,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		OUT
 	}
 	
-	private Component parentComponent;
+	private Visible visibleParent;
 	private Vector2f origin;
 	private int width;
 	private int height;
@@ -189,20 +189,21 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	}
 	
 	/**
-	 * Sets the parent {@code Component}.
-	 * @param component New parent component
+	 * Sets the {@code Visible} parent.
+	 * @param component New visible parent
 	 */
-	public void setParentComponent(Component component) {
-		this.parentComponent = component;
+	public void setVisibleParent(Visible visible) {
+		this.visibleParent = visible;
 	}
 	
 	/**
-	 * Return if visible and parent component(s) are visible.
+	 * Return if visible and visible parent (and grandparents) is/are visible.
 	 * @return {@code true} if visible, {@code false} is not
 	 */
+	@Override
 	public boolean isVisible() {
-		if (parentComponent != null) {
-			return visible && parentComponent.isVisible();
+		if (visibleParent != null) {
+			return visible && visibleParent.isVisible();
 		}
 		
 		return false;
@@ -212,6 +213,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * Set this component to be visible or invisible.
 	 * @param visible Enables visibility if {@code true}, disables if {@code false}
 	 */
+	@Override
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
@@ -228,7 +230,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		component.setPosition(location, referencePoint, xOffset, yOffset);
 		
 		components.add(component);
-		component.setParentComponent(this);
+		component.setVisibleParent(this);
 	}
 	
 	/**
@@ -305,7 +307,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * @param component Component to remove
 	 */
 	public void remove(Component component) {
-		component.setParentComponent(null);
+		component.setVisibleParent(null);
 		components.remove(component);
 	}
 	
