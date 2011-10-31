@@ -1,11 +1,9 @@
-package scene;
+package component;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
-import component.AnimatingColor;
-import component.Component;
 
 public class SceneLayer extends Component {
 	private AnimatingColor overlayColor;
@@ -18,6 +16,10 @@ public class SceneLayer extends Component {
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
+		if (!isVisible()) {
+			return;
+		}
+		
 		g.setWorldClip(getX(), getY(), container.getWidth(), getHeight());
 		super.render(container, g);
 		
@@ -38,15 +40,14 @@ public class SceneLayer extends Component {
 	
 	public void add(Component component) { 
 		components.add(component);
-		component.setParentComponent(this);
-	}
-	
-	@Override
-	public boolean isVisible() {
-		return true;
+		component.setVisibleParent(this);
 	}
 	
 	public void setOverlayColor(AnimatingColor overlayColor) {
 		this.overlayColor = overlayColor;
+	}
+	
+	public boolean isVisible() {
+		return super.isVisible();
 	}
 }

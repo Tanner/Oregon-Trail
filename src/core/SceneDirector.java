@@ -47,7 +47,7 @@ public class SceneDirector extends StateBasedGame {
 		}
 		
 		scenes.push(scene);
-		addState(scene);
+		addScene(scene);
 		try {
 			scene.init(this.getContainer(), this);
 		} catch (SlickException e) {
@@ -99,8 +99,18 @@ public class SceneDirector extends StateBasedGame {
 		
 		MainMenuScene mainMenu = new MainMenuScene();
 		scenes.add(mainMenu);
-		addState(mainMenu);
+		addScene(mainMenu);
+	}
+	
+	/**
+	 * Alternative to {@code StateBasedGame}'s addState(State) method. Prepares
+	 * scene for entry.
+	 * @param scene scene to be added
+	 */
+	private void addScene(Scene scene) {
+		scene.prepareToEnter();
 		
+		super.addState(scene);
 	}
 	
 	@Override
