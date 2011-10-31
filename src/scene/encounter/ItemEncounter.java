@@ -17,7 +17,7 @@ public class ItemEncounter extends Encounter {
 	private enum ITEM_ENCOUNTER_TYPE {
 		APPLE(ITEM_TYPE.APPLE, "You rest by an apple tree. You pick up %d %3$s."),
 		BREAD(ITEM_TYPE.BREAD, "You find a basket of bread which contains %d %s %s. You decide to take it."),
-		GUN(ITEM_TYPE.GUN, "You find a %d rusted %3$s on the trail. It seems like it still works."),
+		GUN(ITEM_TYPE.GUN, "You find %d rusted %3$s on the trail. It seems like it still works."),
 		OX(ITEM_TYPE.OX, "You find %d lonely %3$s. You let the %3$s join your party.");
 		
 		private ITEM_TYPE itemType;
@@ -52,6 +52,12 @@ public class ItemEncounter extends Encounter {
 	private int numItems;
 	private ITEM_ENCOUNTER_TYPE type;
 	
+	/**
+	 * Constructs an ItemEncounter with a party, as well as its range of occurrence.
+	 * @param party The party, so the encounter can affect the game
+	 * @param min The beginning of the range of occurrence
+	 * @param max The end of the range of occurrence
+	 */
 	public ItemEncounter(Party party, int min, int max) {
 		super(party, min, max);
 		

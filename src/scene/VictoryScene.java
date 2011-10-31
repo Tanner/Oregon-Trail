@@ -19,7 +19,7 @@ public class VictoryScene extends Scene {
 		super.init(container, game);
 		
 		Font h1 = FontStore.get(FontStore.FontID.H1);
-		Label titleLabel = new Label(container, h1, Color.red, "Victory!");
+		Label titleLabel = new Label(container, h1, Color.green, "Victory!");
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
 		
 		backgroundLayer.add(new Panel(container, Color.black));
