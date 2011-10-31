@@ -335,7 +335,7 @@ public final class ConstantStore {
 		
 
 		
-		//missouri territory zone names
+		//missouri zone names
 		TOWN_NAMES.put(0, townNames0);
 		//nebraska territory zone names
 		TOWN_NAMES.put(1, townNames1);		

@@ -26,7 +26,7 @@ public class WorldMap {
 	private final int MAX_TRAILS_OUT = 3;  
 	/**minimum number of exiting trails each location can have*/
 	private final int MIN_TRAILS_OUT = 1;  
-	/**maximum number of "levels" of travel west - only portland has this as its rank.  edges can only go to edges with equal or higher rank than their origin node*/
+	/**maximum number of "levels" of travel west - only oregon city has this as its rank.  edges can only go to edges with equal or higher rank than their origin node*/
 	private final int MAX_RANK = 15;
 	/**width of map in miles*/
 	private final int MAX_X = 1200;
@@ -46,7 +46,9 @@ public class WorldMap {
 	private int numTrails;
 	/**dev mode for this class, for testing */
 	private boolean devMode;
-	
+	/**holds which location names have been used*/
+	private Map<Integer,List<Boolean>> townNamesUsed;
+
 	/**
 	 * Makes a {@code WorldMap} object that tells the game where the party is and what's ahead of them
 	 * @param numNodes the number of possible locations on the map - not all of them will be reachable
@@ -56,6 +58,16 @@ public class WorldMap {
 		this.devMode = (devMode.length() == 0) ? false : true;
 		this.numTrails = 0;
 		this.numLocations = numNodes;
+		townNamesUsed = new HashMap <Integer, List<Boolean>>();
+		List<Boolean> townNamesBool;
+		//build local structure that holds a true or false for every location node to see if the name has been used yet
+		for (int incr = 0; incr < ConstantStore.TOWN_NAMES.size(); incr++ ){
+			townNamesBool = new ArrayList<Boolean>();
+			for (int j = 0; j < ConstantStore.TOWN_NAMES.get(incr).size(); j++){
+				townNamesBool.add(false);				
+			}
+			townNamesUsed.put(incr,townNamesBool);
+		}
 		this.generateMap(this.numLocations);
 		this.currLocationNode = this.mapHead;
 		this.currTrail = null;
@@ -142,6 +154,7 @@ public class WorldMap {
 		int rankIndex; 
 		String retVal = "";	
 		String stateVal;
+		String locationVal;
 		double maxRankDouble = (double) MAX_RANK;
 		if (curRank == 0){//treat this as missouri
 			rankIndex = 0;
@@ -156,11 +169,23 @@ public class WorldMap {
 			rankIndex = 5;
 			stateVal = "Oregon";
 		}
-
-		int townNameIndex = mapRand.nextInt(ConstantStore.TOWN_NAMES.get(rankIndex).size());
-		retVal = ConstantStore.TOWN_NAMES.get(rankIndex).get(townNameIndex) + ", " + stateVal;
-		//if ()
 		
+		int maxRankNameAraSize = ConstantStore.TOWN_NAMES.get(rankIndex).size();
+		int townNameIndex = mapRand.nextInt(maxRankNameAraSize);
+		//if the town name at this index is already used, then increment forward until we hit one that hasn't been.  
+		//this will only cycle through 1 time - if all are used then they will be reused
+		//maxRankNameAraSize is the size of the constantstore name array holding the literals for the names of the towns
+		int loopIncr = 0;
+		while ((townNamesUsed.get(rankIndex).get(townNameIndex)) && (loopIncr < maxRankNameAraSize)){
+			townNameIndex = (townNameIndex + 1) % maxRankNameAraSize;
+			loopIncr++;			
+		}
+		locationVal = ConstantStore.TOWN_NAMES.get(rankIndex).get(townNameIndex);
+		townNamesUsed.get(rankIndex).set(townNameIndex, true);
+		//verify that town name hasn't been used already in same location/state
+		
+		
+		retVal = locationVal + ", " + stateVal;
 		return retVal;
 	}
 	

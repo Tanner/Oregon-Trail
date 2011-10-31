@@ -11,6 +11,8 @@ public abstract class MapObject implements Conditioned {
 	protected Condition quality;
 	/**the name of this object */
 	protected String name;
+	/**the nature of the environment in/around this MapObject*/
+	//protected 
 
 
 	public MapObject(){
