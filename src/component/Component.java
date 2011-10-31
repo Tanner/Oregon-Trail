@@ -180,10 +180,18 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		g.clearClip();
 	}
 	
+	/**
+	 * Update the component based on the time since last update.
+	 * @param delta Time since last update in milliseconds.
+	 */
 	public void update(int delta) {
-		
+		return;
 	}
 	
+	/**
+	 * Sets the parent {@code Component}.
+	 * @param component New parent component
+	 */
 	public void setParentComponent(Component component) {
 		this.parentComponent = component;
 	}
@@ -373,6 +381,10 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		return null;
 	}
 	
+	/**
+	 * Get the background color.
+	 * @return The background color
+	 */
 	public Color getBackgroundColor() {
 		return backgroundColor;
 	}
@@ -552,6 +564,9 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		return mouseOver;
 	}
 
+	/**
+	 * Change the debug mode display.
+	 */
 	public static void changeDebugMode() {
 		if (debugMode == DebugMode.NONE) {
 			debugMode = DebugMode.VISIBLE;
@@ -562,10 +577,18 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 	}
 
+	/**
+	 * Get whether or not the tooltip is enabled.
+	 * @return Whether or not the tooltip is enabled
+	 */
 	public boolean isTooltipEnabled() {
 		return tooltipEnabled;
 	}
 
+	/**
+	 * Set whether or not the tooltip is enabled.
+	 * @param tooltipEnabled Whether or not the tooltip is enabled (true is enabled)
+	 */
 	public void setTooltipEnabled(boolean tooltipEnabled) {
 		this.tooltipEnabled = tooltipEnabled;
 		
@@ -574,10 +597,18 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 	}
 
+	/**
+	 * Return the tooltip message.
+	 * @return The tooltip message
+	 */
 	public String getTooltipMessage() {
 		return tooltipMessage;
 	}
 
+	/**
+	 * Set the tooltip message.
+	 * @param tooltipMessage New tooltip message
+	 */
 	public void setTooltipMessage(String tooltipMessage) {
 		this.tooltipMessage = tooltipMessage;
 	}
