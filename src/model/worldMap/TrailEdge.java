@@ -89,7 +89,17 @@ public class TrailEdge extends MapObject {
 	 */
 	public String getRoughDistanceToGo() {
 		double current = 1 - quality.getPercentage();
-		return current < .25 ? "Nowhere close to " : current < .5 ? "Getting closer to " : current < .75 ? "More than halfway to " : "Just a little further to ";
+		String str;
+		if (current < .25) {
+			str = "Nowhere close to ";
+		} else if (current < .5) {
+			str = "Getting closer to ";
+		} else if (current < .75) {
+			str = "More than halfway to ";
+		} else {
+			str = "Just a little further to ";
+		}
+		return str;
 	}
 
 	/**
@@ -126,7 +136,17 @@ public class TrailEdge extends MapObject {
 	 * Return the danger level of the trail as either easy, moderate, challenging, or suicide.
 	 */
 	public String getDangerRating () {
-		return dangerLevel < 25 ? "Easy" : dangerLevel < 50 ? "Moderately difficult" : dangerLevel < 75 ? "Challenging" : "Suicidal";
+		String str;
+		if (dangerLevel < .25) {
+			str = "Easy";
+		} else if (dangerLevel < .5) {
+			str = "Moderatey Difficult";
+		} else if (dangerLevel < .75) {
+			str = "Challenging";
+		} else {
+			str = "Suicidal";
+		}
+		return str;
 	}
 
 	@Override
@@ -143,7 +163,17 @@ public class TrailEdge extends MapObject {
 	 * @return An approximation of the trail length.
 	 */
 	public String getRoughLength() {
-		return (length < (.25 * TrailEdge.longestTrail) ? "Short" : (length < (.75 * TrailEdge.longestTrail) ? "Average" : ((length < TrailEdge.longestTrail) ? "Long" : "Endless")));
+		String str;
+		if (length < (.25 * TrailEdge.longestTrail)) {
+			str = "Short";
+		} else if (length < (.5 * TrailEdge.longestTrail)) {
+			str = "Average";
+		} else if (length < (.75 * TrailEdge.longestTrail)) {
+			str = "Long";
+		} else {
+			str = "Endless";
+		}
+		return str;
 	}
 	
 }// class TrailEdge

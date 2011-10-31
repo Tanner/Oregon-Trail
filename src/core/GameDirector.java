@@ -142,6 +142,9 @@ public class GameDirector implements SceneListener {
 		
 		if (id == SceneID.SCENESELECTOR) {
 			newScene = sceneForSceneID(id);
+		} else if(worldMap.getCurrLocationNode().getRank() == worldMap.getMaxRank()) {
+			newScene = new VictoryScene();
+			inTransition = new RotateTransition(Color.black);
 		} else if (id == SceneID.GAMEOVER) {
 			newScene = sceneForSceneID(id);
 			inTransition = new RotateTransition(Color.black);
