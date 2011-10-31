@@ -123,7 +123,7 @@ public class LocationNode extends MapObject {
 		this.outboundTrails.add(newTrail);
 	}
 	/**
-	 * gets the entire list of {@code outboundTrails}. Not preferred method of acces - keep datastore hidden
+	 * gets the entire list of {@code outboundTrails}. Not preferred method of access - keep datastore hidden
 	 * @return the list of trails for this particular node
 	 */
 	public List<TrailEdge> getOutboundTrails(){

@@ -159,13 +159,13 @@ public class TrailEdge extends MapObject {
 	 */
 	public String getDangerRating () {
 		String str;
-		if (dangerLevel < 5) {
+		if (dangerLevel < 10) {
 			str = "Established";
-		} else if (dangerLevel < 25) {
+		} else if (dangerLevel < 40) {
 			str = "Well-Travelled";
-		} else if (dangerLevel < 5) {
-			str = "Untravelled";
-		} else if (dangerLevel < 75) {
+		} else if (dangerLevel < 55) {
+			str = "Rarely Travelled";
+		} else if (dangerLevel < 90) {
 			str = "Wilderness";
 		} else {
 			str = "Indian Lands";
@@ -176,7 +176,7 @@ public class TrailEdge extends MapObject {
 	@Override
 	public String debugToString() {
 		String retVal = "";
-		retVal += "Roughly " + this.getRoughLength() +  "Danger : " + this.dangerLevel + " Trail ID : " + this.ID + " Trail Name : \"" + this.name + "\" Rank : " + this.origin.getRank() + " to " + this.destination.getRank() + "\n";
+		retVal += "\n\tLength : " + this.length +  " = " + this.getRoughLength() +  " Danger : " + this.dangerLevel +  " = \"" + this.getDangerRating() + "\" Trail ID : " + this.ID + " Trail Name : \"" + this.name + "\" Rank : " + this.origin.getRank() + " to " + this.destination.getRank() + "\n";
 		//retVal += "\tTrail from " + this.origin.getName() + " to " + this.destination.toString() + "that is " + this.length + " miles long\n";
 		return retVal;
 	}
