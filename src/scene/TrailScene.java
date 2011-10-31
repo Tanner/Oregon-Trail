@@ -7,6 +7,7 @@ import java.util.Random;
 import model.Notification;
 import model.Party;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -19,9 +20,11 @@ import component.AnimatingColor;
 import component.HUD;
 import component.Panel;
 import component.ParallaxPanel;
+import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.modal.ChoiceModal;
 import component.modal.Modal;
+import component.sprite.AnimatingSprite;
 import component.sprite.ParallaxSprite;
 import component.sprite.ParallaxSpriteLoop;
 import core.ConstantStore;
@@ -137,6 +140,18 @@ public class TrailScene extends Scene {
 		// Add to panel stuff and other things
 		backgroundLayer.add(parallaxPanel);
 		
+		//build animating party member walking
+		
+		Image[] personWalkingFrame = new Image[4];
+		personWalkingFrame[0] = new Image("resources/graphics/animations/model1a.png", false, Image.FILTER_NEAREST);
+		personWalkingFrame[1] = new Image("resources/graphics/animations/model1b.png", false, Image.FILTER_NEAREST);
+		personWalkingFrame[2] = new Image("resources/graphics/animations/model1c.png", false, Image.FILTER_NEAREST);
+		personWalkingFrame[3] = new Image("resources/graphics/animations/model1d.png", false, Image.FILTER_NEAREST);
+		
+		Animation personWalking = new Animation(personWalkingFrame, 2);
+		
+		AnimatingSprite personTrail = new AnimatingSprite(container, personWalking, personWalking);
+//		mainLayer.add(personTrail, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -5);
 		clickCounter = 0;
 		
 		adjustSetting();
