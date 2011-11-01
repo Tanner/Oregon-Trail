@@ -102,7 +102,6 @@ public class SceneSelectorScene extends Scene {
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
-			SoundStore.get().playSound("Click");
 			String buttonText = ((Button) component).getText();
 			
 			if (buttonText.equals(SceneID.MAINMENU.getName())) {

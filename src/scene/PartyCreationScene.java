@@ -554,7 +554,6 @@ public class PartyCreationScene extends Scene {
 		
 		@Override
 		public void componentActivated(AbstractComponent source) {
-			SoundStore.get().playSound("Click");
 			int retCode = 0;
 			int i = 0;
 			//for loop needed to be modified to a while to handle the retcode returned from personNameTextField

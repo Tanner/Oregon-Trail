@@ -258,7 +258,6 @@ public class SegmentedControl extends Component {
 		
 		@Override
 		public void componentActivated(AbstractComponent source) {
-			SoundStore.get().playSound("Click");
 			Logger.log("Selected before button press: " + Arrays.toString(getSelection()), Logger.Level.DEBUG);
 			if (maxSelected > 1 && !permanent[ordinal]) {
 				if (selection[ordinal])  {

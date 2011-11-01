@@ -2,6 +2,8 @@ package component;
 
 import org.newdawn.slick.gui.GUIContext;
 
+import core.SoundStore;
+
 /**
  * Toggle Button is a button that holds its state until its clicked again.
  */
@@ -49,6 +51,7 @@ public class ToggleButton extends Button {
 				setActive(false);
 			}
 			
+			SoundStore.get().playSound("Click");
 			notifyListeners();
 			input.consumeEvent();
 		}

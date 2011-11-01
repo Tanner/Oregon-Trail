@@ -9,6 +9,7 @@ import org.newdawn.slick.gui.GUIContext;
 import component.sprite.Sprite;
 
 import core.ConstantStore;
+import core.SoundStore;
 
 /**
  * {@code Button} inherits from {@code Component} to extend features
@@ -198,6 +199,7 @@ public class Button extends Component implements Disableable {
 		super.mouseReleased(button, mx, my);
 				
  		if (button == 0 && isMouseOver() && !disabled && active) {
+ 			SoundStore.get().playSound("Click");
 			notifyListeners();
 			input.consumeEvent();
 		}

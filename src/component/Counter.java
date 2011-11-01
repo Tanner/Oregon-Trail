@@ -9,6 +9,7 @@ import org.newdawn.slick.gui.GUIContext;
 import component.Label.Alignment;
 import component.sprite.Sprite;
 import core.FontStore;
+import core.SoundStore;
 
 /**
  * {@code CountingButton} inherits from {@code Button} to add a flag that counts up or down.
@@ -219,6 +220,7 @@ public class Counter extends Component implements Disableable {
 			}
 			
 	 		if (isMouseOver() && !isDisabled() && isActive()) {
+	 			SoundStore.get().playSound("Click");
 				Counter.this.notifyListeners();
 				input.consumeEvent();
 				setActive(false);
