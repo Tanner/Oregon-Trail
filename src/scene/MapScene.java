@@ -71,7 +71,7 @@ public class MapScene extends Scene {
 			SoundStore.get().playSound("Click");
 			if (source == returnToCamp) {
 				SoundStore.get().setMusicVolume(.25f);
-				GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, MapScene.this, true);
+				GameDirector.sharedSceneListener().sceneDidEnd(MapScene.this);
 			}//if source==return2camp
 		}//componentActivated		
 	}//button listener private class

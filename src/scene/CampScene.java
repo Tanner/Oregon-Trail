@@ -108,7 +108,7 @@ public class CampScene extends Scene {
 			} else if (source == bottomButtons[1]) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, CampScene.this, false);
 			} else if (source == bottomButtons[2]) {//map scene selected
-				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, CampScene.this, true);
+				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, CampScene.this, false);
 			} else if (source == bottomButtons[5]) {
 				GameDirector.sharedSceneListener().sceneDidEnd(CampScene.this);
 			}
