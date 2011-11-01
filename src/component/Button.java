@@ -344,4 +344,9 @@ public class Button extends Component implements Disableable {
 			setBevel(BevelType.OUT);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "Button[active: " + active +", label: " + label + "]";
+	}
 }

@@ -262,4 +262,9 @@ public class Label extends Component {
 	public void setVerticalAlignment(VerticalAlignment verticalAlignment) {
 		this.verticalAlignment = verticalAlignment;
 	}
+	
+	@Override
+	public String toString() {
+		return "Label[text: \"" + text +"\"]";
+	}
 }
