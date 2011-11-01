@@ -344,6 +344,15 @@ public class WorldMap {
 		return result;
 	}
 	
+	/**
+	 * returns the structure holding the world map
+	 * @return the world map - nodes and edges
+	 */
+	
+	public Map<Integer, List<LocationNode>> getMapNodes(){
+		return this.mapNodes;
+	}
+	
 	/** 
 	 * returns the currently set maximum rank value for this map
 	 * @return the constant max rank

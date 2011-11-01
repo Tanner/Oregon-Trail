@@ -42,10 +42,11 @@ public class MapScene extends Scene {
 		returnToCamp = new Button(container, 240, 60, new Label(container, fieldFont, Color.white, ConstantStore.get("MAP_SCENE", "RETURN_CAMP")));
 		returnToCamp.addListener(new ButtonListener());
 				
-		mainLayer.add(returnToCamp, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -75);
+		mainLayer.add(returnToCamp, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT, 20, -20);
 		
+		Image mapImg = new Image("resources/graphics/backgrounds/playerMap.png", false, Image.FILTER_NEAREST);
 		
-		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/map.png", false, Image.FILTER_NEAREST)));
+		backgroundLayer.add(new Panel(container, mapImg));
 		
 	}
 	/* (non-Javadoc)
