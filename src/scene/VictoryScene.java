@@ -12,7 +12,7 @@ import component.Positionable;
 import core.FontStore;
 
 public class VictoryScene extends Scene {
-	public static final SceneID ID = SceneID.HUNT;
+	public static final SceneID ID = SceneID.VICTORY;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {

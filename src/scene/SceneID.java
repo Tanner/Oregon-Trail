@@ -11,6 +11,7 @@ public enum SceneID {
 	TRAIL ("Trail"),
 	PARTYMANAGEMENTSCENE ("Party Management"),
 	GAMEOVER ("Game Over"),
+	VICTORY ("Victory"),
 	SCENESELECTOR ("Scene Selector"),
 	COMPONENTTEST ("Component Test"),
 	TRAILTEST ("Trail Test"),

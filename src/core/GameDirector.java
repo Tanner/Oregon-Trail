@@ -112,6 +112,8 @@ public class GameDirector implements SceneListener {
 			return new PartyManagementScene(game.getPlayer().getParty());
 		case GAMEOVER:
 			return new GameOverScene();
+		case VICTORY:
+			return new VictoryScene();
 		case COMPONENTTEST:
 			return new ComponentTestScene();
 		case TRAILTEST:
