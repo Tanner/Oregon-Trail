@@ -128,17 +128,17 @@ public final class ConstantStore {
 		itemMap.put("BREAD_FOOD_FACTOR", "2");
 		
 		itemMap.put("GUN_NAME", "Gun");
-		itemMap.put("GUN_PLURAL_NAME", "Gun");
+		itemMap.put("GUN_PLURAL_NAME", "Guns");
 		itemMap.put("GUN_DESCRIPTION", "Bang! Bang bang bang!");
 		itemMap.put("GUN_WEIGHT", "5.0");
 		itemMap.put("GUN_COST", "50");
 		itemMap.put("GUN_FOOD_FACTOR", "0");
 		
-		itemMap.put("AMMO_NAME", "Bullet");
-		itemMap.put("AMMO_PLURAL_NAME", "Bullets");
-		itemMap.put("AMMO_DESCRIPTION", "For a gun.");
-		itemMap.put("AMMO_WEIGHT", "0.25");
-		itemMap.put("AMMO_COST", "2");
+		itemMap.put("AMMO_NAME", "Ammo");
+		itemMap.put("AMMO_PLURAL_NAME", "Ammo");
+		itemMap.put("AMMO_DESCRIPTION", "A box of 100 bullets.");
+		itemMap.put("AMMO_WEIGHT", "2");
+		itemMap.put("AMMO_COST", "100");
 		itemMap.put("AMMO_FOOD_FACTOR", "0");
 		
 		itemMap.put("MEAT_NAME", "Meat");
