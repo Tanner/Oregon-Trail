@@ -105,8 +105,13 @@ public class SegmentedControl extends Component {
 		for (int i = 0; i < buttons.length; i++) {
 			if ((permanent[i] || selection[i] || i == singleSelection)) {
 				buttons[i].setActive(true);
+				
+				if (i == singleSelection) {
+					buttons[i].setAcceptingInput(false);
+				}
 			} else {
 				buttons[i].setActive(false);
+				buttons[i].setAcceptingInput(true);
 			}
 		}
 	}
