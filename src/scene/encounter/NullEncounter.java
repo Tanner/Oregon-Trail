@@ -5,12 +5,13 @@ import model.Party;
 
 public class NullEncounter extends Encounter {
 
-	public NullEncounter(Party party, int min, int max) {
-		super(party, min, max);
+	public NullEncounter(Party party, int value) {
+		super(party, value);
 	}
 	
 	@Override
 	public EncounterNotification doEncounter() {
+		value -= 1;
 		return makeNotification();
 	}
 
@@ -18,5 +19,4 @@ public class NullEncounter extends Encounter {
 	protected EncounterNotification makeNotification() {
 		return new EncounterNotification(new Notification("", false), null);
 	}
-
 }

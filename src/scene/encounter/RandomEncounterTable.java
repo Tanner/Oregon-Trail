@@ -1,5 +1,6 @@
 package scene.encounter;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -9,14 +10,15 @@ import java.util.Random;
  */
 public class RandomEncounterTable {
 	
-	private Encounter[] encounters;
-	Random random;
+	private List<Encounter> encounters;
+	private Random random;
+	private int maxValue;
 	
 	/**
 	 * Create the RandomEncounterTable so it may be polled for encounters.
 	 * @param encounters An array of generated encounters
 	 */
-	public RandomEncounterTable(Encounter[] encounters){
+	public RandomEncounterTable(List<Encounter> encounters){
 		random = new Random();
 		this.encounters = encounters;
 	}
@@ -28,13 +30,24 @@ public class RandomEncounterTable {
 	 */
 	public EncounterNotification getRandomEncounter() {
 
-		int roll = random.nextInt(encounters[encounters.length - 1].getMax());
-		
-		for (int i = 0; i < encounters.length; i++) {
-			if ( encounters[i].isInRange(roll))
-				return encounters[i].doEncounter();
+		maxValue = 0;
+		for(Encounter encounter : encounters) {
+			maxValue += encounter.getValue();
 		}
 		
+		int roll = random.nextInt(maxValue);
+		for (Encounter encounter : encounters) {
+			System.out.println(encounter + " Value: " + encounter.getValue());
+			if (encounter instanceof NullEncounter) {
+				for(Encounter other : encounters) {
+					other.increaseValue(1);
+				}
+				return encounter.doEncounter();
+			} else if(encounter.isInRange(roll)) {
+				return encounter.doEncounter();
+			} else 
+				roll -= encounter.getValue();
+		}
 		return null;
 	}
 }

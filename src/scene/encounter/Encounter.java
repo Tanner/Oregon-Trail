@@ -8,16 +8,18 @@ import model.Party;
  * or scene encapsulated in a EncounterNotification
  */
 public abstract class Encounter {
-	private int min;
-	private int max;
+	//private int min;
+	//private int max;
+	protected int value;
 	protected Party party;
 	
+	/* Jeremy's old stuff
 	/**
 	 * Give an Encounter the party, as well as its range of occurrence.
 	 * @param party The party, so the encounter can affect the game
 	 * @param min The beginning of the range of occurrence
 	 * @param max The end of the range of occurrence
-	 */
+	 *
 	public Encounter(Party party, int min, int max) {
 		this.min = min;
 		this.max = max;
@@ -29,7 +31,7 @@ public abstract class Encounter {
 	 * when an encounter occurs.
 	 * @param num A randomly generated number
 	 * @return True if num is in the range of this encounter's min and max
-	 */
+	 *
 	public boolean isInRange(int num) {
 		if ( num <= max && num >= min )
 			return true;
@@ -39,9 +41,22 @@ public abstract class Encounter {
 	/**
 	 * Return the max occurrence.
 	 * @return The maximum value for the Encounter's range
-	 */
+	 *
 	public int getMax() {
 		return max;
+	}*/
+	
+	public Encounter(Party party, int value) {
+		this.party = party;
+		this.value = value;
+	}
+	
+	public boolean isInRange(int num) {
+		return num < value;
+	}
+	
+	public int getValue() {
+		return value;
 	}
 	
 	/**
@@ -55,4 +70,8 @@ public abstract class Encounter {
 	 * @return An EncounterNotification with the
 	 */
 	protected abstract EncounterNotification makeNotification();
+
+	public void increaseValue(int amount) {
+		value += amount;
+	}
 }

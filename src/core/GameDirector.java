@@ -1,5 +1,7 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
@@ -248,19 +250,12 @@ public class GameDirector implements SceneListener {
 	 * Gets the encounter list to populate the trail scenes random encounter table
 	 * @return The mapping of scene types to probabilities
 	 */
-	private Encounter[] getEncounterList() {
-		int numOfEncounters = EncounterID.values().length;
+	private List<Encounter> getEncounterList() {
 		Random rand = new Random();
-		Encounter[] encounterList = new Encounter[numOfEncounters];
+		List<Encounter> encounterList = new ArrayList<Encounter>();
 		
-		int i = 0;
-		int min = 0;
-		int max = 0;
 		for ( EncounterID encounter : EncounterID.values() ) {
-			max = max + 5 * encounter.getFrequency();
-			encounterList[i] = EncounterID.getEncounter(game.getPlayer().getParty(), encounter, min, max);
-			min = ++max;
-			i++;
+			encounterList.add(EncounterID.getEncounter(game.getPlayer().getParty(), encounter, 5 * encounter.getFrequency() * (rand.nextInt(10)+1)));
 		}
 		return encounterList;
 	}

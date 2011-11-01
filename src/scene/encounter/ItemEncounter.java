@@ -59,8 +59,8 @@ public class ItemEncounter extends Encounter {
 	 * @param min The beginning of the range of occurrence
 	 * @param max The end of the range of occurrence
 	 */
-	public ItemEncounter(Party party, int min, int max) {
-		super(party, min, max);
+	public ItemEncounter(Party party, int value) {
+		super(party, value);
 		
 		Random random = new Random();
 		
@@ -81,6 +81,7 @@ public class ItemEncounter extends Encounter {
 				party.getVehicle().addItemToInventory(new Item(type.getItemType()));
 			}
 		}
+		value/=4;
 		SoundStore.get().playSound("ItemGet");
 		return makeNotification();
 	}
@@ -92,5 +93,4 @@ public class ItemEncounter extends Encounter {
 		Notification notification = new Notification(message);
 		return new EncounterNotification(notification, null);
 	}
-
 }

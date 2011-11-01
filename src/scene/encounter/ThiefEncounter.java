@@ -18,8 +18,8 @@ public class ThiefEncounter extends Encounter {
 	
 	private Random random = new Random();
 	
-	public ThiefEncounter(Party party, int min, int max) {
-		super(party, min, max);
+	public ThiefEncounter(Party party, int value) {
+		super(party, value);
 		itemName = "";
 	}
 	
@@ -44,6 +44,7 @@ public class ThiefEncounter extends Encounter {
 				itemName = type.getName();
 			}
 		}
+		value /= 5;
 		SoundStore.get().playSound("Smooth");
 		return makeNotification();
 
@@ -63,5 +64,4 @@ public class ThiefEncounter extends Encounter {
 		
 		return new EncounterNotification(new Notification(message, true), null);
 	}
-
 }

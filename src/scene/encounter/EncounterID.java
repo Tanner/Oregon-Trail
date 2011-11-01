@@ -9,7 +9,7 @@ import model.Party;
 public enum EncounterID {
 	THIEF ("Thief Encounter", 1),
 	ITEM ("Item Encounter", 1),
-	POTHOLE ("Pothole Encounter", 1),
+	//POTHOLE ("Pothole Encounter", 1),
 	MESSAGE("Message Encounter", 2),
 	NULL ("Null Encounter", 20);
 	
@@ -41,17 +41,17 @@ public enum EncounterID {
 	 * @param max The maximum in the Encounter's occurrence range
 	 * @return The created Encounter
 	 */
-	public static Encounter getEncounter(Party party, EncounterID id, int min, int max) {
+	public static Encounter getEncounter(Party party, EncounterID id, int value) {
 		if (id == EncounterID.THIEF) {
-			return new ThiefEncounter(party, min, max);
+			return new ThiefEncounter(party, value);
 		} else if (id == EncounterID.ITEM) {
-			return new ItemEncounter(party, min, max);
-		} else if (id == EncounterID.POTHOLE) {
-			return new NullEncounter(party, min, max);
+			return new ItemEncounter(party, value);
+		//} else if (id == EncounterID.POTHOLE) {
+			//return new NullEncounter(party, value);
 		} else if (id == EncounterID.MESSAGE) {
-			return new MessageEncounter(party, min, max);
+			return new MessageEncounter(party, value);
 		} else {
-			return new NullEncounter(party, min, max);
+			return new NullEncounter(party, value);
 		}
 
 	}
