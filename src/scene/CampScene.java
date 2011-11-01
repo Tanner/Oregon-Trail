@@ -71,6 +71,9 @@ public class CampScene extends Scene {
 		ButtonListener listener = new ButtonListener();
 		bottomButtons[0].addListener(listener);
 		bottomButtons[1].addListener(listener);
+		bottomButtons[2].addListener(listener);
+		bottomButtons[3].addListener(listener);
+		bottomButtons[4].addListener(listener);
 		bottomButtons[5].addListener(listener);
 		
 		buttonPanel.addAsGrid(bottomButtons, buttonPanel.getPosition(ReferencePoint.TOPLEFT), 2, 3, PADDING, PADDING, PADDING, PADDING);
@@ -98,10 +101,14 @@ public class CampScene extends Scene {
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
 			SoundStore.get().stopMusic();
+			SoundStore.get().playSound("Click");
+			
 			if (source == bottomButtons[0]) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
 			} else if (source == bottomButtons[1]) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, CampScene.this, false);
+			} else if (source == bottomButtons[2]) {//map scene selected
+				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, CampScene.this, true);
 			} else if (source == bottomButtons[5]) {
 				GameDirector.sharedSceneListener().sceneDidEnd(CampScene.this);
 			}

@@ -15,23 +15,27 @@ import core.ConstantStore;
  * The world map: a collection of locations and paths between.
  */
 public class WorldMap {
-
+	
 	/**number of locations on map if none passed to constructor - needs to be static to pass to constructor*/
-	private final static int GEN_LOC = 80;  
+	public final static int GEN_LOC = 80;  
 	/**weight of ranking assignment in random generator - 2 is 50 50 chance for same rank or next rank, higher numbers weight toward next rank*/
-	private final int RANK_WEIGHT = 3;  
+	public final int RANK_WEIGHT = 3;  
 	/**maximum danger a trail may have - used as an int seed during construction of the map*/
-	private final int MAX_DANGER = 100;  
+	public final int MAX_DANGER = 100;  
 	/**maximum number of exiting trails each location can have*/
-	private final int MAX_TRAILS_OUT = 3;  
+	public final int MAX_TRAILS_OUT = 3;  
 	/**minimum number of exiting trails each location can have*/
-	private final int MIN_TRAILS_OUT = 1;  
+	public final int MIN_TRAILS_OUT = 1;  
 	/**maximum number of "levels" of travel west - only oregon city has this as its rank.  edges can only go to edges with equal or higher rank than their origin node*/
-	private final int MAX_RANK = 25;
+	public final int MAX_RANK = 25;
 	/**width of map in miles*/
-	private final int MAX_X = 1200;
+	public final int MAX_X = 1200;
 	/**height of map in miles*/
-	private final int MAX_Y = 500;
+	public final int MAX_Y = 500;
+
+	/**make a map to hold the game map data (yo dawg), indexed by locationnode.rank, with each value being an arraylist of locationnodes.*/
+	private Map<Integer, List<LocationNode>> mapNodes = new HashMap<Integer, List<LocationNode>>();
+
 	/**points to starting city - references entire map*/
 	private LocationNode mapHead;
 	/**points to trailEdge most recently occupied by party*/
@@ -210,10 +214,10 @@ public class WorldMap {
 		//build a temporary list to hold the generated locations, from which to build the map by adding edges
 		
 		//make a map instead of a list, indexed by locationnode.rank, with value being arraylist of locationnodes.
-		Map<Integer, List<LocationNode>> mapNodes = new HashMap<Integer, List<LocationNode>>();
+		//Map<Integer, List<LocationNode>> mapNodes = new HashMap<Integer, List<LocationNode>>();
 		//initialize arraylists at each rank location
 		for (int i  = 0; i <= MAX_RANK; i++){
-			mapNodes.put(i, new ArrayList<LocationNode>());
+			this.mapNodes.put(i, new ArrayList<LocationNode>());
 		}		
 			//temp array holding number of locations at each rank, indexed by rank
 		int[] numRankAra = new int[MAX_RANK];
@@ -235,11 +239,11 @@ public class WorldMap {
 		numRankAra[MAX_RANK - 1] = 1;
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
 		
-		mapNodes.get(mapHead.getRank()).add(mapHead);
+		this.mapNodes.get(mapHead.getRank()).add(mapHead);
 		//need to build base set of nodes - must have at least 1 per rank to get from independence to portland
 		for (int i = 1; i < MAX_RANK; i++){
 			LocationNode tmp = generateLocationNode(mapRand, i, numExitTrails);
-			mapNodes.get(i).add(tmp);
+			this.mapNodes.get(i).add(tmp);
 		}//for loop to build initial path
 
 		//build rest of random map
@@ -251,9 +255,9 @@ public class WorldMap {
 			curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter - 1 : curRankIter;
 			//number of trails out of location : 1 to MaxTrailsOut constant
 			LocationNode tmp = generateLocationNode(mapRand, curRank, numExitTrails);
-			mapNodes.get(tmp.getRank()).add(tmp);
+			this.mapNodes.get(tmp.getRank()).add(tmp);
 		}//for all locations make a node
-		mapNodes.get(finalDestination.getRank()).add(finalDestination);
+		this.mapNodes.get(finalDestination.getRank()).add(finalDestination);
 
 		//as of here we have all the location nodes.  now need to build map.
 		//by adding edges.  an edge can only go from a location to one with equal or higher 
@@ -268,7 +272,7 @@ public class WorldMap {
 		boolean trailForward;
 
 		for (int i = 0; i < MAX_RANK; i++){
-			for(LocationNode node : mapNodes.get(i)){
+			for(LocationNode node : this.mapNodes.get(i)){
 				trailDest = new ArrayList<Integer>();
 				trailForward = false;
 				//add current node to list of used destination ID's
@@ -283,7 +287,7 @@ public class WorldMap {
 					int dangerLevel = randGenTrailDanger(mapRand, node.getRank());
 					//if we're at final rank before finish, have all edges go to portland
 					if (i == MAX_RANK - 1){
-						//System.out.println("i = " + i + " size = " + mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
+						//System.out.println("i = " + i + " size = " + this.mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
 						node.setTrails(1);
 						newTrail = new TrailEdge("Trail to " + finalDestination.getName(), finalDestination, node, dangerLevel );
 					} else {
@@ -291,8 +295,8 @@ public class WorldMap {
 							nextRank = node.getRank() + 1;
 						}
 						//nexttown holds size of arraylist for locations - used as random source to determine where trails go
-						int nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
-						LocationNode randDestNode = mapNodes.get(nextRank).get(nextTown);
+						int nextTown = mapRand.nextInt(this.mapNodes.get(nextRank).size());
+						LocationNode randDestNode = this.mapNodes.get(nextRank).get(nextTown);
 						//attempt to minimize going to a location that's already on the map and in the same zone as where we
 						//currently are - minimize possibility of moving laterally repeatedly
 						if ((mapRand.nextInt(100) < 90) || (randDestNode.getID() == (node.getID()))){
@@ -303,8 +307,8 @@ public class WorldMap {
 								} else {
 									nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i + 1) : i);
 								}
-								nextTown = mapRand.nextInt(mapNodes.get(nextRank).size());
-								randDestNode = mapNodes.get(nextRank).get(nextTown);
+								nextTown = mapRand.nextInt(this.mapNodes.get(nextRank).size());
+								randDestNode = this.mapNodes.get(nextRank).get(nextTown);
 								}
 						}
 						trailDest.add(randDestNode.getID());
@@ -321,8 +325,8 @@ public class WorldMap {
 		}//for each rank
 		if (this.devMode) {
 			for (int i = 0; i <= MAX_RANK; i++){
-				System.out.println("Locations at rank " +  i + " : " + mapNodes.get(i).size());
-				for(LocationNode node : mapNodes.get(i)){
+				System.out.println("Locations at rank " +  i + " : " + this.mapNodes.get(i).size());
+				for(LocationNode node : this.mapNodes.get(i)){
 					System.out.println(node.debugToString());
 				}//for locationnodes
 			}//for each rank
@@ -340,6 +344,10 @@ public class WorldMap {
 		return result;
 	}
 	
+	/** 
+	 * returns the currently set maximum rank value for this map
+	 * @return the constant max rank
+	 */
 	public int getMaxRank(){
 		return MAX_RANK;
 	}
