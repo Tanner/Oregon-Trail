@@ -17,10 +17,14 @@ public class LocationNode extends MapObject {
 	public final double WORLD_LATITUDE;
 	/** real world longitude */
 	public final double WORLD_LONGITUDE;
-	/** map position */	
+	/** internal representation of x coord*/	
 	public final double MAP_XPOS;
-	/** real world longitude */
+	/** internal representation of y coord */
 	public final double MAP_YPOS;
+	/** translated coord for x pos on player map*/
+	private double playerMapX;
+	/** translated coord for y pos on player map*/
+	private double playerMapY;	
 	/** ID for this node - used only internally for data store */ 
 	public final int ID;
 	/** class-wide counter of nodes */
@@ -129,6 +133,23 @@ public class LocationNode extends MapObject {
 	public List<TrailEdge> getOutboundTrails(){
 		return this.outboundTrails;
 	}
+
+	public double getPlayerMapX() {
+		return playerMapX;
+	}
+
+	public void setPlayerMapX(double playerMapX) {
+		this.playerMapX = playerMapX;
+	}
+
+	public double getPlayerMapY() {
+		return playerMapY;
+	}
+
+	public void setPlayerMapY(double playerMapY) {
+		this.playerMapY = playerMapY;
+	}
+
 	
 	/**
 	 * get a particular trail from the {@code outboundTrail} list by index

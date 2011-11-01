@@ -2,6 +2,7 @@ package scene;
 
 import model.Person;
 import model.WorldMap;
+import model.worldMap.LocationNode;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -37,8 +38,19 @@ public class MapScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		
+
+		Button[] locationButtons = new Button[worldMap.getNumLocations()];
+
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		 
+		for (int i = 0; i <= worldMap.MAX_RANK; i++){
+			for(LocationNode location : worldMap.getMapNodes().get(i)) {
+				locationButtons[location.getID()] = new Button(container, 10, 10, new Label(container, fieldFont ,Color.white, "" + location.getID()));
+				mainLayer.add(locationButtons[location.getID()], mainLayer.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) location.getPlayerMapX(), (int) location.getPlayerMapY());
+				System.out.println("location : " + location.getID() + " x : " + (int) location.getPlayerMapX() + " Y : " + (int) location.getPlayerMapY() );
+			}
+		}
+		
 		returnToCamp = new Button(container, 240, 60, new Label(container, fieldFont, Color.white, ConstantStore.get("MAP_SCENE", "RETURN_CAMP")));
 		returnToCamp.addListener(new ButtonListener());
 				
@@ -65,6 +77,7 @@ public class MapScene extends Scene {
 		return ID.ordinal();
 	}
 	
+
 	private class ButtonListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent source) {

@@ -34,7 +34,7 @@ public class WorldMap {
 	public final int MAX_Y = 500;
 
 	/**make a map to hold the game map data (yo dawg), indexed by locationnode.rank, with each value being an arraylist of locationnodes.*/
-	private Map<Integer, List<LocationNode>> mapNodes = new HashMap<Integer, List<LocationNode>>();
+	private Map<Integer, List<LocationNode>> mapNodes;
 
 	/**points to starting city - references entire map*/
 	private LocationNode mapHead;
@@ -62,7 +62,8 @@ public class WorldMap {
 		this.devMode = (devMode.length() == 0) ? false : true;
 		this.numTrails = 0;
 		this.numLocations = numNodes;
-		townNamesUsed = new HashMap <Integer, List<Boolean>>();
+		this.mapNodes = new HashMap<Integer, List<LocationNode>>();
+		this.townNamesUsed = new HashMap <Integer, List<Boolean>>();
 		List<Boolean> townNamesBool;
 		//build local structure that holds a true or false for every location node to see if the name has been used yet
 		for (int incr = 0; incr < ConstantStore.TOWN_NAMES.size(); incr++ ){
@@ -132,7 +133,7 @@ public class WorldMap {
 		//multiplier to determine whether above or below the "equator"
 		int tmpW = (mapRand.nextBoolean()) ? (1) : (-1);
 		//actual y value passed to locationNode constructor
-		int tmpY = ((MAX_Y / MAX_RANK) * rnkMult * tmpW)  + tmpZ;  
+		int tmpY = (int) (mapRand.nextInt(MAX_Y /MAX_RANK) * mapRand.nextInt(rnkMult+1) * tmpW  + tmpZ);  
 		while(tmpY > MAX_Y / 2){
 			tmpY -= mapRand.nextInt(MAX_Y / MAX_RANK);
 			}
@@ -273,10 +274,15 @@ public class WorldMap {
 
 		for (int i = 0; i < MAX_RANK; i++){
 			for(LocationNode node : this.mapNodes.get(i)){
+				//manufacture proper coords for player map from x/y pos
+				convertToMapCoords(node);
+				
 				trailDest = new ArrayList<Integer>();
 				trailForward = false;
 				//add current node to list of used destination ID's
 				trailDest.add(node.getID());
+				
+				
 				for (int tNum = 0; tNum < node.getTrails(); tNum++){
 					int nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i + 1) : i);
 					if (nextRank == MAX_RANK){
@@ -323,6 +329,9 @@ public class WorldMap {
 				}//for each trail at location
 			}//for each location at rank
 		}//for each rank
+		
+		convertToMapCoords(this.mapNodes.get(finalDestination.getRank()).get(0));
+		
 		if (this.devMode) {
 			for (int i = 0; i <= MAX_RANK; i++){
 				System.out.println("Locations at rank " +  i + " : " + this.mapNodes.get(i).size());
@@ -351,6 +360,21 @@ public class WorldMap {
 	
 	public Map<Integer, List<LocationNode>> getMapNodes(){
 		return this.mapNodes;
+	}
+	
+	/**
+	 * this method will convert the internal coords of the map to the physical representation used by the player map.
+	 * 
+	 */
+	private void convertToMapCoords(LocationNode node){
+		double newX;
+		double newY;
+		
+		newX = (node.MAP_XPOS * (900.0/MAX_X)) + 60;
+		newY = (node.MAP_YPOS/1.5) + 80 + ((this.MAX_RANK - (node.getRank() + 1)) * (480.0/ Math.pow(this.MAX_RANK-1,1))) ;
+		node.setPlayerMapX(newX);
+		node.setPlayerMapY(newY);	
+		System.out.println(node.debugToString());
 	}
 	
 	/** 
@@ -384,7 +408,34 @@ public class WorldMap {
 	public TrailEdge getCurrTrail(){
 		return this.currTrail;
 	}
-	
+	/**
+	 * @return the numLocations
+	 */
+	public int getNumLocations() {
+		return numLocations;
+	}
+
+	/**
+	 * @param numLocations the numLocations to set
+	 */
+	public void setNumLocations(int numLocations) {
+		this.numLocations = numLocations;
+	}
+
+	/**
+	 * @return the numTrails
+	 */
+	public int getNumTrails() {
+		return numTrails;
+	}
+
+	/**
+	 * @param numTrails the numTrails to set
+	 */
+	public void setNumTrails(int numTrails) {
+		this.numTrails = numTrails;
+	}
+
 	/**
 	 * set current location or most recent location node of party
 	 * @param destination most recent/current trail
