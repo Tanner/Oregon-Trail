@@ -126,13 +126,6 @@ public class CampScene extends Scene {
 	}
 	
 	@Override
-	public void leave(GameContainer container, StateBasedGame game)  {
-		super.leave(container, game);
-		
-		backgroundLayer.remove(parallaxPanel);
-	}
-	
-	@Override
 	public int getID() {
 		return ID.ordinal();
 	}
