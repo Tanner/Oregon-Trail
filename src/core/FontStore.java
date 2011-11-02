@@ -35,9 +35,9 @@ public class FontStore {
 	}
 	
 	public void init() throws SlickException {
-		FONTS.put(FontID.H1.toString(), new AngelCodeFont("resources/fonts/04b03_h1.fnt", "resources/fonts/04b03_h1.png"));
-		FONTS.put(FontID.H2.toString(), new AngelCodeFont("resources/fonts/04b03_h2.fnt", "resources/fonts/04b03_h2.png"));
-		FONTS.put(FontID.FIELD.toString(), new AngelCodeFont("resources/fonts/04b03_field.fnt", "resources/fonts/04b03_field.png"));
+		FONTS.put(FontID.H1.toString(), new AngelCodeFont("resources/fonts/04b03_h1.fnt", "resources/fonts/04b03_h1.png", false));
+		FONTS.put(FontID.H2.toString(), new AngelCodeFont("resources/fonts/04b03_h2.fnt", "resources/fonts/04b03_h2.png", false));
+		FONTS.put(FontID.FIELD.toString(), new AngelCodeFont("resources/fonts/04b03_field.fnt", "resources/fonts/04b03_field.png", false));
 	}
 	
 	public static Font get(FontID font) {
