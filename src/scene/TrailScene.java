@@ -92,7 +92,7 @@ public class TrailScene extends Scene {
 			timeElapsed += delta;
 			if (party.getTrail().getConditionPercentage() == 0.0) {
 				party.setLocation(party.getTrail().getDestination());
-				SoundStore.get().stopAllSound();
+				SoundStore.get().stop();
 				GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
 			} else if (!SoundStore.get().getPlayingSounds().contains("Steps")) {
 				SoundStore.get().playSound("Steps");

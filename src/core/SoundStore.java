@@ -214,4 +214,12 @@ public class SoundStore {
 		sounds.get(name).loop();
 		
 	}
+
+	/**
+	 * Stop EVERYTHING
+	 */
+	public void stop() {
+		stopAllSound();
+		stopMusic();
+	}
 }
