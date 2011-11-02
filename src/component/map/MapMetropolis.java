@@ -1,9 +1,11 @@
 /**
  * 
  */
-package component;
+package component.map;
 
 import org.newdawn.slick.gui.GUIContext;
+
+import component.Component;
 
 /**
 *
