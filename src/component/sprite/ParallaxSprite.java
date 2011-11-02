@@ -155,7 +155,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	 * Set the maxElapsedTime using distance.
 	 * @param distance Distance from the viewer
 	 */
-	private void setMaxElapsedTime(int distance) {
+	public void setMaxElapsedTime(int distance) {
 		maxElapsedTime = ((FAR_MAX_ELAPSED_TIME * distance) / MAX_DISTANCE) + NEAR_MAX_ELAPSED_TIME;
 	}
 	

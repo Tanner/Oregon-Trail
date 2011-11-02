@@ -232,6 +232,11 @@ public class TrailScene extends Scene {
 		
 		// Determine our display speed
 		ParallaxSprite.setMaxElapsedTimes((int) map(party.getPace().getSpeed(), Party.Pace.STEADY.getSpeed(), Party.Pace.GRUELING.getSpeed(), NEAR_MAX_ELAPSED_TIME_SLOW, NEAR_MAX_ELAPSED_TIME_FAST), FAR_MAX_ELAPSED_TIME);
+	
+		// Because we changed the max elapsed times, we have to update the new max elapsed time for each sprite
+		for (ParallaxSprite sprite : parallaxPanel.getSprites()) {
+			sprite.setMaxElapsedTime(sprite.getDistance());
+		}
 	}
 	
 	/**
