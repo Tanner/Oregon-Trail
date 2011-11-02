@@ -17,7 +17,6 @@ import core.GameDirector;
 import core.SoundStore;
 
 public class CampScene extends Scene {
-	
 	public static final SceneID ID = SceneID.CAMP;
 	
 	private static final int PADDING = 20;
@@ -31,7 +30,13 @@ public class CampScene extends Scene {
 	//4: huntButton
 	//5: somethingButton
 	//6: continueButton
-	private Button[] bottomButtons;
+	private Button inventoryButton;
+	private Button partyManagementButton;
+	private Button mapButton;
+	private Button huntButton;
+	private Button miscButton;
+	private Button leaveButton;
+	
 	private Particle campFire;
 	
 	@Override
@@ -53,30 +58,42 @@ public class CampScene extends Scene {
 		buttonPanel.setBevel(Component.BevelType.OUT);
 		buttonPanel.setTopBorderWidth(2);
 		buttonPanel.setBorderColor(Color.black);
-		bottomButtons = new Button[6];
-		
-		Label tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Inventory");
-		bottomButtons[0] = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
-		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Party Management");
-		bottomButtons[1] = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
-		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Map");
-		bottomButtons[2] = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
-		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Hunt");
-		bottomButtons[3] = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
-		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Something");
-		bottomButtons[4] = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
-		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Continue");
-		bottomButtons[5] = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		
 		ButtonListener listener = new ButtonListener();
-		bottomButtons[0].addListener(listener);
-		bottomButtons[1].addListener(listener);
-		bottomButtons[2].addListener(listener);
-		bottomButtons[3].addListener(listener);
-		bottomButtons[4].addListener(listener);
-		bottomButtons[5].addListener(listener);
 		
-		buttonPanel.addAsGrid(bottomButtons, buttonPanel.getPosition(ReferencePoint.TOPLEFT), 2, 3, PADDING, PADDING, PADDING, PADDING);
+		Label tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Inventory");
+		inventoryButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		inventoryButton.addListener(listener);
+		
+		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Party Management");
+		partyManagementButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		partyManagementButton.addListener(listener);
+		
+		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Map");
+		mapButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		mapButton.addListener(listener);
+		
+		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Hunt");
+		huntButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		huntButton.addListener(listener);
+		
+		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Something");
+		miscButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		miscButton.addListener(listener);
+		
+		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Leave");
+		leaveButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		leaveButton.addListener(listener);
+				
+		Button buttons[] = new Button[6];
+		buttons[0] = inventoryButton;
+		buttons[1] = partyManagementButton;
+		buttons[2] = mapButton;
+		buttons[3] = leaveButton;
+		buttons[4] = miscButton;
+		buttons[5] = huntButton;
+		
+		buttonPanel.addAsGrid(buttons, buttonPanel.getPosition(ReferencePoint.TOPLEFT), 2, 3, PADDING, PADDING, PADDING, PADDING);
 		mainLayer.add(buttonPanel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT);
 		
 		campFire = new Particle(container, 1, 0, 10);
@@ -103,15 +120,15 @@ public class CampScene extends Scene {
 			SoundStore.get().stopMusic();
 			SoundStore.get().playSound("Click");
 			
-			if (source == bottomButtons[0]) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
-			} else if (source == bottomButtons[1]) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, CampScene.this, false);
-			} else if (source == bottomButtons[2]) {//map scene selected
-				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, CampScene.this, false);
-			} else if (source == bottomButtons[5]) {
-				GameDirector.sharedSceneListener().sceneDidEnd(CampScene.this);
-			}
+//			if (source == bottomButtons[0]) {
+//				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
+//			} else if (source == bottomButtons[1]) {
+//				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, CampScene.this, false);
+//			} else if (source == bottomButtons[2]) {//map scene selected
+//				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, CampScene.this, false);
+//			} else if (source == bottomButtons[5]) {
+//				GameDirector.sharedSceneListener().sceneDidEnd(CampScene.this);
+//			}
 		}
 	}
 
