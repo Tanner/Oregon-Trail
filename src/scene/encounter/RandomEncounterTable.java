@@ -37,7 +37,6 @@ public class RandomEncounterTable {
 		
 		int roll = random.nextInt(maxValue);
 		for (Encounter encounter : encounters) {
-			System.out.println(encounter + " Value: " + encounter.getValue());
 			if (encounter instanceof NullEncounter) {
 				for(Encounter other : encounters) {
 					other.increaseValue(1);
