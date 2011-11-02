@@ -60,6 +60,8 @@ public class SoundStore {
 		addToSounds("Steps", new Sound("resources/music/steps.ogg"));
 		addToSounds("Click", new Sound("resources/music/click.ogg"));
 		addToSounds("ItemGet", new Sound("resources/music/itemGet.ogg"));
+		addToSounds("WolfHowl", new Sound("resources/music/wolfHowl.ogg"));
+		addToSounds("Rooster", new Sound("resources/music/rooster.ogg"));
 	}
 	
 	public List<String> getPlayingMusic() {

@@ -104,6 +104,7 @@ public class GameDirector implements SceneListener {
 		case PARTYINVENTORY:
 			return new PartyInventoryScene(game.getPlayer().getParty());
 		case SCENESELECTOR:
+			SoundStore.get().stop();
 			return new SceneSelectorScene(game);
 		case HUNT:
 			return new HuntScene(game.getPlayer().getParty());

@@ -406,8 +406,13 @@ public class Party implements HUDDataSource {
 		for(Animal animal: getAnimals()) {
 			moveModifier += animal.getMoveFactor();
 		}
-		moveModifier = 10 - moveModifier/10;
-		return moveModifier > 1 ? moveModifier : 1;
+		if (moveModifier/10 > 5) {
+			return 5;
+		} else if (moveModifier/10 < 1) {
+			return 1;
+		} else {
+			return moveModifier/10;
+		}
 	}
 
 	private List<Animal> getAnimals() {

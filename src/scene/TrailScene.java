@@ -138,7 +138,7 @@ public class TrailScene extends Scene {
 				handleNotifications(notifications, encounterNotification.getNotification().getMessage());
 				
 				if (encounterNotification.getSceneID() != null)
-					SoundStore.get().stopAllSound();
+					SoundStore.get().stopSound("Steps");
 					GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
 
 				clickCounter = 0;

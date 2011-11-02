@@ -2,6 +2,8 @@ package model;
 
 import java.util.Random;
 
+import core.SoundStore;
+
 public class Time {
 
 	int time, day, year;
@@ -89,6 +91,12 @@ public class Time {
 			}
 		} else if (time == 24) {
 			time = 0;
+		}
+		
+		if (time == 19) {
+			SoundStore.get().playSound("WolfHowl");
+		} else if (time == 5) {
+			SoundStore.get().playSound("Rooster");
 		}
 	}
 
