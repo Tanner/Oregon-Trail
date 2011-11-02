@@ -42,8 +42,7 @@ public class CampScene extends Scene {
 	private Particle campFire;
 	
 	public CampScene(Party party) {
-		this.sky = sky;
-		this.parallaxPanel = parallaxPanel;
+		this.party = party;
 	}
 	
 	@Override
@@ -56,7 +55,10 @@ public class CampScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
+		sky = SceneryFactory.getSky(container, party);
 		backgroundLayer.add(sky);
+		
+		parallaxPanel = SceneryFactory.getScenery(container, party);
 		backgroundLayer.add(parallaxPanel);
 		
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
