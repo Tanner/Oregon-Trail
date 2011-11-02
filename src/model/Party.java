@@ -346,8 +346,6 @@ public class Party implements HUDDataSource {
 		List<Notification> messages = new ArrayList<Notification>();
 		double movement = (getPace().getSpeed() * getMoveModifier())/30;
 		
-
-		
 		trail.advance(movement);
 		totalDistanceTravelled += movement;
 		
@@ -515,12 +513,12 @@ public class Party implements HUDDataSource {
 			currentHealth = (int)person.getHealth().getCurrent();
 			if(currentHealth == 0) {
 				hasMessage = true;
-				str.append(person.getName() + " has died of starvation! ");
+				str.append(person.getName() + " has died of starvation!\n");
 			}
 			else if(person.getHealth().getCurrent() < (getPace().getSpeed() - 
 					((personHasFood(person) || vehicleHasFood()) ? getRations().getRationAmount() : 0))) {
 				hasMessage = true;
-				str.append(person.getName() + " is in danger of starvation." );
+				str.append(person.getName() + " is in danger of starvation.\n" );
 			}
 		}
 		if (hasMessage) {
