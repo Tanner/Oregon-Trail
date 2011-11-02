@@ -82,7 +82,7 @@ public class ItemEncounter extends Encounter {
 			}
 		}
 		value/=4;
-		SoundStore.get().playSound("ItemGet");
+		//SoundStore.get().playSound("ItemGet");
 		return makeNotification();
 	}
 
