@@ -33,3 +33,7 @@ local.properties
 
 # PDT-specific
 .buildpath
+
+# Javadoc
+javadoc/
+doc/
