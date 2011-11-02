@@ -62,7 +62,6 @@ public class TrailScene extends Scene {
 	
 	private int clickCounter;
 	private int timeElapsed;
-	private boolean paused;
 		
 	private Panel sky;
 	private ParallaxPanel parallaxPanel;
@@ -102,7 +101,7 @@ public class TrailScene extends Scene {
 		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
 		
 		// Ground
-		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		// Hills
@@ -152,8 +151,8 @@ public class TrailScene extends Scene {
 		// Add to panel stuff and other things
 		backgroundLayer.add(parallaxPanel);
 		
-		partyComponent = new PartyComponent(container, 400, 200, party.getPartyComponentDataSources());
-		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT);
+		partyComponent = new PartyComponent(container, 400, 150, party.getPartyComponentDataSources());
+		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, -100);
 		
 		clickCounter = 0;
 		
@@ -187,12 +186,14 @@ public class TrailScene extends Scene {
 				sprite.move(delta);
 			}
 			
-			paused = !hud.isNotificationsEmpty();
+			partyComponent.update(delta, timeElapsed);
 			
-			if (paused) {
+			boolean pause = !hud.isNotificationsEmpty();
+			
+			if (pause) {
 				return;
 			}
-			
+						
 			if (clickCounter >= STEP_COUNT_TRIGGER) {
 				party.getTime().advanceTime();
 				List<Notification> notifications = party.walk();
@@ -217,8 +218,6 @@ public class TrailScene extends Scene {
 				
 				adjustSetting();
 			}
-			
-			partyComponent.update(delta);
 		}
 	}
 	

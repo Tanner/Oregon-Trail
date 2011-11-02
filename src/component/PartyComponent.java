@@ -40,16 +40,16 @@ public class PartyComponent extends Component {
 		}
 		
 		addAsGrid(conditionBarArr,
-				getPosition(ReferencePoint.BOTTOMLEFT),
+				getPosition(ReferencePoint.TOPLEFT),
 				1,
 				conditionBarArr.length,
 				0,
-				-MARGIN - CONDITION_BAR_HEIGHT,
+				0,
 				MARGIN,
 				0);
 	}
 	
-	public void update(int delta) {
+	public void update(int delta, int timeElapsed) {
 		for (int i = dataSources.size() - 1; i >= 0; i--) {
 			conditionBars.get(i).update();
 			
@@ -58,6 +58,8 @@ public class PartyComponent extends Component {
 				conditionBars.remove(i);
 				dataSources.remove(i);
 			}
+			
+			conditionBars.get(i).setTranslation(0, (int)(2 * Math.sin(timeElapsed / 100 - (i + 1))));
 		}
 	}
 }
