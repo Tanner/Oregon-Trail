@@ -2,8 +2,6 @@ package component;
 
 import java.util.Random;
 
-import model.Party;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -47,6 +45,11 @@ public class SceneryFactory {
 		return sky;
 	}
 	
+	/**
+	 * Get the background overlay color for the time period.
+	 * @param hour Time of day
+	 * @return Color for the overlay
+	 */
 	public static Color getBackgroundOverlayColor(int hour) {
 		return backgroundOverlayColorForHour(hour);
 	}
