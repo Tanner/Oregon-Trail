@@ -146,12 +146,14 @@ public final class ConstantStore {
 		itemMap.put("WHEEL_WEIGHT", "5");
 		itemMap.put("WHEEL_COST", "75");
 		itemMap.put("WHEEL_REPAIR_FACTOR", "2");
+		itemMap.put("WHEEL_NECESSARY_QUALITY", "50");
 		
 		itemMap.put("SONIC_NAME", "Sonic");
 		itemMap.put("SONIC_PLURAL_NAME", "Sonics");
 		itemMap.put("SONIC_DESCRIPTION", "Weeeweeeveeeeweee");
 		itemMap.put("SONIC_WEIGHT", "0.5");
 		itemMap.put("SONIC_COST", "100");
+		itemMap.put("SONIC_NECESSARY_QUALITY", "100");
 		
 		itemMap.put("APPLE_NAME", "Apple");
 		itemMap.put("APPLE_PLURAL_NAME", "Apples");
@@ -166,18 +168,21 @@ public final class ConstantStore {
 		itemMap.put("BREAD_WEIGHT", "1.0");
 		itemMap.put("BREAD_COST", "4");
 		itemMap.put("BREAD_FOOD_FACTOR", "2");
+		itemMap.put("BREAD_NECESSARY_QUALITY", "10");
 		
 		itemMap.put("GUN_NAME", "Gun");
 		itemMap.put("GUN_PLURAL_NAME", "Guns");
 		itemMap.put("GUN_DESCRIPTION", "Bang! Bang bang bang!");
 		itemMap.put("GUN_WEIGHT", "5.0");
 		itemMap.put("GUN_COST", "50");
+		itemMap.put("GUN_NECESSARY_QUALITY", "25");
 		
 		itemMap.put("AMMO_NAME", "Ammo");
 		itemMap.put("AMMO_PLURAL_NAME", "Ammo");
 		itemMap.put("AMMO_DESCRIPTION", "A box of 100 bullets.");
 		itemMap.put("AMMO_WEIGHT", "2");
 		itemMap.put("AMMO_COST", "100");
+		itemMap.put("AMMO_NECESSARY_QUALITY", "20");
 		
 		itemMap.put("MEAT_NAME", "Meat");
 		itemMap.put("MEAT_PLURAL_NAME", "Meat");
@@ -193,6 +198,7 @@ public final class ConstantStore {
 		itemMap.put("WAGON_COST", "2000");
 		itemMap.put("WAGON_MAX_INV_SIZE", "10");
 		itemMap.put("WAGON_MAX_INV_WEIGHT", "2000");
+		itemMap.put("WAGON_NECESSARY_QUALITY", "95");
 		
 		itemMap.put("OX_NAME", "Ox");
 		itemMap.put("OX_PLURAL_NAME", "Oxen");
@@ -214,6 +220,7 @@ public final class ConstantStore {
 		itemMap.put("HORSE_WEIGHT", "200");
 		itemMap.put("HORSE_COST", "400");
 		itemMap.put("HORSE_MOVE_FACTOR", "4.0");
+		itemMap.put("HORSE_NECESSARY_QUALITY", "75");
 		
 		itemMap.put("MULE_NAME", "Mule");
 		itemMap.put("MULE_PLURAL_NAME", "Mule");
@@ -221,6 +228,7 @@ public final class ConstantStore {
 		itemMap.put("MULE_WEIGHT", "200");
 		itemMap.put("MULE_COST", "250");
 		itemMap.put("MULE_MOVE_FACTOR", "3.0");
+		itemMap.put("MULE_NECESSARY_QUALITY", "30");
 		
 		itemMap.put("HAMMER_NAME", "Hammer");
 		itemMap.put("HAMMER_PLURAL_NAME", "Hammers");
@@ -235,6 +243,7 @@ public final class ConstantStore {
 		itemMap.put("AXLE_WEIGHT", "10");
 		itemMap.put("AXLE_COST", "200");
 		itemMap.put("AXLE_REPAIR_FACTOR", "4");
+		itemMap.put("AXLE_NECESSARY_QUALITY", "60");
 		
 		literalMap.put("ITEMS", itemMap);
 		
