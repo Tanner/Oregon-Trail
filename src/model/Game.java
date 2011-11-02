@@ -89,7 +89,7 @@ public class Game {
 				numberOf = (random.nextInt(10) + 5)/((location.getRank()/4) + 1);
 			}
 			
-			for(int i = 0; i < numberOf; i++) {
+			for(int i = 0; i < numberOf; i++) { 
 				storeInventory.addItemToInventory(new Item(itemType));
 			}
 		}
