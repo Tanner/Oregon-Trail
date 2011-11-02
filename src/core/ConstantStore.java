@@ -31,6 +31,18 @@ public final class ConstantStore {
 		OREGON
 	}
 	
+	public static enum Environments{
+		FORREST,
+		SNOWY_FORREST,
+		HILLS,
+		SNOWY_HILLS,
+		MOUNTAINS,
+		SNOWY_MOUNTAINS,
+		PLAINS,
+		SNOWY_PLAINS,
+		DESERT
+	}
+	
 	static {
 		Map<String, Map<String, String>> literalMap = new HashMap<String, Map<String, String>>();
 		TOWN_NAMES = new HashMap <StateIdx, List<String>>();

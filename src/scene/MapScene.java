@@ -59,7 +59,6 @@ public class MapScene extends Scene {
 		
 		mainLayer.add(playerMap, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT,0,0);
 		
-		
 		//add return to camp button
 		returnToCamp = new Button(container, 240, 60, new Label(container, fieldFont, Color.white, ConstantStore.get("MAP_SCENE", "RETURN_CAMP")));
 		returnToCamp.addListener(new ButtonListener());
