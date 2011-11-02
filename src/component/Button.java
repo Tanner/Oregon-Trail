@@ -16,7 +16,6 @@ import core.SoundStore;
  * that provides necessary functionality to behave like a button.
  */
 public class Button extends Component implements Disableable {
-	private static final int PADDING = 10;
 	private Label label;
 	private Sprite sprite;
 	

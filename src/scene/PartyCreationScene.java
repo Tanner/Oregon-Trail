@@ -34,7 +34,6 @@ import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;
 import core.Logger;
-import core.SoundStore;
 
 /**
  * Scene to allow user to create a party for the game.

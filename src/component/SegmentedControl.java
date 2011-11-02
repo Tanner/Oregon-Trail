@@ -5,14 +5,13 @@ import org.newdawn.slick.gui.*;
 
 import core.FontStore;
 import core.Logger;
-import core.SoundStore;
 
 import java.util.*;
 
 /**
- * A component with multiple buttons.  Has two functionalities:many buttons,
+ * A component with multiple buttons. Has two functionalities:many buttons,
  * where only one can be selected at a time, or 0 to some specified number
- * can be selected at a time.  The current button(s) selected stands is returned
+ * can be selected at a time. The current button(s) selected stands is returned
  * to the user in the form of an int array, with the numbers corresponding
  * to the index of the String array passed into the constructor.
  */
