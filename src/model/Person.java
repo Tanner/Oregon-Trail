@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import component.PartyComponentDataSource;
+
 import model.Item.ITEM_TYPE;
 
 import core.Logger;
@@ -12,10 +14,11 @@ import core.Logger;
  * Person consists of a list of skills the person is proficient with as well
  * as their name, and what their profession is called.
  */
-public class Person implements Conditioned, Inventoried {
+public class Person implements Conditioned, Inventoried, PartyComponentDataSource {
 	private final Condition skillPoints;
 	
 	private final Condition health;
+	private boolean dead;
 	
 	private boolean isMale = true;
 	
@@ -457,5 +460,19 @@ public class Person implements Conditioned, Inventoried {
 			itemList.add(new Item(ITEM_TYPE.STRANGEMEAT));
 		}
 		return itemList;
+	}
+
+	@Override
+	public Condition getCondition() {
+		return health;
+	}
+
+	@Override
+	public boolean isDead() {
+		return dead;
+	}
+	
+	public void setDead(boolean dead) {
+		this.dead = dead;
 	}
 }

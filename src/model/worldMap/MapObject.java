@@ -53,4 +53,8 @@ public abstract class MapObject implements Conditioned {
 		MapObject.count = 0;
 	}
 
+	@Override
+	public Condition getCondition() {
+		return quality;
+	}
 }

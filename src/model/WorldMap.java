@@ -11,7 +11,6 @@ import java.util.Random;
 import core.ConstantStore;
 
 
-
 /**
  * The world map: a collection of locations and paths between.
  */

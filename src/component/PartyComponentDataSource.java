@@ -1,8 +1,8 @@
 package component;
 
-import model.Condition;
+import model.Conditioned;
 
-public interface PartyComponentDataSource {
-	public Condition getHealthCondition(int person);
-	public int getMemberCount();
+public interface PartyComponentDataSource extends Conditioned {
+	String getName();
+	boolean isDead();
 }

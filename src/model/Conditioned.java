@@ -11,4 +11,6 @@ public interface Conditioned {
 	 * @return The current condition as a percentage of the max.
 	 */
 	double getConditionPercentage();
+
+	Condition getCondition();
 }

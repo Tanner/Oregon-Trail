@@ -12,7 +12,6 @@ import component.Label;
 import component.ModalListener;
 import component.Panel;
 import component.Positionable;
-import component.SegmentedControl;
 import core.ConstantStore;
 import core.FontStore;
 

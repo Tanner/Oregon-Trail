@@ -28,8 +28,6 @@ public class StoreScene extends Scene {
 	public static final SceneID ID = SceneID.STORE;
 	
 	private final int PADDING = 20;
-	private final int WIDE_PADDING = PADDING * 2;
-	private final int BUTTON_WIDTH = 260;
 	private final int REGULAR_BUTTON_HEIGHT = 30;
 	private final int INVENTORY_BUTTON_WIDTH = 130;
 	private final int INVENTORY_BUTTON_HEIGHT = 90;

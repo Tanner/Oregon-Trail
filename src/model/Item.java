@@ -250,6 +250,9 @@ public class Item implements Conditioned, Comparable<Item>{
 	public String toString() {
 		return type.getName();
 	}
-	
-	
+
+	@Override
+	public Condition getCondition() {
+		return status;
+	}
 }
