@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 
 import core.ConstantStore;
+import core.ConstantStore.StateIdx;
 
 
 /**
@@ -51,7 +52,7 @@ public class WorldMap {
 	/**dev mode for this class, for testing */
 	private boolean devMode;
 	/**holds which location names have been used*/
-	private Map<Integer,List<Boolean>> townNamesUsed;
+	private Map<ConstantStore.StateIdx,List<Boolean>> townNamesUsed;
 
 	/**
 	 * Makes a {@code WorldMap} object that tells the game where the party is and what's ahead of them
@@ -62,16 +63,17 @@ public class WorldMap {
 		this.devMode = (devMode.length() == 0) ? false : true;
 		this.numTrails = 0;
 		this.numLocations = numNodes;
+		this.numLocations = 3000;
 		this.mapNodes = new HashMap<Integer, List<LocationNode>>();
-		this.townNamesUsed = new HashMap <Integer, List<Boolean>>();
+		this.townNamesUsed = new HashMap <ConstantStore.StateIdx, List<Boolean>>();
 		List<Boolean> townNamesBool;
 		//build local structure that holds a true or false for every location node to see if the name has been used yet
-		for (int incr = 0; incr < ConstantStore.TOWN_NAMES.size(); incr++ ){
+		for (ConstantStore.StateIdx idx : ConstantStore.StateIdx.values()){
 			townNamesBool = new ArrayList<Boolean>();
-			for (int j = 0; j < ConstantStore.TOWN_NAMES.get(incr).size(); j++){
+			for (int j = 0; j < ConstantStore.TOWN_NAMES.get(idx).size(); j++){
 				townNamesBool.add(false);				
 			}
-			townNamesUsed.put(incr,townNamesBool);
+			townNamesUsed.put(idx,townNamesBool);
 		}
 		this.generateMap(this.numLocations);
 		this.currLocationNode = this.mapHead;
@@ -171,67 +173,50 @@ public class WorldMap {
 	
 	private String nameLocation(int curRank, Random mapRand, int yVal){
 		//index of town_names structure corresponding to the town names of this zone
-		int rankIndex; 
+		ConstantStore.StateIdx rankIndex; 
 		String retVal = "";	
-		String stateVal;
 		String locationVal;
 		double maxRankDouble = (double) MAX_RANK;
 		if (curRank == 0){//treat this as missouri
-			rankIndex = 0;
-			//stateVal = "Missouri";		
+			rankIndex = ConstantStore.StateIdx.MISSOURI;
 		} else if (curRank <= (0.15 * maxRankDouble)){
-			rankIndex = (yVal > 0) ? 1 : 2 ;
-			//stateVal = (yVal > 0) ? "Nebraska Territory" : "Kansas Territory";			
+			rankIndex = (yVal > 0) ? ConstantStore.StateIdx.NEBRASKA_TERRITORY :  ConstantStore.StateIdx.KANSAS_TERRITORY ;
 		} else if (curRank <= (0.35*maxRankDouble)){
-			rankIndex = (yVal > -70) ? 1 : 2 ;
-			//stateVal = (yVal > -70) ? "Nebraska Territory" : "Kansas Territory";			
+			rankIndex = (yVal > -70) ? ConstantStore.StateIdx.NEBRASKA_TERRITORY :  ConstantStore.StateIdx.KANSAS_TERRITORY ;
 		} else if (curRank <= (0.45*maxRankDouble)){
-			rankIndex = (yVal > 80) ? 6 : 1 ;
-			stateVal = (yVal > 80) ? "Dakota Territory" : "Nebraska Territory";	
+			rankIndex = (yVal > 80) ? ConstantStore.StateIdx.DAKOTA_TERRITORY : ConstantStore.StateIdx.NEBRASKA_TERRITORY;
 			if (yVal <  -50){//use kansas names but colorado territory
-				rankIndex = 2;
-			//	stateVal = "Colorado Territory";
+				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;
 			}
 		} else if (curRank <= (0.5*maxRankDouble)){
-			rankIndex = (yVal > 80) ? 6 : 1 ;
-			stateVal = (yVal > 80) ? "Dakota Territory" : "Nebraska Territory";	
+			rankIndex = (yVal > 80) ? ConstantStore.StateIdx.DAKOTA_TERRITORY : ConstantStore.StateIdx.NEBRASKA_TERRITORY;
 			if (yVal <  -80){//use kansas names but colorado territory
-				rankIndex = 2;
-				stateVal = "Colorado Territory";
+				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;
 			}
 		} else if (curRank <= (0.6*maxRankDouble)){
-			rankIndex = (yVal > 55) ? 6 : 1 ;
-			stateVal = (yVal > 55) ? "Dakota Territory" : "Nebraska Territory";	
+			rankIndex = (yVal > 55) ? ConstantStore.StateIdx.DAKOTA_TERRITORY : ConstantStore.StateIdx.NEBRASKA_TERRITORY;
 			if (yVal <  -95){//use kansas names but colorado territory
-				rankIndex = 2;
-				stateVal = "Colorado Territory";
+				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;
 			}
 		} else if (curRank <= (0.7*maxRankDouble)) {
-			rankIndex = (yVal > -70) ? 3 : 4 ;
-			stateVal = (yVal > -70) ? "Washington Territory" : "Utah Territory";
+			rankIndex = (yVal > -70) ? ConstantStore.StateIdx.WASHINGTON_TERRITORY : ConstantStore.StateIdx.UTAH_TERRITORY ;
 			if (yVal > 100){//use Dakota names
-				rankIndex = 6;
-				stateVal = "Dakota Territory";
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
 			}
 			
 		} else if (curRank <= (0.8*maxRankDouble)) {
-			rankIndex = (yVal > -70) ? 3 : 4 ;
-			stateVal = (yVal > -70) ? "Washington Territory" : "Utah Territory";
+			rankIndex = (yVal > -70) ? ConstantStore.StateIdx.WASHINGTON_TERRITORY : ConstantStore.StateIdx.UTAH_TERRITORY ;
 			if (yVal > 120){//use Dakota names
-				rankIndex = 6;
-				stateVal = "Dakota Territory";
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
 			}
 			
 		} else if (curRank <= (0.83*maxRankDouble)) {
-			rankIndex = (yVal > -100) ? 3 : 4 ;
-			stateVal = (yVal > -100) ? "Was1hington Territory" : "Uta1h Territory";
+			rankIndex = (yVal > -100) ? ConstantStore.StateIdx.WASHINGTON_TERRITORY : ConstantStore.StateIdx.UTAH_TERRITORY ;
 			if (yVal > 150){//use Dakota names
-				rankIndex = 6;
-				stateVal = "Dako1ta Territory";
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
 			}
 		} else {
-			rankIndex = 5;
-			stateVal = "Oregon";
+			rankIndex = ConstantStore.StateIdx.OREGON;
 		}
 		
 		int maxRankNameAraSize = ConstantStore.TOWN_NAMES.get(rankIndex).size();
@@ -246,15 +231,24 @@ public class WorldMap {
 			loopIncr++;			
 		}
 		if (loopIncr >= maxRankNameAraSize){
-			int testVal = mapRand.nextInt(3);
+			int testVal = mapRand.nextInt(7);
 			
-			if (testVal == 0) {
+			if ((testVal & 1) == 1) {
 				prefixString += (mapRand.nextInt(2) == 0) ? "New " : "Old ";				
-			} else if (testVal == 1) {
+			}
+			else {
+				prefixString += (mapRand.nextInt(2) == 0) ? "Little " : "Big ";
+			}
+			if ((testVal & 2) == 2) {
 				prefixString += (mapRand.nextInt(2) == 0) ? "West " : "North ";			
+			}
+			else {
+				prefixString += (mapRand.nextInt(2) == 0) ? "East " : "South ";							
+			}
+			if ((testVal & 4) == 4){
+				prefixString += (mapRand.nextInt(2) == 0) ? "Low " : "Dusty ";			
 			} else {
-				prefixString += (mapRand.nextInt(2) == 0) ? "West " : "North ";			
-				prefixString += (mapRand.nextInt(2) == 0) ? "New " : "Old ";				
+				prefixString += (mapRand.nextInt(2) == 0) ? "Crimson " : "Gray ";								
 			}
 		}
 		locationVal = ConstantStore.TOWN_NAMES.get(rankIndex).get(townNameIndex);
@@ -276,9 +270,7 @@ public class WorldMap {
 	private void generateMap(int numLocations){
 		//build a temporary list to hold the generated locations, from which to build the map by adding edges
 		
-		//make a map instead of a list, indexed by locationnode.rank, with value being arraylist of locationnodes.
-		//Map<Integer, List<LocationNode>> mapNodes = new HashMap<Integer, List<LocationNode>>();
-		//initialize arraylists at each rank location
+			//initialize arraylists at each rank location
 		for (int i  = 0; i <= MAX_RANK; i++){
 			this.mapNodes.put(i, new ArrayList<LocationNode>());
 		}		
