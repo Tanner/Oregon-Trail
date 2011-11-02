@@ -34,6 +34,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	private Visible visibleParent;
 	private Vector2f origin;
+	private Vector2f translation;
 	private int width;
 	private int height;
 	
@@ -64,6 +65,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		super(context);
 		
 		origin = new Vector2f();
+		translation = new Vector2f();
 		this.width = width;
 		this.height = height;
 		
@@ -486,12 +488,12 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	@Override
 	public final int getX() {
-		return (int) origin.getX();
+		return (int) (origin.getX() + translation.getX());
 	}
 
 	@Override
 	public final int getY() {
-		return (int) origin.getY();
+		return (int) (origin.getY() + translation.getY());
 	}
 	
 	@Override
@@ -506,6 +508,15 @@ public abstract class Component extends AbstractComponent implements Positionabl
 			}
 			origin.set(x, y);
 		}
+	}
+	
+	public void setTranslation(int x, int y) {
+		if (components != null) {
+			for (Component c : components) {
+				c.setTranslation(x, y);
+			}
+		}
+		translation.set(x, y);
 	}
 	
 	@Override
