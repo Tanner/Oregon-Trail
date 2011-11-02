@@ -121,15 +121,15 @@ public class CampScene extends Scene {
 			SoundStore.get().stopMusic();
 			SoundStore.get().playSound("Click");
 			
-//			if (source == bottomButtons[0]) {
-//				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
-//			} else if (source == bottomButtons[1]) {
-//				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, CampScene.this, false);
-//			} else if (source == bottomButtons[2]) {//map scene selected
-//				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, CampScene.this, false);
-//			} else if (source == bottomButtons[5]) {
-//				GameDirector.sharedSceneListener().sceneDidEnd(CampScene.this);
-//			}
+			if (source == inventoryButton) {
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
+			} else if (source == partyManagementButton) {
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, CampScene.this, false);
+			} else if (source == mapButton) {
+				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, CampScene.this, false);
+			} else if (source == leaveButton) {
+				GameDirector.sharedSceneListener().sceneDidEnd(CampScene.this);
+			}
 		}
 	}
 
