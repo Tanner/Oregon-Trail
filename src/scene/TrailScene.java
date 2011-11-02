@@ -19,6 +19,7 @@ import component.AnimatingColor;
 import component.HUD;
 import component.Panel;
 import component.ParallaxPanel;
+import component.PartyComponent;
 import component.Positionable.ReferencePoint;
 import component.modal.ChoiceModal;
 import component.modal.Modal;
@@ -72,6 +73,8 @@ public class TrailScene extends Scene {
 	private HUD hud;
 	
 	private AnimatingColor skyAnimatingColor;
+	
+	private PartyComponent partyComponent;
 	
 	/**
 	 * Construct a TrailScene with a {@code Party} and a {@code RandomEncounterTable}.
@@ -149,18 +152,9 @@ public class TrailScene extends Scene {
 		// Add to panel stuff and other things
 		backgroundLayer.add(parallaxPanel);
 		
-		//build animating party member walking
+		partyComponent = new PartyComponent(container, 400, 200, this.party);
+		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT);
 		
-//		Image[] personWalkingFrame = new Image[4];
-//		personWalkingFrame[0] = new Image("resources/graphics/animations/model1a.png", false, Image.FILTER_NEAREST);
-//		personWalkingFrame[1] = new Image("resources/graphics/animations/model1b.png", false, Image.FILTER_NEAREST);
-//		personWalkingFrame[2] = new Image("resources/graphics/animations/model1c.png", false, Image.FILTER_NEAREST);
-//		personWalkingFrame[3] = new Image("resources/graphics/animations/model1d.png", false, Image.FILTER_NEAREST);
-//		
-//		Animation personWalking = new Animation(personWalkingFrame, 2);
-//		
-//		AnimatingSprite personTrail = new AnimatingSprite(container, personWalking, personWalking);
-//		mainLayer.add(personTrail, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -5);
 		clickCounter = 0;
 		
 		adjustSetting();
@@ -223,6 +217,8 @@ public class TrailScene extends Scene {
 				
 				adjustSetting();
 			}
+			
+			partyComponent.update(delta);
 		}
 	}
 	

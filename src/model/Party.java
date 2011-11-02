@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import component.PartyComponentDataSource;
+
 import model.Item.ITEM_TYPE;
 import model.datasource.HUDDataSource;
 import model.item.Animal;
@@ -16,7 +18,7 @@ import core.Logger.Level;
 /**
  * Party class that contains an array of persons that are members.
  */
-public class Party implements HUDDataSource {
+public class Party implements HUDDataSource, PartyComponentDataSource {
 	
 	private List<Person> members = new ArrayList<Person>();
 	
@@ -526,5 +528,15 @@ public class Party implements HUDDataSource {
 
 	public Time getTime() {
 		return time;
+	}
+
+	@Override
+	public Condition getHealthCondition(int person) {
+		return members.get(person).getHealth();
+	}
+	
+	@Override
+	public int getMemberCount() {
+		return members.size();
 	}
 }
