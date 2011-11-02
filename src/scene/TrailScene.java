@@ -7,7 +7,6 @@ import java.util.Random;
 import model.Notification;
 import model.Party;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -20,11 +19,9 @@ import component.AnimatingColor;
 import component.HUD;
 import component.Panel;
 import component.ParallaxPanel;
-import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.modal.ChoiceModal;
 import component.modal.Modal;
-import component.sprite.AnimatingSprite;
 import component.sprite.ParallaxSprite;
 import component.sprite.ParallaxSpriteLoop;
 import core.ConstantStore;
@@ -32,6 +29,9 @@ import core.GameDirector;
 import core.Logger;
 import core.SoundStore;
 
+/**
+ * TrailScene is where the {@code Party} travels from place to place.
+ */
 public class TrailScene extends Scene {
 	public static final SceneID ID = SceneID.TRAIL;
 	
@@ -73,6 +73,11 @@ public class TrailScene extends Scene {
 	
 	private AnimatingColor skyAnimatingColor;
 	
+	/**
+	 * Construct a TrailScene with a {@code Party} and a {@code RandomEncounterTable}.
+	 * @param party Party to use
+	 * @param randomEncounterTable RandomEncounterTable to use
+	 */
 	public TrailScene(Party party, RandomEncounterTable randomEncounterTable) {
 		this.party = party;
 		this.randomEncounterTable = randomEncounterTable;
@@ -172,7 +177,7 @@ public class TrailScene extends Scene {
 				party.setLocation(party.getTrail().getDestination());
 				SoundStore.get().stopAllSound();
 				GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
-			} else if(!SoundStore.get().getPlayingSounds().contains("Steps")) {
+			} else if (!SoundStore.get().getPlayingSounds().contains("Steps")) {
 				SoundStore.get().playSound("Steps");
 			}
 			
@@ -231,7 +236,6 @@ public class TrailScene extends Scene {
 	 * @param encounterMessage Notifications from encounter
 	 */
 	private void handleNotifications(List<Notification> notifications, String encounterMessage) {
-
 		List<String> messages = new ArrayList<String>();
 		StringBuilder modalMessage = new StringBuilder();
 		for(Notification notification : notifications) {
@@ -256,6 +260,9 @@ public class TrailScene extends Scene {
 		hud.addNotifications(messages);
 	}
 	
+	/**
+	 * Adjust the setting for the scene based on time of day.
+	 */
 	private void adjustSetting() {
 		int hour = party.getTime().getTime();
 		
@@ -270,6 +277,11 @@ public class TrailScene extends Scene {
 		this.backgroundLayer.setOverlayColor(backgroundOverlayAnimatingColor);
 	}
 	
+	/**
+	 * Get the correct sky color for the hour of day.
+	 * @param hour Hour of the day
+	 * @return Sky color for that hour
+	 */
 	private Color skyColorForHour(int hour) {
 		switch (hour + 1) {
 			case 6:
@@ -297,6 +309,11 @@ public class TrailScene extends Scene {
 		}
 	}
 	
+	/**
+	 * Get the background overlay color for the hour of the day.
+	 * @param hour Hour of the day
+	 * @return Background overlay for that hour
+	 */
 	private Color backgroundOverlayColorForHour(int hour) {
 		switch (hour + 1) {
 			case 7:
@@ -323,6 +340,15 @@ public class TrailScene extends Scene {
 		}
 	}
 	
+	/**
+	 * Map a number from its input range to its number in the own output range.
+	 * @param x Number to map to the new range
+	 * @param inMin x's min value
+	 * @param inMax x's max value
+	 * @param outMin Output's min value
+	 * @param outMax Output's max value
+	 * @return
+	 */
 	public float map(float x, float inMin, float inMax, float outMin, float outMax) {
 		  return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 	}
