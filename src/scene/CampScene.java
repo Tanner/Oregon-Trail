@@ -12,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.*;
 import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
+import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;
 import core.SoundStore;
@@ -61,27 +62,27 @@ public class CampScene extends Scene {
 		
 		ButtonListener listener = new ButtonListener();
 		
-		Label tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Inventory");
+		Label tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "INVENTORY"));
 		inventoryButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		inventoryButton.addListener(listener);
 		
-		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Party Management");
+		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "PARTY_MANAGEMENT"));
 		partyManagementButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		partyManagementButton.addListener(listener);
 		
-		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Map");
+		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "MAP"));
 		mapButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		mapButton.addListener(listener);
 		
-		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Hunt");
+		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "HUNT"));
 		huntButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		huntButton.addListener(listener);
 		
-		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Something");
+		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "MISC"));
 		miscButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		miscButton.addListener(listener);
 		
-		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, "Leave");
+		tempLabel = new Label(container, BUTTON_WIDTH, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "LEAVE"));
 		leaveButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		leaveButton.addListener(listener);
 				
