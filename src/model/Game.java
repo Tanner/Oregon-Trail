@@ -16,7 +16,7 @@ public class Game {
 	
 	private WorldMap worldMap;
 	
-	private Inventory storeInventory = new Inventory(8, 10000);
+	private Inventory storeInventory = new Inventory(16, 10000);
 	
 	
 	/**
