@@ -98,9 +98,6 @@ public class TrailScene extends Scene {
 		
 		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
 		
-		// Determine our display speed
-		ParallaxSprite.setMaxElapsedTimes((int) map(party.getPace().getSpeed(), Party.Pace.STEADY.getSpeed(), Party.Pace.GRUELING.getSpeed(), NEAR_MAX_ELAPSED_TIME_SLOW, NEAR_MAX_ELAPSED_TIME_FAST), FAR_MAX_ELAPSED_TIME);
-		
 		// Ground
 		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
@@ -227,6 +224,14 @@ public class TrailScene extends Scene {
 				adjustSetting();
 			}
 		}
+	}
+	
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) {
+		super.enter(container, game);
+		
+		// Determine our display speed
+		ParallaxSprite.setMaxElapsedTimes((int) map(party.getPace().getSpeed(), Party.Pace.STEADY.getSpeed(), Party.Pace.GRUELING.getSpeed(), NEAR_MAX_ELAPSED_TIME_SLOW, NEAR_MAX_ELAPSED_TIME_FAST), FAR_MAX_ELAPSED_TIME);
 	}
 	
 	/**
