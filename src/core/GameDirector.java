@@ -120,7 +120,7 @@ public class GameDirector implements SceneListener {
 		case TRAILTEST:
 			return new TrailTestScene(game.getPlayer().getParty());
 		case CAMP:
-			return new CampScene(null, null);
+			return new CampScene(game.getPlayer().getParty());
 		case MAP:
 			return new MapScene(game.getWorldMap());
 		case RIVER:
@@ -157,8 +157,6 @@ public class GameDirector implements SceneListener {
 		} else if (lastScene instanceof PartyCreationScene) {
 			// Last scene was Party Creation Scene
 			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
-		} else if (newScene instanceof CampScene && lastScene instanceof TrailScene) {
-			newScene = new CampScene(((TrailScene) lastScene).getSky(), ((TrailScene) lastScene).getParallaxPanel());
 		}
 		
 		/*

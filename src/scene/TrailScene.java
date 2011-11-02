@@ -2,14 +2,12 @@ package scene;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import model.Notification;
 import model.Party;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -21,10 +19,10 @@ import component.Panel;
 import component.ParallaxPanel;
 import component.PartyComponent;
 import component.Positionable.ReferencePoint;
+import component.SceneryFactory;
 import component.modal.ChoiceModal;
 import component.modal.Modal;
 import component.sprite.ParallaxSprite;
-import component.sprite.ParallaxSpriteLoop;
 import core.ConstantStore;
 import core.GameDirector;
 import core.Logger;
@@ -42,23 +40,6 @@ public class TrailScene extends Scene {
 	private static final int NEAR_MAX_ELAPSED_TIME_SLOW = 20;
 	private static final int NEAR_MAX_ELAPSED_TIME_FAST = 1;
 	private static final int FAR_MAX_ELAPSED_TIME = 100;
-	
-	private static final int HILL_DISTANCE_A = 300;
-	private static final int HILL_DISTANCE_B = 600;
-	private static final int CLOUD_DISTANCE = 400;
-	private static final int GROUND_DISTANCE = 10;
-	private static final int TREE_DISTANCE = 200;
-	private static final int DEER_DISTANCE = 150;
-	
-	private static final int NUM_TREES = 40;
-	private static final int TREE_OFFSET = 20;
-	
-	private static final int NUM_CLOUDS = 5;
-	private static final int CLOUD_OFFSET = 20;
-	private static final int CLOUD_DISTANCE_VARIANCE = 10;
-	private static final int CLOUD_OFFSET_VARIANCE = 10;
-	
-	private static final int DEER_OFFSET = 10;
 	
 	private int clickCounter;
 	private int timeElapsed;
@@ -92,63 +73,10 @@ public class TrailScene extends Scene {
 		hud = new HUD(container, party, new HUDListener());
 		showHUD(hud);
 		
-		sky = new Panel(container, skyColorForHour(party.getTime().getTime()));
+		sky = SceneryFactory.getSky(container, party);
 		backgroundLayer.add(sky);
 		
-		parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
-		Random random = new Random();
-		
-		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
-		
-		// Ground
-		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
-		parallaxPanel.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
-		
-		// Hills
-		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
-		parallaxPanel.add(hillA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
-		
-		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
-		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
-		
-		// Clouds
-		Image[] cloudImages = new Image[3];
-		cloudImages[0] = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
-		cloudImages[1] = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
-		cloudImages[2] = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
-		
-		for (int i = 0; i < NUM_CLOUDS; i++) {
-			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
-			int cloudImage = random.nextInt(cloudImages.length);
-			
-			int offset = CLOUD_OFFSET + random.nextInt(CLOUD_OFFSET_VARIANCE * 2) - CLOUD_OFFSET_VARIANCE;
-			
-			ParallaxSprite cloud = new ParallaxSprite(container, cloudImages[cloudImage], distance, true);
-			parallaxPanel.add(cloud, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, offset);
-		}
-		
-		// Trees
-		for (int i = 0; i < NUM_TREES; i++) {
-			int distance = random.nextInt(TREE_DISTANCE);
-			int offset = TREE_OFFSET;
-			
-			if (distance <= TREE_DISTANCE / 3) {
-				distance = random.nextInt(GROUND_DISTANCE);
-				
-				offset += GROUND_DISTANCE - distance;
-			}
-			
-			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 0, TREE_DISTANCE, distance, true);
-			
-			offset -= (int) (tree.getScale() * offset) / 2;
-
-			parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, offset);
-		}
-		
-		ParallaxSprite deer = new ParallaxSprite(container, new Image("resources/graphics/animals/deer.png", false, Image.FILTER_NEAREST), DEER_DISTANCE, true);
-		parallaxPanel.add(deer, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, DEER_OFFSET);
-		
-		// Add to panel stuff and other things
+		parallaxPanel = SceneryFactory.getScenery(container, party);
 		backgroundLayer.add(parallaxPanel);
 		
 		partyComponent = new PartyComponent(container, 400, 150, party.getPartyComponentDataSources());
@@ -273,76 +201,12 @@ public class TrailScene extends Scene {
 		
 		hud.setTime(party.getTime().get12HourTime());
 		hud.setDate(party.getTime().getDayMonthYear());
-		skyAnimatingColor = new AnimatingColor(skyColorForHour(hour-1),
-				skyColorForHour(hour), CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		
+		skyAnimatingColor = SceneryFactory.getSkyAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
 		sky.setBackgroundColor(skyAnimatingColor);
 		
-		AnimatingColor backgroundOverlayAnimatingColor = new AnimatingColor(backgroundOverlayColorForHour(hour-1),
-				backgroundOverlayColorForHour(hour), CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		AnimatingColor backgroundOverlayAnimatingColor = SceneryFactory.getBackgroundOverlayAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
 		this.backgroundLayer.setOverlayColor(backgroundOverlayAnimatingColor);
-	}
-	
-	/**
-	 * Get the correct sky color for the hour of day.
-	 * @param hour Hour of the day
-	 * @return Sky color for that hour
-	 */
-	private Color skyColorForHour(int hour) {
-		switch (hour + 1) {
-			case 6:
-				return new Color(0xeba7a4); // light pink
-			case 7:
-				return new Color(0xebd0a4); // light orange
-			case 8:
-			case 9:
-			case 10:
-			case 11:
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-			case 16:
-			case 17:
-				return new Color(0x579cdd); // light blue
-			case 18:
-			case 19:
-				return new Color(0xdd90a4); // pink
-			case 20:
-				return new Color(0x4a3b48); // dark purple
-			default:
-				return Color.black;
-		}
-	}
-	
-	/**
-	 * Get the background overlay color for the hour of the day.
-	 * @param hour Hour of the day
-	 * @return Background overlay for that hour
-	 */
-	private Color backgroundOverlayColorForHour(int hour) {
-		switch (hour + 1) {
-			case 7:
-				return new Color(0, 0, 0, .3f);
-			case 8:
-				return new Color(0, 0, 0, .1f);
-			case 9:
-			case 10:
-			case 11:
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-			case 16:
-			case 17:
-				return new Color(0, 0, 0, 0f);
-			case 18:
-			case 19:
-				return new Color(0, 0, 0, .1f);
-			case 20:
-				return new Color(0, 0, 0, .3f);
-			default:
-				return new Color(0, 0, 0, .5f);
-		}
 	}
 	
 	/**
@@ -356,14 +220,6 @@ public class TrailScene extends Scene {
 	 */
 	public float map(float x, float inMin, float inMax, float outMin, float outMax) {
 		  return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
-	}
-	
-	public Panel getSky() {
-		return sky;
-	}
-	
-	public ParallaxPanel getParallaxPanel() {
-		return parallaxPanel;
 	}
 	
 	@Override

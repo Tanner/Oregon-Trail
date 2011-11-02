@@ -1,5 +1,7 @@
 package scene;
 
+import model.Party;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -24,6 +26,8 @@ public class CampScene extends Scene {
 	private static final int BUTTON_WIDTH = 315;
 	private static final int BUTTON_HEIGHT = 30;
 	
+	private Party party;
+	
 	private Panel sky;
 	private ParallaxPanel parallaxPanel;
 	private Panel buttonPanel;
@@ -37,7 +41,7 @@ public class CampScene extends Scene {
 	
 	private Particle campFire;
 	
-	public CampScene(Panel sky, ParallaxPanel parallaxPanel) {
+	public CampScene(Party party) {
 		this.sky = sky;
 		this.parallaxPanel = parallaxPanel;
 	}
