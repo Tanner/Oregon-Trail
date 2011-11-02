@@ -63,7 +63,7 @@ public class ConditionBar extends Component {
 		label = new Label(context, getWidth(), getHeight(), font, Color.white, "0%");
 		label.setAlignment(Alignment.CENTER);
 		
-		updateLabelText();
+		update();
 		
 		add(label, getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER, 0, 0);
 		
@@ -109,13 +109,13 @@ public class ConditionBar extends Component {
 	public void setCondition(Condition condition) {
 		this.condition = condition;
 		
-		updateLabelText();
+		update();
 	}
 	
 	/**
-	 * Update the label text with whatever condition value is present.
+	 * Update the background bar and label.
 	 */
-	public void updateLabelText() {
+	public void update() {
 		if (condition != null) {
 			double percentage = condition.getPercentage();
 			if (label != null) {
