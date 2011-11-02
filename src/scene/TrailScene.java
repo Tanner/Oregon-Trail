@@ -38,6 +38,10 @@ public class TrailScene extends Scene {
 	private static final int CLICK_WAIT_TIME = 1000;
 	private static final int STEP_COUNT_TRIGGER = 2;
 	
+	private static final int NEAR_MAX_ELAPSED_TIME_SLOW = 20;
+	private static final int NEAR_MAX_ELAPSED_TIME_FAST = 1;
+	private static final int FAR_MAX_ELAPSED_TIME = 100;
+	
 	private static final int HILL_DISTANCE_A = 300;
 	private static final int HILL_DISTANCE_B = 600;
 	private static final int CLOUD_DISTANCE = 400;
@@ -88,6 +92,9 @@ public class TrailScene extends Scene {
 		Random random = new Random();
 		
 		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
+		
+		// Determine our display speed
+		ParallaxSprite.setMaxElapsedTimes((int) map(party.getPace().getSpeed(), Party.Pace.STEADY.getSpeed(), Party.Pace.GRUELING.getSpeed(), NEAR_MAX_ELAPSED_TIME_SLOW, NEAR_MAX_ELAPSED_TIME_FAST), FAR_MAX_ELAPSED_TIME);
 		
 		// Ground
 		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
@@ -314,6 +321,10 @@ public class TrailScene extends Scene {
 			default:
 				return new Color(0, 0, 0, .5f);
 		}
+	}
+	
+	public float map(float x, float inMin, float inMax, float outMin, float outMax) {
+		  return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 	}
 	
 	@Override
