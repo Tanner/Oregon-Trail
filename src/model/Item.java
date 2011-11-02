@@ -40,7 +40,7 @@ public class Item implements Conditioned, Comparable<Item>{
 		private final boolean isFood, isPlant, isAnimal;
 		
 		private final int foodFactor;
-		
+				
 		/**
 		 * Makes the item type
 		 * @param name Name of the item type
@@ -63,7 +63,8 @@ public class Item implements Conditioned, Comparable<Item>{
 			this.isFood = isFood;
 			this.isPlant = isPlant;
 			this.isAnimal = isAnimal;
-			this.foodFactor = Integer.parseInt(ConstantStore.get("ITEMS", type + "_FOOD_FACTOR"));
+			this.foodFactor = ConstantStore.get("ITEMS", type + "_FOOD_FACTOR") == null ? 0 :
+				Integer.parseInt(ConstantStore.get("ITEMS", type + "_FOOD_FACTOR"));
 		}
 		
 		/**

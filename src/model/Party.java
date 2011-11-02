@@ -404,9 +404,10 @@ public class Party implements HUDDataSource {
 	private double getMoveModifier() {
 		double moveModifier = 1;
 		for(Animal animal: getAnimals()) {
-			moveModifier += (double) animal.getMoveFactor() / 10;
+			moveModifier += animal.getMoveFactor();
 		}
-		return moveModifier;
+		moveModifier = 10 - moveModifier/10;
+		return moveModifier > 1 ? moveModifier : 1;
 	}
 
 	private List<Animal> getAnimals() {

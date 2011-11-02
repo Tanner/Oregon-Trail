@@ -2,6 +2,8 @@ package model.item;
 
 import java.util.List;
 
+import core.ConstantStore;
+
 import model.Condition;
 import model.Inventoried;
 import model.Inventory;
@@ -16,7 +18,7 @@ public class Vehicle extends Item implements Inventoried{
 
 	private final Inventory cargo;
 	
-	private final int MAX_INVENTORY_SIZE = 10;
+	private final int MAX_INVENTORY_SIZE;
 	
 	private final double MAX_INVENTORY_WEIGHT;
 
@@ -27,7 +29,8 @@ public class Vehicle extends Item implements Inventoried{
 	public Vehicle(double maxWeight, Item.ITEM_TYPE type) {
 		super(type);
 		this.status = new Condition(100);
-		this.MAX_INVENTORY_WEIGHT = maxWeight;
+		this.MAX_INVENTORY_SIZE = Integer.parseInt(ConstantStore.get("ITEMS", type + "_MAX_INV_SIZE"));
+		this.MAX_INVENTORY_WEIGHT = Double.parseDouble(ConstantStore.get("ITEMS", type + "_MAX_INV_WEIGHT"));
 		this.cargo = new Inventory(MAX_INVENTORY_SIZE, MAX_INVENTORY_WEIGHT);
 	}
 	

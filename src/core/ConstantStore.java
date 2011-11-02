@@ -145,14 +145,12 @@ public final class ConstantStore {
 		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
 		itemMap.put("WHEEL_WEIGHT", "5");
 		itemMap.put("WHEEL_COST", "75");
-		itemMap.put("WHEEL_FOOD_FACTOR", "0");
 		
 		itemMap.put("SONIC_NAME", "Sonic");
 		itemMap.put("SONIC_PLURAL_NAME", "Sonics");
 		itemMap.put("SONIC_DESCRIPTION", "Weeeweeeveeeeweee");
 		itemMap.put("SONIC_WEIGHT", "0.5");
 		itemMap.put("SONIC_COST", "100");
-		itemMap.put("SONIC_FOOD_FACTOR", "0");
 		
 		itemMap.put("APPLE_NAME", "Apple");
 		itemMap.put("APPLE_PLURAL_NAME", "Apples");
@@ -173,14 +171,12 @@ public final class ConstantStore {
 		itemMap.put("GUN_DESCRIPTION", "Bang! Bang bang bang!");
 		itemMap.put("GUN_WEIGHT", "5.0");
 		itemMap.put("GUN_COST", "50");
-		itemMap.put("GUN_FOOD_FACTOR", "0");
 		
 		itemMap.put("AMMO_NAME", "Ammo");
 		itemMap.put("AMMO_PLURAL_NAME", "Ammo");
 		itemMap.put("AMMO_DESCRIPTION", "A box of 100 bullets.");
 		itemMap.put("AMMO_WEIGHT", "2");
 		itemMap.put("AMMO_COST", "100");
-		itemMap.put("AMMO_FOOD_FACTOR", "0");
 		
 		itemMap.put("MEAT_NAME", "Meat");
 		itemMap.put("MEAT_PLURAL_NAME", "Meat");
@@ -194,14 +190,15 @@ public final class ConstantStore {
 		itemMap.put("WAGON_DESCRIPTION", "This is a trusty wooden wagon.");
 		itemMap.put("WAGON_WEIGHT", "200");
 		itemMap.put("WAGON_COST", "2000");
-		itemMap.put("WAGON_FOOD_FACTOR", "0");
+		itemMap.put("WAGON_MAX_INV_SIZE", "10");
+		itemMap.put("WAGON_MAX_INV_WEIGHT", "2000");
 		
 		itemMap.put("OX_NAME", "Ox");
 		itemMap.put("OX_PLURAL_NAME", "Oxen");
 		itemMap.put("OX_DESCRIPTION", "MOOO!");
 		itemMap.put("OX_WEIGHT", "200");
 		itemMap.put("OX_COST", "100");
-		itemMap.put("OX_FOOD_FACTOR", "0");
+		itemMap.put("OX_MOVE_FACTOR", "2.0");
 		
 		itemMap.put("STRANGE_MEAT_NAME", "Strange Meat");
 		itemMap.put("STRANGE_MEAT_PLURAL_NAME", "Strange Meat");

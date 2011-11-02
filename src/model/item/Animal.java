@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import component.PartyComponentDataSource;
+import core.ConstantStore;
 
 import model.Item;
 
 public class Animal extends Item implements PartyComponentDataSource {
 
-	private int moveFactor;
+	private double moveFactor;
 	
 	private boolean dead;
 	
 	public Animal(ITEM_TYPE type) {
 		super(type);
-		this.moveFactor = 2;
+		this.moveFactor = Double.parseDouble(ConstantStore.get("ITEMS", type + "_MOVE_FACTOR"));
 	}
 	
 	public List<Item> killForFood() {
@@ -27,7 +28,7 @@ public class Animal extends Item implements PartyComponentDataSource {
 		return itemList;
 	}
 	
-	public int getMoveFactor() {
+	public double getMoveFactor() {
 		return moveFactor;
 	}
 
