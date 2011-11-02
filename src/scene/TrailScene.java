@@ -6,7 +6,6 @@ import java.util.List;
 import model.Notification;
 import model.Party;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
@@ -207,10 +206,6 @@ public class TrailScene extends Scene {
 		
 		AnimatingColor backgroundOverlayAnimatingColor = SceneryFactory.getBackgroundOverlayAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
 		this.backgroundLayer.setOverlayColor(backgroundOverlayAnimatingColor);
-	}
-	
-	public ParallaxPanel getParallaxPanel() {
-		return parallaxPanel;
 	}
 	
 	/**

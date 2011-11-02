@@ -12,8 +12,6 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.state.transition.RotateTransition;
 import org.newdawn.slick.state.transition.Transition;
 
-import component.ParallaxPanel;
-
 import scene.*;
 import scene.encounter.*;
 import scene.test.*;
