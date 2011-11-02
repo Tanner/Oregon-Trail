@@ -508,7 +508,6 @@ public class Party implements HUDDataSource {
 	
 	/**
 	 * Determines if a party member is near dying or dead, and alerts the player.
-	 * @param person The person who's status we're checking.
 	 * @return A string with a message about the health status of the person
 	 */
 	public String checkHungerStatus() {

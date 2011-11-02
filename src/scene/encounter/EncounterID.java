@@ -36,9 +36,8 @@ public enum EncounterID {
 	/**
 	 * A method to generate Encounters based on EncounterID
 	 * @param party The current game's party
-	 * @param id The id of the desired encounter
-	 * @param min The minimum in the Encounter's occurrence range
-	 * @param max The maximum in the Encounter's occurrence range
+	 * @param id The id of the desired 
+	 * @param value Multiplier for "extreme-ness" of the Encounter
 	 * @return The created Encounter
 	 */
 	public static Encounter getEncounter(Party party, EncounterID id, int value) {

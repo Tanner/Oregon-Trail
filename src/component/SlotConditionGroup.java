@@ -34,6 +34,7 @@ public class SlotConditionGroup extends ComponentConditionGroup<Counter> {
 	 * @param width Width
 	 * @param height Height
 	 * @param font Font to use
+	 * @param button Button to have
 	 * @param pocketNumber The "pocket number" that the {@code Inventoried} has on it to use
 	 */
 	public SlotConditionGroup(GUIContext container, int width, int height, Font font, Counter button, Condition condition) {

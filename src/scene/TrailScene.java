@@ -225,7 +225,7 @@ public class TrailScene extends Scene {
 	 * @param inMax x's max value
 	 * @param outMin Output's min value
 	 * @param outMax Output's max value
-	 * @return
+	 * @return Value contorted to outMin and outMax
 	 */
 	public float map(float x, float inMin, float inMax, float outMin, float outMax) {
 		  return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;

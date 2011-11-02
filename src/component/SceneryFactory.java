@@ -35,7 +35,7 @@ public class SceneryFactory {
 	/**
 	 * Return a sky for the time period.
 	 * @param container Container
-	 * @param party Party
+	 * @param hour Time of day
 	 * @return Sky panel with the background color for the time
 	 * @throws SlickException
 	 */
@@ -57,7 +57,6 @@ public class SceneryFactory {
 	/**
 	 * Return the scenery for the time period and environment.
 	 * @param container Container
-	 * @param party Party
 	 * @return ParallaxPanel with correct scenery
 	 * @throws SlickException
 	 */

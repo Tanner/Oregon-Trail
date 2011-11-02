@@ -15,7 +15,8 @@ public class AnimatingSprite extends Sprite {
 	/**
 	 * Constructs a {@code Sprite} with a right and left animation.
 	 * @param context The GUI context
-	 * @param leftAnimation Animation for when facing left
+	 * @param animation Animation for when facing left
+	 * @param direction Direction fo face
 	 */
 	public AnimatingSprite(GUIContext context, Animation animation, Direction direction) {
 		super(context, animation.getWidth(), animation.getHeight());
@@ -42,7 +43,6 @@ public class AnimatingSprite extends Sprite {
 	/**
 	 * Updates the Sprite on a clock cycle.
 	 * @param container Container displaying the component
-	 * @param game Game containing the Entity
 	 * @param delta Time since last update
 	 */
 	public void update(GameContainer container, int delta) {

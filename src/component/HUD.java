@@ -105,15 +105,15 @@ public class HUD extends Component {
 	
 	/**
 	 * Set the date label's contents.
-	 * @param date New string from date label
+	 * @param time New string from date label
 	 */
 	public void setTime(String time) {
 		timeLabel.setText(time);
 	}
 	
 	/**
-	 * Set the money label's contents.
-	 * @param money Amount of money to display
+	 * Set the date label's contents.
+	 * @param date Amount of money to display
 	 */
 	public void setDate(String date) {
 		dateLabel.setText(date);

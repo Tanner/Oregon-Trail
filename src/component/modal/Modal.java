@@ -33,7 +33,6 @@ public abstract class Modal extends Component {
 	 * @param context The GUI context
 	 * @param listener The listener
 	 * @param message The text for the message
-	 * @param dismissButtonText The text for the dismiss button
 	 */
 	public Modal(GUIContext context, ModalListener listener, String message) {
 		super(context, context.getWidth(), context.getHeight());
