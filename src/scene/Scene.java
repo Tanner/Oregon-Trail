@@ -82,7 +82,7 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 				backgroundLayer,
 				mainLayer,
 				hudLayer,
-				hudLayer
+				modalLayer
 		};
 	}
 	
