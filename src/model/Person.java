@@ -401,7 +401,7 @@ public class Person implements Conditioned, Inventoried {
 	 * @return The condition 'health'
 	 */
 	public Condition getHealth() {
-		return health.copy();
+		return health;
 	}
 	
 	/**
