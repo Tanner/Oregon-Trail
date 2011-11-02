@@ -189,11 +189,13 @@ public class SoundStore {
 	 * @return A list of all sounds currently playing
 	 */
 	public Set<String> getPlayingSounds() {
+		Set<String> newSet = new HashSet<String>();
 		for(String name : playingSounds) {
-			if(!sounds.get(name).playing()) {
-				playingSounds.remove(name);
+			if(sounds.get(name).playing()) {
+				newSet.add(name);
 			}
 		}
+		playingSounds = newSet;
 		return playingSounds;
 	}
 	
