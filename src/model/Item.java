@@ -17,16 +17,20 @@ public class Item implements Conditioned, Comparable<Item>{
 	private final ITEM_TYPE type;
 	
 	public enum ITEM_TYPE {
-		APPLE ("APPLE", true, true, false),
-		BREAD ("BREAD", true, false, false),
-		AMMO ("AMMO", false, false, false),
-		GUN ("GUN", false, false, false),
-		MEAT ("MEAT", true, false, false),
-		SONIC ("SONIC", false, false, false),
-		WAGON ("WAGON", false, false, false),
-		WHEEL ("WHEEL", false, false, false),
-		OX ("OX", false, false, true),
-		STRANGEMEAT ("STRANGE_MEAT", true, false, false);
+		APPLE ("APPLE", true, true, false, false),
+		BREAD ("BREAD", true, false, false, false),
+		AMMO ("AMMO", false, false, false, false),
+		GUN ("GUN", false, false, false, false),
+		MEAT ("MEAT", true, false, false, false),
+		SONIC ("SONIC", false, false, false, false),
+		WAGON ("WAGON", false, false, false, false),
+		WHEEL ("WHEEL", false, false, false, true),
+		OX ("OX", false, false, true, false),
+		HAMMER ("HAMMER", false, false, false, true),
+		AXLE ("AXLE", false, false, false, true),
+		HORSE ("HORSE", false, false, true, false),
+		MULE ("MULE", false, false, true, false),
+		STRANGEMEAT ("STRANGE_MEAT", true, false, false, false);
 		
 		private final String name;
 		private final String pluralName;
@@ -37,9 +41,9 @@ public class Item implements Conditioned, Comparable<Item>{
 		
 		private final double weight;
 		
-		private final boolean isFood, isPlant, isAnimal;
+		private final boolean isFood, isPlant, isAnimal, isTool;
 		
-		private final int foodFactor;
+		private final int factor;
 				
 		/**
 		 * Makes the item type
@@ -51,9 +55,7 @@ public class Item implements Conditioned, Comparable<Item>{
 		 * @param isPlant If the item is a plant
 		 * @param foodFactor The multiplier for the food (if it is one, else 0)
 		 */
-		//private ITEM_TYPE (String name, String description, String cost,
-			//	String weight, boolean isFood, boolean isPlant, int foodFactor) {
-		private ITEM_TYPE (String type, boolean isFood, boolean isPlant, boolean isAnimal) {
+		private ITEM_TYPE (String type, boolean isFood, boolean isPlant, boolean isAnimal, boolean isTool) {
 			this.name = ConstantStore.get("ITEMS", type + "_NAME");
 			this.pluralName = ConstantStore.get("ITEMS", type + "_PLURAL_NAME");
 			
@@ -63,8 +65,14 @@ public class Item implements Conditioned, Comparable<Item>{
 			this.isFood = isFood;
 			this.isPlant = isPlant;
 			this.isAnimal = isAnimal;
-			this.foodFactor = ConstantStore.get("ITEMS", type + "_FOOD_FACTOR") == null ? 0 :
-				Integer.parseInt(ConstantStore.get("ITEMS", type + "_FOOD_FACTOR"));
+			this.isTool = isTool;
+			if(isFood) {
+				this.factor = Integer.parseInt(ConstantStore.get("ITEMS", type + "_FOOD_FACTOR"));
+			} else if (isTool){
+				this.factor = Integer.parseInt(ConstantStore.get("ITEMS", type + "_REPAIR_FACTOR"));
+			} else {
+				this.factor = 0;
+			}
 		}
 		
 		/**
@@ -116,11 +124,19 @@ public class Item implements Conditioned, Comparable<Item>{
 		}
 		
 		/**
+		 * Whether or not the item is a tool
+		 * @return Is the item a tool?
+		 */
+		public boolean isTool() {
+			return isTool;
+		}
+		
+		/**
 		 * The multiplier for the food
 		 * @return The multiplier
 		 */
-		public int getFoodFactor() {
-			return foodFactor;
+		public int getFactor() {
+			return factor;
 		}
 		
 		/**

@@ -145,6 +145,7 @@ public final class ConstantStore {
 		itemMap.put("WHEEL_DESCRIPTION", "This is a wheeel");
 		itemMap.put("WHEEL_WEIGHT", "5");
 		itemMap.put("WHEEL_COST", "75");
+		itemMap.put("WHEEL_REPAIR_FACTOR", "2");
 		
 		itemMap.put("SONIC_NAME", "Sonic");
 		itemMap.put("SONIC_PLURAL_NAME", "Sonics");
@@ -206,6 +207,35 @@ public final class ConstantStore {
 		itemMap.put("STRANGE_MEAT_WEIGHT", "25");
 		itemMap.put("STRANGE_MEAT_COST", "15");
 		itemMap.put("STRANGE_MEAT_FOOD_FACTOR", "3");
+		
+		itemMap.put("HORSE_NAME", "Horse");
+		itemMap.put("HORSE_PLURAL_NAME", "Horses");
+		itemMap.put("HORSE_DESCRIPTION", "NEIGH!");
+		itemMap.put("HORSE_WEIGHT", "200");
+		itemMap.put("HORSE_COST", "400");
+		itemMap.put("HORSE_MOVE_FACTOR", "4.0");
+		
+		itemMap.put("MULE_NAME", "Mule");
+		itemMap.put("MULE_PLURAL_NAME", "Mule");
+		itemMap.put("MULE_DESCRIPTION", "HEEHAW!");
+		itemMap.put("MULE_WEIGHT", "200");
+		itemMap.put("MULE_COST", "250");
+		itemMap.put("MULE_MOVE_FACTOR", "3.0");
+		
+		itemMap.put("HAMMER_NAME", "Hammer");
+		itemMap.put("HAMMER_PLURAL_NAME", "Hammers");
+		itemMap.put("HAMMER_DESCRIPTION", "A hammer for hammering.");
+		itemMap.put("HAMMER_WEIGHT", ".5");
+		itemMap.put("HAMMER_COST", "20");
+		itemMap.put("HAMMER_REPAIR_FACTOR", "1");
+		
+		itemMap.put("AXLE_NAME", "Axle");
+		itemMap.put("AXLE_PLURAL_NAME", "Axles");
+		itemMap.put("AXLE_DESCRIPTION", "An axle for your wagon.");
+		itemMap.put("AXLE_WEIGHT", "10");
+		itemMap.put("AXLE_COST", "200");
+		itemMap.put("AXLE_REPAIR_FACTOR", "4");
+		
 		literalMap.put("ITEMS", itemMap);
 		
 		// General

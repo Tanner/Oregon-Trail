@@ -458,7 +458,7 @@ public class Party implements HUDDataSource {
 			donator.removeItemFromInventory(firstFood, 1);
 		
 		final Item food = foodList.get(0);
-		int foodFactor = food.getType().getFoodFactor();
+		int foodFactor = food.getType().getFactor();
 		
 		//Do some handling for party member skills, such as cooking
 		if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
