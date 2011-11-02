@@ -23,7 +23,9 @@ public class CampScene extends Scene {
 	private static final int PADDING = 20;
 	private static final int BUTTON_WIDTH = 315;
 	private static final int BUTTON_HEIGHT = 30;
-		
+	
+	private Panel sky;
+	private ParallaxPanel parallaxPanel;
 	private Panel buttonPanel;
 	
 	private Button inventoryButton;
@@ -35,6 +37,11 @@ public class CampScene extends Scene {
 	
 	private Particle campFire;
 	
+	public CampScene(Panel sky, ParallaxPanel parallaxPanel) {
+		this.sky = sky;
+		this.parallaxPanel = parallaxPanel;
+	}
+	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		super.enter(container, game);
@@ -45,7 +52,8 @@ public class CampScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
-		backgroundLayer.add(new Sprite(container, new Image("resources/graphics/backgrounds/camp.png")));
+		backgroundLayer.add(sky);
+		backgroundLayer.add(parallaxPanel);
 		
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		
@@ -127,5 +135,4 @@ public class CampScene extends Scene {
 			}
 		}
 	}
-
 }

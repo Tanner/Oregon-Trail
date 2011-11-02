@@ -358,6 +358,14 @@ public class TrailScene extends Scene {
 		  return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 	}
 	
+	public Panel getSky() {
+		return sky;
+	}
+	
+	public ParallaxPanel getParallaxPanel() {
+		return parallaxPanel;
+	}
+	
 	@Override
 	public int getID() {
 		return ID.ordinal();

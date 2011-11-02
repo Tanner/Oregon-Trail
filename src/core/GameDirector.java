@@ -120,7 +120,7 @@ public class GameDirector implements SceneListener {
 		case TRAILTEST:
 			return new TrailTestScene(game.getPlayer().getParty());
 		case CAMP:
-			return new CampScene();
+			return new CampScene(null, null);
 		case MAP:
 			return new MapScene(game.getWorldMap());
 		case RIVER:
@@ -135,32 +135,31 @@ public class GameDirector implements SceneListener {
 	  ----------------------*/
 	@Override
 	public void requestScene(SceneID id, Scene lastScene, boolean popLastScene) {
-		
 		Transition outTransition = null;
 		Transition inTransition = null;
 		
-		if(game.getPlayer().getParty() != null && game.getPlayer().getParty().getLocation() != null) {
-			worldMap.setCurrLocationNode(game.getPlayer().getParty().getLocation());
-		}
 		if (game.getPlayer().getParty() != null && game.getPlayer().getParty().getLocation() != null) {
+			worldMap.setCurrLocationNode(game.getPlayer().getParty().getLocation());
 			worldMap.setCurrTrail(game.getPlayer().getParty().getTrail());
 		}
 		
 		Scene newScene = id != null ? sceneForSceneID(id): null;
 		
-		if(worldMap.getCurrLocationNode().getRank() == worldMap.getMaxRank()) {
+		if (worldMap.getCurrLocationNode().getRank() == worldMap.getMaxRank()) {
 			newScene = new VictoryScene();
 		}
+		
 		if (newScene instanceof VictoryScene || newScene instanceof GameOverScene) {
 			inTransition = new RotateTransition(Color.black);
 		} else if (newScene instanceof PartyInventoryScene && lastScene instanceof StoreScene) {
 			// Requested Party Inventory Scene
 			newScene = new PartyInventoryScene(game.getPlayer().getParty(), ((StoreScene) lastScene).getInventory());
-		}
-		if (lastScene instanceof PartyCreationScene) {
+		} else if (lastScene instanceof PartyCreationScene) {
 			// Last scene was Party Creation Scene
 			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
-		}  
+		} else if (newScene instanceof CampScene && lastScene instanceof TrailScene) {
+			newScene = new CampScene(((TrailScene) lastScene).getSky(), ((TrailScene) lastScene).getParallaxPanel());
+		}
 		
 		/*
 		if (id == SceneID.SCENESELECTOR) {
