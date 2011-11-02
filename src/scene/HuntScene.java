@@ -59,7 +59,7 @@ public class HuntScene extends Scene {
 		
 		Image leftImage = new Image("resources/graphics/test/marioLeft.png");
 		Image rightImage = new Image("resources/graphics/test/marioRight.png");
-		toonHunter = new AnimatingSprite(container, new Animation(new Image[]{leftImage}, 1), new Animation(new Image[]{rightImage}, 1));
+		//toonHunter = new AnimatingSprite(container, new Animation(new Image[]{leftImage}, 1), new Animation(new Image[]{rightImage}, 1));
 //		toonHunter.setScale(0.1f);
 		
 		mainLayer.add(toonHunter, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -5);
