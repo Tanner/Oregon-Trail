@@ -69,7 +69,7 @@ public class CampScene extends Scene {
 		}
 		backgroundLayer.add(parallaxPanel);
 		
-		backgroundLayer.setOverlayColor(SceneryFactory.getBackgroundOverlayAnimatingColor(party.getTime().getTime(), 0));
+		backgroundLayer.setOverlayColor(SceneryFactory.getBackgroundOverlayColor(party.getTime().getTime()));
 		
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		
