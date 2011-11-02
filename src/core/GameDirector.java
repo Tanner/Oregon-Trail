@@ -124,6 +124,8 @@ public class GameDirector implements SceneListener {
 			return new CampScene();
 		case MAP:
 			return new MapScene(game.getWorldMap());
+		case RIVER:
+			return new RiverScene(game.getPlayer().getParty());
 		}
 		
 		return null;

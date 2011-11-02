@@ -173,7 +173,15 @@ public class SceneSelectorScene extends Scene {
 					return;
 				}
 				
-				GameDirector.sharedSceneListener().requestScene(SceneID.VICTORY, SceneSelectorScene.this, false);			
+				GameDirector.sharedSceneListener().requestScene(SceneID.VICTORY, SceneSelectorScene.this, false);	
+			} else if (buttonText.equals(SceneID.RIVER.getName())) {
+				// Game Over
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;
+				}
+				
+				GameDirector.sharedSceneListener().requestScene(SceneID.RIVER, SceneSelectorScene.this, false);
 			}  else if (buttonText.equals(SceneID.MAP.getName())) {
 					// Map Scene
 					if (player.getParty() == null) {
