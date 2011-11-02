@@ -45,9 +45,17 @@ public class MapScene extends Scene {
 		 
 		for (int i = 0; i <= worldMap.MAX_RANK; i++){
 			for(LocationNode location : worldMap.getMapNodes().get(i)) {
-				locationButtons[location.getID()] = new Button(container, 10, 10, new Label(container, fieldFont ,Color.white, "" + location.getID()));
+/*				if (location.getID() % 4 == 0){
+					locationButtons[location.getID()] = new Button(container, 10, 10, new Label(container, fieldFont ,Color.white, "" + location.getID()));
+					
+				} else {
+*/					locationButtons[location.getID()] = new Button(container, 10, 10);					
+//				}
+				locationButtons[location.getID()].setTooltipEnabled(true);
+				locationButtons[location.getID()].setTooltipMessage(location.getName());
 				mainLayer.add(locationButtons[location.getID()], mainLayer.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) location.getPlayerMapX(), (int) location.getPlayerMapY());
-				System.out.println("location : " + location.getID() + " x : " + (int) location.getPlayerMapX() + " Y : " + (int) location.getPlayerMapY() );
+				//System.out.println("location : " + location.getID() + " x : " + (int) location.getPlayerMapX() + " Y : " + (int) location.getPlayerMapY() );
+				locationButtons[location.getID()].addListener(new ButtonListener(location));
 			}
 		}
 		
@@ -79,6 +87,13 @@ public class MapScene extends Scene {
 	
 
 	private class ButtonListener implements ComponentListener {
+		private LocationNode node;
+		public ButtonListener(LocationNode node){
+			this.node = node;
+		}
+		public ButtonListener(){
+			this(null);
+		}
 		@Override
 		public void componentActivated(AbstractComponent source) {
 			SoundStore.get().playSound("Click");
@@ -86,6 +101,9 @@ public class MapScene extends Scene {
 				SoundStore.get().setMusicVolume(.25f);
 				GameDirector.sharedSceneListener().sceneDidEnd(MapScene.this);
 			}//if source==return2camp
+			else {
+				System.out.println("location : " + this.node.debugToString());
+			}
 		}//componentActivated		
 	}//button listener private class
 	

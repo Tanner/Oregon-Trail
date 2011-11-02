@@ -264,7 +264,7 @@ public final class ConstantStore {
 		townNames1.add("Tombstone");
 	
 	
-		//town names - kansas territory
+		//town names - kansas/colorado territory
 		List<String> townNames2 = new ArrayList<String>();
 		townNames2.add("Alcove Spring");
 		townNames2.add("Ash Hollow");
@@ -291,8 +291,8 @@ public final class ConstantStore {
 		townNames2.add("Washington");
 
 		townNames2.add("Julesburg");
-		townNames1.add("Goodnight");
-		townNames1.add("Deadwood");
+		townNames2.add("Goodnight");
+		townNames2.add("Deadwood");
 		townNames2.add("Latham");
 	
 		//town names - washington territory
@@ -319,6 +319,7 @@ public final class ConstantStore {
 		//town names - utah territory
 		List<String> townNames4 = new ArrayList<String>();
 		townNames4.add("Big Mountain Pass");
+		townNames4.add("Gold Hill");
 		townNames4.add("Hogsback");
 		townNames4.add("Promontory Point");
 		townNames4.add("Southbend");
@@ -329,16 +330,69 @@ public final class ConstantStore {
 		//town names - oregon
 		List<String> townNames5 = new ArrayList<String>();
 
+		townNames5.add("Antelope");
+		townNames5.add("Boyd");
 		townNames5.add("Baker City");
 		townNames5.add("Barlow Gate");
+		townNames5.add("Bourne");
+		townNames5.add("Cornucopia");
 		townNames5.add("The Dalles");
 		townNames5.add("Fort Vancouver");
 		townNames5.add("Fort Walla Walla");
 		townNames5.add("Grande Ronde Outpost");
+		townNames5.add("Granite");
+		townNames5.add("Granite");
+		townNames5.add("Greenback");
+		townNames5.add("HalfWay");
+		townNames5.add("Horse Heaven");
+		townNames5.add("Kent");
 		townNames5.add("Pendleton");
+		townNames5.add("Shaniko");
+		townNames5.add("Sumpter");
 		townNames5.add("Vale");
 		townNames5.add("Whitman Mission");
+		townNames5.add("Walla Walla Lake");
 		
+		//town names - nebraska territory
+		List<String> townNames6 = new ArrayList<String>();
+		townNames6.add("Archer");
+		townNames6.add("Ash Hollow");
+		townNames6.add("Black Hills");
+		townNames6.add("Brule");
+		townNames6.add("California Hill");		
+		townNames6.add("Fairbury");
+		townNames6.add("Fort Bridger");
+		townNames6.add("Fort Kearny");
+		townNames6.add("Fort Laramie");
+		townNames6.add("Fort Lisa");
+		townNames6.add("Fort McPherson");
+		townNames6.add("Franklin");
+		townNames6.add("Gothenburg");
+		townNames6.add("Guernsey");
+		townNames6.add("Hastings");
+		townNames6.add("Homestead");
+		townNames6.add("Lexington");
+		townNames6.add("Minden");
+		townNames6.add("North Platte");
+		townNames6.add("Ogallala");
+		townNames6.add("Odell");
+		townNames6.add("O'Fallon's Bluff");
+		townNames6.add("Pawneeville");
+		townNames6.add("Ponca Fort");
+		townNames6.add("Red Cloud");
+		townNames6.add("Rock Creek Station");
+		townNames6.add("Saline"); 
+		townNames6.add("Scottsbluff");
+		townNames6.add("Southerland");
+		townNames6.add("Sioux City");
+		townNames6.add("Tecumseh");
+		townNames6.add("Windlass Hill");
+		townNames6.add("York");
+		
+		
+		townNames6.add("Cokeville");
+		townNames6.add("Tombstone");
+
 
 		
 		//missouri zone names
@@ -353,6 +407,8 @@ public final class ConstantStore {
 		TOWN_NAMES.put(4, townNames4);
 		//oregon zone names		
 		TOWN_NAMES.put(5, townNames5);
+		//Dakota territory zone names		
+		TOWN_NAMES.put(6, townNames6);
 		
 	}
 	
