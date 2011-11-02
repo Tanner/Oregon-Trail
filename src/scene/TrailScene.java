@@ -152,7 +152,7 @@ public class TrailScene extends Scene {
 		// Add to panel stuff and other things
 		backgroundLayer.add(parallaxPanel);
 		
-		partyComponent = new PartyComponent(container, 400, 200, this.party);
+		partyComponent = new PartyComponent(container, 400, 200, party.getPartyComponentDataSources());
 		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT);
 		
 		clickCounter = 0;

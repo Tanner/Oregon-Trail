@@ -3,6 +3,8 @@ package component;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Conditioned;
+
 import org.newdawn.slick.gui.GUIContext;
 
 import core.FontStore;
@@ -10,23 +12,24 @@ import core.FontStore.FontID;
 
 public class PartyComponent extends Component {
 	private final static int MARGIN = 20;
+	private final static int CONDITION_BAR_WIDTH = 80;
 	private final static int CONDITION_BAR_HEIGHT = 20;
 	
-	private PartyComponentDataSource dataSource;
+	private List<PartyComponentDataSource> dataSources;
 	private List<ConditionBar> conditionBars;
 	
-	public PartyComponent(GUIContext context, int width, int height, PartyComponentDataSource dataSource) {
+	public PartyComponent(GUIContext context, int width, int height, List<PartyComponentDataSource> dataSources) {
 		super(context, width, height);
 		
-		this.dataSource = dataSource;
+		this.dataSources = dataSources;
 		
 		conditionBars = new ArrayList<ConditionBar>();
-		int memberCount = dataSource.getMemberCount();
-		for (int i = 0; i < memberCount; i++) {
+				
+		for (int i = 0; i < dataSources.size(); i++) {
 			ConditionBar cb = new ConditionBar(context,
-					(getWidth() - MARGIN * memberCount) / memberCount,
+					CONDITION_BAR_WIDTH,
 					CONDITION_BAR_HEIGHT,
-					dataSource.getHealthCondition(i),
+					dataSources.get(i).getCondition(),
 					FontStore.get(FontID.FIELD));
 			conditionBars.add(cb);
 		}
@@ -39,7 +42,7 @@ public class PartyComponent extends Component {
 		addAsGrid(conditionBarArr,
 				getPosition(ReferencePoint.BOTTOMLEFT),
 				1,
-				memberCount,
+				conditionBarArr.length,
 				0,
 				-MARGIN - CONDITION_BAR_HEIGHT,
 				MARGIN,
@@ -47,8 +50,14 @@ public class PartyComponent extends Component {
 	}
 	
 	public void update(int delta) {
-		for (ConditionBar cb : conditionBars) {
-			cb.update();
+		for (int i = dataSources.size() - 1; i >= 0; i--) {
+			conditionBars.get(i).update();
+			
+			if (dataSources.get(i).isDead()) {
+				remove(conditionBars.get(i));
+				conditionBars.remove(i);
+				dataSources.remove(i);
+			}
 		}
 	}
 }

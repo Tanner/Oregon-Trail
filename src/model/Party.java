@@ -18,7 +18,7 @@ import core.Logger.Level;
 /**
  * Party class that contains an array of persons that are members.
  */
-public class Party implements HUDDataSource, PartyComponentDataSource {
+public class Party implements HUDDataSource {
 	
 	private List<Person> members = new ArrayList<Person>();
 	
@@ -214,6 +214,15 @@ public class Party implements HUDDataSource, PartyComponentDataSource {
 	public List<Person> getPartyMembers() {
 		return this.members;
 	}
+	
+	public List<PartyComponentDataSource> getPartyComponentDataSources() {
+		ArrayList<PartyComponentDataSource> dataSources = new ArrayList<PartyComponentDataSource>();
+		for (Person p : members) {
+			dataSources.add(p);
+		}
+		
+		return dataSources;
+	}
 
 	/**
 	 * Returns a list of the Skills present in the party
@@ -379,9 +388,11 @@ public class Party implements HUDDataSource, PartyComponentDataSource {
 			messages.add(new Notification(checkHungerStatus(), true));
 		}
 		for (Person person : deathList) {
+			person.setDead(true);
 			members.remove(person);
 		}
 		for (Animal animal : slaughterHouse) {
+			animal.setDead(true);
 			animals.remove(animal);
 		}
 		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", getTotalDistanceTravelled()), false));
@@ -528,15 +539,5 @@ public class Party implements HUDDataSource, PartyComponentDataSource {
 
 	public Time getTime() {
 		return time;
-	}
-
-	@Override
-	public Condition getHealthCondition(int person) {
-		return members.get(person).getHealth();
-	}
-	
-	@Override
-	public int getMemberCount() {
-		return members.size();
 	}
 }
