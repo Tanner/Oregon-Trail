@@ -12,9 +12,9 @@ import component.Panel;
  * A sprite that shifts a certain amount on the screen and can scale with distance.
  */
 public class ParallaxSprite extends Component implements Comparable<ParallaxSprite> {
-	protected final int DELTA_X = 1;
-	protected static final int NEAR_MAX_ELAPSED_TIME = 1;
-	protected static final int FAR_MAX_ELAPSED_TIME = 100 - NEAR_MAX_ELAPSED_TIME;
+	public static int DELTA_X = 1;
+	protected static int NEAR_MAX_ELAPSED_TIME = 1;
+	protected static int FAR_MAX_ELAPSED_TIME = 100 - NEAR_MAX_ELAPSED_TIME;
 	
 	public static int MAX_DISTANCE = 0;
 	
@@ -27,7 +27,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	protected double scale = 1.0;
 	
 	protected int elapsedTime;
-	protected final int maxElapsedTime;
+	protected int maxElapsedTime;
 
 	private boolean randomXPosition;
 	private Random random;
@@ -46,12 +46,11 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		super(context, context.getWidth(), spriteWidth * image.getHeight() / image.getWidth());
 		
 		this.randomXPosition = randomXPosition;
-		
-		maxElapsedTime = ((FAR_MAX_ELAPSED_TIME * distance) / MAX_DISTANCE) + NEAR_MAX_ELAPSED_TIME;
+
+		this.distance = distance;
+		setMaxElapsedTime(distance);
 		
 		random = new Random();
-		
-		this.distance = distance;
 		
 		if (minDistance == 0) {
 			minDistance = 1;
@@ -88,11 +87,10 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		
 		this.randomXPosition = randomXPosition;
 		
-		maxElapsedTime = ((FAR_MAX_ELAPSED_TIME * distance) / MAX_DISTANCE) + NEAR_MAX_ELAPSED_TIME;
+		this.distance = distance;
+		setMaxElapsedTime(distance);
 		
 		random = new Random();
-		
-		this.distance = distance;
 		
 		sprite = new Sprite(context, spriteWidth, image);
 		
@@ -153,6 +151,18 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		}
 	}
 	
+	/**
+	 * Set the maxElapsedTime using distance.
+	 * @param distance Distance from the viewer
+	 */
+	private void setMaxElapsedTime(int distance) {
+		maxElapsedTime = ((FAR_MAX_ELAPSED_TIME * distance) / MAX_DISTANCE) + NEAR_MAX_ELAPSED_TIME;
+	}
+	
+	/**
+	 * Get a new x-axis offset. Returns a new value if random is on, zero otherwise.
+	 * @return A new x-axis offset
+	 */
 	private int getXOffset() {
 		if (randomXPosition) {
 			return random.nextInt(panel.getWidth() - sprite.getWidth() + 1);
@@ -161,16 +171,38 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 		return 0;
 	}
 	
+	/**
+	 * Get the width of the {@code Sprite}.
+	 * @return Width of the sprite
+	 */
 	public int getSpriteWidth() {
 		return sprite.getWidth();
 	}
 	
+	/**
+	 * Get the distance from the viewer.
+	 * @return Distance from viewer
+	 */
 	public int getDistance() {
 		return distance;
 	}
 	
+	/**
+	 * Get the scale of the {@code Sprite}.
+	 * @return Scale of the Sprite.
+	 */
 	public double getScale() {
 		return scale;
+	}
+	
+	/**
+	 * Set the Max Elapsed Times (i.e. NEAR and FAR_MAX_ELAPSED_TIME) for the {@code Sprite} movement.
+	 * @param nearMaxElapsedTime New near time
+	 * @param farMaxElapsedTime New far time
+	 */
+	public static void setMaxElapsedTimes(int nearMaxElapsedTime, int farMaxElapsedTime) {
+		NEAR_MAX_ELAPSED_TIME = nearMaxElapsedTime;
+		FAR_MAX_ELAPSED_TIME = farMaxElapsedTime - NEAR_MAX_ELAPSED_TIME;
 	}
 
 	@Override
