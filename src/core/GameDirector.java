@@ -43,7 +43,6 @@ public class GameDirector implements SceneListener {
 		 sceneDirector = new SceneDirector("Oregon Trail");
 		 worldMap = new WorldMap();
 		 game = new Game(worldMap);
-		 game.getStoreInventory().addRandomItems();
 	}
 	
 	/**

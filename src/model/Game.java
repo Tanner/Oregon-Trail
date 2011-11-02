@@ -57,7 +57,6 @@ public class Game {
 	}
 
 	public void reset() {
-		storeInventory.clear();
 		this.worldMap = new WorldMap();
 		this.player =  new Player();
 		resetStoreInventory(worldMap.getMapHead());
@@ -89,7 +88,6 @@ public class Game {
 				storeInventory.addItemToInventory(new Item(itemType));
 			}
 		}
-		System.out.println(storeInventory);
 	}
 
 }
