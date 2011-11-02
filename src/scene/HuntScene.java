@@ -3,35 +3,22 @@ package scene;
 import model.Party;
 import model.Person;
 
-//import org.newdawn.slick.geom.Rectangle;
-//import org.newdawn.slick.gui.AbstractComponent;
-//import org.newdawn.slick.gui.ComponentListener;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 
-//import component.Button;
-//import component.Counter;
-//import component.ItemListener;
 import component.Label;
-//import component.Modal;
-//import component.Label.Alignment;
-//import component.OwnerInventoryButtons;
 import component.Panel;
 import component.Positionable;
-//import component.Positionable.ReferencePoint;
 import component.sprite.AnimatingSprite;
-//import component.sprite.Sprite;
 
-//import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;
-//import core.Logger;
 
 /**
  * Hunt scene is where you kill animals and get food.

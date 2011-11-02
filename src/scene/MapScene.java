@@ -1,15 +1,14 @@
 package scene;
 
-import model.Person;
 import model.WorldMap;
 import model.worldMap.LocationNode;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.MapComponent;
 import component.Button;
 import component.Label;
 import component.Panel;
@@ -39,33 +38,36 @@ public class MapScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
+		
+		MapComponent playerMap = new MapComponent(container, worldMap);
+		
 		Button[] locationButtons = new Button[worldMap.getNumLocations()];
 
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
-		 
+		//add to mapComponent
 		for (int i = 0; i <= worldMap.MAX_RANK; i++){
 			for(LocationNode location : worldMap.getMapNodes().get(i)) {
-/*				if (location.getID() % 4 == 0){
-					locationButtons[location.getID()] = new Button(container, 10, 10, new Label(container, fieldFont ,Color.white, "" + location.getID()));
-					
-				} else {
-*/					locationButtons[location.getID()] = new Button(container, 10, 10);					
-//				}
+				locationButtons[location.getID()] = new Button(container, 10, 10);					
 				locationButtons[location.getID()].setTooltipEnabled(true);
 				locationButtons[location.getID()].setTooltipMessage(location.getName());
-				mainLayer.add(locationButtons[location.getID()], mainLayer.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) location.getPlayerMapX(), (int) location.getPlayerMapY());
-				//System.out.println("location : " + location.getID() + " x : " + (int) location.getPlayerMapX() + " Y : " + (int) location.getPlayerMapY() );
+				playerMap.add(locationButtons[location.getID()], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) location.getPlayerMapX(), (int) location.getPlayerMapY());
 				locationButtons[location.getID()].addListener(new ButtonListener(location));
 			}
 		}
 		
+		//add map component
+		
+		mainLayer.add(playerMap, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT,0,0);
+		
+		
+		//add return to camp button
 		returnToCamp = new Button(container, 240, 60, new Label(container, fieldFont, Color.white, ConstantStore.get("MAP_SCENE", "RETURN_CAMP")));
 		returnToCamp.addListener(new ButtonListener());
 				
 		mainLayer.add(returnToCamp, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT, 20, -20);
 		
-		Image mapImg = new Image("resources/graphics/backgrounds/playerMap.png", false, Image.FILTER_NEAREST);
-		
+		//set the background image - the map picture
+		Image mapImg = new Image("resources/graphics/backgrounds/playerMap.png", false, Image.FILTER_NEAREST);		
 		backgroundLayer.add(new Panel(container, mapImg));
 		
 	}

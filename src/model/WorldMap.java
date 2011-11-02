@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Random;
 
 import core.ConstantStore;
-import core.ConstantStore.StateIdx;
+
 
 
 /**
@@ -63,7 +63,9 @@ public class WorldMap {
 		this.devMode = (devMode.length() == 0) ? false : true;
 		this.numTrails = 0;
 		this.numLocations = numNodes;
-		//this.numLocations = 3000;
+		if (this.devMode) {
+			this.numLocations = 3000;			
+		}
 		this.mapNodes = new HashMap<Integer, List<LocationNode>>();
 		this.townNamesUsed = new HashMap <ConstantStore.StateIdx, List<Boolean>>();
 		List<Boolean> townNamesBool;
@@ -424,7 +426,7 @@ public class WorldMap {
 		double newX;
 		double newY;
 		
-		newX = (node.MAP_XPOS + 60) * (920.0/MAX_X) ; 
+		newX = (node.MAP_XPOS + 60) * (920.0/this.MAX_X) ; 
 		if (node.getRank() < (.15 * (1.0 * this.MAX_RANK))) {
 			newY = (-1 * node.MAP_YPOS/1.2) + 70 + ((this.MAX_RANK - node.getRank()) * (480.0/ Math.pow(this.MAX_RANK,1))) ;						
 		} else if (node.getRank() < (.25 * (1.0 * this.MAX_RANK))){
@@ -440,7 +442,12 @@ public class WorldMap {
 		} else {
 			newY = (-1 * node.MAP_YPOS/2) + 70 + ((this.MAX_RANK - (node.getRank())) * (480.0/ Math.pow(this.MAX_RANK,1))) ;			
 		}
-
+		if (newX > 1050){
+			newX = 1050;
+		}
+		if (newY > 565){
+			newY = 565;
+		}
 		node.setPlayerMapX(newX);
 		node.setPlayerMapY(newY);	
 	}

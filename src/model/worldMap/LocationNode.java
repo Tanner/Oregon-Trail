@@ -50,7 +50,6 @@ public class LocationNode extends MapObject {
 	 */
 	public LocationNode(String locationName, int xPos, int yPos, double latitude, double longitude, int trails, int rank, int quality){
 		this.ID = LocationNode.count++;
-		//until we can get a nice source for lat and long data
 		MAP_XPOS = xPos;
 		MAP_YPOS = yPos;
 		//eventually want to implement real world lat and long
@@ -178,6 +177,7 @@ public class LocationNode extends MapObject {
 		int numTrails = this.outboundTrails.size();
 		retVal = "Name : \t" + this.name + "\t| X pos : \t" + this.MAP_XPOS + " \t| Y pos : \t" + this.MAP_YPOS + "\n";
 //		retVal += "World Lat : \t" + this.WORLD_LATITUDE + "\t| World Long : " + this.WORLD_LONGITUDE + " \n";
+		retVal += "Map X : \t" + this.playerMapX + "\t| Map Y : " + this.playerMapY + " \n";
 		retVal += "Internal ID : \t" + this.ID + "\t| Total Nodes currently made : \t" + LocationNode.count + " \n";
 		retVal += "Location Quality : \t " +  this.quality + "\n";
 		retVal += "Rank : \t\t" + this.rank + "\t| Total Exit Trail Count : \t" + trails + " \n";
