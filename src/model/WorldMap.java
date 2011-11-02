@@ -63,7 +63,7 @@ public class WorldMap {
 		this.devMode = (devMode.length() == 0) ? false : true;
 		this.numTrails = 0;
 		this.numLocations = numNodes;
-		this.numLocations = 3000;
+		//this.numLocations = 3000;
 		this.mapNodes = new HashMap<Integer, List<LocationNode>>();
 		this.townNamesUsed = new HashMap <ConstantStore.StateIdx, List<Boolean>>();
 		List<Boolean> townNamesBool;
@@ -278,8 +278,8 @@ public class WorldMap {
 		int[] numRankAra = new int[MAX_RANK];
 			//current node's rank as we're building the node list
 			//manufacture random object - make constant seeded now for testing purposes
-		Random mapRand = new Random(54321);
-		//Random mapRand = new Random();
+		//Random mapRand = new Random(54321);
+		Random mapRand = new Random();
 			//num of edges from current location - will be between 1 and MAX_TRAILS_OUT
 		int numExitTrails;
 		
