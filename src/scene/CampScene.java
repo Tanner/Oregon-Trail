@@ -25,12 +25,7 @@ public class CampScene extends Scene {
 	private static final int BUTTON_HEIGHT = 30;
 		
 	private Panel buttonPanel;
-	//1: inventoryButton
-	//2: managementButton
-	//3: mapButton
-	//4: huntButton
-	//5: somethingButton
-	//6: continueButton
+	
 	private Button inventoryButton;
 	private Button partyManagementButton;
 	private Button mapButton;
