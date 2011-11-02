@@ -69,8 +69,12 @@ public class SceneryFactory {
 		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
 		
 		// Ground
-		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, parallaxPanel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
+		
+		// Trail
+		ParallaxSprite trail = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		parallaxPanel.add(trail, ground.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, -trail.getHeight() / 2);
 		
 		// Hills
 		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
