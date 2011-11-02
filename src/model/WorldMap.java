@@ -178,19 +178,19 @@ public class WorldMap {
 		double maxRankDouble = (double) MAX_RANK;
 		if (curRank == 0){//treat this as missouri
 			rankIndex = 0;
-			stateVal = "Missouri";		
+			//stateVal = "Missouri";		
 		} else if (curRank <= (0.15 * maxRankDouble)){
 			rankIndex = (yVal > 0) ? 1 : 2 ;
-			stateVal = (yVal > 0) ? "Nebraska Territory" : "Kansas Territory";			
+			//stateVal = (yVal > 0) ? "Nebraska Territory" : "Kansas Territory";			
 		} else if (curRank <= (0.35*maxRankDouble)){
 			rankIndex = (yVal > -70) ? 1 : 2 ;
-			stateVal = (yVal > -70) ? "Nebraska Territory" : "Kansas Territory";			
+			//stateVal = (yVal > -70) ? "Nebraska Territory" : "Kansas Territory";			
 		} else if (curRank <= (0.45*maxRankDouble)){
 			rankIndex = (yVal > 80) ? 6 : 1 ;
 			stateVal = (yVal > 80) ? "Dakota Territory" : "Nebraska Territory";	
 			if (yVal <  -50){//use kansas names but colorado territory
 				rankIndex = 2;
-				stateVal = "Colorado Territory";
+			//	stateVal = "Colorado Territory";
 			}
 		} else if (curRank <= (0.5*maxRankDouble)){
 			rankIndex = (yVal > 80) ? 6 : 1 ;
@@ -246,14 +246,23 @@ public class WorldMap {
 			loopIncr++;			
 		}
 		if (loopIncr >= maxRankNameAraSize){
-			prefixString = "West ";
+			int testVal = mapRand.nextInt(3);
+			
+			if (testVal == 0) {
+				prefixString += (mapRand.nextInt(2) == 0) ? "New " : "Old ";				
+			} else if (testVal == 1) {
+				prefixString += (mapRand.nextInt(2) == 0) ? "West " : "North ";			
+			} else {
+				prefixString += (mapRand.nextInt(2) == 0) ? "West " : "North ";			
+				prefixString += (mapRand.nextInt(2) == 0) ? "New " : "Old ";				
+			}
 		}
 		locationVal = ConstantStore.TOWN_NAMES.get(rankIndex).get(townNameIndex);
 		townNamesUsed.get(rankIndex).set(townNameIndex, true);
 		//verify that town name hasn't been used already in same location/state
 		
 		
-		retVal = prefixString + locationVal + ", " + stateVal;
+		retVal = prefixString + locationVal + ", " + ConstantStore.STATE_NAMES.get(rankIndex);
 		return retVal;
 	}
 	
@@ -509,6 +518,16 @@ public class WorldMap {
 	 */
 	public void setCurrLocationNode(LocationNode currLocationNode){
 		this.currLocationNode = currLocationNode;
+	}
+	
+	/**
+	 * resets the relevant max values in the locations and edges upon game reset
+	 */
+	public void resetMap(){
+		LocationNode.resetCount();
+		TrailEdge.resetCount();
+		TrailEdge.resetTrails();
+
 	}
 	
 	/**

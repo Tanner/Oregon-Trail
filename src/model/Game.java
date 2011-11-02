@@ -57,6 +57,7 @@ public class Game {
 	}
 
 	public void reset() {
+		worldMap.resetMap();
 		this.worldMap = new WorldMap();
 		this.player =  new Player();
 		resetStoreInventory(worldMap.getMapHead());

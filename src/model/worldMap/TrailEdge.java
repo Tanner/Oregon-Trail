@@ -15,13 +15,13 @@ public class TrailEdge extends MapObject {
 	/**length of the trail.  calculated by the distance between the two location nodes.*/
 	private float length;
 	/**total number of edges built*/
-	private static int edgeCount;
+//	private static int edgeCount;
 	/**length of the longest trail on map*/
 	private static float longestTrail = 0;
 	/**length of the shortest trail on map*/
 	private static float shortestTrail = 9999;
 	/**length of the shortest trail on map*/
-	private static float totalTrailLength;
+	private static float totalTrailLength = 0;
 	/**unique id corresponding to this edge.*/
 	private final int ID;
 	
@@ -38,7 +38,7 @@ public class TrailEdge extends MapObject {
 	public TrailEdge(String name, LocationNode destination, LocationNode origin, int dangerLevel){
 		this.destination = destination;
 		this.origin = origin;
-		this.ID = TrailEdge.edgeCount++;
+		this.ID = TrailEdge.count++;
 		this.dangerLevel = dangerLevel;
 		this.name ="Trail to " + destination.getName(); // this.getRoughLength() + ", " + this.getDangerRating() + "," + this.getRoughDirection() + 
 		this.length = calcDistance(destination.MAP_XPOS, origin.MAP_XPOS, destination.MAP_YPOS, origin.MAP_YPOS);
@@ -172,6 +172,12 @@ public class TrailEdge extends MapObject {
 		}
 		return str;
 	}
+	
+	public static void resetTrails(){
+		TrailEdge.longestTrail = 0;
+		TrailEdge.shortestTrail = 9999;
+		TrailEdge.totalTrailLength = 0;	
+	}
 
 	@Override
 	public String debugToString() {
@@ -188,15 +194,15 @@ public class TrailEdge extends MapObject {
 	 */
 	public String getRoughLength() {
 		String str;
-		if (length < (.1 * (TrailEdge.totalTrailLength/TrailEdge.edgeCount))) {
+		if (length < (.1 * (TrailEdge.totalTrailLength/TrailEdge.count))) {
 			str = "Very Short";
-		} else if (length < (.5 * (TrailEdge.totalTrailLength/TrailEdge.edgeCount))) {
+		} else if (length < (.5 * (TrailEdge.totalTrailLength/TrailEdge.count))) {
 			str = "Short";
-		} else if (length <  (TrailEdge.totalTrailLength/TrailEdge.edgeCount)) {
+		} else if (length <  (TrailEdge.totalTrailLength/TrailEdge.count)) {
 			str = "Average";
-		} else if (length < (1.5 * (TrailEdge.totalTrailLength/TrailEdge.edgeCount))) {
+		} else if (length < (1.5 * (TrailEdge.totalTrailLength/TrailEdge.count))) {
 			str = "Long";
-		} else if (length < (2 * (TrailEdge.totalTrailLength/TrailEdge.edgeCount))) {
+		} else if (length < (2 * (TrailEdge.totalTrailLength/TrailEdge.count))) {
 			str = "Very Long";
 		} else {
 			str = "Endless";

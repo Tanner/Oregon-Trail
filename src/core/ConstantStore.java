@@ -18,10 +18,12 @@ public final class ConstantStore {
 	public static final Map<String, Map<String, String>> LITERALS;
 	public static final Map<String, Color> COLORS;
 	public static final Map<Integer,List<String>> TOWN_NAMES;
+	public static final Map<Integer,String> STATE_NAMES;
 	
 	static {
 		Map<String, Map<String, String>> literalMap = new HashMap<String, Map<String, String>>();
 		TOWN_NAMES = new HashMap <Integer, List<String>>();
+		STATE_NAMES = new HashMap <Integer,String>();
 		
 		// Main Menu
 		Map<String, String> mainMenu = new HashMap<String, String>();
@@ -353,7 +355,7 @@ public final class ConstantStore {
 		townNames5.add("Whitman Mission");
 		townNames5.add("Walla Walla Lake");
 		
-		//town names - nebraska territory
+		//town names - Dakota territory
 		List<String> townNames6 = new ArrayList<String>();
 		townNames6.add("Archer");
 		townNames6.add("Ash Hollow");
@@ -409,6 +411,14 @@ public final class ConstantStore {
 		TOWN_NAMES.put(5, townNames5);
 		//Dakota territory zone names		
 		TOWN_NAMES.put(6, townNames6);
+		
+		STATE_NAMES.put(0, "Missouri");
+		STATE_NAMES.put(1, "Nebraska Territory");
+		STATE_NAMES.put(2, "Kansas Territory");
+		STATE_NAMES.put(3, "Washington Territory");
+		STATE_NAMES.put(4, "Utah Territory");
+		STATE_NAMES.put(5, "Oregon");
+		STATE_NAMES.put(6, "Dakota Territory");
 		
 	}
 	

@@ -28,7 +28,7 @@ public class LocationNode extends MapObject {
 	/** ID for this node - used only internally for data store */ 
 	public final int ID;
 	/** class-wide counter of nodes */
-	private static int nodeCount;
+	//private static int count;
 	/** how far west this location is - a location cannot have a trail leading to a location of lower rank, only equal or greater rank*/
 	private int rank;
 	/** how many outbound trails this location has */
@@ -49,7 +49,7 @@ public class LocationNode extends MapObject {
 	 * @param quality quality of location - lower quality means smaller town or outpost
 	 */
 	public LocationNode(String locationName, int xPos, int yPos, double latitude, double longitude, int trails, int rank, int quality){
-		this.ID = LocationNode.nodeCount++;
+		this.ID = LocationNode.count++;
 		//until we can get a nice source for lat and long data
 		MAP_XPOS = xPos;
 		MAP_YPOS = yPos;
@@ -80,7 +80,7 @@ public class LocationNode extends MapObject {
 	
 	public LocationNode(int xPos, int yPos, int trails, int rank, int quality){
 		//makes unique name for location, temporarily, until we can make them prettier.
-		this("Location " + LocationNode.nodeCount, xPos, yPos, 0, 90, trails, rank, quality);
+		this("Location " + LocationNode.count, xPos, yPos, 0, 90, trails, rank, quality);
 	}
 	
 	
@@ -178,7 +178,7 @@ public class LocationNode extends MapObject {
 		int numTrails = this.outboundTrails.size();
 		retVal = "Name : \t" + this.name + "\t| X pos : \t" + this.MAP_XPOS + " \t| Y pos : \t" + this.MAP_YPOS + "\n";
 //		retVal += "World Lat : \t" + this.WORLD_LATITUDE + "\t| World Long : " + this.WORLD_LONGITUDE + " \n";
-		retVal += "Internal ID : \t" + this.ID + "\t| Total Nodes currently made : \t" + LocationNode.nodeCount + " \n";
+		retVal += "Internal ID : \t" + this.ID + "\t| Total Nodes currently made : \t" + LocationNode.count + " \n";
 		retVal += "Location Quality : \t " +  this.quality + "\n";
 		retVal += "Rank : \t\t" + this.rank + "\t| Total Exit Trail Count : \t" + trails + " \n";
 		

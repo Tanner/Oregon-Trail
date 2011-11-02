@@ -11,6 +11,8 @@ public abstract class MapObject implements Conditioned {
 	protected Condition quality;
 	/**the name of this object */
 	protected String name;
+	/** class-wide counter of nodes */
+	protected static int count;
 	/**the nature of the environment in/around this MapObject*/
 	//protected 
 
@@ -47,5 +49,8 @@ public abstract class MapObject implements Conditioned {
 	
 	public abstract String debugToString();
 		
+	public static void resetCount(){
+		MapObject.count = 0;
+	}
 
 }
