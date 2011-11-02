@@ -19,22 +19,22 @@ public class FontStore {
 		BIG_FIELD
 	}
 	
-	private static FontStore fontManager;
+	private static FontStore fontStore;
 	
 	public static final Map<String, Font> FONTS;
 	
 	static {
-			fontManager = new FontStore();
-			FONTS = new HashMap<String, Font>();
+		fontStore = new FontStore();
+		FONTS = new HashMap<String, Font>();
 		try {
-			fontManager.init();
+			fontStore.init();
 		} catch (SlickException e) {
 			System.err.println(e.getStackTrace());
 		}
 		
 	}
 	
-	public void init() throws SlickException {
+	private void init() throws SlickException {
 		FONTS.put(FontID.H1.toString(), new AngelCodeFont("resources/fonts/04b03_h1.fnt", "resources/fonts/04b03_h1.png", false));
 		FONTS.put(FontID.H2.toString(), new AngelCodeFont("resources/fonts/04b03_h2.fnt", "resources/fonts/04b03_h2.png", false));
 		FONTS.put(FontID.FIELD.toString(), new AngelCodeFont("resources/fonts/04b03_field.fnt", "resources/fonts/04b03_field.png", false));
