@@ -73,10 +73,10 @@ public class TrailScene extends Scene {
 		hud = new HUD(container, party, new HUDListener());
 		showHUD(hud);
 		
-		sky = SceneryFactory.getSky(container, party);
+		sky = SceneryFactory.getSky(container, party.getTime().getTime());
 		backgroundLayer.add(sky);
 		
-		parallaxPanel = SceneryFactory.getScenery(container, party);
+		parallaxPanel = SceneryFactory.getScenery(container);
 		backgroundLayer.add(parallaxPanel);
 		
 		partyComponent = new PartyComponent(container, 400, 150, party.getPartyComponentDataSources());
@@ -207,6 +207,10 @@ public class TrailScene extends Scene {
 		
 		AnimatingColor backgroundOverlayAnimatingColor = SceneryFactory.getBackgroundOverlayAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
 		this.backgroundLayer.setOverlayColor(backgroundOverlayAnimatingColor);
+	}
+	
+	public ParallaxPanel getParallaxPanel() {
+		return parallaxPanel;
 	}
 	
 	/**

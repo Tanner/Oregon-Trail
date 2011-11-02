@@ -45,6 +45,12 @@ public class CampScene extends Scene {
 		this.party = party;
 	}
 	
+	public CampScene(Party party, ParallaxPanel parallaxPanel) {
+		this(party);
+		
+		this.parallaxPanel = parallaxPanel;
+	}
+	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		super.enter(container, game);
@@ -55,11 +61,15 @@ public class CampScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
-		sky = SceneryFactory.getSky(container, party);
+		sky = SceneryFactory.getSky(container, party.getTime().getTime());
 		backgroundLayer.add(sky);
 		
-		parallaxPanel = SceneryFactory.getScenery(container, party);
+		if (parallaxPanel == null) {
+			parallaxPanel = SceneryFactory.getScenery(container);
+		}
 		backgroundLayer.add(parallaxPanel);
+		
+		backgroundLayer.setOverlayColor(SceneryFactory.getBackgroundOverlayAnimatingColor(party.getTime().getTime(), 0));
 		
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		

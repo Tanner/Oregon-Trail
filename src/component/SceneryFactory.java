@@ -41,10 +41,14 @@ public class SceneryFactory {
 	 * @return Sky panel with the background color for the time
 	 * @throws SlickException
 	 */
-	public static Panel getSky(GameContainer container, Party party) throws SlickException {
-		Panel sky = new Panel(container, skyColorForHour(party.getTime().getTime()));
+	public static Panel getSky(GameContainer container, int hour) throws SlickException {
+		Panel sky = new Panel(container, skyColorForHour(hour));
 		
 		return sky;
+	}
+	
+	public static Color getBackgroundOverlayColor(int hour) {
+		return backgroundOverlayColorForHour(hour);
 	}
 	
 	/**
@@ -54,7 +58,7 @@ public class SceneryFactory {
 	 * @return ParallaxPanel with correct scenery
 	 * @throws SlickException
 	 */
-	public static ParallaxPanel getScenery(GameContainer container, Party party) throws SlickException {
+	public static ParallaxPanel getScenery(GameContainer container) throws SlickException {
 		// Stuff
 		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		Random random = new Random();
@@ -119,7 +123,7 @@ public class SceneryFactory {
 	 * @return AnimatingColor
 	 */
 	public static AnimatingColor getSkyAnimatingColor(int hour, int duration) {
-		return new AnimatingColor(SceneryFactory.skyColorForHour(hour - 1), SceneryFactory.skyColorForHour(hour), duration);
+		return new AnimatingColor(skyColorForHour(hour - 1), skyColorForHour(hour), duration);
 	}
 	
 	/**
@@ -129,7 +133,7 @@ public class SceneryFactory {
 	 * @return AnimatingColor
 	 */
 	public static AnimatingColor getBackgroundOverlayAnimatingColor(int hour, int duration) {
-		 return new AnimatingColor(backgroundOverlayColorForHour(hour - 1), backgroundOverlayColorForHour(hour), duration);
+		 return new AnimatingColor(getBackgroundOverlayColor(hour - 1), getBackgroundOverlayColor(hour), duration);
 	}
 	
 	/**

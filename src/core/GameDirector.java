@@ -12,6 +12,8 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.state.transition.RotateTransition;
 import org.newdawn.slick.state.transition.Transition;
 
+import component.ParallaxPanel;
+
 import scene.*;
 import scene.encounter.*;
 import scene.test.*;
@@ -157,6 +159,8 @@ public class GameDirector implements SceneListener {
 		} else if (lastScene instanceof PartyCreationScene) {
 			// Last scene was Party Creation Scene
 			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
+		} else if (lastScene instanceof TrailScene && newScene instanceof CampScene) {
+			newScene = new CampScene(game.getPlayer().getParty());
 		}
 		
 		/*
