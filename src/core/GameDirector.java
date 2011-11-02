@@ -159,7 +159,7 @@ public class GameDirector implements SceneListener {
 			// Last scene was Party Creation Scene
 			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
 		} else if (lastScene instanceof TrailScene && newScene instanceof CampScene) {
-			newScene = new CampScene(game.getPlayer().getParty());
+			newScene = new CampScene(game.getPlayer().getParty(), ((TrailScene) lastScene).getParallaxPanel());
 		}
 		
 		/*

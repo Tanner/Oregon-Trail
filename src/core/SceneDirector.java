@@ -78,6 +78,8 @@ public class SceneDirector extends StateBasedGame {
 			return;
 		}
 		
+		scenes.peek().prepareToLeave();
+		
 		scenes.pop();
 	
 		scenes.peek().prepareToEnter();

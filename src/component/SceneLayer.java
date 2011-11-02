@@ -44,6 +44,13 @@ public class SceneLayer extends Component {
 		component.setVisibleParent(this);
 	}
 	
+	public void remove(Component component) {
+		components.remove(component);
+		if (component.getVisibleParent() == this) {
+			component.setVisibleParent(null);
+		}
+	}
+	
 	public void setOverlayColor(Color overlayColor) {
 		this.overlayColor = overlayColor;
 	}

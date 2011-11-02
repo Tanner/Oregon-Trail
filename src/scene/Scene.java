@@ -130,6 +130,13 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 		setActive(true);
 	}
 	
+	/**
+	 * Prepare for departure. Transition is about to end this scene. 
+	 */
+	public void prepareToLeave() {
+		return;
+	}
+	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		mainLayer.setAcceptingInput(true);

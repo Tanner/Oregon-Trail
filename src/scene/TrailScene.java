@@ -149,6 +149,15 @@ public class TrailScene extends Scene {
 	}
 	
 	@Override
+	public void prepareToEnter() {
+		super.prepareToEnter();
+		
+		if (parallaxPanel != null) {
+			backgroundLayer.add(parallaxPanel);
+		}
+	}
+	
+	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
 		super.enter(container, game);
 		
@@ -219,6 +228,21 @@ public class TrailScene extends Scene {
 	 */
 	public float map(float x, float inMin, float inMax, float outMin, float outMax) {
 		  return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+	}
+	
+	/**
+	 * Get the {@code ParallaxPanel}.
+	 * @return ParallaxPanel
+	 */
+	public ParallaxPanel getParallaxPanel() {		
+		return parallaxPanel;
+	}
+	
+	@Override
+	public void leave(GameContainer container, StateBasedGame game)  {
+		super.leave(container, game);
+		
+		backgroundLayer.remove(parallaxPanel);
 	}
 	
 	@Override

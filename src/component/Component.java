@@ -532,6 +532,14 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		}
 	}
 	
+	/**
+	 * Returns the {@code Visible} parent.
+	 * @return Return the visible parent
+	 */
+	public Visible getVisibleParent() {
+		return visibleParent;
+	}
+	
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		if (!isVisible() || !isAcceptingInput()) {
