@@ -8,6 +8,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import component.Positionable.ReferencePoint;
+import component.hud.HUD;
 import component.sprite.ParallaxSprite;
 import component.sprite.ParallaxSpriteLoop;
 

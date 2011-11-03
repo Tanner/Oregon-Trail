@@ -8,12 +8,12 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import component.HUD;
 import component.Component;
 import component.SceneLayer;
 import component.Tooltip;
 import component.Positionable.ReferencePoint;
 import component.Visible;
+import component.hud.HUD;
 import component.modal.Modal;
 import component.modal.ModalListener;
 
