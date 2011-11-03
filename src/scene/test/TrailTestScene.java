@@ -65,7 +65,7 @@ public class TrailTestScene extends Scene {
 
 		// Ration Selection
 		int labelWidth = 100;
-		Label rationsLabel = new Label(container, labelWidth, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "RATIONS_LABEL"));
+		Label rationsLabel = new Label(container, labelWidth, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("GENERAL", "RATIONS_LABEL"));
 		mainLayer.add(rationsLabel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, PADDING, -PADDING);
 		
 		int numOfRations = Party.Rations.values().length;
@@ -77,7 +77,7 @@ public class TrailTestScene extends Scene {
 		mainLayer.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPLEFT, PADDING, 0);
 		
 		// Pace Selection
-		Label paceLabel = new Label(container, labelWidth, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("PARTY_CREATION_SCENE", "PACE_LABEL"));
+		Label paceLabel = new Label(container, labelWidth, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("GENERAL", "PACE_LABEL"));
 		mainLayer.add(paceLabel, rationsLabel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, -PADDING);
 		
 		int numOfPaces = Party.Pace.values().length;

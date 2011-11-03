@@ -266,6 +266,9 @@ public class RiverScene extends Scene {
 	public String damage() {
 		ArrayList<String> deadMembers = new ArrayList<String>();
 		didTakeDamage = true;
+		if (party.getVehicle() != null) {
+			party.getVehicle().decreaseStatus((int)(Math.random()*100));
+		}
 		List<Person> partyMembers = party.getPartyMembers();
 		for ( int i = partyMembers.size() - 1; i >= 0; i-- ) {
 			Person person = partyMembers.get(i);
