@@ -117,7 +117,7 @@ public final class ConstantStore {
 		campScene.put("MAP", "Map");
 		campScene.put("HUNT", "Hunt");
 		campScene.put("MISC", "TBD");
-		campScene.put("LEAVE", "Leave");
+		campScene.put("LEAVE", "Continue");
 		literalMap.put("CAMP_SCENE", campScene);
 		
 		// Trail Scene
