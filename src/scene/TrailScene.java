@@ -69,6 +69,9 @@ public class TrailScene extends Scene {
 	
 	private PartyComponent partyComponent;
 	
+	private EncounterNotification currentEncounterNotification;
+	private Modal encounterModal;
+	
 	/**
 	 * Construct a TrailScene with a {@code Party} and a {@code RandomEncounterTable}.
 	 * @param party Party to use
@@ -183,10 +186,8 @@ public class TrailScene extends Scene {
 				
 				handleNotifications(notifications, encounterNotification.getNotification().getMessage());
 				
-				if (encounterNotification.getSceneID() != null)
-					SoundStore.get().stopSound("Steps");
-					GameDirector.sharedSceneListener().requestScene(encounterNotification.getSceneID(), this, false);
-
+				currentEncounterNotification = encounterNotification;
+				
 				clickCounter = 0;
 				
 				adjustSetting();
@@ -225,10 +226,10 @@ public class TrailScene extends Scene {
 		
 		if (modalMessage.length() != 0) {
 			SoundStore.get().stopSound("Steps");
-			ChoiceModal campModal = new ChoiceModal(container, this, modalMessage.toString().trim());
-			campModal.setCancelButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
-			campModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
-			showModal(campModal);
+			encounterModal = new ChoiceModal(container, this, modalMessage.toString().trim());
+			encounterModal.setCancelButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
+			encounterModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
+			showModal(encounterModal);
 		}
 		
 		hud.addNotifications(messages);
@@ -297,6 +298,12 @@ public class TrailScene extends Scene {
 		SoundStore.get().stopAllSound();
 		if (cancelled) {
 			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, this, false);
+		}
+		if (modal == encounterModal) {
+			if (currentEncounterNotification.getSceneID() != null) {
+				SoundStore.get().stopSound("Steps");
+				GameDirector.sharedSceneListener().requestScene(currentEncounterNotification.getSceneID(), this, false);
+			}
 		}
 	}
 	

@@ -42,19 +42,26 @@ public class RiverScene extends Scene {
 	private static final int CAULK_DANGER_DEPTH = 4;
 	private static final int RIVER_CROSS_TIME = 3000;
 	
-	private int riverDepth;
-	private int tollPrice;
-	private int crossTime;
-	private String message;
-	private Party party;
+
 	private ParallaxPanel riverParallaxPanel;
 	private ParallaxPanel cloudParallaxPanel;
-	private boolean haveWaited;
-	private boolean didTakeDamage;
+	
 	private SegmentedControl crossingChoicesControl;
 	private ComponentModal<SegmentedControl> crossingChoicesModal;
 	private MessageModal successModal;
 	private Modal nextModal;
+	
+	private Party party;
+	
+	private int riverDepth;
+	private int tollPrice;
+	private int crossTime;
+	
+	private String successModalMessage;
+
+	private boolean haveWaited;
+	private boolean didTakeDamage;
+
 	public RiverScene(Party party) {
 		this.party = party;
 		riverDepth = (int) (Math.random() * MAX_RIVER_DEPTH) + 1;
@@ -63,6 +70,7 @@ public class RiverScene extends Scene {
 		crossTime = 0;
 	}
 	
+	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
@@ -156,13 +164,14 @@ public class RiverScene extends Scene {
 			}
 		}
 		else if (modal == successModal) {
+			SoundStore.get().stopMusic();
 			GameDirector.sharedSceneListener().sceneDidEnd(this);
 		}
 	}
 	
 	/**
 	 * Construct the modal with all of the river crossing choices.  Disable
-	 * choics if they are not available
+	 * choices if they are not available
 	 */
 	public void makeChoiceModal() {
 		String[] choices = {"Ford the river", "Caulk your wagon", "Pay the toll", "Wait for an hour"};
@@ -177,14 +186,14 @@ public class RiverScene extends Scene {
 		if (disabled[0] != -1)
 			crossingChoicesControl.setDisabled(disabled);
 		makeChoicesModalMessage();
-		crossingChoicesModal = new ComponentModal<SegmentedControl>(container, this, message, crossingChoicesControl);
+		crossingChoicesModal = new ComponentModal<SegmentedControl>(container, this, successModalMessage, crossingChoicesControl);
 	}
 	
 	/**
 	 * Construct the message for the main choices modal
 	 */
 	public void makeChoicesModalMessage() {
-		message = String.format("You've come to a river.  It is %d %s deep.\n" +
+		successModalMessage = String.format("You've come to a river.  It is %d %s deep.\n" +
 			"There is a bridge with a $%d toll, and you have $%d.\nWhat do you want to do?",
 			riverDepth, (riverDepth == 1) ? "foot" : "feet", tollPrice, party.getMoney());
 	}
@@ -194,17 +203,17 @@ public class RiverScene extends Scene {
 	 */
 	private void ford() {
 		if (riverDepth >= FORD_DANGER_DEPTH && Math.random() > 0.5) {
-			message = "Oh no!  Why would you ford a " + riverDepth +
+			successModalMessage = "Oh no!  Why would you ford a " + riverDepth +
 					" foot deep river?  Your party was damaged";
 			String deaths = damage();
-			message += (deaths.equals("")) ? ", but at least no one died!" :
+			successModalMessage += (deaths.equals("")) ? ", but at least no one died!" :
 				" and you lost " + deaths + ".";
 		}
 		else {
-			message = "You successfully forded the river!  Your party sighs in" +
+			successModalMessage = "You successfully forded the river!  Your party sighs in" +
 					" relief";
 		}
-		successModal = new MessageModal(container, this, message);
+		successModal = new MessageModal(container, this, successModalMessage);
 		nextModal = successModal;
 	}
 	
@@ -213,19 +222,19 @@ public class RiverScene extends Scene {
 	 */
 	private void caulk() {
 		if (riverDepth >= CAULK_DANGER_DEPTH && Math.random() > 0.5) {
-			message = "Oh no!  Your caulk didn't hold up and water leaked into " +
+			successModalMessage = "Oh no!  Your caulk didn't hold up and water leaked into " +
 					"your wagon.  Your party was damaged";
 			String deaths = damage();
-			message += (deaths.equals("")) ? ", but at least no one died!" :
+			successModalMessage += (deaths.equals("")) ? ", but at least no one died!" :
 				" and you lost " + deaths + ".";
 		}
 		else {
-			message = "Water started seeping into your wagon just as you " +
-					"reached the shore, but you make it!.  You dump the water" +
+			successModalMessage = "Water started seeping into your wagon just as you " +
+					"reached the shore, but you make it!  You dump the water " +
 					"out of your boots, take a big swill of whiskey, and get " +
 					"back on the trail.";
 		}
-		successModal = new MessageModal(container, this, message);
+		successModal = new MessageModal(container, this, successModalMessage);
 		nextModal = successModal;
 	}
 	
@@ -234,9 +243,9 @@ public class RiverScene extends Scene {
 	 */
 	private void payToll() {
 		party.setMoney(party.getMoney() - tollPrice);
-		message = "Your party decided to take the easy way out and " +
+		successModalMessage = "Your party decided to take the easy way out and " +
 				"pay the the bridge toll.  Your party members thank you.";
-		successModal = new MessageModal(container, this, message);
+		successModal = new MessageModal(container, this, successModalMessage);
 		nextModal = successModal;
 	}
 	

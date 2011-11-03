@@ -10,8 +10,9 @@ public enum EncounterID {
 	THIEF ("Thief Encounter", 0, 0, 3, 5),
 	ITEM ("Item Encounter", 1, 2, 1, 0),
 	//POTHOLE ("Pothole Encounter", 2, 1, 3, 5),
-	MESSAGE("Message Encounter", 2, 2, 2, 2),
-	NULL ("Null Encounter", 20, 20, 20, 20);
+	MESSAGE ("Message Encounter", 2, 2, 2, 2),
+	RIVER ("River Encounter", 1, 1, 0, 0),
+	NULL ("Null Encounter", 20, 20, 20, 20);	
 	
 	private final String name;
 	private final int[] frequencies;
@@ -49,6 +50,9 @@ public enum EncounterID {
 			//return new NullEncounter(party, value);
 		} else if (id == EncounterID.MESSAGE) {
 			return new MessageEncounter(party, value);
+		} 
+		else if (id == EncounterID.RIVER) {
+			return new RiverEncounter(party, value);
 		} else {
 			return new NullEncounter(party, value);
 		}
