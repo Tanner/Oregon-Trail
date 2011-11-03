@@ -221,10 +221,18 @@ public class HUD extends Component {
 		notificationLabel.setText(message);
 	}
 	
+	/**
+	 * Return the current mode.
+	 * @return Current mode
+	 */
 	public Mode getMode() {
 		return currentMode;
 	}
 	
+	/**
+	 * Set the current mode.
+	 * @param mode New mode
+	 */
 	public void setMode(Mode mode) {
 		currentMode = mode;
 		
