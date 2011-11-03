@@ -109,7 +109,7 @@ public class PartyComponent extends Component {
 				sprites.remove(i);
 				dataSources.remove(i);
 			} else {
-				int translateY = (int)(2 * Math.sin(timeElapsed / 250 - (i + 1)));
+				int translateY = (int)(2 * Math.sin(timeElapsed / 10000 - (i + 1)));
 				names.get(i).setTranslation(0, translateY);
 				conditionBars.get(i).setTranslation(0, translateY);
 				sprites.get(i).setTranslation(0, translateY);

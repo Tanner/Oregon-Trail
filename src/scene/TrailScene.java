@@ -159,7 +159,7 @@ public class TrailScene extends Scene {
 				sprite.move(delta);
 			}
 			
-			partyComponent.update(delta, timeElapsed);
+			partyComponent.update(delta, timeElapsed * party.getPace().getSpeed());
 			
 			boolean pause = !hud.isNotificationsEmpty();
 			
