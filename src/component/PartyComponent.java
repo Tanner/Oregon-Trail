@@ -59,37 +59,39 @@ public class PartyComponent extends Component {
 			conditionBars.add(cb);
 		}
 
-		Label[] nameArrayay = new Label[names.size()];
-		int groupWidth = 0;
-		for (int i = 0; i < nameArrayay.length; i++) {
-			nameArrayay[i] = names.get(i);
-			groupWidth += nameArrayay[i].getWidth();
+		int groupWidth = MARGIN;
+
+		AnimatingSprite[] spriteArray = new AnimatingSprite[sprites.size()];
+		for (int i = 0; i < spriteArray.length; i++) {
+			spriteArray[i] = sprites.get(i);
+			groupWidth += spriteArray[i].getWidth();
 			groupWidth += MARGIN;
 		}
-		addAsRow(nameArrayay,
-				new Vector2f(getPosition(ReferencePoint.TOPRIGHT).x - groupWidth, getPosition(ReferencePoint.TOPRIGHT).y),
-				0,
-				0,
-				MARGIN);
-		
+		Label[] nameArrayay = new Label[names.size()];
+		for (int i = 0; i < nameArrayay.length; i++) {
+			nameArrayay[i] = names.get(i);
+		}
 		ConditionBar[] conditionBarArray = new ConditionBar[conditionBars.size()];
 		for (int i = 0; i < conditionBarArray.length; i++) {
 			conditionBarArray[i] = conditionBars.get(i);
 		}
-		addAsRow(conditionBarArray,
-				names.get(0).getPosition(ReferencePoint.BOTTOMLEFT),
+		
+		addAsRow(spriteArray,
+				new Vector2f(getPosition(ReferencePoint.BOTTOMRIGHT).x - groupWidth, getPosition(ReferencePoint.BOTTOMRIGHT).y),
 				0,
 				MARGIN,
 				MARGIN);
 		
-		AnimatingSprite[] spriteArray = new AnimatingSprite[sprites.size()];
-		for (int i = 0; i < spriteArray.length; i++) {
-			spriteArray[i] = sprites.get(i);
-		}
-		addAsRow(spriteArray,
-				conditionBars.get(0).getPosition(ReferencePoint.BOTTOMLEFT),
+		addAsRow(conditionBarArray,
+				new Vector2f(sprites.get(0).getPosition(ReferencePoint.TOPLEFT).x, sprites.get(0).getPosition(ReferencePoint.TOPLEFT).y - CONDITION_BAR_HEIGHT),
 				0,
-				MARGIN,
+				-MARGIN,
+				MARGIN);
+		
+		addAsRow(nameArrayay,
+				new Vector2f(conditionBars.get(0).getPosition(ReferencePoint.TOPLEFT).x, conditionBars.get(0).getPosition(ReferencePoint.TOPLEFT).y - names.get(0).getHeight()),
+				0,
+				-MARGIN,
 				MARGIN);
 	}
 	
@@ -99,11 +101,16 @@ public class PartyComponent extends Component {
 			sprites.get(i).update(delta);
 			
 			if (dataSources.get(i).isDead()) {
+				remove(names.get(i));
 				remove(conditionBars.get(i));
+				remove(sprites.get(i));
+				names.remove(i);
 				conditionBars.remove(i);
+				sprites.remove(i);
 				dataSources.remove(i);
 			} else {
 				int translateY = (int)(2 * Math.sin(timeElapsed / 250 - (i + 1)));
+				names.get(i).setTranslation(0, translateY);
 				conditionBars.get(i).setTranslation(0, translateY);
 				sprites.get(i).setTranslation(0, translateY);
 			}

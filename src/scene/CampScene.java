@@ -22,6 +22,7 @@ public class CampScene extends Scene {
 	
 	private static final int MARGIN = 10;
 	private static final int HEIGHT = 80;
+	private static final int PARTY_Y_OFFSET = -190;
 	
 	private Party party;
 	
@@ -112,8 +113,8 @@ public class CampScene extends Scene {
 		campFire.addFire(560, 290, 15);
 		backgroundLayer.add(campFire);
 		
-		partyComponent = new PartyComponent(container, 400, 150, party.getPartyComponentDataSources());
-		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, -75);
+		partyComponent = new PartyComponent(container, container.getWidth(), parallaxPanel.getHeight(), party.getPartyComponentDataSources());
+		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, PARTY_Y_OFFSET);
 	}
 	
 	@Override

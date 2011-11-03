@@ -42,6 +42,8 @@ import core.SoundStore;
 public class TrailScene extends Scene {
 	public static final SceneID ID = SceneID.TRAIL;
 	
+	private static final int PARTY_Y_OFFSET = -190;
+	
 	private static final int CLICK_WAIT_TIME = 1000;
 	private static final int STEP_COUNT_TRIGGER = 2;
 	
@@ -122,8 +124,8 @@ public class TrailScene extends Scene {
 		parallaxPanel = SceneryFactory.getScenery(container);
 		backgroundLayer.add(parallaxPanel);
 		
-		partyComponent = new PartyComponent(container, container.getWidth(), 250, party.getPartyComponentDataSources());
-		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, 0);
+		partyComponent = new PartyComponent(container, container.getWidth(), parallaxPanel.getHeight(), party.getPartyComponentDataSources());
+		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, PARTY_Y_OFFSET);
 		
 		clickCounter = 0;
 		
