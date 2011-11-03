@@ -52,7 +52,6 @@ public class SceneryFactory {
 	 * @throws SlickException
 	 */
 	public static ParallaxPanel getScenery(GameContainer container) throws SlickException {
-		// Stuff
 		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		Random random = new Random();
 		
@@ -72,22 +71,6 @@ public class SceneryFactory {
 		
 		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
 		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
-		
-		// Clouds
-		Image[] cloudImages = new Image[3];
-		cloudImages[0] = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
-		cloudImages[1] = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
-		cloudImages[2] = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
-		
-		for (int i = 0; i < NUM_CLOUDS; i++) {
-			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
-			int cloudImage = random.nextInt(cloudImages.length);
-			
-			int offset = CLOUD_OFFSET + random.nextInt(CLOUD_OFFSET_VARIANCE * 2) - CLOUD_OFFSET_VARIANCE;
-			
-			ParallaxSprite cloud = new ParallaxSprite(container, cloudImages[cloudImage], distance, true);
-			parallaxPanel.add(cloud, parallaxPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, offset);
-		}
 		
 		// Trees
 		for (int i = 0; i < NUM_TREES; i++) {
@@ -109,6 +92,31 @@ public class SceneryFactory {
 		
 		ParallaxSprite deer = new ParallaxSprite(container, new Image("resources/graphics/animals/deer.png", false, Image.FILTER_NEAREST), DEER_DISTANCE, true);
 		parallaxPanel.add(deer, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, DEER_OFFSET);
+		
+		return parallaxPanel;
+	}
+	
+	public static ParallaxPanel getClouds(GameContainer container) throws SlickException {
+		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
+		Random random = new Random();
+		
+		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
+		
+		// Clouds
+		Image[] cloudImages = new Image[3];
+		cloudImages[0] = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
+		cloudImages[1] = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
+		cloudImages[2] = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
+		
+		for (int i = 0; i < NUM_CLOUDS; i++) {
+			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
+			int cloudImage = random.nextInt(cloudImages.length);
+			
+			int offset = CLOUD_OFFSET + random.nextInt(CLOUD_OFFSET_VARIANCE * 2) - CLOUD_OFFSET_VARIANCE;
+			
+			ParallaxSprite cloud = new ParallaxSprite(container, cloudImages[cloudImage], distance, true);
+			parallaxPanel.add(cloud, parallaxPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, offset);
+		}
 		
 		return parallaxPanel;
 	}

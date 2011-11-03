@@ -59,6 +59,7 @@ public class TrailScene extends Scene {
 		
 	private Panel sky;
 	private ParallaxPanel parallaxPanel;
+	private ParallaxPanel cloudsParallaxPanel;
 	
 	private Party party;
 	private RandomEncounterTable randomEncounterTable;
@@ -129,6 +130,9 @@ public class TrailScene extends Scene {
 		sky = SceneryFactory.getSky(container, party.getTime().getTime());
 		backgroundLayer.add(sky);
 		
+		cloudsParallaxPanel = SceneryFactory.getClouds(container);
+		backgroundLayer.add(cloudsParallaxPanel);
+		
 		parallaxPanel = SceneryFactory.getScenery(container);
 		backgroundLayer.add(parallaxPanel);
 		
@@ -155,6 +159,10 @@ public class TrailScene extends Scene {
 				if (!SoundStore.get().getPlayingSounds().contains("Steps")) {
 					SoundStore.get().playSound("Steps");
 				}
+				
+				for (ParallaxSprite sprite : parallaxPanel.getSprites()) {
+					sprite.move(delta);
+				}
 			}
 			
 			if (skyAnimatingColor != null) {
@@ -162,16 +170,15 @@ public class TrailScene extends Scene {
 			}
 			mainLayer.update(delta);
 			
+			for (ParallaxSprite sprite : cloudsParallaxPanel.getSprites()) {
+				sprite.move(delta);
+			}
+			
 			if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
 				clickCounter++;
 				hud.updateNotifications();
 				timeElapsed = 0;
 			}
-			
-			for (ParallaxSprite sprite : parallaxPanel.getSprites()) {
-				sprite.move(delta);
-			}
-			
 			
 			boolean pause = !hud.isNotificationsEmpty();
 			if (pause) {
