@@ -308,8 +308,9 @@ public class TrailScene extends Scene {
 		super.dismissModal(modal, cancelled);
 		SoundStore.get().stopAllSound();
 		if (cancelled) {
-			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, this, false);
+			setMode(Mode.CAMP);
 		}
+		
 		if (modal == encounterModal) {
 			if (currentEncounterNotification.getSceneID() != null) {
 				SoundStore.get().stopSound("Steps");
@@ -318,18 +319,22 @@ public class TrailScene extends Scene {
 		}
 	}
 	
+	public void setMode(Mode mode) {
+		if (mode == Mode.TRAIL) {
+			currentMode = Mode.CAMP;
+			hud.setMode(HUD.Mode.CAMP);
+		} else if (mode == Mode.CAMP) {
+			currentMode = Mode.TRAIL;
+			hud.setMode(HUD.Mode.TRAIL);
+		}
+	}
+	
 	private class HUDListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			SoundStore.get().stopAllSound();
 			
-			if (currentMode == Mode.TRAIL) {
-				currentMode = Mode.CAMP;
-				hud.setMode(HUD.Mode.CAMP);
-			} else if (currentMode == Mode.CAMP) {
-				currentMode = Mode.TRAIL;
-				hud.setMode(HUD.Mode.TRAIL);
-			}
+			setMode(Mode.CAMP);
 		}
 	}
 	
