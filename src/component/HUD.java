@@ -14,7 +14,6 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
-import scene.CampScene;
 import scene.SceneID;
 
 import component.Label.VerticalAlignment;

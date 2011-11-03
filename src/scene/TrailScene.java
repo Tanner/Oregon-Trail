@@ -290,14 +290,6 @@ public class TrailScene extends Scene {
 		  return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 	}
 	
-	/**
-	 * Get the {@code ParallaxPanel}.
-	 * @return ParallaxPanel
-	 */
-	public ParallaxPanel getParallaxPanel() {		
-		return parallaxPanel;
-	}
-	
 	@Override
 	public void leave(GameContainer container, StateBasedGame game)  {
 		super.leave(container, game);
