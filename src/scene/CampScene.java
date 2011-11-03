@@ -82,7 +82,7 @@ public class CampScene extends Scene {
 		backgroundLayer.add(parallaxPanel);
 		
 		Color overlayColor = SceneryFactory.getOverlayColorForHour(party.getTime().getTime());
-		backgroundLayer.setOverlayColor(overlayColor);
+		mainLayer.setOverlayColor(overlayColor);
 		
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		
@@ -153,6 +153,7 @@ public class CampScene extends Scene {
 		if (skyAnimatingColor != null) {
 			skyAnimatingColor.update(delta);
 		}
+		mainLayer.update(delta);
 		
 		for (ParallaxSprite sprite : parallaxPanel.getSprites()) {
 			sprite.move(delta);
