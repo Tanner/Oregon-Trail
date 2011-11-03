@@ -7,7 +7,7 @@ import model.Party;
 public class RiverEncounter extends Encounter {
 	
 	public RiverEncounter(Party party, int value) {
-		super(party, value, EncounterID.THIEF);
+		super(party, value, EncounterID.RIVER);
 	}
 	
 	@Override
