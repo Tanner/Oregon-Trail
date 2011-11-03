@@ -42,6 +42,9 @@ import core.SoundStore;
 public class TrailScene extends Scene {
 	public static final SceneID ID = SceneID.TRAIL;
 	
+	private static enum Mode { TRAIL, CAMP };
+	private static Mode currentMode;
+	
 	private static final int PARTY_Y_OFFSET = -190;
 	
 	private static final int CLICK_WAIT_TIME = 1000;
@@ -80,13 +83,15 @@ public class TrailScene extends Scene {
 	public TrailScene(Party party, RandomEncounterTable randomEncounterTable) {
 		this.party = party;
 		this.randomEncounterTable = randomEncounterTable;
+		
+		currentMode = Mode.TRAIL;
 	}
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		hud = new HUD(container, party, new HUDListener());
+		hud = new HUD(container, party, HUD.Mode.TRAIL, new HUDListener());
 		showHUD(hud);
 		
 		int toolbarXMargin = 10;
@@ -139,12 +144,17 @@ public class TrailScene extends Scene {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(!isPaused()) {
 			timeElapsed += delta;
+			
 			if (party.getTrail().getConditionPercentage() == 0.0) {
 				party.setLocation(party.getTrail().getDestination());
 				SoundStore.get().stop();
 				GameDirector.sharedSceneListener().requestScene(SceneID.TOWN, this, true);
-			} else if (!SoundStore.get().getPlayingSounds().contains("Steps")) {
-				SoundStore.get().playSound("Steps");
+			} else if (currentMode == Mode.TRAIL) {
+				partyComponent.update(delta, timeElapsed * party.getPace().getSpeed());
+				
+				if (!SoundStore.get().getPlayingSounds().contains("Steps")) {
+					SoundStore.get().playSound("Steps");
+				}
 			}
 			
 			if (skyAnimatingColor != null) {
@@ -162,31 +172,32 @@ public class TrailScene extends Scene {
 				sprite.move(delta);
 			}
 			
-			partyComponent.update(delta, timeElapsed * party.getPace().getSpeed());
 			
 			boolean pause = !hud.isNotificationsEmpty();
-			
 			if (pause) {
 				return;
 			}
 						
 			if (clickCounter >= STEP_COUNT_TRIGGER) {
 				party.getTime().advanceTime();
-				List<Notification> notifications = party.walk();
-				hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
-				if (party.getPartyMembers().isEmpty()) {
-					SoundStore.get().stopAllSound();
-					GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
+				
+				if (currentMode == Mode.TRAIL) {
+					List<Notification> notifications = party.walk();
+					hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
+					if (party.getPartyMembers().isEmpty()) {
+						SoundStore.get().stopAllSound();
+						GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, this, true);
+					}
+					Logger.log("Last Town = " + party.getLocation(), Logger.Level.INFO);
+					
+					hud.addNotification("" + party.getTrail().getRoughDistanceToGo() + party.getTrail().getDestination().getName());
+					
+					EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter(party.getTime().getTimeOfDay().ordinal());
+					
+					handleNotifications(notifications, encounterNotification.getNotification().getMessage());
+					
+					currentEncounterNotification = encounterNotification;
 				}
-				Logger.log("Last Town = " + party.getLocation(), Logger.Level.INFO);
-				
-				hud.addNotification("" + party.getTrail().getRoughDistanceToGo() + party.getTrail().getDestination().getName());
-				
-				EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter(party.getTime().getTimeOfDay().ordinal());
-				
-				handleNotifications(notifications, encounterNotification.getNotification().getMessage());
-				
-				currentEncounterNotification = encounterNotification;
 				
 				clickCounter = 0;
 				
@@ -311,7 +322,14 @@ public class TrailScene extends Scene {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			SoundStore.get().stopAllSound();
-			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, TrailScene.this, false);
+			
+			if (currentMode == Mode.TRAIL) {
+				currentMode = Mode.CAMP;
+				hud.setMode(HUD.Mode.CAMP);
+			} else if (currentMode == Mode.CAMP) {
+				currentMode = Mode.TRAIL;
+				hud.setMode(HUD.Mode.TRAIL);
+			}
 		}
 	}
 	

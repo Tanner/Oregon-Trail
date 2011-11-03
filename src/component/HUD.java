@@ -22,6 +22,9 @@ import core.FontStore;
  * A HUD holds quick information for the player.
  */
 public class HUD extends Component {
+	public static enum Mode { TRAIL, CAMP };
+	private static Mode currentMode;
+	
 	private static final int MARGIN = 10;
 	public static final int HEIGHT = 80;
 	
@@ -41,9 +44,10 @@ public class HUD extends Component {
 	 * @param context Context
 	 * @param data Data source to use
 	 */
-	public HUD(GUIContext context, HUDDataSource data, ComponentListener listener) {
+	public HUD(GUIContext context, HUDDataSource data, Mode mode, ComponentListener listener) {
 		super(context, context.getWidth(), HEIGHT);
 		
+		this.currentMode = mode;
 		this.data = data;
 		
 		notificationQueue = new LinkedList<String>();
@@ -147,5 +151,13 @@ public class HUD extends Component {
 	 */
 	private void setNotification(String message) {
 		notificationLabel.setText(message);
+	}
+	
+	public Mode getMode() {
+		return currentMode;
+	}
+	
+	public void setMode(Mode mode) {
+		currentMode = mode;
 	}
 }
