@@ -56,12 +56,14 @@ public class SoundStore {
 
 		addToMusic("Crackling Fire", new Music("resources/music/crackling_fire.ogg"));
 		addToMusic("GBU", new Music("resources/music/GBU.ogg"));
+		addToMusic("River", new Music("resources/music/river.ogg"));
 		addToSounds("Smooth", new Sound("resources/music/smooth.ogg"));
 		addToSounds("Steps", new Sound("resources/music/steps.ogg"));
 		addToSounds("Click", new Sound("resources/music/click.ogg"));
 		addToSounds("ItemGet", new Sound("resources/music/itemGet.ogg"));
 		addToSounds("WolfHowl", new Sound("resources/music/wolfHowl.ogg"));
 		addToSounds("Rooster", new Sound("resources/music/rooster.ogg"));
+		addToSounds("Splash", new Sound("resources/music/splash.ogg"));
 	}
 	
 	public List<String> getPlayingMusic() {

@@ -532,6 +532,23 @@ public class Party implements HUDDataSource {
 		}
 		return null;
 	}
+	
+	/**
+	 * Decrease the health of a party member, and take the proper actions if
+	 * they die when the health is decreased.
+	 * @param person The person to decrease health.
+	 * @param health The amount of health to decrease.
+	 * @return True if the person is still alive, false if they are dead
+	 */
+	public boolean decreaseHealth(Person person, int health) {
+		person.decreaseHealth(health);
+		if (person.getHealth().getCurrent() <= 0) {
+			person.setDead(true);
+			person.killForFood();
+			members.remove(person);
+		}
+		return !person.isDead();
+	}
 
 	public void addAnimals(List<Animal> animals) {
 		animals.addAll(animals);
