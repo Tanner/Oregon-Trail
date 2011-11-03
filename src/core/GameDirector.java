@@ -254,7 +254,7 @@ public class GameDirector implements SceneListener {
 		List<Encounter> encounterList = new ArrayList<Encounter>();
 		
 		for ( EncounterID encounter : EncounterID.values() ) {
-			encounterList.add(EncounterID.getEncounter(game.getPlayer().getParty(), encounter, 5 * encounter.getFrequency() * (rand.nextInt(10)+1)));
+			encounterList.add(EncounterID.getEncounter(game.getPlayer().getParty(), encounter, 5 * (rand.nextInt(10)+1)));
 		}
 		return encounterList;
 	}

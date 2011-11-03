@@ -2,8 +2,6 @@ package scene.encounter;
 
 import java.util.Random;
 
-import core.SoundStore;
-
 import model.Item;
 import model.Notification;
 import model.Party;
@@ -15,6 +13,7 @@ import model.item.Animal;
  * Displays a modal with results of the transaction.
  */
 public class ItemEncounter extends Encounter {
+	
 	private enum ITEM_ENCOUNTER_TYPE {
 		APPLE(ITEM_TYPE.APPLE, "You rest by an apple tree. You pick up %d %3$s."),
 		BREAD(ITEM_TYPE.BREAD, "You find a basket of bread which contains %d %s %s. You decide to take it."),
@@ -59,7 +58,7 @@ public class ItemEncounter extends Encounter {
 	 * @param value Multiplier for "extreme-ness" of the Encounter
 	 */
 	public ItemEncounter(Party party, int value) {
-		super(party, value);
+		super(party, value, EncounterID.ITEM);
 		
 		Random random = new Random();
 		
@@ -91,5 +90,10 @@ public class ItemEncounter extends Encounter {
 		
 		Notification notification = new Notification(message);
 		return new EncounterNotification(notification, null);
+	}
+
+	@Override
+	public EncounterID getEncounterID() {
+		return id;
 	}
 }

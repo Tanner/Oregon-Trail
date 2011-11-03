@@ -177,7 +177,7 @@ public class TrailScene extends Scene {
 				
 				hud.addNotification("" + party.getTrail().getRoughDistanceToGo() + party.getTrail().getDestination().getName());
 				
-				EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter();
+				EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter(party.getTime().getTimeOfDay().ordinal());
 				
 				handleNotifications(notifications, encounterNotification.getNotification().getMessage());
 				
