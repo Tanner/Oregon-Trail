@@ -321,11 +321,11 @@ public class TrailScene extends Scene {
 	
 	public void setMode(Mode mode) {
 		if (mode == Mode.TRAIL) {
-			currentMode = Mode.CAMP;
-			hud.setMode(HUD.Mode.CAMP);
-		} else if (mode == Mode.CAMP) {
-			currentMode = Mode.TRAIL;
+			currentMode = mode;
 			hud.setMode(HUD.Mode.TRAIL);
+		} else if (mode == Mode.CAMP) {
+			currentMode = mode;
+			hud.setMode(HUD.Mode.CAMP);
 		}
 	}
 	
