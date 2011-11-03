@@ -12,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import component.*;
 import component.Positionable.ReferencePoint;
+import component.sprite.ParallaxSprite;
 import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;
@@ -24,18 +25,31 @@ public class CampScene extends Scene {
 	private static final int HEIGHT = 80;
 	private static final int PARTY_Y_OFFSET = -190;
 	
+	private static final int CLICK_WAIT_TIME = 1000;
+	private static final int STEP_COUNT_TRIGGER = 2;
+	
+	private static final int INFO_WIDTH = 200;
+	
 	private Party party;
 	
 	private Panel sky;
 	private ParallaxPanel parallaxPanel;
-	private Panel buttonPanel;
+	private Panel hudPanel;
+	
+	private int clickCounter;
+	private int timeElapsed;
 	
 	private Button inventoryButton;
 	private Button mapButton;
 	private Button huntButton;
 	private Button leaveButton;
 	
+	private Label dateLabel;
+	private Label timeLabel;
+	
 	private Particle campFire;
+
+	private AnimatingColor skyAnimatingColor;
 	
 	private PartyComponent partyComponent;
 	
@@ -72,17 +86,17 @@ public class CampScene extends Scene {
 		
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		
-		buttonPanel = new Panel(container, container.getWidth(), HEIGHT, Color.gray);
-		buttonPanel.setBackgroundColor(Color.gray);
-		buttonPanel.setBevelWidth(2);
-		buttonPanel.setBevel(Component.BevelType.OUT);
-		buttonPanel.setBottomBorderWidth(2);
-		buttonPanel.setBorderColor(Color.black);
+		hudPanel = new Panel(container, container.getWidth(), HEIGHT, Color.gray);
+		hudPanel.setBackgroundColor(Color.gray);
+		hudPanel.setBevelWidth(2);
+		hudPanel.setBevel(Component.BevelType.OUT);
+		hudPanel.setBottomBorderWidth(2);
+		hudPanel.setBorderColor(Color.black);
 		
 		ButtonListener listener = new ButtonListener();
 		Button buttons[] = new Button[4];
 		
-		int buttonWidth = (container.getWidth() - MARGIN * 2 - MARGIN * (buttons.length - 1)) / buttons.length;
+		int buttonWidth = (container.getWidth() - MARGIN * 2 - MARGIN * (buttons.length - 1) - INFO_WIDTH - MARGIN) / buttons.length;
 		int buttonHeight = HEIGHT - MARGIN * 2;
 		
 		Label tempLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "INVENTORY"));
@@ -106,8 +120,15 @@ public class CampScene extends Scene {
 		buttons[2] = mapButton;
 		buttons[3] = huntButton;
 		
-		buttonPanel.addAsRow(buttons, buttonPanel.getPosition(ReferencePoint.TOPLEFT), MARGIN, MARGIN, MARGIN);
-		mainLayer.add(buttonPanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT);
+		hudPanel.addAsRow(buttons, hudPanel.getPosition(ReferencePoint.TOPLEFT), MARGIN, MARGIN, MARGIN);
+		
+		timeLabel = new Label(container, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
+		hudPanel.add(timeLabel, hudPanel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.BOTTOMRIGHT, -MARGIN, - MARGIN / 2);
+		
+		dateLabel = new Label(container, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
+		hudPanel.add(dateLabel, hudPanel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.TOPRIGHT, -MARGIN, MARGIN / 2);
+		
+		mainLayer.add(hudPanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT);
 		
 		campFire = new Particle(container, 1, 0, 10);
 		campFire.addFire(560, 290, 15);
@@ -115,12 +136,53 @@ public class CampScene extends Scene {
 		
 		partyComponent = new PartyComponent(container, container.getWidth(), parallaxPanel.getHeight(), party.getPartyComponentDataSources());
 		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, PARTY_Y_OFFSET);
+
+		adjustSetting();
 	}
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
+		timeElapsed += delta;
+		
+		if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
+			clickCounter++;
+			timeElapsed = 0;
+		}
+		
+		if (skyAnimatingColor != null) {
+			skyAnimatingColor.update(delta);
+		}
+		
+		for (ParallaxSprite sprite : parallaxPanel.getSprites()) {
+			sprite.move(delta);
+		}
+		
 		campFire.update(delta);
+		
+		if (clickCounter >= STEP_COUNT_TRIGGER) {
+			party.getTime().advanceTime();
+			
+			adjustSetting();
+			
+			clickCounter = 0;
+		}
+	}
+	
+	/**
+	 * Adjust the setting for the scene based on time of day.
+	 */
+	private void adjustSetting() {
+		int hour = party.getTime().getTime();
+		
+		timeLabel.setText(party.getTime().get12HourTime());
+		dateLabel.setText(party.getTime().getDayMonthYear());
+		
+		skyAnimatingColor = SceneryFactory.getSkyAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		sky.setBackgroundColor(skyAnimatingColor);
+		
+		AnimatingColor overlayAnimatingColor = SceneryFactory.getOverlayAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		mainLayer.setOverlayColor(overlayAnimatingColor);
 	}
 	
 	@Override
