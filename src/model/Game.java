@@ -1,18 +1,18 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import model.Item.ITEM_TYPE;
 import model.worldMap.LocationNode;
-import model.worldMap.MapObject;
 import core.Logger;
 
 /**
  * Holds all game data.
  */
-public class Game {
+public class Game implements Serializable{
 	private Player player;
 	
 	private WorldMap worldMap;
@@ -94,5 +94,4 @@ public class Game {
 			}
 		}
 	}
-
 }

@@ -1,9 +1,11 @@
 package model.worldMap;
 
+import java.io.Serializable;
+
 import model.Condition;
 import model.Conditioned;
 
-public abstract class MapObject implements Conditioned {
+public abstract class MapObject implements Conditioned, Serializable {
 	
 	/**this object is visible to player*/
 	protected boolean visible;

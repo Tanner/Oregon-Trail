@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
+
 import core.Logger;
 
 /**
  * Player class contains party. Can be passed or set manually.
  */
-public class Player {
+public class Player implements Serializable {
 	private Party party;
 	
 	/**

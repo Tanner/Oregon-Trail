@@ -1,5 +1,6 @@
 package core;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -200,6 +201,37 @@ public class GameDirector implements SceneListener {
 		return encounterList;
 	}
 	
+	public void serialize() {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("resources/serialized/game.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(game);
+			out.close();
+			fileOut.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	@Override
+	public Game deserialize() {
+		try {
+			FileInputStream fileIn = new FileInputStream("resources/serialized/game.ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			game = (Game) in.readObject();
+			in.close();
+			fileIn.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException e) {
+			Logger.log("Game class not found", Logger.Level.INFO);
+			e.printStackTrace();
+			return null;
+		}
+		return game;
+	}
+
 	/*----------------------
 	  Main
 	  ----------------------*/

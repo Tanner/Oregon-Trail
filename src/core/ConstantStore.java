@@ -58,6 +58,8 @@ public final class ConstantStore {
 		Map<String, String> sceneSelectorScene = new HashMap<String, String>();
 		sceneSelectorScene.put("RESET_PARTY", "Reset Party");
 		sceneSelectorScene.put("RESET_GAME", "Reset Game");
+		sceneSelectorScene.put("SAVE_GAME", "Save Game");
+		sceneSelectorScene.put("LOAD_GAME", "Load Game");
 		sceneSelectorScene.put("ERR_NO_PARTY_FOR_SCENE", "Error - A party is required for this scene.");
 		literalMap.put("SCENE_SELECTOR_SCENE", sceneSelectorScene);
 		

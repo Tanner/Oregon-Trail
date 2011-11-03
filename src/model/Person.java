@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,7 +15,7 @@ import core.Logger;
  * Person consists of a list of skills the person is proficient with as well
  * as their name, and what their profession is called.
  */
-public class Person implements Conditioned, Inventoried, PartyComponentDataSource {
+public class Person implements Conditioned, Inventoried, PartyComponentDataSource, Serializable {
 	private final Condition skillPoints;
 	
 	private final Condition health;

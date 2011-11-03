@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -12,7 +13,7 @@ import core.Logger;
 /**
  * Inventory with an list that holds all the arrayLists of items in the inventory.
  */
-public class Inventory{
+public class Inventory implements Serializable {
 	private final List<PriorityQueue<Item>> slots;
 	
 	private final int MAX_SIZE;

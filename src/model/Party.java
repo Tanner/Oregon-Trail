@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import core.Logger.Level;
 /**
  * Party class that contains an array of persons that are members.
  */
-public class Party implements HUDDataSource {
+public class Party implements HUDDataSource, Serializable {
 	
 	private List<Person> members = new ArrayList<Person>();
 	

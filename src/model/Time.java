@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import core.SoundStore;
 
-public class Time {
+public class Time implements Serializable{
 
 	int time, day, year;
 	Month month;

@@ -2,6 +2,7 @@ package model;
 
 import model.worldMap.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import core.ConstantStore;
 /**
  * The world map: a collection of locations and paths between.
  */
-public class WorldMap {
+public class WorldMap implements Serializable {
 	
 	/**number of locations on map if none passed to constructor - needs to be static to pass to constructor*/
 	public final static int GEN_LOC = 80;  

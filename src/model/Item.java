@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 import core.ConstantStore;
 
 /**
@@ -8,7 +10,7 @@ import core.ConstantStore;
  * name, description, and weight.  The only modifiable aspect
  * is weight.
  */
-public class Item implements Conditioned, Comparable<Item>{
+public class Item implements Conditioned, Comparable<Item>, Serializable{
 	
 	private final Condition status;
 	

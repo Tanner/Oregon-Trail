@@ -2,6 +2,7 @@ package core;
 
 //import org.newdawn.slick.Music;
 
+import model.Game;
 import scene.Scene;
 import scene.SceneID;
 
@@ -32,7 +33,7 @@ public interface SceneListener {
 	 */
 	public FontStore getFontManager();
 	
-	//public void playMusic(Music music);
-	
-	//public void stopMusic();
+	public void serialize();
+
+	public Game deserialize();
 }

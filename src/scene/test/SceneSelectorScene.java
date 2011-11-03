@@ -75,6 +75,10 @@ public class SceneSelectorScene extends Scene {
 		// Create extra function button
 		buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_GAME"))));
 		buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_PARTY"))));
+		buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "SAVE_GAME"))));
+		buttons.add(new Button(container, width, height, new Label(container, width - MARGIN, height - MARGIN, fieldFont, Color.white, ConstantStore.get("SCENE_SELECTOR_SCENE", "LOAD_GAME"))));
+		
+		
 		
 		// Add listeners to buttons and make an array
 		ButtonListener buttonListener = new ButtonListener();
@@ -198,6 +202,12 @@ public class SceneSelectorScene extends Scene {
 				player = game.getPlayer();
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_PARTY"))) {
 				player.setParty(makeRandomParty());
+			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "SAVE_GAME"))) {
+				GameDirector.sharedSceneListener().serialize();
+			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "LOAD_GAME"))) {
+				game = GameDirector.sharedSceneListener().deserialize();
+				player = game.getPlayer();
+				System.out.println(player.getParty());
 			}
 		}
 		
