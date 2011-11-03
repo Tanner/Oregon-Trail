@@ -214,7 +214,6 @@ public class TrailScene extends Scene {
 		sky.setBackgroundColor(skyAnimatingColor);
 		
 		AnimatingColor backgroundOverlayAnimatingColor = SceneryFactory.getBackgroundOverlayAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
-		backgroundLayer.setOverlayColor(backgroundOverlayAnimatingColor);
 		mainLayer.setOverlayColor(backgroundOverlayAnimatingColor);
 	}
 	
