@@ -4,22 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.sprite.AnimatingSprite;
-import component.sprite.Sprite;
 
 import core.FontStore;
 import core.FontStore.FontID;
 
 public class PartyComponent extends Component {
-	private final static int MARGIN = 20;
-	private final static int CONDITION_BAR_WIDTH = 80;
+	private final static int MARGIN = 10;
 	private final static int CONDITION_BAR_HEIGHT = 20;
 	
 	private List<PartyComponentDataSource> dataSources;
+	
+	private List<Label> names;
 	private List<ConditionBar> conditionBars;
 	private List<AnimatingSprite> sprites;
 	
@@ -28,17 +29,11 @@ public class PartyComponent extends Component {
 		
 		this.dataSources = dataSources;
 		
+		names = new ArrayList<Label>();
 		conditionBars = new ArrayList<ConditionBar>();
 		sprites = new ArrayList<AnimatingSprite>();
 		
-		for (int i = 0; i < dataSources.size(); i++) {
-			ConditionBar cb = new ConditionBar(context,
-					CONDITION_BAR_WIDTH,
-					CONDITION_BAR_HEIGHT,
-					dataSources.get(i).getCondition(),
-					FontStore.get(FontID.FIELD));
-			conditionBars.add(cb);
-			
+		for (int i = 0; i < dataSources.size(); i++) {			
 			AnimatingSprite sprite = null;
 			try {
 				sprite = new AnimatingSprite(context,
@@ -49,23 +44,45 @@ public class PartyComponent extends Component {
 				e.printStackTrace();
 			}
 			sprites.add(sprite);
+			
+			int componentWidth = sprite.getWidth();
+			
+			Label name = new Label(context, componentWidth, FontStore.get(FontID.FIELD), Color.white, dataSources.get(i).getName());
+			names.add(name);
+			
+			ConditionBar cb = new ConditionBar(context,
+					componentWidth,
+					CONDITION_BAR_HEIGHT,
+					dataSources.get(i).getCondition(),
+					FontStore.get(FontID.FIELD));
+			conditionBars.add(cb);
 		}
-		
-		ConditionBar[] conditionBarArr = new ConditionBar[conditionBars.size()];
-		for (int i = 0; i < conditionBarArr.length; i++) {
-			conditionBarArr[i] = conditionBars.get(i);
+
+		Label[] nameArrayay = new Label[names.size()];
+		for (int i = 0; i < nameArrayay.length; i++) {
+			nameArrayay[i] = names.get(i);
 		}
-		addAsRow(conditionBarArr,
+		addAsRow(nameArrayay,
 				getPosition(ReferencePoint.TOPLEFT),
 				0,
 				0,
 				MARGIN);
 		
-		AnimatingSprite[] spriteArr = new AnimatingSprite[sprites.size()];
-		for (int i = 0; i < spriteArr.length; i++) {
-			spriteArr[i] = sprites.get(i);
+		ConditionBar[] conditionBarArray = new ConditionBar[conditionBars.size()];
+		for (int i = 0; i < conditionBarArray.length; i++) {
+			conditionBarArray[i] = conditionBars.get(i);
 		}
-		addAsRow(spriteArr,
+		addAsRow(conditionBarArray,
+				names.get(0).getPosition(ReferencePoint.BOTTOMLEFT),
+				0,
+				MARGIN,
+				MARGIN);
+		
+		AnimatingSprite[] spriteArray = new AnimatingSprite[sprites.size()];
+		for (int i = 0; i < spriteArray.length; i++) {
+			spriteArray[i] = sprites.get(i);
+		}
+		addAsRow(spriteArray,
 				conditionBars.get(0).getPosition(ReferencePoint.BOTTOMLEFT),
 				0,
 				MARGIN,
