@@ -110,8 +110,6 @@ public class GameDirector implements SceneListener {
 			return new HuntScene(game.getPlayer().getParty());
 		case TRAIL:
 			return new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
-		case PARTYMANAGEMENTSCENE:
-			return new PartyManagementScene(game.getPlayer().getParty());
 		case GAMEOVER:
 			return new GameOverScene();
 		case VICTORY:
@@ -256,7 +254,7 @@ public class GameDirector implements SceneListener {
 		List<Encounter> encounterList = new ArrayList<Encounter>();
 		
 		for ( EncounterID encounter : EncounterID.values() ) {
-			encounterList.add(EncounterID.getEncounter(game.getPlayer().getParty(), encounter, 5 * encounter.getFrequency() * (rand.nextInt(10)+1)));
+			encounterList.add(EncounterID.getEncounter(game.getPlayer().getParty(), encounter, 5 * (rand.nextInt(10)+1)));
 		}
 		return encounterList;
 	}

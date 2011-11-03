@@ -97,7 +97,6 @@ public class MapScene extends Scene {
 		}
 		@Override
 		public void componentActivated(AbstractComponent source) {
-			SoundStore.get().playSound("Click");
 			if (source == returnToCamp) {
 				SoundStore.get().setMusicVolume(.25f);
 				GameDirector.sharedSceneListener().sceneDidEnd(MapScene.this);

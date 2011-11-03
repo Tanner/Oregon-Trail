@@ -44,6 +44,7 @@ public class Item implements Conditioned, Comparable<Item>{
 		private final boolean isFood, isPlant, isAnimal, isTool;
 		
 		private final int factor;
+		private final int necessaryQuality;
 				
 		/**
 		 * Makes the item type
@@ -72,6 +73,11 @@ public class Item implements Conditioned, Comparable<Item>{
 				this.factor = Integer.parseInt(ConstantStore.get("ITEMS", type + "_REPAIR_FACTOR"));
 			} else {
 				this.factor = 0;
+			}
+			if (ConstantStore.get("ITEMS", type + "_NECESSARY_QUALITY") != null) {
+				this.necessaryQuality = Integer.parseInt(ConstantStore.get("ITEMS", type + "_NECESSARY_QUALITY"));
+			} else {
+				this.necessaryQuality = 0;
 			}
 		}
 		
@@ -153,6 +159,10 @@ public class Item implements Conditioned, Comparable<Item>{
 		 */
 		public boolean isAnimal() {
 			return isAnimal;
+		}
+
+		public double getNecessaryQuality() {
+			return necessaryQuality;
 		}
 	}
 

@@ -89,6 +89,10 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 		public String getName(){
 			return name;
 		}
+		
+		public String toString() {
+			return name;
+		}
 	}
 
 	/**
@@ -168,6 +172,10 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 		 * @return Profession's name
 		 */
 		public String getName(){
+			return name;
+		}
+		
+		public String toString() {
 			return name;
 		}
 	}

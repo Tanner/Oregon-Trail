@@ -84,7 +84,6 @@ public class WorldMap {
 	/**
 	 * Makes a {@code WorldMap} object that tells the game where the party is and what's ahead of them
 	 * @param numNodes the number of possible locations on the map - not all of them will be reachable
-	 * @param numTrails the number of possible directed trails - not all will be traveled.
 	 */	
 	public WorldMap(int numNodes){
 		this(numNodes, "");
@@ -512,7 +511,7 @@ public class WorldMap {
 
 	/**
 	 * set current location or most recent location node of party
-	 * @param destination most recent/current trail
+	 * @param currLocationNode Current location
 	 */
 	public void setCurrLocationNode(LocationNode currLocationNode){
 		this.currLocationNode = currLocationNode;
@@ -530,7 +529,7 @@ public class WorldMap {
 	
 	/**
 	 * set current or most recent trail occupied by party
-	 * @param trailEdge most recent/current trail
+	 * @param currTrail Most current trail
 	 */
 	public void setCurrTrail(TrailEdge currTrail){
 		this.currTrail = currTrail;

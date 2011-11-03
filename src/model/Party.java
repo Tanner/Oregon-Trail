@@ -361,23 +361,25 @@ public class Party implements HUDDataSource {
 		}
 		
 		List<Person> deathList = new ArrayList<Person>();
-		int healAmount = 0;
+		int finalResult = 0;
 		for (Person person : members) {
 			person.increaseSkillPoints((int) (getPace().getSpeed() / 10));
 			if(!personHasFood(person) && !vehicleHasFood()) {
 				person.decreaseHealth(getPace().getSpeed());
 			} else {
-				healAmount = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount());
-				if(healAmount > 0) {
-					person.increaseHealth(healAmount);
+				finalResult = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount())
+					- getPace().getSpeed();
+				if(finalResult > 0) {
+					person.increaseHealth(finalResult);
 				}
 				else {
-					person.decreaseHealth(-healAmount);
+					person.decreaseHealth(-finalResult);
 				}
 			}
 			if(person.getHealth().getCurrent() == 0) {
 				if (vehicle != null) {
 					vehicle.addItemsToInventory(person.killForFood());
+					System.out.println(vehicle.getInventory());
 				}
 				deathList.add(person);
 			}
@@ -508,7 +510,6 @@ public class Party implements HUDDataSource {
 	
 	/**
 	 * Determines if a party member is near dying or dead, and alerts the player.
-	 * @param person The person who's status we're checking.
 	 * @return A string with a message about the health status of the person
 	 */
 	public String checkHungerStatus() {

@@ -26,7 +26,7 @@ public class SceneryFactory {
 	private static final int TREE_OFFSET = 20;
 	
 	private static final int NUM_CLOUDS = 5;
-	private static final int CLOUD_OFFSET = 20;
+	private static final int CLOUD_OFFSET = HUD.HEIGHT + 20;
 	private static final int CLOUD_DISTANCE_VARIANCE = 10;
 	private static final int CLOUD_OFFSET_VARIANCE = 10;
 	
@@ -35,7 +35,7 @@ public class SceneryFactory {
 	/**
 	 * Return a sky for the time period.
 	 * @param container Container
-	 * @param party Party
+	 * @param hour Time of day
 	 * @return Sky panel with the background color for the time
 	 * @throws SlickException
 	 */
@@ -46,18 +46,8 @@ public class SceneryFactory {
 	}
 	
 	/**
-	 * Get the background overlay color for the time period.
-	 * @param hour Time of day
-	 * @return Color for the overlay
-	 */
-	public static Color getBackgroundOverlayColor(int hour) {
-		return backgroundOverlayColorForHour(hour);
-	}
-	
-	/**
 	 * Return the scenery for the time period and environment.
 	 * @param container Container
-	 * @param party Party
 	 * @return ParallaxPanel with correct scenery
 	 * @throws SlickException
 	 */
@@ -69,8 +59,12 @@ public class SceneryFactory {
 		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
 		
 		// Ground
-		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, parallaxPanel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
+		
+		// Trail
+		ParallaxSprite trail = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		parallaxPanel.add(trail, ground.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, -trail.getHeight() / 2);
 		
 		// Hills
 		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
@@ -135,8 +129,8 @@ public class SceneryFactory {
 	 * @param duration Duration of animation
 	 * @return AnimatingColor
 	 */
-	public static AnimatingColor getBackgroundOverlayAnimatingColor(int hour, int duration) {
-		 return new AnimatingColor(getBackgroundOverlayColor(hour - 1), getBackgroundOverlayColor(hour), duration);
+	public static AnimatingColor getOverlayAnimatingColor(int hour, int duration) {
+		 return new AnimatingColor(getOverlayColorForHour(hour - 1), getOverlayColorForHour(hour), duration);
 	}
 	
 	/**
@@ -144,7 +138,7 @@ public class SceneryFactory {
 	 * @param hour Hour of the day
 	 * @return Background overlay for that hour
 	 */
-	private static Color backgroundOverlayColorForHour(int hour) {
+	public static Color getOverlayColorForHour(int hour) {
 		switch (hour + 1) {
 			case 7:
 				return new Color(0, 0, 0, .3f);

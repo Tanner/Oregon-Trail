@@ -65,7 +65,7 @@ public class LocationNode extends MapObject {
 	
 	/**
 	 * Constructor for making a {@code LocationNode}
-	 * @param name
+	 * @param locatioName
 	 * @param xPos
 	 * @param yPos
 	 * @param trails

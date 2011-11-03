@@ -7,26 +7,26 @@ import model.Party;
  * Get the name, frequency, as well as generate any requested Encounter.
  */
 public enum EncounterID {
-	THIEF ("Thief Encounter", 1),
-	ITEM ("Item Encounter", 1),
-	//POTHOLE ("Pothole Encounter", 1),
-	MESSAGE("Message Encounter", 2),
-	NULL ("Null Encounter", 20);
+	THIEF ("Thief Encounter", 0, 0, 3, 5),
+	ITEM ("Item Encounter", 1, 2, 1, 0),
+	//POTHOLE ("Pothole Encounter", 2, 1, 3, 5),
+	MESSAGE("Message Encounter", 2, 2, 2, 2),
+	NULL ("Null Encounter", 20, 20, 20, 20);
 	
 	private final String name;
-	private final int frequency;
+	private final int[] frequencies;
 	
-	private EncounterID(String name, int frequency) {
+	private EncounterID(String name, int ... frequencies) {
 		this.name = name;
-		this.frequency = frequency;
+		this.frequencies = frequencies;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public int getFrequency() {
-		return frequency;
+	public int[] getFrequencies() {
+		return frequencies;
 	}
 	
 	public String toString() {
@@ -36,9 +36,8 @@ public enum EncounterID {
 	/**
 	 * A method to generate Encounters based on EncounterID
 	 * @param party The current game's party
-	 * @param id The id of the desired encounter
-	 * @param min The minimum in the Encounter's occurrence range
-	 * @param max The maximum in the Encounter's occurrence range
+	 * @param id The id of the desired 
+	 * @param value Multiplier for "extreme-ness" of the Encounter
 	 * @return The created Encounter
 	 */
 	public static Encounter getEncounter(Party party, EncounterID id, int value) {
@@ -53,6 +52,5 @@ public enum EncounterID {
 		} else {
 			return new NullEncounter(party, value);
 		}
-
 	}
 }

@@ -9,22 +9,32 @@ public class AnimatingSprite extends Sprite {
 	private Animation rightAnimation;
 	private Animation currentAnimation;
 	
-	public static enum DirectionFacing { LEFT, RIGHT }
-	private DirectionFacing xDirection = DirectionFacing.LEFT;
+	public static enum Direction { LEFT, RIGHT }
+	private Direction xDirection = Direction.LEFT;
 	
 	/**
 	 * Constructs a {@code Sprite} with a right and left animation.
 	 * @param context The GUI context
-	 * @param rightAnimation Animation for when facing right
-	 * @param leftAnimation Animation for when facing left
+	 * @param animation Animation for when facing left
+	 * @param direction Direction fo face
 	 */
-	public AnimatingSprite(GUIContext context, Animation rightAnimation, Animation leftAnimation) {
-		super(context, rightAnimation.getWidth(), rightAnimation.getHeight());
-				
-		this.rightAnimation = rightAnimation;
-		this.leftAnimation = leftAnimation;
+	public AnimatingSprite(GUIContext context, Animation animation, Direction direction) {
+		super(context, animation.getWidth(), animation.getHeight());
 		
-		xDirection = DirectionFacing.LEFT;
+		Animation reflectedAnimation = new Animation();
+		for (int i = 0; i < animation.getFrameCount(); i++) {
+			reflectedAnimation.addFrame(animation.getImage(i).getFlippedCopy(true, false), animation.getDuration(i));
+		}
+		
+		if (direction == Direction.LEFT) {
+			this.leftAnimation = animation;
+			this.rightAnimation = reflectedAnimation;
+		} else {
+			this.leftAnimation = reflectedAnimation;
+			this.rightAnimation = animation;
+		}
+		
+		xDirection = Direction.LEFT;
 		currentAnimation = leftAnimation;
 
 		setImage(currentAnimation.getCurrentFrame());
@@ -33,11 +43,10 @@ public class AnimatingSprite extends Sprite {
 	/**
 	 * Updates the Sprite on a clock cycle.
 	 * @param container Container displaying the component
-	 * @param game Game containing the Entity
 	 * @param delta Time since last update
 	 */
 	public void update(GameContainer container, int delta) {
-		if (xDirection == DirectionFacing.LEFT) {
+		if (xDirection == Direction.LEFT) {
 			currentAnimation = leftAnimation;
 		} else {
 			currentAnimation = rightAnimation;
@@ -52,7 +61,7 @@ public class AnimatingSprite extends Sprite {
 	 * Get which direction the Sprite is facing.
 	 * @return Direction the Sprite is facing
 	 */
-	public DirectionFacing getDirectionFacing() {
+	public Direction getDirectionFacing() {
 		return xDirection;
 	}
 	
@@ -60,7 +69,7 @@ public class AnimatingSprite extends Sprite {
 	 * Sets the direction the Sprite is facing
 	 * @param xDirection New direction the Sprite is facing
 	 */
-	public void setDirectionFacing(DirectionFacing xDirection) {
+	public void setDirectionFacing(Direction xDirection) {
 		this.xDirection = xDirection;
 	}
 }

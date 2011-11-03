@@ -7,7 +7,7 @@ public class MessageEncounter extends Encounter {
 	
 	String[] messages;
 	public MessageEncounter(Party party, int value) {
-		super(party, value);
+		super(party, value, EncounterID.MESSAGE);
 		messages = new String[] 
 				{ "You notice something staring at you from behind the trees.  It might be best to keep moving.",
 				"Your party admires the forest for a bit before moving ahead.",
@@ -30,4 +30,8 @@ public class MessageEncounter extends Encounter {
 				null);
 	}
 
+	@Override
+	public EncounterID getEncounterID() {
+		return id;
+	}
 }

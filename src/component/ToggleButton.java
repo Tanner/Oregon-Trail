@@ -12,7 +12,7 @@ public class ToggleButton extends Button {
 	
 	/**
 	 * Creates a {@code ToggleButton} with a label, width, and height.
-	 * @param container The GUI context
+	 * @param context The GUI context
 	 * @param width The width
 	 * @param height The height
 	 * @param label A label

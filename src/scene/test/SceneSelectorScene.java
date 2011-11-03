@@ -150,14 +150,6 @@ public class SceneSelectorScene extends Scene {
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, SceneSelectorScene.this, false);
-			} else if (buttonText.equals(SceneID.PARTYMANAGEMENTSCENE.getName())) {
-				// Party Management Scene
-				if (player.getParty() == null) {
-					warnBecauseNoParty();
-					return;
-				}
-				
-				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.GAMEOVER.getName())) {
 				// Game Over
 				if (player.getParty() == null) {
