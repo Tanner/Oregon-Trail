@@ -50,8 +50,7 @@ public enum EncounterID {
 			//return new NullEncounter(party, value);
 		} else if (id == EncounterID.MESSAGE) {
 			return new MessageEncounter(party, value);
-		} 
-		else if (id == EncounterID.RIVER) {
+		} else if (id == EncounterID.RIVER) {
 			return new RiverEncounter(party, value);
 		} else {
 			return new NullEncounter(party, value);
