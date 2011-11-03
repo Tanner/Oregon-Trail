@@ -10,14 +10,20 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
+
+import scene.CampScene;
+import scene.SceneID;
 
 import component.Label.VerticalAlignment;
 import component.sprite.Sprite;
 
 import core.ConstantStore;
 import core.FontStore;
+import core.GameDirector;
+import core.SoundStore;
 /**
  * A HUD holds quick information for the player.
  */
@@ -28,12 +34,23 @@ public class HUD extends Component {
 	private static final int MARGIN = 10;
 	public static final int HEIGHT = 80;
 	
+	private static final int BUTTON_HEIGHT = HEIGHT - (2 * MARGIN);
+	
 	private static final int INFO_WIDTH = 200;
 	
 	private Button menuButton;
+	
+	private Button inventoryButton;
+	private Button mapButton;
+	private Button huntButton;
+	private Button leaveButton;
+	
 	private Label timeLabel;
 	private Label dateLabel;
 	private Label notificationLabel;
+	
+	private Panel trailPanel;
+	private Panel campPanel;
 	
 	private Queue<String> notificationQueue;
 	
@@ -52,30 +69,16 @@ public class HUD extends Component {
 		
 		notificationQueue = new LinkedList<String>();
 		
+		int panelWidth = context.getWidth() - INFO_WIDTH - MARGIN * 2;
+		
+		campPanel = makeCampPanel(panelWidth);
+		trailPanel = makeTrailPanel(panelWidth, listener);
+		
+		add(campPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
+		add(trailPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
+		setMode(Mode.TRAIL);
+		
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
-		
-		int height = HEIGHT - (2 * MARGIN);
-		
-		Label menuLabel = new Label(context, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "CAMP"));
-		Sprite fireSprite = null;
-		try {
-			fireSprite = new Sprite(context, 48, new Image("resources/graphics/icons/fire.png", false, Image.FILTER_NEAREST));
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		
-		menuButton = new Button(context, menuLabel.getWidth() + (2 * MARGIN), height, menuLabel);
-		menuButton.setSprite(fireSprite);
-		menuButton.setShowLabel(false);
-		menuButton.addListener(listener);
-		add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
-		
-		int notificationWidth = context.getWidth() - menuButton.getWidth() - INFO_WIDTH -  MARGIN * 4;
-		
-		notificationLabel = new Label(context, notificationWidth, height, fieldFont, Color.white, "");
-		notificationLabel.setVerticalAlignment(VerticalAlignment.CENTER);
-		notificationLabel.setBackgroundColor(Color.black);
-		add(notificationLabel, menuButton.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPLEFT, MARGIN, 0);
 		
 		timeLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
 		add(timeLabel, notificationLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.BOTTOMLEFT, MARGIN, - MARGIN / 2);
@@ -88,6 +91,72 @@ public class HUD extends Component {
 		setBevel(Component.BevelType.OUT);
 		setBottomBorderWidth(2);
 		setBorderColor(Color.black);
+	}
+	
+	public Panel makeTrailPanel(int width, ComponentListener listener) {
+		Panel panel = new Panel(container, width, HEIGHT);
+		
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		
+		Label menuLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "CAMP"));
+		
+		Sprite fireSprite = null;
+		try {
+			fireSprite = new Sprite(container, 48, new Image("resources/graphics/icons/fire.png", false, Image.FILTER_NEAREST));
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		
+		menuButton = new Button(container, menuLabel.getWidth() + (2 * MARGIN), BUTTON_HEIGHT, menuLabel);
+		menuButton.setSprite(fireSprite);
+		menuButton.setShowLabel(false);
+		menuButton.addListener(listener);
+		panel.add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
+		
+		int notificationWidth = width - menuButton.getWidth() -  MARGIN * 2;
+		
+		notificationLabel = new Label(container, notificationWidth, BUTTON_HEIGHT, fieldFont, Color.white, "");
+		notificationLabel.setVerticalAlignment(VerticalAlignment.CENTER);
+		notificationLabel.setBackgroundColor(Color.black);
+		panel.add(notificationLabel, menuButton.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPLEFT, MARGIN, 0);
+		
+		return panel;
+	}
+	
+	public Panel makeCampPanel(int width) {
+		Panel panel = new Panel(container, width, HEIGHT);
+		
+		CampButtonListener listener = new CampButtonListener();
+		Button buttons[] = new Button[4];
+		
+		int buttonWidth = (container.getWidth() - MARGIN * 2 - MARGIN * (buttons.length - 1) - INFO_WIDTH - MARGIN) / buttons.length;
+		
+		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+
+		Label inventoryLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "INVENTORY"));
+		inventoryButton = new Button(container, buttonWidth, BUTTON_HEIGHT, inventoryLabel);
+		inventoryButton.addListener(listener);
+		
+		Label mapLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "MAP"));
+		mapButton = new Button(container, buttonWidth, BUTTON_HEIGHT, mapLabel);
+		mapButton.addListener(listener);
+		
+		Label huntLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "HUNT"));
+		huntButton = new Button(container, buttonWidth, BUTTON_HEIGHT, huntLabel);
+		huntButton.addListener(listener);
+		
+		Label leaveLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "LEAVE"));
+		leaveButton = new Button(container, buttonWidth, BUTTON_HEIGHT, leaveLabel);
+		leaveButton.addListener(listener);
+				
+		buttons[0] = leaveButton;
+		buttons[1] = inventoryButton;
+		buttons[2] = mapButton;
+		buttons[3] = huntButton;
+		
+		panel.addAsRow(buttons, panel.getPosition(ReferencePoint.TOPLEFT), MARGIN, MARGIN, MARGIN);
+		
+		return panel;
 	}
 	
 	/**
@@ -159,5 +228,13 @@ public class HUD extends Component {
 	
 	public void setMode(Mode mode) {
 		currentMode = mode;
+		
+		if (currentMode == Mode.CAMP) {
+			campPanel.setVisible(true);
+			trailPanel.setVisible(false);
+		} else if (currentMode == Mode.TRAIL) {
+			campPanel.setVisible(false);
+			trailPanel.setVisible(true);
+		}
 	}
 }
