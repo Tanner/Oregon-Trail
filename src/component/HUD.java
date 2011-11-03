@@ -71,7 +71,7 @@ public class HUD extends Component {
 		
 		int panelWidth = context.getWidth() - INFO_WIDTH - MARGIN * 2;
 		
-		campPanel = makeCampPanel(panelWidth);
+		campPanel = makeCampPanel(panelWidth, listener);
 		trailPanel = makeTrailPanel(panelWidth, listener);
 		
 		add(campPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
@@ -123,10 +123,9 @@ public class HUD extends Component {
 		return panel;
 	}
 	
-	public Panel makeCampPanel(int width) {
+	public Panel makeCampPanel(int width, ComponentListener listener) {
 		Panel panel = new Panel(container, width, HEIGHT);
 		
-		CampButtonListener listener = new CampButtonListener();
 		Button buttons[] = new Button[4];
 		
 		int buttonWidth = (container.getWidth() - MARGIN * 2 - MARGIN * (buttons.length - 1) - INFO_WIDTH - MARGIN) / buttons.length;
