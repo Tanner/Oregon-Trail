@@ -350,13 +350,13 @@ public class Party implements HUDDataSource {
 		totalDistanceTravelled += movement;
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
-		for (Animal animal : animals) {
-			animal.decreaseStatus(getPace().getSpeed() - 75);
+		grazeAnimals(getPace().getSpeed());
+		for(Animal animal : animals) {
 			if(animal.getStatus().getCurrent() == 0) {
 				if (vehicle != null) {
 					vehicle.addItemsToInventory(animal.killForFood());
 				}
-				slaughterHouse.add(animal);
+			slaughterHouse.add(animal);
 			}
 		}
 		
@@ -387,6 +387,9 @@ public class Party implements HUDDataSource {
 		if(checkHungerStatus() != null) {
 			messages.add(new Notification(checkHungerStatus(), true));
 		}
+		if(checkAnimalHunger() != null) {
+			messages.add(new Notification(checkAnimalHunger(), true));
+		}
 		for (Person person : deathList) {
 			person.setDead(true);
 			members.remove(person);
@@ -398,7 +401,54 @@ public class Party implements HUDDataSource {
 		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", getTotalDistanceTravelled()), false));
 		return messages;
 	}
+	
+	public List<Notification> rest() {
+		List<Notification> messages = new ArrayList<Notification>();
+		grazeAnimals(5);
+		
+		List<Person> deathList = new ArrayList<Person>();
+		int finalResult = 0;
+		for (Person person : members) {
+			if(!personHasFood(person) && !vehicleHasFood()) {
+				person.decreaseHealth(5);
+			} else {
+				finalResult = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount()) - 5;
+				if(finalResult > 0) {
+					person.increaseHealth(finalResult);
+				}
+				else {
+					person.decreaseHealth(-finalResult);
+				}
+			}
+			if(person.getHealth().getCurrent() == 0) {
+				if (vehicle != null) {
+					vehicle.addItemsToInventory(person.killForFood());
+					System.out.println(vehicle.getInventory());
+				}
+				deathList.add(person);
+			}
+		}
+		if(checkHungerStatus() != null) {
+			messages.add(new Notification(checkHungerStatus(), true));
+		}
+		for (Person person : deathList) {
+			person.setDead(true);
+			members.remove(person);
+		}
+		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", getTotalDistanceTravelled()), false));
+		return messages;
+	}
 
+	private void grazeAnimals(int paceDamage) {
+		for (Animal animal : animals) {
+			if(paceDamage - 75 > 0) {
+				animal.decreaseStatus(paceDamage - 75);
+			} else {
+				animal.increaseStatus(75 - paceDamage);
+			}
+		}
+	}
+	
 	public int getTotalDistanceTravelled() {
 		return totalDistanceTravelled;
 	}
@@ -549,6 +599,27 @@ public class Party implements HUDDataSource {
 			members.remove(person);
 		}
 		return !person.isDead();
+	}
+	
+	private String checkAnimalHunger() {
+		final StringBuilder str = new StringBuilder();
+		int currentHealth;
+		boolean hasMessage = false;
+		for(Animal animal : animals) {
+			currentHealth = (int)animal.getStatus().getCurrent();
+			if(currentHealth == 0) {
+				hasMessage = true;
+				str.append(animal.getName() + " has died of starvation!\n");
+			}
+			else if(animal.getStatus().getCurrent() < (getPace().getSpeed() - 75)) {
+				hasMessage = true;
+				str.append(animal.getName() + " is in danger of starvation.\n" );
+			}
+		}
+		if (hasMessage) {
+			return str.toString();
+		}
+		return null;
 	}
 
 	public void addAnimals(List<Animal> animals) {
