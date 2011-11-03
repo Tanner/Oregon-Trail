@@ -7,6 +7,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.sprite.AnimatingSprite;
@@ -59,11 +60,14 @@ public class PartyComponent extends Component {
 		}
 
 		Label[] nameArrayay = new Label[names.size()];
+		int groupWidth = 0;
 		for (int i = 0; i < nameArrayay.length; i++) {
 			nameArrayay[i] = names.get(i);
+			groupWidth += nameArrayay[i].getWidth();
+			groupWidth += MARGIN;
 		}
 		addAsRow(nameArrayay,
-				getPosition(ReferencePoint.TOPLEFT),
+				new Vector2f(getPosition(ReferencePoint.TOPRIGHT).x - groupWidth, getPosition(ReferencePoint.TOPRIGHT).y),
 				0,
 				0,
 				MARGIN);
