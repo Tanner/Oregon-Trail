@@ -17,8 +17,6 @@ public class Sprite extends Component {
 	
 	public Sprite(GUIContext context, int width, int height) {
 		super(context, width, height);
-		
-		setAcceptingInput(false);
 	}
 	
 	public Sprite(GUIContext context, int width, Image image) {
@@ -51,18 +49,5 @@ public class Sprite extends Component {
 	@Override
 	public String toString() {
 		return image.getResourceReference();
-	}
-	
-	public void mousePressed(int button, int mx, int my) {
-		if (!isVisible() || !isAcceptingInput()) {
-			return;
-		}
-		
-		super.mouseReleased(button, mx, my);
-		
-		if (button == 0 && isMouseOver()) {
-			notifyListeners();
-			input.consumeEvent();
-		}
 	}
 }
