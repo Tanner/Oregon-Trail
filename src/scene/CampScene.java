@@ -163,6 +163,7 @@ public class CampScene extends Scene {
 		
 		if (clickCounter >= STEP_COUNT_TRIGGER) {
 			party.getTime().advanceTime();
+			party.rest();
 			
 			adjustSetting();
 			
