@@ -10,19 +10,15 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
-
-import scene.SceneID;
 
 import component.Label.VerticalAlignment;
 import component.sprite.Sprite;
 
 import core.ConstantStore;
 import core.FontStore;
-import core.GameDirector;
-import core.SoundStore;
+
 /**
  * A HUD holds quick information for the player.
  */
@@ -131,19 +127,19 @@ public class HUD extends Component {
 		
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 
-		Label inventoryLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "INVENTORY"));
+		Label inventoryLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "INVENTORY"));
 		inventoryButton = new Button(container, buttonWidth, BUTTON_HEIGHT, inventoryLabel);
 		inventoryButton.addListener(listener);
 		
-		Label mapLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "MAP"));
+		Label mapLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "MAP"));
 		mapButton = new Button(container, buttonWidth, BUTTON_HEIGHT, mapLabel);
 		mapButton.addListener(listener);
 		
-		Label huntLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "HUNT"));
+		Label huntLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "HUNT"));
 		huntButton = new Button(container, buttonWidth, BUTTON_HEIGHT, huntLabel);
 		huntButton.addListener(listener);
 		
-		Label leaveLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "LEAVE"));
+		Label leaveLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "LEAVE"));
 		leaveButton = new Button(container, buttonWidth, BUTTON_HEIGHT, leaveLabel);
 		leaveButton.addListener(listener);
 				

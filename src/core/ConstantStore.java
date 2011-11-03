@@ -110,19 +110,14 @@ public final class ConstantStore {
 		storeScene.put("ERR_CANT_CARRY", "No one can carry that weight.");
 		literalMap.put("STORE_SCENE", storeScene);
 		
-		// Camp Scene
-		Map<String, String> campScene = new HashMap<String, String>();
-		campScene.put("INVENTORY", "Inventory");
-		campScene.put("PARTY_MANAGEMENT", "Party Management");
-		campScene.put("MAP", "Map");
-		campScene.put("HUNT", "Hunt");
-		campScene.put("MISC", "TBD");
-		campScene.put("LEAVE", "Continue");
-		literalMap.put("CAMP_SCENE", campScene);
-		
 		// Trail Scene
 		Map<String, String> trailScene = new HashMap<String, String>();
 		trailScene.put("CAMP", "Camp");
+		trailScene.put("INVENTORY", "Inventory");
+		trailScene.put("MAP", "Map");
+		trailScene.put("HUNT", "Hunt");
+		trailScene.put("MISC", "TBD");
+		trailScene.put("LEAVE", "Continue");
 		literalMap.put("TRAIL_SCENE", trailScene);
 		
 		// Town Scene
