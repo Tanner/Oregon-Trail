@@ -133,7 +133,6 @@ public class CampScene extends Scene {
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
 			SoundStore.get().stopMusic();
-			SoundStore.get().playSound("Click");
 			
 			if (source == inventoryButton) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
