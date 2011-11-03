@@ -28,12 +28,11 @@ import core.FontStore;
 /**
  * A HUD holds quick information for the player in {@code TrailScene}.
  */
-public class TrailHUD extends Component {
+public class TrailHUD extends HUD {
 	public static enum Mode { TRAIL, CAMP };
 	private static Mode currentMode;
 	
 	private static final int MARGIN = 10;
-	public static final int HEIGHT = 80;
 	
 	private static final int BUTTON_HEIGHT = HEIGHT - (2 * MARGIN);
 	
