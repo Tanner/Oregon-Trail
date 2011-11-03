@@ -6,6 +6,7 @@ import java.util.List;
 import model.Notification;
 import model.Party;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
@@ -13,16 +14,24 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 import scene.encounter.*;
 import component.AnimatingColor;
+import component.Component;
+import component.Component.BevelType;
 import component.HUD;
+import component.Label;
+import component.Label.Alignment;
 import component.Panel;
 import component.ParallaxPanel;
 import component.PartyComponent;
 import component.Positionable.ReferencePoint;
 import component.SceneryFactory;
+import component.SegmentedControl;
+import component.Toolbar;
 import component.modal.ChoiceModal;
 import component.modal.Modal;
 import component.sprite.ParallaxSprite;
 import core.ConstantStore;
+import core.FontStore;
+import core.FontStore.FontID;
 import core.GameDirector;
 import core.Logger;
 import core.SoundStore;
@@ -68,9 +77,39 @@ public class TrailScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-				
+		
 		hud = new HUD(container, party, new HUDListener());
 		showHUD(hud);
+		
+		int toolbarXMargin = 10;
+		Toolbar toolbar = new Toolbar(container, container.getWidth(), 40);
+		hudLayer.add(toolbar, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT);
+		
+		Label paceLabel = new Label(container, FontStore.get(FontID.FIELD), Color.white, ConstantStore.get("GENERAL", "PACE_LABEL"));
+		paceLabel.setAlignment(Alignment.LEFT);
+		Label rationsLabel = new Label(container, FontStore.get(FontID.FIELD), Color.white, ConstantStore.get("GENERAL", "RATIONS_LABEL"));
+		rationsLabel.setAlignment(Alignment.LEFT);
+		
+		toolbar.add(paceLabel, toolbar.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERLEFT, toolbarXMargin, -2);
+
+		int segmentedControlWidth = (toolbar.getWidth() - paceLabel.getWidth() - rationsLabel.getWidth() - toolbarXMargin * 6) / 2;
+
+		String[] paceLabels = new String[Party.Pace.values().length];
+		for (int i = 0; i < paceLabels.length; i++) {
+			paceLabels[i] = Party.Pace.values()[i].toString();
+		}
+		
+		SegmentedControl paceSegmentedControl = new SegmentedControl(container, segmentedControlWidth, toolbar.getHeight() - 14, 1, 3, 0, true, 1, paceLabels);
+		toolbar.add(paceSegmentedControl, paceLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, toolbarXMargin, 0);
+		
+		toolbar.add(rationsLabel, paceSegmentedControl.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, toolbarXMargin * 2, 0);
+		
+		String[] rationLabels = new String[Party.Rations.values().length];
+		for (int i = 0; i < rationLabels.length; i++) {
+			rationLabels[i] = Party.Rations.values()[i].toString();
+		}
+		SegmentedControl rationsSegmentedControl = new SegmentedControl(container, segmentedControlWidth, toolbar.getHeight() - 14, 1, 3, 0, true, 1, rationLabels);
+		toolbar.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, toolbarXMargin, 0);
 		
 		sky = SceneryFactory.getSky(container, party.getTime().getTime());
 		backgroundLayer.add(sky);
@@ -101,7 +140,7 @@ public class TrailScene extends Scene {
 			if (skyAnimatingColor != null) {
 				skyAnimatingColor.update(delta);
 			}
-			backgroundLayer.update(delta);
+			mainLayer.update(delta);
 			
 			if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
 				clickCounter++;
@@ -213,8 +252,8 @@ public class TrailScene extends Scene {
 		skyAnimatingColor = SceneryFactory.getSkyAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
 		sky.setBackgroundColor(skyAnimatingColor);
 		
-		AnimatingColor backgroundOverlayAnimatingColor = SceneryFactory.getBackgroundOverlayAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
-		mainLayer.setOverlayColor(backgroundOverlayAnimatingColor);
+		AnimatingColor overlayAnimatingColor = SceneryFactory.getOverlayAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		mainLayer.setOverlayColor(overlayAnimatingColor);
 	}
 	
 	/**

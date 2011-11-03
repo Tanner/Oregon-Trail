@@ -17,6 +17,8 @@ public class Sprite extends Component {
 	
 	public Sprite(GUIContext context, int width, int height) {
 		super(context, width, height);
+		
+		setAcceptingInput(false);
 	}
 	
 	public Sprite(GUIContext context, int width, Image image) {

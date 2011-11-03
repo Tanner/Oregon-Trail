@@ -69,8 +69,6 @@ public final class ConstantStore {
 		partyCreationScene.put("CHANGE_SKILL", "Change Skills");
 		partyCreationScene.put("CHANGE_PROFESSION", "Change Profession");
 		partyCreationScene.put("DELETE_PERSON_LABEL", "X");
-		partyCreationScene.put("PACE_LABEL", "Pace:");
-		partyCreationScene.put("RATIONS_LABEL", "Rations:");
 		partyCreationScene.put("PROFESSION_MODAL", "Please select a profession.");
 		partyCreationScene.put("PROFESSIONS_TOOLTIP_MONEY", "Money: ");
 		partyCreationScene.put("PROFESSIONS_TOOLTIP_SKILL", "Starting Skill: ");
@@ -258,6 +256,8 @@ public final class ConstantStore {
 		general.put("LEAVE", "Leave");
 		general.put("PROFESSION", "Profession");
 		general.put("WEIGHT_UNIT", "lbs");
+		general.put("PACE_LABEL", "Pace:");
+		general.put("RATIONS_LABEL", "Rations:");
 		literalMap.put("GENERAL", general);
 
 		LITERALS = Collections.unmodifiableMap(literalMap);

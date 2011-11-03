@@ -46,15 +46,6 @@ public class SceneryFactory {
 	}
 	
 	/**
-	 * Get the background overlay color for the time period.
-	 * @param hour Time of day
-	 * @return Color for the overlay
-	 */
-	public static Color getBackgroundOverlayColor(int hour) {
-		return backgroundOverlayColorForHour(hour);
-	}
-	
-	/**
 	 * Return the scenery for the time period and environment.
 	 * @param container Container
 	 * @return ParallaxPanel with correct scenery
@@ -138,8 +129,8 @@ public class SceneryFactory {
 	 * @param duration Duration of animation
 	 * @return AnimatingColor
 	 */
-	public static AnimatingColor getBackgroundOverlayAnimatingColor(int hour, int duration) {
-		 return new AnimatingColor(getBackgroundOverlayColor(hour - 1), getBackgroundOverlayColor(hour), duration);
+	public static AnimatingColor getOverlayAnimatingColor(int hour, int duration) {
+		 return new AnimatingColor(getOverlayColorForHour(hour - 1), getOverlayColorForHour(hour), duration);
 	}
 	
 	/**
@@ -147,7 +138,7 @@ public class SceneryFactory {
 	 * @param hour Hour of the day
 	 * @return Background overlay for that hour
 	 */
-	private static Color backgroundOverlayColorForHour(int hour) {
+	public static Color getOverlayColorForHour(int hour) {
 		switch (hour + 1) {
 			case 7:
 				return new Color(0, 0, 0, .3f);
