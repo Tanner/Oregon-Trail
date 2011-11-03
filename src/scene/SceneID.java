@@ -9,7 +9,6 @@ public enum SceneID {
 	TOWN ("Town"),
 	HUNT ("Hunt"),
 	TRAIL ("Trail"),
-	PARTYMANAGEMENTSCENE ("Party Management"),
 	GAMEOVER ("Game Over"),
 	VICTORY ("Victory"),
 	SCENESELECTOR ("Scene Selector"),

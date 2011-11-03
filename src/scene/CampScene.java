@@ -30,7 +30,6 @@ public class CampScene extends Scene {
 	private Panel buttonPanel;
 	
 	private Button inventoryButton;
-	private Button partyManagementButton;
 	private Button mapButton;
 	private Button huntButton;
 	private Button leaveButton;
@@ -78,7 +77,7 @@ public class CampScene extends Scene {
 		buttonPanel.setBorderColor(Color.black);
 		
 		ButtonListener listener = new ButtonListener();
-		Button buttons[] = new Button[5];
+		Button buttons[] = new Button[4];
 		
 		int buttonWidth = (container.getWidth() - MARGIN * 2 - MARGIN * (buttons.length - 1)) / buttons.length;
 		int buttonHeight = HEIGHT - MARGIN * 2;
@@ -86,10 +85,6 @@ public class CampScene extends Scene {
 		Label tempLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "INVENTORY"));
 		inventoryButton = new Button(container, buttonWidth, buttonHeight, tempLabel);
 		inventoryButton.addListener(listener);
-		
-		tempLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "PARTY_MANAGEMENT"));
-		partyManagementButton = new Button(container, buttonWidth, buttonHeight, tempLabel);
-		partyManagementButton.addListener(listener);
 		
 		tempLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("CAMP_SCENE", "MAP"));
 		mapButton = new Button(container, buttonWidth, buttonHeight, tempLabel);
@@ -105,9 +100,8 @@ public class CampScene extends Scene {
 				
 		buttons[0] = leaveButton;
 		buttons[1] = inventoryButton;
-		buttons[2] = partyManagementButton;
-		buttons[3] = mapButton;
-		buttons[4] = huntButton;
+		buttons[2] = mapButton;
+		buttons[3] = huntButton;
 		
 		buttonPanel.addAsRow(buttons, buttonPanel.getPosition(ReferencePoint.TOPLEFT), MARGIN, MARGIN, MARGIN);
 		mainLayer.add(buttonPanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT);
@@ -137,8 +131,6 @@ public class CampScene extends Scene {
 			
 			if (source == inventoryButton) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, CampScene.this, false);
-			} else if (source == partyManagementButton) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, CampScene.this, false);
 			} else if (source == mapButton) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, CampScene.this, false);
 			} else if (source == leaveButton) {

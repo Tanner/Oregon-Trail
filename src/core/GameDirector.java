@@ -110,8 +110,6 @@ public class GameDirector implements SceneListener {
 			return new HuntScene(game.getPlayer().getParty());
 		case TRAIL:
 			return new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
-		case PARTYMANAGEMENTSCENE:
-			return new PartyManagementScene(game.getPlayer().getParty());
 		case GAMEOVER:
 			return new GameOverScene();
 		case VICTORY:
