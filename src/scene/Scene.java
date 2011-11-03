@@ -10,12 +10,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import component.HUD;
 import component.Component;
-import component.ModalListener;
 import component.SceneLayer;
 import component.Tooltip;
 import component.Positionable.ReferencePoint;
 import component.Visible;
 import component.modal.Modal;
+import component.modal.ModalListener;
 
 /**
  * How the game displays information to the player. Inherited by the containers which execute the game functionality.

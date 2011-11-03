@@ -6,7 +6,6 @@ import org.newdawn.slick.Input;
 import component.Button;
 import component.Component;
 import component.Label;
-import component.ModalListener;
 import component.Panel;
 
 import core.ConstantStore;

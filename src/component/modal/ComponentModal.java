@@ -9,7 +9,6 @@ import org.newdawn.slick.gui.GUIContext;
 import component.Button;
 import component.Component;
 import component.Label;
-import component.ModalListener;
 import component.Panel;
 import component.Positionable;
 import core.ConstantStore;
