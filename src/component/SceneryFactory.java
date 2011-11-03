@@ -26,7 +26,7 @@ public class SceneryFactory {
 	private static final int TREE_OFFSET = 20;
 	
 	private static final int NUM_CLOUDS = 5;
-	private static final int CLOUD_OFFSET = 20;
+	private static final int CLOUD_OFFSET = HUD.HEIGHT + 20;
 	private static final int CLOUD_DISTANCE_VARIANCE = 10;
 	private static final int CLOUD_OFFSET_VARIANCE = 10;
 	

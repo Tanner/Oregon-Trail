@@ -23,7 +23,7 @@ import core.FontStore;
  */
 public class HUD extends Component {
 	private static final int MARGIN = 10;
-	private static final int HEIGHT = 80;
+	public static final int HEIGHT = 80;
 	
 	private static final int INFO_WIDTH = 200;
 	
