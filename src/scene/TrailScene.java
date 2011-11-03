@@ -60,6 +60,9 @@ public class TrailScene extends Scene {
 	
 	private HUD hud;
 	
+	private SegmentedControl paceSegmentedControl;
+	private SegmentedControl rationsSegmentedControl;
+	
 	private AnimatingColor skyAnimatingColor;
 	
 	private PartyComponent partyComponent;
@@ -99,8 +102,9 @@ public class TrailScene extends Scene {
 			paceLabels[i] = Party.Pace.values()[i].toString();
 		}
 		
-		SegmentedControl paceSegmentedControl = new SegmentedControl(container, segmentedControlWidth, toolbar.getHeight() - 14, 1, 3, 0, true, 1, paceLabels);
+		paceSegmentedControl = new SegmentedControl(container, segmentedControlWidth, toolbar.getHeight() - 14, 1, 3, 0, true, 1, paceLabels);
 		toolbar.add(paceSegmentedControl, paceLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, toolbarXMargin, 0);
+		paceSegmentedControl.addListener(new ToolbarComponentListener());
 		
 		toolbar.add(rationsLabel, paceSegmentedControl.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, toolbarXMargin * 2, 0);
 		
@@ -108,8 +112,9 @@ public class TrailScene extends Scene {
 		for (int i = 0; i < rationLabels.length; i++) {
 			rationLabels[i] = Party.Rations.values()[i].toString();
 		}
-		SegmentedControl rationsSegmentedControl = new SegmentedControl(container, segmentedControlWidth, toolbar.getHeight() - 14, 1, 3, 0, true, 1, rationLabels);
+		rationsSegmentedControl = new SegmentedControl(container, segmentedControlWidth, toolbar.getHeight() - 14, 1, 3, 0, true, 1, rationLabels);
 		toolbar.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, toolbarXMargin, 0);
+		rationsSegmentedControl.addListener(new ToolbarComponentListener());
 		
 		sky = SceneryFactory.getSky(container, party.getTime().getTime());
 		backgroundLayer.add(sky);
@@ -196,19 +201,6 @@ public class TrailScene extends Scene {
 		}
 	}
 	
-	@Override
-	public void enter(GameContainer container, StateBasedGame game) {
-		super.enter(container, game);
-		
-		// Determine our display speed
-		ParallaxSprite.setMaxElapsedTimes((int) map(party.getPace().getSpeed(), Party.Pace.STEADY.getSpeed(), Party.Pace.GRUELING.getSpeed(), NEAR_MAX_ELAPSED_TIME_SLOW, NEAR_MAX_ELAPSED_TIME_FAST), FAR_MAX_ELAPSED_TIME);
-	
-		// Because we changed the max elapsed times, we have to update the new max elapsed time for each sprite
-		for (ParallaxSprite sprite : parallaxPanel.getSprites()) {
-			sprite.setMaxElapsedTime(sprite.getDistance());
-		}
-	}
-	
 	/**
 	 * Handle the incoming messages from walk and Encounters, consolidating
 	 * everything into one modal window.
@@ -254,6 +246,14 @@ public class TrailScene extends Scene {
 		
 		AnimatingColor overlayAnimatingColor = SceneryFactory.getOverlayAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
 		mainLayer.setOverlayColor(overlayAnimatingColor);
+
+		// Determine our display speed
+		ParallaxSprite.setMaxElapsedTimes((int) map(party.getPace().getSpeed(), Party.Pace.STEADY.getSpeed(), Party.Pace.GRUELING.getSpeed(), NEAR_MAX_ELAPSED_TIME_SLOW, NEAR_MAX_ELAPSED_TIME_FAST), FAR_MAX_ELAPSED_TIME);
+	
+		// Because we changed the max elapsed times, we have to update the new max elapsed time for each sprite
+		for (ParallaxSprite sprite : parallaxPanel.getSprites()) {
+			sprite.setMaxElapsedTime(sprite.getDistance());
+		}
 	}
 	
 	/**
@@ -304,5 +304,18 @@ public class TrailScene extends Scene {
 			SoundStore.get().stopAllSound();
 			GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, TrailScene.this, false);
 		}
+	}
+	
+	private class ToolbarComponentListener implements ComponentListener {
+
+		@Override
+		public void componentActivated(AbstractComponent source) {
+			if (source == paceSegmentedControl) {
+				party.setPace(Party.Pace.values()[paceSegmentedControl.getSelection()[0]]);
+			} else if (source == rationsSegmentedControl) {
+				party.setRations(Party.Rations.values()[rationsSegmentedControl.getSelection()[0]]);
+			}
+		}
+		
 	}
 }
