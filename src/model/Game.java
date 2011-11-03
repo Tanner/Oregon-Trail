@@ -6,6 +6,7 @@ import java.util.Random;
 
 import model.Item.ITEM_TYPE;
 import model.worldMap.LocationNode;
+import model.worldMap.MapObject;
 import core.Logger;
 
 /**
@@ -16,7 +17,7 @@ public class Game {
 	
 	private WorldMap worldMap;
 	
-	private Inventory storeInventory = new Inventory(8, 10000);
+	private Inventory storeInventory = new Inventory(16, 10000);
 	
 	
 	/**
@@ -70,11 +71,14 @@ public class Game {
 		//Populate the list of item types to allow for ready population of store slots
 		List<ITEM_TYPE> startItems = new ArrayList<ITEM_TYPE>();
 		for(ITEM_TYPE itemType : ITEM_TYPE.values()) {
-			startItems.add(itemType);
+			if(itemType.getNecessaryQuality() <= location.getCondition().getCurrent());
+				startItems.add(itemType);
 		}
 		//Items that wont show up in starting inventory
 		startItems.remove(ITEM_TYPE.STRANGEMEAT);
 		startItems.remove(ITEM_TYPE.SONIC);
+		
+		
 				
 		//Now we fill in the stores inventory.
 		int numberOf;
@@ -85,7 +89,7 @@ public class Game {
 				numberOf = (random.nextInt(10) + 5)/((location.getRank()/4) + 1);
 			}
 			
-			for(int i = 0; i < numberOf; i++) {
+			for(int i = 0; i < numberOf; i++) { 
 				storeInventory.addItemToInventory(new Item(itemType));
 			}
 		}

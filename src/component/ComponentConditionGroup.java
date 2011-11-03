@@ -88,4 +88,8 @@ public class ComponentConditionGroup <T extends Component> extends Component {
 		
 		conditionBar.setVisible(!disabled);
 	}
+
+	public void update() {
+		conditionBar.update();
+	}
 }

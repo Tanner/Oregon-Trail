@@ -9,7 +9,7 @@ public class Time {
 	int time, day, year;
 	Month month;
 	
-	private enum TimeOfDay {
+	public enum TimeOfDay {
 		MORNING,
 		AFTERNOON,
 		EVENING,

@@ -8,7 +8,6 @@ import org.newdawn.slick.gui.GUIContext;
 
 import component.Button;
 import component.Label;
-import component.ModalListener;
 import component.Panel;
 import component.Positionable;
 import core.ConstantStore;
@@ -21,7 +20,6 @@ public class MessageModal extends Modal {
 	 * @param context The GUI context
 	 * @param listener The listener
 	 * @param message The text for the message
-	 * @param dismissButtonText The text for the dismiss button
 	 */
 	public MessageModal(GUIContext context, ModalListener listener, String message) {
 		super(context, listener, message);

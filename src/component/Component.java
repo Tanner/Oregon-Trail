@@ -192,7 +192,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	/**
 	 * Sets the {@code Visible} parent.
-	 * @param component New visible parent
+	 * @param visible New visible parent
 	 */
 	public void setVisibleParent(Visible visible) {
 		this.visibleParent = visible;
@@ -530,6 +530,14 @@ public abstract class Component extends AbstractComponent implements Positionabl
 		for (Component c : components) {
 			c.setAcceptingInput(acceptingInput);
 		}
+	}
+	
+	/**
+	 * Returns the {@code Visible} parent.
+	 * @return Return the visible parent
+	 */
+	public Visible getVisibleParent() {
+		return visibleParent;
 	}
 	
 	@Override

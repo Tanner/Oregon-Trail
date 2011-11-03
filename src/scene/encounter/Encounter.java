@@ -8,55 +8,22 @@ import model.Party;
  * or scene encapsulated in a EncounterNotification
  */
 public abstract class Encounter {
-	//private int min;
-	//private int max;
 	protected int value;
 	protected Party party;
+	protected EncounterID id;
 	
-	/* Jeremy's old stuff
-	/**
-	 * Give an Encounter the party, as well as its range of occurrence.
-	 * @param party The party, so the encounter can affect the game
-	 * @param min The beginning of the range of occurrence
-	 * @param max The end of the range of occurrence
-	 *
-	public Encounter(Party party, int min, int max) {
-		this.min = min;
-		this.max = max;
-		this.party = party;
-	}
-	
-	/**
-	 * Check if a certain number lies within an Encounter's range. Meant to determine
-	 * when an encounter occurs.
-	 * @param num A randomly generated number
-	 * @return True if num is in the range of this encounter's min and max
-	 *
-	public boolean isInRange(int num) {
-		if ( num <= max && num >= min )
-			return true;
-		return false;
-	}
-	
-	/**
-	 * Return the max occurrence.
-	 * @return The maximum value for the Encounter's range
-	 *
-	public int getMax() {
-		return max;
-	}*/
-	
-	public Encounter(Party party, int value) {
+	public Encounter(Party party, int value, EncounterID id) {
 		this.party = party;
 		this.value = value;
+		this.id = id;
 	}
 	
-	public boolean isInRange(int num) {
-		return num < value;
+	public boolean isInRange(int num, int timeIndex) {
+		return num < value * id.getFrequencies()[timeIndex];
 	}
 	
-	public int getValue() {
-		return value;
+	public int getValue(int timeIndex) {
+		return value * id.getFrequencies()[timeIndex];
 	}
 	
 	/**
@@ -70,6 +37,8 @@ public abstract class Encounter {
 	 * @return An EncounterNotification with the
 	 */
 	protected abstract EncounterNotification makeNotification();
+	
+	public abstract EncounterID getEncounterID();
 
 	public void increaseValue(int amount) {
 		value += amount;

@@ -6,6 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.Component;
+import core.SoundStore;
 
 /**
  * {@code Sprite} inherits from {@code Component} to extend features
@@ -35,7 +36,7 @@ public class Sprite extends Component {
 		}
 		
 		super.render(context, g);
-
+		
 		if (image != null) {
 			image.draw(getX(), getY(), getWidth(), getHeight());
 		}

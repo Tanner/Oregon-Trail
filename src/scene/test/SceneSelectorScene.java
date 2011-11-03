@@ -150,14 +150,6 @@ public class SceneSelectorScene extends Scene {
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, SceneSelectorScene.this, false);
-			} else if (buttonText.equals(SceneID.PARTYMANAGEMENTSCENE.getName())) {
-				// Party Management Scene
-				if (player.getParty() == null) {
-					warnBecauseNoParty();
-					return;
-				}
-				
-				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYMANAGEMENTSCENE, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.GAMEOVER.getName())) {
 				// Game Over
 				if (player.getParty() == null) {
@@ -206,14 +198,6 @@ public class SceneSelectorScene extends Scene {
 				player = game.getPlayer();
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_PARTY"))) {
 				player.setParty(makeRandomParty());
-			} else if (buttonText.equals(SceneID.CAMP.getName())) {
-				// Game Over
-				if (player.getParty() == null) {
-					warnBecauseNoParty();
-					return;
-				}
-				
-				GameDirector.sharedSceneListener().requestScene(SceneID.CAMP, SceneSelectorScene.this, false);
 			}
 		}
 		

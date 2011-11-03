@@ -9,7 +9,6 @@ import org.newdawn.slick.gui.GUIContext;
 import component.Button;
 import component.Component;
 import component.Label;
-import component.ModalListener;
 import component.Panel;
 import component.Positionable;
 import core.ConstantStore;
@@ -19,13 +18,11 @@ public class ComponentModal<T extends Component> extends Modal {
 	private T component;
 
 	/**
-	 * Constructs a {@code Modal} with a listener, message, segmented control, submit message text, and cancel button text.
+	 * Constructs a {@code Modal} with a listener, message, and component.
 	 * @param context The GUI context
 	 * @param listener The listener
 	 * @param message The text for the message
-	 * @param segmentedControl A segmented control
-	 * @param dismissButtonText The text for the submit button
-	 * @param cancelButtonText The text button for the cancel button
+	 * @param component Component to add
 	 */
 	public ComponentModal(GUIContext context, ModalListener listener, String message, T component) {
 		super(context, listener, message);

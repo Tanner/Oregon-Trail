@@ -110,8 +110,6 @@ public class GameDirector implements SceneListener {
 			return new HuntScene(game.getPlayer().getParty());
 		case TRAIL:
 			return new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
-		case PARTYMANAGEMENTSCENE:
-			return new PartyManagementScene(game.getPlayer().getParty());
 		case GAMEOVER:
 			return new GameOverScene();
 		case VICTORY:
@@ -120,8 +118,6 @@ public class GameDirector implements SceneListener {
 			return new ComponentTestScene();
 		case TRAILTEST:
 			return new TrailTestScene(game.getPlayer().getParty());
-		case CAMP:
-			return new CampScene(game.getPlayer().getParty());
 		case MAP:
 			return new MapScene(game.getWorldMap());
 		case RIVER:
@@ -158,65 +154,8 @@ public class GameDirector implements SceneListener {
 		} else if (lastScene instanceof PartyCreationScene) {
 			// Last scene was Party Creation Scene
 			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
-		} else if (lastScene instanceof TrailScene && newScene instanceof CampScene) {
-			newScene = new CampScene(game.getPlayer().getParty());
 		}
 		
-		/*
-		if (id == SceneID.SCENESELECTOR) {
-			newScene = sceneForSceneID(id);
-		} else if(worldMap.getCurrLocationNode().getRank() == worldMap.getMaxRank()) {
-			newScene = new VictoryScene();
-			inTransition = new RotateTransition(Color.black);
-		} else if (id == SceneID.GAMEOVER) {
-			newScene = sceneForSceneID(id);
-			inTransition = new RotateTransition(Color.black);
-		} else if (lastScene instanceof MainMenuScene) {
-			// Last scene was Main Menu Scene
-			if (id == SceneID.PARTYCREATION) {
-				// Requested Party Creation Scene
-				newScene = new PartyCreationScene(game.getPlayer());
-			}
-		} else if (lastScene instanceof PartyCreationScene) {
-			// Last scene was Party Creation Scene
-			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
-			newScene = new TownScene(game.getPlayer().getParty(), worldMap.getMapHead());
-		} else if (lastScene instanceof TownScene) {
-			// Last scene was Town Scene
-			if (id == SceneID.STORE) {
-				// Requested Store Scene
-				newScene = new StoreScene(game.getPlayer().getParty(), game.getStoreInventory(), (1 + worldMap.getCurrLocationNode().getRank()/10));
-			}
-			if (id == SceneID.TRAIL) {
-				//Requested Trail scene
-				newScene = new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
-			}
-		} else if (lastScene instanceof StoreScene) {
-			// Last scene was Store Scene
-			if (id == SceneID.PARTYINVENTORY) {
-				// Requested Party Inventory Scene
-				newScene = new PartyInventoryScene(game.getPlayer().getParty(), ((StoreScene) lastScene).getInventory());
-			}
-		} else if (lastScene instanceof SceneSelectorScene) {
-			// Last scene was Scene Selector Scene
-			newScene =  sceneForSceneID(id);
-		} else if (id == SceneID.PARTYINVENTORY) {
-			// Requested Party Inventory Scene
-			newScene = new PartyInventoryScene(game.getPlayer().getParty());
-		} else if (id == SceneID.HUNT) {
-			//Requested Hunt scene
-			newScene = new HuntScene(game.getPlayer().getParty());
-		} else if (id == SceneID.CAMP) {
-			//Requested Trail scene
-			newScene = new CampScene();
-		} else if (id == SceneID.PARTYMANAGEMENTSCENE) {
-			//Requested Party Management Scene scene
-			newScene = new PartyManagementScene(game.getPlayer().getParty());
-		} else if (id == SceneID.TOWN) {
-			game.resetStoreInventory(worldMap.getCurrLocationNode());
-			newScene = new TownScene(game.getPlayer().getParty(), worldMap.getCurrLocationNode());
-		}
-		*/
 		if (newScene != null) {
 			lastScene.disable();
 			
@@ -256,24 +195,10 @@ public class GameDirector implements SceneListener {
 		List<Encounter> encounterList = new ArrayList<Encounter>();
 		
 		for ( EncounterID encounter : EncounterID.values() ) {
-			encounterList.add(EncounterID.getEncounter(game.getPlayer().getParty(), encounter, 5 * encounter.getFrequency() * (rand.nextInt(10)+1)));
+			encounterList.add(EncounterID.getEncounter(game.getPlayer().getParty(), encounter, 5 * (rand.nextInt(10)+1)));
 		}
 		return encounterList;
 	}
-
-	/*
-	@Override
-	public void playMusic(Music music) {
-		this.music = music;
-		this.music.loop();
-	}
-	
-	public void stopMusic() {
-		if (this.music != null) {
-			this.music.fade(1000, 0, true);
-		}
-	}
-	*/
 	
 	/*----------------------
 	  Main

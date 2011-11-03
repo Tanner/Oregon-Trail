@@ -350,40 +350,45 @@ public class Party implements HUDDataSource {
 		totalDistanceTravelled += movement;
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
-		for (Animal animal : animals) {
-			animal.decreaseStatus(getPace().getSpeed() - 75);
+		grazeAnimals(getPace().getSpeed());
+		for(Animal animal : animals) {
 			if(animal.getStatus().getCurrent() == 0) {
 				if (vehicle != null) {
 					vehicle.addItemsToInventory(animal.killForFood());
 				}
-				slaughterHouse.add(animal);
+			slaughterHouse.add(animal);
 			}
 		}
 		
 		List<Person> deathList = new ArrayList<Person>();
-		int healAmount = 0;
+		int finalResult = 0;
 		for (Person person : members) {
 			person.increaseSkillPoints((int) (getPace().getSpeed() / 10));
 			if(!personHasFood(person) && !vehicleHasFood()) {
 				person.decreaseHealth(getPace().getSpeed());
 			} else {
-				healAmount = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount());
-				if(healAmount > 0) {
-					person.increaseHealth(healAmount);
+				finalResult = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount())
+					- getPace().getSpeed();
+				if(finalResult > 0) {
+					person.increaseHealth(finalResult);
 				}
 				else {
-					person.decreaseHealth(-healAmount);
+					person.decreaseHealth(-finalResult);
 				}
 			}
 			if(person.getHealth().getCurrent() == 0) {
 				if (vehicle != null) {
 					vehicle.addItemsToInventory(person.killForFood());
+					System.out.println(vehicle.getInventory());
 				}
 				deathList.add(person);
 			}
 		}
 		if(checkHungerStatus() != null) {
 			messages.add(new Notification(checkHungerStatus(), true));
+		}
+		if(checkAnimalHunger() != null) {
+			messages.add(new Notification(checkAnimalHunger(), true));
 		}
 		for (Person person : deathList) {
 			person.setDead(true);
@@ -396,7 +401,54 @@ public class Party implements HUDDataSource {
 		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", getTotalDistanceTravelled()), false));
 		return messages;
 	}
+	
+	public List<Notification> rest() {
+		List<Notification> messages = new ArrayList<Notification>();
+		grazeAnimals(5);
+		
+		List<Person> deathList = new ArrayList<Person>();
+		int finalResult = 0;
+		for (Person person : members) {
+			if(!personHasFood(person) && !vehicleHasFood()) {
+				person.decreaseHealth(5);
+			} else {
+				finalResult = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount()) - 5;
+				if(finalResult > 0) {
+					person.increaseHealth(finalResult);
+				}
+				else {
+					person.decreaseHealth(-finalResult);
+				}
+			}
+			if(person.getHealth().getCurrent() == 0) {
+				if (vehicle != null) {
+					vehicle.addItemsToInventory(person.killForFood());
+					System.out.println(vehicle.getInventory());
+				}
+				deathList.add(person);
+			}
+		}
+		if(checkHungerStatus() != null) {
+			messages.add(new Notification(checkHungerStatus(), true));
+		}
+		for (Person person : deathList) {
+			person.setDead(true);
+			members.remove(person);
+		}
+		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", getTotalDistanceTravelled()), false));
+		return messages;
+	}
 
+	private void grazeAnimals(int paceDamage) {
+		for (Animal animal : animals) {
+			if(paceDamage - 75 > 0) {
+				animal.decreaseStatus(paceDamage - 75);
+			} else {
+				animal.increaseStatus(75 - paceDamage);
+			}
+		}
+	}
+	
 	public int getTotalDistanceTravelled() {
 		return totalDistanceTravelled;
 	}
@@ -458,7 +510,7 @@ public class Party implements HUDDataSource {
 			donator.removeItemFromInventory(firstFood, 1);
 		
 		final Item food = foodList.get(0);
-		int foodFactor = food.getType().getFoodFactor();
+		int foodFactor = food.getType().getFactor();
 		
 		//Do some handling for party member skills, such as cooking
 		if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
@@ -508,7 +560,6 @@ public class Party implements HUDDataSource {
 	
 	/**
 	 * Determines if a party member is near dying or dead, and alerts the player.
-	 * @param person The person who's status we're checking.
 	 * @return A string with a message about the health status of the person
 	 */
 	public String checkHungerStatus() {
@@ -525,6 +576,44 @@ public class Party implements HUDDataSource {
 					((personHasFood(person) || vehicleHasFood()) ? getRations().getRationAmount() : 0))) {
 				hasMessage = true;
 				str.append(person.getName() + " is in danger of starvation.\n" );
+			}
+		}
+		if (hasMessage) {
+			return str.toString();
+		}
+		return null;
+	}
+	
+	/**
+	 * Decrease the health of a party member, and take the proper actions if
+	 * they die when the health is decreased.
+	 * @param person The person to decrease health.
+	 * @param health The amount of health to decrease.
+	 * @return True if the person is still alive, false if they are dead
+	 */
+	public boolean decreaseHealth(Person person, int health) {
+		person.decreaseHealth(health);
+		if (person.getHealth().getCurrent() <= 0) {
+			person.setDead(true);
+			person.killForFood();
+			members.remove(person);
+		}
+		return !person.isDead();
+	}
+	
+	private String checkAnimalHunger() {
+		final StringBuilder str = new StringBuilder();
+		int currentHealth;
+		boolean hasMessage = false;
+		for(Animal animal : animals) {
+			currentHealth = (int)animal.getStatus().getCurrent();
+			if(currentHealth == 0) {
+				hasMessage = true;
+				str.append(animal.getName() + " has died of starvation!\n");
+			}
+			else if(animal.getStatus().getCurrent() < (getPace().getSpeed() - 75)) {
+				hasMessage = true;
+				str.append(animal.getName() + " is in danger of starvation.\n" );
 			}
 		}
 		if (hasMessage) {

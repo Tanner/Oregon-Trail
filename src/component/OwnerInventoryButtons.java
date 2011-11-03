@@ -160,7 +160,6 @@ public class OwnerInventoryButtons {
 	/**
 	 * Add an item to the {@code Inventoried} inventory.
 	 * @param items List of Items to add to the inventory
-	 * @return Whether or not the addition was successful
 	 */
 	public void addItemToInventory(List<Item> items) {
 		inventoried.addItemsToInventory(items);

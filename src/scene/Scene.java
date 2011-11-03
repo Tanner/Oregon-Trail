@@ -8,17 +8,17 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import component.HUD;
 import component.Component;
-import component.ModalListener;
 import component.SceneLayer;
 import component.Tooltip;
 import component.Positionable.ReferencePoint;
 import component.Visible;
+import component.hud.HUD;
 import component.modal.Modal;
+import component.modal.ModalListener;
 
 /**
- * How the game displays information to the player.  Inherited by the containers which execute the game functionality
+ * How the game displays information to the player. Inherited by the containers which execute the game functionality.
  */
 public abstract class Scene extends BasicGameState implements Visible, ModalListener {
 	protected static GameContainer container;
@@ -65,24 +65,38 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 	@Override
 	public abstract void update(GameContainer container, StateBasedGame game, int delta) throws SlickException;
 
+	/**
+	 * Set paused to true.
+	 */
 	private void pause() {
 		paused = true;
 	}
 	
+	/**
+	 * Set paused to false.
+	 */
 	private void resume() {
 		paused = false;
 	}
 	
+	/**
+	 * Returns whether or not {@code Scene} is paused.
+	 * @return Whether or not the Scene is paused (true is paused).
+	 */
 	public boolean isPaused() {
 		return paused;
 	}
 	
+	/**
+	 * Return the layers for the Scene.
+	 * @return Layers that make of Scene
+	 */
 	public SceneLayer[] getLayers() {
 		return new SceneLayer[] {
 				backgroundLayer,
 				mainLayer,
 				hudLayer,
-				hudLayer
+				modalLayer
 		};
 	}
 	
@@ -119,6 +133,10 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 		hudLayer.setAcceptingInput(true);
 	}
 	
+	/**
+	 * Add the given {@code HUD} to the HUD layer.
+	 * @param hud HUD to use
+	 */
 	public void showHUD(HUD hud) {
 		hudLayer.add(hud);
 	}
@@ -128,6 +146,13 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 	 */
 	public void prepareToEnter() {
 		setActive(true);
+	}
+	
+	/**
+	 * Prepare for departure. Transition is about to end this scene. 
+	 */
+	public void prepareToLeave() {
+		return;
 	}
 	
 	@Override
@@ -147,6 +172,9 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 		removeTooltip();
 	}
 	
+	/**
+	 * Disable everything.
+	 */
 	public void disable() {
 		mainLayer.setAcceptingInput(false);
 		hudLayer.setAcceptingInput(false);
@@ -173,10 +201,18 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 		}
 	}
 	
+	/**
+	 * Remove the tooltip.
+	 */
 	public static void removeTooltip() {
 		tooltip = null;
 	}
 	
+	/**
+	 * Set the position of the tooltip.
+	 * @param x X position
+	 * @param y Y position
+	 */
 	private static void setTooltipPosition(int x, int y) {
 		ReferencePoint referencePoint = ReferencePoint.TOPLEFT;
 		
@@ -204,18 +240,34 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 		tooltip.setPosition(new Vector2f(x, y), referencePoint);
 	}
 
+	/**
+	 * Return whether or not the Scene is active.
+	 * @return Whether or not the Scene is active
+	 */
 	public boolean isActive() {
 		return active;
 	}
 
+	/**
+	 * Set the active of the Scene.
+	 * @param active Whether or not the Scene is active
+	 */
 	private void setActive(boolean active) {
 		this.active = active;
 	}
 	
+	/**
+	 * Get the input from the container.
+	 * @return Input
+	 */
 	public Input getInput() {
 		return container.getInput();
 	}
 	
+	/**
+	 * Set the visibility of all layers within the Scene.
+	 * @param visible New visibility boolean
+	 */
 	public void setVisible(boolean visible) {
 		SceneLayer[] layers  = getLayers();
 		for (SceneLayer layer : layers) {
@@ -223,6 +275,10 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 		}
 	}
 	
+	/**
+	 * Return whether or not the Scene is visible.
+	 * @return Whether or not the Scene is visible
+	 */
 	public boolean isVisible() {
 		return active;
 	}

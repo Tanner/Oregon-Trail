@@ -15,7 +15,6 @@ public class ParallaxSpriteLoop extends ParallaxSprite {
 	 * @param spriteWidth Width the sprite should be (e.g. for scaling)
 	 * @param image Image to use for the sprite
 	 * @param distance What the distance this sprite should be
-	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
 	 */
 	public ParallaxSpriteLoop(GUIContext context, int spriteWidth, Image image, int distance) {
 		super(context, spriteWidth, image, distance);

@@ -5,10 +5,16 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
-
+/**
+ * A scene layer which holds components.
+ */
 public class SceneLayer extends Component {
 	private Color overlayColor;
 	
+	/**
+	 * Constructs a SceneLayer with a container.
+	 * @param container Container
+	 */
 	public SceneLayer(GUIContext container) {
 		super(container, container.getWidth(), container.getHeight());
 		setLocation(0, 0);
@@ -39,15 +45,38 @@ public class SceneLayer extends Component {
 		}
 	}
 	
+	/**
+	 * Add a {@code Component}.
+	 * @param component New component to add
+	 */
 	public void add(Component component) { 
 		components.add(component);
 		component.setVisibleParent(this);
 	}
+
+	/**
+	 * Remove a {@code Component}.
+	 * @param component Component to remove
+	 */
+	public void remove(Component component) {
+		components.remove(component);
+		if (component.getVisibleParent() == this) {
+			component.setVisibleParent(null);
+		}
+	}
 	
+	/**
+	 * Sets the overlay {@code Color}.
+	 * @param overlayColor Overlay Color
+	 */
 	public void setOverlayColor(Color overlayColor) {
 		this.overlayColor = overlayColor;
 	}
 	
+	/**
+	 * Whether or not it is visible.
+	 * @return Whether or not it is visible
+	 */
 	public boolean isVisible() {
 		return super.isVisible();
 	}

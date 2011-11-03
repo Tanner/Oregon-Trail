@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import core.SoundStore;
-
 import model.Inventoried;
 import model.Item.ITEM_TYPE;
 import model.Notification;
@@ -19,7 +17,7 @@ public class ThiefEncounter extends Encounter {
 	private Random random = new Random();
 	
 	public ThiefEncounter(Party party, int value) {
-		super(party, value);
+		super(party, value, EncounterID.THIEF);
 		itemName = "";
 	}
 	
@@ -45,7 +43,7 @@ public class ThiefEncounter extends Encounter {
 			}
 		}
 		value /= 5;
-		SoundStore.get().playSound("Smooth");
+		//SoundStore.get().playSound("Smooth");
 		return makeNotification();
 
 	}
@@ -63,5 +61,10 @@ public class ThiefEncounter extends Encounter {
 				"have anything to steal!  Hope you make it to the next town.";
 		
 		return new EncounterNotification(new Notification(message, true), null);
+	}
+	
+	@Override
+	public EncounterID getEncounterID() {
+		return id;
 	}
 }

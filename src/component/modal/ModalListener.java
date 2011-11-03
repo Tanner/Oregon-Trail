@@ -1,6 +1,4 @@
-package component;
-
-import component.modal.Modal;
+package component.modal;
 
 /**
  * Interface that can be implemented by classes that listen for {@code Modal} events.

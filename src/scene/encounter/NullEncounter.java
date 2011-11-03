@@ -6,7 +6,7 @@ import model.Party;
 public class NullEncounter extends Encounter {
 
 	public NullEncounter(Party party, int value) {
-		super(party, value);
+		super(party, value, EncounterID.NULL);
 	}
 	
 	@Override
@@ -18,5 +18,10 @@ public class NullEncounter extends Encounter {
 	@Override
 	protected EncounterNotification makeNotification() {
 		return new EncounterNotification(new Notification("", false), null);
+	}
+	
+	@Override
+	public EncounterID getEncounterID() {
+		return id;
 	}
 }

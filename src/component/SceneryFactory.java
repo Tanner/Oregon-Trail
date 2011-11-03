@@ -8,6 +8,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import component.Positionable.ReferencePoint;
+import component.hud.HUD;
 import component.sprite.ParallaxSprite;
 import component.sprite.ParallaxSpriteLoop;
 
@@ -26,7 +27,7 @@ public class SceneryFactory {
 	private static final int TREE_OFFSET = 20;
 	
 	private static final int NUM_CLOUDS = 5;
-	private static final int CLOUD_OFFSET = 20;
+	private static final int CLOUD_OFFSET = HUD.HEIGHT + 20;
 	private static final int CLOUD_DISTANCE_VARIANCE = 10;
 	private static final int CLOUD_OFFSET_VARIANCE = 10;
 	
@@ -35,7 +36,7 @@ public class SceneryFactory {
 	/**
 	 * Return a sky for the time period.
 	 * @param container Container
-	 * @param party Party
+	 * @param hour Time of day
 	 * @return Sky panel with the background color for the time
 	 * @throws SlickException
 	 */
@@ -46,31 +47,24 @@ public class SceneryFactory {
 	}
 	
 	/**
-	 * Get the background overlay color for the time period.
-	 * @param hour Time of day
-	 * @return Color for the overlay
-	 */
-	public static Color getBackgroundOverlayColor(int hour) {
-		return backgroundOverlayColorForHour(hour);
-	}
-	
-	/**
 	 * Return the scenery for the time period and environment.
 	 * @param container Container
-	 * @param party Party
 	 * @return ParallaxPanel with correct scenery
 	 * @throws SlickException
 	 */
 	public static ParallaxPanel getScenery(GameContainer container) throws SlickException {
-		// Stuff
 		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		Random random = new Random();
 		
 		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
 		
 		// Ground
-		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
 		parallaxPanel.add(ground, parallaxPanel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
+		
+		// Trail
+		ParallaxSprite trail = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		parallaxPanel.add(trail, ground.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, -trail.getHeight() / 2);
 		
 		// Hills
 		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
@@ -78,22 +72,6 @@ public class SceneryFactory {
 		
 		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
 		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
-		
-		// Clouds
-		Image[] cloudImages = new Image[3];
-		cloudImages[0] = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
-		cloudImages[1] = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
-		cloudImages[2] = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
-		
-		for (int i = 0; i < NUM_CLOUDS; i++) {
-			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
-			int cloudImage = random.nextInt(cloudImages.length);
-			
-			int offset = CLOUD_OFFSET + random.nextInt(CLOUD_OFFSET_VARIANCE * 2) - CLOUD_OFFSET_VARIANCE;
-			
-			ParallaxSprite cloud = new ParallaxSprite(container, cloudImages[cloudImage], distance, true);
-			parallaxPanel.add(cloud, parallaxPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, offset);
-		}
 		
 		// Trees
 		for (int i = 0; i < NUM_TREES; i++) {
@@ -119,6 +97,31 @@ public class SceneryFactory {
 		return parallaxPanel;
 	}
 	
+	public static ParallaxPanel getClouds(GameContainer container) throws SlickException {
+		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
+		Random random = new Random();
+		
+		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
+		
+		// Clouds
+		Image[] cloudImages = new Image[3];
+		cloudImages[0] = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
+		cloudImages[1] = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
+		cloudImages[2] = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
+		
+		for (int i = 0; i < NUM_CLOUDS; i++) {
+			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
+			int cloudImage = random.nextInt(cloudImages.length);
+			
+			int offset = CLOUD_OFFSET + random.nextInt(CLOUD_OFFSET_VARIANCE * 2) - CLOUD_OFFSET_VARIANCE;
+			
+			ParallaxSprite cloud = new ParallaxSprite(container, cloudImages[cloudImage], distance, true);
+			parallaxPanel.add(cloud, parallaxPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, offset);
+		}
+		
+		return parallaxPanel;
+	}
+	
 	/**
 	 * Get the sky {@code AnimatingColor} for a time.
 	 * @param hour Time of day
@@ -135,8 +138,8 @@ public class SceneryFactory {
 	 * @param duration Duration of animation
 	 * @return AnimatingColor
 	 */
-	public static AnimatingColor getBackgroundOverlayAnimatingColor(int hour, int duration) {
-		 return new AnimatingColor(getBackgroundOverlayColor(hour - 1), getBackgroundOverlayColor(hour), duration);
+	public static AnimatingColor getOverlayAnimatingColor(int hour, int duration) {
+		 return new AnimatingColor(getOverlayColorForHour(hour - 1), getOverlayColorForHour(hour), duration);
 	}
 	
 	/**
@@ -144,7 +147,7 @@ public class SceneryFactory {
 	 * @param hour Hour of the day
 	 * @return Background overlay for that hour
 	 */
-	private static Color backgroundOverlayColorForHour(int hour) {
+	public static Color getOverlayColorForHour(int hour) {
 		switch (hour + 1) {
 			case 7:
 				return new Color(0, 0, 0, .3f);
