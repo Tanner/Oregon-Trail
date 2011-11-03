@@ -36,6 +36,8 @@ public class CampScene extends Scene {
 	
 	private Particle campFire;
 	
+	private PartyComponent partyComponent;
+	
 	public CampScene(Party party) {
 		this.party = party;
 	}
@@ -109,6 +111,9 @@ public class CampScene extends Scene {
 		campFire = new Particle(container, 1, 0, 10);
 		campFire.addFire(560, 290, 15);
 		backgroundLayer.add(campFire);
+		
+		partyComponent = new PartyComponent(container, 400, 150, party.getPartyComponentDataSources());
+		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, -75);
 	}
 	
 	@Override
