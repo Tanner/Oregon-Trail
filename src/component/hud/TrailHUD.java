@@ -26,9 +26,9 @@ import core.ConstantStore;
 import core.FontStore;
 
 /**
- * A HUD holds quick information for the player.
+ * A HUD holds quick information for the player in {@code TrailScene}.
  */
-public class HUD extends Component {
+public class TrailHUD extends Component {
 	public static enum Mode { TRAIL, CAMP };
 	private static Mode currentMode;
 	
@@ -62,7 +62,7 @@ public class HUD extends Component {
 	 * @param context Context
 	 * @param data Data source to use
 	 */
-	public HUD(GUIContext context, HUDDataSource data, Mode mode, ComponentListener listener) {
+	public TrailHUD(GUIContext context, HUDDataSource data, Mode mode, ComponentListener listener) {
 		super(context, context.getWidth(), HEIGHT);
 		
 		this.currentMode = mode;

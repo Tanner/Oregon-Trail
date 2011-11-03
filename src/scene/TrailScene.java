@@ -25,7 +25,7 @@ import component.Positionable.ReferencePoint;
 import component.SceneryFactory;
 import component.SegmentedControl;
 import component.Toolbar;
-import component.hud.HUD;
+import component.hud.TrailHUD;
 import component.modal.ChoiceModal;
 import component.modal.Modal;
 import component.sprite.ParallaxSprite;
@@ -64,7 +64,7 @@ public class TrailScene extends Scene {
 	private Party party;
 	private RandomEncounterTable randomEncounterTable;
 	
-	private HUD hud;
+	private TrailHUD hud;
 	
 	private SegmentedControl paceSegmentedControl;
 	private SegmentedControl rationsSegmentedControl;
@@ -92,7 +92,7 @@ public class TrailScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		hud = new HUD(container, party, HUD.Mode.TRAIL, new HUDListener());
+		hud = new TrailHUD(container, party, HUD.Mode.TRAIL, new HUDListener());
 		showHUD(hud);
 		
 		int toolbarXMargin = 10;
@@ -321,10 +321,10 @@ public class TrailScene extends Scene {
 	public void setMode(Mode mode) {
 		if (mode == Mode.TRAIL) {
 			currentMode = mode;
-			hud.setMode(HUD.Mode.TRAIL);
+			hud.setMode(TrailHUD.Mode.TRAIL);
 		} else if (mode == Mode.CAMP) {
 			currentMode = mode;
-			hud.setMode(HUD.Mode.CAMP);
+			hud.setMode(TrailHUD.Mode.CAMP);
 		}
 	}
 	
