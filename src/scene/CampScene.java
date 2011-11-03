@@ -161,6 +161,8 @@ public class CampScene extends Scene {
 		
 		campFire.update(delta);
 		
+		partyComponent.update(delta, timeElapsed * party.getPace().getSpeed());
+		
 		if (clickCounter >= STEP_COUNT_TRIGGER) {
 			party.getTime().advanceTime();
 			party.rest();
