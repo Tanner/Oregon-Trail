@@ -244,4 +244,44 @@ public class HUD extends Component {
 			trailPanel.setVisible(true);
 		}
 	}
+	
+	/**
+	 * Get the menu button.
+	 * @return Menu button
+	 */
+	public Button getMenuButton() {
+		return menuButton;
+	}
+	
+	/**
+	 * Get the inventory button.
+	 * @return Inventory button
+	 */
+	public Button getInventoryButton() {
+		return inventoryButton;
+	}
+	
+	/**
+	 * Get the map button.
+	 * @return Map button
+	 */
+	public Button getMapButton() {
+		return mapButton;
+	}
+	
+	/**
+	 * Get the hunt button.
+	 * @return Hunt button
+	 */
+	public Button getHuntButton() {
+		return huntButton;
+	}
+	
+	/**
+	 * Get the leave button.
+	 * @return Leave button
+	 */
+	public Button getLeaveButton() {
+		return leaveButton;
+	}
 }

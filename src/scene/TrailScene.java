@@ -334,7 +334,15 @@ public class TrailScene extends Scene {
 		public void componentActivated(AbstractComponent component) {
 			SoundStore.get().stopAllSound();
 			
-			setMode(Mode.CAMP);
+			if (component == hud.getMenuButton()) {
+				setMode(Mode.CAMP);
+			} else if (component == hud.getInventoryButton()) {
+				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, TrailScene.this, false);
+			} else if (component == hud.getMapButton()) {
+				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, TrailScene.this, false);
+			} else if (component == hud.getLeaveButton()) {
+				setMode(Mode.TRAIL);
+			}
 		}
 	}
 	
