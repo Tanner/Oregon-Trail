@@ -28,7 +28,7 @@ public class Item implements Conditioned, Comparable<Item>, Serializable{
 		WAGON ("WAGON", false, false, false, false),
 		WHEEL ("WHEEL", false, false, false, true),
 		OX ("OX", false, false, true, false),
-		HAMMER ("HAMMER", false, false, false, true),
+		TOOLS ("TOOLS", false, false, false, true),
 		AXLE ("AXLE", false, false, false, true),
 		HORSE ("HORSE", false, false, true, false),
 		MULE ("MULE", false, false, true, false),

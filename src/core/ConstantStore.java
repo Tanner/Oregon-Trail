@@ -225,12 +225,12 @@ public final class ConstantStore {
 		itemMap.put("MULE_MOVE_FACTOR", "3.0");
 		itemMap.put("MULE_NECESSARY_QUALITY", "30");
 		
-		itemMap.put("HAMMER_NAME", "Hammer");
-		itemMap.put("HAMMER_PLURAL_NAME", "Hammers");
-		itemMap.put("HAMMER_DESCRIPTION", "A hammer for hammering.");
-		itemMap.put("HAMMER_WEIGHT", ".5");
-		itemMap.put("HAMMER_COST", "20");
-		itemMap.put("HAMMER_REPAIR_FACTOR", "1");
+		itemMap.put("TOOLS_NAME", "Tools");
+		itemMap.put("TOOLS_PLURAL_NAME", "Tools");
+		itemMap.put("TOOLS_DESCRIPTION", "Some tools to fix stuff.");
+		itemMap.put("TOOLS_WEIGHT", ".5");
+		itemMap.put("TOOLS_COST", "20");
+		itemMap.put("TOOLS_REPAIR_FACTOR", "1");
 		
 		itemMap.put("AXLE_NAME", "Axle");
 		itemMap.put("AXLE_PLURAL_NAME", "Axles");
