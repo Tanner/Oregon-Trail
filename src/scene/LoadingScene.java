@@ -13,7 +13,7 @@ import core.GameDirector;
 import core.SoundStore;
 
 public class LoadingScene extends Scene {
-	public static final SceneID ID = SceneID.LOADINGSCENE;
+	public static final SceneID ID = SceneID.LOADING;
 	
 	private int PADDING = 20;
 	
