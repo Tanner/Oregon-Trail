@@ -33,6 +33,7 @@ import component.TextField;
 import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;
+import core.ImageStore;
 import core.Logger;
 
 /**
@@ -242,7 +243,7 @@ public class PartyCreationScene extends Scene {
 		confirmButton.addListener(componentListener);
 		mainLayer.add(confirmButton, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
 		
-		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/dark_dirt.png")));
+		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("DIRT_BACKGROUND")));
 		
 		enableNextPersonField();
 	}

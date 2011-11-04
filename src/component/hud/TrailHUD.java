@@ -27,6 +27,7 @@ import component.sprite.Sprite;
 
 import core.ConstantStore;
 import core.FontStore;
+import core.ImageStore;
 
 /**
  * A HUD holds quick information for the player in {@code TrailScene}.
@@ -103,12 +104,7 @@ public class TrailHUD extends HUD {
 		
 		Label menuLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "CAMP"));
 		
-		Sprite fireSprite = null;
-		try {
-			fireSprite = new Sprite(container, 48, new Image("resources/graphics/icons/fire.png", false, Image.FILTER_NEAREST));
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		Sprite fireSprite = new Sprite(container, 48, ImageStore.get().getImage("CAMP_ICON"));
 		
 		menuButton = new Button(container, menuLabel.getWidth() + (2 * MARGIN), BUTTON_HEIGHT, menuLabel);
 		menuButton.setSprite(fireSprite);

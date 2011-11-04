@@ -65,9 +65,8 @@ public class MapScene extends Scene {
 				
 		mainLayer.add(returnToCamp, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT, 20, -20);
 		
-		//set the background image - the map picture
-		Image mapImg = new Image("resources/graphics/backgrounds/playerMap.png", false, Image.FILTER_NEAREST);		
-		backgroundLayer.add(new Panel(container, mapImg));
+		//set the background image - the map picture;		
+		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("TRAIL_MAP")));
 		
 	}
 	/* (non-Javadoc)

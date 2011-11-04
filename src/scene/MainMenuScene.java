@@ -39,7 +39,7 @@ public class MainMenuScene extends Scene {
 		mainLayer.add(logoSprite, mainLayer.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 75);
 		mainLayer.add(newGameButton, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -75);
 		
-		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("MAP")));
+		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("MAP_BACKGROUND")));
 	}
 
 	@Override

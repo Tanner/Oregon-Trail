@@ -30,7 +30,10 @@ public class ImageStore {
 	
 	private void initialize() throws SlickException {
 		IMAGES.put("LOGO", new Image("resources/graphics/logo.png", false, Image.FILTER_NEAREST));
-		IMAGES.put("MAP", new Image("resources/graphics/backgrounds/map.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("MAP_BACKGROUND", new Image("resources/graphics/backgrounds/map.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("TRAIL_MAP", new Image("resources/graphics/backgrounds/playerMap.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("DIRT_BACKGROUND", new Image("resources/graphics/backgrounds/dark_dirt.png"));
+		IMAGES.put("CAMP_ICON", new Image("resources/graphics/icons/fire.png", false, Image.FILTER_NEAREST));
 	}
 	
 	public Image getImage(String name) {
