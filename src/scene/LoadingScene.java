@@ -72,6 +72,9 @@ public class LoadingScene extends Scene {
 		}
 		
 		if (loader.getState() == Thread.State.TERMINATED) {
+			loadCondition.increase(MAX_LOAD_AMOUNT - currentLoadAmount);
+			loadingBar.update();
+			
 			if (currentItemIndex == LOAD_ITEMS.values().length - 1) {
 				loadLabel.setText("Loading complete.");
 				
