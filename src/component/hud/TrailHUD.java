@@ -14,8 +14,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
-import com.sun.tools.javac.code.Attribute.Array;
-
 import component.Button;
 import component.Component;
 import component.Label;
