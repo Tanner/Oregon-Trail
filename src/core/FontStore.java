@@ -11,7 +11,6 @@ import org.newdawn.slick.SlickException;
  * Manages fonts for use in the game.
  */
 public class FontStore {
-	
 	public enum FontID {
 		H1,
 		H2,
@@ -21,27 +20,35 @@ public class FontStore {
 	
 	private static FontStore fontStore;
 	
-	public static final Map<String, Font> FONTS;
+	public final Map<String, Font> FONTS;
 	
-	static {
-		fontStore = new FontStore();
-		FONTS = new HashMap<String, Font>();
-		try {
-			fontStore.init();
-		} catch (SlickException e) {
-			System.err.println(e.getStackTrace());
-		}
+	private FontStore() {
+		fontStore = this;
 		
+		FONTS = new HashMap<String, Font>();
+		
+		try {
+			initialize();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	private void init() throws SlickException {
+	private void initialize() throws SlickException {
 		FONTS.put(FontID.H1.toString(), new AngelCodeFont("resources/fonts/04b03_h1.fnt", "resources/fonts/04b03_h1.png", false));
 		FONTS.put(FontID.H2.toString(), new AngelCodeFont("resources/fonts/04b03_h2.fnt", "resources/fonts/04b03_h2.png", false));
 		FONTS.put(FontID.FIELD.toString(), new AngelCodeFont("resources/fonts/04b03_field.fnt", "resources/fonts/04b03_field.png", false));
 	}
 	
-	public static Font get(FontID font) {
+	public Font getFont(FontID font) {
 		return FONTS.get(font.toString());
 	}
-
+	
+	public static FontStore get() {
+		if (fontStore == null) {
+			fontStore = new FontStore();
+		}
+		
+		return fontStore;
+	}
 }
