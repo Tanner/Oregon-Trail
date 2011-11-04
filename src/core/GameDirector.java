@@ -93,6 +93,8 @@ public class GameDirector implements SceneListener {
 	 */
 	private Scene sceneForSceneID(SceneID id) {
 		switch (id) {
+		case LOADING:
+			return new LoadingScene();
 		case MAINMENU:
 			return new MainMenuScene();
 		case PARTYCREATION:
