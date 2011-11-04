@@ -1,9 +1,7 @@
 package core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,7 +10,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 public class SoundStore {
-	
 	private static SoundStore soundStore;
 	
 	private float musicVolume = 1;
@@ -26,7 +23,7 @@ public class SoundStore {
 	/**
 	 * Private constructor, creates the singleton
 	 */
-	private SoundStore(){
+	private SoundStore() {
 		soundStore = this;
 		sounds = new HashMap<String, Sound>();
 		musics = new HashMap<String, Music>();
@@ -41,10 +38,11 @@ public class SoundStore {
 	 * If soundstore doesn't exist, create it, otherwise just return it
 	 * @return the instance of soundstore
 	 */
-	public static SoundStore get(){
-		if(soundStore == null) {
+	public static SoundStore get() {
+		if (soundStore == null) {
 			soundStore = new SoundStore();
 		}
+		
 		return soundStore;
 	}
 	
@@ -53,7 +51,6 @@ public class SoundStore {
 	 * @throws SlickException
 	 */
 	private void initialize() throws SlickException {
-
 		addToMusic("Crackling Fire", new Music("resources/music/crackling_fire.ogg"));
 		addToMusic("GBU", new Music("resources/music/GBU.ogg"));
 		addToMusic("River", new Music("resources/music/river.ogg"));
@@ -69,11 +66,12 @@ public class SoundStore {
 	}
 	
 	public String getPlayingMusic() {
-		for(String name : musics.keySet()) {
-			if(musics.get(name).playing()) {
+		for (String name : musics.keySet()) {
+			if (musics.get(name).playing()) {
 				return name;
 			}
 		}
+		
 		return null;
 	}
 	
@@ -104,8 +102,8 @@ public class SoundStore {
 	 */
 	public void setMusicVolume(float volume) {
 		musicVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
-		for(String name : musics.keySet()) {
-			if(musics.get(name).playing()) {
+		for (String name : musics.keySet()) {
+			if (musics.get(name).playing()) {
 				musics.get(name).setVolume(musicVolume);
 			}
 		}
@@ -155,8 +153,8 @@ public class SoundStore {
 	 * Stops the currently playing music
 	 */
 	public void stopMusic() {
-		for(String name : musics.keySet()) {
-			if(musics.get(name).playing()) {
+		for (String name : musics.keySet()) {
+			if (musics.get(name).playing()) {
 				musics.get(name).stop();
 			}
 		}
@@ -195,23 +193,25 @@ public class SoundStore {
 	 */
 	public Set<String> getPlayingSounds() {
 		Set<String> newSet = new HashSet<String>();
-		for(String name : playingSounds) {
-			if(sounds.get(name).playing()) {
+		for (String name : playingSounds) {
+			if (sounds.get(name).playing()) {
 				newSet.add(name);
 			}
 		}
-		playingSounds = newSet;
-		return playingSounds;
+
+		return newSet;
 	}
 	
 	/**
 	 * Stops all playing sounds
 	 */
 	public void stopAllSound() {
-		for(String name : sounds.keySet()) {
-			if(sounds.get(name).playing())
+		for (String name : sounds.keySet()) {
+			if (sounds.get(name).playing()) {
 				sounds.get(name).stop();
+			}
 		}
+		
 		playingSounds.clear();
 	}
 
