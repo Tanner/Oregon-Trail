@@ -96,8 +96,12 @@ public class Time implements Serializable{
 		
 		if (time == 19) {
 			SoundStore.get().playSound("WolfHowl");
+			SoundStore.get().stopMusic();
+			SoundStore.get().loopMusic("NightTheme");
 		} else if (time == 5) {
 			SoundStore.get().playSound("Rooster");
+			SoundStore.get().stopMusic();
+			SoundStore.get().loopMusic("DayTheme");
 		}
 	}
 

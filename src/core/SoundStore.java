@@ -64,16 +64,17 @@ public class SoundStore {
 		addToSounds("WolfHowl", new Sound("resources/music/wolfHowl.ogg"));
 		addToSounds("Rooster", new Sound("resources/music/rooster.ogg"));
 		addToSounds("Splash", new Sound("resources/music/splash.ogg"));
+		addToMusic("DayTheme", new Music("resources/music/walkingDaytimeMusic.ogg"));
+		addToMusic("NightTheme", new Music("resources/music/Creepy Wind.ogg"));
 	}
 	
-	public List<String> getPlayingMusic() {
-		List<String> nameList = new ArrayList<String>();
+	public String getPlayingMusic() {
 		for(String name : musics.keySet()) {
 			if(musics.get(name).playing()) {
-				nameList.add(name);
+				return name;
 			}
 		}
-		return nameList;
+		return null;
 	}
 	
 	/**

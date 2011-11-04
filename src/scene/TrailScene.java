@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.Notification;
 import model.Party;
+import model.Time;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -14,8 +15,6 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 import scene.encounter.*;
 import component.AnimatingColor;
-import component.Component;
-import component.Component.BevelType;
 import component.Label;
 import component.Label.Alignment;
 import component.Panel;
@@ -146,6 +145,13 @@ public class TrailScene extends Scene {
 		
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		if(SoundStore.get().getPlayingMusic() == null) {
+			if(party.getTime().getTimeOfDay() == Time.TimeOfDay.EVENING || party.getTime().getTimeOfDay() == Time.TimeOfDay.NIGHT) {
+				SoundStore.get().loopMusic("NightTheme");
+			} else {
+				SoundStore.get().loopMusic("DayTheme");
+			}
+		}
 		if(!isPaused()) {
 			timeElapsed += delta;
 			
