@@ -81,7 +81,7 @@ public class TrailHUD extends HUD {
 		add(trailPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		setMode(Mode.TRAIL);
 		
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		
 		timeLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
 		add(timeLabel, notificationLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.BOTTOMLEFT, MARGIN, - MARGIN / 2);
@@ -99,7 +99,7 @@ public class TrailHUD extends HUD {
 	public Panel makeTrailPanel(int width, ComponentListener listener) {
 		Panel panel = new Panel(container, width, HEIGHT);
 		
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		
 		Label menuLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "CAMP"));
 		
@@ -133,7 +133,7 @@ public class TrailHUD extends HUD {
 		
 		int buttonWidth = (container.getWidth() - MARGIN * 2 - MARGIN * (buttons.length - 1) - INFO_WIDTH - MARGIN) / buttons.length;
 		
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 
 		Label inventoryLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("TRAIL_SCENE", "INVENTORY"));
 		inventoryButton = new Button(container, buttonWidth, BUTTON_HEIGHT, inventoryLabel);

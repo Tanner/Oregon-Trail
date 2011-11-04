@@ -33,8 +33,8 @@ public class LoadingScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
-		Font h2 = FontStore.get(FontStore.FontID.H2);
-		Font field = FontStore.get(FontStore.FontID.FIELD);
+		Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
+		Font field = FontStore.get().getFont(FontStore.FontID.FIELD);
 		
 		Label loadingLabel = new Label(container, h2, Color.white, "Loading...");
 		mainLayer.add(loadingLabel, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);

@@ -100,7 +100,7 @@ public class PartyInventoryScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		
 		List<Person> members = party.getPartyMembers();
 		Vehicle vehicle = party.getVehicle();

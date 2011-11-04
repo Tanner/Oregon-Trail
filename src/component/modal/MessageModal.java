@@ -23,7 +23,7 @@ public class MessageModal extends Modal {
 	public MessageModal(GUIContext context, ModalListener listener, String message) {
 		super(context, listener, message, 1);
 		
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		this.messageLabel = new Label(container, DEFAULT_LABEL_WIDTH, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		

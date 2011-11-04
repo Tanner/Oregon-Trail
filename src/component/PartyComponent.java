@@ -48,14 +48,14 @@ public class PartyComponent extends Component {
 			
 			int componentWidth = sprite.getWidth();
 			
-			Label name = new Label(context, componentWidth, FontStore.get(FontID.FIELD), Color.white, dataSources.get(i).getName());
+			Label name = new Label(context, componentWidth, FontStore.get().getFont(FontID.FIELD), Color.white, dataSources.get(i).getName());
 			names.add(name);
 			
 			ConditionBar cb = new ConditionBar(context,
 					componentWidth,
 					CONDITION_BAR_HEIGHT,
 					dataSources.get(i).getCondition(),
-					FontStore.get(FontID.FIELD));
+					FontStore.get().getFont(FontID.FIELD));
 			conditionBars.add(cb);
 		}
 

@@ -17,7 +17,7 @@ public class ChoiceModal extends Modal {
 	public ChoiceModal(GUIContext context, ModalListener listener, String message, int buttonCount) {
 		super(context, listener, message, buttonCount);
 		
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		this.messageLabel = new Label(container, DEFAULT_LABEL_WIDTH, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		

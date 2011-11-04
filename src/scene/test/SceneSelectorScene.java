@@ -58,7 +58,7 @@ public class SceneSelectorScene extends Scene {
 
 		SoundStore.get().stopMusic();
 		
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		
 		SceneID scenes[] = SceneID.values();
 		

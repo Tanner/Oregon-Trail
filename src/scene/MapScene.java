@@ -43,7 +43,7 @@ public class MapScene extends Scene {
 		
 		Button[] locationButtons = new Button[worldMap.getNumLocations()];
 
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		//add to mapComponent
 		for (int i = 0; i <= worldMap.MAX_RANK; i++){
 			for(LocationNode location : worldMap.getMapNodes().get(i)) {

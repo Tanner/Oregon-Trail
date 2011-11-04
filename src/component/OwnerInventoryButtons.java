@@ -80,7 +80,7 @@ public class OwnerInventoryButtons {
 				padding = 0;
 			}
 			
-			Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+			Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 			
 			Sprite sprite = new Sprite(container, 48, 48);
 			Label label = new Label(container, ITEM_BUTTON_WIDTH, ITEM_BUTTON_HEIGHT, fieldFont, Color.white, "");

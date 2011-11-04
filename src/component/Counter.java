@@ -126,7 +126,7 @@ public class Counter extends Component implements Disableable {
 			remove(countLabel);
 		}
 		
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		String text = "" + count;
 		countLabel = new Label(container,
 				fieldFont.getWidth(text) + COUNT_LABEL_PADDING * 2,

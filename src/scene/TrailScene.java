@@ -98,9 +98,9 @@ public class TrailScene extends Scene {
 		Toolbar toolbar = new Toolbar(container, container.getWidth(), 40);
 		hudLayer.add(toolbar, hud.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT);
 		
-		Label paceLabel = new Label(container, FontStore.get(FontID.FIELD), Color.white, ConstantStore.get("GENERAL", "PACE_LABEL"));
+		Label paceLabel = new Label(container, FontStore.get().getFont(FontID.FIELD), Color.white, ConstantStore.get("GENERAL", "PACE_LABEL"));
 		paceLabel.setAlignment(Alignment.LEFT);
-		Label rationsLabel = new Label(container, FontStore.get(FontID.FIELD), Color.white, ConstantStore.get("GENERAL", "RATIONS_LABEL"));
+		Label rationsLabel = new Label(container, FontStore.get().getFont(FontID.FIELD), Color.white, ConstantStore.get("GENERAL", "RATIONS_LABEL"));
 		rationsLabel.setAlignment(Alignment.LEFT);
 		
 		toolbar.add(paceLabel, toolbar.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERLEFT, toolbarXMargin, -2);

@@ -13,9 +13,9 @@ public class Tooltip extends Label {
 
 	public Tooltip(GUIContext context, Component owner, String message) {
 		super(context,
-				FontStore.get(FontID.FIELD).getWidth(message) + PADDING * 2,
-				FontStore.get(FontID.FIELD).getLineHeight() * Label.getNumberOfNewlines(message) + PADDING * 2,
-				FontStore.get(FontID.FIELD), 
+				FontStore.get().getFont(FontID.FIELD).getWidth(message) + PADDING * 2,
+				FontStore.get().getFont(FontID.FIELD).getLineHeight() * Label.getNumberOfNewlines(message) + PADDING * 2,
+				FontStore.get().getFont(FontID.FIELD), 
 				Color.white,
 				message);
 		

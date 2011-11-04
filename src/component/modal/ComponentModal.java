@@ -27,8 +27,11 @@ public class ComponentModal<T extends Component> extends Modal {
 		super(context, listener, message, buttonCount);
 		
 		this.component = component;
-				
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+
+		setCancelButtonIndex(0);
+		
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
+
 		this.messageLabel = new Label(container, DEFAULT_LABEL_WIDTH, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
 		

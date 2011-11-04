@@ -17,7 +17,7 @@ import java.util.*;
  */
 public class SegmentedControl extends Component {
 	
-	private Font font = FontStore.get(FontStore.FontID.FIELD);
+	private Font font = FontStore.get().getFont(FontStore.FontID.FIELD);
 	private Color color = Color.white;
 	
 	private final int STATES;

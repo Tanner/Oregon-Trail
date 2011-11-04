@@ -53,7 +53,7 @@ public abstract class Modal extends Component {
 	}
 	
 	protected void createButtons() {
-		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		int buttonWidth = (panel.getWidth() - PADDING * (buttons.length + 1)) / buttons.length;
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i] = new Button(container, buttonWidth, BUTTON_HEIGHT, new Label(container, buttonWidth, BUTTON_HEIGHT, fieldFont, Color.white, ConstantStore.get("GENERAL", "OK")));
