@@ -9,6 +9,8 @@ import component.ConditionBar;
 import component.Label;
 import component.Positionable.ReferencePoint;
 import core.FontStore;
+import core.GameDirector;
+import core.SoundStore;
 
 public class LoadingScene extends Scene {
 	public static final SceneID ID = SceneID.LOADINGSCENE;
@@ -20,6 +22,7 @@ public class LoadingScene extends Scene {
 	
 	private Label loadLabel;
 	private Condition loadCondition;
+	private ConditionBar loadingBar;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -32,11 +35,27 @@ public class LoadingScene extends Scene {
 		mainLayer.add(loadingLabel, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
 		
 		loadCondition = new Condition(0, 100, 0);
-		ConditionBar loadingBar = new ConditionBar(container, BAR_WIDTH, BAR_HEIGHT, loadCondition);
+		loadingBar = new ConditionBar(container, BAR_WIDTH, BAR_HEIGHT, loadCondition);
 		mainLayer.add(loadingBar, loadingLabel.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
 		
-		loadLabel = new Label(container, BAR_WIDTH, field, Color.white, "");
-		mainLayer.add(loadLabel, loadingLabel.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
+		loadLabel = new Label(container, BAR_WIDTH, field, Color.white, "Loading...");
+		mainLayer.add(loadLabel, loadingBar.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
+	}
+	
+	public void enter(GameContainer container, StateBasedGame game)  {
+		// Sound
+		loadLabel.setText("Loading sounds...");
+		SoundStore.get();
+		loadCondition.increase(50);
+		loadingBar.update();
+		
+		// Done
+		loadCondition.increase(50);
+		loadingBar.update();
+		
+		loadLabel.setText("Loading complete.");
+		
+		GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, this, true);
 	}
 	
 	@Override
