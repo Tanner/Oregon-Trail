@@ -23,7 +23,7 @@ public class LoadingScene extends Scene {
 	public static enum LOAD_ITEMS { SOUNDS, FONTS };
 	private int currentItemIndex;
 	private final int MAX_LOAD_AMOUNT;
-	private int currentLoadAmount;
+	private double currentLoadAmount;
 	
 	private Label loadLabel;
 	private Condition loadCondition;
@@ -54,18 +54,20 @@ public class LoadingScene extends Scene {
 		loadingBar = new ConditionBar(container, BAR_WIDTH, BAR_HEIGHT, loadCondition);
 		mainLayer.add(loadingBar, loadingLabel.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
 		
-		loadLabel = new Label(container, BAR_WIDTH, field, Color.white, "Loading...");
+		loadLabel = new Label(container, BAR_WIDTH, field, Color.white, "Loading load scene...");
 		mainLayer.add(loadLabel, loadingBar.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
 	}
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if (loader.getState() == Thread.State.RUNNABLE) {
-			if (currentLoadAmount < MAX_LOAD_AMOUNT) {
-				loadCondition.increase(1);
+			if (currentLoadAmount <= MAX_LOAD_AMOUNT) {
+				double increaseAmount = ((-1.0 / MAX_LOAD_AMOUNT) * currentLoadAmount) + 1;
+				
+				loadCondition.increase(increaseAmount);
 				loadingBar.update();
 				
-				currentLoadAmount++;
+				currentLoadAmount += increaseAmount;
 			}
 			
 			return;
