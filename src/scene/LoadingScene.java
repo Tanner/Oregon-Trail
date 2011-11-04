@@ -22,12 +22,24 @@ public class LoadingScene extends Scene {
 	
 	public static enum LOAD_ITEMS { SOUNDS, FONTS };
 	private int currentItemIndex;
+	private final int MAX_LOAD_AMOUNT;
+	private int currentLoadAmount;
 	
 	private Label loadLabel;
 	private Condition loadCondition;
 	private ConditionBar loadingBar;
 	
 	private Loader loader;
+	
+	public LoadingScene() {
+		currentItemIndex = 0;
+		currentLoadAmount = 0;
+
+		loadCondition = new Condition(0, 100, 0);
+		MAX_LOAD_AMOUNT = (int) (loadCondition.getMax() / LOAD_ITEMS.values().length);
+	
+		loader = new Loader();
+	}
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -39,22 +51,22 @@ public class LoadingScene extends Scene {
 		Label loadingLabel = new Label(container, h2, Color.white, "Loading...");
 		mainLayer.add(loadingLabel, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
 		
-		loadCondition = new Condition(0, 100, 0);
 		loadingBar = new ConditionBar(container, BAR_WIDTH, BAR_HEIGHT, loadCondition);
 		mainLayer.add(loadingBar, loadingLabel.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
 		
 		loadLabel = new Label(container, BAR_WIDTH, field, Color.white, "Loading...");
 		mainLayer.add(loadLabel, loadingBar.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
-		
-		currentItemIndex = 0;
-		loader = new Loader();
 	}
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if (loader.getState() == Thread.State.RUNNABLE) {
-			loadCondition.increase(1);
-			loadingBar.update();
+			if (currentLoadAmount < MAX_LOAD_AMOUNT) {
+				loadCondition.increase(1);
+				loadingBar.update();
+				
+				currentLoadAmount++;
+			}
 			
 			return;
 		}
@@ -68,6 +80,7 @@ public class LoadingScene extends Scene {
 			} else {
 				loader = new Loader();
 				
+				currentLoadAmount = 0;
 				currentItemIndex++;
 			}
 		}
@@ -79,6 +92,8 @@ public class LoadingScene extends Scene {
 		} else if (currentLoadingItem == LOAD_ITEMS.FONTS) {
 			loadLabel.setText("Loading fonts...");
 		}
+		
+		System.out.println(loadLabel.getText());
 
 		loader.setItemToLoad(currentLoadingItem);
 		loader.start();
