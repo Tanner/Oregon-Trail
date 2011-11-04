@@ -148,10 +148,10 @@ public class RiverScene extends Scene {
 	}
 	
 	@Override
-	public void dismissModal(Modal modal, boolean cancelled) {
-		super.dismissModal(modal, cancelled);
+	public void dismissModal(Modal modal, int button) {
+		super.dismissModal(modal, button);
 		if (modal == crossingChoicesModal) {
-			if (cancelled) {
+			if (button == modal.getCancelButtonIndex()) {
 				showModal(crossingChoicesModal);
 			} else {
 				int[] choice = crossingChoicesModal.getComponent().getSelection();
@@ -186,7 +186,7 @@ public class RiverScene extends Scene {
 		if (disabled[0] != -1)
 			crossingChoicesControl.setDisabled(disabled);
 		makeChoicesModalMessage();
-		crossingChoicesModal = new ComponentModal<SegmentedControl>(container, this, successModalMessage, crossingChoicesControl);
+		crossingChoicesModal = new ComponentModal<SegmentedControl>(container, this, successModalMessage, 1, crossingChoicesControl);
 	}
 	
 	/**

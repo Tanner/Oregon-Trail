@@ -61,34 +61,24 @@ public class PartyComponent extends Component {
 
 		int groupWidth = MARGIN;
 
-		AnimatingSprite[] spriteArray = new AnimatingSprite[sprites.size()];
-		for (int i = 0; i < spriteArray.length; i++) {
-			spriteArray[i] = sprites.get(i);
-			groupWidth += spriteArray[i].getWidth();
+		for (int i = 0; i < sprites.size(); i++) {
+			groupWidth += sprites.get(i).getWidth();
 			groupWidth += MARGIN;
 		}
-		Label[] nameArrayay = new Label[names.size()];
-		for (int i = 0; i < nameArrayay.length; i++) {
-			nameArrayay[i] = names.get(i);
-		}
-		ConditionBar[] conditionBarArray = new ConditionBar[conditionBars.size()];
-		for (int i = 0; i < conditionBarArray.length; i++) {
-			conditionBarArray[i] = conditionBars.get(i);
-		}
 		
-		addAsRow(spriteArray,
+		addAsRow(sprites.iterator(),
 				new Vector2f(getPosition(ReferencePoint.BOTTOMRIGHT).x - groupWidth, getPosition(ReferencePoint.BOTTOMRIGHT).y),
 				0,
 				MARGIN,
 				MARGIN);
 		
-		addAsRow(conditionBarArray,
+		addAsRow(conditionBars.iterator(),
 				new Vector2f(sprites.get(0).getPosition(ReferencePoint.TOPLEFT).x, sprites.get(0).getPosition(ReferencePoint.TOPLEFT).y - CONDITION_BAR_HEIGHT),
 				0,
 				-MARGIN,
 				MARGIN);
 		
-		addAsRow(nameArrayay,
+		addAsRow(names.iterator(),
 				new Vector2f(conditionBars.get(0).getPosition(ReferencePoint.TOPLEFT).x, conditionBars.get(0).getPosition(ReferencePoint.TOPLEFT).y - names.get(0).getHeight()),
 				0,
 				-MARGIN,

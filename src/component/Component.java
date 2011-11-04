@@ -1,6 +1,8 @@
 package component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.newdawn.slick.Color;
@@ -268,11 +270,12 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * @param yOffset Y Offset from the location
 	 * @param spacing Spacing between components in the row
 	 */
-	public void addAsRow(Component[] components, Vector2f location, int xOffset, int yOffset, int spacing) {
-		for (int i = 0; i < components.length; i++) {
-			if (components[i] != null) {
-				add(components[i], location, ReferencePoint.TOPLEFT, xOffset, yOffset);
-				location.set(location.x + components[i].getWidth() + spacing, location.y);
+	public void addAsRow(Iterator<? extends Component> components, Vector2f location, int xOffset, int yOffset, int spacing) {
+		while (components.hasNext()) {
+			Component c = components.next();
+			if (c != null) {
+				add(c, location, ReferencePoint.TOPLEFT, xOffset, yOffset);
+				location.set(location.x + c.getWidth() + spacing, location.y);
 			}
 		}
 	}
@@ -297,7 +300,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 				row[x] = components[startIndex + x];
 			}
 			
-			addAsRow(row, location.copy(), xOffset, yOffset, xSpacing);
+			addAsRow(Arrays.asList(row).iterator(), location.copy(), xOffset, yOffset, xSpacing);
 			
 			location.set(location.x, location.y + components[startIndex].getHeight() + ySpacing);
 			startIndex += cols;

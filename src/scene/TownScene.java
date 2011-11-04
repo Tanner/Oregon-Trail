@@ -57,8 +57,12 @@ public class TownScene extends Scene {
 				TrailEdge temp = location.getOutBoundTrailByIndex(i);
 				trails[i] = temp.getRoughLength() + " and to the " + temp.getRoughDirection() + ", " + temp.getDangerRating()  +  " \n" + temp.getName();
 				}
-			trailChoiceModal = new ComponentModal<SegmentedControl>(container, this, ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
+			trailChoiceModal = new ComponentModal<SegmentedControl>(container,
+					this,
+					ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
+					2,
 					new SegmentedControl(container, 700, 300, 3, 1, 20, true, 1, trails));
+			trailChoiceModal.setButtonText(trailChoiceModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
 		}
 	}
 	
@@ -115,11 +119,11 @@ public class TownScene extends Scene {
 	}
 	
 	@Override
-	public void dismissModal(Modal modal, boolean cancelled) {
-		super.dismissModal(modal, cancelled);
+	public void dismissModal(Modal modal, int button) {
+		super.dismissModal(modal, button);
 		
 		if (modal == trailChoiceModal) {
-			if (!cancelled) {
+			if (button != modal.getCancelButtonIndex()) {
 				party.setTrail(party.getLocation().getOutBoundTrailByIndex(trailChoiceModal.getComponent().getSelection()[0]));
 				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, TownScene.this, true);
 			}

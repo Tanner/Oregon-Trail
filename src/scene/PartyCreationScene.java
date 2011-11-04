@@ -356,10 +356,10 @@ public class PartyCreationScene extends Scene {
 	}
 	
 	@Override
-	public void dismissModal(Modal modal, boolean cancelled) {
-		super.dismissModal(modal, cancelled);
+	public void dismissModal(Modal modal, int button) {
+		super.dismissModal(modal, button);
 		
-		if (!cancelled) {
+		if (button != modal.getCancelButtonIndex()) {
 			if (modal == professionModal) {
 				int[] segmentedControlResults = professionModal.getComponent().getSelection();
 				setProfession(segmentedControlResults);
@@ -451,9 +451,10 @@ public class PartyCreationScene extends Scene {
 			professionModal = new ComponentModal<SegmentedControl>(container,
 					PartyCreationScene.this,
 					ConstantStore.get("PARTY_CREATION_SCENE", "PROFESSION_MODAL"),
+					2,
 					professionSegmentedControl);
-			professionModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONFIRM"));
-			professionModal.setCancelButtonText(ConstantStore.get("GENERAL", "CANCEL"));
+			professionModal.setButtonText(professionModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
+			professionModal.setButtonText(professionModal.getCancelButtonIndex() + 1, ConstantStore.get("GENERAL", "CONFIRM"));
 
 			int[] currentProfession = new int[1];
 			if (people.get(i).getProfession() != null) {
@@ -482,9 +483,10 @@ public class PartyCreationScene extends Scene {
 			skillModal = new ComponentModal<SegmentedControl>(container,
 					PartyCreationScene.this,
 					skillModalMessage,
+					2,
 					skillSegmentedControl);
-			skillModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONFIRM"));
-			skillModal.setCancelButtonText(ConstantStore.get("GENERAL", "CANCEL"));
+			skillModal.setButtonText(skillModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
+			skillModal.setButtonText(skillModal.getCancelButtonIndex() + 1, ConstantStore.get("GENERAL", "CONFIRM"));
 
 			if (people.get(i).getProfession().getStartingSkill() != Person.Skill.NONE) {
 				int[] permanent = new int[1];

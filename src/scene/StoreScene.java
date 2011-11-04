@@ -151,11 +151,11 @@ public class StoreScene extends Scene {
 	}
 	
 	@Override
-	public void dismissModal(Modal modal, boolean cancelled) {
-		super.dismissModal(modal, cancelled);
+	public void dismissModal(Modal modal, int button) {
+		super.dismissModal(modal, button);
 		
 		if (modal == buyModal) {
-			if (cancelled) {
+			if (button == modal.getCancelButtonIndex()) {
 				inv.addItemsToInventory(currentPurchase);
 			} else {
 				int[] buyer = buyModal.getComponent().getSelection();
@@ -371,8 +371,10 @@ public class StoreScene extends Scene {
 			buyModal = new ComponentModal<SegmentedControl>(container,
 					this,
 					ConstantStore.get("STORE_SCENE", "PICK_RECEIVER"),
+					2,
 					choosePlayer);
-			buyModal.setDismissButtonText(ConstantStore.get("STORE_SCENE", "BUY"));
+			buyModal.setButtonText(buyModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
+			buyModal.setButtonText(buyModal.getCancelButtonIndex() + 1, ConstantStore.get("STORE_SCENE", "BUY"));
 			return 0;
 		}
 	}

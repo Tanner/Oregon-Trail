@@ -7,7 +7,7 @@ public interface ModalListener {
 	/**
 	 * Dismiss the modal.
 	 * @param modal The modal to be dismissed
-	 * @param cancelled If the modal was cancelled
+	 * @param cancelled Index of button that was pressed
 	 */
-	public void dismissModal(Modal modal, boolean cancelled);
+	public void dismissModal(Modal modal, int button);
 }

@@ -1,5 +1,6 @@
 package component.hud;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -12,6 +13,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
+
+import com.sun.tools.javac.code.Attribute.Array;
 
 import component.Button;
 import component.Component;
@@ -153,7 +156,11 @@ public class TrailHUD extends HUD {
 		buttons[2] = mapButton;
 		buttons[3] = huntButton;
 		
-		panel.addAsRow(buttons, panel.getPosition(ReferencePoint.TOPLEFT), MARGIN, MARGIN, MARGIN);
+		panel.addAsRow(Arrays.asList(buttons).iterator(),
+				panel.getPosition(ReferencePoint.TOPLEFT),
+				MARGIN,
+				MARGIN,
+				MARGIN);
 		
 		return panel;
 	}

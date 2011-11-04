@@ -250,9 +250,13 @@ public class TrailScene extends Scene {
 		
 		if (modalMessage.length() != 0) {
 			SoundStore.get().stopSound("Steps");
-			encounterModal = new ChoiceModal(container, this, modalMessage.toString().trim());
-			encounterModal.setCancelButtonText(ConstantStore.get("TRAIL_SCENE", "CAMP"));
-			encounterModal.setDismissButtonText(ConstantStore.get("GENERAL", "CONTINUE"));
+			encounterModal = new ChoiceModal(container,
+					this,
+					modalMessage.toString().trim(),
+					2);
+			encounterModal.setButtonText(encounterModal.getCancelButtonIndex(), ConstantStore.get("TRAIL_SCENE", "CAMP"));
+			encounterModal.setButtonText(encounterModal.getCancelButtonIndex() + 1, ConstantStore.get("GENERAL", "CONTINUE"));
+
 			showModal(encounterModal);
 		}
 		
@@ -309,10 +313,10 @@ public class TrailScene extends Scene {
 	}
 	
 	@Override
-	public void dismissModal(Modal modal, boolean cancelled) {
-		super.dismissModal(modal, cancelled);
+	public void dismissModal(Modal modal, int button) {
+		super.dismissModal(modal, button);
 		SoundStore.get().stopAllSound();
-		if (cancelled) {
+		if (button == modal.getCancelButtonIndex()) {
 			setMode(Mode.CAMP);
 		}
 		

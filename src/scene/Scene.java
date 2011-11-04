@@ -119,7 +119,7 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 	}
 	
 	@Override
-	public void dismissModal(Modal modal, boolean cancelled) {
+	public void dismissModal(Modal modal, int button) {
 		resume();
 		removeTooltip();
 		
