@@ -10,7 +10,7 @@ import component.Label;
 import component.Positionable.ReferencePoint;
 import core.FontStore;
 import core.GameDirector;
-import core.SoundStore;
+import core.Loader;
 
 public class LoadingScene extends Scene {
 	public static final SceneID ID = SceneID.LOADING;
@@ -20,9 +20,14 @@ public class LoadingScene extends Scene {
 	private int BAR_WIDTH = 200;
 	private int BAR_HEIGHT = 10;
 	
+	public static enum LOAD_ITEMS { SOUNDS };
+	private int currentItemIndex;
+	
 	private Label loadLabel;
 	private Condition loadCondition;
 	private ConditionBar loadingBar;
+	
+	private Loader loader;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -40,26 +45,41 @@ public class LoadingScene extends Scene {
 		
 		loadLabel = new Label(container, BAR_WIDTH, field, Color.white, "Loading...");
 		mainLayer.add(loadLabel, loadingBar.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
-	}
-	
-	public void enter(GameContainer container, StateBasedGame game)  {
-		// Sound
-		loadLabel.setText("Loading sounds...");
-		SoundStore.get();
-		loadCondition.increase(50);
-		loadingBar.update();
 		
-		// Done
-		loadCondition.increase(50);
-		loadingBar.update();
-		
-		loadLabel.setText("Loading complete.");
-		
-		GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, this, true);
+		currentItemIndex = 0;
+		loader = new Loader();
 	}
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		if (loader.getState() == Thread.State.RUNNABLE) {
+			loadCondition.increase(1);
+			loadingBar.update();
+			
+			return;
+		}
+		
+		if (loader.getState() == Thread.State.TERMINATED) {
+			if (currentItemIndex == LOAD_ITEMS.values().length - 1) {
+				loadLabel.setText("Loading complete.");
+				
+				GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, this, true);
+				return;
+			} else {
+				loader = new Loader();
+				
+				currentItemIndex++;
+			}
+		}
+		
+		LOAD_ITEMS currentLoadingItem = LOAD_ITEMS.values()[currentItemIndex];
+
+		if (currentLoadingItem == LOAD_ITEMS.SOUNDS) {
+			loadLabel.setText("Loading sounds...");
+			
+			loader.setItemToLoad(currentLoadingItem);
+			loader.start();
+		}
 	}
 
 	@Override
