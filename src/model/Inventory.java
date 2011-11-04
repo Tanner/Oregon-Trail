@@ -246,9 +246,11 @@ public class Inventory implements Serializable {
 			} while(!canGetItems(item.getType(), 1) && attempts < ITEM_TYPE.values().length);
 			
 			item.decreaseStatus(random.nextInt(101));
-			if (item.getType() != ITEM_TYPE.OX && 
+			if (!item.getType().isAnimal() && 
 				item.getType() != ITEM_TYPE.STRANGEMEAT && 
-				item.getType() != ITEM_TYPE.WAGON)
+				item.getType() != ITEM_TYPE.WAGON &&
+				item.getType() != ITEM_TYPE.SONIC
+				)
 			addItemToInventory(item);
 		}
 	}
