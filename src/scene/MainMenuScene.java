@@ -34,12 +34,12 @@ public class MainMenuScene extends Scene {
 		newGameButton = new Button(container, 240, 60, new Label(container, fieldFont, Color.white, ConstantStore.get("MAIN_MENU", "NEW_GAME")));
 		newGameButton.addListener(new ButtonListener());
 				
-		Sprite logoSprite = new Sprite(container, 480, new Image("resources/graphics/logo.png", false, Image.FILTER_NEAREST));
+		Sprite logoSprite = new Sprite(container, 480, ImageStore.get().getImage("LOGO"));
 				
 		mainLayer.add(logoSprite, mainLayer.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 75);
 		mainLayer.add(newGameButton, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -75);
 		
-		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/map.png", false, Image.FILTER_NEAREST)));
+		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("MAP")));
 	}
 
 	@Override
