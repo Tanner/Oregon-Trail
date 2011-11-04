@@ -255,10 +255,11 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * @param yOffset Y Offset from the location
 	 * @param spacing Spacing between components in the column
 	 */
-	public void addAsColumn(Component[] components, Vector2f location, int xOffset, int yOffset, int spacing) {
-		for (int i = 0; i < components.length; i++) {
-			add(components[i], location, ReferencePoint.TOPLEFT, xOffset, yOffset);
-			location.set(location.x, location.y + components[i].getHeight() + spacing);
+	public void addAsColumn(Iterator<? extends Component> components, Vector2f location, int xOffset, int yOffset, int spacing) {
+		while (components.hasNext()) {
+			Component  c = components.next();
+			add(c, location, ReferencePoint.TOPLEFT, xOffset, yOffset);
+			location.set(location.x, location.y + c.getHeight() + spacing);
 		}
 	}
 	

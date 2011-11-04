@@ -27,9 +27,7 @@ public class ComponentModal<T extends Component> extends Modal {
 		super(context, listener, message, buttonCount);
 		
 		this.component = component;
-		
-		setCancelButtonIndex(0);
-		
+				
 		Font fieldFont = FontStore.get(FontStore.FontID.FIELD);
 		this.messageLabel = new Label(container, DEFAULT_LABEL_WIDTH, fieldFont, Color.white, message);
 		messageLabel.setAlignment(Label.Alignment.CENTER);
@@ -41,6 +39,7 @@ public class ComponentModal<T extends Component> extends Modal {
 		panel.setBorderWidth(2);
 		panel.setLocation((getWidth() - panel.getWidth()) / 2, (getHeight() - panel.getHeight() / 2));
 
+		setCancelButtonIndex(0);
 		createButtons();
 		
 		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);

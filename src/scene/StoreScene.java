@@ -2,6 +2,7 @@ package scene;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import model.*;
@@ -77,7 +78,7 @@ public class StoreScene extends Scene {
 		mainLayer.add(partyMoney, storeInventoryButtons.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
 
 		mainLayer.add(textPanel, mainLayer.getPosition(ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.TOPRIGHT, -PADDING, PADDING);
-		textPanel.addAsColumn(itemDescription, textPanel.getPosition(ReferencePoint.TOPLEFT), PADDING, PADDING, PADDING);
+		textPanel.addAsColumn(Arrays.asList(itemDescription).iterator(), textPanel.getPosition(ReferencePoint.TOPLEFT), PADDING, PADDING, PADDING);
 		
 		mainLayer.add(clearButton, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.BOTTOMRIGHT, -PADDING, -PADDING);
 		mainLayer.add(buyButton, clearButton.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPRIGHT, -PADDING, 0);

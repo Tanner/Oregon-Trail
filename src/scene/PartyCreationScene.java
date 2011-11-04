@@ -197,7 +197,7 @@ public class PartyCreationScene extends Scene {
 				personSkillLabels[i][j].setText(ConstantStore.get("PARTY_CREATION_SCENE", "EMPTY_SKILL_LABEL"));
 			}
 			
-			personSkillPanel[i].addAsColumn(personSkillLabels[i], personChangeSkillButtons[i].getPosition(ReferencePoint.BOTTOMLEFT), 0, 0, 0);
+			personSkillPanel[i].addAsColumn(Arrays.asList(personSkillLabels[i]).iterator(), personChangeSkillButtons[i].getPosition(ReferencePoint.BOTTOMLEFT), 0, 0, 0);
 			mainLayer.add(personSkillPanel[i], personMoneyLabels[i].getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, INNER_PADDING);
 		}
 		

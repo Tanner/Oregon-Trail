@@ -28,6 +28,7 @@ public class ChoiceModal extends Modal {
 		panel.setBorderWidth(2);
 		panel.setLocation((getWidth() - panel.getWidth()) / 2, (getHeight() - panel.getHeight() / 2));
 		
+		setCancelButtonIndex(0);
 		createButtons();
 		
 		panel.add(messageLabel, panel.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, PADDING);
@@ -35,7 +36,7 @@ public class ChoiceModal extends Modal {
 		panel.addAsRow(Arrays.asList(buttons).iterator(),
 				panel.getPosition(Positionable.ReferencePoint.BOTTOMLEFT),
 				PADDING,
-				-PADDING,
+				-PADDING - BUTTON_HEIGHT,
 				PADDING);
 		
 		add(panel, getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
