@@ -9,6 +9,8 @@ public class Loader extends Thread {
 	public void run() {
 		if (itemToLoad == LOAD_ITEMS.SOUNDS) {
 			SoundStore.get();
+		} else if (itemToLoad == LOAD_ITEMS.FONTS) {
+			FontStore.get();
 		}
 	}
 	

@@ -20,7 +20,7 @@ public class LoadingScene extends Scene {
 	private int BAR_WIDTH = 200;
 	private int BAR_HEIGHT = 10;
 	
-	public static enum LOAD_ITEMS { SOUNDS };
+	public static enum LOAD_ITEMS { SOUNDS, FONTS };
 	private int currentItemIndex;
 	
 	private Label loadLabel;
@@ -76,10 +76,12 @@ public class LoadingScene extends Scene {
 
 		if (currentLoadingItem == LOAD_ITEMS.SOUNDS) {
 			loadLabel.setText("Loading sounds...");
-			
-			loader.setItemToLoad(currentLoadingItem);
-			loader.start();
+		} else if (currentLoadingItem == LOAD_ITEMS.FONTS) {
+			loadLabel.setText("Loading fonts...");
 		}
+
+		loader.setItemToLoad(currentLoadingItem);
+		loader.start();
 	}
 
 	@Override
