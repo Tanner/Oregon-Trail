@@ -97,8 +97,6 @@ public class LoadingScene extends Scene {
 		} else if (currentLoadingItem == LOAD_ITEMS.FONTS) {
 			loadLabel.setText("Loading fonts...");
 		}
-		
-		System.out.println(loadLabel.getText());
 
 		loader.setItemToLoad(currentLoadingItem);
 		loader.start();
