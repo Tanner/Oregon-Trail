@@ -7,8 +7,9 @@ import core.SoundStore;
 
 public class Time implements Serializable{
 
-	int time, day, year;
-	Month month;
+	private int time, day, year;
+
+	private Month month;
 	
 	public enum TimeOfDay {
 		MORNING,
@@ -32,6 +33,7 @@ public class Time implements Serializable{
 		DECEMBER(31, "Dec.");
 		
 		private int numberOfDays;
+
 		private String name;
 		
 		private Month(int numberOfDays, String name) {
@@ -46,12 +48,12 @@ public class Time implements Serializable{
 		public String getName() {
 			return name;
 		}
+
 		public Month getNextMonth() {
 			return values()[(ordinal() + 1) % (values().length)];
 		}
 	}
-	
-	
+
 	public Time() {
 		Random random = new Random();
 		this.time = random.nextInt(24);
@@ -59,6 +61,7 @@ public class Time implements Serializable{
 		this.day = random.nextInt(month.getNumberOfDays() - 1) + 1;
 		this.year = random.nextInt(10) + 1860;
 	}
+
 	public Time(int time, int day, int month, int year) {
 		this.time = time;
 		this.day = day;
@@ -83,7 +86,7 @@ public class Time implements Serializable{
 		if ( time == 23) {
 			day += 1;
 			if (day > month.getNumberOfDays() + (month.equals(Month.FEBRUARY) && 
-				((year%4 == 0 && year%100 != 0) || (year%400) == 0) ? 1 : 0)) {
+				((year % 4 == 0 && year % 100 != 0) || (year % 400) == 0) ? 1 : 0)) {
 				day = 1;
 				month = month.getNextMonth();
 				if (month == Month.JANUARY) {
@@ -114,7 +117,7 @@ public class Time implements Serializable{
 	}
 	
 	public String get12HourTime() {
-		return ((time)%12 + 1) + ":00" + ((time < 11 || time == 23)? "am" : "pm");
+		return ((time) % 12 + 1) + ":00" + ((time < 11 || time == 23)? "am" : "pm");
 	}
 	
 	public String getDayMonthYear() {

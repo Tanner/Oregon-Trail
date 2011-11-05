@@ -3,6 +3,7 @@ package model;
 public class Notification {
 
 	private String message;
+
 	private boolean isModal;
 	
 	public Notification(String message) {

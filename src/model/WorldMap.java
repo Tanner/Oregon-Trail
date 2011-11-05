@@ -64,7 +64,7 @@ public class WorldMap implements Serializable {
 		this.numTrails = 0;
 		this.numLocations = numNodes;
 		if (this.devMode) {
-			this.numLocations = 3000;			
+			this.numLocations = 3000;
 		}
 		this.mapNodes = new HashMap<Integer, List<LocationNode>>();
 		this.townNamesUsed = new HashMap <ConstantStore.StateIdx, List<Boolean>>();
@@ -73,9 +73,9 @@ public class WorldMap implements Serializable {
 		for (ConstantStore.StateIdx idx : ConstantStore.StateIdx.values()){
 			townNamesBool = new ArrayList<Boolean>();
 			for (int j = 0; j < ConstantStore.TOWN_NAMES.get(idx).size(); j++){
-				townNamesBool.add(false);				
+				townNamesBool.add(false);
 			}
-			townNamesUsed.put(idx,townNamesBool);
+			townNamesUsed.put(idx, townNamesBool);
 		}
 		this.generateMap(this.numLocations);
 		this.currLocationNode = this.mapHead;
@@ -139,7 +139,7 @@ public class WorldMap implements Serializable {
 		//multiplier to determine whether above or below the "equator"
 		int tmpW = (mapRand.nextBoolean()) ? (1) : (-1);
 		//actual y value passed to locationNode constructor
-		int tmpY = (int) (mapRand.nextInt(MAX_Y /MAX_RANK) * mapRand.nextInt(rnkMult+1) * tmpW  + tmpZ);  
+		int tmpY = (mapRand.nextInt(MAX_Y / MAX_RANK) * mapRand.nextInt(rnkMult + 1) * tmpW  + tmpZ);  
 		while(tmpY > MAX_Y / 2){
 			tmpY -= mapRand.nextInt(MAX_Y / MAX_RANK);
 			}
@@ -148,7 +148,7 @@ public class WorldMap implements Serializable {
 			}
 		//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
-		LocationNode tempNode = new LocationNode(nameLocation(curRank,mapRand, tmpY),tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(100));
+		LocationNode tempNode = new LocationNode(nameLocation(curRank, mapRand, tmpY), tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(100));
 		return tempNode;
 	}
 	
@@ -175,43 +175,43 @@ public class WorldMap implements Serializable {
 	private String nameLocation(int curRank, Random mapRand, int yVal){
 		//index of town_names structure corresponding to the town names of this zone
 		ConstantStore.StateIdx rankIndex; 
-		String retVal = "";	
+		String retVal = "";
 		String locationVal;
 		double maxRankDouble = (double) MAX_RANK;
 		if (curRank == 0){//treat this as missouri
 			rankIndex = ConstantStore.StateIdx.MISSOURI;
 		} else if (curRank <= (0.15 * maxRankDouble)){
 			rankIndex = (yVal > 0) ? ConstantStore.StateIdx.NEBRASKA_TERRITORY :  ConstantStore.StateIdx.KANSAS_TERRITORY ;
-		} else if (curRank <= (0.35*maxRankDouble)){
+		} else if (curRank <= (0.35 * maxRankDouble)){
 			rankIndex = (yVal > -70) ? ConstantStore.StateIdx.NEBRASKA_TERRITORY :  ConstantStore.StateIdx.KANSAS_TERRITORY ;
-		} else if (curRank <= (0.45*maxRankDouble)){
+		} else if (curRank <= (0.45 * maxRankDouble)){
 			rankIndex = (yVal > 80) ? ConstantStore.StateIdx.DAKOTA_TERRITORY : ConstantStore.StateIdx.NEBRASKA_TERRITORY;
 			if (yVal <  -50){//use kansas names but colorado territory
 				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;
 			}
-		} else if (curRank <= (0.5*maxRankDouble)){
+		} else if (curRank <= (0.5 * maxRankDouble)){
 			rankIndex = (yVal > 80) ? ConstantStore.StateIdx.DAKOTA_TERRITORY : ConstantStore.StateIdx.NEBRASKA_TERRITORY;
 			if (yVal <  -80){//use kansas names but colorado territory
 				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;
 			}
-		} else if (curRank <= (0.6*maxRankDouble)){
+		} else if (curRank <= (0.6 * maxRankDouble)){
 			rankIndex = (yVal > 55) ? ConstantStore.StateIdx.DAKOTA_TERRITORY : ConstantStore.StateIdx.NEBRASKA_TERRITORY;
 			if (yVal <  -95){//use kansas names but colorado territory
 				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;
 			}
-		} else if (curRank <= (0.7*maxRankDouble)) {
+		} else if (curRank <= (0.7 * maxRankDouble)) {
 			rankIndex = (yVal > -70) ? ConstantStore.StateIdx.WASHINGTON_TERRITORY : ConstantStore.StateIdx.UTAH_TERRITORY ;
 			if (yVal > 100){//use Dakota names
 				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
 			}
 			
-		} else if (curRank <= (0.8*maxRankDouble)) {
+		} else if (curRank <= (0.8 * maxRankDouble)) {
 			rankIndex = (yVal > -70) ? ConstantStore.StateIdx.WASHINGTON_TERRITORY : ConstantStore.StateIdx.UTAH_TERRITORY ;
 			if (yVal > 120){//use Dakota names
 				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
 			}
 			
-		} else if (curRank <= (0.83*maxRankDouble)) {
+		} else if (curRank <= (0.83 * maxRankDouble)) {
 			rankIndex = (yVal > -100) ? ConstantStore.StateIdx.WASHINGTON_TERRITORY : ConstantStore.StateIdx.UTAH_TERRITORY ;
 			if (yVal > 150){//use Dakota names
 				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
@@ -229,27 +229,27 @@ public class WorldMap implements Serializable {
 		String prefixString = "";
 		while ((townNamesUsed.get(rankIndex).get(townNameIndex)) && (loopIncr < maxRankNameAraSize)){
 			townNameIndex = (townNameIndex + 1) % maxRankNameAraSize;
-			loopIncr++;			
+			loopIncr++;
 		}
 		if (loopIncr >= maxRankNameAraSize){
 			int testVal = mapRand.nextInt(7);
 			
 			if ((testVal & 1) == 1) {
-				prefixString += (mapRand.nextInt(2) == 0) ? "New " : "Old ";				
+				prefixString += (mapRand.nextInt(2) == 0) ? "New " : "Old ";
 			}
 			else {
 				prefixString += (mapRand.nextInt(2) == 0) ? "Little " : "Big ";
 			}
 			if ((testVal & 2) == 2) {
-				prefixString += (mapRand.nextInt(2) == 0) ? "West " : "North ";			
+				prefixString += (mapRand.nextInt(2) == 0) ? "West " : "North ";
 			}
 			else {
-				prefixString += (mapRand.nextInt(2) == 0) ? "East " : "South ";							
+				prefixString += (mapRand.nextInt(2) == 0) ? "East " : "South ";
 			}
 			if ((testVal & 4) == 4){
-				prefixString += (mapRand.nextInt(2) == 0) ? "Low " : "Dusty ";			
+				prefixString += (mapRand.nextInt(2) == 0) ? "Low " : "Dusty ";	
 			} else {
-				prefixString += (mapRand.nextInt(2) == 0) ? "Crimson " : "Gray ";								
+				prefixString += (mapRand.nextInt(2) == 0) ? "Crimson " : "Gray ";	
 			}
 		}
 		locationVal = ConstantStore.TOWN_NAMES.get(rankIndex).get(townNameIndex);
@@ -274,7 +274,7 @@ public class WorldMap implements Serializable {
 			//initialize arraylists at each rank location
 		for (int i  = 0; i <= MAX_RANK; i++){
 			this.mapNodes.put(i, new ArrayList<LocationNode>());
-		}		
+		}	
 			//temp array holding number of locations at each rank, indexed by rank
 		int[] numRankAra = new int[MAX_RANK];
 			//current node's rank as we're building the node list
@@ -427,19 +427,19 @@ public class WorldMap implements Serializable {
 		
 		newX = (node.MAP_XPOS + 60) * (920.0/this.MAX_X) ; 
 		if (node.getRank() < (.15 * (1.0 * this.MAX_RANK))) {
-			newY = (-1 * node.MAP_YPOS/1.2) + 70 + ((this.MAX_RANK - node.getRank()) * (480.0/ Math.pow(this.MAX_RANK,1))) ;						
+			newY = (-1 * node.MAP_YPOS/1.2) + 70 + ((this.MAX_RANK - node.getRank()) * (480.0/ Math.pow(this.MAX_RANK,1))) ;	
 		} else if (node.getRank() < (.25 * (1.0 * this.MAX_RANK))){
-			newY = (-1 * node.MAP_YPOS/1.6) + 155 + ((this.MAX_RANK - node.getRank()) * (480.0/ Math.pow(this.MAX_RANK,1.05))) ;						
+			newY = (-1 * node.MAP_YPOS/1.6) + 155 + ((this.MAX_RANK - node.getRank()) * (480.0/ Math.pow(this.MAX_RANK,1.05))) ;	
 		} else if (node.getRank() < (.45 * (1.0 * this.MAX_RANK))){
-			newY = (-1 * node.MAP_YPOS/1.7) + 138 + ((this.MAX_RANK - node.getRank()) * (480.0/ Math.pow(this.MAX_RANK,1.05))) ;						
+			newY = (-1 * node.MAP_YPOS/1.7) + 138 + ((this.MAX_RANK - node.getRank()) * (480.0/ Math.pow(this.MAX_RANK,1.05))) ;	
 		} else if (node.getRank() < (.6 * (1.0 * this.MAX_RANK))){
-			newY = (-1 * node.MAP_YPOS/1.7) + 138 + ((this.MAX_RANK - node.getRank()) * (480.0/ Math.pow(this.MAX_RANK,1.05))) ;						
+			newY = (-1 * node.MAP_YPOS/1.7) + 138 + ((this.MAX_RANK - node.getRank()) * (480.0/ Math.pow(this.MAX_RANK,1.05))) ;	
 		} else if (node.getRank() < (.7 * (1.0 * this.MAX_RANK))){
-			newY = (-1 * node.MAP_YPOS/1.3) + 160 + ((this.MAX_RANK - (node.getRank() + 1)) * (480.0/ Math.pow(this.MAX_RANK,1.1))) ;						
+			newY = (-1 * node.MAP_YPOS/1.3) + 160 + ((this.MAX_RANK - (node.getRank() + 1)) * (480.0/ Math.pow(this.MAX_RANK,1.1))) ;	
 		} else if (node.getRank() < (.84 * (1.0 * this.MAX_RANK))){
-			newY = (-1 * node.MAP_YPOS/1.3) + 160 + ((this.MAX_RANK - (node.getRank() + 1)) * (480.0/ Math.pow(this.MAX_RANK,1.1))) ;						
+			newY = (-1 * node.MAP_YPOS/1.3) + 160 + ((this.MAX_RANK - (node.getRank() + 1)) * (480.0/ Math.pow(this.MAX_RANK,1.1))) ;	
 		} else {
-			newY = (-1 * node.MAP_YPOS/2) + 70 + ((this.MAX_RANK - (node.getRank())) * (480.0/ Math.pow(this.MAX_RANK,1))) ;			
+			newY = (-1 * node.MAP_YPOS/2) + 70 + ((this.MAX_RANK - (node.getRank())) * (480.0/ Math.pow(this.MAX_RANK,1))) ;	
 		}
 		if (newX > 1050){
 			newX = 1050;
@@ -448,7 +448,7 @@ public class WorldMap implements Serializable {
 			newY = 565;
 		}
 		node.setPlayerMapX(newX);
-		node.setPlayerMapY(newY);	
+		node.setPlayerMapY(newY);
 	}
 	
 	/** 
@@ -472,7 +472,7 @@ public class WorldMap implements Serializable {
 	 * @return the location node most recently visited by the party
 	 */
 	public LocationNode getCurrLocationNode(){
-		return this.currLocationNode;		
+		return this.currLocationNode;	
 	}
 	
 	/**

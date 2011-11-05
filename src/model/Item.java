@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import model.item.ItemType;
 
-import core.ConstantStore;
-
 /**
  * 
  * An item contains it's own condition as well as a 

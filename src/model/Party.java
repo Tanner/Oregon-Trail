@@ -217,7 +217,7 @@ public class Party implements HUDDataSource, Serializable {
 	}
 	
 	public List<PartyComponentDataSource> getPartyComponentDataSources() {
-		ArrayList<PartyComponentDataSource> dataSources = new ArrayList<PartyComponentDataSource>();
+		List<PartyComponentDataSource> dataSources = new ArrayList<PartyComponentDataSource>();
 		for (Person p : members) {
 			dataSources.add(p);
 		}
@@ -345,7 +345,7 @@ public class Party implements HUDDataSource, Serializable {
 	 */
 	public List<Notification> walk() {
 		List<Notification> messages = new ArrayList<Notification>();
-		double movement = (getPace().getSpeed() * getMoveModifier())/30;
+		double movement = (getPace().getSpeed() * getMoveModifier()) / 30;
 		
 		trail.advance(movement);
 		totalDistanceTravelled += movement;
@@ -364,7 +364,7 @@ public class Party implements HUDDataSource, Serializable {
 		List<Person> deathList = new ArrayList<Person>();
 		int finalResult = 0;
 		for (Person person : members) {
-			person.increaseSkillPoints((int) (getPace().getSpeed() / 10));
+			person.increaseSkillPoints((getPace().getSpeed() / 10));
 			if(!personHasFood(person) && !vehicleHasFood()) {
 				person.decreaseHealth(getPace().getSpeed());
 			} else {
@@ -459,12 +459,12 @@ public class Party implements HUDDataSource, Serializable {
 		for(Animal animal: getAnimals()) {
 			moveModifier += animal.getMoveFactor();
 		}
-		if (moveModifier/10 > 5) {
+		if (moveModifier / 10 > 5) {
 			return 5;
-		} else if (moveModifier/10 < 1) {
+		} else if (moveModifier / 10 < 1) {
 			return 1;
 		} else {
-			return moveModifier/10;
+			return moveModifier / 10;
 		}
 	}
 
@@ -533,7 +533,7 @@ public class Party implements HUDDataSource, Serializable {
 			return 0;
 		} else {
 			//we don't have enough status in the food to completely heal the person, so eat it all.
-			int restoreAmount = (int)food.getStatus().getCurrent() * foodFactor;
+			int restoreAmount = (int) food.getStatus().getCurrent() * foodFactor;
 			//person.increaseHealth(restoreAmount);
 			return eatFood(person, restoreNeeded - restoreAmount); //Recursively call the function to ensure we eat as much as possible.
 		}
@@ -568,7 +568,7 @@ public class Party implements HUDDataSource, Serializable {
 		int currentHealth;
 		boolean hasMessage = false;
 		for(Person person : members) {
-			currentHealth = (int)person.getHealth().getCurrent();
+			currentHealth = (int) person.getHealth().getCurrent();
 			if(currentHealth == 0) {
 				hasMessage = true;
 				str.append(person.getName() + " has died of starvation!\n");
@@ -607,7 +607,7 @@ public class Party implements HUDDataSource, Serializable {
 		int currentHealth;
 		boolean hasMessage = false;
 		for(Animal animal : animals) {
-			currentHealth = (int)animal.getStatus().getCurrent();
+			currentHealth = (int) animal.getStatus().getCurrent();
 			if(currentHealth == 0) {
 				hasMessage = true;
 				str.append(animal.getName() + " has died of starvation!\n");
@@ -624,7 +624,7 @@ public class Party implements HUDDataSource, Serializable {
 	}
 
 	public void addAnimals(List<Animal> animals) {
-		animals.addAll(animals);
+		this.animals.addAll(animals);
 	}
 
 	public void addAnimals(Animal animal) {

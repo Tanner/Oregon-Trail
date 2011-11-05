@@ -19,6 +19,7 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 	private final Condition skillPoints;
 	
 	private final Condition health;
+
 	private boolean dead;
 	
 	private boolean isMale = true;
@@ -94,7 +95,7 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 	 * @return Remaining skill points
 	 */
 	public int getSkillPoints() {
-		return (int)skillPoints.getCurrent();
+		return (int) skillPoints.getCurrent();
 	}
 	
 	/**

@@ -54,7 +54,7 @@ public class Condition implements Serializable{
 	 * @return Ratio of the current value to the maximum value
 	 */
 	public double getPercentage() {
-		return (double) (current - min) / (double) (max - min);
+		return (current - min) / (max - min);
 	}
 	
 	/**
@@ -123,6 +123,6 @@ public class Condition implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Min: " + min + ", Max: " + max + ", Current: " + current;	
+		return "Min: " + min + ", Max: " + max + ", Current: " + current;
 	}
 }
