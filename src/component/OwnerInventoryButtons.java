@@ -6,7 +6,7 @@ import java.util.List;
 import model.Condition;
 import model.Inventoried;
 import model.Item;
-import model.Item.ITEM_TYPE;
+import model.ITEM_TYPE;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -59,7 +59,7 @@ public class OwnerInventoryButtons {
 	 * @param container Container
 	 */
 	public void makePanel(GameContainer container) {
-		List<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
+		List<ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * inventoried.getMaxSize()) - PADDING;
@@ -125,7 +125,7 @@ public class OwnerInventoryButtons {
 	 * Update the contents of the buttons and the weightbar to be current
 	 */
 	public void updateGraphics() {
-		List<Item.ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
+		List<ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
 
 		int maxInventorySize = inventoried.getInventory().getMaxSize();
 

@@ -7,8 +7,6 @@ import java.util.Random;
 
 import component.PartyComponentDataSource;
 
-import model.Item.ITEM_TYPE;
-
 import core.Logger;
 
 /**
@@ -404,7 +402,7 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 	}
 
 	@Override
-	public List<Item> removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
+	public List<Item> removeItemFromInventory(ITEM_TYPE itemIndex, int quantity) {
 		return inventory.removeItemFromInventory(itemIndex, quantity);
 	}
 	
@@ -438,7 +436,7 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 	}
 	
 	@Override
-	public boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
+	public boolean canGetItem(ITEM_TYPE itemType, int numberOf) {
 		return inventory.canGetItems(itemType, numberOf);
 	}
 

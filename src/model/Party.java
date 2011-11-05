@@ -6,7 +6,6 @@ import java.util.List;
 
 import component.PartyComponentDataSource;
 
-import model.Item.ITEM_TYPE;
 import model.datasource.HUDDataSource;
 import model.item.Animal;
 import model.item.Vehicle;
@@ -157,7 +156,7 @@ public class Party implements HUDDataSource, Serializable {
 	 */
 	public void buyItemForInventory(List<Item> items, Inventoried buyer) {
 		int cost = 0;
-		final Item.ITEM_TYPE itemType = items.get(0).getType();
+		final ITEM_TYPE itemType = items.get(0).getType();
 		final int numberOf = items.size();
 		
 		for (Item item : items) {
@@ -185,7 +184,7 @@ public class Party implements HUDDataSource, Serializable {
 	 * @param numberOf The number of items to try with
 	 * @return The list of people
 	 */
-	public List<Inventoried> canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
+	public List<Inventoried> canGetItem(ITEM_TYPE itemType, int numberOf) {
 		final List<Inventoried> ableList = new ArrayList<Inventoried>();
 		
 		if (itemType.getCost() * numberOf > money) {
@@ -497,11 +496,11 @@ public class Party implements HUDDataSource, Serializable {
 		}
 		
 		//If we need restoration, and have food
-		Item.ITEM_TYPE firstFood = null;
-		final List<Item.ITEM_TYPE> typeList = 
+		ITEM_TYPE firstFood = null;
+		final List<ITEM_TYPE> typeList = 
 			donator.getInventory().getPopulatedSlots();
 		
-		for (Item.ITEM_TYPE itemType : typeList) {
+		for (ITEM_TYPE itemType : typeList) {
 			if (itemType.isFood() && firstFood == null) {
 				firstFood = itemType;
 			}
@@ -541,7 +540,7 @@ public class Party implements HUDDataSource, Serializable {
 	
 	private boolean vehicleHasFood() {
 		if (vehicle != null) {
-			for (Item.ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
+			for (ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
 				if (itemType.isFood()) {
 					return true;
 				}
@@ -551,7 +550,7 @@ public class Party implements HUDDataSource, Serializable {
 	}
 
 	private boolean personHasFood(Person person) {
-		for (Item.ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
+		for (ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
 			if (itemType.isFood()) {
 				return true;
 			}

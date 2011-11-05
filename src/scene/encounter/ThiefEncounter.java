@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import model.Inventoried;
-import model.Item.ITEM_TYPE;
+import model.ITEM_TYPE;
 import model.Notification;
 import model.Party;
 import model.item.Vehicle;

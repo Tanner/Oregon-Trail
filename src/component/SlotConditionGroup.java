@@ -3,7 +3,7 @@ package component;
 import java.io.File;
 
 import model.Condition;
-import model.Item.ITEM_TYPE;
+import model.ITEM_TYPE;
 
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;

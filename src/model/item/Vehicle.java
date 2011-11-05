@@ -5,6 +5,7 @@ import java.util.List;
 import core.ConstantStore;
 
 import model.Condition;
+import model.ITEM_TYPE;
 import model.Inventoried;
 import model.Inventory;
 import model.Item;
@@ -26,7 +27,7 @@ public class Vehicle extends Item implements Inventoried{
 	 * Makes a vehicle to be used to get to oregon
 	 * @param type The type of vehicle
 	 */
-	public Vehicle(double maxWeight, Item.ITEM_TYPE type) {
+	public Vehicle(double maxWeight, ITEM_TYPE type) {
 		super(type);
 		this.status = new Condition(100);
 		this.MAX_INVENTORY_SIZE = Integer.parseInt(ConstantStore.get("ITEMS", type + "_MAX_INV_SIZE"));
@@ -65,12 +66,12 @@ public class Vehicle extends Item implements Inventoried{
 	}
 	
 	@Override
-	public List<Item> removeItemFromInventory(Item.ITEM_TYPE itemIndex, int quantity) {
+	public List<Item> removeItemFromInventory(ITEM_TYPE itemIndex, int quantity) {
 		return cargo.removeItemFromInventory(itemIndex, quantity);
 	}
 	
 	@Override
-	public boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf) {
+	public boolean canGetItem(ITEM_TYPE itemType, int numberOf) {
 		return cargo.canGetItems(itemType, numberOf);
 	}
 	

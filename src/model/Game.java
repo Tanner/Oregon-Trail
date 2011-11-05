@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import model.Item.ITEM_TYPE;
 import model.worldMap.LocationNode;
 import core.Logger;
 

@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import model.*;
-import model.Item.ITEM_TYPE;
 import model.item.*;
 
 import org.newdawn.slick.*;
@@ -47,8 +46,8 @@ public class StoreScene extends Scene {
 	private List<Item> currentPurchase;
 	private List<Inventoried> currentParty;
 	
-	private Item.ITEM_TYPE currentItem = null;
-	private Item.ITEM_TYPE hoverItem = null;
+	private ITEM_TYPE currentItem = null;
+	private ITEM_TYPE hoverItem = null;
 	
 	private Inventory inv;
 	private Party party;
@@ -170,7 +169,7 @@ public class StoreScene extends Scene {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		super.enter(container, game) ;
-			for (Item.ITEM_TYPE item : inv.getPopulatedSlots() ) {
+			for (ITEM_TYPE item : inv.getPopulatedSlots() ) {
 				storeInventory[getButtonIndex(item)].setMax(inv.getNumberOf(item));
 				storeInventory[getButtonIndex(item)].setCount(inv.getNumberOf(item));
 			}
@@ -185,8 +184,8 @@ public class StoreScene extends Scene {
 		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		
 		//Create inventory buttons and a map to which button stands for which inventory item
-		List<Item.ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
-		buttonMap = new ArrayList<Item.ITEM_TYPE>();
+		List<ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
+		buttonMap = new ArrayList<ITEM_TYPE>();
 		
 		//Create money label
 		partyMoney = new Label(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, "");
@@ -195,7 +194,7 @@ public class StoreScene extends Scene {
 		
 		storeInventory = new Counter[inventorySlots.size()];
 		for (int i = 0; i < inventorySlots.size(); i++) {
-			Item.ITEM_TYPE currentType = inventorySlots.get(i);
+			ITEM_TYPE currentType = inventorySlots.get(i);
 			buttonMap.add(currentType);
 			tempLabel = new Label(container, fieldFont, Color.white, currentType.getName());
 			String itemImagePath = "resources/graphics/icons/items/" + currentType.toString().toLowerCase() + ".png";
@@ -265,7 +264,7 @@ public class StoreScene extends Scene {
 	 * 
 	 * @param index The index of the item you wish to display information on
 	 */
-	private void updateLabels(Item.ITEM_TYPE currentItem) {
+	private void updateLabels(ITEM_TYPE currentItem) {
 		int count = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
 	
 		itemDescription[0].setText(currentItem.getName());
@@ -292,8 +291,8 @@ public class StoreScene extends Scene {
 		System.out.println(currentBuyers);
 		
 		//The player doesn't have a wagon and is trying to buy one
-		if (currentItem == Item.ITEM_TYPE.WAGON && party.getVehicle() == null ) {
-			if (itemCount > 1 && party.getMoney() >= (int)(Item.ITEM_TYPE.WAGON.getCost()*priceModifier)) {
+		if (currentItem == ITEM_TYPE.WAGON && party.getVehicle() == null ) {
+			if (itemCount > 1 && party.getMoney() >= (int)(ITEM_TYPE.WAGON.getCost()*priceModifier)) {
 				//The player tries to buy too many wagons
 				failedBuyModal = new MessageModal(container, this, ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_WAGON"));
 				return -1;
@@ -302,7 +301,7 @@ public class StoreScene extends Scene {
 				
 				party.setVehicle(new Wagon());
 				inv.removeItemFromInventory(currentItem, 1);
-				party.setMoney(party.getMoney() - (int)(Item.ITEM_TYPE.WAGON.getCost()*priceModifier));
+				party.setMoney(party.getMoney() - (int)(ITEM_TYPE.WAGON.getCost()*priceModifier));
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
 				updateLabels(currentItem);
 				return 1;
@@ -386,7 +385,7 @@ public class StoreScene extends Scene {
 	 * @param item The item to 
 	 * @return the index in the button array of the item
 	 */
-	private int getButtonIndex(Item.ITEM_TYPE item) {
+	private int getButtonIndex(ITEM_TYPE item) {
 		return buttonMap.indexOf(item);
 	}
 	
@@ -397,7 +396,7 @@ public class StoreScene extends Scene {
 	 * @param index the index of inventoryButton
 	 * @return the Item that the given button is associated with
 	 */
-	private Item.ITEM_TYPE getItemFromButtonIndex(int index) {
+	private ITEM_TYPE getItemFromButtonIndex(int index) {
 		return buttonMap.get(index);
 	}
 	
@@ -436,9 +435,9 @@ public class StoreScene extends Scene {
 	 *	Check for presses on the store's inventory item buttons
 	 */
 	private class InventoryListener implements ComponentListener {
-		private Item.ITEM_TYPE item;
+		private ITEM_TYPE item;
 		
-		public InventoryListener(Item.ITEM_TYPE item) {
+		public InventoryListener(ITEM_TYPE item) {
 			this.item = item;
 		}
 		

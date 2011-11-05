@@ -6,7 +6,7 @@ import java.util.List;
 
 import model.Inventory;
 import model.Item;
-import model.Item.ITEM_TYPE;
+import model.ITEM_TYPE;
 import model.Party;
 import model.Person;
 import model.item.Vehicle;

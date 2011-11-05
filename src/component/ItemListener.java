@@ -1,6 +1,6 @@
 package component;
 
-import model.Item.ITEM_TYPE;
+import model.ITEM_TYPE;
 
 public interface ItemListener {
 	public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons, ITEM_TYPE item);

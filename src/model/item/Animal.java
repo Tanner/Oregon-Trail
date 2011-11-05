@@ -6,6 +6,7 @@ import java.util.List;
 import component.PartyComponentDataSource;
 import core.ConstantStore;
 
+import model.ITEM_TYPE;
 import model.Item;
 
 public class Animal extends Item implements PartyComponentDataSource {

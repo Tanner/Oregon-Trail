@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import model.*;
-import model.Item.ITEM_TYPE;
+import model.ITEM_TYPE;
 import model.Party.Pace;
 import model.Party.Rations;
 import model.item.*;

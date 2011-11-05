@@ -24,7 +24,7 @@ public interface Inventoried {
 	 * @param quantity The number of items to remove
 	 * @return True if successful
 	 */
-	List<Item> removeItemFromInventory(Item.ITEM_TYPE itemType, int quantity);
+	List<Item> removeItemFromInventory(ITEM_TYPE itemType, int quantity);
 	
 	/**
 	 * Returns whether or not the number of a specific item type 
@@ -33,7 +33,7 @@ public interface Inventoried {
 	 * @param numberOf The number of items to test with
 	 * @return True if successful.
 	 */
-	boolean canGetItem(Item.ITEM_TYPE itemType, int numberOf);
+	boolean canGetItem(ITEM_TYPE itemType, int numberOf);
 	
 	/**
 	 * The inventory of the inventoried person.

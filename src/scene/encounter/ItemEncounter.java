@@ -5,7 +5,7 @@ import java.util.Random;
 import model.Item;
 import model.Notification;
 import model.Party;
-import model.Item.ITEM_TYPE;
+import model.ITEM_TYPE;
 import model.item.Animal;
 
 /**

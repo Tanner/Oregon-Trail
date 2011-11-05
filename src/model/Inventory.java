@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
 
-import model.Item.ITEM_TYPE;
-
 import core.Logger;
 
 /**
@@ -30,8 +28,8 @@ public class Inventory implements Serializable {
 	public Inventory(int maxSize, double maxWeight) {
 		this.MAX_SIZE = maxSize;
 		this.MAX_WEIGHT = maxWeight;
-		this.slots = new ArrayList<PriorityQueue<Item>>(Item.ITEM_TYPE.values().length);
-		for(int i = 0; i < Item.ITEM_TYPE.values().length; i++) {
+		this.slots = new ArrayList<PriorityQueue<Item>>(ITEM_TYPE.values().length);
+		for(int i = 0; i < ITEM_TYPE.values().length; i++) {
 			slots.add(new PriorityQueue<Item>());
 		}
 		this.currentSize = 0;
@@ -49,9 +47,9 @@ public class Inventory implements Serializable {
 	 * Returns the slots in inventory with items.
 	 * @return The slots in the inventory.
 	 */
-	public List<Item.ITEM_TYPE> getPopulatedSlots() {
-		final List<Item.ITEM_TYPE> popSlots = new ArrayList<Item.ITEM_TYPE>();
-		for(Item.ITEM_TYPE itemType : Item.ITEM_TYPE.values()) {
+	public List<ITEM_TYPE> getPopulatedSlots() {
+		final List<ITEM_TYPE> popSlots = new ArrayList<ITEM_TYPE>();
+		for(ITEM_TYPE itemType : ITEM_TYPE.values()) {
 			if (getNumberOf(itemType) != 0) {
 				popSlots.add(itemType);
 			}
@@ -87,7 +85,7 @@ public class Inventory implements Serializable {
 	 * @param numberOf The number of items to test with
 	 * @return True if successful
 	 */
-	public boolean canGetItems(Item.ITEM_TYPE itemType, int numberOf) {
+	public boolean canGetItems(ITEM_TYPE itemType, int numberOf) {
 		if(numberOf == 0) {
 			return false;
 		}
@@ -112,7 +110,7 @@ public class Inventory implements Serializable {
 		if(itemsToAdd.size() == 0) {
 			return;
 		}
-		final Item.ITEM_TYPE itemType = itemsToAdd.get(0).getType();
+		final ITEM_TYPE itemType = itemsToAdd.get(0).getType();
 		if(canGetItems(itemType, itemsToAdd.size())) {
 			for(Item item : itemsToAdd) {
 				slots.get(itemType.ordinal()).add(item);
@@ -143,7 +141,7 @@ public class Inventory implements Serializable {
 	 * @param quantity The number of the item to remvove
 	 * @return The removed items.
 	 */
-	public List<Item> removeItemFromInventory(Item.ITEM_TYPE itemType, int quantity) {
+	public List<Item> removeItemFromInventory(ITEM_TYPE itemType, int quantity) {
 		List<Item> removedItems = new ArrayList<Item>();
 		final int itemIndex = itemType.ordinal();
 		if(slots.get(itemIndex).size() < quantity) {
@@ -187,7 +185,7 @@ public class Inventory implements Serializable {
 	 * @param itemType The item type queried
 	 * @return The number of that item type.
 	 */
-	public int getNumberOf(Item.ITEM_TYPE itemType) {
+	public int getNumberOf(ITEM_TYPE itemType) {
 		return slots.get(itemType.ordinal()).size();
 	}
 	
@@ -210,7 +208,7 @@ public class Inventory implements Serializable {
 	 * @param itemType The item to check
 	 * @return The condition of the worst item in the list
 	 */
-	public Condition getConditionOf(Item.ITEM_TYPE itemType) {
+	public Condition getConditionOf(ITEM_TYPE itemType) {
 		return getNumberOf(itemType) != 0 ? 
 				slots.get(itemType.ordinal()).peek().getStatus() :
 					null;
@@ -260,9 +258,9 @@ public class Inventory implements Serializable {
 	 * @return String representation of the inventory
 	 */
 	public String toString() {
-		final List<Item.ITEM_TYPE> popSlots = getPopulatedSlots();
+		final List<ITEM_TYPE> popSlots = getPopulatedSlots();
 		final StringBuffer str = new StringBuffer("Size: " + popSlots.size() + ". ");
-		for(Item.ITEM_TYPE itemType : popSlots) {
+		for(ITEM_TYPE itemType : popSlots) {
 			str.append(" # of " + itemType.getName() + "s: " + getNumberOf(itemType));
 		}
 				
