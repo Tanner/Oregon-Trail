@@ -145,7 +145,7 @@ public class TrailScene extends Scene {
 		
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		if(!SoundStore.get().getPlayingMusic().contains("NightTheme") && !SoundStore.get().getPlayingMusic().contains("DayTheme")) {
+		if(SoundStore.get().getPlayingMusic() == null || (!SoundStore.get().getPlayingMusic().equals("NightTheme") && !SoundStore.get().getPlayingMusic().equals("DayTheme"))) {
 			if(party.getTime().getTimeOfDay() == Time.TimeOfDay.EVENING || party.getTime().getTimeOfDay() == Time.TimeOfDay.NIGHT) {
 				SoundStore.get().loopMusic("NightTheme");
 			} else {
