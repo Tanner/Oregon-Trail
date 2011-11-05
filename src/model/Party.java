@@ -567,22 +567,60 @@ public class Party implements HUDDataSource, Serializable {
 		final StringBuilder str = new StringBuilder();
 		int currentHealth;
 		boolean hasMessage = false;
+		ArrayList<String> deadMembers = new ArrayList<String>();
+		ArrayList<String> hungryMembers = new ArrayList<String>();
+		
 		for(Person person : members) {
 			currentHealth = (int) person.getHealth().getCurrent();
 			if(currentHealth == 0) {
 				hasMessage = true;
-				str.append(person.getName() + " has died of starvation!\n");
+				deadMembers.add(person.getName());
 			}
 			else if(person.getHealth().getCurrent() < (getPace().getSpeed() - 
 					((personHasFood(person) || vehicleHasFood()) ? getRations().getRationAmount() : 0))) {
 				hasMessage = true;
-				str.append(person.getName() + " is in danger of starvation.\n" );
+				hungryMembers.add(person.getName());
 			}
 		}
+		
 		if (hasMessage) {
+			if ( !deadMembers.isEmpty() ) {
+			str.append(buildNameList(deadMembers));
+			str.append(deadMembers.size() > 1 ? " have " : " has ");
+			str.append("died of starvation!\n");
+			}
+			if ( !hungryMembers.isEmpty() ) {
+				str.append(buildNameList(hungryMembers));
+				str.append(hungryMembers.size() > 1 ? " are " : " is ");
+				str.append("in danger of starvation.\n" );
+			}
 			return str.toString();
 		}
 		return null;
+	}
+	
+	/**
+	 * Create a comma separate list of names, if appropriate, for passed in
+	 * list of names.
+	 * @param names The names to be made into a list
+	 * @return A string representing a list of names, with proper formatting
+	 */
+	private String buildNameList(ArrayList<String> names) {
+		String nameList = "";
+		if ( names.size() == 1 )
+			nameList += names.get(0);
+		else if (names.size() == 2)
+			nameList += names.get(0) + " and " + names.get(1);
+		else if (names.size() > 2) {
+			for (int i = 0; i < names.size(); i++) {
+				if ( i == names.size() -1 )
+					nameList += "and ";
+				nameList += names.get(i);
+				if ( i != names.size() - 1)
+					nameList += ", ";
+			}
+		}
+		return nameList;
 	}
 	
 	/**
