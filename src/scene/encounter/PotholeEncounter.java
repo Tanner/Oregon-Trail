@@ -5,6 +5,9 @@ import model.Notification;
 import model.Party;
 import model.item.Vehicle;
 
+/**
+ * An encounter where the party's vehicle will become randomly damaged.
+ */
 public class PotholeEncounter extends Encounter {
 	
 	private final double MAX_DECREASE = .25;
@@ -35,7 +38,6 @@ public class PotholeEncounter extends Encounter {
 			}
 			else
 				message += "  Better check your wagon for damages.";
-			System.out.println("Vehicle health is: " + vehicle.getCondition().getCurrent());
 		}
 		return makeNotification();
 		

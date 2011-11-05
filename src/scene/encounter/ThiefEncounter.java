@@ -10,6 +10,10 @@ import model.Notification;
 import model.Party;
 import model.item.Vehicle;
 
+/**
+ * An encounter where the party will have a random item and item amount
+ * removed from their inventory.
+ */
 public class ThiefEncounter extends Encounter {
 	
 	private String itemName;
