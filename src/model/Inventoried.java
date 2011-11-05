@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+import model.item.ItemType;
+
 /**
  * Interface for objects with inventories
  */
@@ -24,7 +26,7 @@ public interface Inventoried {
 	 * @param quantity The number of items to remove
 	 * @return True if successful
 	 */
-	List<Item> removeItemFromInventory(ITEM_TYPE itemType, int quantity);
+	List<Item> removeItemFromInventory(ItemType itemType, int quantity);
 	
 	/**
 	 * Returns whether or not the number of a specific item type 
@@ -33,7 +35,7 @@ public interface Inventoried {
 	 * @param numberOf The number of items to test with
 	 * @return True if successful.
 	 */
-	boolean canGetItem(ITEM_TYPE itemType, int numberOf);
+	boolean canGetItem(ItemType itemType, int numberOf);
 	
 	/**
 	 * The inventory of the inventoried person.

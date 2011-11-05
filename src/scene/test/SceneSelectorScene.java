@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import model.*;
-import model.ITEM_TYPE;
 import model.Party.Pace;
 import model.Party.Rations;
 import model.item.*;
@@ -237,23 +236,23 @@ public class SceneSelectorScene extends Scene {
 		people.add(new Person("Diane"));
 		
 		for (Person person : people) {
-			ArrayList<Person.Skill> personSkill = new ArrayList<Person.Skill>();
-			person.setProfession(Person.Profession.values()[random.nextInt(Person.Profession.values().length)]);
+			ArrayList<Skill> personSkill = new ArrayList<Skill>();
+			person.setProfession(Profession.values()[random.nextInt(Profession.values().length)]);
 	
 			int skillPoints = 0;
 			
 			// Randomly assign some skills
-			Person.Skill tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];
-			while (tempSkill != Person.Skill.NONE && personSkill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120) {
+			Skill tempSkill = Skill.values()[random.nextInt(Skill.values().length)];
+			while (tempSkill != Skill.NONE && personSkill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120) {
 				if (!personSkill.contains(tempSkill)) {
 					personSkill.add(tempSkill);
 					skillPoints += tempSkill.getCost();
 				}
 				
-				tempSkill = Person.Skill.values()[random.nextInt(Person.Skill.values().length)];
+				tempSkill = Skill.values()[random.nextInt(Skill.values().length)];
 			}
 			
-			for (Person.Skill skill : personSkill) {
+			for (Skill skill : personSkill) {
 				person.addSkill(skill);
 			}
 			
@@ -263,13 +262,13 @@ public class SceneSelectorScene extends Scene {
 		
 		Vehicle vehicle = new Wagon();
 		for(int i = 0; i < 99; i++) {
-			vehicle.addItemToInventory(new Item(ITEM_TYPE.MEAT));
+			vehicle.addItemToInventory(new Item(ItemType.MEAT));
 		}
 		vehicle.getInventory().addRandomItems();
 		
 		List<Animal> animalList = new ArrayList<Animal>();
 		for(int i = 0; i < 4; i++) {
-			Animal animal = new Animal(ITEM_TYPE.OX);
+			Animal animal = new Animal(ItemType.OX);
 			animalList.add(animal);
 		}
 		

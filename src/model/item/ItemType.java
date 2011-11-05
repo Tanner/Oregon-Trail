@@ -1,8 +1,8 @@
-package model;
+package model.item;
 
 import core.ConstantStore;
 
-public enum ITEM_TYPE {
+public enum ItemType {
 	APPLE ("APPLE", true, true, false, false),
 	BREAD ("BREAD", true, false, false, false),
 	AMMO ("AMMO", false, false, false, false),
@@ -42,7 +42,7 @@ public enum ITEM_TYPE {
 	 * @param isPlant If the item is a plant
 	 * @param foodFactor The multiplier for the food (if it is one, else 0)
 	 */
-	private ITEM_TYPE (String type, boolean isFood, boolean isPlant, boolean isAnimal, boolean isTool) {
+	private ItemType (String type, boolean isFood, boolean isPlant, boolean isAnimal, boolean isTool) {
 		this.name = ConstantStore.get("ITEMS", type + "_NAME");
 		this.pluralName = ConstantStore.get("ITEMS", type + "_PLURAL_NAME");
 		

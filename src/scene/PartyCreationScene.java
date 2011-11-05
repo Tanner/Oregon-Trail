@@ -6,9 +6,10 @@ import model.Party;
 import model.Party.Pace;
 import model.Party.Rations;
 import model.Person;
-import model.Person.Skill;
+import model.Skill;
 import model.Player;
 import model.Time;
+import model.Profession;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -108,14 +109,14 @@ public class PartyCreationScene extends Scene {
 		componentListener = new SceneComponentListener();
 		
 		// Create the profession segmented control
-		int numOfProfessions = Person.Profession.values().length;
+		int numOfProfessions = Profession.values().length;
 		String[] professionLabels = new String[numOfProfessions];
 		String[] professionTooltips = new String[numOfProfessions];
 		for (int i = 0; i < numOfProfessions; i++) {
-			professionLabels[i] = Person.Profession.values()[i].toString();
+			professionLabels[i] = Profession.values()[i].toString();
 			
-			int money = Person.Profession.values()[i].getMoney();
-			Person.Skill startingSkill = Person.Profession.values()[i].getStartingSkill();
+			int money = Profession.values()[i].getMoney();
+			Skill startingSkill = Profession.values()[i].getStartingSkill();
 			
 			String moneyString = ConstantStore.get("PARTY_CREATION_SCENE", "PROFESSIONS_TOOLTIP_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", money);
 			String skillString = ConstantStore.get("PARTY_CREATION_SCENE", "PROFESSIONS_TOOLTIP_SKILL") + startingSkill;
@@ -126,10 +127,10 @@ public class PartyCreationScene extends Scene {
 		professionSegmentedControl.setTooltips(professionTooltips);
 		
 		// Create the skill segmented control
-		int numOfSkills = Person.Skill.values().length - 1;
+		int numOfSkills = Skill.values().length - 1;
 		String[] skillLabels = new String[numOfSkills];
 		for (int i = 0; i < numOfSkills; i++) {
-			skillLabels[i] = Person.Skill.values()[i].getName();
+			skillLabels[i] = Skill.values()[i].getName();
 		}
 		skillSegmentedControl = new SegmentedControl(container, 800, 200, 5, 3, 5, true, 3, skillLabels);
 		
@@ -315,8 +316,8 @@ public class PartyCreationScene extends Scene {
 	 * @param segmentedControlResults The results of the data entry
 	 */
 	private void setProfession(int[] segmentedControlResults){
-		personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Person.Profession.values()[segmentedControlResults[0]].getMoney());
-		people.get(currentPersonModifying).setProfession(Person.Profession.values()[segmentedControlResults[0]]);
+		personMoneyLabels[currentPersonModifying].setText(ConstantStore.get("GENERAL", "MONEY_SYMBOL") + Profession.values()[segmentedControlResults[0]].getMoney());
+		people.get(currentPersonModifying).setProfession(Profession.values()[segmentedControlResults[0]]);
 		
 		personProfessionLabels[currentPersonModifying].setText(people.get(currentPersonModifying).getProfession().getName());
 		
@@ -489,7 +490,7 @@ public class PartyCreationScene extends Scene {
 			skillModal.setButtonText(skillModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
 			skillModal.setButtonText(skillModal.getCancelButtonIndex() + 1, ConstantStore.get("GENERAL", "CONFIRM"));
 
-			if (people.get(i).getProfession().getStartingSkill() != Person.Skill.NONE) {
+			if (people.get(i).getProfession().getStartingSkill() != Skill.NONE) {
 				int[] permanent = new int[1];
 				permanent[0] = people.get(i).getProfession().getStartingSkill().ordinal();
 				skillSegmentedControl.setPermanent(permanent);
@@ -499,7 +500,7 @@ public class PartyCreationScene extends Scene {
 			
 			List<Skill> currentSkills = people.get(i).getSkills();
 			
-			currentSkills.remove(Person.Skill.NONE);
+			currentSkills.remove(Skill.NONE);
 			int[] currentSkillIndices = new int[currentSkills.size()];
 			for (int j = 0; j < currentSkillIndices.length; j++) {
 				currentSkillIndices[j] = currentSkills.get(j).ordinal();

@@ -5,8 +5,8 @@ import java.util.Random;
 import model.Item;
 import model.Notification;
 import model.Party;
-import model.ITEM_TYPE;
 import model.item.Animal;
+import model.item.ItemType;
 
 /**
  * Generates a random number of an item, and gives them to the Party's wagon.
@@ -15,20 +15,20 @@ import model.item.Animal;
 public class ItemEncounter extends Encounter {
 	
 	private enum ITEM_ENCOUNTER_TYPE {
-		APPLE(ITEM_TYPE.APPLE, "You rest by an apple tree. You pick up %d %3$s."),
-		BREAD(ITEM_TYPE.BREAD, "You find a basket of bread which contains %d %s %s. You decide to take it."),
-		GUN(ITEM_TYPE.GUN, "You find %d rusted %3$s on the trail. It seems like it still works."),
-		OX(ITEM_TYPE.OX, "You find %d lonely %3$s. You let the %3$s join your party.");
+		APPLE(ItemType.APPLE, "You rest by an apple tree. You pick up %d %3$s."),
+		BREAD(ItemType.BREAD, "You find a basket of bread which contains %d %s %s. You decide to take it."),
+		GUN(ItemType.GUN, "You find %d rusted %3$s on the trail. It seems like it still works."),
+		OX(ItemType.OX, "You find %d lonely %3$s. You let the %3$s join your party.");
 		
-		private ITEM_TYPE itemType;
+		private ItemType itemType;
 		private String message;
 		
-		private ITEM_ENCOUNTER_TYPE(ITEM_TYPE itemType, String message) {
+		private ITEM_ENCOUNTER_TYPE(ItemType itemType, String message) {
 			this.itemType = itemType;
 			this.message = message;
 		}
 		
-		public ITEM_TYPE getItemType() {
+		public ItemType getItemType() {
 			return itemType;
 		}
 		

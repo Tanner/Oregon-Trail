@@ -1,7 +1,7 @@
 package scene.test;
 
 import model.Condition;
-import model.Person;
+import model.Skill;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.AbstractComponent;
@@ -56,7 +56,7 @@ public class ComponentTestScene extends Scene {
 	
 		spinnerLabel = new Label(container, 300, fieldFont, Color.white, "Label");
 		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
-		Person.Skill[] arr = Person.Skill.values();
+		Skill[] arr = Skill.values();
 		String[] strs = new String[arr.length - 2];
 		for (int i = 0; i < strs.length; i++) {
 			strs[i] = arr[i].getName();

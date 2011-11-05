@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Random;
 
 import model.Inventoried;
-import model.ITEM_TYPE;
 import model.Notification;
 import model.Party;
+import model.item.ItemType;
 import model.item.Vehicle;
 
 public class ThiefEncounter extends Encounter {
@@ -36,8 +36,8 @@ public class ThiefEncounter extends Encounter {
 			Inventoried inventory = inventories.remove(random.nextInt(inventories.size()));
 			if ( !inventory.getInventory().isEmpty() ) {
 				removed = true;
-				List<ITEM_TYPE> items = inventory.getInventory().getPopulatedSlots();
-				ITEM_TYPE type = items.get((int) (random.nextDouble() * items.size()));
+				List<ItemType> items = inventory.getInventory().getPopulatedSlots();
+				ItemType type = items.get((int) (random.nextDouble() * items.size()));
 				inventory.getInventory().removeItemFromInventory(type, random.nextInt(inventory.getInventory().getNumberOf(type))+1);
 				itemName = type.getName();
 			}

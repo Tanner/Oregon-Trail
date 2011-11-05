@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 
+import model.item.ItemType;
+
 import core.ConstantStore;
 
 /**
@@ -16,14 +18,14 @@ public class Item implements Conditioned, Comparable<Item>, Serializable{
 	
 	private boolean isStackable = true;
 	
-	private final ITEM_TYPE type;
+	private final ItemType type;
 	
 	/**
 	 * 
 	 * Creates a new item with a name, description, status, and weight.
 	 * @param type The type of the item
 	 */
-	public Item(ITEM_TYPE type) {
+	public Item(ItemType type) {
 		this.status = new Condition(100);
 		this.type = type;
 	}
@@ -121,7 +123,7 @@ public class Item implements Conditioned, Comparable<Item>, Serializable{
 	 * Returns the item type
 	 * @return The item type
 	 */
-	public ITEM_TYPE getType() {
+	public ItemType getType() {
 		return type;
 	}
 	

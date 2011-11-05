@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import model.item.ItemType;
+
 import component.PartyComponentDataSource;
 
 import core.Logger;
@@ -26,9 +28,7 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 	private String name;
 	
 	private Profession profession;
-	
-	private static final float BASE_MONEY = 1600f;
-	
+		
 	private static final int BASE_SKILL_POINTS = 70;
 	
 	private final Inventory inventory;
@@ -39,146 +39,6 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 	
 	private static final double MAX_INVENTORY_WEIGHT = 100;
 	
-	/**
-	 * Skills named and with skill point cost.
-	 * 
-	 */
-	public enum Skill {
-		MEDICAL (50, "Medical"),
-		RIVERWORK (50, "Riverwork"),
-		SHARPSHOOTING (50, "Sharpshooting"),
-		BLACKSMITHING (40, "Blacksmithing"),
-		CARPENTRY (40, "Carpentry"),
-		FARMING (40, "Farming"),
-		TRACKING (30, "Tracking"),
-		BOTANY (20, "Botany"),
-		COMMERCE (20, "Commerce"),
-		COOKING (20, "Cooking"),
-		MUSICAL (10, "Musical"),
-		SEWING (10, "Sewing"),
-		SPANISH (10, "Spanish"),
-		NONE (0, "");
-		
-		private final int cost;
-	
-		private final String name;
-		
-		/**
-		 * Sets the cost of the skill as designated
-		 * @param cost The cost of the skill (defined above)
-		 * @param name The name of the skill
-		 */
-		private Skill(int cost, String name) {
-			this.cost = cost;
-			this.name = name;
-		}
-		
-		/**
-		 * Returns the cost of a skill
-		 * @return The cost
-		 */
-		public int getCost() {
-			return cost;
-		}
-		
-		/**
-		 * Return the name of a skill
-		 * @return The skill name
-		 */
-		public String getName(){
-			return name;
-		}
-		
-		public String toString() {
-			return name;
-		}
-	}
-
-	/**
-	 * Professions with their gold/score multiplier and starting skill
-	 * 
-	 */
-	public static enum Profession {
-		BANKER (1, Skill.COMMERCE, "Banker", null),
-		DOCTOR (1.2f, Skill.MEDICAL, "Doctor", null),
-		MERCHANT (1.4f, Skill.COMMERCE, "Merchant", null),
-		PHARMACIST (1.6f, Skill.MEDICAL, "Pharmacist", null),
-		WAINWRIGHT (1.8f, Skill.CARPENTRY, "Wainwright", ITEM_TYPE.WHEEL),
-		GUNSMITH (2, Skill.SHARPSHOOTING, "Gunsmith", ITEM_TYPE.GUN),
-		BLACKSMITH (2.2f, Skill.BLACKSMITHING, "Blacksmith", null),
-		MASON (2.4f, Skill.CARPENTRY, "Mason", null),
-		WHEELWRIGHT (2.6f, Skill.CARPENTRY, "Wheelwright", ITEM_TYPE.WHEEL),
-		CARPENTER (2.8f, Skill.CARPENTRY, "Carpenter", ITEM_TYPE.WHEEL),
-		SADDLEMAKER (3, Skill.FARMING, "Saddlemaker", null),
-		BRICKMAKER (3.2f, Skill.CARPENTRY, "Brickmaker", null),
-		PROSPECTOR (3.4f, Skill.RIVERWORK, "Prospector", null),
-		TRAPPER (3.6f, Skill.TRACKING, "Trapper", null),
-		SURVEYOR (3.8f, Skill.RIVERWORK, "Surveyor", null),
-		SHOEMAKER (4, Skill.SEWING, "Shoemaker", null),
-		JOURNALIST (4.1f, Skill.NONE, "Journalist", null),
-		PRINTER (4.2f, Skill.COMMERCE, "Printer", null),
-		BUTCHER (4.3f, Skill.COOKING, "Butcher", ITEM_TYPE.MEAT),
-		BAKER (4.4f, Skill.COOKING, "Baker", ITEM_TYPE.BREAD),
-		TAILOR (4.5f, Skill.SEWING, "Tailor", null),
-		FARMER (4.5f, Skill.FARMING, "Farmer", ITEM_TYPE.APPLE),
-		PASTOR (4.6f, Skill.NONE, "Pastor", null),
-		ARTIST (4.8f, Skill.MUSICAL, "Artist", null),
-		TEACHER (5, Skill.NONE, "Teacher", null);
-		
-		private final float moneyDivider;
-	
-		private final Skill startingSkill;
-		
-		private final String name;
-		
-		private final ITEM_TYPE startingItem;
-		
-		/**
-		 * Assigns money multiplier and starting skill to each profession
-		 * @param moneyDivider Gold divided by and score multiplied by this 
-		 * @param startingSkill Skill the profession starts with
-		 * @param name The profession's name
-		 */
-		private Profession(float moneyDivider, Skill startingSkill, String name, ITEM_TYPE itemType) {
-			this.moneyDivider = moneyDivider;
-			this.startingSkill = startingSkill;
-			this.name = name;
-			this.startingItem = itemType;
-		}
-		
-		/**
-		 * Returns the multiplier
-		 * @return Multiplier
-		 */
-		public int getMoney() {
-			return (int) (BASE_MONEY / moneyDivider);
-		}
-		
-		/**
-		 * Returns starting skill
-		 * @return Starting skill
-		 */
-		public Skill getStartingSkill() {
-			return startingSkill;
-		}
-		
-		public ITEM_TYPE getStartingItem() {
-			return startingItem;
-		}
-		
-		/**
-		 * Returns the profession's name
-		 * @return Profession's name
-		 */
-		public String getName(){
-			return name;
-		}
-		
-		public String toString() {
-			return name;
-		}
-	}
-
 	/**
 	 * Person creation should be done this way always - 
 	 * name first, then profession and skills are added.
@@ -402,7 +262,7 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 	}
 
 	@Override
-	public List<Item> removeItemFromInventory(ITEM_TYPE itemIndex, int quantity) {
+	public List<Item> removeItemFromInventory(ItemType itemIndex, int quantity) {
 		return inventory.removeItemFromInventory(itemIndex, quantity);
 	}
 	
@@ -436,7 +296,7 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 	}
 	
 	@Override
-	public boolean canGetItem(ITEM_TYPE itemType, int numberOf) {
+	public boolean canGetItem(ItemType itemType, int numberOf) {
 		return inventory.canGetItems(itemType, numberOf);
 	}
 
@@ -461,10 +321,10 @@ public class Person implements Conditioned, Inventoried, PartyComponentDataSourc
 	}
 
 	public List<Item> killForFood() {
-		int numberOf = (int) (this.weight / ITEM_TYPE.STRANGEMEAT.getWeight());
+		int numberOf = (int) (this.weight / ItemType.STRANGEMEAT.getWeight());
 		List<Item> itemList = new ArrayList<Item>();
 		for(int i = 0; i < (numberOf / 2); i++) {
-			itemList.add(new Item(ITEM_TYPE.STRANGEMEAT));
+			itemList.add(new Item(ItemType.STRANGEMEAT));
 		}
 		return itemList;
 	}

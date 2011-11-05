@@ -34,7 +34,7 @@ public class StoreScene extends Scene {
 	private final Color BACKGROUND_COLOR = new Color(0x0C5DA5);
 	private final Color TEXT_PANEL_COLOR = new Color(0x679FD2);
 	
-	private List<ITEM_TYPE> buttonMap;
+	private List<ItemType> buttonMap;
 	private Counter[] storeInventory;
 	private Panel storeInventoryButtons, textPanel;
 	private Button cancelButton, clearButton, inventoryButton, buyButton;
@@ -46,8 +46,8 @@ public class StoreScene extends Scene {
 	private List<Item> currentPurchase;
 	private List<Inventoried> currentParty;
 	
-	private ITEM_TYPE currentItem = null;
-	private ITEM_TYPE hoverItem = null;
+	private ItemType currentItem = null;
+	private ItemType hoverItem = null;
 	
 	private Inventory inv;
 	private Party party;
@@ -169,7 +169,7 @@ public class StoreScene extends Scene {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		super.enter(container, game) ;
-			for (ITEM_TYPE item : inv.getPopulatedSlots() ) {
+			for (ItemType item : inv.getPopulatedSlots() ) {
 				storeInventory[getButtonIndex(item)].setMax(inv.getNumberOf(item));
 				storeInventory[getButtonIndex(item)].setCount(inv.getNumberOf(item));
 			}
@@ -184,8 +184,8 @@ public class StoreScene extends Scene {
 		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		
 		//Create inventory buttons and a map to which button stands for which inventory item
-		List<ITEM_TYPE> inventorySlots = inv.getPopulatedSlots();
-		buttonMap = new ArrayList<ITEM_TYPE>();
+		List<ItemType> inventorySlots = inv.getPopulatedSlots();
+		buttonMap = new ArrayList<ItemType>();
 		
 		//Create money label
 		partyMoney = new Label(container, INVENTORY_BUTTON_WIDTH * 4 + PADDING * 3, REGULAR_BUTTON_HEIGHT, fieldFont, Color.white, "");
@@ -194,7 +194,7 @@ public class StoreScene extends Scene {
 		
 		storeInventory = new Counter[inventorySlots.size()];
 		for (int i = 0; i < inventorySlots.size(); i++) {
-			ITEM_TYPE currentType = inventorySlots.get(i);
+			ItemType currentType = inventorySlots.get(i);
 			buttonMap.add(currentType);
 			tempLabel = new Label(container, fieldFont, Color.white, currentType.getName());
 			String itemImagePath = "resources/graphics/icons/items/" + currentType.toString().toLowerCase() + ".png";
@@ -264,7 +264,7 @@ public class StoreScene extends Scene {
 	 * 
 	 * @param index The index of the item you wish to display information on
 	 */
-	private void updateLabels(ITEM_TYPE currentItem) {
+	private void updateLabels(ItemType currentItem) {
 		int count = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
 	
 		itemDescription[0].setText(currentItem.getName());
@@ -291,8 +291,8 @@ public class StoreScene extends Scene {
 		System.out.println(currentBuyers);
 		
 		//The player doesn't have a wagon and is trying to buy one
-		if (currentItem == ITEM_TYPE.WAGON && party.getVehicle() == null ) {
-			if (itemCount > 1 && party.getMoney() >= (int)(ITEM_TYPE.WAGON.getCost()*priceModifier)) {
+		if (currentItem == ItemType.WAGON && party.getVehicle() == null ) {
+			if (itemCount > 1 && party.getMoney() >= (int)(ItemType.WAGON.getCost()*priceModifier)) {
 				//The player tries to buy too many wagons
 				failedBuyModal = new MessageModal(container, this, ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_WAGON"));
 				return -1;
@@ -301,7 +301,7 @@ public class StoreScene extends Scene {
 				
 				party.setVehicle(new Wagon());
 				inv.removeItemFromInventory(currentItem, 1);
-				party.setMoney(party.getMoney() - (int)(ITEM_TYPE.WAGON.getCost()*priceModifier));
+				party.setMoney(party.getMoney() - (int)(ItemType.WAGON.getCost()*priceModifier));
 				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
 				updateLabels(currentItem);
 				return 1;
@@ -385,7 +385,7 @@ public class StoreScene extends Scene {
 	 * @param item The item to 
 	 * @return the index in the button array of the item
 	 */
-	private int getButtonIndex(ITEM_TYPE item) {
+	private int getButtonIndex(ItemType item) {
 		return buttonMap.indexOf(item);
 	}
 	
@@ -396,7 +396,7 @@ public class StoreScene extends Scene {
 	 * @param index the index of inventoryButton
 	 * @return the Item that the given button is associated with
 	 */
-	private ITEM_TYPE getItemFromButtonIndex(int index) {
+	private ItemType getItemFromButtonIndex(int index) {
 		return buttonMap.get(index);
 	}
 	
@@ -435,9 +435,9 @@ public class StoreScene extends Scene {
 	 *	Check for presses on the store's inventory item buttons
 	 */
 	private class InventoryListener implements ComponentListener {
-		private ITEM_TYPE item;
+		private ItemType item;
 		
-		public InventoryListener(ITEM_TYPE item) {
+		public InventoryListener(ItemType item) {
 			this.item = item;
 		}
 		

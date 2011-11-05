@@ -6,9 +6,9 @@ import java.util.List;
 
 import model.Inventory;
 import model.Item;
-import model.ITEM_TYPE;
 import model.Party;
 import model.Person;
+import model.item.ItemType;
 import model.item.Vehicle;
 
 import org.newdawn.slick.Color;
@@ -208,7 +208,7 @@ public class PartyInventoryScene extends Scene {
 		String name = "";
 		
 		for (int i = 0; i < binInventory.length; i++) {
-			List<ITEM_TYPE> itemType = binInventory[i].getPopulatedSlots();
+			List<ItemType> itemType = binInventory[i].getPopulatedSlots();
 			
 			if (itemType.size() > 0) {
 				amount += binInventory[i].getNumberOf(itemType.get(0));
@@ -268,11 +268,11 @@ public class PartyInventoryScene extends Scene {
 	}
 	
 	/**
-	 * Check to see if an {@code ITEM_TYPE} can be added to the bin.
-	 * @param item ITEM_TYPE to check
+	 * Check to see if an {@code ItemType} can be added to the bin.
+	 * @param item ItemType to check
 	 * @return Whether or not the item can be added to the bin
 	 */
-	public boolean canAddItemToBin(ITEM_TYPE item) {
+	public boolean canAddItemToBin(ItemType item) {
 		for (int i = 0; i < binInventory.length; i++) {
 			if (!binInventory[i].canGetItems(item, 1)) {
 				return false;
@@ -287,10 +287,10 @@ public class PartyInventoryScene extends Scene {
 	 */
 	public void returnBinItems() {
 		for (int i = 0; i < binInventory.length; i++) {
-			List<ITEM_TYPE> populated = binInventory[i].getPopulatedSlots();
+			List<ItemType> populated = binInventory[i].getPopulatedSlots();
 			
 			if (populated.size() > 0) {
-				ITEM_TYPE itemToRemove = populated.get(0);
+				ItemType itemToRemove = populated.get(0);
 				List<Item> itemsRemoved = binInventory[i].removeItemFromInventory(itemToRemove, binInventory[i].getNumberOf(itemToRemove));
 				
 				if (i != party.getPartyMembers().size()) {
@@ -326,13 +326,13 @@ public class PartyInventoryScene extends Scene {
 	}
 	
 	/**
-	 * The {@code ITEM_TYPE} that the bin is currently holding, if any.
-	 * @return ITEM_TYPE that the bin is holding
+	 * The {@code ItemType} that the bin is currently holding, if any.
+	 * @return ItemType that the bin is holding
 	 */
-	public ITEM_TYPE getBinItemType() {
-		ITEM_TYPE itemType = null;
+	public ItemType getBinItemType() {
+		ItemType itemType = null;
 		for (int i = 0; i < binInventory.length; i++) {
-			List<ITEM_TYPE> populatedSlots = binInventory[i].getPopulatedSlots();
+			List<ItemType> populatedSlots = binInventory[i].getPopulatedSlots();
 			if (populatedSlots.size() > 0) {
 				itemType = populatedSlots.get(0);
 				break;
@@ -347,7 +347,7 @@ public class PartyInventoryScene extends Scene {
 	 * @return List of Items in the bin
 	 */
 	public List<Item> getItemsInBin() {
-		ITEM_TYPE itemType = getBinItemType();
+		ItemType itemType = getBinItemType();
 		
 		if (itemType == null) {
 			// No items in the bin, return null
@@ -452,7 +452,7 @@ public class PartyInventoryScene extends Scene {
 	 */
 	private class OwnerInventoryButtonsListener implements ItemListener {
 		@Override
-		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons, ITEM_TYPE item) {
+		public void itemButtonPressed(OwnerInventoryButtons ownerInventoryButtons, ItemType item) {
 			if (currentMode == Mode.TRANSFER) {
 				return;
 			}

@@ -3,7 +3,7 @@ package component;
 import java.io.File;
 
 import model.Condition;
-import model.ITEM_TYPE;
+import model.item.ItemType;
 
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
@@ -26,7 +26,7 @@ public class SlotConditionGroup extends ComponentConditionGroup<Counter> {
 	public static enum Mode {NORMAL, TRANSFER};
 	private Mode currentMode;
 	
-	private ITEM_TYPE item;
+	private ItemType item;
 	
 	/**
 	 * Construct a {@code SlotConditionGroup} with a {@code GUIContext}, width, height, {@code Font}, and the pocket number.
@@ -55,21 +55,21 @@ public class SlotConditionGroup extends ComponentConditionGroup<Counter> {
 	}
 	
 	/**
-	 * Get the ITEM_TYPE.
-	 * @return ITEM_TYPE
+	 * Get the ItemType.
+	 * @return ItemType
 	 */
-	public ITEM_TYPE getItem() {
+	public ItemType getItem() {
 		return item;
 	}
 	
 	/**
 	 * Changes the contents of the group.
-	 * @param item New ITEM_TYPE
+	 * @param item New ItemType
 	 * @param name New name
 	 * @param amount New quantity
 	 * @param condition Condition to use
 	 */
-	public void changeContents(ITEM_TYPE item, String name, int amount, Condition condition) {
+	public void changeContents(ItemType item, String name, int amount, Condition condition) {
 		if (currentMode == Mode.TRANSFER) {
 			return;
 		}

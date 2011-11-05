@@ -8,6 +8,7 @@ import component.PartyComponentDataSource;
 
 import model.datasource.HUDDataSource;
 import model.item.Animal;
+import model.item.ItemType;
 import model.item.Vehicle;
 import model.worldMap.LocationNode;
 import model.worldMap.TrailEdge;
@@ -156,7 +157,7 @@ public class Party implements HUDDataSource, Serializable {
 	 */
 	public void buyItemForInventory(List<Item> items, Inventoried buyer) {
 		int cost = 0;
-		final ITEM_TYPE itemType = items.get(0).getType();
+		final ItemType itemType = items.get(0).getType();
 		final int numberOf = items.size();
 		
 		for (Item item : items) {
@@ -184,7 +185,7 @@ public class Party implements HUDDataSource, Serializable {
 	 * @param numberOf The number of items to try with
 	 * @return The list of people
 	 */
-	public List<Inventoried> canGetItem(ITEM_TYPE itemType, int numberOf) {
+	public List<Inventoried> canGetItem(ItemType itemType, int numberOf) {
 		final List<Inventoried> ableList = new ArrayList<Inventoried>();
 		
 		if (itemType.getCost() * numberOf > money) {
@@ -228,12 +229,12 @@ public class Party implements HUDDataSource, Serializable {
 	 * Returns a list of the Skills present in the party
 	 * @return A list of skills in the party
 	 */
-	public List<Person.Skill> getSkills() {
-		final List<Person.Skill> skillList = new ArrayList<Person.Skill>();
+	public List<Skill> getSkills() {
+		final List<Skill> skillList = new ArrayList<Skill>();
 		
 		for (Person person : members) {
-			for (Person.Skill skill: person.getSkills()) {
-				if (!skillList.contains(skill) && skill != Person.Skill.NONE) {
+			for (Skill skill: person.getSkills()) {
+				if (!skillList.contains(skill) && skill != Skill.NONE) {
 					skillList.add(skill);
 				}
 			}
@@ -496,11 +497,11 @@ public class Party implements HUDDataSource, Serializable {
 		}
 		
 		//If we need restoration, and have food
-		ITEM_TYPE firstFood = null;
-		final List<ITEM_TYPE> typeList = 
+		ItemType firstFood = null;
+		final List<ItemType> typeList = 
 			donator.getInventory().getPopulatedSlots();
 		
-		for (ITEM_TYPE itemType : typeList) {
+		for (ItemType itemType : typeList) {
 			if (itemType.isFood() && firstFood == null) {
 				firstFood = itemType;
 			}
@@ -513,10 +514,10 @@ public class Party implements HUDDataSource, Serializable {
 		int foodFactor = food.getType().getFactor();
 		
 		//Do some handling for party member skills, such as cooking
-		if(food.getType().isPlant() && getSkills().contains(Person.Skill.BOTANY)) {
+		if(food.getType().isPlant() && getSkills().contains(Skill.BOTANY)) {
 			foodFactor += 1;
 		}
-		if(getSkills().contains(Person.Skill.COOKING)) {
+		if(getSkills().contains(Skill.COOKING)) {
 			foodFactor += 1;
 		}
 
@@ -540,7 +541,7 @@ public class Party implements HUDDataSource, Serializable {
 	
 	private boolean vehicleHasFood() {
 		if (vehicle != null) {
-			for (ITEM_TYPE itemType : vehicle.getInventory().getPopulatedSlots()) {
+			for (ItemType itemType : vehicle.getInventory().getPopulatedSlots()) {
 				if (itemType.isFood()) {
 					return true;
 				}
@@ -550,7 +551,7 @@ public class Party implements HUDDataSource, Serializable {
 	}
 
 	private boolean personHasFood(Person person) {
-		for (ITEM_TYPE itemType : person.getInventory().getPopulatedSlots()) {
+		for (ItemType itemType : person.getInventory().getPopulatedSlots()) {
 			if (itemType.isFood()) {
 				return true;
 			}

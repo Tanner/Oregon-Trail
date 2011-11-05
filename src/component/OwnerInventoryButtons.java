@@ -6,7 +6,7 @@ import java.util.List;
 import model.Condition;
 import model.Inventoried;
 import model.Item;
-import model.ITEM_TYPE;
+import model.item.ItemType;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -59,7 +59,7 @@ public class OwnerInventoryButtons {
 	 * @param container Container
 	 */
 	public void makePanel(GameContainer container) {
-		List<ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
+		List<ItemType> slots = inventoried.getInventory().getPopulatedSlots();
 		
 		int panelHeight = ITEM_BUTTON_HEIGHT + CONDITION_BAR_PADDING + ITEM_CONDITION_BAR_HEIGHT;
 		int panelWidth = ((ITEM_BUTTON_WIDTH + PADDING) * inventoried.getMaxSize()) - PADDING;
@@ -125,7 +125,7 @@ public class OwnerInventoryButtons {
 	 * Update the contents of the buttons and the weightbar to be current
 	 */
 	public void updateGraphics() {
-		List<ITEM_TYPE> slots = inventoried.getInventory().getPopulatedSlots();
+		List<ItemType> slots = inventoried.getInventory().getPopulatedSlots();
 
 		int maxInventorySize = inventoried.getInventory().getMaxSize();
 
@@ -168,21 +168,21 @@ public class OwnerInventoryButtons {
 	
 	/**
 	 * Remove an item from the {@code Inventoried} inventory.
-	 * @param item ITEM_TYPE to remove
+	 * @param item ItemType to remove
 	 * @param quantity Number of the item to remove
 	 * @return Whether or not the removal was successful
 	 */
-	public List<Item> removeItemFromInventory(ITEM_TYPE item, int quantity) {
+	public List<Item> removeItemFromInventory(ItemType item, int quantity) {
 		return inventoried.removeItemFromInventory(item, quantity);
 	}
 	
 	/**
-	 * Check to see if an {@code ITEM_TYPE} can be added.
-	 * @param item ITEM_TYPE to check
+	 * Check to see if an {@code ItemType} can be added.
+	 * @param item ItemType to check
 	 * @param quantity Number of the item to check
 	 * @return Whether or not the check return true or false
 	 */
-	public boolean canAddItems(ITEM_TYPE item, int quantity) {
+	public boolean canAddItems(ItemType item, int quantity) {
 		return inventoried.canGetItem(item, quantity);
 	}
 	
@@ -233,7 +233,7 @@ public class OwnerInventoryButtons {
 		this.listener = listener;
 	}
 
-	public int getNumberOfItem(ITEM_TYPE itemType) {
+	public int getNumberOfItem(ItemType itemType) {
 		return inventoried.getInventory().getNumberOf(itemType);
 	}
 	
@@ -241,7 +241,7 @@ public class OwnerInventoryButtons {
 		@Override
 		public void componentActivated(AbstractComponent component) {
 			SlotConditionGroup slotConditionGroup = (SlotConditionGroup) component;
-			ITEM_TYPE item = slotConditionGroup.getItem();
+			ItemType item = slotConditionGroup.getItem();
 			
 			if (PartyInventoryScene.getCurrentMode() == PartyInventoryScene.Mode.NORMAL) {
 				listener.itemButtonPressed(OwnerInventoryButtons.this, item);
