@@ -7,7 +7,7 @@ import model.item.Vehicle;
 
 public class PotholeEncounter extends Encounter {
 	
-	private final double MAX_DECREASE = 1;
+	private final double MAX_DECREASE = .25;
 	private String message;
 	
 	public PotholeEncounter(Party party, int value) {
@@ -25,7 +25,7 @@ public class PotholeEncounter extends Encounter {
 		else {
 			Condition condition = vehicle.getCondition();
 			double max = condition.getMax();
-			double damage = max * MAX_DECREASE;
+			double damage = max * MAX_DECREASE * Math.random();
 			vehicle.decreaseStatus((int) damage);
 			message = "You weren't paying attention and ran your wagon over a " +
 					"huge pothole.";
