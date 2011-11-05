@@ -21,9 +21,4 @@ public class RiverEncounter extends Encounter {
 		return new EncounterNotification(new Notification(message, true), SceneID.RIVER);
 	}
 
-	@Override
-	public EncounterID getEncounterID() {
-		return id;
-	}
-
 }

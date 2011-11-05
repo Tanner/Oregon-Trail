@@ -63,8 +63,4 @@ public class ThiefEncounter extends Encounter {
 		return new EncounterNotification(new Notification(message, true), null);
 	}
 	
-	@Override
-	public EncounterID getEncounterID() {
-		return id;
-	}
 }

@@ -30,8 +30,4 @@ public class MessageEncounter extends Encounter {
 				null);
 	}
 
-	@Override
-	public EncounterID getEncounterID() {
-		return id;
-	}
 }

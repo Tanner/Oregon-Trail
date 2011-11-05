@@ -38,7 +38,9 @@ public abstract class Encounter {
 	 */
 	protected abstract EncounterNotification makeNotification();
 	
-	public abstract EncounterID getEncounterID();
+	public  EncounterID getEncounterID() {
+		return id;
+	}
 
 	public void increaseValue(int amount) {
 		value += amount;
