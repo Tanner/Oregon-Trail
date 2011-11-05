@@ -1,5 +1,7 @@
 package scene;
 
+import java.util.Random;
+
 import model.Party;
 import model.Person;
 import model.worldMap.LocationNode;
@@ -69,6 +71,9 @@ public class TownScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
+
+		Random random = new Random();
+		SoundStore.get().playMusic(random.nextBoolean() ? "FFD" : "MS");
 						
 		Font h1 = FontStore.get().getFont(FontStore.FontID.H1);
 		Font h2 = FontStore.get().getFont(FontStore.FontID.H2);

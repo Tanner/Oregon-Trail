@@ -243,6 +243,7 @@ public class RiverScene extends Scene {
 	 */
 	private void payToll() {
 		party.setMoney(party.getMoney() - tollPrice);
+		SoundStore.get().playSound("RK");
 		successModalMessage = "Your party decided to take the easy way out and " +
 				"pay the the bridge toll.  Your party members thank you.";
 		successModal = new MessageModal(container, this, successModalMessage);

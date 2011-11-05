@@ -63,6 +63,9 @@ public class SoundStore {
 		addToSounds("Splash", new Sound("resources/music/splash.ogg"));
 		addToMusic("DayTheme", new Music("resources/music/walkingDaytimeMusic.ogg"));
 		addToMusic("NightTheme", new Music("resources/music/Creepy Wind.ogg"));
+		addToMusic("FFD", new Music("resources/music/FFD.ogg"));
+		addToMusic("MS", new Music("resources/music/MagnificentSeven.ogg"));
+		addToSounds("RK", new Sound("resources/music/RiverKwai.ogg"));
 	}
 	
 	public String getPlayingMusic() {
