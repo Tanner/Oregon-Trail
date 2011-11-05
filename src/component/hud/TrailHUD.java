@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import model.datasource.HUDDataSource;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Image;
@@ -56,18 +54,14 @@ public class TrailHUD extends HUD {
 	
 	private Queue<String> notificationQueue;
 	
-	private HUDDataSource data;
-	
 	/**
 	 * Constructs a HUD with a {@code GUIContext} and {@code HUDDataSource}.
 	 * @param context Context
-	 * @param data Data source to use
 	 */
-	public TrailHUD(GUIContext context, HUDDataSource data, Mode mode, ComponentListener listener) {
+	public TrailHUD(GUIContext context, Mode mode, ComponentListener listener) {
 		super(context, context.getWidth(), HEIGHT);
 		
 		this.currentMode = mode;
-		this.data = data;
 		
 		notificationQueue = new LinkedList<String>();
 		

@@ -6,7 +6,6 @@ import java.util.List;
 
 import component.PartyComponentDataSource;
 
-import model.datasource.HUDDataSource;
 import model.item.Animal;
 import model.item.ItemType;
 import model.item.Vehicle;
@@ -19,7 +18,7 @@ import core.Logger.Level;
 /**
  * Party class that contains an array of persons that are members.
  */
-public class Party implements HUDDataSource, Serializable {
+public class Party implements Serializable {
 	
 	private List<Person> members = new ArrayList<Person>();
 	
@@ -243,7 +242,6 @@ public class Party implements HUDDataSource, Serializable {
 		return skillList;
 	}
 
-	@Override
 	public int getMoney() {
 		return this.money;
 	}

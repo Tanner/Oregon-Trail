@@ -34,7 +34,9 @@ public class PotholeEncounter extends Encounter {
 					"huge pothole.";
 			if (condition.getCurrent() == 0) {
 				message += "  Your vehicle was destroyed.";
-				party.setVehicle(null);
+				//if(!party.repairVehicle()) {
+					party.setVehicle(null);
+				//}
 			}
 			else
 				message += "  Better check your wagon for damages.";

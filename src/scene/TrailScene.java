@@ -91,7 +91,7 @@ public class TrailScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		hud = new TrailHUD(container, party, TrailHUD.Mode.TRAIL, new HUDListener());
+		hud = new TrailHUD(container, TrailHUD.Mode.TRAIL, new HUDListener());
 		showHUD(hud);
 		
 		int toolbarXMargin = 10;
