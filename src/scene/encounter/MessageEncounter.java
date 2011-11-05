@@ -3,6 +3,10 @@ package scene.encounter;
 import model.Notification;
 import model.Party;
 
+
+/**
+ * An encounter where a simple message is displayed to the player.
+ */
 public class MessageEncounter extends Encounter {
 	
 	String[] messages;
@@ -30,8 +34,4 @@ public class MessageEncounter extends Encounter {
 				null);
 	}
 
-	@Override
-	public EncounterID getEncounterID() {
-		return id;
-	}
 }

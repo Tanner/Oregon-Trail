@@ -92,8 +92,4 @@ public class ItemEncounter extends Encounter {
 		return new EncounterNotification(notification, null);
 	}
 
-	@Override
-	public EncounterID getEncounterID() {
-		return id;
-	}
 }

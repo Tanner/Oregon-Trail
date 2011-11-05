@@ -3,6 +3,9 @@ package scene.encounter;
 import model.Notification;
 import model.Party;
 
+/**
+ * An encounter where nothing happens.
+ */
 public class NullEncounter extends Encounter {
 
 	public NullEncounter(Party party, int value) {
@@ -19,9 +22,5 @@ public class NullEncounter extends Encounter {
 	protected EncounterNotification makeNotification() {
 		return new EncounterNotification(new Notification("", false), null);
 	}
-	
-	@Override
-	public EncounterID getEncounterID() {
-		return id;
-	}
+
 }

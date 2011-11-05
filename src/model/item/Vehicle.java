@@ -14,8 +14,6 @@ import model.Item;
  */
 public class Vehicle extends Item implements Inventoried{
 
-	private final Condition status;
-
 	private final Inventory cargo;
 	
 	private final int MAX_INVENTORY_SIZE;
