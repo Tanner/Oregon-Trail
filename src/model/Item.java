@@ -12,7 +12,7 @@ import core.ConstantStore;
  */
 public class Item implements Conditioned, Comparable<Item>, Serializable{
 	
-	private final Condition status;
+	protected Condition status;
 	
 	private boolean isStackable = true;
 	
