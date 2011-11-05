@@ -1,5 +1,6 @@
 package scene.test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,7 +22,10 @@ import component.Panel;
 import component.Button;
 import component.Label;
 import component.Positionable;
+import component.SegmentedControl;
+import component.modal.ComponentModal;
 import component.modal.MessageModal;
+import component.modal.Modal;
 import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;
@@ -43,6 +47,8 @@ public class SceneSelectorScene extends Scene {
 	private Player player;
 	private Game game;
 	
+	private ComponentModal<SegmentedControl> fileLoadModal, fileSaveModal;
+	
 	/**
 	 * Creates the scene which selects the scene by which the player can select the scene they wish this scene to select 
 	 */
@@ -61,6 +67,8 @@ public class SceneSelectorScene extends Scene {
 		
 		SceneID scenes[] = SceneID.values();
 		
+		setUpSaveFiles();
+				
 		int size = (int) Math.ceil(Math.sqrt(scenes.length + 2)); // 2 for reset party and game
 		int height = (container.getHeight() - (size + 1) * MARGIN) / size;
 		int width = (container.getWidth() - (size + 1) * MARGIN) / size;
@@ -94,6 +102,43 @@ public class SceneSelectorScene extends Scene {
 		backgroundLayer.add(new Panel(container, Color.black));
 	}
 	
+	private void setUpSaveFiles() {
+
+		List<String> fileList = new ArrayList<String>();
+		for(String file : new File("resources/serialized/").list()) {
+			fileList.add(file);
+		}
+		
+		String[] saveFileList = new String[5];
+		int numEmpty = 0;
+		for(int i = 1; i <= 5; i++) {
+			if(fileList.contains("game" + i + ".ser")) {
+				saveFileList[i-1] = ("game" + i);
+			} else {
+				saveFileList[i-1] = ("Empty");
+				numEmpty++;
+			}
+		}
+		int[] emptyFiles = new int[numEmpty];
+		int j = 0;
+		for(int i = 0; i < 5; i++) {
+			if(saveFileList[i] == "Empty") {
+				emptyFiles[j] = i;
+				j++;
+			}
+		}
+		
+		SegmentedControl loadableFiles = new SegmentedControl(container, 500, 200, 5, 1, 0, true, 1, saveFileList);
+		loadableFiles.setDisabled(emptyFiles);
+		
+		fileLoadModal = new ComponentModal<SegmentedControl>(container, SceneSelectorScene.this, "Choose a file to load", 2, loadableFiles);
+		fileLoadModal.setButtonText(fileLoadModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
+		
+		fileSaveModal = new ComponentModal<SegmentedControl>(container, SceneSelectorScene.this, "Choose a slot to save", 2, new SegmentedControl(container, 500, 200, 5, 1, 0, true, 1, saveFileList));
+		fileSaveModal.setButtonText(fileLoadModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
+		
+	}
+
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		return;
@@ -205,11 +250,11 @@ public class SceneSelectorScene extends Scene {
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_PARTY"))) {
 				player.setParty(makeRandomParty());
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "SAVE_GAME"))) {
-				GameDirector.sharedSceneListener().serialize("game");
+				setUpSaveFiles();
+				showModal(fileSaveModal);
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "LOAD_GAME"))) {
-				game = GameDirector.sharedSceneListener().deserialize("game");
-				player = game.getPlayer();
-				System.out.println(player.getParty());
+				setUpSaveFiles();
+				showModal(fileLoadModal);
 			}
 		}
 		
@@ -284,6 +329,17 @@ public class SceneSelectorScene extends Scene {
 		party.setTrail(party.getLocation().getOutBoundTrailByIndex(0));
 		
 		return party;
+	}
+	
+	public void dismissModal(Modal modal, int button) {
+		super.dismissModal(modal, button);
+		if(modal == fileLoadModal && button != modal.getCancelButtonIndex()) {
+			game = GameDirector.sharedSceneListener().deserialize("game" + (fileLoadModal.getComponent().getSelection()[0] + 1));
+			player = game.getPlayer();
+		}
+		if(modal == fileSaveModal && button != modal.getCancelButtonIndex()) {
+			GameDirector.sharedSceneListener().serialize("game" + (fileSaveModal.getComponent().getSelection()[0]+1));
+		}
 	}
 
 	@Override
