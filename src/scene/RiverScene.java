@@ -151,16 +151,12 @@ public class RiverScene extends Scene {
 	public void dismissModal(Modal modal, int button) {
 		super.dismissModal(modal, button);
 		if (modal == crossingChoicesModal) {
-			if (button == modal.getCancelButtonIndex()) {
-				showModal(crossingChoicesModal);
-			} else {
-				int[] choice = crossingChoicesModal.getComponent().getSelection();
-				switch ( choice[0] ) {
+			int[] choice = crossingChoicesModal.getComponent().getSelection();
+			switch ( choice[0] ) {
 				case 0 : ford(); break;
 				case 1 : caulk(); break;
 				case 2 : payToll(); break;
 				case 3 : delay(); break;
-				}
 			}
 		}
 		else if (modal == successModal) {
