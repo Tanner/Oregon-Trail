@@ -7,6 +7,7 @@ import java.util.Random;
 import model.Party;
 import model.Person;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -15,11 +16,13 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import component.Panel;
 import component.ParallaxPanel;
+import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.SegmentedControl;
 import component.modal.ComponentModal;
 import component.modal.MessageModal;
 import component.modal.Modal;
+import component.sprite.AnimatingSprite;
 import component.sprite.ParallaxSprite;
 import component.sprite.ParallaxSpriteLoop;
 import component.sprite.Sprite;
@@ -46,6 +49,8 @@ public class RiverScene extends Scene {
 	private ParallaxPanel riverParallaxPanel;
 	private ParallaxPanel cloudParallaxPanel;
 	
+	private AnimatingSprite wagon;
+	
 	private SegmentedControl crossingChoicesControl;
 	private ComponentModal<SegmentedControl> crossingChoicesModal;
 	private MessageModal successModal;
@@ -61,7 +66,8 @@ public class RiverScene extends Scene {
 
 	private boolean haveWaited;
 	private boolean didTakeDamage;
-
+	private boolean ani;
+	
 	public RiverScene(Party party) {
 		this.party = party;
 		riverDepth = (int) (Math.random() * MAX_RIVER_DEPTH) + 1;
@@ -73,6 +79,14 @@ public class RiverScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
+		
+		//Animating wagon sprites
+		Animation wagonAni = new Animation();
+		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver1.png"), 100);
+		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver2.png"), 100);
+		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver3.png"), 100);
+		wagon = new AnimatingSprite(container, wagonAni, AnimatingSprite.Direction.LEFT);
+		mainLayer.add(wagon, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, 120);
 		
 		makeChoiceModal();
 
@@ -125,6 +139,10 @@ public class RiverScene extends Scene {
 			sprite.move(delta);
 		}
 		if ( !isPaused() ) {
+			ani = !ani;
+			if (ani)
+				wagon.setLocation(wagon.getX(), wagon.getY() - 1);
+			wagon.update(container, delta);
 			crossTime += delta;
 			if ( crossTime > RIVER_CROSS_TIME ) {
 				if (didTakeDamage) {
