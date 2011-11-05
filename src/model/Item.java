@@ -12,7 +12,7 @@ import model.item.ItemType;
  */
 public class Item implements Conditioned, Comparable<Item>, Serializable{
 	
-	protected Condition status;
+	protected final Condition status;
 	
 	private boolean isStackable = true;
 	
