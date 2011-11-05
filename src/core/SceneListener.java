@@ -33,7 +33,7 @@ public interface SceneListener {
 	 */
 	public FontStore getFontManager();
 	
-	public void serialize();
+	public void serialize(String name);
 
-	public Game deserialize();
+	public Game deserialize(String name);
 }

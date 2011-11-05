@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JFileChooser;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
@@ -203,9 +205,15 @@ public class GameDirector implements SceneListener {
 		return encounterList;
 	}
 	
-	public void serialize() {
+	@Override
+	public void serialize(String saveName) {
 		try {
-			FileOutputStream fileOut = new FileOutputStream("resources/serialized/game.ser");
+			File newFile = new File("resources/serialized/" + saveName + ".ser");
+			if(!newFile.exists()) {
+				new File("resources/serialized").mkdir();
+				newFile.createNewFile();
+			}
+			FileOutputStream fileOut = new FileOutputStream(newFile);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(game);
 			out.close();
@@ -216,9 +224,9 @@ public class GameDirector implements SceneListener {
 	}
 	
 	@Override
-	public Game deserialize() {
+	public Game deserialize(String saveName) {
 		try {
-			FileInputStream fileIn = new FileInputStream("resources/serialized/game.ser");
+			FileInputStream fileIn = new FileInputStream("resources/serialized/" + saveName + ".ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			game = (Game) in.readObject();
 			in.close();

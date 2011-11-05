@@ -206,9 +206,9 @@ public class SceneSelectorScene extends Scene {
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "RESET_PARTY"))) {
 				player.setParty(makeRandomParty());
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "SAVE_GAME"))) {
-				GameDirector.sharedSceneListener().serialize();
+				GameDirector.sharedSceneListener().serialize("game");
 			} else if (buttonText.equals(ConstantStore.get("SCENE_SELECTOR_SCENE", "LOAD_GAME"))) {
-				game = GameDirector.sharedSceneListener().deserialize();
+				game = GameDirector.sharedSceneListener().deserialize("game");
 				player = game.getPlayer();
 				System.out.println(player.getParty());
 			}
