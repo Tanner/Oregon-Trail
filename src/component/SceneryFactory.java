@@ -11,6 +11,7 @@ import component.Positionable.ReferencePoint;
 import component.hud.HUD;
 import component.sprite.ParallaxSprite;
 import component.sprite.ParallaxSpriteLoop;
+import core.ImageStore;
 
 /**
  * Generates a sky and scenery for a time of day and environment.
@@ -59,18 +60,18 @@ public class SceneryFactory {
 		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
 		
 		// Ground
-		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, ImageStore.get().getImage("GRASS"), GROUND_DISTANCE);
 		parallaxPanel.add(ground, parallaxPanel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		// Trail
-		ParallaxSprite trail = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		ParallaxSprite trail = new ParallaxSpriteLoop(container, container.getWidth() + 1, ImageStore.get().getImage("TRAIL"), GROUND_DISTANCE);
 		parallaxPanel.add(trail, ground.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, -trail.getHeight() / 2);
 		
 		// Hills
-		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
+		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), ImageStore.get().getImage("HILL_A"), HILL_DISTANCE_A);
 		parallaxPanel.add(hillA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
+		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), ImageStore.get().getImage("HILL_B"), HILL_DISTANCE_B);
 		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		// Trees
@@ -84,14 +85,14 @@ public class SceneryFactory {
 				offset += GROUND_DISTANCE - distance;
 			}
 			
-			ParallaxSprite tree = new ParallaxSprite(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 0, TREE_DISTANCE, distance, true);
+			ParallaxSprite tree = new ParallaxSprite(container, 96, ImageStore.get().getImage("TREE"), 0, TREE_DISTANCE, distance, true);
 			
 			offset -= (int) (tree.getScale() * offset) / 2;
 
 			parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, offset);
 		}
 		
-		ParallaxSprite deer = new ParallaxSprite(container, new Image("resources/graphics/animals/deer.png", false, Image.FILTER_NEAREST), DEER_DISTANCE, true);
+		ParallaxSprite deer = new ParallaxSprite(container, ImageStore.get().getImage("DEER"), DEER_DISTANCE, true);
 		parallaxPanel.add(deer, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, DEER_OFFSET);
 		
 		return parallaxPanel;
@@ -105,9 +106,9 @@ public class SceneryFactory {
 		
 		// Clouds
 		Image[] cloudImages = new Image[3];
-		cloudImages[0] = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
-		cloudImages[1] = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
-		cloudImages[2] = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
+		cloudImages[0] = ImageStore.get().getImage("CLOUD_A");
+		cloudImages[1] = ImageStore.get().getImage("CLOUD_B");
+		cloudImages[2] = ImageStore.get().getImage("CLOUD_C");
 		
 		for (int i = 0; i < NUM_CLOUDS; i++) {
 			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;

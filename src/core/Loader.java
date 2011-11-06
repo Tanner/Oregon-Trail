@@ -11,6 +11,8 @@ public class Loader extends Thread {
 			SoundStore.get();
 		} else if (itemToLoad == LOAD_ITEMS.FONTS) {
 			FontStore.get();
+		} else if (itemToLoad == LOAD_ITEMS.IMAGES) {
+			ImageStore.get();
 		}
 	}
 	
