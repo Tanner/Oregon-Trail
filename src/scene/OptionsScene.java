@@ -35,9 +35,8 @@ public class OptionsScene extends Scene {
 	private final int BUTTON_HEIGHT = 50;
 	private final int PADDING = 20;
 	
-	private ComponentModal<SegmentedControl> fileLoadModal;
 	private ComponentModal<SegmentedControl> fileSaveModal;
-	private Button mainMenu, save, exit, back;
+	private Button mainMenu, save, back;
 	private Spinner volume;
 	
 	public OptionsScene() {
@@ -65,27 +64,28 @@ public class OptionsScene extends Scene {
 			save.setTooltipEnabled(true);
 			save.setTooltipMessage("Please start a game\nbefore you can save.");
 		}
-		tempLabel = new Label(container, fieldFont, Color.white, "Exit");
-		exit = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT,tempLabel);
-		exit.addListener(listener);
+//		tempLabel = new Label(container, fieldFont, Color.white, "Exit");
+//		exit = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT,tempLabel);
+//		exit.addListener(listener);
 		tempLabel = new Label(container, fieldFont, Color.white, "Back");
 		back = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT,tempLabel);
 		back.addListener(listener);
 		tempLabel = new Label(container, fieldFont, Color.white, "Volume");
-		String[] volumeLevels = new String[101];
-		for (int i = 0; i <= 100; i++) {
-			volumeLevels[i] = "" + i;
+		String[] volumeLevels = new String[11];
+		for (int i = 0; i <= 10; i++) {
+			volumeLevels[i] = "" + i*10;
 		}
 		volume = new Spinner(container, BUTTON_WIDTH, BUTTON_HEIGHT, fieldFont, Color.white, true, volumeLevels);
 		volume.addListener(listener);
-		volume.setState((int) (SoundStore.get().getVolume() * 100));
+		System.out.println(SoundStore.get().getVolume() * 10);
+		volume.setState((int) (SoundStore.get().getVolume() * 10));
 		
 		ArrayList<Component> components = new ArrayList<Component>();
 		components.add(options);
 		components.add(mainMenu);
 		components.add(save);
 		components.add(volume);
-		components.add(exit);
+//		components.add(exit);
 		components.add(back);
 		mainLayer.addAsColumn(components.iterator(), mainLayer.getPosition(ReferencePoint.TOPCENTER), -BUTTON_WIDTH/2, 75, PADDING);
 	}
@@ -140,15 +140,18 @@ public class OptionsScene extends Scene {
 		public void componentActivated(AbstractComponent source) {
 			if (source == mainMenu) {
 				GameDirector.sharedSceneListener().resetToMainMenu();
-			} else if ( source == exit ) {
-				System.exit(0);
+//			} else if ( source == exit ) {
+//				System.exit(0);
 			} else if ( source == back ) {
 				GameDirector.sharedSceneListener().sceneDidEnd(OptionsScene.this);
 			} else if ( source == save ) {
+				setUpSaveFiles();
 				showModal(fileSaveModal);
 			}
 			else if ( source == volume ) {
-				SoundStore.get().setVolume(1.0f / volume.getState());
+				System.out.printf("Before volume: %f\n", SoundStore.get().getVolume());
+				SoundStore.get().setVolume( volume.getState() / 100.0f );
+				System.out.printf("After volume: %f\n", SoundStore.get().getVolume());
 			}
 		}
 	}

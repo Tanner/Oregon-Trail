@@ -90,6 +90,7 @@ public class Spinner extends Component {
 	public void setState(int state) {
 		this.state = state;
 		label.setText(fields[state]);
+		refreshState();
 	}
 	
 	/**
@@ -133,11 +134,12 @@ public class Spinner extends Component {
 		public void componentActivated(AbstractComponent source) {
 			if (source == upButton) {
 				state = (state == MAX_STATE) ? state : state + 1;
-			} else {
+			} else if (source == downButton) {
 				state = (state == 0) ? 0 : state - 1;
 			}
 			label.setText(fields[state]);
 			refreshState();
+			Spinner.this.notifyListeners();
 		}
 	}
 }
