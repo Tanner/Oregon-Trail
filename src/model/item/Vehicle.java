@@ -85,4 +85,8 @@ public class Vehicle extends Item implements Inventoried{
 	public double getWeight() {
 		return cargo.getWeight();
 	}
+
+	public void repair(int amount) {
+		status.increase(amount);
+	}
 }

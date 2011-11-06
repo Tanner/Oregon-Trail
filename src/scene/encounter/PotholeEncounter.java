@@ -26,17 +26,23 @@ public class PotholeEncounter extends Encounter {
 					"it.";
 		}
 		else {
-			Condition condition = vehicle.getCondition();
+			Condition condition = vehicle.getStatus();
 			double max = condition.getMax();
 			double damage = max * MAX_DECREASE * Math.random();
-			vehicle.decreaseStatus((int) damage);
+			party.damageVehicle((int) damage);
 			message = "You weren't paying attention and ran your wagon over a " +
 					"huge pothole.";
-			if (condition.getCurrent() == 0) {
-				message += "  Your vehicle was destroyed.";
-				//if(!party.repairVehicle()) {
-					party.setVehicle(null);
-				//}
+			if (party.getVehicle().getConditionPercentage() == 0) {
+				message += "  Your vehicle has broken down.";
+				if(party.repairVehicle() == 0) {
+					message += "  However, you managed to fix it.";
+				} else {
+					if(party.getVehicle().getConditionPercentage() == 0) {
+						message += "  You couldn't repair your wagon and had to abandon it.";
+					} else {
+						message += "  You managed to fix it enough to keep going.";
+					}
+				}
 			}
 			else
 				message += "  Better check your wagon for damages.";

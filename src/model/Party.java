@@ -670,4 +670,76 @@ public class Party implements Serializable {
 	public Time getTime() {
 		return time;
 	}
+	
+	public void damageVehicle(int amount) {
+		vehicle.decreaseStatus(amount);
+	}
+	
+	/**
+	 * Repairs the vehicle as much as possible, and returns the amount not repaired
+	 * @param amount The amount attempted to repair by
+	 * @return The amount left over after all repairing is done
+	 */
+	public int repairVehicle() {
+		// Figure out how much restoration is needed.
+		int restoreNeeded = (int)(vehicle.getCondition().getMax() - vehicle.getCondition().getCurrent());
+		if(restoreNeeded == 0) {
+			return 0;
+		}
+		
+		boolean repairPossible = false;
+		Inventoried donator = null;
+		for(Person person : members) {
+			for(ItemType itemType : person.getInventory().getPopulatedSlots()) {
+				if(itemType.isTool()) {
+					repairPossible = true;
+					donator = person;
+				}
+			}
+		}						
+		if(!repairPossible) {
+			for(ItemType itemType : vehicle.getInventory().getPopulatedSlots()) {
+				if(itemType.isTool()) {
+					repairPossible = true;
+					donator = vehicle;
+				}
+			}
+		}
+		if (!repairPossible) {
+			return restoreNeeded;
+		}
+		
+		//If we need restoration, and have food
+		ItemType firstTool = null;
+		final List<ItemType> typeList = 
+			donator.getInventory().getPopulatedSlots();
+		
+		for (ItemType itemType : typeList) {
+			if (itemType.isFood() && firstTool == null) {
+				firstTool = itemType;
+			}
+		}
+		
+		final Item tool = 
+			donator.removeItemFromInventory(firstTool, 1).get(0);
+		
+		int repairFactor = tool.getType().getFactor();
+
+		final int toolToUse = (restoreNeeded / repairFactor) + 1; //+1 to ensure that we overshoot
+		
+		if (tool.getStatus().getCurrent() > toolToUse) {
+			//If there is enough condition in the food to feed the person completely, heal them and eat
+			
+			vehicle.repair(toolToUse * repairFactor);
+			tool.decreaseStatus(toolToUse);
+			donator.addItemToInventory(tool); //puts the item back in inventory
+			//tool status down, person health up
+			return 0;
+		} else {
+			//we don't have enough status in the tool to completely heal the person, so eat it all.
+			int restoreAmount = (int) tool.getStatus().getCurrent() * repairFactor;
+			vehicle.repair(restoreAmount);
+			return repairVehicle(); //Recursively call the function to ensure we eat as much as possible.
+		}
+	}
 }
