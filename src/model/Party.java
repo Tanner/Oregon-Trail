@@ -349,7 +349,7 @@ public class Party implements Serializable {
 		totalDistanceTravelled += movement;
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
-		grazeAnimals(getPace().getSpeed());
+		grazeAnimals(getAnimalStrain());
 		for(Animal animal : animals) {
 			if(animal.getStatus().getCurrent() == 0) {
 				if (vehicle != null) {
@@ -403,7 +403,6 @@ public class Party implements Serializable {
 	
 	public List<Notification> rest() {
 		List<Notification> messages = new ArrayList<Notification>();
-		grazeAnimals(5);
 		
 		List<Person> deathList = new ArrayList<Person>();
 		int finalResult = 0;
@@ -438,16 +437,25 @@ public class Party implements Serializable {
 		return messages;
 	}
 
-	private void grazeAnimals(int paceDamage) {
+	private void grazeAnimals(int amount) {
 		for (Animal animal : animals) {
-			if(paceDamage - 75 > 0) {
-				animal.decreaseStatus(paceDamage - 75);
+			if(amount < 0) {
+				animal.decreaseStatus(-amount);
 			} else {
-				animal.increaseStatus(75 - paceDamage);
+				animal.increaseStatus(amount);
 			}
 		}
 	}
 	
+	private int getAnimalStrain() {
+		if(getPace() == Pace.GRUELING) {
+			
+		} else if (getPace() == Pace.STRENUOUS) {
+			
+		}
+		return 0;
+	}
+
 	public int getTotalDistanceTravelled() {
 		return totalDistanceTravelled;
 	}
