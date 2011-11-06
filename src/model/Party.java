@@ -449,11 +449,11 @@ public class Party implements Serializable {
 	
 	private int getAnimalStrain() {
 		if(getPace() == Pace.GRUELING) {
-			
+			return -(int) (10 - (10./vehicle.getWeight()));
 		} else if (getPace() == Pace.STRENUOUS) {
-			
+			return -(int) (5 - (10./vehicle.getWeight()));
 		}
-		return 0;
+		return 10;
 	}
 
 	public int getTotalDistanceTravelled() {
