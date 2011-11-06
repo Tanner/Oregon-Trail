@@ -138,7 +138,7 @@ public class SceneSelectorScene extends Scene {
 		fileLoadModal.setButtonText(fileLoadModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
 		
 		fileSaveModal = new ComponentModal<SegmentedControl>(container, SceneSelectorScene.this, "Choose a slot to save", 2, new SegmentedControl(container, 500, 200, 5, 1, 0, true, 1, saveFileList));
-		fileSaveModal.setButtonText(fileLoadModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
+		fileSaveModal.setButtonText(fileSaveModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
 		
 	}
 
