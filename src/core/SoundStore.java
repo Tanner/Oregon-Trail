@@ -103,7 +103,9 @@ public class SoundStore {
 	 * @param volume The volume to set to
 	 */
 	public void setMusicVolume(float volume) {
-		musics.get(getPlayingMusic()).setVolume(musicVolume * (volume < 0 ? 0 : volume > 1 ? 1 : volume));
+		if(getPlayingMusic() != null) {
+			musics.get(getPlayingMusic()).setVolume(musicVolume * (volume < 0 ? 0 : volume > 1 ? 1 : volume));
+		}
 	}
 
 	/**
