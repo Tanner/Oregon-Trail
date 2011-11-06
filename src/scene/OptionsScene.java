@@ -12,12 +12,12 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
-
 import component.Button;
 import component.Component;
 import component.Label;
 import component.Label.Alignment;
 import component.Panel;
+import component.Positionable;
 import component.SegmentedControl;
 import component.Spinner;
 import component.Positionable.ReferencePoint;
@@ -38,10 +38,6 @@ public class OptionsScene extends Scene {
 	private ComponentModal<SegmentedControl> fileSaveModal;
 	private Button mainMenu, save, back;
 	private Spinner volume;
-	
-	public OptionsScene() {
-		setUpSaveFiles();
-	}
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -64,13 +60,14 @@ public class OptionsScene extends Scene {
 			save.setTooltipEnabled(true);
 			save.setTooltipMessage("Please start a game\nbefore you can save.");
 		}
-//		tempLabel = new Label(container, fieldFont, Color.white, "Exit");
-//		exit = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT,tempLabel);
-//		exit.addListener(listener);
 		tempLabel = new Label(container, fieldFont, Color.white, "Back");
 		back = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT,tempLabel);
 		back.addListener(listener);
 		tempLabel = new Label(container, fieldFont, Color.white, "Volume");
+		
+		Label volumeLabel = new Label(container, BUTTON_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "Volume");
+		volumeLabel.setAlignment(Alignment.CENTER);
+		
 		String[] volumeLevels = new String[11];
 		for (int i = 0; i <= 10; i++) {
 			volumeLevels[i] = "" + i*10;
@@ -80,14 +77,20 @@ public class OptionsScene extends Scene {
 		System.out.println(SoundStore.get().getVolume() * 10);
 		volume.setState((int) (SoundStore.get().getVolume() * 10));
 		
+		List<Component> volumeList = new ArrayList<Component>();
+		volumeList.add(volumeLabel);
+		volumeList.add(volume);
+		Panel volumePanel = new Panel(container, BUTTON_WIDTH,  volume.getHeight() + volumeLabel.getHeight());
+		
+		volumePanel.addAsColumn(volumeList.iterator(), mainLayer.getPosition(ReferencePoint.TOPLEFT), 0, 0, 0);
 		ArrayList<Component> components = new ArrayList<Component>();
 		components.add(options);
 		components.add(mainMenu);
 		components.add(save);
-		components.add(volume);
-//		components.add(exit);
+		components.add(volumePanel);
 		components.add(back);
 		mainLayer.addAsColumn(components.iterator(), mainLayer.getPosition(ReferencePoint.TOPCENTER), -BUTTON_WIDTH/2, 75, PADDING);
+		backgroundLayer.add(new Panel(container, new Color(0x4671D5)), backgroundLayer.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT);
 	}
 	
 	@Override
@@ -140,8 +143,6 @@ public class OptionsScene extends Scene {
 		public void componentActivated(AbstractComponent source) {
 			if (source == mainMenu) {
 				GameDirector.sharedSceneListener().resetToMainMenu();
-//			} else if ( source == exit ) {
-//				System.exit(0);
 			} else if ( source == back ) {
 				GameDirector.sharedSceneListener().sceneDidEnd(OptionsScene.this);
 			} else if ( source == save ) {
