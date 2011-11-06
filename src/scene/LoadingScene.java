@@ -41,7 +41,6 @@ public class LoadingScene extends Scene {
 		LoadingList.setDeferredLoading(true);
 
 		SoundStore.get();
-		FontStore.get();
 		ImageStore.get();
 		
 		loadCondition = new Condition(0, LoadingList.get().getTotalResources(), 0); 
@@ -66,8 +65,6 @@ public class LoadingScene extends Scene {
 				description = "images";
 			} else if (path.contains("music")) {
 				description = "sounds";
-			} else if (path.contains("fonts")) {
-				description = "fonts";
 			}
 			loadLabel.setText("Loading " + description + "...");
 			
