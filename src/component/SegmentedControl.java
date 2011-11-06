@@ -70,7 +70,7 @@ public class SegmentedControl extends Component {
 			
 			// if there's no spacing, then set first button's left border to 0
 			if (margin <= 0) {
-				if (i > 0) {
+				if (i > 0 && rows == 1) {
 					buttons[i].setLeftBorderWidth(0);
 				}
 				if (i > STATES / rows - 1) {
