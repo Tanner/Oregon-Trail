@@ -127,6 +127,8 @@ public class GameDirector implements SceneListener {
 			return new MapScene(game.getWorldMap());
 		case RIVER:
 			return new RiverScene(game.getPlayer().getParty());
+		case OPTIONS:
+			return new OptionsScene();
 		}
 		
 		return null;
@@ -189,6 +191,10 @@ public class GameDirector implements SceneListener {
 	@Override
 	public void showSceneSelector() {
 		sceneDirector.replaceStackWithScene(sceneForSceneID(SceneID.SCENESELECTOR));
+	}
+	
+	public void resetToMainMenu() {
+		sceneDirector.replaceStackWithScene(sceneForSceneID(SceneID.MAINMENU));
 	}
 	
 	/**

@@ -28,12 +28,20 @@ public interface SceneListener {
 	public void showSceneSelector();
 	
 	/**
+	 * Show a {@code MainMenuScene}.
+	 */
+	public void resetToMainMenu();
+	
+	/**
 	 * Get the font manager.
 	 * @return A {@code FontManager} object
 	 */
 	public FontStore getFontManager();
 	
+	public Game getGame();
+	
 	public void serialize(String name);
 
 	public Game deserialize(String name);
+
 }

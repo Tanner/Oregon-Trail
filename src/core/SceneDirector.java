@@ -143,6 +143,12 @@ public class SceneDirector extends StateBasedGame {
 			GameDirector.sharedSceneListener().showSceneSelector();
 		} else if (c == '-') {
 			Component.changeDebugMode();
+		} else if (key == Input.KEY_ESCAPE
+				&& !scenes.peek().getClass().equals(OptionsScene.class)
+				&& !scenes.peek().getClass().equals(LoadingScene.class)) {
+			pushScene(new OptionsScene(), false, false,
+					new FadeOutTransition(Color.black),
+					new FadeInTransition(Color.black));
 		}
 	}
 }
