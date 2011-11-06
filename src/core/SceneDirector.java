@@ -104,10 +104,10 @@ public class SceneDirector extends StateBasedGame {
 	public void initStatesList(GameContainer container) throws SlickException {
 //		this.container = container;
 		
-		LoadingScene loading = new LoadingScene();
-		scenes.add(loading);
-		addState(loading);
-		loading.prepareToEnter();
+		SplashScene splash = new SplashScene();
+		scenes.add(splash);
+		addState(splash);
+		splash.prepareToEnter();
 	}
 	
 	@Override

@@ -95,6 +95,8 @@ public class GameDirector implements SceneListener {
 	 */
 	private Scene sceneForSceneID(SceneID id) {
 		switch (id) {
+		case SPLASH:
+			return new SplashScene();
 		case LOADING:
 			return new LoadingScene();
 		case MAINMENU:

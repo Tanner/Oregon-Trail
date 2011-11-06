@@ -2,6 +2,7 @@ package scene;
 
 public enum SceneID {
 	DEFAULT ("Default"),
+	SPLASH ("Splash Screen"),
 	LOADING ("Load Screen"),
 	MAINMENU ("Main Menu"),
 	PARTYCREATION ("Party Creation"),

@@ -161,6 +161,9 @@ public class SceneSelectorScene extends Scene {
 			} else if (buttonText.equals(SceneID.LOADING.getName())) {
 				// Loading
 				GameDirector.sharedSceneListener().requestScene(SceneID.LOADING, SceneSelectorScene.this, false);
+			} else if (buttonText.equals(SceneID.SPLASH.getName())) {
+				// Splash
+				GameDirector.sharedSceneListener().requestScene(SceneID.SPLASH, SceneSelectorScene.this, false);
 			} else if (buttonText.equals(SceneID.PARTYCREATION.getName())) {
 				// Party Creation
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYCREATION, SceneSelectorScene.this, false);
