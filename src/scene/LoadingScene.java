@@ -63,7 +63,7 @@ public class LoadingScene extends Scene {
 			String description = "nothing";
 			if (path.contains("graphics")) {
 				description = "images";
-			} else if (path.contains("music")) {
+			} else if (path.contains("sounds")) {
 				description = "sounds";
 			}
 			loadLabel.setText("Loading " + description + "...");
