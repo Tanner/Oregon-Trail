@@ -15,6 +15,10 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.state.transition.RotateTransition;
 import org.newdawn.slick.state.transition.Transition;
 
+import component.SegmentedControl;
+import component.modal.ComponentModal;
+import component.modal.Modal;
+
 import scene.*;
 import scene.encounter.*;
 import scene.test.*;
@@ -197,6 +201,7 @@ public class GameDirector implements SceneListener {
 	
 	public void resetToMainMenu() {
 		sceneDirector.replaceStackWithScene(sceneForSceneID(SceneID.MAINMENU));
+		game = null;
 	}
 	
 	/**
@@ -251,6 +256,55 @@ public class GameDirector implements SceneListener {
 	}
 
 	/*----------------------
+	  Saving and Loading
+	  ----------------------*/
+	/**
+	 * 
+	 */
+	public Modal getLoadSaveModal(boolean isLoad, Scene scene) {
+
+		List<String> fileList = new ArrayList<String>();
+		File file  = new File("resources/serialized/");
+		if(file.exists()) {
+			for(String fileName : file.list()) {
+				fileList.add(fileName);
+			}
+		}
+		
+		String[] saveFileList = new String[5];
+		int numEmpty = 0;
+		for(int i = 1; i <= 5; i++) {
+			if(fileList.contains("game" + i + ".ser")) {
+				saveFileList[i-1] = ("game" + i);
+			} else {
+				saveFileList[i-1] = ("Empty");
+				numEmpty++;
+			}
+		}
+		int[] emptyFiles = new int[numEmpty];
+		int j = 0;
+		for(int i = 0; i < 5; i++) {
+			if(saveFileList[i] == "Empty") {
+				emptyFiles[j] = i;
+				j++;
+			}
+		}
+		
+		SegmentedControl loadableFiles = new SegmentedControl(container, 500, 200, 5, 1, 0, true, 1, saveFileList);
+		loadableFiles.setDisabled(emptyFiles);
+		
+		if (isLoad) {
+			Modal fileLoadModal = new ComponentModal<SegmentedControl>(container, scene, "Choose a file to load", 2, loadableFiles);
+			fileLoadModal.setButtonText(fileLoadModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
+			return fileLoadModal;
+		} else {
+			Modal fileSaveModal = new ComponentModal<SegmentedControl>(container, scene, "Choose a slot to save", 2, new SegmentedControl(container, 500, 200, 5, 1, 0, true, 1, saveFileList));
+			fileSaveModal.setButtonText(fileSaveModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
+			return fileSaveModal;
+		}
+	}
+	
+	/*----------------------
 	  Main
 	  ----------------------*/
 	/**
@@ -262,4 +316,5 @@ public class GameDirector implements SceneListener {
 		GameDirector gameDirector = new GameDirector();
 		gameDirector.start();
 	}
+
 }

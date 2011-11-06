@@ -2,6 +2,8 @@ package core;
 
 //import org.newdawn.slick.Music;
 
+import component.modal.Modal;
+
 import model.Game;
 import scene.Scene;
 import scene.SceneID;
@@ -43,5 +45,7 @@ public interface SceneListener {
 	public void serialize(String name);
 
 	public Game deserialize(String name);
+	
+	public Modal getLoadSaveModal(boolean isLoad, Scene scene);
 
 }
