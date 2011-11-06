@@ -59,7 +59,17 @@ public class LoadingScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if (nextResource != null) {
-			loadLabel.setText("Loading " + nextResource.getDescription());
+			String path = nextResource.getDescription();
+			
+			String description = "nothing";
+			if (path.contains("graphics")) {
+				description = "images";
+			} else if (path.contains("music")) {
+				description = "sounds";
+			} else if (path.contains("fonts")) {
+				description = "fonts";
+			}
+			loadLabel.setText("Loading " + description + "...");
 			
 			loadCondition.increase(1);
 			loadingBar.update();
