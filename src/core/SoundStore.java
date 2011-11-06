@@ -94,8 +94,7 @@ public class SoundStore {
 	public void setVolume(float volume) {
 		musicVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
 		soundVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
-		setMusicVolume(musicVolume);
-		setSoundVolume(soundVolume);
+		setMusicVolume(1);
 	}
 	
 	/**
@@ -104,23 +103,9 @@ public class SoundStore {
 	 * @param volume The volume to set to
 	 */
 	public void setMusicVolume(float volume) {
-		musicVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
-		for (String name : musics.keySet()) {
-			if (musics.get(name).playing()) {
-				musics.get(name).setVolume(musicVolume);
-			}
-		}
+		musics.get(getPlayingMusic()).setVolume(musicVolume * (volume < 0 ? 0 : volume > 1 ? 1 : volume));
 	}
 
-	/**
-	 * Sets the sound effect volume to a specific level.  
-	 * Does not update currently playing sound effects.
-	 * @param volume The volume to set it to.
-	 */
-	public void setSoundVolume(float volume) {
-		soundVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
-	}
-	
 	/**
 	 * Plays the music, but on loop
 	 * @param name The key for the music.

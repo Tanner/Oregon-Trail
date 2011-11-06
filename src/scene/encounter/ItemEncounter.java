@@ -69,7 +69,7 @@ public class ItemEncounter extends Encounter {
 	@Override
 	public EncounterNotification doEncounter() {
 		// Give the party 1 to 10 items
-		numItems = (int) (Math.random() * 10) + 1;
+		numItems = (int) (Math.random() * 3) + 1;
 		if (type.getItemType().isAnimal()) {
 			for (int i = 0; i < numItems; i++) {
 				party.addAnimals(new Animal(type.getItemType()));
@@ -80,7 +80,6 @@ public class ItemEncounter extends Encounter {
 			}
 		}
 		value/=4;
-		//SoundStore.get().playSound("ItemGet");
 		return makeNotification();
 	}
 

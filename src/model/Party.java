@@ -449,9 +449,9 @@ public class Party implements Serializable {
 	
 	private int getAnimalStrain() {
 		if(getPace() == Pace.GRUELING) {
-			return -(int) (10 - (10./vehicle.getWeight()));
+			return -(int) (10 - 10 * (vehicle.getMaxWeight()/vehicle.getWeight()));
 		} else if (getPace() == Pace.STRENUOUS) {
-			return -(int) (5 - (10./vehicle.getWeight()));
+			return -(int) (5 - 5 * (vehicle.getMaxWeight()/vehicle.getWeight()));
 		}
 		return 10;
 	}
@@ -714,6 +714,9 @@ public class Party implements Serializable {
 			}
 		}
 		if (!repairPossible) {
+			if(vehicle.getConditionPercentage() == 0) {
+				vehicle = null;
+			}
 			return restoreNeeded;
 		}
 		

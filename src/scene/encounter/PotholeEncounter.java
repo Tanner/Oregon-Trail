@@ -37,10 +37,10 @@ public class PotholeEncounter extends Encounter {
 				if(party.repairVehicle() == 0) {
 					message += "  However, you managed to fix it.";
 				} else {
-					if(party.getVehicle().getConditionPercentage() == 0) {
-						message += "  You couldn't repair your wagon and had to abandon it.";
-					} else {
+					if(party.getVehicle() != null) {
 						message += "  You managed to fix it enough to keep going.";
+					} else {
+						message += "  You couldn't repair your wagon and had to abandon it.";
 					}
 				}
 			}

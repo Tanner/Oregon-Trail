@@ -12,7 +12,7 @@ public enum EncounterID {
 	POTHOLE ("Pothole Encounter", 1, 1, 1, 2),
 	MESSAGE ("Message Encounter", 2, 2, 2, 2),
 	RIVER ("River Encounter", 1, 1, 0, 0),
-	NULL ("Null Encounter", 20, 20, 20, 20);	
+	NULL ("Null Encounter", 100, 100, 100, 100);	
 	
 	private final String name;
 	private final int[] frequencies;

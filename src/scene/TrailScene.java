@@ -146,7 +146,7 @@ public class TrailScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(SoundStore.get().getPlayingMusic() == null || (!SoundStore.get().getPlayingMusic().equals("NightTheme") && !SoundStore.get().getPlayingMusic().equals("DayTheme"))) {
-			if(party.getTime().getTimeOfDay() == Time.TimeOfDay.EVENING || party.getTime().getTimeOfDay() == Time.TimeOfDay.NIGHT) {
+			if(party.getTime().getTime() >= 15 || party.getTime().getTime() < 5) {
 				SoundStore.get().loopMusic("NightTheme");
 			} else {
 				SoundStore.get().loopMusic("DayTheme");
@@ -340,9 +340,7 @@ public class TrailScene extends Scene {
 	
 	private class HUDListener implements ComponentListener {
 		@Override
-		public void componentActivated(AbstractComponent component) {
-			SoundStore.get().stopAllSound();
-			
+		public void componentActivated(AbstractComponent component) {			
 			if (component == hud.getMenuButton()) {
 				setMode(Mode.CAMP);
 			} else if (component == hud.getInventoryButton()) {
