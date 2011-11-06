@@ -255,7 +255,7 @@ public class Party implements Serializable {
 		
 		this.money = money;
 	}
-	
+		
 	/**
 	 * Returns the vehicle of the party
 	 * @return The vehicle of the party
@@ -349,8 +349,8 @@ public class Party implements Serializable {
 		totalDistanceTravelled += movement;
 		
 		List<Animal> slaughterHouse = new ArrayList<Animal>();
-		grazeAnimals(getAnimalStrain());
 		for(Animal animal : animals) {
+			grazeAnimals();
 			if(animal.getStatus().getCurrent() == 0) {
 				if (vehicle != null) {
 					vehicle.addItemsToInventory(animal.killForFood());
@@ -437,8 +437,10 @@ public class Party implements Serializable {
 		return messages;
 	}
 
-	private void grazeAnimals(int amount) {
+	private void grazeAnimals() {
+		int amount;
 		for (Animal animal : animals) {
+			amount = getAnimalStrain(animal);
 			if(amount < 0) {
 				animal.decreaseStatus(-amount);
 			} else {
@@ -447,7 +449,7 @@ public class Party implements Serializable {
 		}
 	}
 	
-	private int getAnimalStrain() {
+	private int getAnimalStrain(Animal animal) {
 		if(getPace() == Pace.GRUELING) {
 			return -(int) (10 - 10 * (vehicle.getMaxWeight()/vehicle.getWeight()));
 		} else if (getPace() == Pace.STRENUOUS) {
@@ -474,7 +476,7 @@ public class Party implements Serializable {
 		}
 	}
 
-	private List<Animal> getAnimals() {
+	public List<Animal> getAnimals() {
 		return animals;
 	}
 
@@ -667,12 +669,22 @@ public class Party implements Serializable {
 		return null;
 	}
 
-	public void addAnimals(List<Animal> animals) {
-		this.animals.addAll(animals);
+	public boolean addAnimals(List<Animal> animals) {
+		boolean failedAdd = true;
+		for(Animal animal : animals) {
+			if(animals.size() < 5) {
+				animals.add(animal);
+			} else {
+				failedAdd = false;
+			}
+		}
+		return failedAdd;
 	}
 
-	public void addAnimals(Animal animal) {
-		animals.add(animal);
+	public boolean addAnimals(Animal animal) {
+		List<Animal> animalList = new ArrayList<Animal>();
+		animalList.add(animal);
+		return addAnimals(animalList);
 	}
 
 	public Time getTime() {
@@ -752,5 +764,15 @@ public class Party implements Serializable {
 			vehicle.repair(restoreAmount);
 			return repairVehicle(); //Recursively call the function to ensure we eat as much as possible.
 		}
+	}
+
+	public int getNumberOfAnimals(ItemType animalType) {
+		int count = 0;
+		for(Animal animal : animals) {
+			if(animal.getType() == animalType) {
+				count++;
+			}
+		}
+		return count;
 	}
 }

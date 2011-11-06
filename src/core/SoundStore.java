@@ -12,8 +12,7 @@ import org.newdawn.slick.Sound;
 public class SoundStore {
 	private static SoundStore soundStore;
 	
-	private float musicVolume = 1;
-	private float soundVolume = 1;
+	private float globalVolume = 1;
 	
 	public Map<String, Sound> sounds;
 	private Map<String, Music> musics;
@@ -66,6 +65,10 @@ public class SoundStore {
 		addToMusic("FFD", new Music("resources/music/FFD.ogg"));
 		addToMusic("MS", new Music("resources/music/MagnificentSeven.ogg"));
 		addToSounds("RK", new Sound("resources/music/RiverKwai.ogg"));
+		addToSounds("CowMoo", new Sound("resources/music/CowMoo.ogg"));
+		addToSounds("Donkey", new Sound("resources/music/Donkey.ogg"));
+		addToSounds("HorseWhinny", new Sound("resources/music/HorseWhinny.ogg"));
+		
 	}
 	
 	public String getPlayingMusic() {
@@ -92,9 +95,12 @@ public class SoundStore {
 	 * @param volume The volume to set to.
 	 */
 	public void setVolume(float volume) {
-		musicVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
-		soundVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
+		globalVolume = volume < 0 ? 0 : volume > 1 ? 1 : volume;
 		setMusicVolume(1);
+	}
+	
+	public float getVolume() {
+		return globalVolume;
 	}
 	
 	/**
@@ -104,7 +110,7 @@ public class SoundStore {
 	 */
 	public void setMusicVolume(float volume) {
 		if(getPlayingMusic() != null) {
-			musics.get(getPlayingMusic()).setVolume(musicVolume * (volume < 0 ? 0 : volume > 1 ? 1 : volume));
+			musics.get(getPlayingMusic()).setVolume(globalVolume * (volume < 0 ? 0 : volume > 1 ? 1 : volume));
 		}
 	}
 
@@ -115,7 +121,7 @@ public class SoundStore {
 	public void loopMusic(String name) {
 		stopMusic();
 		musics.get(name).loop();
-		musics.get(name).setVolume(musicVolume);
+		musics.get(name).setVolume(globalVolume);
 	}
 	
 	/**
@@ -125,7 +131,7 @@ public class SoundStore {
 	public void playMusic(String name) {
 		stopMusic();
 		musics.get(name).play();
-		musics.get(name).setVolume(musicVolume);
+		musics.get(name).setVolume(globalVolume);
 	}
 	
 	/**
@@ -164,7 +170,12 @@ public class SoundStore {
 	 * @param name The key of the sound
 	 */
 	public void playSound(String name) {
-		sounds.get(name).play(1, soundVolume);
+		sounds.get(name).play(1, globalVolume);
+		playingSounds.add(name);
+	}
+	
+	public void playSound(String name, float volume) {
+		sounds.get(name).play(1, globalVolume *volume);
 		playingSounds.add(name);
 	}
 	

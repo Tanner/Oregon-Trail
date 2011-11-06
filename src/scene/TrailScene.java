@@ -2,10 +2,13 @@ package scene;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import model.Notification;
 import model.Party;
 import model.Time;
+import model.item.ItemType;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -152,6 +155,7 @@ public class TrailScene extends Scene {
 				SoundStore.get().loopMusic("DayTheme");
 			}
 		}
+		randomAnimalSound();
 		if(!isPaused()) {
 			timeElapsed += delta;
 			
@@ -219,6 +223,27 @@ public class TrailScene extends Scene {
 		}
 	}
 	
+	private void randomAnimalSound() {
+		Set<String> sounds = SoundStore.get().getPlayingSounds();
+		if(!sounds.contains("CowMoo") 
+				&& !sounds.contains("Donkey") 
+				&& !sounds.contains("HorseWhinny")) {
+			int random = new Random().nextInt(1000);
+			if(random < party.getNumberOfAnimals(ItemType.OX)) {
+				SoundStore.get().playSound("CowMoo", .25f);
+			}
+			random -= party.getNumberOfAnimals(ItemType.OX);
+			if (random < party.getNumberOfAnimals(ItemType.MULE)) {
+				SoundStore.get().playSound("Donkey", .25f);
+			}
+			random -= party.getNumberOfAnimals(ItemType.MULE);
+			if (random < party.getNumberOfAnimals(ItemType.HORSE)) {
+				SoundStore.get().playSound("HorseWhinny", .25f);
+			}
+		}
+		
+	}
+
 	@Override
 	public void prepareToEnter() {
 		super.prepareToEnter();
