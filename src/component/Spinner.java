@@ -89,6 +89,7 @@ public class Spinner extends Component {
 	 */
 	public void setState(int state) {
 		this.state = state;
+		label.setText(fields[state]);
 	}
 	
 	/**

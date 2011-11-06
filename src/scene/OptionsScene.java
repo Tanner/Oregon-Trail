@@ -78,7 +78,7 @@ public class OptionsScene extends Scene {
 		}
 		volume = new Spinner(container, BUTTON_WIDTH, BUTTON_HEIGHT, fieldFont, Color.white, true, volumeLevels);
 		volume.addListener(listener);
-		volume.setState(SoundStore.get().getVolume();
+		volume.setState((int) (SoundStore.get().getVolume() * 100));
 		
 		ArrayList<Component> components = new ArrayList<Component>();
 		components.add(options);
