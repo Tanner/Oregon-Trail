@@ -21,7 +21,7 @@ public class SplashScene extends Scene {
 		super.init(container,  game);
 		
 		Sprite logo = new Sprite(container, new Image("resources/graphics/splash_screen.png", false, Image.FILTER_NEAREST));
-		mainLayer.add(logo, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
+		mainLayer.add(logo, mainLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
 		time = 0;
 	}
