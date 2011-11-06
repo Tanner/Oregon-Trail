@@ -280,12 +280,14 @@ public class SceneSelectorScene extends Scene {
 		
 		Random random = new Random();
 		ArrayList<Person> people = new ArrayList<Person>();
+		Person partyLeader;
 		
-		people.add(new Person("Alice"));
+		partyLeader = new Person("Alice");
+		people.add(partyLeader);
 		people.add(new Person("Bob"));
 		people.add(new Person("Carl"));
 		people.add(new Person("Diane"));
-		
+				
 		for (Person person : people) {
 			ArrayList<Skill> personSkill = new ArrayList<Skill>();
 			person.setProfession(Profession.values()[random.nextInt(Profession.values().length)]);
@@ -327,7 +329,7 @@ public class SceneSelectorScene extends Scene {
 		Party.Pace pace = Pace.STEADY;
 		Party.Rations rations = Rations.BAREBONES;
 
-		Party party = new Party(pace, rations, people, new Time());
+		Party party = new Party(pace, rations, partyLeader, people, new Time());
 		party.setVehicle(vehicle);
 		party.addAnimals(animalList);
 		

@@ -20,6 +20,8 @@ import core.Logger.Level;
  */
 public class Party implements Serializable {
 	
+	private Person partyLeader;
+	
 	private List<Person> members = new ArrayList<Person>();
 	
 	private int money;
@@ -119,13 +121,14 @@ public class Party implements Serializable {
 	 * @param currentRations The current rations of the party
 	 * @param party Array of people to be initialized into party
 	 */
-	public Party(Pace currentPace, Rations currentRations, List<Person> party, Time time) {
+	public Party(Pace currentPace, Rations currentRations, Person partyLeader, List<Person> party, Time time) {
 		for (Person person : party) {
 			if (person != null) {
 				members.add(person);
 			}
 		}
 		
+		this.partyLeader = partyLeader;
 		this.money = 0;
 		this.currentPace = currentPace;
 		this.currentRations = currentRations;
@@ -136,7 +139,7 @@ public class Party implements Serializable {
 				" members were created successfully: ");
 		for (Person person : party) {
 			this.money += person.getProfession().getMoney();
-			Logger.log(person.getName() + " as a " + 
+			Logger.log((person == partyLeader ? "Party leader " : "") + person.getName() + " as a " + 
 					person.getProfession() + " brings $" + 
 					person.getProfession().getMoney() + 
 					" to the party.", Logger.Level.INFO);
@@ -220,7 +223,6 @@ public class Party implements Serializable {
 		for (Person p : members) {
 			dataSources.add(p);
 		}
-		
 		return dataSources;
 	}
 
@@ -230,7 +232,7 @@ public class Party implements Serializable {
 	 */
 	public List<Skill> getSkills() {
 		final List<Skill> skillList = new ArrayList<Skill>();
-		
+
 		for (Person person : members) {
 			for (Skill skill: person.getSkills()) {
 				if (!skillList.contains(skill) && skill != Skill.NONE) {
@@ -361,28 +363,51 @@ public class Party implements Serializable {
 		
 		List<Person> deathList = new ArrayList<Person>();
 		int finalResult = 0;
-		for (Person person : members) {
-			person.increaseSkillPoints((getPace().getSpeed() / 10));
-			if(!personHasFood(person) && !vehicleHasFood()) {
-				person.decreaseHealth(getPace().getSpeed());
-			} else {
-				finalResult = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount())
-					- getPace().getSpeed();
-				if(finalResult > 0) {
-					person.increaseHealth(finalResult);
-				}
-				else {
-					person.decreaseHealth(-finalResult);
-				}
+		
+		int eatFoodRemnant;
+		partyLeader.increaseSkillPoints((getPace().getSpeed() / 10));
+		if(!personHasFood(partyLeader) && !vehicleHasFood()) {
+			partyLeader.decreaseHealth(getPace().getSpeed());
+			eatFoodRemnant = getRations().getRationAmount();
+		} else {
+			eatFoodRemnant = eatFood(partyLeader, getRations().getRationAmount());
+			finalResult = getRations().getRationAmount() - eatFoodRemnant
+				- getPace().getSpeed();
+			if(finalResult > 0) {
+				partyLeader.increaseHealth(finalResult);
 			}
-			if(person.getHealth().getCurrent() == 0) {
-				if (vehicle != null) {
-					vehicle.addItemsToInventory(person.killForFood());
-					System.out.println(vehicle.getInventory());
-				}
-				deathList.add(person);
+			else {
+				partyLeader.decreaseHealth(-finalResult);
 			}
 		}
+		if(partyLeader.getHealth().getCurrent() == 0) {
+			deathList.add(partyLeader);
+		}
+		
+		for (Person person : members) {
+			if(person != partyLeader) {
+					person.increaseSkillPoints((getPace().getSpeed() / 10));
+				if(!personHasFood(person) && !vehicleHasFood()) {
+					person.decreaseHealth(getPace().getSpeed());
+				} else {
+					finalResult = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount())
+						- getPace().getSpeed();
+					if(finalResult > 0) {
+						person.increaseHealth(finalResult);
+					}
+					else {
+						person.decreaseHealth(-finalResult);
+					}
+				}
+				if(person.getHealth().getCurrent() == 0) {
+					if (vehicle != null) {
+						vehicle.addItemsToInventory(person.killForFood());
+					}
+					deathList.add(person);
+				}
+			}
+		}
+		partyLeader.increaseHealth(eatFoodRemnant - eatFood(partyLeader, eatFoodRemnant));
 		if(checkHungerStatus() != null) {
 			messages.add(new Notification(checkHungerStatus(), true));
 		}
@@ -390,8 +415,10 @@ public class Party implements Serializable {
 			messages.add(new Notification(checkAnimalHunger(), true));
 		}
 		for (Person person : deathList) {
-			person.setDead(true);
-			members.remove(person);
+			if(person.getHealth().getCurrent() == 0) {
+				person.setDead(true);
+				members.remove(person);
+			}
 		}
 		for (Animal animal : slaughterHouse) {
 			animal.setDead(true);
@@ -406,32 +433,60 @@ public class Party implements Serializable {
 		
 		List<Person> deathList = new ArrayList<Person>();
 		int finalResult = 0;
-		for (Person person : members) {
-			if(!personHasFood(person) && !vehicleHasFood()) {
-				person.decreaseHealth(5);
-			} else {
-				finalResult = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount()) - 5;
-				if(finalResult > 0) {
-					person.increaseHealth(finalResult);
-				}
-				else {
-					person.decreaseHealth(-finalResult);
-				}
+		
+		int eatFoodRemnant;
+		partyLeader.increaseSkillPoints((getPace().getSpeed() / 10));
+		if(!personHasFood(partyLeader) && !vehicleHasFood()) {
+			partyLeader.decreaseHealth(5);
+			eatFoodRemnant = getRations().getRationAmount();
+		} else {
+			eatFoodRemnant = eatFood(partyLeader, getRations().getRationAmount());
+			finalResult = getRations().getRationAmount() - eatFoodRemnant
+				- getPace().getSpeed();
+			if(finalResult > 0) {
+				partyLeader.increaseHealth(finalResult);
 			}
-			if(person.getHealth().getCurrent() == 0) {
-				if (vehicle != null) {
-					vehicle.addItemsToInventory(person.killForFood());
-					System.out.println(vehicle.getInventory());
+			else {
+				partyLeader.decreaseHealth(-finalResult);
+			}
+		}
+		if(partyLeader.getHealth().getCurrent() == 0) {
+			deathList.add(partyLeader);
+		}	
+		
+		for (Person person : members) {
+			if(person != partyLeader) {
+				if(!personHasFood(person) && !vehicleHasFood()) {
+					person.decreaseHealth(5);
+				} else {
+					finalResult = getRations().getRationAmount() - eatFood(person, getRations().getRationAmount()) - 5;
+					if(finalResult > 0) {
+						person.increaseHealth(finalResult);
+					}
+					else {
+						person.decreaseHealth(-finalResult);
+					}
 				}
-				deathList.add(person);
+				if(person.getHealth().getCurrent() == 0) {
+					if (vehicle != null) {
+						vehicle.addItemsToInventory(person.killForFood());
+						System.out.println(vehicle.getInventory());
+					}
+					deathList.add(person);
+				}
 			}
 		}
 		if(checkHungerStatus() != null) {
 			messages.add(new Notification(checkHungerStatus(), true));
 		}
 		for (Person person : deathList) {
-			person.setDead(true);
-			members.remove(person);
+			if(person == partyLeader) {
+				partyLeader.increaseHealth(eatFoodRemnant - eatFood(partyLeader, eatFoodRemnant));
+			}
+			if(person.getHealth().getCurrent() == 0) {
+				person.setDead(true);
+				members.remove(person);
+			}
 		}
 		messages.add(new Notification("Current Distance Travelled: " + String.format("%,d", getTotalDistanceTravelled()), false));
 		return messages;
@@ -577,8 +632,10 @@ public class Party implements Serializable {
 		boolean hasMessage = false;
 		ArrayList<String> deadMembers = new ArrayList<String>();
 		ArrayList<String> hungryMembers = new ArrayList<String>();
+		List<Person> people = new ArrayList<Person>();
+		people.addAll(members);
 		
-		for(Person person : members) {
+		for(Person person : people) {
 			currentHealth = (int) person.getHealth().getCurrent();
 			if(currentHealth == 0) {
 				hasMessage = true;
@@ -716,7 +773,7 @@ public class Party implements Serializable {
 					donator = person;
 				}
 			}
-		}						
+		}	
 		if(!repairPossible) {
 			for(ItemType itemType : vehicle.getInventory().getPopulatedSlots()) {
 				if(itemType.isTool()) {

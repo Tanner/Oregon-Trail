@@ -149,7 +149,7 @@ public class TrailScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(SoundStore.get().getPlayingMusic() == null || (!SoundStore.get().getPlayingMusic().equals("NightTheme") && !SoundStore.get().getPlayingMusic().equals("DayTheme"))) {
-			if(party.getTime().getTime() >= 15 || party.getTime().getTime() < 5) {
+			if(party.getTime().getTime() >= 19 || party.getTime().getTime() < 5) {
 				SoundStore.get().loopMusic("NightTheme");
 			} else {
 				SoundStore.get().loopMusic("DayTheme");
@@ -231,17 +231,19 @@ public class TrailScene extends Scene {
 			int random = new Random().nextInt(1000);
 			if(random < party.getNumberOfAnimals(ItemType.OX)) {
 				SoundStore.get().playSound("CowMoo", .25f);
+				return;
 			}
 			random -= party.getNumberOfAnimals(ItemType.OX);
 			if (random < party.getNumberOfAnimals(ItemType.MULE)) {
 				SoundStore.get().playSound("Donkey", .25f);
+				return;
 			}
 			random -= party.getNumberOfAnimals(ItemType.MULE);
 			if (random < party.getNumberOfAnimals(ItemType.HORSE)) {
 				SoundStore.get().playSound("HorseWhinny", .25f);
+				return;
 			}
 		}
-		
 	}
 
 	@Override
@@ -367,6 +369,7 @@ public class TrailScene extends Scene {
 		@Override
 		public void componentActivated(AbstractComponent component) {			
 			if (component == hud.getMenuButton()) {
+				SoundStore.get().stopSound("Steps");
 				setMode(Mode.CAMP);
 			} else if (component == hud.getInventoryButton()) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, TrailScene.this, false);
