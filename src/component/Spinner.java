@@ -84,6 +84,14 @@ public class Spinner extends Component {
 	}
 	
 	/**
+	 * Set the state of the Spinner to a specified value;
+	 * @param state Set the current state.
+	 */
+	public void setState(int state) {
+		this.state = state;
+	}
+	
+	/**
 	 * Gets the text representation of the current state of the Spinner.
 	 * @return The current state in String form
 	 */
