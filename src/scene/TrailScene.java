@@ -346,11 +346,9 @@ public class TrailScene extends Scene {
 			
 			if (clickCounter >= STEP_COUNT_TRIGGER) {
 				party.getTime().advanceTime();
+				clickCounter = 0;
+				adjustSetting();
 			}
-			
-			clickCounter = 0;
-			
-			adjustSetting();
 		}
 	}
 	
