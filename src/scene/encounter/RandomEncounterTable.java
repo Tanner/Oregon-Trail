@@ -3,8 +3,6 @@ package scene.encounter;
 import java.util.List;
 import java.util.Random;
 
-import model.Time;
-
 /**
  * This provides a probability table for random encounters during a trail scene
  * as well as handling probability shifts.

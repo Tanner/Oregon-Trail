@@ -13,9 +13,6 @@ import component.Button;
 import component.Label;
 import component.Panel;
 import component.Positionable;
-import component.sprite.AnimatingSprite;
-import component.sprite.Sprite;
-
 
 import core.*;
 

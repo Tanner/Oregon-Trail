@@ -7,8 +7,6 @@ import java.util.Queue;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
@@ -16,9 +14,7 @@ import component.Button;
 import component.Component;
 import component.Label;
 import component.Panel;
-import component.Component.BevelType;
 import component.Label.VerticalAlignment;
-import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
 
 import core.ConstantStore;

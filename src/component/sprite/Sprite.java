@@ -6,7 +6,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.Component;
-import core.SoundStore;
 
 /**
  * {@code Sprite} inherits from {@code Component} to extend features

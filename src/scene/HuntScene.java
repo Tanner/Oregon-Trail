@@ -3,7 +3,7 @@ package scene;
 import model.Party;
 import model.Person;
 
-import org.newdawn.slick.Animation;
+//import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -27,9 +27,9 @@ public class HuntScene extends Scene {
 	public static final SceneID ID = SceneID.HUNT;
 
 	//the member of the party engaged in the hunt
-	private Person hunter;
+	//private Person hunter;
 	
-	private Image ground;
+	//private Image ground;
 	private AnimatingSprite toonHunter;
 	
 	/**
@@ -37,14 +37,14 @@ public class HuntScene extends Scene {
 	 * @param hunter the single member of the party who is going to hunt.
 	 */
 	public HuntScene(Person hunter){
-		this.hunter = hunter;
+		//this.hunter = hunter;
 		
 		
 	}
 	
 	public HuntScene(Party party){
 		//grap a person from the party to be the hunter
-		this.hunter = party.getPartyMembers().get(0);
+		//this.hunter = party.getPartyMembers().get(0);
 	}
 	
 	
@@ -57,8 +57,8 @@ public class HuntScene extends Scene {
 		Label infoLabel = new Label(container, h2, Color.white, "Just making the hunt scene");
 		mainLayer.add(infoLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
 		
-		Image leftImage = new Image("resources/graphics/test/marioLeft.png");
-		Image rightImage = new Image("resources/graphics/test/marioRight.png");
+		//Image leftImage = new Image("resources/graphics/test/marioLeft.png");
+		//Image rightImage = new Image("resources/graphics/test/marioRight.png");
 		//toonHunter = new AnimatingSprite(container, new Animation(new Image[]{leftImage}, 1), new Animation(new Image[]{rightImage}, 1));
 //		toonHunter.setScale(0.1f);
 		
