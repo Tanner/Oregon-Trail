@@ -18,7 +18,8 @@ public enum SceneID {
 	TRAILTEST ("Trail Test"),
 	MAP ("Map"),
 	RIVER ("River"),
-	OPTIONS ("Options");
+	OPTIONS ("Options"),
+	TAVERN ("Tavern");
 	
 	private final String name;
 	

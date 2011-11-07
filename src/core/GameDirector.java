@@ -130,6 +130,8 @@ public class GameDirector implements SceneListener {
 			return new RiverScene(game.getPlayer().getParty());
 		case OPTIONS:
 			return new OptionsScene();
+		case TAVERN:
+			return new TavernScene(game.getPlayer().getParty());
 		}
 		
 		return null;

@@ -215,6 +215,14 @@ public class SceneSelectorScene extends Scene {
 				}
 				
 				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, SceneSelectorScene.this, false);
+			} else if (buttonText.equals(SceneID.TAVERN.getName())) {
+				// Game Over
+				if (player.getParty() == null) {
+					warnBecauseNoParty();
+					return;
+				}
+				
+				GameDirector.sharedSceneListener().requestScene(SceneID.TAVERN, SceneSelectorScene.this, false);
 			}  else if (buttonText.equals(SceneID.VICTORY.getName())) {
 				// Victory
 				if (player.getParty() == null) {
