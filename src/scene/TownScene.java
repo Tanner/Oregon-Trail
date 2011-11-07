@@ -101,7 +101,7 @@ public class TownScene extends Scene {
 		terrain.add(ground, terrain.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);	
 		
 		ParallaxComponentLoop trail = SceneryFactory.getTrail(container);
-		terrain.add(trail, ground.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERLEFT);
+		terrain.add(trail, ground.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERLEFT, 80, 0);
 
 		ParallaxComponentLoop hillB = SceneryFactory.getHillB(container);
 		terrain.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 80, 0);
