@@ -27,6 +27,7 @@ import component.SegmentedControl;
 import component.modal.*;
 import component.parallax.ParallaxComponent;
 import component.parallax.ParallaxComponentLoop;
+import component.parallax.ParallaxPanel;
 import component.sprite.Sprite;
 
 import core.*;
@@ -94,11 +95,21 @@ public class TownScene extends Scene {
 		
 		ParallaxComponent.MAX_DISTANCE = 1;
 		
+		ParallaxPanel terrain = new ParallaxPanel(container, container.getWidth(), container.getHeight());
+		
 		ParallaxComponentLoop ground = SceneryFactory.getGround(container);
-		mainLayer.add(ground, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);	
+		terrain.add(ground, terrain.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);	
 		
 		ParallaxComponentLoop trail = SceneryFactory.getTrail(container);
-		mainLayer.add(trail, ground.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERLEFT);
+		terrain.add(trail, ground.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERLEFT);
+
+		ParallaxComponentLoop hillB = SceneryFactory.getHillB(container);
+		terrain.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 80, 0);
+		
+		ParallaxComponentLoop hillA = SceneryFactory.getHillA(container);
+		terrain.add(hillA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
+		
+		mainLayer.add(terrain, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		Sprite store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
 		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 10, 40);
