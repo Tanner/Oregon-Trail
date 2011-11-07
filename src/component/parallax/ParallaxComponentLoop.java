@@ -1,11 +1,12 @@
-package component.sprite;
+package component.parallax;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.Panel;
+import component.sprite.Sprite;
 
-public class ParallaxSpriteLoop extends ParallaxSprite {
+public class ParallaxComponentLoop extends ParallaxComponent {
 	private Sprite sprite;
 	private Panel panel;
 	
@@ -16,7 +17,7 @@ public class ParallaxSpriteLoop extends ParallaxSprite {
 	 * @param image Image to use for the sprite
 	 * @param distance What the distance this sprite should be
 	 */
-	public ParallaxSpriteLoop(GUIContext context, int spriteWidth, Image image, int distance) {
+	public ParallaxComponentLoop(GUIContext context, int spriteWidth, Image image, int distance) {
 		super(context, spriteWidth, image, distance);
 		
 		sprite = new Sprite(context, spriteWidth, image);
@@ -28,7 +29,11 @@ public class ParallaxSpriteLoop extends ParallaxSprite {
 	}
 	
 	@Override
-	public void move(int delta) {
+	public void update(int delta) {
+		if (isPaused()) {
+			return;
+		}
+		
 		elapsedTime += delta;
 		
 		if (elapsedTime > maxElapsedTime) {

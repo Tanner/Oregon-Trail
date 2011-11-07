@@ -1,4 +1,4 @@
-package component.sprite;
+package component.parallax;
 
 import java.util.Random;
 
@@ -7,11 +7,12 @@ import org.newdawn.slick.Image;
 
 import component.Component;
 import component.Panel;
+import component.sprite.Sprite;
 
 /**
  * A sprite that shifts a certain amount on the screen and can scale with distance.
  */
-public class ParallaxSprite extends Component implements Comparable<ParallaxSprite> {
+public class ParallaxComponent extends Component implements Comparable<ParallaxComponent> {
 	public static int DELTA_X = 1;
 	protected static int NEAR_MAX_ELAPSED_TIME = 1;
 	protected static int FAR_MAX_ELAPSED_TIME = 100 - NEAR_MAX_ELAPSED_TIME;
@@ -29,6 +30,9 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	protected int elapsedTime;
 	protected int maxElapsedTime;
 
+	private boolean alwaysMoving;
+	private boolean paused;
+	
 	private boolean randomXPosition;
 	private Random random;
 	
@@ -42,8 +46,8 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	 * @param distance What the distance this sprite should be
 	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
 	 */
-	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int minDistance, int maxDistance, int distance, boolean randomXPosition) {
-		super(context, context.getWidth(), spriteWidth * image.getHeight() / image.getWidth());
+	public ParallaxComponent(GUIContext context, int spriteWidth, Image image, int minDistance, int maxDistance, int distance, boolean randomXPosition) {
+		super(context, spriteWidth, spriteWidth * image.getHeight() / image.getWidth());
 		
 		this.randomXPosition = randomXPosition;
 
@@ -82,8 +86,8 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	 * @param distance What the distance this sprite should be
 	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
 	 */
-	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int distance, boolean randomXPosition) {
-		super(context, context.getWidth(), spriteWidth * image.getHeight() / image.getWidth());
+	public ParallaxComponent(GUIContext context, int spriteWidth, Image image, int distance, boolean randomXPosition) {
+		super(context, spriteWidth, spriteWidth * image.getHeight() / image.getWidth());
 		
 		this.randomXPosition = randomXPosition;
 		
@@ -107,7 +111,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	 * @param distance What the distance this sprite should be
 	 * @param randomXPosition Whether or not the sprite should be in a random position in the container
 	 */
-	public ParallaxSprite(GUIContext context, Image image, int distance, boolean randomXPosition) {
+	public ParallaxComponent(GUIContext context, Image image, int distance, boolean randomXPosition) {
 		this(context, image.getWidth() * 2, image, distance, randomXPosition);
 	}
 	
@@ -118,7 +122,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	 * @param image Image to use for the sprite
 	 * @param distance What the distance this sprite should be
 	 */
-	public ParallaxSprite(GUIContext context, int spriteWidth, Image image, int distance) {
+	public ParallaxComponent(GUIContext context, int spriteWidth, Image image, int distance) {
 		this(context, spriteWidth, image, distance, false);
 	}
 	
@@ -128,7 +132,7 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	 * @param image Image to use for the sprite
 	 * @param distance What the distance this sprite should be
 	 */
-	public ParallaxSprite(GUIContext context, Image image, int distance) {
+	public ParallaxComponent(GUIContext context, Image image, int distance) {
 		this(context, image, distance, false);
 	}
 	
@@ -136,18 +140,17 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	 * Moves the ParallaxSprite when the elapsedTime is greater than the maxElapsedTime. Loop images around when needed.
 	 * @param delta Amount of time passed
 	 */
-	public void move(int delta) {
+	@Override
+	public void update(int delta) {		
+		if (isPaused()) {
+			return;
+		}
+		
 		elapsedTime += delta;
 		
 		if (elapsedTime > maxElapsedTime) {
 			panel.setLocation(panel.getX() + DELTA_X, panel.getY());
 			elapsedTime = 0;
-		}
-		
-		if (sprite.getX() > container.getWidth()) {
-			panel.setLocation(0 - panel.getWidth(), panel.getY());
-			
-			sprite.setPosition(panel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, getXOffset(), 0);
 		}
 	}
 	
@@ -206,12 +209,30 @@ public class ParallaxSprite extends Component implements Comparable<ParallaxSpri
 	}
 
 	@Override
-	public int compareTo(ParallaxSprite sprite) {
+	public int compareTo(ParallaxComponent sprite) {
 		return sprite.distance - this.distance;
 	}
 	
 	@Override
 	public String toString() {
 		return sprite + " at " + distance;
+	}
+
+	public boolean isPaused() {
+		return paused;
+	}
+	
+	public void setPaused(boolean paused) {
+		if (!isAlwaysMoving()) {
+			this.paused = paused;
+		}
+	}
+
+	public boolean isAlwaysMoving() {
+		return alwaysMoving;
+	}
+
+	public void setAlwaysMoving(boolean alwaysMoving) {
+		this.alwaysMoving = alwaysMoving;
 	}
 }

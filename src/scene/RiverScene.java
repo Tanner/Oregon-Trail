@@ -15,16 +15,16 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Panel;
-import component.ParallaxPanel;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.SegmentedControl;
 import component.modal.ComponentModal;
 import component.modal.MessageModal;
 import component.modal.Modal;
+import component.parallax.ParallaxPanel;
+import component.parallax.ParallaxComponent;
+import component.parallax.ParallaxComponentLoop;
 import component.sprite.AnimatingSprite;
-import component.sprite.ParallaxSprite;
-import component.sprite.ParallaxSpriteLoop;
 import component.sprite.Sprite;
 import core.GameDirector;
 import core.SoundStore;
@@ -93,8 +93,8 @@ public class RiverScene extends Scene {
 		Random random = new Random();
 		riverParallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		cloudParallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
-		ParallaxSprite.MAX_DISTANCE = 600;
-		ParallaxSprite water = new ParallaxSpriteLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/water.png", false, Image.FILTER_LINEAR),1);
+		ParallaxComponent.MAX_DISTANCE = 600;
+		ParallaxComponent water = new ParallaxComponentLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/water.png", false, Image.FILTER_LINEAR),1);
 		riverParallaxPanel.add(water, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		//Clouds
@@ -109,7 +109,7 @@ public class RiverScene extends Scene {
 			
 			int offset = CLOUD_OFFSET + random.nextInt(CLOUD_OFFSET_VARIANCE * 2) - CLOUD_OFFSET_VARIANCE;
 			
-			ParallaxSprite cloud = new ParallaxSprite(container, cloudImages[cloudImage], distance, true);
+			ParallaxComponent cloud = new ParallaxComponent(container, cloudImages[cloudImage], distance, true);
 			cloudParallaxPanel.add(cloud, backgroundLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, offset);
 		}
 		
@@ -132,12 +132,12 @@ public class RiverScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		for (ParallaxSprite sprite : riverParallaxPanel.getSprites()) {
-			sprite.move(delta);
-		}
-		for (ParallaxSprite sprite : cloudParallaxPanel.getSprites()) {
-			sprite.move(delta);
-		}
+//		for (ParallaxComponent sprite : riverParallaxPanel.getParallaxComponents()) {
+//			sprite.move(delta);
+//		}
+//		for (ParallaxComponent sprite : cloudParallaxPanel.getParallaxComponents()) {
+//			sprite.move(delta);
+//		}
 		if ( !isPaused() ) {
 			ani = !ani;
 			if (ani)

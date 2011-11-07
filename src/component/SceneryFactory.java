@@ -9,8 +9,9 @@ import org.newdawn.slick.SlickException;
 
 import component.Positionable.ReferencePoint;
 import component.hud.HUD;
-import component.sprite.ParallaxSprite;
-import component.sprite.ParallaxSpriteLoop;
+import component.parallax.ParallaxPanel;
+import component.parallax.ParallaxComponent;
+import component.parallax.ParallaxComponentLoop;
 import core.ImageStore;
 
 /**
@@ -34,6 +35,11 @@ public class SceneryFactory {
 	
 	private static final int DEER_OFFSET = 10;
 	
+	private static final float CLOUD_CHANCE = 0.2f;
+	private static final float TREE_CHANCE = 0.9f;
+	
+	private static final Random random = new Random();
+	
 	/**
 	 * Return a sky for the time period.
 	 * @param container Container
@@ -54,73 +60,49 @@ public class SceneryFactory {
 	 * @throws SlickException
 	 */
 	public static ParallaxPanel getScenery(GameContainer container) throws SlickException {
-		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
-		Random random = new Random();
-		
-		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
-		
-		// Ground
-		ParallaxSprite ground = new ParallaxSpriteLoop(container, container.getWidth() + 1, ImageStore.get().getImage("GRASS"), GROUND_DISTANCE);
-		parallaxPanel.add(ground, parallaxPanel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
-		
-		// Trail
-		ParallaxSprite trail = new ParallaxSpriteLoop(container, container.getWidth() + 1, ImageStore.get().getImage("TRAIL"), GROUND_DISTANCE);
-		parallaxPanel.add(trail, ground.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, -trail.getHeight() / 2);
-		
-		// Hills
-		ParallaxSprite hillA = new ParallaxSpriteLoop(container, container.getWidth(), ImageStore.get().getImage("HILL_A"), HILL_DISTANCE_A);
-		parallaxPanel.add(hillA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
-		
-		ParallaxSprite hillB = new ParallaxSpriteLoop(container, container.getWidth(), ImageStore.get().getImage("HILL_B"), HILL_DISTANCE_B);
-		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
-		
-		// Trees
-		for (int i = 0; i < NUM_TREES; i++) {
-			int distance = random.nextInt(TREE_DISTANCE);
-			int offset = TREE_OFFSET;
-			
-			if (distance <= TREE_DISTANCE / 3) {
-				distance = random.nextInt(GROUND_DISTANCE);
-				
-				offset += GROUND_DISTANCE - distance;
-			}
-			
-			ParallaxSprite tree = new ParallaxSprite(container, 96, ImageStore.get().getImage("TREE"), 0, TREE_DISTANCE, distance, true);
-			
-			offset -= (int) (tree.getScale() * offset) / 2;
-
-			parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, offset);
-		}
-		
-		ParallaxSprite deer = new ParallaxSprite(container, ImageStore.get().getImage("DEER"), DEER_DISTANCE, true);
-		parallaxPanel.add(deer, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, DEER_OFFSET);
-		
+		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());		
+		ParallaxComponent.MAX_DISTANCE = HILL_DISTANCE_B;
 		return parallaxPanel;
 	}
 	
-	public static ParallaxPanel getClouds(GameContainer container) throws SlickException {
-		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
-		Random random = new Random();
-		
-		ParallaxSprite.MAX_DISTANCE = HILL_DISTANCE_B;
-		
-		// Clouds
+	public static ParallaxComponentLoop getGround(GameContainer container) throws SlickException {
+		return new ParallaxComponentLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+	}
+	
+	public static ParallaxComponentLoop getTrail(GameContainer container) throws SlickException {
+		return new ParallaxComponentLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+	}
+	
+	public static ParallaxComponentLoop getHillA(GameContainer container) throws SlickException {
+		return new ParallaxComponentLoop(container, container.getWidth() + 1, new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
+	}
+	
+	public static ParallaxComponentLoop getHillB(GameContainer container) throws SlickException {
+		return new ParallaxComponentLoop(container, container.getWidth() + 1, new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
+	}
+	
+	public static ParallaxComponent getCloud(GameContainer container, boolean randomXPosition) throws SlickException {		
 		Image[] cloudImages = new Image[3];
 		cloudImages[0] = ImageStore.get().getImage("CLOUD_A");
 		cloudImages[1] = ImageStore.get().getImage("CLOUD_B");
 		cloudImages[2] = ImageStore.get().getImage("CLOUD_C");
+
+		int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
+		int cloudImage = random.nextInt(cloudImages.length);
 		
-		for (int i = 0; i < NUM_CLOUDS; i++) {
-			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
-			int cloudImage = random.nextInt(cloudImages.length);
-			
-			int offset = CLOUD_OFFSET + random.nextInt(CLOUD_OFFSET_VARIANCE * 2) - CLOUD_OFFSET_VARIANCE;
-			
-			ParallaxSprite cloud = new ParallaxSprite(container, cloudImages[cloudImage], distance, true);
-			parallaxPanel.add(cloud, parallaxPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, offset);
+		ParallaxComponent cloud = new ParallaxComponent(container, cloudImages[cloudImage], distance, randomXPosition);
+		cloud.setAlwaysMoving(true);
+		return cloud;
+	}
+	
+	public static ParallaxComponent getTree(GameContainer container, boolean randomXPosition) throws SlickException {		
+		int distance = random.nextInt(TREE_DISTANCE);
+		
+		if (distance <= TREE_DISTANCE / 3) {
+			distance = random.nextInt(GROUND_DISTANCE);
 		}
-		
-		return parallaxPanel;
+
+		return new ParallaxComponent(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 0, TREE_DISTANCE, distance, randomXPosition);
 	}
 	
 	/**
@@ -204,5 +186,13 @@ public class SceneryFactory {
 			default:
 				return Color.black;
 		}
+	}
+
+	public static boolean shouldAddCloud() {
+		return (random.nextFloat() <= CLOUD_CHANCE);
+	}
+	
+	public static boolean shouldAddTree() {
+		return (random.nextFloat() <= TREE_CHANCE);
 	}
 }
