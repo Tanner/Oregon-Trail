@@ -34,9 +34,9 @@ public class SceneryFactory {
 	
 	private static final int DEER_OFFSET = 10;
 	
-	private static final float CLOUD_CHANCE = 0.2f;
-	private static final float TREE_CHANCE = 0.9f;
-	private static final float DEER_CHANCE = 0.05f;
+	private static final double CLOUD_CHANCE = 0.0005;
+	private static final double TREE_CHANCE = 0.009;
+	private static final double DEER_CHANCE = 0.0001;
 	
 	private static final Random random = new Random();
 	
@@ -195,14 +195,14 @@ public class SceneryFactory {
 	}
 
 	public static boolean shouldAddCloud() {
-		return (random.nextFloat() <= CLOUD_CHANCE);
+		return (random.nextDouble() <= CLOUD_CHANCE);
 	}
 	
 	public static boolean shouldAddTree() {
-		return (random.nextFloat() <= TREE_CHANCE);
+		return (random.nextDouble() <= TREE_CHANCE);
 	}
 
 	public static boolean shouldAddDeer() {
-		return (random.nextFloat() <= DEER_CHANCE);
+		return (random.nextDouble() <= DEER_CHANCE);
 	}
 }

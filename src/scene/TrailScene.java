@@ -140,7 +140,7 @@ public class TrailScene extends Scene {
 		ParallaxComponent hillB = SceneryFactory.getHillB(container);
 		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		for (int i = 0; i < 25; i++) {
+		for (int i = 0; i < 4000; i++) {
 			if (SceneryFactory.shouldAddCloud()) {
 				ParallaxComponent cloud = SceneryFactory.getCloud(container, true);
 				parallaxPanel.add(cloud, toolbar.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 0);
@@ -300,6 +300,7 @@ public class TrailScene extends Scene {
 			if (currentEncounterNotification.getSceneID() != null) {
 				SoundStore.get().stopSound("Steps");
 				GameDirector.sharedSceneListener().requestScene(currentEncounterNotification.getSceneID(), this, false);
+//				setState(new RiverState());
 			}
 		}
 	}
@@ -353,8 +354,8 @@ public class TrailScene extends Scene {
 		}
 	}
 	
-	private class WalkingState extends TrailSceneState {
-		private static final int DEER_OFFSET = 10;
+	private abstract class MovingState extends TrailSceneState {
+		public static final int DEER_OFFSET = 10;
 
 		public void init() {
 			SoundStore.get().stopSound("Steps");
@@ -376,6 +377,12 @@ public class TrailScene extends Scene {
 				SoundStore.get().playSound("Steps");
 			}
 			
+			if (SceneryFactory.shouldAddCloud()) {
+				ParallaxComponent cloud = SceneryFactory.getCloud(container, false);
+				int yOffset = (int) (cloud.getScale() * 20) / 2;;
+				parallaxPanel.add(cloud, toolbar.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, -cloud.getWidth(), yOffset);
+			}
+			
 			boolean showingNotifications = !hud.isNotificationsEmpty();
 			if (showingNotifications) {
 				return;
@@ -392,12 +399,13 @@ public class TrailScene extends Scene {
 			EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter(party.getTime().getTimeOfDay().ordinal());
 			handleNotifications(notifications, encounterNotification.getNotification().getMessage());
 			currentEncounterNotification = encounterNotification;
+		}
+	}
+	
+	private class WalkingState extends MovingState {
+		public void update(GameContainer container, int delta) throws SlickException {
+			super.update(container, delta);
 			
-			if (SceneryFactory.shouldAddCloud()) {
-				ParallaxComponent cloud = SceneryFactory.getCloud(container, false);
-				int yOffset = (int) (cloud.getScale() * 20) / 2;;
-				parallaxPanel.add(cloud, toolbar.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, -cloud.getWidth(), yOffset);
-			}
 			if (SceneryFactory.shouldAddTree()) {
 				ParallaxComponent tree = SceneryFactory.getTree(container, false);
 				int yOffset = (int) (tree.getScale() * 20) / 2;;
@@ -407,6 +415,14 @@ public class TrailScene extends Scene {
 				ParallaxComponent deer = SceneryFactory.getDeer(container);
 				parallaxPanel.add(deer, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, -deer.getWidth(), DEER_OFFSET);
 			}
+		}
+	}
+	
+	private class RiverState extends MovingState {
+		public void update(GameContainer container, int delta) throws SlickException {
+			super.update(container, delta);
+			
+			
 		}
 	}
 	
