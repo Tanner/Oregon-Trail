@@ -140,18 +140,6 @@ public class TrailScene extends Scene {
 		ParallaxComponent hillB = SceneryFactory.getHillB(container);
 		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		for (int i = 0; i < 4000; i++) {
-			if (SceneryFactory.shouldAddCloud()) {
-				ParallaxComponent cloud = SceneryFactory.getCloud(container, true);
-				parallaxPanel.add(cloud, toolbar.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 0);
-			}
-			if (SceneryFactory.shouldAddTree()) {
-				ParallaxComponent tree = SceneryFactory.getTree(container, true);
-				int yOffset = (int) (tree.getScale() * 20) / 2;;
-				parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, yOffset);
-			}
-		}
-		
 		backgroundLayer.add(parallaxPanel);
 		
 		partyComponent = new PartyComponent(container, container.getWidth(), parallaxPanel.getHeight(), party.getPartyComponentDataSources());
@@ -162,6 +150,20 @@ public class TrailScene extends Scene {
 		setState(new WalkingState());
 		
 		adjustSetting();
+		
+		// Simulate attempts at adding stuff, just like update(int delta) will in the TrailSceneState classes
+		int numberAttemptsToAddStuff = ground.getMaxElapsedTime() * container.getWidth() * 2 / CLICK_WAIT_TIME;
+		for (int i = 0; i < numberAttemptsToAddStuff; i++) {
+			if (SceneryFactory.shouldAddCloud()) {
+				ParallaxComponent cloud = SceneryFactory.getCloud(container, true);
+				parallaxPanel.add(cloud, toolbar.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, 0, 0);
+			}
+			if (SceneryFactory.shouldAddTree()) {
+				ParallaxComponent tree = SceneryFactory.getTree(container, true);
+				int yOffset = (int) (tree.getScale() * 20) / 2;;
+				parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, yOffset);
+			}
+		}
 }
 		
 	@Override
@@ -375,12 +377,6 @@ public class TrailScene extends Scene {
 				SoundStore.get().playSound("Steps");
 			}
 			
-			if (SceneryFactory.shouldAddCloud()) {
-				ParallaxComponent cloud = SceneryFactory.getCloud(container, false);
-				int yOffset = (int) (cloud.getScale() * 20) / 2;;
-				parallaxPanel.add(cloud, toolbar.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, -cloud.getWidth(), yOffset);
-			}
-			
 			boolean showingNotifications = !hud.isNotificationsEmpty();
 			if (showingNotifications) {
 				return;
@@ -401,17 +397,28 @@ public class TrailScene extends Scene {
 	}
 	
 	private class WalkingState extends MovingState {
+		private int counter;
 		public void update(GameContainer container, int delta) throws SlickException {
 			super.update(container, delta);
 			
-			if (SceneryFactory.shouldAddTree()) {
-				ParallaxComponent tree = SceneryFactory.getTree(container, false);
-				int yOffset = (int) (tree.getScale() * 20) / 2;;
-				parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, -tree.getWidth(), yOffset);
-			}
-			if (SceneryFactory.shouldAddDeer()) {
-				ParallaxComponent deer = SceneryFactory.getDeer(container);
-				parallaxPanel.add(deer, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, -deer.getWidth(), DEER_OFFSET);
+			counter += delta;
+			if (counter >= CLICK_WAIT_TIME) {
+				if (SceneryFactory.shouldAddCloud()) {
+					ParallaxComponent cloud = SceneryFactory.getCloud(container, false);
+					int yOffset = (int) (cloud.getScale() * 20) / 2;;
+					parallaxPanel.add(cloud, toolbar.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, -cloud.getWidth(), yOffset);
+				}
+				if (SceneryFactory.shouldAddTree()) {
+					ParallaxComponent tree = SceneryFactory.getTree(container, false);
+					int yOffset = (int) (tree.getScale() * 20) / 2;;
+					parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, -tree.getWidth(), yOffset);
+				}
+				if (SceneryFactory.shouldAddDeer()) {
+					ParallaxComponent deer = SceneryFactory.getDeer(container);
+					parallaxPanel.add(deer, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, -deer.getWidth(), DEER_OFFSET);
+				}
+				
+				counter = 0;
 			}
 		}
 	}

@@ -208,6 +208,10 @@ public class ParallaxComponent extends Component implements Comparable<ParallaxC
 		FAR_MAX_ELAPSED_TIME = farMaxElapsedTime - NEAR_MAX_ELAPSED_TIME;
 	}
 
+	public int getMaxElapsedTime() {
+		return maxElapsedTime;
+	}
+
 	@Override
 	public int compareTo(ParallaxComponent sprite) {
 		return sprite.distance - this.distance;

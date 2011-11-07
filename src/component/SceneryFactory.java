@@ -34,9 +34,9 @@ public class SceneryFactory {
 	
 	private static final int DEER_OFFSET = 10;
 	
-	private static final double CLOUD_CHANCE = 0.0005;
-	private static final double TREE_CHANCE = 0.009;
-	private static final double DEER_CHANCE = 0.0001;
+	private static final double CLOUD_CHANCE = 0.05;
+	private static final double TREE_CHANCE = 0.7;
+	private static final double DEER_CHANCE = 0.01;
 	
 	private static final Random random = new Random();
 	
