@@ -1,16 +1,11 @@
 package scene;
 
-
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
-
-import scene.test.SceneSelectorScene;
 
 import component.Button;
 import component.Component;
@@ -33,6 +28,7 @@ public class MainMenuScene extends Scene {
 	private final int BUTTON_WIDTH = 230;
 	private final int BUTTON_HEIGHT = 60;
 	private final int PADDING = 20;
+	private final int LOGO_PADDING = 75;
 	
 	private Button newGameButton, loadButton, optionsButton, quitButton;
 
@@ -62,7 +58,7 @@ public class MainMenuScene extends Scene {
 		Sprite logoSprite = new Sprite(container, 480, ImageStore.get().getImage("LOGO"));
 		
 		
-		mainLayer.add(logoSprite, mainLayer.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 75);
+		mainLayer.add(logoSprite, mainLayer.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, LOGO_PADDING);
 		mainLayer.addAsRow(componentList.iterator(), mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), PADDING, -BUTTON_HEIGHT*2, PADDING);
 		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("MAP_BACKGROUND")));
 	}
