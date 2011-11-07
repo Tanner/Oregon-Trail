@@ -43,6 +43,8 @@ public class ImageStore {
 		IMAGES.put("CLOUD_A", new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("CLOUD_B", new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("CLOUD_C", new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST));
+		
+		IMAGES.put("STORE_BUILDING", new Image("resources/graphics/buildings/general-store.png", false, Image.FILTER_NEAREST));
 	}
 	
 	public Image getImage(String name) {

@@ -23,6 +23,7 @@ import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.SegmentedControl;
 import component.modal.*;
+import component.sprite.Sprite;
 
 import core.*;
 
@@ -74,7 +75,10 @@ public class TownScene extends Scene {
 
 		Random random = new Random();
 		SoundStore.get().playMusic(random.nextBoolean() ? "FFD" : "MS");
-						
+		
+		Sprite store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
+		mainLayer.add(store, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
+		
 		Font h1 = FontStore.get().getFont(FontStore.FontID.H1);
 		Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
 		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
