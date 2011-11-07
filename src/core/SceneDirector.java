@@ -40,10 +40,8 @@ public class SceneDirector extends StateBasedGame {
 	 */
 	public void pushScene(Scene scene, boolean popLastScene, boolean animated, Transition transitionOut, Transition transitionIn) {
 		// Don't add a Scene if there's already a Scene on the stack of the same type
-		for (Scene sceneOnStack : scenes) {
-			if (sceneOnStack.getID() == scene.getID()) {
-				return;
-			}
+		if (isDuplicateScene(scene)) {
+			return;
 		}
 		
 		scenes.push(scene);
@@ -66,6 +64,16 @@ public class SceneDirector extends StateBasedGame {
 		if (popLastScene) {
 			scenes.remove(scenes.size() - 2);
 		}
+	}
+	
+	private boolean isDuplicateScene(Scene scene) {
+		for (Scene sceneOnStack : scenes) {
+			if (sceneOnStack.getID() == scene.getID()) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -96,8 +104,12 @@ public class SceneDirector extends StateBasedGame {
 	 * @param scene Scene to be added after
 	 */
 	public void replaceStackWithScene(Scene scene) {
-		scenes.removeAllElements();
-		pushScene(scene, false, false, null, null);
+		if (!isDuplicateScene(scene)) {
+			scenes.removeAllElements();
+			pushScene(scene, false, false, null, null);
+		} else {
+			popScene(true);
+		}
 	}
 	
 	@Override
