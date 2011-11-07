@@ -34,45 +34,31 @@ public class OptionsScene extends Scene {
 	
 	public static final SceneID ID = SceneID.RIVER;
 	
-	private final int TOP_PADDING = 75;
 	private final int BUTTON_WIDTH = 250;
 	private final int BUTTON_HEIGHT = 50;
 	private final int PADDING = 20;
 	
 	private final int SOUND_INCREMENT = 10;
 	private final float MAX_VOLUME = 100.0f;
-	
-	private final Color bgColor = new Color(0x4671D5);
-	
-	private Button mainMenu, save, back;
-	private Spinner volume;
+		
+	private Button mainMenuButton, saveButton, backButton;
+	private Spinner volumeSpinner;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
 		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
-		Font h1Font = FontStore.get().getFont(FontStore.FontID.H2);
-		ArrayList<Component> components = new ArrayList<Component>();
-		
-		//Title
-		Label options = new Label(container, BUTTON_WIDTH, BUTTON_HEIGHT, h1Font, Color.white, "Options");
-		options.setAlignment(Alignment.CENTER);
-		components.add(options);
-		
-		//Create all buttons
+		Font h1Font = FontStore.get().getFont(FontStore.FontID.H1);
+		ArrayList<Component> optionComponents = new ArrayList<Component>();
 		ButtonListener listener = new ButtonListener();
-		Label tempLabel = new Label(container, fieldFont, Color.white, "Reset to Main Menu");
-		mainMenu = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT,tempLabel);
-		mainMenu.addListener(listener);
-		components.add(mainMenu);
+
+		// Title
+		Label optionsLabel = new Label(container, BUTTON_WIDTH, h1Font.getLineHeight(), h1Font, Color.white, "Options");
+		optionsLabel.setAlignment(Alignment.CENTER);
+		optionComponents.add(optionsLabel);
 		
-		tempLabel = new Label(container, fieldFont, Color.white, "Save");
-		save = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT,tempLabel);
-		save.addListener(listener);
-		components.add(save);
-		
-		//Create volume spinner
+		// Create volume spinner
 		Label volumeLabel = new Label(container, BUTTON_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "Volume");
 		volumeLabel.setAlignment(Alignment.CENTER);
 		
@@ -80,27 +66,38 @@ public class OptionsScene extends Scene {
 		for (int i = 0; i <= SOUND_INCREMENT ; i++) {
 			volumeLevels[i] = "" + i*SOUND_INCREMENT;
 		}
-		volume = new Spinner(container, BUTTON_WIDTH, BUTTON_HEIGHT, fieldFont, Color.white, true, volumeLevels);
-		volume.addListener(listener);
-		System.out.println(SoundStore.get().getVolume() * SOUND_INCREMENT );
-		volume.setState((int) (SoundStore.get().getVolume() * SOUND_INCREMENT ));
+		volumeSpinner = new Spinner(container, BUTTON_WIDTH, BUTTON_HEIGHT, fieldFont, Color.white, true, volumeLevels);
+		volumeSpinner.addListener(listener);
+		volumeSpinner.setState((int) (SoundStore.get().getVolume() * SOUND_INCREMENT ));
 		
 		List<Component> volumeList = new ArrayList<Component>();
 		volumeList.add(volumeLabel);
-		volumeList.add(volume);
-		Panel volumePanel = new Panel(container, BUTTON_WIDTH,  volume.getHeight() + volumeLabel.getHeight());
+		volumeList.add(volumeSpinner);
+		Panel volumePanel = new Panel(container, BUTTON_WIDTH,  volumeSpinner.getHeight() + volumeLabel.getHeight());
 		volumePanel.addAsColumn(volumeList.iterator(), mainLayer.getPosition(ReferencePoint.TOPLEFT), 0, 0, 0);
-		components.add(volumePanel);
+		optionComponents.add(volumePanel);
 		
-		tempLabel = new Label(container, fieldFont, Color.white, "Back");
-		back = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT,tempLabel);
-		back.addListener(listener);
-		tempLabel = new Label(container, fieldFont, Color.white, "Volume");
-		components.add(back);
+		//Create all buttons
+		saveButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, "Save"));
+		saveButton.addListener(listener);
+		optionComponents.add(saveButton);
+		
+		mainMenuButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, "Main Menu"));
+		mainMenuButton.addListener(listener);
+		optionComponents.add(mainMenuButton);
+		
+		backButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, "Back"));
+		backButton.addListener(listener);
+		optionComponents.add(backButton);
+		
+		int height = 0;
+		for (Component  c : optionComponents) {
+			height += c.getHeight() + PADDING;
+		}
 		
 		//Add to layers
-		mainLayer.addAsColumn(components.iterator(), mainLayer.getPosition(ReferencePoint.TOPCENTER), -BUTTON_WIDTH/2, TOP_PADDING, PADDING);
-		backgroundLayer.add(new Panel(container, bgColor), backgroundLayer.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT);
+		mainLayer.addAsColumn(optionComponents.iterator(), mainLayer.getPosition(ReferencePoint.CENTERCENTER), -BUTTON_WIDTH/2, -height / 2, PADDING);
+		backgroundLayer.add(new Panel(container, Color.black), backgroundLayer.getPosition(ReferencePoint.TOPLEFT), Positionable.ReferencePoint.TOPLEFT);
 	}
 	
 	@Override
@@ -128,15 +125,15 @@ public class OptionsScene extends Scene {
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			if (source == mainMenu) {
+			if (source == mainMenuButton) {
 				GameDirector.sharedSceneListener().resetToMainMenu();
-			} else if ( source == back ) {
+			} else if (source == backButton) {
 				GameDirector.sharedSceneListener().sceneDidEnd(OptionsScene.this);
-			} else if ( source == save ) {
+			} else if (source == saveButton) {
 				showModal(GameDirector.sharedSceneListener().getLoadSaveModal(false, OptionsScene.this));
 			}
-			else if ( source == volume ) {
-				SoundStore.get().setVolume( volume.getState() / MAX_VOLUME );
+			else if (source == volumeSpinner) {
+				SoundStore.get().setVolume(volumeSpinner.getState() / MAX_VOLUME );
 			}
 		}
 	}
