@@ -97,6 +97,9 @@ public class TownScene extends Scene {
 		ParallaxComponentLoop ground = SceneryFactory.getGround(container);
 		mainLayer.add(ground, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);	
 		
+		ParallaxComponentLoop trail = SceneryFactory.getTrail(container);
+		mainLayer.add(trail, ground.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERLEFT);
+		
 		Sprite store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
 		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 10, 40);
 		
