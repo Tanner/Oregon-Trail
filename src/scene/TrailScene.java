@@ -152,6 +152,7 @@ public class TrailScene extends Scene {
 		adjustSetting();
 		
 		// Simulate attempts at adding stuff, just like update(int delta) will in the TrailSceneState classes
+		// This exact formula is kind of a guess, but it seems to work well
 		int numberAttemptsToAddStuff = ground.getMaxElapsedTime() * container.getWidth() * 2 / CLICK_WAIT_TIME;
 		for (int i = 0; i < numberAttemptsToAddStuff; i++) {
 			if (SceneryFactory.shouldAddCloud()) {
