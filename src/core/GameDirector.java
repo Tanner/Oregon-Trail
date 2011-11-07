@@ -247,7 +247,7 @@ public class GameDirector implements SceneListener {
 			e.printStackTrace();
 			return null;
 		}
-		
+	
 		if(game.getPlayer().getParty() == null) {
 			sceneDirector.pushScene(new PartyCreationScene(game.getPlayer()), true, true, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));	
 		} else if (game.getPlayer().getParty().getTrail() == null || 

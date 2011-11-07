@@ -1,5 +1,6 @@
 package scene;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.newdawn.slick.*;
@@ -46,6 +47,10 @@ public class MainMenuScene extends Scene {
 		componentList.add(newGameButton);
 		loadButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, "Load"));
 		loadButton.addListener(new ButtonListener());
+		File file = new File("resources/serialized/");
+		if(!file.exists() || file.list().length == 0) {
+			loadButton.setDisabled(true);
+		}
 		componentList.add(loadButton);
 		optionsButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, "Options"));
 		optionsButton.addListener(new ButtonListener());
