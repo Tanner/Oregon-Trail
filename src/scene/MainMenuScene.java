@@ -65,7 +65,7 @@ public class MainMenuScene extends Scene {
 		
 		mainLayer.add(logoSprite, mainLayer.getPosition(Positionable.ReferencePoint.TOPCENTER), Positionable.ReferencePoint.TOPCENTER, 0, LOGO_PADDING);
 		mainLayer.addAsRow(componentList.iterator(), mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), PADDING, -BUTTON_HEIGHT*2, PADDING);
-		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("MAP_BACKGROUND")));
+		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("TRAIL_MAP")));
 	}
 
 	@Override
