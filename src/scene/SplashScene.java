@@ -17,6 +17,7 @@ public class SplashScene extends Scene {
 	public static final SceneID ID = SceneID.SPLASH;
 	
 	private static final int WAIT_TIME = 3000;
+	private static final int DELAY = 100;
 	private int time;
 	
 	private Panel whitePanel;
@@ -31,12 +32,12 @@ public class SplashScene extends Scene {
 		super.init(container,  game);
 		
 		whitePanel = new Panel(container, container.getWidth() / 2, container.getHeight());
-		whitePanelAnimatingColor = new AnimatingColor(Color.black, Color.white, WAIT_TIME / 4 - 10);
+		whitePanelAnimatingColor = new AnimatingColor(Color.black, Color.white, WAIT_TIME / 4 - DELAY);
 		whitePanel.setBackgroundColor(whitePanelAnimatingColor);
 		backgroundLayer.add(whitePanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
 		blackPanel = new Panel(container, container.getWidth() / 2, container.getHeight());
-		blackPanelAnimatingColor = new AnimatingColor(Color.black, Color.white, WAIT_TIME / 4 - 10);
+		blackPanelAnimatingColor = new AnimatingColor(Color.black, Color.white, WAIT_TIME / 4 - DELAY);
 		blackPanel.setBackgroundColor(blackPanelAnimatingColor);
 		backgroundLayer.add(blackPanel, mainLayer.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPRIGHT);
 		
@@ -56,21 +57,21 @@ public class SplashScene extends Scene {
 			throws SlickException {
 		time += delta;
 		
-		if (time < WAIT_TIME / 4) {
-			blackPanelAnimatingColor.update(delta);
-		} else if (time >= WAIT_TIME / 4 && time < WAIT_TIME * 2 / 3) {
-			nullLogo.setVisible(true);
-			whitePanelAnimatingColor.update(delta);
-			
-			blackPanelAnimatingColor = new AnimatingColor(Color.white, Color.black, WAIT_TIME / 4 - 10);
-			blackPanel.setBackgroundColor(blackPanelAnimatingColor);
-		} else if (time >= WAIT_TIME * 2 / 3 && time < WAIT_TIME) {
+		if (time >= WAIT_TIME) {
+			GameDirector.sharedSceneListener().requestScene(SceneID.LOADING, this, true);
+		} else if (time >= WAIT_TIME * 1 / 2 + DELAY) {
 			voidLogo.setVisible(true);
 			
 			blackPanelAnimatingColor.update(delta);
-		} else if (time >= WAIT_TIME) {
-			GameDirector.sharedSceneListener().requestScene(SceneID.LOADING, this, true);
-		}
+		} else if (time >= WAIT_TIME / 4 + DELAY) {
+			nullLogo.setVisible(true);
+			whitePanelAnimatingColor.update(delta);
+			
+			blackPanelAnimatingColor = new AnimatingColor(Color.white, Color.black, WAIT_TIME / 4 - DELAY);
+			blackPanel.setBackgroundColor(blackPanelAnimatingColor);
+		} else if (time < WAIT_TIME / 4) {
+			blackPanelAnimatingColor.update(delta);
+		} 
 	}
 
 	@Override
