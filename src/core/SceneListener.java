@@ -40,12 +40,25 @@ public interface SceneListener {
 	 */
 	public FontStore getFontManager();
 	
-	public Game getGame();
-	
+	/**
+	 * Save the game data using serialization.
+	 * @param name The filename to store the serialized data
+	 */
 	public void serialize(String name);
-
+	
+	/**
+	 * Load the game data using serialization.
+	 * @param name The serialized file to load from
+	 */
 	public Game deserialize(String name);
 	
+	/**
+	 * Generates a modal with the correct save files, and allows the user
+	 * to either save or load a game.
+	 * @param isLoad True if you want a load modal, false if you want a save modal
+	 * @param scene The scene you want the modal to return to
+	 * @return A modal for saving or loading a game
+	 */
 	public Modal getLoadSaveModal(boolean isLoad, Scene scene);
 
 }

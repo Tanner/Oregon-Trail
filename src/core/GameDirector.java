@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.swing.JFileChooser;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
@@ -30,6 +28,10 @@ import model.*;
  */
 
 public class GameDirector implements SceneListener {
+	private final int SCREEN_WIDTH = 1024;
+	private final int SCREEN_HEIGHT = 576;
+	private final int FRAME_RATE = 60;
+	
 	private static GameDirector sharedDirector;
 	
 	private FontStore fontManager;
@@ -66,8 +68,8 @@ public class GameDirector implements SceneListener {
 	public void start() {
 		try {
 			container = new AppGameContainer(sceneDirector);
-			container.setDisplayMode(1024, 576, false);
-			container.setTargetFrameRate(60);
+			container.setDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, false);
+			container.setTargetFrameRate(FRAME_RATE);
 			container.setAlwaysRender(true);
 			container.setShowFPS(false);
 			container.start();
@@ -76,14 +78,7 @@ public class GameDirector implements SceneListener {
 		}
 	}
 	
-	/**
-	 * Returns the game object.
-	 * @return the game
-	 */
-	public Game getGame() {
-		return game;
-	}
-	
+
 	/**
 	 * Returns the container that holds the gui element of the game.
 	 * @return the game container
