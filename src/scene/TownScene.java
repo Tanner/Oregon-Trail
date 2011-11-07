@@ -16,13 +16,17 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.AnimatingColor;
 import component.Button;
 import component.Panel;
 import component.Label;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
+import component.SceneryFactory;
 import component.SegmentedControl;
 import component.modal.*;
+import component.parallax.ParallaxComponent;
+import component.parallax.ParallaxComponentLoop;
 import component.sprite.Sprite;
 
 import core.*;
@@ -36,6 +40,12 @@ public class TownScene extends Scene {
 	private static final int BUTTON_WIDTH = 200;
 	private static final int BUTTON_HEIGHT = 60;
 	
+	private static final int CLICK_WAIT_TIME = 1000;
+	private static final int STEP_COUNT_TRIGGER = 2;
+	
+	private int clickCounter;
+	private int timeElapsed;
+	
 	private Party party;
 	
 	private LocationNode location;
@@ -43,6 +53,9 @@ public class TownScene extends Scene {
 	private Button trailButton;
 	
 	private ComponentModal<SegmentedControl> trailChoiceModal;
+	
+	private Panel sky;
+	private AnimatingColor skyAnimatingColor;
 	
 	/**
 	 * builds town scene
@@ -76,8 +89,16 @@ public class TownScene extends Scene {
 		Random random = new Random();
 		SoundStore.get().playMusic(random.nextBoolean() ? "FFD" : "MS");
 		
+		sky = SceneryFactory.getSky(container, party.getTime().getTime());
+		backgroundLayer.add(sky);
+		
+		ParallaxComponent.MAX_DISTANCE = 1;
+		
+		ParallaxComponentLoop ground = SceneryFactory.getGround(container);
+		mainLayer.add(ground, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);	
+		
 		Sprite store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
-		mainLayer.add(store, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
+		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 10, 40);
 		
 		Font h1 = FontStore.get().getFont(FontStore.FontID.H1);
 		Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
@@ -93,7 +114,7 @@ public class TownScene extends Scene {
 		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -5);
 		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
 		
-		backgroundLayer.add(new Panel(container, new Color(0x003e84)));
+		adjustSetting();
 	}
 	
 	@Override
@@ -102,11 +123,42 @@ public class TownScene extends Scene {
 			Random random = new Random();
 			SoundStore.get().playMusic(random.nextBoolean() ? "FFD" : "MS");
 		}
+		
+		timeElapsed += delta;
+		
+		if (skyAnimatingColor != null) {
+			skyAnimatingColor.update(delta);
+		}
+		mainLayer.update(delta);
+		
+		if (timeElapsed % CLICK_WAIT_TIME < timeElapsed) {
+			clickCounter++;
+			timeElapsed = 0;
+		}
+		
+		if (clickCounter >= STEP_COUNT_TRIGGER) {
+			party.getTime().advanceTime();
+			clickCounter = 0;
+			adjustSetting();
+		}
 	}
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		super.enter(container, game);
+	}
+	
+	/**
+	 * Adjust the setting for the scene based on time of day.
+	 */
+	private void adjustSetting() {
+		int hour = party.getTime().getTime();
+		
+		skyAnimatingColor = SceneryFactory.getSkyAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		sky.setBackgroundColor(skyAnimatingColor);
+		
+		AnimatingColor overlayAnimatingColor = SceneryFactory.getOverlayAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
+		mainLayer.setOverlayColor(overlayAnimatingColor);
 	}
 
 	@Override
