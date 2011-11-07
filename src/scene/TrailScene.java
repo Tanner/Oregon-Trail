@@ -7,16 +7,13 @@ import java.util.Set;
 
 import model.Notification;
 import model.Party;
-import model.Time;
 import model.item.ItemType;
 
-import org.newdawn.slick.AppletGameContainer.Container;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
-import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
 import scene.encounter.*;
 import component.AnimatingColor;
@@ -357,6 +354,8 @@ public class TrailScene extends Scene {
 	}
 	
 	private class WalkingState extends TrailSceneState {
+		private static final int DEER_OFFSET = 10;
+
 		public void init() {
 			SoundStore.get().stopSound("Steps");
 
@@ -403,6 +402,10 @@ public class TrailScene extends Scene {
 				ParallaxComponent tree = SceneryFactory.getTree(container, false);
 				int yOffset = (int) (tree.getScale() * 20) / 2;;
 				parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, -tree.getWidth(), yOffset);
+			}
+			if (SceneryFactory.shouldAddDeer()) {
+				ParallaxComponent deer = SceneryFactory.getDeer(container);
+				parallaxPanel.add(deer, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, -deer.getWidth(), DEER_OFFSET);
 			}
 		}
 	}

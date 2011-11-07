@@ -7,7 +7,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import component.Positionable.ReferencePoint;
 import component.hud.HUD;
 import component.parallax.ParallaxPanel;
 import component.parallax.ParallaxComponent;
@@ -37,6 +36,7 @@ public class SceneryFactory {
 	
 	private static final float CLOUD_CHANCE = 0.2f;
 	private static final float TREE_CHANCE = 0.9f;
+	private static final float DEER_CHANCE = 0.05f;
 	
 	private static final Random random = new Random();
 	
@@ -103,6 +103,12 @@ public class SceneryFactory {
 		}
 
 		return new ParallaxComponent(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 0, TREE_DISTANCE, distance, randomXPosition);
+	}
+	
+	public static ParallaxComponent getDeer(GameContainer container) throws SlickException {		
+		int distance = random.nextInt(DEER_DISTANCE);
+
+		return new ParallaxComponent(container, 56, new Image("resources/graphics/animals/deer.png", false, Image.FILTER_NEAREST), 0, DEER_DISTANCE, distance, false);
 	}
 	
 	/**
@@ -194,5 +200,9 @@ public class SceneryFactory {
 	
 	public static boolean shouldAddTree() {
 		return (random.nextFloat() <= TREE_CHANCE);
+	}
+
+	public static boolean shouldAddDeer() {
+		return (random.nextFloat() <= DEER_CHANCE);
 	}
 }
