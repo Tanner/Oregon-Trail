@@ -79,7 +79,7 @@ public class MainMenuScene extends Scene {
 		if (button != modal.getCancelButtonIndex()) {
 			ComponentModal<SegmentedControl> loadModal = (ComponentModal<SegmentedControl>) modal;
 			SegmentedControl loadControl = loadModal.getComponent();
-			GameDirector.sharedSceneListener().deserialize("game" + (loadControl.getSelection()[0] + 1));
+			GameDirector.sharedSceneListener().deserialize("Game " + (loadControl.getSelection()[0] + 1));
 		}
 	}
 	

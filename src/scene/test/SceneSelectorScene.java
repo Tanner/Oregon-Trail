@@ -115,8 +115,8 @@ public class SceneSelectorScene extends Scene {
 		String[] saveFileList = new String[5];
 		int numEmpty = 0;
 		for(int i = 1; i <= 5; i++) {
-			if(fileList.contains("game" + i + ".ser")) {
-				saveFileList[i-1] = ("game" + i);
+			if(fileList.contains("Game " + i + ".ser")) {
+				saveFileList[i-1] = ("Game " + i);
 			} else {
 				saveFileList[i-1] = ("Empty");
 				numEmpty++;
@@ -342,11 +342,11 @@ public class SceneSelectorScene extends Scene {
 	public void dismissModal(Modal modal, int button) {
 		super.dismissModal(modal, button);
 		if(modal == fileLoadModal && button != modal.getCancelButtonIndex()) {
-			game = GameDirector.sharedSceneListener().deserialize("game" + (fileLoadModal.getComponent().getSelection()[0] + 1));
+			game = GameDirector.sharedSceneListener().deserialize("Game " + (fileLoadModal.getComponent().getSelection()[0] + 1));
 			player = game.getPlayer();
 		}
 		if(modal == fileSaveModal && button != modal.getCancelButtonIndex()) {
-			GameDirector.sharedSceneListener().serialize("game" + (fileSaveModal.getComponent().getSelection()[0]+1));
+			GameDirector.sharedSceneListener().serialize("Game " + (fileSaveModal.getComponent().getSelection()[0]+1));
 		}
 	}
 

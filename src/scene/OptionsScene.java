@@ -119,7 +119,7 @@ public class OptionsScene extends Scene {
 		if (button != modal.getCancelButtonIndex()) {
 			ComponentModal<SegmentedControl> loadModal = (ComponentModal<SegmentedControl>) modal;
 			SegmentedControl loadControl = loadModal.getComponent();
-			GameDirector.sharedSceneListener().serialize("game" + (loadControl.getSelection()[0]+1));
+			GameDirector.sharedSceneListener().serialize("Game " + (loadControl.getSelection()[0]+1));
 		}
 	}
 	

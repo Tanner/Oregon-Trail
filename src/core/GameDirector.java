@@ -196,7 +196,7 @@ public class GameDirector implements SceneListener {
 	
 	public void resetToMainMenu() {
 		sceneDirector.replaceStackWithScene(sceneForSceneID(SceneID.MAINMENU));
-		game = null;
+		game = new Game(game.getWorldMap());
 	}
 	
 	/**
@@ -247,6 +247,16 @@ public class GameDirector implements SceneListener {
 			e.printStackTrace();
 			return null;
 		}
+		
+		if(game.getPlayer().getParty() == null) {
+			sceneDirector.pushScene(new PartyCreationScene(game.getPlayer()), true, true, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));	
+		} else if (game.getPlayer().getParty().getTrail() == null || 
+				game.getPlayer().getParty().getTrail().getConditionPercentage() == 0) {
+			sceneDirector.pushScene(new TownScene(game.getPlayer().getParty(), game.getPlayer().getParty().getLocation()), 
+					true, true, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));	
+		} else {
+			sceneDirector.pushScene(new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList())), true, true, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+		}
 		return game;
 	}
 
@@ -269,8 +279,8 @@ public class GameDirector implements SceneListener {
 		String[] saveFileList = new String[5];
 		int numEmpty = 0;
 		for(int i = 1; i <= 5; i++) {
-			if(fileList.contains("game" + i + ".ser")) {
-				saveFileList[i-1] = ("game" + i);
+			if(fileList.contains("Game " + i + ".ser")) {
+				saveFileList[i-1] = ("Game " + i);
 			} else {
 				saveFileList[i-1] = ("Empty");
 				numEmpty++;
