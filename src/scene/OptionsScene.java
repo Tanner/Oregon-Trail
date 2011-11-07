@@ -70,11 +70,6 @@ public class OptionsScene extends Scene {
 		tempLabel = new Label(container, fieldFont, Color.white, "Save");
 		save = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT,tempLabel);
 		save.addListener(listener);
-		if (GameDirector.sharedSceneListener().getGame().getPlayer().getParty() == null) {
-			save.setDisabled(true);
-			save.setTooltipEnabled(true);
-			save.setTooltipMessage("Please start a game\nbefore you can save.");
-		}
 		components.add(save);
 		
 		//Create volume spinner
