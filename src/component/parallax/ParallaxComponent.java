@@ -36,6 +36,9 @@ public class ParallaxComponent extends Component implements Comparable<ParallaxC
 	private boolean randomXPosition;
 	private Random random;
 	
+	private int maxXPosition;
+	private boolean expired;
+	
 	/**
 	 * Constructs a ParallaxSprite with a context, spriteWidth, and image. Sprite scales with distance and can have a random X position.
 	 * @param context Context to use
@@ -50,6 +53,7 @@ public class ParallaxComponent extends Component implements Comparable<ParallaxC
 		super(context, spriteWidth, spriteWidth * image.getHeight() / image.getWidth());
 		
 		this.randomXPosition = randomXPosition;
+		maxXPosition = context.getWidth();
 
 		this.distance = distance;
 		setMaxElapsedTime(distance);
@@ -72,10 +76,10 @@ public class ParallaxComponent extends Component implements Comparable<ParallaxC
 		
 		sprite = new Sprite(context, spriteWidth, image);
 		
-		panel = new Panel(context, context.getWidth(), sprite.getHeight());
-		panel.add(sprite, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(), 0);
+		panel = new Panel(context, sprite.getWidth(), sprite.getHeight());
+		panel.add(sprite, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, 0);
 		
-		add(panel, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, 0);
+		add(panel, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, getXOffset(), 0);
 	}
 	
 	/**
@@ -90,6 +94,7 @@ public class ParallaxComponent extends Component implements Comparable<ParallaxC
 		super(context, spriteWidth, spriteWidth * image.getHeight() / image.getWidth());
 		
 		this.randomXPosition = randomXPosition;
+		maxXPosition = context.getWidth();
 		
 		this.distance = distance;
 		setMaxElapsedTime(distance);
@@ -99,9 +104,9 @@ public class ParallaxComponent extends Component implements Comparable<ParallaxC
 		sprite = new Sprite(context, spriteWidth, image);
 		
 		panel = new Panel(context, context.getWidth(), sprite.getHeight());
-		panel.add(sprite, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, getXOffset(), 0);
+		panel.add(sprite, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, 0);
 		
-		add(panel, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, 0);
+		add(panel, getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, getXOffset(), 0);
 	}
 	
 	/**
@@ -152,6 +157,10 @@ public class ParallaxComponent extends Component implements Comparable<ParallaxC
 			panel.setLocation(panel.getX() + DELTA_X, panel.getY());
 			elapsedTime = 0;
 		}
+		
+		if (panel.getX() > maxXPosition) {
+			setExpired(true);
+		}
 	}
 	
 	/**
@@ -168,7 +177,7 @@ public class ParallaxComponent extends Component implements Comparable<ParallaxC
 	 */
 	private int getXOffset() {
 		if (randomXPosition) {
-			return random.nextInt(panel.getWidth() - sprite.getWidth() + 1);
+			return random.nextInt(maxXPosition - sprite.getWidth() + 1);
 		}
 		
 		return 0;
@@ -238,5 +247,13 @@ public class ParallaxComponent extends Component implements Comparable<ParallaxC
 
 	public void setAlwaysMoving(boolean alwaysMoving) {
 		this.alwaysMoving = alwaysMoving;
+	}
+
+	public boolean isExpired() {
+		return expired;
+	}
+
+	private void setExpired(boolean expired) {
+		this.expired = expired;
 	}
 }

@@ -3,16 +3,13 @@ package component.parallax;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
-import org.newdawn.slick.state.StateBasedGame;
 
 import component.Component;
 import component.Panel;
-import component.hud.HUD;
 
 /**
  * Panel that has a sorted list of {@code ParallaxSprite}.
@@ -41,8 +38,14 @@ public class ParallaxPanel extends Panel {
 	public void update(int delta) {
 		super.update(delta);
 		
-		for (ParallaxComponent pc : parallaxComponents) {
+		for (int i = parallaxComponents.size() - 1; i >= 0; i--) {
+			ParallaxComponent pc = parallaxComponents.get(i);
 			pc.update(delta);
+			
+			if (pc.isExpired()) {
+				parallaxComponents.remove(i);
+				remove(pc);
+			}
 		}
 	}
 	
