@@ -66,19 +66,19 @@ public class SceneryFactory {
 	}
 	
 	public static ParallaxComponentLoop getGround(GameContainer container) throws SlickException {
-		return new ParallaxComponentLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/grass.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		return new ParallaxComponentLoop(container, container.getWidth() + 1, ImageStore.get().getImage("GRASS"), GROUND_DISTANCE);
 	}
 	
 	public static ParallaxComponentLoop getTrail(GameContainer container) throws SlickException {
-		return new ParallaxComponentLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/trail.png", false, Image.FILTER_NEAREST), GROUND_DISTANCE);
+		return new ParallaxComponentLoop(container, container.getWidth() + 1, ImageStore.get().getImage("TRAIL"), GROUND_DISTANCE);
 	}
 	
 	public static ParallaxComponentLoop getHillA(GameContainer container) throws SlickException {
-		return new ParallaxComponentLoop(container, container.getWidth() + 1, new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_A);
+		return new ParallaxComponentLoop(container, container.getWidth() + 1, ImageStore.get().getImage("HILL_A"), HILL_DISTANCE_A);
 	}
 	
 	public static ParallaxComponentLoop getHillB(GameContainer container) throws SlickException {
-		return new ParallaxComponentLoop(container, container.getWidth() + 1, new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST), HILL_DISTANCE_B);
+		return new ParallaxComponentLoop(container, container.getWidth() + 1, ImageStore.get().getImage("HILL_B"), HILL_DISTANCE_B);
 	}
 	
 	public static ParallaxComponent getCloud(GameContainer container, boolean randomXPosition) throws SlickException {		
@@ -102,13 +102,13 @@ public class SceneryFactory {
 			distance = random.nextInt(GROUND_DISTANCE);
 		}
 
-		return new ParallaxComponent(container, 96, new Image("resources/graphics/ground/tree.png", false, Image.FILTER_NEAREST), 0, TREE_DISTANCE, distance, randomXPosition);
+		return new ParallaxComponent(container, 96, ImageStore.get().getImage("TREE"), 0, TREE_DISTANCE, distance, randomXPosition);
 	}
 	
 	public static ParallaxComponent getDeer(GameContainer container) throws SlickException {		
 		int distance = random.nextInt(DEER_DISTANCE);
 
-		return new ParallaxComponent(container, 56, new Image("resources/graphics/animals/deer.png", false, Image.FILTER_NEAREST), 0, DEER_DISTANCE, distance, false);
+		return new ParallaxComponent(container, 56, ImageStore.get().getImage("DEER"), 0, DEER_DISTANCE, distance, false);
 	}
 	
 	/**
