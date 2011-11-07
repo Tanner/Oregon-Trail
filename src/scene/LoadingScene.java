@@ -45,11 +45,11 @@ public class LoadingScene extends Scene {
 		
 		loadCondition = new Condition(0, LoadingList.get().getTotalResources(), 0); 
 		
-		Label loadingLabel = new Label(container, h2, Color.white, "Loading...");
-		mainLayer.add(loadingLabel, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
-		
 		loadingBar = new ConditionBar(container, BAR_WIDTH, BAR_HEIGHT, loadCondition);
-		mainLayer.add(loadingBar, loadingLabel.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
+		mainLayer.add(loadingBar, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.TOPCENTER);
+		
+		Label loadingLabel = new Label(container, h2, Color.white, "Loading...");
+		mainLayer.add(loadingLabel, loadingBar.getPosition(ReferencePoint.TOPCENTER), ReferencePoint.BOTTOMCENTER, 0, -PADDING);
 		
 		loadLabel = new Label(container, container.getWidth(), field, Color.white, "Loading load scene...");
 		mainLayer.add(loadLabel, loadingBar.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
