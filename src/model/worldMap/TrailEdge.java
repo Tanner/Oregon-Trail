@@ -124,8 +124,10 @@ public class TrailEdge extends MapObject {
 			resStr =  "West";		
 		}
 		//if the rank between destinations is the same, make only s or n, so return only first char
-		if (this.destination.getRank() == this.origin.getRank()){
-			resStr = resStr.substring(0,5);
+		if (this.destination.getRank() == this.origin.getRank()) {
+			if (resStr.indexOf(' ') > 0) {
+				resStr = resStr.substring(0, resStr.indexOf(' '));
+			}
 		}	
 		return resStr;
 		
