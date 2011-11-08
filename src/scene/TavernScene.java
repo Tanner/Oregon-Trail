@@ -34,6 +34,7 @@ public class TavernScene extends Scene {
 		super.init(container, game);
 		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		int maxNewMembers = MAX_PARTY_SIZE - party.getPartyMembers().size();
+		System.out.println(maxNewMembers);
 		String[] names = {"Billy Joe Bob", "John Henry Jingle", "Washington George", "New Partymember", "Place Holder Jr."};
 		hireBoard = new SegmentedControl(container, 300, 400, 5, 1, 10, false, maxNewMembers, names);
 		hireButton = new Button(container, 280, 40, new Label(container, 300, fieldFont, Color.white, "Hire!"));
