@@ -324,15 +324,16 @@ public class TrailScene extends Scene {
 	private abstract class TrailSceneState {				
 		public abstract void init();
 		
-		public void update(GameContainer container, int delta) throws SlickException {			
+		public void update(GameContainer container, int delta) throws SlickException {
+			if(party.getTime().getTime() == 19) {
+				SoundStore.get().playSound("WolfHowl");
+			}	
 			if(party.getTime().getTime() >= 19 || party.getTime().getTime() < 5) {
-				if(!SoundStore.get().getPlayingMusic().equals("NightTheme")) {
+				if(SoundStore.get().getPlayingMusic() == null || !SoundStore.get().getPlayingMusic().equals("NightTheme")) {
 					SoundStore.get().loopMusic("NightTheme");
 				}
-			} else {
-				if(!SoundStore.get().getPlayingMusic().equals("DayTheme")) {
+			} else if(SoundStore.get().getPlayingMusic() == null || !SoundStore.get().getPlayingMusic().equals("DayTheme")) {
 					SoundStore.get().loopMusic("DayTheme");
-				}
 			}
 			randomAnimalSound();
 			

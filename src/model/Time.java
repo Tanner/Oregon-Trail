@@ -96,9 +96,6 @@ public class Time implements Serializable{
 		} else if (time == 24) {
 			time = 0;
 		}
-		if(time == 19) {
-			SoundStore.get().playSound("WolfHowl");
-		}
 		if(time == 5) {
 			SoundStore.get().playSound("Rooster");
 		}
