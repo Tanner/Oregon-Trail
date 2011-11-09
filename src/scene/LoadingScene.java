@@ -17,6 +17,10 @@ import core.GameDirector;
 import core.ImageStore;
 import core.SoundStore;
 
+/**
+ * A screen that shows a loading bar that gradually fills to 100% as
+ * the game's resources are loaded (sound, images, fonts, etc).
+ */
 public class LoadingScene extends Scene {
 	public static final SceneID ID = SceneID.LOADING;
 	

@@ -27,10 +27,15 @@ public enum SceneID {
 		this.name = name;
 	}
 	
+	/**
+	 * Get the name of a SceneID.
+	 * @return The string representation of a SceneID
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	@Override
 	public String toString() {
 		return getName();
 	}

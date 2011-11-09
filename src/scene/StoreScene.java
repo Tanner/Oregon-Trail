@@ -278,9 +278,13 @@ public class StoreScene extends Scene {
 		updatePartyMoneyLabel();
 	}
 	
+	/**
+	 * Update the party's money label with formatting after a purchase is made.
+	 */
 	private void updatePartyMoneyLabel() {
 		partyMoney.setText(ConstantStore.get("STORE_SCENE", "PARTY_MONEY") + ConstantStore.get("GENERAL", "MONEY_SYMBOL") + String.format("%,d", party.getMoney()));
 	}
+	
 	/**
 	 * Check the validity of a current purchase after the Buy button has been pressed.
 	 * @return -1 if a failed purchase, 0 if purchase can proceed, 1 if you handled the case inside this method
