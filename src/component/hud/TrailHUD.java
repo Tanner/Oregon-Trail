@@ -57,7 +57,7 @@ public class TrailHUD extends HUD {
 	public TrailHUD(GUIContext context, Mode mode, ComponentListener listener) {
 		super(context, context.getWidth(), HEIGHT);
 		
-		this.currentMode = mode;
+		currentMode = mode;
 		
 		notificationQueue = new LinkedList<String>();
 		
