@@ -187,7 +187,7 @@ public class TrailScene extends Scene {
 		if(!sounds.contains("CowMoo") 
 				&& !sounds.contains("Donkey") 
 				&& !sounds.contains("HorseWhinny")) {
-			int random = new Random().nextInt(1000);
+			int random = new Random().nextInt(10000);
 			if(random < party.getNumberOfAnimals(ItemType.OX)) {
 				SoundStore.get().playSound("CowMoo", .25f);
 				return;
@@ -325,18 +325,21 @@ public class TrailScene extends Scene {
 		public abstract void init();
 		
 		public void update(GameContainer container, int delta) throws SlickException {			
-			if (isPaused()) {
-				return;
-			}
-			
-			if(SoundStore.get().getPlayingMusic() == null || (!SoundStore.get().getPlayingMusic().equals("NightTheme") && !SoundStore.get().getPlayingMusic().equals("DayTheme"))) {
-				if(party.getTime().getTime() >= 19 || party.getTime().getTime() < 5) {
+			if(party.getTime().getTime() >= 19 || party.getTime().getTime() < 5) {
+				if(!SoundStore.get().getPlayingMusic().equals("NightTheme")) {
 					SoundStore.get().loopMusic("NightTheme");
-				} else {
+				}
+			} else {
+				if(!SoundStore.get().getPlayingMusic().equals("DayTheme")) {
 					SoundStore.get().loopMusic("DayTheme");
 				}
 			}
 			randomAnimalSound();
+			
+			if (isPaused()) {
+				return;
+			}
+					
 			
 			timeElapsed += delta;
 			
