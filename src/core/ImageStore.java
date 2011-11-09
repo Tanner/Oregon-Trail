@@ -14,6 +14,9 @@ public class ImageStore {
 	
 	public final Map<String, Image> IMAGES;
 	
+	/**
+	 * Constructs a new {@code ImageStore} and initializes it.
+	 */
 	private ImageStore() {
 		imageStore = this;
 		
@@ -26,6 +29,10 @@ public class ImageStore {
 		}
 	}
 	
+	/**
+	 * Initializes the store with all the images.
+	 * @throws SlickException
+	 */
 	private void initialize() throws SlickException {
 		IMAGES.put("LOGO", new Image("resources/graphics/logo.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("MAP_BACKGROUND", new Image("resources/graphics/backgrounds/map.png", false, Image.FILTER_NEAREST));
@@ -48,10 +55,19 @@ public class ImageStore {
 		IMAGES.put("STORE_BUILDING", new Image("resources/graphics/buildings/general-store.png", false, Image.FILTER_NEAREST));
 	}
 	
+	/**
+	 * Get the {@code Image} for the key.
+	 * @param name Key for the image
+	 * @return Image at that key, if any
+	 */
 	public Image getImage(String name) {
 		return IMAGES.get(name);
 	}
 	
+	/**
+	 * Returns the {@code ImageStore} instance. Creates one if one does not exist.
+	 * @return Instance of ImageStore
+	 */
 	public static ImageStore get() {
 		if (imageStore == null) {
 			imageStore = new ImageStore();
