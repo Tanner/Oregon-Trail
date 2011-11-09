@@ -516,6 +516,9 @@ public class WorldMap implements Serializable {
 	 */
 	public void setCurrLocationNode(LocationNode currLocationNode){
 		this.currLocationNode = currLocationNode;
+		for(TrailEdge edge : currLocationNode.getOutboundTrails()){
+			edge.setVisible(true);
+		}
 	}
 	
 	/**
@@ -534,6 +537,7 @@ public class WorldMap implements Serializable {
 	 */
 	public void setCurrTrail(TrailEdge currTrail){
 		this.currTrail = currTrail;
+		currTrail.getDestination().setVisible(true);
 	}
 	
 	/**

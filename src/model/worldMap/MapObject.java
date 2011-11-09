@@ -22,11 +22,13 @@ public abstract class MapObject implements Conditioned, Serializable {
 	public MapObject(){
 		
 	}
+	
+
 	/**
-	 * whether this trail is visible to the player or not
-	 * @return this trail's visiblity
+	 * whether this map object is visible to the player or not
+	 * @return this map object's visiblity
 	 */
-	public boolean getVisible(){
+	public boolean isVisible(){
 		return this.visible;
 	}
 	
