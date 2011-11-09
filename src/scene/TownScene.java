@@ -157,7 +157,7 @@ public class TownScene extends Scene {
 		
 		if (partyLeaderSprite.getX() < store.getX() + store.getWidth()
 				&& partyLeaderSprite.getX() > store.getX()) {
-			hud.setNotification("Press Enter to go in Store");
+			hud.setNotification(ConstantStore.get("TOWN_SCENE", "ENTER_STORE_INSTRUCTION"));
 		} else {
 			hud.setNotification(location.getName());
 		}
