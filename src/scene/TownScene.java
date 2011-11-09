@@ -145,10 +145,12 @@ public class TownScene extends Scene {
 		
 		timeElapsed += delta;
 		
-		if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
+		if (container.getInput().isKeyDown(Input.KEY_LEFT)
+				&& partyLeaderSprite.getX() > 0) {
 			partyLeaderSprite.moveLeft(delta);
 			partyLeaderSprite.update(container, delta);
-		} else if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
+		} else if (container.getInput().isKeyDown(Input.KEY_RIGHT)
+				&& partyLeaderSprite.getX() + partyLeaderSprite.getWidth() < container.getWidth()) {
 			partyLeaderSprite.moveRight(delta);
 			partyLeaderSprite.update(container, delta);
 		}
