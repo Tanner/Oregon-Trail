@@ -51,10 +51,12 @@ public class MapComponent extends Component {
 		for (int j = 0; j <= worldMap.MAX_RANK; j++){
 			for(LocationNode node : worldMap.getMapNodes().get(j)) {
 				for (int i = 0; i < node.getTrails(); i++){
+					if (node.getOutBoundTrailByIndex(i).isVisible()) {
 					drawIndividualTrail(context, g, node.getOutBoundTrailByIndex(i).getOrigin().getPlayerMapX(),
 						node.getOutBoundTrailByIndex(i).getOrigin().getPlayerMapY(),
 						node.getOutBoundTrailByIndex(i).getDestination().getPlayerMapX(),
 						node.getOutBoundTrailByIndex(i).getDestination().getPlayerMapY(), node);
+					}//if visible draw it
 				}//iTrails for
 			}//for location node in node lists
 		}//for i <= maxrank

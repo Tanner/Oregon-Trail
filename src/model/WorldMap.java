@@ -516,8 +516,10 @@ public class WorldMap implements Serializable {
 	 */
 	public void setCurrLocationNode(LocationNode currLocationNode){
 		this.currLocationNode = currLocationNode;
+		this.currLocationNode.setVisible(true);
 		for(TrailEdge edge : currLocationNode.getOutboundTrails()){
 			edge.setVisible(true);
+			edge.getDestination().setVisible(true);
 		}
 	}
 	

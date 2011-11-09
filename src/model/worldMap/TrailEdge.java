@@ -14,8 +14,6 @@ public class TrailEdge extends MapObject {
 	private int dangerLevel;
 	/**length of the trail.  calculated by the distance between the two location nodes.*/
 	private float length;
-	/**total number of edges built*/
-//	private static int edgeCount;
 	/**length of the longest trail on map*/
 	private static float longestTrail = 0;
 	/**length of the shortest trail on map*/
@@ -24,7 +22,6 @@ public class TrailEdge extends MapObject {
 	private static float totalTrailLength = 0;
 	/**unique id corresponding to this edge.*/
 	private final int ID;
-	
 	
 	
 	/**
@@ -50,7 +47,8 @@ public class TrailEdge extends MapObject {
 		}
 		this.quality = new Condition((int) this.length);
 		TrailEdge.totalTrailLength += this.length;
-		}
+		this.visible = false;
+	}
 
 	private float calcDistance(double destX, double origX, double destY, double origY){
 		float result = 0;

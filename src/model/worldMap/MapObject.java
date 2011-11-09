@@ -15,8 +15,8 @@ public abstract class MapObject implements Conditioned, Serializable {
 	protected String name;
 	/** class-wide counter of nodes */
 	protected static int count;
-	/**the nature of the environment in/around this MapObject*/
-	//protected 
+	/**the nature of the environment in/around this MapObject - format needed*/
+
 
 
 	public MapObject(){

@@ -27,8 +27,6 @@ public class LocationNode extends MapObject {
 	private double playerMapY;	
 	/** ID for this node - used only internally for data store */ 
 	public final int ID;
-	/** class-wide counter of nodes */
-	//private static int count;
 	/** how far west this location is - a location cannot have a trail leading to a location of lower rank, only equal or greater rank*/
 	private int rank;
 	/** how many outbound trails this location has */
@@ -61,6 +59,7 @@ public class LocationNode extends MapObject {
 		this.name = locationName;
 		this.rank = rank;
 		this.quality = new Condition((int) quality);
+		this.visible = false;
 	}
 	
 	/**

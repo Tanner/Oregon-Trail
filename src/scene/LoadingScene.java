@@ -72,7 +72,6 @@ public class LoadingScene extends Scene {
 			loadingBar.update();
 
 			try {
-				System.out.println(nextResource.getDescription());
 				nextResource.load();
 			} catch (IOException e) {
 				e.printStackTrace();
