@@ -41,7 +41,7 @@ public class TownScene extends Scene {
 	
 	private static final int CLICK_WAIT_TIME = 1000;
 	private static final int STEP_COUNT_TRIGGER = 2;
-	
+		
 	private int clickCounter;
 	private int timeElapsed;
 	
@@ -57,6 +57,8 @@ public class TownScene extends Scene {
 	private AnimatingSprite partyLeaderSprite;
 	
 	private TownHUD hud;
+
+	private Sprite store;
 	
 	/**
 	 * Builds town scene
@@ -117,18 +119,19 @@ public class TownScene extends Scene {
 		
 		mainLayer.add(parallaxPanel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		Sprite store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
+		store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
 		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 20, 40);
 		
 		partyLeaderSprite = new AnimatingSprite(container,
-				new Animation(new Image[] {new Image("resources/graphics/test/mario.png", false, Image.FILTER_NEAREST),
-						new Image("resources/graphics/test/luigi.png", false, Image.FILTER_NEAREST)}, 1),
-						AnimatingSprite.Direction.RIGHT);
+				96,
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
+				AnimatingSprite.Direction.RIGHT);
 		mainLayer.add(partyLeaderSprite,
 				new Vector2f(mainLayer.getWidth(), trail.getPosition(ReferencePoint.BOTTOMRIGHT).y),
 				ReferencePoint.BOTTOMRIGHT,
 				-20,
-				-20);
+				-25);
 		
 		adjustSetting();
 	}
@@ -141,6 +144,21 @@ public class TownScene extends Scene {
 		}
 		
 		timeElapsed += delta;
+		
+		if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
+			partyLeaderSprite.moveLeft(delta);
+			partyLeaderSprite.update(container, delta);
+		} else if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
+			partyLeaderSprite.moveRight(delta);
+			partyLeaderSprite.update(container, delta);
+		}
+		
+		if (partyLeaderSprite.getX() < store.getX() + store.getWidth()
+				&& partyLeaderSprite.getX() > store.getX()) {
+			hud.setNotification("Press Enter to go in Store");
+		} else {
+			hud.setNotification(location.getName());
+		}
 		
 		if (skyAnimatingColor != null) {
 			skyAnimatingColor.update(delta);
@@ -179,10 +197,12 @@ public class TownScene extends Scene {
 		
 		hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
 	}
-
+	
 	@Override
 	public void keyReleased(int key, char c) {
-		if (key == Input.KEY_ENTER) {
+		if (key == Input.KEY_ENTER
+				&& partyLeaderSprite.getX() < store.getX() + store.getWidth()
+				&& partyLeaderSprite.getX() > store.getX()) {
 			GameDirector.sharedSceneListener().requestScene(SceneID.STORE, this, false);
 		}
 	}

@@ -52,6 +52,9 @@ public class ImageStore {
 		IMAGES.put("CLOUD_B", new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("CLOUD_C", new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST));
 		
+		IMAGES.put("HUNTER_LEFT", new Image("resources/graphics/hunt/hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("HUNTER_RIGHT", new Image("resources/graphics/hunt/hunterRightFaceSide1.png", false, Image.FILTER_NEAREST));
+		
 		IMAGES.put("STORE_BUILDING", new Image("resources/graphics/buildings/general-store.png", false, Image.FILTER_NEAREST));
 	}
 	

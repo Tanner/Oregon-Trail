@@ -38,9 +38,9 @@ public class PartyComponent extends Component {
 			AnimatingSprite sprite = null;
 			try {
 				sprite = new AnimatingSprite(context,
-						new Animation(new Image[] {new Image("resources/graphics/test/mario.png", false, Image.FILTER_NEAREST),
-								new Image("resources/graphics/test/luigi.png", false, Image.FILTER_NEAREST)}, 1),
-								AnimatingSprite.Direction.RIGHT);
+						80,
+						new Animation(new Image[] {new Image("resources/graphics/test/mario.png", false, Image.FILTER_NEAREST)}, 1),
+						AnimatingSprite.Direction.RIGHT);
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}

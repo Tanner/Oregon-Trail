@@ -100,11 +100,11 @@ public class RiverScene extends Scene {
 		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver1.png"), 100);
 		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver2.png"), 100);
 		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver3.png"), 100);
-		wagon = new AnimatingSprite(container, wagonAni, AnimatingSprite.Direction.LEFT);
+		wagon = new AnimatingSprite(container, 50, wagonAni, AnimatingSprite.Direction.LEFT);
 		wagonAni = new Animation();
 		wagonAni.addFrame(new Image("resources/graphics/test/wagonwheels1.png"), 100);
 		wagonAni.addFrame(new Image("resources/graphics/test/wagonwheels2.png"), 100);
-		wagonWheels = new AnimatingSprite(container, wagonAni, AnimatingSprite.Direction.LEFT);
+		wagonWheels = new AnimatingSprite(container, 44, wagonAni, AnimatingSprite.Direction.LEFT);
 		mainLayer.add(wagon, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, -50, 120);
 		mainLayer.add(wagonWheels, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, -50, 120);
 		wagonWheels.setVisible(false);

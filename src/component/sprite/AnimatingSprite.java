@@ -2,9 +2,13 @@ package component.sprite;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
 public class AnimatingSprite extends Sprite {
+	private static final int MOVE_SPEED_REDUCTION = 6;
+	
 	private Animation leftAnimation;
 	private Animation rightAnimation;
 	private Animation currentAnimation;
@@ -13,18 +17,22 @@ public class AnimatingSprite extends Sprite {
 	private Direction xDirection = Direction.LEFT;
 	
 	/**
-	 * Constructs a {@code Sprite} with a right and left animation.
+	 * Constructs an {@code AnimatingSprite} with a right and left animation.
 	 * @param context The GUI context
+	 * @param width The width
 	 * @param animation Animation for when facing left
-	 * @param direction Direction fo face
+	 * @param direction Direction Direction facing
 	 */
-	public AnimatingSprite(GUIContext context, Animation animation, Direction direction) {
-		super(context, animation.getWidth(), animation.getHeight());
+	public AnimatingSprite(GUIContext context, int width, Animation animation, Direction direction) {
+		super(context, width, width * animation.getHeight() / animation.getWidth());
+		
+		animation.setAutoUpdate(false);
 		
 		Animation reflectedAnimation = new Animation();
 		for (int i = 0; i < animation.getFrameCount(); i++) {
 			reflectedAnimation.addFrame(animation.getImage(i).getFlippedCopy(true, false), animation.getDuration(i));
 		}
+		reflectedAnimation.setAutoUpdate(false);
 		
 		if (direction == Direction.LEFT) {
 			this.leftAnimation = animation;
@@ -36,8 +44,26 @@ public class AnimatingSprite extends Sprite {
 		
 		xDirection = Direction.LEFT;
 		currentAnimation = leftAnimation;
-
-		setImage(currentAnimation.getCurrentFrame());
+	}
+	
+	/**
+	 * Constructs an {@code AnimatingSprite} with a right and left animation.
+	 * @param context The GUI context
+	 * @param width The width
+	 * @param animation Animation for when facing left
+	 * @param direction Direction Direction facing
+	 */
+	public AnimatingSprite(GUIContext context, int width, Animation leftAnimation, Animation rightAnimation, Direction direction) {
+		super(context, width, width * leftAnimation.getHeight() / leftAnimation.getWidth());
+		
+		this.leftAnimation = leftAnimation;
+		this.rightAnimation = rightAnimation;
+		
+		leftAnimation.setAutoUpdate(false);
+		rightAnimation.setAutoUpdate(false);
+		
+		xDirection = Direction.LEFT;
+		currentAnimation = leftAnimation;
 	}
 	
 	/**
@@ -52,9 +78,20 @@ public class AnimatingSprite extends Sprite {
 			currentAnimation = rightAnimation;
 		}
 		
-		setImage(currentAnimation.getCurrentFrame());
-
 		currentAnimation.update(delta);
+	}
+	
+	@Override
+	public void render(GUIContext context, Graphics g) throws SlickException {
+		if (!isVisible()) {
+			return;
+		}
+		
+		super.render(context, g);
+		
+		if (currentAnimation != null) {
+			currentAnimation.draw(getX(), getY(), getWidth(), getHeight());
+		}
 	}
 	
 	/**
@@ -71,5 +108,19 @@ public class AnimatingSprite extends Sprite {
 	 */
 	public void setDirectionFacing(Direction xDirection) {
 		this.xDirection = xDirection;
+	}
+
+	public void moveLeft(int delta) {
+		delta /= MOVE_SPEED_REDUCTION;
+		setLocation(getX() - delta, getY());
+		
+		setDirectionFacing(Direction.LEFT);
+	}
+
+	public void moveRight(int delta) {
+		delta /= MOVE_SPEED_REDUCTION;
+		setLocation(getX() + delta, getY());
+		
+		setDirectionFacing(Direction.RIGHT);
 	}
 }
