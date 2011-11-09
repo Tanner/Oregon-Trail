@@ -85,17 +85,16 @@ public class SceneDirector extends StateBasedGame {
 		if (scenes.size() <= 1) {
 			return;
 		}
+				
+		Scene poppedScene = scenes.pop();
 		
-		scenes.peek().prepareToLeave();
-		
-		scenes.pop();
-	
 		scenes.peek().prepareToEnter();
 		
 		if (animated) {
 			enterState(scenes.peek().getID(), new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 		} else {
 			enterState(scenes.peek().getID());
+			poppedScene.setActive(false);
 		}
 	}
 	

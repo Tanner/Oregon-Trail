@@ -126,7 +126,6 @@ public class RiverScene extends Scene {
 		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		backgroundLayer.add(cloudParallaxPanel, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		showModal(crossingChoicesModal);
-
 	}
 	
 	@Override

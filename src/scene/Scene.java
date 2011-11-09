@@ -148,13 +148,6 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 		setActive(true);
 	}
 	
-	/**
-	 * Prepare for departure. Transition is about to end this scene. 
-	 */
-	public void prepareToLeave() {
-		return;
-	}
-	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		mainLayer.setAcceptingInput(true);
@@ -167,7 +160,6 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 		mainLayer.setAcceptingInput(false);
 		hudLayer.setAcceptingInput(false);
 		modalLayer.setAcceptingInput(false);
-		setActive(false);
 		
 		removeTooltip();
 	}
@@ -252,7 +244,7 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 	 * Set the active of the Scene.
 	 * @param active Whether or not the Scene is active
 	 */
-	private void setActive(boolean active) {
+	public void setActive(boolean active) {
 		this.active = active;
 	}
 	
