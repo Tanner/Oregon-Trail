@@ -2,6 +2,9 @@ package core;
 
 import java.util.Stack;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.state.transition.* ;
@@ -14,7 +17,7 @@ import scene.*;
  * Handles the stack of scenes for scene display.
  */
 public class SceneDirector extends StateBasedGame {
-//	private GameContainer container;
+	private GameContainer container;
 	
 	private Stack<Scene> scenes;
 	
@@ -113,7 +116,7 @@ public class SceneDirector extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-//		this.container = container;
+		this.container = container;
 		
 		SplashScene splash = new SplashScene();
 		scenes.add(splash);
@@ -135,29 +138,24 @@ public class SceneDirector extends StateBasedGame {
 //				
 //		if (fullScreenKeyComboPressed) {
 //			try {
-//				try {
-//					DisplayMode[] dms = Display.getAvailableDisplayModes();
-//					for (DisplayMode m : dms) {
-//						Logger.log(m.toString(), Logger.Level.DEBUG);
-//					}
-//				} catch (LWJGLException e) {
-//					e.printStackTrace();
-//				}
+//				DisplayMode d = Display.getDesktopDisplayMode();
 //				
-//				container.setFullscreen(!container.isFullscreen());
+//				if (!container.isFullscreen())
+//					((AppGameContainer)container).setDisplayMode(d.getWidth(), d.getHeight(), true);
 //			} catch (SlickException e) {
 //				e.printStackTrace();
 //			}
 //		}
 		
+		if (scenes.peek() instanceof LoadingScene || scenes.peek() instanceof SplashScene) {
+			return;
+		}
+		
 		if (c == '+') {
 			GameDirector.sharedSceneListener().showSceneSelector();
 		} else if (c == '-') {
 			Component.changeDebugMode();
-		} else if (key == Input.KEY_ESCAPE &&
-				!scenes.peek().getClass().equals(OptionsScene.class) &&
-				!scenes.peek().getClass().equals(LoadingScene.class) &&
-				!scenes.peek().getClass().equals(SplashScene.class)) {
+		} else if (key == Input.KEY_ESCAPE) {
 			pushScene(new OptionsScene(), false, false, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 		}
 	}
