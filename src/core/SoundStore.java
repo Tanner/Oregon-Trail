@@ -65,7 +65,7 @@ public class SoundStore {
 		addToMusic("FFD", new Music("resources/sounds/FFD.ogg"));
 		addToMusic("MS", new Music("resources/sounds/MagnificentSeven.ogg"));
 		addToSounds("RK", new Sound("resources/sounds/RiverKwai.ogg"));
-		addToSounds("CowMoo", new Sound("resources/sounds/CowMoo.ogg"));
+		addToSounds("CowMoo", new Sound("resources/sounds/cowMoo.ogg"));
 		addToSounds("Donkey", new Sound("resources/sounds/Donkey.ogg"));
 		addToSounds("HorseWhinny", new Sound("resources/sounds/HorseWhinny.ogg"));
 		addToMusic("FarewellCheyenne", new Music("resources/sounds/FarewellCheyenne.ogg"));
