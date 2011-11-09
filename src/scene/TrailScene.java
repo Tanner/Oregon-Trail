@@ -169,9 +169,7 @@ public class TrailScene extends Scene {
 		
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		if(!isPaused()) {
-			state.update(container, delta);
-		}
+		state.update(container, delta);
 	}
 	
 	private void randomAnimalSound() {
@@ -316,7 +314,11 @@ public class TrailScene extends Scene {
 	private abstract class TrailSceneState {				
 		public abstract void init();
 		
-		public void update(GameContainer container, int delta) throws SlickException {
+		public void update(GameContainer container, int delta) throws SlickException {			
+			if (isPaused()) {
+				return;
+			}
+			
 			if(SoundStore.get().getPlayingMusic() == null || (!SoundStore.get().getPlayingMusic().equals("NightTheme") && !SoundStore.get().getPlayingMusic().equals("DayTheme"))) {
 				if(party.getTime().getTime() >= 19 || party.getTime().getTime() < 5) {
 					SoundStore.get().loopMusic("NightTheme");
@@ -374,6 +376,10 @@ public class TrailScene extends Scene {
 			
 			partyComponent.update(delta, timeElapsed * party.getPace().getSpeed());
 			
+			if (isPaused()) {
+				return;
+			}
+			
 			if (!SoundStore.get().getPlayingSounds().contains("Steps")) {
 				SoundStore.get().playSound("Steps");
 			}
@@ -401,6 +407,10 @@ public class TrailScene extends Scene {
 		private int counter;
 		public void update(GameContainer container, int delta) throws SlickException {
 			super.update(container, delta);
+			
+			if (isPaused()) {
+				return;
+			}
 			
 			counter += delta;
 			if (counter >= CLICK_WAIT_TIME) {
