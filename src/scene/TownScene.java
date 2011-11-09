@@ -24,6 +24,8 @@ import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.SceneryFactory;
 import component.SegmentedControl;
+import component.hud.HUD;
+import component.hud.TownHUD;
 import component.modal.*;
 import component.parallax.ParallaxComponent;
 import component.parallax.ParallaxComponentLoop;
@@ -58,8 +60,10 @@ public class TownScene extends Scene {
 	private Panel sky;
 	private AnimatingColor skyAnimatingColor;
 	
+	private TownHUD hud;
+	
 	/**
-	 * builds town scene
+	 * Builds town scene
 	 * @param party where/who the action is
 	 */
 	public TownScene(Party party, LocationNode location) {
@@ -68,19 +72,21 @@ public class TownScene extends Scene {
 		for (Person p : party.getPartyMembers()) {
 			Logger.log(p.getName() + ", the " + p.getProfession() + ", entered the town.", Logger.Level.INFO);
 		}
-		if(location.getTrails() != 0) {
+		
+		if (location.getTrails() != 0) {
 			String[] trails = new String[location.getTrails()];
-			for(int i = 0; i < location.getTrails(); i++) {
+			for (int i = 0; i < location.getTrails(); i++) {
 				TrailEdge temp = location.getOutBoundTrailByIndex(i);
 				trails[i] = temp.getRoughLength() + " and to the " + temp.getRoughDirection() + ", " + temp.getDangerRating()  +  " \n" + temp.getName();
-				}
+			}
+			
 			trailChoiceModal = new ComponentModal<SegmentedControl>(container,
 					this,
 					ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
 					2,
 					new SegmentedControl(container, 700, 300, 3, 1, 20, true, 1, trails));
 			trailChoiceModal.setButtonText(trailChoiceModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
-		}
+		};
 	}
 	
 	@Override
@@ -114,19 +120,9 @@ public class TownScene extends Scene {
 		Sprite store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
 		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 10, 40);
 		
-		Font h1 = FontStore.get().getFont(FontStore.FontID.H1);
-		Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
-		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
-		
-		Label titleLabel = new Label(container, h1, Color.white, location.getName());
-		Label subtitleLabel = new Label(container, h2, Color.white, "Press Enter to Go to Store");
-		
-		trailButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, "Go To Trail"));
-		trailButton.addListener(new ButtonListener());
-		
-		mainLayer.add(trailButton, mainLayer.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, -100);
-		mainLayer.add(titleLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -5);
-		mainLayer.add(subtitleLabel, titleLabel.getPosition(Positionable.ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
+		hud = new TownHUD(container, new HUDListener());
+		hud.setNotification(location.getName());
+		super.showHUD(hud);
 		
 		adjustSetting();
 	}
@@ -153,6 +149,7 @@ public class TownScene extends Scene {
 		if (clickCounter >= STEP_COUNT_TRIGGER) {
 			party.getTime().advanceTime();
 			clickCounter = 0;
+			
 			adjustSetting();
 		}
 	}
@@ -173,6 +170,8 @@ public class TownScene extends Scene {
 		
 		AnimatingColor overlayAnimatingColor = SceneryFactory.getOverlayAnimatingColor(hour, CLICK_WAIT_TIME * STEP_COUNT_TRIGGER);
 		mainLayer.setOverlayColor(overlayAnimatingColor);
+		
+		hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
 	}
 
 	@Override
@@ -187,15 +186,6 @@ public class TownScene extends Scene {
 		return ID.ordinal();
 	}
 	
-	/**
-	 * Temporary listener to allow movement to the trail
-	 */
-	private class ButtonListener implements ComponentListener {
-		public void componentActivated(AbstractComponent source) {
-			showModal(trailChoiceModal);
-		}
-	}
-	
 	@Override
 	public void dismissModal(Modal modal, int button) {
 		super.dismissModal(modal, button);
@@ -204,6 +194,15 @@ public class TownScene extends Scene {
 			if (button != modal.getCancelButtonIndex()) {
 				party.setTrail(party.getLocation().getOutBoundTrailByIndex(trailChoiceModal.getComponent().getSelection()[0]));
 				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, TownScene.this, true);
+			}
+		}
+	}
+	
+	private class HUDListener implements ComponentListener {
+		@Override
+		public void componentActivated(AbstractComponent component) {
+			if (component == hud.getTrailButton()) {
+				showModal(trailChoiceModal);
 			}
 		}
 	}

@@ -125,6 +125,7 @@ public final class ConstantStore {
 		// Town Scene
 		Map<String, String> townScene = new HashMap<String, String>();
 		townScene.put("TRAIL_CHOICE", "Where do you wish to travel to next?");
+		townScene.put("TRAIL", "Trail");
 		literalMap.put("TOWN_SCENE", townScene);
 		
 		// Map Scene
