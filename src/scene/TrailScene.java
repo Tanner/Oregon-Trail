@@ -109,21 +109,31 @@ public class TrailScene extends Scene {
 		int segmentedControlWidth = (toolbar.getWidth() - paceLabel.getWidth() - rationsLabel.getWidth() - toolbarXMargin * 6) / 2;
 
 		String[] paceLabels = new String[Party.Pace.values().length];
+		int currentPaceIndex = -1;
 		for (int i = 0; i < paceLabels.length; i++) {
 			paceLabels[i] = Party.Pace.values()[i].toString();
+			if (party.getPace() == Party.Pace.values()[i]) {
+				currentPaceIndex = i;
+			}
 		}
 		
 		paceSegmentedControl = new SegmentedControl(container, segmentedControlWidth, toolbar.getHeight() - 14, 1, 3, 0, true, 1, paceLabels);
+		paceSegmentedControl.setSelection(new int[]{currentPaceIndex});
 		toolbar.add(paceSegmentedControl, paceLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, toolbarXMargin, 0);
 		paceSegmentedControl.addListener(new ToolbarComponentListener());
 		
 		toolbar.add(rationsLabel, paceSegmentedControl.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, toolbarXMargin * 2, 0);
 		
 		String[] rationLabels = new String[Party.Rations.values().length];
+		int currentRationIndex = -1;
 		for (int i = 0; i < rationLabels.length; i++) {
 			rationLabels[i] = Party.Rations.values()[i].toString();
+			if (party.getRations() == Party.Rations.values()[i]) {
+				currentRationIndex = i;
+			}
 		}
 		rationsSegmentedControl = new SegmentedControl(container, segmentedControlWidth, toolbar.getHeight() - 14, 1, 3, 0, true, 1, rationLabels);
+		rationsSegmentedControl.setSelection(new int[]{currentRationIndex});
 		toolbar.add(rationsSegmentedControl, rationsLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, toolbarXMargin, 0);
 		rationsSegmentedControl.addListener(new ToolbarComponentListener());
 		
