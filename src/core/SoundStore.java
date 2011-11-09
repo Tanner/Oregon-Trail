@@ -68,12 +68,12 @@ public class SoundStore {
 		addToSounds("CowMoo", new Sound("resources/sounds/CowMoo.ogg"));
 		addToSounds("Donkey", new Sound("resources/sounds/Donkey.ogg"));
 		addToSounds("HorseWhinny", new Sound("resources/sounds/HorseWhinny.ogg"));
-		addToMusic("FarewellCheyenne", new Music("resources/sounds/FarewellCheyenne.org"));
-		addToMusic("HangEmHigh", new Music("resources/sounds/HangEmHigh.org"));
-		addToMusic("HowTheWest", new Music("resources/sounds/HowTheWest.org"));
-		addToMusic("JesseJames", new Music("resources/sounds/JesseJames.org"));
-		addToMusic("MyNameIsNobody", new Music("resources/sounds/MyNameIsNobody.org"));
-		addToMusic("WanderingTrail", new Music("resources/sounds/WanderingTrail.org"));
+		addToMusic("FarewellCheyenne", new Music("resources/sounds/FarewellCheyenne.ogg"));
+		addToMusic("HangEmHigh", new Music("resources/sounds/HangEmHigh.ogg"));
+		addToMusic("HowTheWest", new Music("resources/sounds/HowTheWest.ogg"));
+		addToMusic("JesseJames", new Music("resources/sounds/JesseJames.ogg"));
+		addToMusic("MyNameIsNobody", new Music("resources/sounds/MyNameIsNobody.ogg"));
+		addToMusic("WanderingTrail", new Music("resources/sounds/WanderingTrail.ogg"));
 	}
 	
 	public String getPlayingMusic() {
