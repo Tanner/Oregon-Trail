@@ -32,6 +32,8 @@ public class MainMenuScene extends Scene {
 	private final int LOGO_PADDING = 75;
 	
 	private Button newGameButton, loadButton, optionsButton, quitButton;
+	
+	private boolean loadEnabled;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -47,10 +49,7 @@ public class MainMenuScene extends Scene {
 		componentList.add(newGameButton);
 		loadButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, "Load"));
 		loadButton.addListener(new ButtonListener());
-		File file = new File("resources/serialized/");
-		if(!file.exists() || file.list().length == 0) {
-			loadButton.setDisabled(true);
-		}
+		loadButton.setDisabled(!loadEnabled);		
 		componentList.add(loadButton);
 		optionsButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, "Options"));
 		optionsButton.addListener(new ButtonListener());
@@ -68,6 +67,20 @@ public class MainMenuScene extends Scene {
 		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("TRAIL_MAP")));
 	}
 
+	@Override
+	public void prepareToEnter() {
+		super.prepareToEnter();
+		File file = new File("resources/serialized/");
+		if(!file.exists() || file.list().length == 0) {
+			loadEnabled = false;
+		} else {
+			loadEnabled = true;
+		}
+		if(loadButton != null) {
+			loadButton.setDisabled(!loadEnabled);
+		}
+	}
+	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		return;
