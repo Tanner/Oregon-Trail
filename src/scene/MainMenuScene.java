@@ -84,7 +84,7 @@ public class MainMenuScene extends Scene {
 	private boolean hasLoadableFiles(File file) {
 		for(String name : file.list()) {
 			for(int i = 1; i <= 5; i++) {
-				if(name == "Game " + i + ".ser") {
+				if(name.equals("Game " + i + ".ser")) {
 					return true;
 				}
 			}
