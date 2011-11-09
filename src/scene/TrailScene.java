@@ -34,7 +34,6 @@ import core.ConstantStore;
 import core.FontStore;
 import core.FontStore.FontID;
 import core.GameDirector;
-import core.Logger;
 import core.SoundStore;
 
 /**
