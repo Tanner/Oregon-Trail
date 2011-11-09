@@ -71,7 +71,7 @@ public class MainMenuScene extends Scene {
 	public void prepareToEnter() {
 		super.prepareToEnter();
 		File file = new File("resources/serialized/");
-		if(!file.exists() || file.list().length == 0) {
+		if(!file.exists() || !hasLoadableFiles(file)) {
 			loadEnabled = false;
 		} else {
 			loadEnabled = true;
@@ -81,6 +81,17 @@ public class MainMenuScene extends Scene {
 		}
 	}
 	
+	private boolean hasLoadableFiles(File file) {
+		for(String name : file.list()) {
+			for(int i = 1; i <= 5; i++) {
+				if(name == "Game " + i + ".ser") {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		return;
