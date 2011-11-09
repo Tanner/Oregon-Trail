@@ -15,15 +15,17 @@ import core.ConstantStore;
  */
 public class MapComponent extends Component {
 	private WorldMap worldMap;
+	private Boolean devMode;
 	
 	public MapComponent(GUIContext context, int width, int height){
 		super(context, width, height);
 		
 	}
 	
-	public MapComponent(GUIContext context, WorldMap worldMap){
+	public MapComponent(GUIContext context, WorldMap worldMap, Boolean devMode){
 		super(context, context.getWidth(), context.getHeight());
 		this.worldMap = worldMap;
+		this.devMode = devMode;
 		MapPanel mapPanel = new MapPanel(context, context.getWidth(),context.getHeight(), ConstantStore.COLORS.get("TRANSLUCENT_OVERLAY"));
 		add(mapPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
@@ -51,7 +53,7 @@ public class MapComponent extends Component {
 		for (int j = 0; j <= worldMap.MAX_RANK; j++){
 			for(LocationNode node : worldMap.getMapNodes().get(j)) {
 				for (int i = 0; i < node.getTrails(); i++){
-					if (node.getOutBoundTrailByIndex(i).isVisible()) {
+					if ((node.getOutBoundTrailByIndex(i).isVisible()) || this.devMode)  {
 					drawIndividualTrail(context, g, node.getOutBoundTrailByIndex(i).getOrigin().getPlayerMapX(),
 						node.getOutBoundTrailByIndex(i).getOrigin().getPlayerMapY(),
 						node.getOutBoundTrailByIndex(i).getDestination().getPlayerMapX(),

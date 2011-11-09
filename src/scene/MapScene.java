@@ -34,17 +34,17 @@ public class MapScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
+		boolean devMode = false;
 
-		
-		MapComponent playerMap = new MapComponent(container, worldMap);
-		
+		MapComponent playerMap = new MapComponent(container, worldMap, devMode);
+
 		Button[] locationButtons = new Button[worldMap.getNumLocations()];
 
 		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		//add to mapComponent
 		for (int i = 0; i <= worldMap.MAX_RANK; i++){
 			for(LocationNode location : worldMap.getMapNodes().get(i)) {
-				if (location.isVisible()){
+				if ((location.isVisible()) || devMode){
 					locationButtons[location.getID()] = new Button(container, 10, 10);					
 					locationButtons[location.getID()].setTooltipEnabled(true);
 					locationButtons[location.getID()].setTooltipMessage(location.getName());

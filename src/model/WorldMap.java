@@ -19,6 +19,8 @@ public class WorldMap implements Serializable {
 	
 	/**number of locations on map if none passed to constructor - needs to be static to pass to constructor*/
 	public final static int GEN_LOC = 80;  
+	/**max quality for a location, which determines how big/populated/well known it is.*/
+	public final int  MAX_LOC_QUAL = 100;
 	/**weight of ranking assignment in random generator - 2 is 50 50 chance for same rank or next rank, higher numbers weight toward next rank*/
 	public final int RANK_WEIGHT = 3;  
 	/**maximum danger a trail may have - used as an int seed during construction of the map*/
@@ -63,6 +65,7 @@ public class WorldMap implements Serializable {
 		this.devMode = (devMode.length() == 0) ? false : true;
 		this.numTrails = 0;
 		this.numLocations = numNodes;
+//		this.numLocations = 3000;
 		if (this.devMode) {
 			this.numLocations = 3000;
 		}
@@ -148,7 +151,7 @@ public class WorldMap implements Serializable {
 			}
 		//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
-		LocationNode tempNode = new LocationNode(nameLocation(curRank, mapRand, tmpY), tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(100));
+		LocationNode tempNode = new LocationNode(nameLocation(curRank, mapRand, tmpY), tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(MAX_LOC_QUAL));
 		return tempNode;
 	}
 	
@@ -288,7 +291,7 @@ public class WorldMap implements Serializable {
 			//build beginning and final locations
 		this.mapHead = new LocationNode("Independence, Missouri", MAX_X, 0, MAX_TRAILS_OUT);
 		this.finalDestination = new LocationNode("Oregon City, Oregon", 0, 0, 0, MAX_RANK, 100);
-
+		this.finalDestination.setVisible(true);
 		//setting mapHead to be "on the trail" - don't want to loop back to home base as we initialize the map structure
 		this.mapHead.setOnTheTrail(true);
 		numRankAra[0] = 1;
@@ -331,7 +334,10 @@ public class WorldMap implements Serializable {
 			for(LocationNode node : this.mapNodes.get(i)){
 				//manufacture proper coords for player map from x/y pos
 				convertToMapCoords(node);
-				
+				//node is of sufficient "quality" to show up on map regardless of having been visited or not
+				if (node.getCondition().getCurrent() / this.MAX_LOC_QUAL > .90){
+					node.setVisible(true);					
+				}
 				trailDest = new ArrayList<Integer>();
 				trailForward = false;
 				//add current node to list of used destination ID's
@@ -384,8 +390,10 @@ public class WorldMap implements Serializable {
 				}//for each trail at location
 			}//for each location at rank
 		}//for each rank
-		
+		//convert oregon city's coords to actual coords on our map
 		convertToMapCoords(this.mapNodes.get(finalDestination.getRank()).get(0));
+		
+		
 		
 		if (this.devMode) {
 			for (int i = 0; i <= MAX_RANK; i++){

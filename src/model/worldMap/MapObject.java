@@ -48,7 +48,7 @@ public abstract class MapObject implements Conditioned, Serializable {
 	}
 
 	public double getConditionPercentage() {
-		return quality.getPercentage();
+		return this.quality.getPercentage();
 	}
 	
 	public abstract String debugToString();
@@ -57,8 +57,10 @@ public abstract class MapObject implements Conditioned, Serializable {
 		MapObject.count = 0;
 	}
 
+	
+		
 	@Override
 	public Condition getCondition() {
-		return quality;
+		return this.quality;
 	}
 }
