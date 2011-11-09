@@ -100,6 +100,9 @@ public class TrailHUD extends HUD {
 		menuButton.addListener(listener);
 		panel.add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
 		
+		menuButton.setTooltipEnabled(true);
+		menuButton.setTooltipMessage(ConstantStore.get("TRAIL_SCENE", "CAMP"));
+		
 		int notificationWidth = width - menuButton.getWidth() -  MARGIN * 2;
 		
 		notificationLabel = new Label(container, notificationWidth, BUTTON_HEIGHT, fieldFont, Color.white, "");

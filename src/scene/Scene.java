@@ -54,7 +54,7 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 		modalLayer.render(container, g);
 		
 		if (tooltip != null) {
-			if (tooltip.getOwner().isMouseOver()) {
+			if (tooltip.getOwner().isMouseOver() && tooltip.getOwner().isVisible()) {
 				tooltip.render(container, g);
 			} else {
 				removeTooltip();

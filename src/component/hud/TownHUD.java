@@ -59,6 +59,9 @@ public class TownHUD extends HUD {
 		trailButton.addListener(listener);
 		panel.add(trailButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
 		
+		trailButton.setTooltipEnabled(true);
+		trailButton.setTooltipMessage(ConstantStore.get("TOWN_SCENE", "CONTINUE_ON_TRAIL"));
+		
 		int notificationWidth = panelWidth - trailButton.getWidth() -  MARGIN * 2;
 		
 		notificationLabel = new Label(container, notificationWidth, BUTTON_HEIGHT, fieldFont, Color.white, "");
