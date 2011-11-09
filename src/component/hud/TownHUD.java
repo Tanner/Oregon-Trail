@@ -51,10 +51,10 @@ public class TownHUD extends HUD {
 		
 		Label menuLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("TOWN_SCENE", "TRAIL"));
 		
-		Sprite fireSprite = new Sprite(container, 48, ImageStore.get().getImage("CAMP_ICON"));
+		Sprite trailSprite = new Sprite(container, 48, ImageStore.get().getImage("TRAIL_ICON"));
 		
 		trailButton = new Button(container, menuLabel.getWidth() + (2 * MARGIN), BUTTON_HEIGHT, menuLabel);
-		trailButton.setSprite(fireSprite);
+		trailButton.setSprite(trailSprite);
 		trailButton.setShowLabel(false);
 		trailButton.addListener(listener);
 		panel.add(trailButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
