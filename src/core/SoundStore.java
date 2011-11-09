@@ -1,8 +1,11 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import org.newdawn.slick.Music;
@@ -21,6 +24,7 @@ public class SoundStore {
 	private Map<String, Music> musics;
 	
 	private Set<String> playingSounds = new HashSet<String>();
+	private List<String> townSongs = new ArrayList<String>();
 	
 	/**
 	 * Constructs a new {@code SoundStore} and initializes it.
@@ -77,6 +81,20 @@ public class SoundStore {
 		addToMusic("JesseJames", new Music("resources/sounds/JesseJames.ogg"));
 		addToMusic("MyNameIsNobody", new Music("resources/sounds/MyNameIsNobody.ogg"));
 		addToMusic("WanderingTrail", new Music("resources/sounds/WanderingTrail.ogg"));
+		
+		townSongs.add("FarewellCheyenne");
+		townSongs.add("HangEmHigh");
+		townSongs.add("HowTheWest");
+		townSongs.add("JesseJames");
+		townSongs.add("MyNameIsNobody");
+		townSongs.add("FFD");
+		townSongs.add("MS");
+	}
+	
+	public void playTownMusic() {
+		Random random = new Random();
+		playMusic(townSongs.get(random.nextInt(townSongs.size())));
+		
 	}
 	
 	/**

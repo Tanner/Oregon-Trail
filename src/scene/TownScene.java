@@ -139,8 +139,7 @@ public class TownScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(SoundStore.get().getPlayingMusic() == null) {
-			Random random = new Random();
-			SoundStore.get().playMusic(random.nextBoolean() ? "FFD" : "MS");
+			SoundStore.get().playTownMusic();
 		}
 		
 		timeElapsed += delta;
