@@ -39,9 +39,6 @@ import core.*;
 public class TownScene extends Scene {
 	public static final SceneID ID = SceneID.TOWN;
 	
-	private static final int BUTTON_WIDTH = 200;
-	private static final int BUTTON_HEIGHT = 60;
-	
 	private static final int CLICK_WAIT_TIME = 1000;
 	private static final int STEP_COUNT_TRIGGER = 2;
 	
@@ -51,8 +48,6 @@ public class TownScene extends Scene {
 	private Party party;
 	
 	private LocationNode location;
-	
-	private Button trailButton;
 	
 	private ComponentModal<SegmentedControl> trailChoiceModal;
 	
