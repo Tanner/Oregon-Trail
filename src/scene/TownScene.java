@@ -7,11 +7,14 @@ import model.Person;
 import model.worldMap.LocationNode;
 import model.worldMap.TrailEdge;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
@@ -20,6 +23,7 @@ import component.AnimatingColor;
 import component.Button;
 import component.Panel;
 import component.Label;
+import component.PartyComponent;
 import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.SceneryFactory;
@@ -30,6 +34,7 @@ import component.modal.*;
 import component.parallax.ParallaxComponent;
 import component.parallax.ParallaxComponentLoop;
 import component.parallax.ParallaxPanel;
+import component.sprite.AnimatingSprite;
 import component.sprite.Sprite;
 
 import core.*;
@@ -59,6 +64,8 @@ public class TownScene extends Scene {
 	
 	private Panel sky;
 	private AnimatingColor skyAnimatingColor;
+	
+	private AnimatingSprite partyLeaderSprite;
 	
 	private TownHUD hud;
 	
@@ -96,33 +103,43 @@ public class TownScene extends Scene {
 		Random random = new Random();
 		SoundStore.get().playMusic(random.nextBoolean() ? "FFD" : "MS");
 		
+		hud = new TownHUD(container, new HUDListener());
+		hud.setNotification(location.getName());
+		super.showHUD(hud);	
+		
 		sky = SceneryFactory.getSky(container, party.getTime().getTime());
 		backgroundLayer.add(sky);
 		
 		ParallaxComponent.MAX_DISTANCE = 1;
 		
-		ParallaxPanel terrain = new ParallaxPanel(container, container.getWidth(), container.getHeight());
+		ParallaxPanel parallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		
 		ParallaxComponentLoop ground = SceneryFactory.getGround(container);
-		terrain.add(ground, terrain.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);	
+		parallaxPanel.add(ground, parallaxPanel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);	
 		
 		ParallaxComponentLoop trail = SceneryFactory.getTrail(container);
-		terrain.add(trail, ground.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERLEFT, 80, 0);
+		parallaxPanel.add(trail, ground.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERLEFT, 80, 0);
 
 		ParallaxComponentLoop hillB = SceneryFactory.getHillB(container);
-		terrain.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 80, 0);
+		parallaxPanel.add(hillB, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 80, 0);
 		
 		ParallaxComponentLoop hillA = SceneryFactory.getHillA(container);
-		terrain.add(hillA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
+		parallaxPanel.add(hillA, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT);
 		
-		mainLayer.add(terrain, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
+		mainLayer.add(parallaxPanel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		Sprite store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
-		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 10, 40);
+		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 20, 40);
 		
-		hud = new TownHUD(container, new HUDListener());
-		hud.setNotification(location.getName());
-		super.showHUD(hud);
+		partyLeaderSprite = new AnimatingSprite(container,
+				new Animation(new Image[] {new Image("resources/graphics/test/mario.png", false, Image.FILTER_NEAREST),
+						new Image("resources/graphics/test/luigi.png", false, Image.FILTER_NEAREST)}, 1),
+						AnimatingSprite.Direction.RIGHT);
+		mainLayer.add(partyLeaderSprite,
+				new Vector2f(mainLayer.getWidth(), trail.getPosition(ReferencePoint.BOTTOMRIGHT).y),
+				ReferencePoint.BOTTOMRIGHT,
+				-20,
+				-20);
 		
 		adjustSetting();
 	}

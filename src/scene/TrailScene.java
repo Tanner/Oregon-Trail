@@ -340,7 +340,7 @@ public class TrailScene extends Scene {
 			if (isPaused()) {
 				return;
 			}
-					
+			
 			
 			timeElapsed += delta;
 			
