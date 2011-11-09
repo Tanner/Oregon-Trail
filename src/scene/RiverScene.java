@@ -29,27 +29,35 @@ import component.sprite.Sprite;
 import core.GameDirector;
 import core.SoundStore;
 
+/**
+ * A river crossing scene where the user is given a few choices
+ * to cross a river.
+ */
 public class RiverScene extends Scene {
 	public static final SceneID ID = SceneID.RIVER;
 	
-	private static final int NUM_CLOUDS = 5;
-	private static final int CLOUD_OFFSET = 20;
-	private static final int CLOUD_DISTANCE_VARIANCE = 10;
-	private static final int CLOUD_OFFSET_VARIANCE = 10;
-	private static final int CLOUD_DISTANCE = 300;
+	private final int NUM_CLOUDS = 5;
+	private final int CLOUD_OFFSET = 20;
+	private final int CLOUD_DISTANCE_VARIANCE = 10;
+	private final int CLOUD_OFFSET_VARIANCE = 10;
+	private final int CLOUD_DISTANCE = 300;
 	
-	private static final int MAX_RIVER_DEPTH = 8;
-	private static final int MAX_TOLL = 1000;
-	private static final int MIN_TOLL = 100;
-	private static final int FORD_DANGER_DEPTH = 3;
-	private static final int CAULK_DANGER_DEPTH = 4;
-	private static final int RIVER_CROSS_TIME = 3000;
+	private final int MAX_RIVER_DEPTH = 8;
+	private final int MAX_TOLL = 1000;
+	private final int MIN_TOLL = 100;
+	private final int FORD_DANGER_DEPTH = 3;
+	private final int CAULK_DANGER_DEPTH = 4;
+	private final int RIVER_CROSS_TIME = 3000;
+	private final int BRIDGE_CROSS_TIME = 5500;
 	
 
 	private ParallaxPanel riverParallaxPanel;
 	private ParallaxPanel cloudParallaxPanel;
 	
 	private AnimatingSprite wagon;
+	private AnimatingSprite wagonWheels;
+	
+	private Sprite bridge;
 	
 	private SegmentedControl crossingChoicesControl;
 	private ComponentModal<SegmentedControl> crossingChoicesModal;
@@ -65,6 +73,9 @@ public class RiverScene extends Scene {
 	private String successModalMessage;
 
 	private boolean haveWaited;
+	private boolean waiting;
+	private boolean crossingBridge;
+	private boolean crossingRiver;
 	private boolean didTakeDamage;
 	private boolean ani;
 	
@@ -73,6 +84,7 @@ public class RiverScene extends Scene {
 		riverDepth = (int) (Math.random() * MAX_RIVER_DEPTH) + 1;
 		tollPrice = (int) (Math.random() * MAX_TOLL - MIN_TOLL) + MIN_TOLL;
 		haveWaited = false;
+		waiting = false;
 		crossTime = 0;
 	}
 	
@@ -80,14 +92,26 @@ public class RiverScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
+		bridge = new Sprite(container, new Image("resources/graphics/test/bridge.png"));
+		mainLayer.add(bridge, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER, 100, 100);
+		
 		//Animating wagon sprites
 		Animation wagonAni = new Animation();
 		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver1.png"), 100);
 		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver2.png"), 100);
 		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver3.png"), 100);
 		wagon = new AnimatingSprite(container, wagonAni, AnimatingSprite.Direction.LEFT);
-		mainLayer.add(wagon, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, 120);
+		wagonAni = new Animation();
+		wagonAni.addFrame(new Image("resources/graphics/test/wagonwheels1.png"), 100);
+		wagonAni.addFrame(new Image("resources/graphics/test/wagonwheels2.png"), 100);
+		wagonWheels = new AnimatingSprite(container, wagonAni, AnimatingSprite.Direction.LEFT);
+		mainLayer.add(wagon, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, -50, 120);
+		mainLayer.add(wagonWheels, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, -50, 120);
+		wagonWheels.setVisible(false);
+		wagon.setVisible(false);
 		
+
+
 		makeChoiceModal();
 
 		Random random = new Random();
@@ -125,30 +149,50 @@ public class RiverScene extends Scene {
 		ground = new Sprite(container, container.getWidth() + 1, new Image("resources/graphics/ground/riveredgetop.png", false, Image.FILTER_NEAREST));
 		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		backgroundLayer.add(cloudParallaxPanel, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
-		showModal(crossingChoicesModal);
 	}
+	
+	
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-//		for (ParallaxComponent sprite : riverParallaxPanel.getParallaxComponents()) {
-//			sprite.move(delta);
-//		}
-//		for (ParallaxComponent sprite : cloudParallaxPanel.getParallaxComponents()) {
-//			sprite.move(delta);
-//		}
+		for (ParallaxComponent sprite : riverParallaxPanel.getParallaxComponents()) {
+			sprite.update(delta);
+		}
+		for (ParallaxComponent sprite : cloudParallaxPanel.getParallaxComponents()) {
+			sprite.update(delta);
+		}
 		if ( !isPaused() ) {
-			ani = !ani;
-			if (ani)
-				wagon.setLocation(wagon.getX(), wagon.getY() - 1);
-			wagon.update(container, delta);
 			crossTime += delta;
-			if ( crossTime > RIVER_CROSS_TIME ) {
-				if (didTakeDamage) {
-					SoundStore.get().playSound("Splash");
+			if (waiting) {
+				if ( crossTime > RIVER_CROSS_TIME ) {
+					crossTime = 0;
+					waiting = false;
+					wagon.setVisible(true);
+					showModal(nextModal);
 				}
-				crossTime = 0;
-				showModal(nextModal);
+			}
+			else {
+				wagon.update(container, delta);
+				if ( crossingRiver ) {
+					ani = !ani;
+					if (ani)
+						wagon.setLocation(wagon.getX(), wagon.getY() - 1);
+					if ( crossTime > RIVER_CROSS_TIME ) {
+						if (didTakeDamage) {
+							SoundStore.get().playSound("Splash");
+						}
+						crossTime = 0;
+						showModal(nextModal);
+					}
+				}
+				else if (crossingBridge) {
+					wagon.setLocation(wagon.getX(), wagon.getY() - 1);
+					if ( crossTime > BRIDGE_CROSS_TIME ) {
+						crossTime = 0;
+						showModal(nextModal);
+					}
+				}
 			}
 		}
 	}
@@ -156,6 +200,8 @@ public class RiverScene extends Scene {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
 		super.enter(container, game);
+		showModal(crossingChoicesModal);
+		wagon.setVisible(true);
 		SoundStore.get().loopMusic("River");
 	}
 	
@@ -215,6 +261,7 @@ public class RiverScene extends Scene {
 	 * The logic for fording a river
 	 */
 	private void ford() {
+		crossingRiver = true;
 		if (riverDepth >= FORD_DANGER_DEPTH && Math.random() > 0.5) {
 			successModalMessage = "Oh no!  Why would you ford a " + riverDepth +
 					" foot deep river?  Your party was damaged";
@@ -234,6 +281,7 @@ public class RiverScene extends Scene {
 	 * The logic for caulking and floating across a river
 	 */
 	private void caulk() {
+		crossingRiver = true;
 		if (riverDepth >= CAULK_DANGER_DEPTH && Math.random() > 0.5) {
 			successModalMessage = "Oh no!  Your caulk didn't hold up and water leaked into " +
 					"your wagon.  Your party was damaged";
@@ -255,7 +303,12 @@ public class RiverScene extends Scene {
 	 * The logic for caulking and floating across a river
 	 */
 	private void payToll() {
+		crossingBridge = true;
 		party.setMoney(party.getMoney() - tollPrice);
+		wagon.setVisible(false);
+		wagonWheels.setVisible(true);
+		wagon = wagonWheels;
+		wagon.setLocation(wagon.getX() + 150, 576);
 		SoundStore.get().playSound("RK");
 		successModalMessage = "Your party decided to take the easy way out and " +
 				"pay the the bridge toll.  Your party members thank you.";
@@ -268,6 +321,8 @@ public class RiverScene extends Scene {
 	 */
 	private void delay() {
 		haveWaited = true;
+		waiting = true;
+		wagon.setVisible(false);
 		riverDepth = (int) (Math.random() * MAX_RIVER_DEPTH) + 1;
 		makeChoiceModal();
 		nextModal = crossingChoicesModal;
