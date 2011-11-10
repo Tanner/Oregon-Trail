@@ -54,7 +54,7 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 		modalLayer.render(container, g);
 		
 		if (tooltip != null) {
-			if (tooltip.getOwner().isMouseOver()) {
+			if (tooltip.getOwner().isMouseOver() && tooltip.getOwner().isVisible()) {
 				tooltip.render(container, g);
 			} else {
 				removeTooltip();
@@ -176,6 +176,14 @@ public abstract class Scene extends BasicGameState implements Visible, ModalList
 	@Override
 	public abstract int getID();
 	
+	/**
+	 * Show a tooltip that floats above a component if the component is currently
+	 * being moused-over.
+	 * @param x The upper left of the tooltip
+	 * @param y The upper y of the tooltip.
+	 * @param owner The component the tooltip is associated with.
+	 * @param message The message to display on the tooltip.
+	 */
 	public static void showTooltip(int x, int y, Component owner, String message) {
 		if (tooltip != null) {
 			if (tooltip.getOwner() != owner && owner.isVisible()) {

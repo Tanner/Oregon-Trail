@@ -3,8 +3,6 @@ package scene;
 import model.Party;
 import model.Person;
 
-//import org.newdawn.slick.Animation;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;

@@ -57,7 +57,7 @@ public class TrailHUD extends HUD {
 	public TrailHUD(GUIContext context, Mode mode, ComponentListener listener) {
 		super(context, context.getWidth(), HEIGHT);
 		
-		this.currentMode = mode;
+		currentMode = mode;
 		
 		notificationQueue = new LinkedList<String>();
 		
@@ -99,6 +99,9 @@ public class TrailHUD extends HUD {
 		menuButton.setShowLabel(false);
 		menuButton.addListener(listener);
 		panel.add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
+		
+		menuButton.setTooltipEnabled(true);
+		menuButton.setTooltipMessage(ConstantStore.get("TRAIL_SCENE", "CAMP"));
 		
 		int notificationWidth = width - menuButton.getWidth() -  MARGIN * 2;
 		

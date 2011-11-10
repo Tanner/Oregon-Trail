@@ -9,6 +9,9 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+/**
+ * Manages all the sounds for use in the game.
+ */
 public class SoundStore {
 	private static SoundStore soundStore;
 	
@@ -20,7 +23,7 @@ public class SoundStore {
 	private Set<String> playingSounds = new HashSet<String>();
 	
 	/**
-	 * Private constructor, creates the singleton
+	 * Constructs a new {@code SoundStore} and initializes it.
 	 */
 	private SoundStore() {
 		soundStore = this;
@@ -34,8 +37,8 @@ public class SoundStore {
 	}
 	
 	/**
-	 * If soundstore doesn't exist, create it, otherwise just return it
-	 * @return the instance of soundstore
+	 * Returns the {@code SoundStore} instance. Creates one if one does not exist.
+	 * @return Instance of SoundStore
 	 */
 	public static SoundStore get() {
 		if (soundStore == null) {
@@ -46,7 +49,7 @@ public class SoundStore {
 	}
 	
 	/**
-	 * Creates all the sounds so that there is no lag in making them later.
+	 * Initializes the store with all the images.
 	 * @throws SlickException
 	 */
 	private void initialize() throws SlickException {
@@ -65,7 +68,7 @@ public class SoundStore {
 		addToMusic("FFD", new Music("resources/sounds/FFD.ogg"));
 		addToMusic("MS", new Music("resources/sounds/MagnificentSeven.ogg"));
 		addToSounds("RK", new Sound("resources/sounds/RiverKwai.ogg"));
-		addToSounds("CowMoo", new Sound("resources/sounds/CowMoo.ogg"));
+		addToSounds("CowMoo", new Sound("resources/sounds/cowMoo.ogg"));
 		addToSounds("Donkey", new Sound("resources/sounds/Donkey.ogg"));
 		addToSounds("HorseWhinny", new Sound("resources/sounds/HorseWhinny.ogg"));
 		addToMusic("FarewellCheyenne", new Music("resources/sounds/FarewellCheyenne.ogg"));
@@ -76,6 +79,10 @@ public class SoundStore {
 		addToMusic("WanderingTrail", new Music("resources/sounds/WanderingTrail.ogg"));
 	}
 	
+	/**
+	 * Get the key of the music that is currently playing.
+	 * @return Name of the music currently playing
+	 */
 	public String getPlayingMusic() {
 		for (String name : musics.keySet()) {
 			if (musics.get(name).playing()) {
@@ -88,15 +95,15 @@ public class SoundStore {
 	
 	/**
 	 * Adds a music to the list of music in the store
-	 * @param name The name the music is referred to by
-	 * @param music The music itself
+	 * @param name The name the music is referred to by (the key)
+	 * @param music The {@code Music} object
 	 */
 	private void addToMusic(String name, Music music) {
 		musics.put(name, music);
 	}
 	
 	/**
-	 * Sets the overall volume to a specific level (0 is mute, 1 is full volume)
+	 * Sets the overall volume to a specific level (0 is mute, 1 is full volume).
 	 * @param volume The volume to set to.
 	 */
 	public void setVolume(float volume) {
@@ -104,6 +111,10 @@ public class SoundStore {
 		setMusicVolume(1);
 	}
 	
+	/**
+	 * Gets the global volume.
+	 * @return Float value of volume (0 is mute, 1 is full volume)
+	 */
 	public float getVolume() {
 		return globalVolume;
 	}
@@ -171,7 +182,7 @@ public class SoundStore {
 	}
 	
 	/**
-	 * Plays a sound
+	 * Plays a sound.
 	 * @param name The key of the sound
 	 */
 	public void playSound(String name) {
@@ -179,8 +190,13 @@ public class SoundStore {
 		playingSounds.add(name);
 	}
 	
+	/**
+	 * Play a sound at the given volume.
+	 * @param name The key of the sound
+	 * @param volume Volume to play this sound at
+	 */
 	public void playSound(String name, float volume) {
-		sounds.get(name).play(1, globalVolume *volume);
+		sounds.get(name).play(1, globalVolume * volume);
 		playingSounds.add(name);
 	}
 	
@@ -221,13 +237,17 @@ public class SoundStore {
 		playingSounds.clear();
 	}
 
+	/**
+	 * Loop the sound forever.
+	 * @param name Key value for the sound
+	 */
 	public void loopSound(String name) {
 		sounds.get(name).loop();
 		
 	}
 
 	/**
-	 * Stop EVERYTHING
+	 * Stop everything - music and sounds.
 	 */
 	public void stop() {
 		stopAllSound();

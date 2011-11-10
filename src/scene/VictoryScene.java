@@ -11,6 +11,9 @@ import component.Panel;
 import component.Positionable;
 import core.FontStore;
 
+/**
+ * A scene displayed upon reaching the final destination along the trail.
+ */
 public class VictoryScene extends Scene {
 	public static final SceneID ID = SceneID.VICTORY;
 	

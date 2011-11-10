@@ -13,6 +13,10 @@ import component.sprite.Sprite;
 
 import core.GameDirector;
 
+/**
+ * A Scene with a short animated introduction displaying the null && void team
+ * name.
+ */
 public class SplashScene extends Scene {
 	public static final SceneID ID = SceneID.SPLASH;
 	
