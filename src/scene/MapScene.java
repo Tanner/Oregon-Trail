@@ -34,9 +34,9 @@ public class MapScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		boolean devMode = false;
+		boolean devMode = true;
 
-		MapComponent playerMap = new MapComponent(container, worldMap, devMode);
+		MapComponent playerMap = new MapComponent(container, worldMap, false);
 
 		Button[] locationButtons = new Button[worldMap.getNumLocations()];
 
