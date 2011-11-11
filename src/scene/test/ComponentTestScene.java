@@ -48,13 +48,15 @@ public class ComponentTestScene extends Scene {
 		button.addListener(new ButtonListener());
 		mainLayer.add(button, buttonLabel.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT);
 		
-		label = new Label(container, 300, fieldFont, Color.white, "Label");
+		label = new Label(container, 1000, fieldFont, Color.white, "Label");
+		label.setAlignment(Alignment.LEFT);
 		mainLayer.add(label, button.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
 	
 		spinner = new Spinner(container, 300, 50, fieldFont, Color.white, false, "Hello", "There", "Encyclopedia");
 		mainLayer.add(spinner, label.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
 	
-		spinnerLabel = new Label(container, 300, fieldFont, Color.white, "Label");
+		spinnerLabel = new Label(container, 400, fieldFont, Color.white, "Label");
+		spinnerLabel.setAlignment(Alignment.LEFT);
 		mainLayer.add(spinnerLabel, spinner.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPLEFT, 0, PADDING);
 		Skill[] arr = Skill.values();
 		String[] strs = new String[arr.length - 2];
@@ -68,7 +70,7 @@ public class ComponentTestScene extends Scene {
 		segment.setPermanent(num);
 		segment.setDisabled(new int[]{5});
 		
-		Label longLabel = new Label(container, 400, 125, fieldFont, Color.white, "Hello my name is jeremy.\n\nI am a really cool guy and stuff and I made a multiline label.\nOr did I?");
+		Label longLabel = new Label(container, 400, 125, fieldFont, Color.white, "This is a multiline label.\n It should deal with text with new line characters, as well as wrap when lines start to overflow.\n\nTest.");
 		longLabel.setAlignment(Alignment.CENTER);
 		longLabel.setColor(Color.black);
 		longLabel.setBackgroundColor(Color.lightGray);
