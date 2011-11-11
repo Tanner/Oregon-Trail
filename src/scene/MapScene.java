@@ -34,7 +34,7 @@ public class MapScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		boolean devMode = true;
+		boolean devMode = false;
 
 		MapComponent playerMap = new MapComponent(container, worldMap, false);
 
