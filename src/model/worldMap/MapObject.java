@@ -5,6 +5,7 @@ import java.io.Serializable;
 import model.Condition;
 import model.Conditioned;
 
+@SuppressWarnings("serial")
 public abstract class MapObject implements Conditioned, Serializable {
 	
 	/**this object is visible to player*/
@@ -17,13 +18,10 @@ public abstract class MapObject implements Conditioned, Serializable {
 	protected static int count;
 	/**the nature of the environment in/around this MapObject - format needed*/
 
-
-
 	public MapObject(){
 		
 	}
 	
-
 	/**
 	 * whether this map object is visible to the player or not
 	 * @return this map object's visiblity

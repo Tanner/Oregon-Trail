@@ -11,6 +11,7 @@ import model.Condition;
  *
  */
 
+@SuppressWarnings("serial")
 public class LocationNode extends MapObject {
 	
 	/** real world latitude */	
@@ -33,6 +34,8 @@ public class LocationNode extends MapObject {
 	private int trails;
 	/**already part of the trail or not */
 	private boolean onTheTrail;
+	/**has an incoming trail - might not due to ranom nature of map generation*/
+	private boolean hasInTrail;
 	
 	private List<TrailEdge> outboundTrails;
 	
@@ -60,6 +63,7 @@ public class LocationNode extends MapObject {
 		this.rank = rank;
 		this.quality = new Condition((int) quality);
 		this.visible = false;
+		this.hasInTrail = false;
 	}
 	
 	/**
@@ -165,7 +169,21 @@ public class LocationNode extends MapObject {
 		
 		return this.name + " Rank : " + this.rank + " (which has " + this.trails + " westward trails) ";
 	}
-	
+	/**
+	 * @return the hasInTrail
+	 */
+	public boolean isHasInTrail() {
+		return hasInTrail;
+	}
+
+	/**
+	 * @param hasInTrail the hasInTrail to set
+	 */
+	public void setHasInTrail(boolean hasInTrail) {
+		this.hasInTrail = hasInTrail;
+	}
+
+
 	/**
 	 * method to return all instance variables easily without having to string getters
 	 * only dev mode

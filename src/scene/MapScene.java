@@ -48,6 +48,7 @@ public class MapScene extends Scene {
 					locationButtons[location.getID()] = new Button(container, 10, 10);					
 					locationButtons[location.getID()].setTooltipEnabled(true);
 					locationButtons[location.getID()].setTooltipMessage(location.getName());
+//					playerMap.add(locationButtons[location.getID()], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) location.getPlayerMapX(), (int) location.getPlayerMapY());
 					playerMap.add(locationButtons[location.getID()], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) location.getPlayerMapX(), (int) location.getPlayerMapY());
 					locationButtons[location.getID()].addListener(new ButtonListener(location));
 				}//if location is visible, paint it.				

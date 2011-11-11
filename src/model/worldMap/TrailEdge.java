@@ -4,6 +4,7 @@ package model.worldMap;
 import core.Logger;
 import model.Condition;
 
+@SuppressWarnings("serial")
 public class TrailEdge extends MapObject {
 	
 	/**end point of this edge - destination node*/
