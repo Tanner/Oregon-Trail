@@ -411,9 +411,14 @@ public class TrailScene extends Scene {
 			}
 			
 			hud.addNotification("" + party.getTrail().getRoughDistanceToGo() + party.getTrail().getDestination().getName());
-			EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter(party.getTime().getTimeOfDay().ordinal());
-			handleNotifications(notifications, encounterNotification.getNotification().getMessage());
-			currentEncounterNotification = encounterNotification;
+			if(party.getTime().getTime() != 19 && party.getTime().getTime() != 5 && 
+				party.getTrail().getConditionPercentage() != 1 && 
+				party.getTrail().getConditionPercentage() != 0) {
+				
+				EncounterNotification encounterNotification = randomEncounterTable.getRandomEncounter(party.getTime().getTimeOfDay().ordinal());
+				handleNotifications(notifications, encounterNotification.getNotification().getMessage());
+				currentEncounterNotification = encounterNotification;
+			}
 		}
 	}
 	
