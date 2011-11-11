@@ -40,7 +40,7 @@ public class TownScene extends Scene {
 	public static final SceneID ID = SceneID.TOWN;
 	
 	private static final int CLICK_WAIT_TIME = 1000;
-	private static final int STEP_COUNT_TRIGGER = 2;
+	private static final int STEP_COUNT_TRIGGER = 20;
 		
 	private int clickCounter;
 	private int timeElapsed;
@@ -91,8 +91,7 @@ public class TownScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
-		Random random = new Random();
-		SoundStore.get().playMusic(random.nextBoolean() ? "FFD" : "MS");
+		SoundStore.get().playTownMusic();
 		
 		hud = new TownHUD(container, new HUDListener());
 		hud.setNotification(location.getName());
