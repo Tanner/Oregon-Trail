@@ -62,6 +62,8 @@ public class ImageStore {
 		
 		IMAGES.put("HUNTER_LEFT", new Image(PATH_PEOPLE + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_RIGHT", new Image(PATH_PEOPLE + "hunterRightFaceSide1.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("MAIDEN_LEFT", new Image(PATH_PEOPLE + "maidenLeftFaceSide1.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("MAIDEN_RIGHT", new Image(PATH_PEOPLE + "maidenRightFaceSide1.png", false, Image.FILTER_NEAREST));
 		
 		IMAGES.put("STORE_BUILDING", new Image(PATH_BUILDINGS + "general-store.png", false, Image.FILTER_NEAREST));
 	}
