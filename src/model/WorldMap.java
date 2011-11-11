@@ -561,7 +561,9 @@ public class WorldMap implements Serializable {
 	 */
 	public void setCurrTrail(TrailEdge currTrail){
 		this.currTrail = currTrail;
-		this.currTrail.setVisible(true);
+		if (this.currTrail != null){
+			this.currTrail.setVisible(true);
+		}
 		currTrail.getDestination().setVisible(true);
 	}
 	
