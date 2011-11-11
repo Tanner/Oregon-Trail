@@ -92,7 +92,7 @@ public class TownScene extends Scene {
 		super.init(container, game);
 
 		Random random = new Random();
-		SoundStore.get().playMusic(random.nextBoolean() ? "FFD" : "MS");
+		SoundStore.get().playTownMusic();
 		
 		hud = new TownHUD(container, new HUDListener());
 		hud.setNotification(location.getName());

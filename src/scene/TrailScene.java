@@ -325,7 +325,8 @@ public class TrailScene extends Scene {
 		
 		public void update(GameContainer container, int delta) throws SlickException {
 			if(party.getTime().getTime() == 19) {
-				SoundStore.get().playSound("WolfHowl");
+				if(SoundStore.get().getPlayingSounds() == null || !SoundStore.get().getPlayingSounds().contains("WolfHowl"))
+					SoundStore.get().playSound("WolfHowl");
 			}	
 			if(party.getTime().getTime() >= 19 || party.getTime().getTime() < 5) {
 				if(SoundStore.get().getPlayingMusic() == null || !SoundStore.get().getPlayingMusic().equals("NightTheme")) {
