@@ -14,6 +14,10 @@ import model.Condition;
 @SuppressWarnings("serial")
 public class LocationNode extends MapObject {
 	
+	/**map object's max x dimension*/
+	private final int MAP_X_MAX;
+	/**map object's max y dimension*/
+	private final int MAP_Y_MAX;	
 	/** real world latitude */	
 	public final double WORLD_LATITUDE;
 	/** real world longitude */
@@ -49,7 +53,7 @@ public class LocationNode extends MapObject {
 	 * @param trails number of trails exiting this location
 	 * @param quality quality of location - lower quality means smaller town or outpost
 	 */
-	public LocationNode(String locationName, int xPos, int yPos, double latitude, double longitude, int trails, int rank, int quality){
+	public LocationNode(String locationName, int xPos, int yPos, double latitude, double longitude, int trails, int rank, int quality, int MAP_X_MAX, int MAP_Y_MAX){
 		this.ID = LocationNode.count++;
 		MAP_XPOS = xPos;
 		MAP_YPOS = yPos;
@@ -64,6 +68,8 @@ public class LocationNode extends MapObject {
 		this.quality = new Condition((int) quality);
 		this.visible = false;
 		this.hasInTrail = false;
+		this.MAP_X_MAX = MAP_X_MAX;
+		this.MAP_Y_MAX = MAP_Y_MAX;
 	}
 	
 	/**
@@ -74,22 +80,36 @@ public class LocationNode extends MapObject {
 	 * @param trails
 	 * @param rank
 	 */
-	public LocationNode(String locationName, int xPos, int yPos, int trails, int rank, int quality){
-		//makes unique name for location, temporarily, until we can make them prettier.
-		this(locationName, xPos, yPos, 0, 90, trails, rank, quality);
+	public LocationNode(String locationName, int xPos, int yPos, int trails, int rank, int quality, int MAP_X_MAX, int MAP_Y_MAX){
+		this(locationName, xPos, yPos, 0, 90, trails, rank, quality, MAP_X_MAX, MAP_Y_MAX);
 		
 	}
 	
-	public LocationNode(int xPos, int yPos, int trails, int rank, int quality){
+	public LocationNode(int xPos, int yPos, int trails, int rank, int quality, int MAP_X_MAX, int MAP_Y_MAX){
 		//makes unique name for location, temporarily, until we can make them prettier.
-		this("Location " + LocationNode.count, xPos, yPos, 0, 90, trails, rank, quality);
+		this("Location " + LocationNode.count, xPos, yPos, 0, 90, trails, rank, quality,  MAP_X_MAX,  MAP_Y_MAX);
 	}
 	
-	
-	public LocationNode(String locationName, int xPos, int yPos, int trails){
+	private void convertToMapCoords(){
+		double newX;
+		double newY;
+		
+		newX = (this.MAP_XPOS + 60) * (920.0/this.MAP_X_MAX) ; 
+		newY = (((-1 * this.MAP_YPOS)/1.4) + 320) + ((this.MAP_XPOS -600)/2.4);
+		if (newX > 1050){
+			newX = 1050;
+		}
+		if (newY > 565){
+			newY = 565;
+		}
+		this.setPlayerMapX(newX);
+		this.setPlayerMapY(newY);
+	}
+
+	public LocationNode(String locationName, int xPos, int yPos, int trails, int MAP_X_MAX, int MAP_Y_MAX){
 		//makes unique name for location, temporarily, until we can make them prettier.
 		//this constructor makes Independence
-		this(locationName, xPos, yPos, 0, 90, trails, 0, 100);
+		this(locationName, xPos, yPos, 0, 90, trails, 0, 100,  MAP_X_MAX,  MAP_Y_MAX);
 		
 	}
 	
