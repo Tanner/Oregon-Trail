@@ -338,7 +338,7 @@ public class WorldMap implements Serializable {
 		for (int i = 0; i < MAX_RANK; i++){
 			for(LocationNode node : this.mapNodes.get(i)){
 				//manufacture proper coords for player map from x/y pos
-				convertToMapCoords(node);
+//				convertToMapCoords(node);
 				//node.setName(reNameLocation(node, mapRand));
 				//node is of sufficient "quality" to show up on map regardless of having been visited or not
 				if (node.getCondition().getCurrent() / this.MAX_LOC_QUAL > .90){
@@ -397,7 +397,7 @@ public class WorldMap implements Serializable {
 			}//for each location at rank
 		}//for each rank
 		//convert oregon city's coords to actual coords on our map
-		convertToMapCoords(this.mapNodes.get(finalDestination.getRank()).get(0));
+//		convertToMapCoords(this.mapNodes.get(finalDestination.getRank()).get(0));
 		
 		
 		
@@ -431,26 +431,26 @@ public class WorldMap implements Serializable {
 		return this.mapNodes;
 	}
 	
-	/**
-	 * this method will convert the internal coords of the map to the physical representation used by the player map.
-	 * 
-	 */
-	private void convertToMapCoords(LocationNode node){
-		double newX;
-		double newY;
-		
-		newX = (node.MAP_XPOS + 60) * (920.0/this.MAX_X) ; 
-		newY = (((-1 * node.MAP_YPOS)/1.4) + 320) + ((node.MAP_XPOS -600)/2.4);
-		if (newX > 1050){
-			newX = 1050;
-		}
-		if (newY > 565){
-			newY = 565;
-		}
-		node.setPlayerMapX(newX);
-		node.setPlayerMapY(newY);
-	}
-	
+//	/**
+//	 * this method will convert the internal coords of the map to the physical representation used by the player map.
+//	 * 
+//	 */
+//	private void convertToMapCoords(LocationNode node){
+//		double newX;
+//		double newY;
+//		
+//		newX = (node.MAP_XPOS + 60) * (920.0/this.MAX_X) ; 
+//		newY = (((-1 * node.MAP_YPOS)/1.4) + 320) + ((node.MAP_XPOS -600)/2.4);
+//		if (newX > 1050){
+//			newX = 1050;
+//		}
+//		if (newY > 565){
+//			newY = 565;
+//		}
+//		node.setPlayerMapX(newX);
+//		node.setPlayerMapY(newY);
+//	}
+//	
 	/** 
 	 * returns the currently set maximum rank value for this map
 	 * @return the constant max rank
