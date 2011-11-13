@@ -70,6 +70,7 @@ public class LocationNode extends MapObject {
 		this.hasInTrail = false;
 		this.MAP_X_MAX = MAP_X_MAX;
 		this.MAP_Y_MAX = MAP_Y_MAX;
+		this.convertToMapCoords();
 	}
 	
 	/**
@@ -95,7 +96,7 @@ public class LocationNode extends MapObject {
 		double newY;
 		
 		newX = (this.MAP_XPOS + 60) * (920.0/this.MAP_X_MAX) ; 
-		newY = (((-1 * this.MAP_YPOS)/1.4) + 320) + ((this.MAP_XPOS -600)/2.4);
+		newY = (((-1 * this.MAP_YPOS)/1.4) + 300) + ((this.MAP_XPOS -600)/2.4);
 		if (newX > 1050){
 			newX = 1050;
 		}

@@ -65,7 +65,7 @@ public class WorldMap implements Serializable {
 		this.devMode = (devMode.length() == 0) ? false : true;
 		this.numTrails = 0;
 		this.numLocations = numNodes;
-		//this.numLocations = 3010;
+		this.numLocations = 3010;
 		if (this.devMode) {
 			this.numLocations = 3000;
 		}
