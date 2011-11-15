@@ -65,7 +65,7 @@ public class WorldMap implements Serializable {
 		this.devMode = (devMode.length() == 0) ? false : true;
 		this.numTrails = 0;
 		this.numLocations = numNodes;
-		//this.numLocations = 3010;
+		//this.numLocations = 5000;
 		if (this.devMode) {
 			this.numLocations = 3000;
 		}
@@ -154,6 +154,73 @@ public class WorldMap implements Serializable {
 		LocationNode tempNode = new LocationNode(nameLocation(curRank, mapRand, tmpY), tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(MAX_LOC_QUAL), MAX_X, MAX_Y);
 		return tempNode;
 	}
+	
+	
+	/**
+	 * checks if in the bounds of missouri
+	 * @param node node in question
+	 */
+	
+	private boolean inMissouriBounds(LocationNode node){
+		return false;
+	}
+	
+	/**
+	 * checks if in the bounds of kansas territory
+	 * @param node node in question
+	 */
+	
+	private boolean inKansasBounds(LocationNode node){
+		return false;
+	}
+	
+	/**
+	 * checks if in the bounds of nebraska territory
+	 * @param node node in question
+	 */
+	
+	private boolean inNebraskaBounds(LocationNode node){
+		return false;
+	}
+	
+	/**
+	 * checks if in the bounds of utah
+	 * @param node node in question
+	 */
+	
+	private boolean inUtahBounds(LocationNode node){
+		return false;
+	}
+	
+	/**
+	 * checks if in the bounds of washinton territory
+	 * @param node node in question
+	 */
+	
+	private boolean inWashintonBounds(LocationNode node){
+		return false;
+	}
+	
+	/**
+	 * checks if in the bounds of dakota territory
+	 * @param node node in question
+	 */
+	
+	private boolean inDakotaBounds(LocationNode node){
+		return false;
+	}
+	
+	
+	/**
+	 * checks if in the bounds of oregon territory
+	 * @param node node in question
+	 */
+	
+	private boolean inOregonBounds(LocationNode node){
+		return false;
+	}
+	
+	
 	
 	
 	/** 
