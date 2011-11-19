@@ -118,7 +118,7 @@ public class WorldMap implements Serializable {
 	 */
 	private LocationNode generateLocationNode(Random mapRand, int curRank, int numExitTrails){
 		
-		//curRank = TESTRANK;
+			//curRank = TESTRANK;
 		int tmpZ =  mapRand.nextInt(MAX_X / MAX_RANK) - (MAX_X / (2 * MAX_RANK));
 		int tmpX = MAX_X - (((MAX_X / MAX_RANK) * curRank) + tmpZ);
 		if ((tmpX > 10) && (tmpX < 50)){
@@ -135,13 +135,13 @@ public class WorldMap implements Serializable {
 			//mapRand of MAXRANK finds the correct general "rank zone"
 			//final component tmpZ determines offset within zone
 		tmpZ =  mapRand.nextInt(MAX_Y / (2 * MAX_RANK)) - (MAX_Y / MAX_RANK);  //range : +/- partition size/2
-		//gives a multiplier that is greatest in the middle of the MAX_RANK # of partitions
-		//allows the spread of possible y values of locations to be greatest at the middle of the 
-		//path, with the least spread at the ends
+			//gives a multiplier that is greatest in the middle of the MAX_RANK # of partitions
+			//allows the spread of possible y values of locations to be greatest at the middle of the 
+			//path, with the least spread at the ends
 		int rnkMult = (curRank <= (MAX_RANK / 2) ) ? (curRank) : (MAX_RANK - curRank);
-		//multiplier to determine whether above or below the "equator"
+			//multiplier to determine whether above or below the "equator"
 		int tmpW = (mapRand.nextBoolean()) ? (1) : (-1);
-		//actual y value passed to locationNode constructor
+			//actual y value passed to locationNode constructor
 		int tmpY = (mapRand.nextInt(MAX_Y / MAX_RANK) * mapRand.nextInt(rnkMult + 1) * tmpW  + tmpZ);  
 		while(tmpY > MAX_Y / 2){
 			tmpY -= mapRand.nextInt(MAX_Y / MAX_RANK);
@@ -149,7 +149,7 @@ public class WorldMap implements Serializable {
 		while(tmpY <  -1 * (MAX_Y / 2)){
 			tmpY += mapRand.nextInt(MAX_Y / MAX_RANK);
 			}
-		//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
+			//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
 		LocationNode tempNode = new LocationNode(nameLocation(curRank, mapRand, tmpY), tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(MAX_LOC_QUAL), MAX_X, MAX_Y);
 		return tempNode;
@@ -157,7 +157,7 @@ public class WorldMap implements Serializable {
 	
 	
 	/**
-	 * checks if in the bounds of missouri
+	 * checks if in the bounds of missouri - called if x location > 
 	 * @param node node in question
 	 */
 	

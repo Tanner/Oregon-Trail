@@ -49,76 +49,70 @@ public class MapScene extends Scene {
 					locationButtons[location.getID()] = new Button(container, 10, 10);					
 					locationButtons[location.getID()].setTooltipEnabled(true);
 					locationButtons[location.getID()].setTooltipMessage(location.getName());
-					//if (!devMode) {
+					if (!devMode) {
 						playerMap.add(locationButtons[location.getID()], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) location.getPlayerMapX(), (int) location.getPlayerMapY());
-					//}
+					}
 					locationButtons[location.getID()].addListener(new ButtonListener(location));
 				}//if location is visible, paint it.				
 			}
 		}
 
+		//the following paints nodes at the corners of the various territories, to help determine equatiosn that would more accurately reflect the 
+		//approriate terrority for a particular town, based on its generated location on the map, than the current (11/18/11) mechanism coded in worldmap.java
+		
+		int[][] coords = {
+				//missouri border
+				{ 910, 475},
+				{ 940, 510},
+				{ 1010, 490},
+				{ 940, 560},
+				
+				//utah/washington territory border => y = (335-275)/(420-218) = (.3) x + 210; 218<x<420 and 275<y<335				
+				{ 218, 275},
+				{ 300, 300},
+				{ 415, 330},
+				
+				//nebraska/dakota/washington border y = (390 - 290)/(900 - 430) = (.213) x + 200 : 420<x<900 ; 290 < y < 390			
+				{ 430, 290},
+				{ 460, 300},
+				{ 900, 390},
+				
+				//kansas/nebraska border y =
+				{670, 470},
+				
+				//colorado/nebraska border y =
+				{680, 430},
+				{430, 375},
+				{405, 365},
+				
+				//longitudinal borders
+				//colorado/kansas
+				{645, 560},
+				
+				//colorado/utah
+				{375, 520},
+				
+				//oregon/washington
+				{255, 115},
+				{175, 255},
+				
+				//washington/dakota
+				{470, 265},
+				{325, 155},
+				{180, 340}
+				
+		};
+
 		if (devMode){
-			Button[] tmpButtonAra = new Button[30];
+			Button[] tmpButtonAra = new Button[coords.length];
 			for (int i = 0; i < tmpButtonAra.length; i++){
 				tmpButtonAra[i] = new Button(container, 10, 10);
 				tmpButtonAra[i].setTooltipEnabled(true);
-				tmpButtonAra[i].setTooltipMessage(""+ i);
+				playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, coords[i][0], coords[i][1]);
+				tmpButtonAra[i].setTooltipMessage(""+ i + ":|x = " + coords[i][0] + "|y = " + coords[i][1]);
 			}
-			int i = 0;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 910, (int) 475);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 1010, (int) 490);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 940, (int) 560);
-			i++;
-			//utah/washington territory border => y = (335-275)/(420-218) = (.3) x + 210; 218<x<420 and 275<y<335
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 218, (int) 275);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 300, (int) 300);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 415, (int) 330);
-			i++;
-			//nebraska/dakota/washington border y = (390 - 290)/(900 - 430) = (.213) x + 200 : 420<x<900 ; 290 < y < 390
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 430, (int) 290);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 460, (int) 300);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 900, (int) 390);
-			i++;
-			//kansas/nebraska border y =
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 940, (int) 510);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 670, (int) 470);
-			i++;
-			//colorado/nebraska border y =
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 680, (int) 430);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 430, (int) 375);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 405, (int) 365);
-			i++;
-			
-			//longitudinal borders
-			//colorado/kansas
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 645, (int) 560);
-			i++;
-			//colorado/utah
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 375, (int) 520);
-			i++;
-			
-			//oregon/washington
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 255, (int) 115);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 175, (int) 255);
-			i++;
-			//washington/dakota
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 470, (int) 265);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 325, (int) 155);
-			i++;
-			playerMap.add(tmpButtonAra[i], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) 180, (int) 340);
-			i++;
 		}
+		//end territory corner painting
 		
 		//add map component
 		
