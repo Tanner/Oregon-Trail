@@ -317,7 +317,9 @@ public class StoreScene extends Scene {
 		} else if (currentBuyers.size() == 0) {
 			//Display modal if the user can not buy the currently selected item
 			String errorText;
-			if (party.getMoney() < itemCount * (int)(currentItem.getCost()*priceModifier)) {
+			if (currentItem.isAnimal() && party.getAnimals().size() + itemCount > 5) {
+				errorText = ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_ANIMALS");
+			} else if (party.getMoney() < itemCount * (int)(currentItem.getCost()*priceModifier)) {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY");
 			} else {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_CANT_CARRY");
@@ -416,6 +418,7 @@ public class StoreScene extends Scene {
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
+			System.out.println(party.getAnimals());
 			if (source == cancelButton) {
 				GameDirector.sharedSceneListener().sceneDidEnd(StoreScene.this);
 			} else if (source == inventoryButton) {

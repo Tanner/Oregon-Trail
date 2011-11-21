@@ -20,6 +20,8 @@ import core.Logger.Level;
  */
 public class Party implements Serializable {
 	
+	private final int MAX_ANIMALS = 5;
+	
 	private Person partyLeader;
 	
 	private List<Person> members = new ArrayList<Person>();
@@ -190,7 +192,8 @@ public class Party implements Serializable {
 	public List<Inventoried> canGetItem(ItemType itemType, int numberOf) {
 		final List<Inventoried> ableList = new ArrayList<Inventoried>();
 		
-		if (itemType.getCost() * numberOf > money) {
+		if (itemType.getCost() * numberOf > money ||
+			itemType.isAnimal() && animals.size() + numberOf > MAX_ANIMALS ) {
 			return ableList;
 		}
 		
@@ -202,7 +205,6 @@ public class Party implements Serializable {
 					ableList.add(person);
 				}
 			}
-		
 			if (vehicle != null && vehicle.canGetItem(itemType, numberOf)) {
 				ableList.add(vehicle);
 			}
