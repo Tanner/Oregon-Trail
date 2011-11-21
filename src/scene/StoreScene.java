@@ -316,7 +316,6 @@ public class StoreScene extends Scene {
 			}
 		} else if (currentBuyers.size() == 0) {
 			//Display modal if the user can not buy the currently selected item
-			
 			String errorText;
 			if (party.getMoney() < itemCount * (int)(currentItem.getCost()*priceModifier)) {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY");

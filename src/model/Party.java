@@ -166,7 +166,7 @@ public class Party implements Serializable {
 			cost += item.getCost();
 		}
 		
-		if (money > cost && buyer.canGetItem(itemType, numberOf)) {
+		if (money >= cost && buyer.canGetItem(itemType, numberOf)) {
 			if(itemType.isAnimal()) {
 				for(int i = 0; i < numberOf; i++) {
 					addAnimals(new Animal(itemType));
