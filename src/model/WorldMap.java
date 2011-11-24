@@ -151,76 +151,10 @@ public class WorldMap implements Serializable {
 			}
 			//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
-		LocationNode tempNode = new LocationNode(nameLocation(curRank, mapRand, tmpY), tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(MAX_LOC_QUAL), MAX_X, MAX_Y);
+		LocationNode tempNode = new LocationNode("tmp name - " + tmpX +" | " + tmpY , tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(MAX_LOC_QUAL), MAX_X, MAX_Y);
+		tempNode.setName(nameLocation(curRank, mapRand, tempNode));
 		return tempNode;
 	}
-	
-	
-	/**
-	 * checks if in the bounds of missouri - called if x location > 
-	 * @param node node in question
-	 */
-	
-	private boolean inMissouriBounds(LocationNode node){
-		return false;
-	}
-	
-	/**
-	 * checks if in the bounds of kansas territory
-	 * @param node node in question
-	 */
-	
-	private boolean inKansasBounds(LocationNode node){
-		return false;
-	}
-	
-	/**
-	 * checks if in the bounds of nebraska territory
-	 * @param node node in question
-	 */
-	
-	private boolean inNebraskaBounds(LocationNode node){
-		return false;
-	}
-	
-	/**
-	 * checks if in the bounds of utah
-	 * @param node node in question
-	 */
-	
-	private boolean inUtahBounds(LocationNode node){
-		return false;
-	}
-	
-	/**
-	 * checks if in the bounds of washinton territory
-	 * @param node node in question
-	 */
-	
-	private boolean inWashintonBounds(LocationNode node){
-		return false;
-	}
-	
-	/**
-	 * checks if in the bounds of dakota territory
-	 * @param node node in question
-	 */
-	
-	private boolean inDakotaBounds(LocationNode node){
-		return false;
-	}
-	
-	
-	/**
-	 * checks if in the bounds of oregon territory
-	 * @param node node in question
-	 */
-	
-	private boolean inOregonBounds(LocationNode node){
-		return false;
-	}
-	
-	
 	
 	
 	/** 
@@ -245,55 +179,119 @@ public class WorldMap implements Serializable {
 	 * @return the name of this city
 	 */
 	
-	private String nameLocation(int curRank, Random mapRand, int yVal){
+	private String nameLocation(int curRank, Random mapRand, LocationNode node){
 		//index of town_names structure corresponding to the town names of this zone
+//		int yVal = (int) node.getPlayerMapY();
 		ConstantStore.StateIdx rankIndex; 
 		String retVal = "";
 		String locationVal;
 		double maxRankDouble = (double) MAX_RANK;
-		if (curRank == 0){//treat this as missouri
-			rankIndex = ConstantStore.StateIdx.MISSOURI;
-		} else if (curRank <= (0.05 * maxRankDouble)){
-			rankIndex = (yVal > 10) ? ConstantStore.StateIdx.NEBRASKA_TERRITORY :  ConstantStore.StateIdx.KANSAS_TERRITORY ;
-		} else if (curRank <= (0.25 * maxRankDouble)){
-			rankIndex = (yVal > -20) ? ConstantStore.StateIdx.NEBRASKA_TERRITORY :  ConstantStore.StateIdx.KANSAS_TERRITORY ;
-		} else if (curRank <= (0.35 * maxRankDouble)){
-			rankIndex = (yVal > -20) ? ConstantStore.StateIdx.NEBRASKA_TERRITORY :  ConstantStore.StateIdx.KANSAS_TERRITORY ;
-		} else if (curRank <= (0.45 * maxRankDouble)){
-			rankIndex = (yVal > 80) ? ConstantStore.StateIdx.DAKOTA_TERRITORY : ConstantStore.StateIdx.NEBRASKA_TERRITORY;
-			if (yVal <  -50){//use kansas names but colorado territory
-				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;
+		if (node.getPlayerMapX() <= 255){//only will be oregon or washington territory
+			if (((.2414 * (node.getPlayerMapX()) + 54) < node.getPlayerMapY()) && ((-1.75 * (node.getPlayerMapX()) + 561) > node.getPlayerMapY())){
+				rankIndex = ConstantStore.StateIdx.OREGON;
+			} else {
+				rankIndex = ConstantStore.StateIdx.WASHINGTON_TERRITORY;
 			}
-		} else if (curRank <= (0.5 * maxRankDouble)){
-			rankIndex = (yVal > 80) ? ConstantStore.StateIdx.DAKOTA_TERRITORY : ConstantStore.StateIdx.NEBRASKA_TERRITORY;
-			if (yVal <  -80){//use kansas names but colorado territory
-				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;
-			}
-		} else if (curRank <= (0.6 * maxRankDouble)){
-			rankIndex = (yVal > 55) ? ConstantStore.StateIdx.DAKOTA_TERRITORY : ConstantStore.StateIdx.NEBRASKA_TERRITORY;
-			if (yVal <  -95){//use kansas names but colorado territory
-				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;
-			}
-		} else if (curRank <= (0.7 * maxRankDouble)) {
-			rankIndex = (yVal > -70) ? ConstantStore.StateIdx.WASHINGTON_TERRITORY : ConstantStore.StateIdx.UTAH_TERRITORY ;
-			if (yVal > 100){//use Dakota names
-				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
+		}//if x <=255
+		else if (node.getPlayerMapX() <= 325){//only will be utah territory or washington territory
+
+			if ((.3 * (node.getPlayerMapX()) + 210) > node.getPlayerMapY()){ //border between utah and washington
+				rankIndex = ConstantStore.StateIdx.WASHINGTON_TERRITORY;
+			} else {
+				rankIndex = ConstantStore.StateIdx.UTAH_TERRITORY;
 			}
 			
-		} else if (curRank <= (0.8 * maxRankDouble)) {
-			rankIndex = (yVal > -70) ? ConstantStore.StateIdx.WASHINGTON_TERRITORY : ConstantStore.StateIdx.UTAH_TERRITORY ;
-			if (yVal > 120){//use Dakota names
-				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
+		}//if 255 < x <= 325
+		else if (node.getPlayerMapX() <= 405) {//washington, dakota, and utah
+			if (((.7855) * (node.getPlayerMapX()) - 92) > node.getPlayerMapY()){//border between washington and dakota
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;				
+			} else if ((.3 * (node.getPlayerMapX()) + 210) > node.getPlayerMapY()){ //border between utah and washington
+				rankIndex = ConstantStore.StateIdx.WASHINGTON_TERRITORY;
+			} else {
+				rankIndex = ConstantStore.StateIdx.UTAH_TERRITORY;
 			}
 			
-		} else if (curRank <= (0.83 * maxRankDouble)) {
-			rankIndex = (yVal > -100) ? ConstantStore.StateIdx.WASHINGTON_TERRITORY : ConstantStore.StateIdx.UTAH_TERRITORY ;
-			if (yVal > 150){//use Dakota names
-				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
+		}//if 325 < x <= 405
+		else if (node.getPlayerMapX() <= 415){
+			if (((.7855) * (node.getPlayerMapX()) - 92) > node.getPlayerMapY()){//border between washington and dakota
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;				
+			} else if ((.3 * (node.getPlayerMapX()) + 210) > node.getPlayerMapY()){ //border between utah and washington
+				rankIndex = ConstantStore.StateIdx.WASHINGTON_TERRITORY;
+			} else if ((-3 * (node.getPlayerMapX()) + 1580) > node.getPlayerMapY()) {//border between utah and nebraska -  365-290/405-430 : (-3) x +  1580
+				rankIndex = ConstantStore.StateIdx.UTAH_TERRITORY;
+			} else {//
+				rankIndex = ConstantStore.StateIdx.NEBRASKA_TERRITORY;				
 			}
-		} else {
-			rankIndex = ConstantStore.StateIdx.OREGON;
-		}
+		}//if 405 < x <= 415
+		else if (node.getPlayerMapX() <= 430) {
+			if (((.7855) * (node.getPlayerMapX()) - 92) > node.getPlayerMapY()){//border between washington and dakota
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;				
+			} else if ((-3 * (node.getPlayerMapX()) + 1580) > node.getPlayerMapY()) {//border between washington and nebraska -  365-290/405-430 : (-3) x +  1580
+				rankIndex = ConstantStore.StateIdx.WASHINGTON_TERRITORY;				
+			} else if (((.2364) * (node.getPlayerMapX()) + 270) > node.getPlayerMapY()){ //border between nebraska and utah/colorado : (365 - 430)/(405 - 680) : .2364 x + 270
+				rankIndex = ConstantStore.StateIdx.NEBRASKA_TERRITORY;
+			} else if (((-2.7273) * (node.getPlayerMapX()) - 1548) > node.getPlayerMapY()) {//border between utah and colorado : (525 - 375 )/(375 - 430)  : (-2.7273 x - 1548)
+				rankIndex = ConstantStore.StateIdx.UTAH_TERRITORY;
+			} else {
+				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;			
+			}
+		
+			
+		}//if 415 < x <= 430
+		else if (node.getPlayerMapX() <= 460) {
+			if (((.7855) * (node.getPlayerMapX()) - 92) > node.getPlayerMapY()){//border between washington and dakota
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;				
+			} else if (((.21277) * (node.getPlayerMapX()) + 199) > node.getPlayerMapY()) {//north border between washington and nebraska -  290-390/430-900 : (.21277) x +  199
+				rankIndex = ConstantStore.StateIdx.WASHINGTON_TERRITORY;
+			} else if (((.2364) * (node.getPlayerMapX()) + 270) > node.getPlayerMapY()){ //border between nebraska and utah/colorado : (365 - 430)/(405 - 680) : .2364 x + 270
+				rankIndex = ConstantStore.StateIdx.NEBRASKA_TERRITORY;
+			} else {// 
+				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;			
+			}
+		}// if 430 < x <= 460
+		else if (node.getPlayerMapX() <= 645) {
+			if (((.21277) * (node.getPlayerMapX()) + 199) > node.getPlayerMapY()) {//north border between dakota and nebraska -  290-390/430-900 : (.21277) x +  199
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
+			} else if (((.2364) * (node.getPlayerMapX()) + 270) > node.getPlayerMapY()){ //border between nebraska and utah/colorado : (365 - 430)/(405 - 680) : .2364 x + 270
+				rankIndex = ConstantStore.StateIdx.NEBRASKA_TERRITORY;
+			} else {// 
+				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;			
+			}
+		}// if 460 < x <= 645
+		else if (node.getPlayerMapX() <= 680) {
+			if (((.21277) * (node.getPlayerMapX()) + 199) > node.getPlayerMapY()) {//north border between dakota and nebraska -  290-390/430-900 : (.21277) x +  199
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
+			} else if (((.2364) * (node.getPlayerMapX()) + 270) > node.getPlayerMapY()){ //border between nebraska and colorado : (365 - 430)/(405 - 680) : .2364 x + 270
+				rankIndex = ConstantStore.StateIdx.NEBRASKA_TERRITORY;
+			} else if (((-3.7143) * (node.getPlayerMapX()) + 2955) > node.getPlayerMapY()) {// border between colorado and kansas/nebraska : (560 - 430 )/(645 - 680) : -3.7143 x + 2955
+				rankIndex = ConstantStore.StateIdx.COLORADO_TERRITORY;			
+			} else if (((.15) * (node.getPlayerMapX()) + 370) >  node.getPlayerMapY()){//border between kansas and nebraska : (470 - 510) / (670 - 940) : .15 x + 370
+				rankIndex = ConstantStore.StateIdx.NEBRASKA_TERRITORY;				
+			} else {
+				rankIndex = ConstantStore.StateIdx.KANSAS_TERRITORY;				
+			}
+		}// 645 < x <= 680
+		else if (node.getPlayerMapX() <= 900) {
+			if (((.21277) * (node.getPlayerMapX()) + 199) > node.getPlayerMapY()) {//north border between dakota and nebraska -  290-390/430-900 : (.21277) x +  199
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
+			} else if (((.15) * (node.getPlayerMapX()) + 370) >  node.getPlayerMapY()){//border between kansas and nebraska : (470 - 510) / (670 - 940) : .15 x + 370
+				rankIndex = ConstantStore.StateIdx.NEBRASKA_TERRITORY;				
+			} else {
+				rankIndex = ConstantStore.StateIdx.KANSAS_TERRITORY;				
+			}
+		}// 680 < x <= 900
+		else if (node.getPlayerMapX() <= 930) {
+			if (((.21277) * (node.getPlayerMapX()) + 199) > node.getPlayerMapY()) {//north border between dakota and nebraska -  290-390/430-900 : (.21277) x +  199
+				rankIndex = ConstantStore.StateIdx.DAKOTA_TERRITORY;
+			} else if (((.15) * (node.getPlayerMapX()) + 370) >  node.getPlayerMapY()){//border between kansas and nebraska : (470 - 510) / (670 - 940) : .15 x + 370
+				rankIndex = ConstantStore.StateIdx.NEBRASKA_TERRITORY;				
+			} else {
+				rankIndex = ConstantStore.StateIdx.KANSAS_TERRITORY;				
+			}
+		}// 900 < x <= 930
+		else {
+			rankIndex = ConstantStore.StateIdx.MISSOURI;		
+		}//if/else test for entire state layout
 		
 		int maxRankNameAraSize = ConstantStore.TOWN_NAMES.get(rankIndex).size();
 		int townNameIndex = mapRand.nextInt(maxRankNameAraSize);
@@ -405,7 +403,7 @@ public class WorldMap implements Serializable {
 		for (int i = 0; i < MAX_RANK; i++){
 			for(LocationNode node : this.mapNodes.get(i)){
 				//manufacture proper coords for player map from x/y pos
-//				convertToMapCoords(node);
+// - replaced with call in location node				convertToMapCoords(node);
 				//node.setName(reNameLocation(node, mapRand));
 				//node is of sufficient "quality" to show up on map regardless of having been visited or not
 				if (node.getCondition().getCurrent() / this.MAX_LOC_QUAL > .90){
@@ -464,7 +462,7 @@ public class WorldMap implements Serializable {
 			}//for each location at rank
 		}//for each rank
 		//convert oregon city's coords to actual coords on our map
-//		convertToMapCoords(this.mapNodes.get(finalDestination.getRank()).get(0));
+// - replaced with call in location node	convertToMapCoords(this.mapNodes.get(finalDestination.getRank()).get(0));
 		
 		
 		
@@ -500,7 +498,7 @@ public class WorldMap implements Serializable {
 	
 //	/**
 //	 * this method will convert the internal coords of the map to the physical representation used by the player map.
-//	 * 
+//	 *  replaced with method in locationNode
 //	 */
 //	private void convertToMapCoords(LocationNode node){
 //		double newX;

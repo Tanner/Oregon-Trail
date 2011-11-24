@@ -48,8 +48,8 @@ public class LocationNode extends MapObject {
 	 * @param locationName String representing name of location
 	 * @param xPos the x position for the location on the world map
 	 * @param yPos the y position for the location on the world map
-	 * @param latitude Real World(tm) latitude of location (for MapScene manufacture)
-	 * @param longitude Real World(tm) longitude of location (for MapScene Manufacture)
+	 * @param latitude Real World(tm) latitude of location (for MapScene manufacture) - not used
+	 * @param longitude Real World(tm) longitude of location (for MapScene Manufacture) - not used
 	 * @param trails number of trails exiting this location
 	 * @param quality quality of location - lower quality means smaller town or outpost
 	 */

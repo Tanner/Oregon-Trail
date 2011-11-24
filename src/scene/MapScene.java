@@ -49,9 +49,9 @@ public class MapScene extends Scene {
 					locationButtons[location.getID()] = new Button(container, 10, 10);					
 					locationButtons[location.getID()].setTooltipEnabled(true);
 					locationButtons[location.getID()].setTooltipMessage(location.getName());
-					if (!devMode) {
+					//if (!devMode) {
 						playerMap.add(locationButtons[location.getID()], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) location.getPlayerMapX(), (int) location.getPlayerMapY());
-					}
+					//}
 					locationButtons[location.getID()].addListener(new ButtonListener(location));
 				}//if location is visible, paint it.				
 			}
@@ -62,28 +62,19 @@ public class MapScene extends Scene {
 		
 		int[][] coords = {
 				//missouri border
-				{ 910, 475},
-				{ 940, 510},
-				{ 1010, 490},
-				{ 940, 560},
+				{ 910, 475}, { 940, 510}, { 1010, 490}, { 940, 560},
 				
 				//utah/washington territory border => y = (335-275)/(420-218) = (.3) x + 210; 218<x<420 and 275<y<335				
-				{ 218, 275},
-				{ 300, 300},
-				{ 415, 330},
+				{ 218, 275}, { 300, 300}, { 415, 330},
 				
 				//nebraska/dakota/washington border y = (390 - 290)/(900 - 430) = (.213) x + 200 : 420<x<900 ; 290 < y < 390			
-				{ 430, 290},
-				{ 460, 300},
-				{ 900, 390},
+				{ 430, 290}, { 460, 300}, { 900, 390},
 				
 				//kansas/nebraska border y =
 				{670, 470},
 				
 				//colorado/nebraska border y =
-				{680, 430},
-				{430, 375},
-				{405, 365},
+				{680, 430}, {430, 375}, {405, 365},
 				
 				//longitudinal borders
 				//colorado/kansas
@@ -92,14 +83,13 @@ public class MapScene extends Scene {
 				//colorado/utah
 				{375, 520},
 				
-				//oregon/washington
-				{255, 115},
+				//oregon/washington : northern border : y = (115 - 80) /  (255 - 110)  : .2414 x + 54
+				{255, 115}, {110, 80},
+									//eastern border : y = (115 - 255)/ (255 - 175) :  -1.75 x + 561
 				{175, 255},
 				
 				//washington/dakota
-				{470, 265},
-				{325, 155},
-				{180, 340}
+				{470, 265}, {325, 155}, {180, 340}
 				
 		};
 
