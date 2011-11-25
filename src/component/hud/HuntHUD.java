@@ -37,9 +37,7 @@ public class HuntHUD extends HUD {
 	private Button menuButton;
 	
 	private Button inventoryButton;
-	private Button mapButton;
-	private Button huntButton;
-	private Button leaveButton;
+	private Button campButton;
 	
 	private Label timeLabel;
 	private Label dateLabel;
@@ -66,13 +64,13 @@ public class HuntHUD extends HUD {
 		add(huntPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 	
 		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
-		
+	/*	
 		timeLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
 		add(timeLabel, notificationLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.BOTTOMLEFT, MARGIN, - MARGIN / 2);
 		
 		dateLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
 		add(dateLabel, notificationLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.TOPLEFT, MARGIN, MARGIN / 2);
-		
+	*/	
 		setBackgroundColor(Color.gray);
 		setBevelWidth(2);
 		setBevel(Component.BevelType.OUT);
@@ -88,7 +86,7 @@ public class HuntHUD extends HUD {
 		Label menuLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("HUNT_SCENE", "CAMP"));
 		
 		Sprite fireSprite = new Sprite(container, 48, ImageStore.get().getImage("CAMP_ICON"));
-		
+/**		
 		menuButton = new Button(container, menuLabel.getWidth() + (2 * MARGIN), BUTTON_HEIGHT, menuLabel);
 		menuButton.setSprite(fireSprite);
 		menuButton.setShowLabel(false);
@@ -104,9 +102,45 @@ public class HuntHUD extends HUD {
 		notificationLabel.setVerticalAlignment(VerticalAlignment.CENTER);
 		notificationLabel.setBackgroundColor(Color.black);
 		panel.add(notificationLabel, menuButton.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPLEFT, MARGIN, 0);
+	*/
 		
+		Button buttons[] = new Button[2];
+
+		int buttonWidth = (container.getWidth() - MARGIN * 2 - MARGIN * (buttons.length - 1) - INFO_WIDTH - MARGIN) / buttons.length;
+		
+		Label inventoryLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("HUNT_SCENE", "INVENTORY"));
+		inventoryButton = new Button(container, buttonWidth, BUTTON_HEIGHT, inventoryLabel);
+		inventoryButton.addListener(listener);
+				
+		Label leaveLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("HUNT_SCENE", "CAMP"));
+		campButton = new Button(container, buttonWidth, BUTTON_HEIGHT, leaveLabel);
+		campButton.addListener(listener);
+				
+		buttons[0] = campButton;
+		buttons[1] = inventoryButton;
+		
+		panel.addAsRow(Arrays.asList(buttons).iterator(),
+				panel.getPosition(ReferencePoint.TOPLEFT),
+				MARGIN,
+				MARGIN,
+				MARGIN);
+		
+
 		return panel;
+	} 
+	
+	/**
+	 * Get the map button.
+	 * @return Map button
+	 */
+	public Button getCampButton() {
+		return campButton;
 	}
-
-
+	/**
+	 * Get the map button.
+	 * @return Map button
+	 */
+	public Button getInventoryButton() {
+		return inventoryButton;
+	}
 }

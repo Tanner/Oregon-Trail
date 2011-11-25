@@ -486,6 +486,8 @@ public class TrailScene extends Scene {
 				GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, TrailScene.this, false);
 			} else if (component == hud.getMapButton()) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, TrailScene.this, false);
+			} else if (component == hud.getHuntButton()) {
+				GameDirector.sharedSceneListener().requestScene(SceneID.HUNT, TrailScene.this, false);
 			} else if (component == hud.getLeaveButton()) {
 				setState(new WalkingState());
 			}

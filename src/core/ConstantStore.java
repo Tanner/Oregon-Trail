@@ -133,6 +133,7 @@ public final class ConstantStore {
 		// Hunt Scene
 		Map<String, String> huntScene = new HashMap<String, String>();
 		huntScene.put("CAMP", "Return to Camp");
+		huntScene.put("INVENTORY", "Inventory");
 		literalMap.put("HUNT_SCENE", huntScene);
 		
 		// Map Scene

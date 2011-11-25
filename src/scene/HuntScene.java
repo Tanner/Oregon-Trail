@@ -142,6 +142,10 @@ public class HuntScene extends Scene {
 	private class HUDListener implements ComponentListener {
 		@Override
 		public void componentActivated(AbstractComponent component) {
+		if (component == hud.getCampButton()) {
+				SoundStore.get().setMusicVolume(.25f);
+				GameDirector.sharedSceneListener().sceneDidEnd(HuntScene.this);
+			}//if source==return2camp
 			
 		}//component activated
 	}	
