@@ -27,6 +27,7 @@ public class SoundStore {
 	private List<String> townSongs = new ArrayList<String>();
 	
 	private String filePath = "resources/sounds/";
+	private String huntSong;
 	
 	/**
 	 * Constructs a new {@code SoundStore} and initializes it.
@@ -83,6 +84,8 @@ public class SoundStore {
 		addToMusic("JesseJames", new Music(filePath + "JesseJames.ogg"));
 		addToMusic("MyNameIsNobody", new Music(filePath + "MyNameIsNobody.ogg"));
 		addToMusic("WanderingTrail", new Music(filePath + "WanderingTrail.ogg"));
+		addToMusic("KnightsOfCydonia", new Music(filePath + "KnightsOfCydonia.ogg"));
+		//addToMusic("KnightsOfCydonia", new Music(filePath + "HowTheWest.ogg"));
 		
 		townSongs.add("FarewellCheyenne");
 		townSongs.add("HangEmHigh");
@@ -91,12 +94,21 @@ public class SoundStore {
 		townSongs.add("MyNameIsNobody");
 		townSongs.add("FFD");
 		townSongs.add("MS");
+		huntSong = "KnightsOfCydonia";
 	}
 	
 	public void playTownMusic() {
 		Random random = new Random();
 		playMusic(townSongs.get(random.nextInt(townSongs.size())));
 		
+	}
+	
+	/**
+	 * play appropriate music in the hunt scene.
+	 * 
+	 */
+	public void playHuntMusic() {
+		playMusic(huntSong);
 	}
 	
 	/**

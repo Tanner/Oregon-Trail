@@ -130,6 +130,10 @@ public final class ConstantStore {
 		townScene.put("ENTER_STORE_INSTRUCTION", "Press Enter to Go Inside Store");
 		townScene.put("CONTINUE_ON_TRAIL", "Continue on Trail");
 		literalMap.put("TOWN_SCENE", townScene);
+		// Hunt Scene
+		Map<String, String> huntScene = new HashMap<String, String>();
+		huntScene.put("CAMP", "Return to Camp");
+		literalMap.put("HUNT_SCENE", huntScene);
 		
 		// Map Scene
 		Map<String, String> mapScene = new HashMap<String, String>();

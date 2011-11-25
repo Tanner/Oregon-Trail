@@ -9,15 +9,20 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.gui.AbstractComponent;
+import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Label;
 import component.Panel;
 import component.Positionable;
+import component.hud.HuntHUD;
 import component.sprite.AnimatingSprite;
 
+import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;
+import core.SoundStore;
 
 /**
  * Hunt scene is where you kill animals and get food.
@@ -25,11 +30,14 @@ import core.GameDirector;
 public class HuntScene extends Scene {
 	public static final SceneID ID = SceneID.HUNT;
 
+	private HuntHUD hud;
+
 	//the member of the party engaged in the hunt
 	//private Person hunter;
 	
 	//private Image ground;
-	private AnimatingSprite toonHunter;
+	private AnimatingSprite[] huntingParty;
+	private AnimatingSprite hunter;
 	
 	/**
 	 * Constructs a {@code HuntScene} with a {@code Person} who will be the hunter
@@ -51,18 +59,17 @@ public class HuntScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 
+		SoundStore.get().playHuntMusic();
+		
+		hud = new HuntHUD(container, new HUDListener());
+		//hud.setNotification(location.getName());
+		super.showHUD(hud);			
 		Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
 		
 		Label infoLabel = new Label(container, h2, Color.white, "Just making the hunt scene");
 		mainLayer.add(infoLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
 		
-		//Image leftImage = new Image("resources/graphics/test/marioLeft.png");
-		//Image rightImage = new Image("resources/graphics/test/marioRight.png");
-		//toonHunter = new AnimatingSprite(container, new Animation(new Image[]{leftImage}, 1), new Animation(new Image[]{rightImage}, 1));
-//		toonHunter.setScale(0.1f);
-		
-		mainLayer.add(toonHunter, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, 0, -5);
-		
+
 		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/dark_dirt.png")));
 	}
 	
@@ -73,7 +80,30 @@ public class HuntScene extends Scene {
 	 */
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		toonHunter.update(container, delta);
+
+		
+		if(SoundStore.get().getPlayingMusic() == null) {
+			SoundStore.get().playTownMusic();
+		}
+		
+		//handle multiple direction keys at once.
+		if (container.getInput().isKeyDown(Input.KEY_LEFT)){
+			
+		}
+		if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
+			
+		}
+		if (container.getInput().isKeyDown(Input.KEY_UP)){
+			
+		}
+		if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
+			
+		}
+			
+		mainLayer.update(delta);
+		
+		
+		
 	}
 
 	@Override
@@ -109,6 +139,11 @@ public class HuntScene extends Scene {
 		return ID.ordinal();
 	}
 	
-	
+	private class HUDListener implements ComponentListener {
+		@Override
+		public void componentActivated(AbstractComponent component) {
+			
+		}//component activated
+	}	
 
 }
