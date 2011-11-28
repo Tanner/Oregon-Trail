@@ -3,12 +3,14 @@ package scene;
 import model.Party;
 import model.Person;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,12 +18,14 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.Label;
 import component.Panel;
 import component.Positionable;
+import component.Positionable.ReferencePoint;
 import component.hud.HuntHUD;
 import component.sprite.AnimatingSprite;
 
 import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;
+import core.ImageStore;
 import core.SoundStore;
 
 /**
@@ -66,10 +70,26 @@ public class HuntScene extends Scene {
 		super.showHUD(hud);			
 		Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
 		
-		Label infoLabel = new Label(container, h2, Color.white, "Just making the hunt scene");
-		mainLayer.add(infoLabel, mainLayer.getPosition(Positionable.ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.TOPCENTER, 0, 5);
+		hunter = new AnimatingSprite(container,
+				48,
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_FRONT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_BACK")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_UPPERLEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_UPPERRIGHT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERLEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERRIGHT")}, 250),
+				AnimatingSprite.Direction.RIGHT);
 		
-
+		mainLayer.add(hunter,
+				new Vector2f(mainLayer.getWidth()/2,mainLayer.getHeight()/2),
+				ReferencePoint.CENTERCENTER,
+				20,
+				25);
+		
+		//build background
+		
 		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/dark_dirt.png")));
 	}
 	
@@ -85,20 +105,24 @@ public class HuntScene extends Scene {
 		if(SoundStore.get().getPlayingMusic() == null) {
 			SoundStore.get().playTownMusic();
 		}
-		
-		//handle multiple direction keys at once.
-		if (container.getInput().isKeyDown(Input.KEY_LEFT)){
-			
-		}
-		if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-			
-		}
-		if (container.getInput().isKeyDown(Input.KEY_UP)){
-			
-		}
-		if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
-			
-		}
+
+		if (moveUpperLeft(container)){
+
+		} else if (moveLowerLeft(container)){
+
+		} else if (moveUpperRight(container)){
+
+		} else if (moveLowerRight(container)){
+
+		} else if (moveLeft(container)){
+
+		} else if (moveUp(container)){
+
+		} else if (moveRight(container)){
+
+		} else if (moveDown(container)){
+
+		} 
 			
 		mainLayer.update(delta);
 		
@@ -106,6 +130,127 @@ public class HuntScene extends Scene {
 		
 	}
 
+	/**
+	 * checks if the up and left keys are pressed simultaneously
+	 * @param container
+	 * @return whether the indicated movement has occurred
+	 */
+	private boolean moveUpperLeft(GameContainer container){
+		if (container.getInput().isKeyDown(Input.KEY_LEFT) 
+				&& (container.getInput().isKeyDown(Input.KEY_UP))){			
+			return true;
+		} else {
+			return false;
+		}
+	}//move upper left direction
+	
+	/**
+	 * checks if the down and left keys are pressed simultaneously
+	 * @param container
+	 * @return whether the indicated movement has occurred
+	 */
+	private boolean moveLowerLeft(GameContainer container){
+		if (container.getInput().isKeyDown(Input.KEY_LEFT)  
+				&& (container.getInput().isKeyDown(Input.KEY_DOWN))){			
+			return true;
+		} else {
+			return false;
+		}
+	}//move lower left direction
+	
+	/**
+	 * checks if the up and right keys are pressed simultaneously
+	 * @param container
+	 * @return whether the indicated movement has occurred
+	 */
+	private boolean moveUpperRight(GameContainer container){
+		if (container.getInput().isKeyDown(Input.KEY_UP) 
+				&& (container.getInput().isKeyDown(Input.KEY_RIGHT))){			
+			return true;
+		} else {
+			return false;
+		}
+	}//move upper right direction
+	
+	/**
+	 * checks if the down and right keys are pressed simultaneously
+	 * @param container
+	 * @return whether the indicated movement has occurred
+	 */
+	private boolean moveLowerRight(GameContainer container){
+		if (container.getInput().isKeyDown(Input.KEY_RIGHT)
+				&& (container.getInput().isKeyDown(Input.KEY_DOWN))){			
+			return true;
+		} else {
+			return false;
+		}
+	}//move upper right direction
+	
+	/**
+	 * checks if the right key is pressed alone
+	 * @param container
+	 * @return whether the indicated movement has occurred
+	 */
+	private boolean moveRight(GameContainer container){
+		if (!(container.getInput().isKeyDown(Input.KEY_LEFT)) 
+				&& !(container.getInput().isKeyDown(Input.KEY_UP)) 
+				&& (container.getInput().isKeyDown(Input.KEY_RIGHT)) 
+				&& !(container.getInput().isKeyDown(Input.KEY_DOWN))){			
+			return true;
+		} else {
+			return false;
+		}
+	}//move right direction
+
+	/**
+	 * checks if the left key is pressed alone
+	 * @param container
+	 * @return whether the indicated movement has occurred
+	 */
+	private boolean moveLeft(GameContainer container){
+		if ((container.getInput().isKeyDown(Input.KEY_LEFT)) 
+				&& !(container.getInput().isKeyDown(Input.KEY_UP)) 
+				&& !(container.getInput().isKeyDown(Input.KEY_RIGHT)) 
+				&& !(container.getInput().isKeyDown(Input.KEY_DOWN))){			
+			return true;
+		} else {
+			return false;
+		}
+	}//move left direction
+	
+	/**
+	 * checks if the down key is pressed alone
+	 * @param container
+	 * @return whether the indicated movement has occurred
+	 */
+	private boolean moveDown(GameContainer container){
+		if (!(container.getInput().isKeyDown(Input.KEY_LEFT)) 
+				&& !(container.getInput().isKeyDown(Input.KEY_UP)) 
+				&& !(container.getInput().isKeyDown(Input.KEY_RIGHT)) 
+				&& (container.getInput().isKeyDown(Input.KEY_DOWN))){			
+			return true;
+		} else {
+			return false;
+		}
+	}//move down direction
+	
+	/**
+	 * checks if the up key is pressed alone
+	 * @param container
+	 * @return whether the indicated movement has occurred
+	 */
+	private boolean moveUp(GameContainer container){
+		if (!(container.getInput().isKeyDown(Input.KEY_LEFT)) 
+				&& (container.getInput().isKeyDown(Input.KEY_UP)) 
+				&& !(container.getInput().isKeyDown(Input.KEY_RIGHT)) 
+				&& !(container.getInput().isKeyDown(Input.KEY_DOWN))){			
+			return true;
+		} else {
+			return false;
+		}
+	}//move up direction
+	
+	
 	@Override
 	public void keyPressed(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {

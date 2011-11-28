@@ -11,11 +11,53 @@ public class AnimatingSprite extends Sprite {
 	
 	private Animation leftAnimation;
 	private Animation rightAnimation;
+	private Animation upAnimation;
+	private Animation downAnimation;
+	private Animation upperLeftAnimation;
+	private Animation upperRightAnimation;
+	private Animation lowerLeftAnimation;
+	private Animation lowerRightAnimation;
 	private Animation currentAnimation;
 	
-	public static enum Direction { LEFT, RIGHT }
+	public static enum Direction { LEFT, RIGHT, FRONT, BACK }
 	private Direction xDirection = Direction.LEFT;
-	
+
+	/**
+	 * Constructs an {@code AnimatingSprite} with a right, left, up and down animation.
+	 * @param context The GUI context
+	 * @param width The width
+	 * @param animation Animation for when facing left
+	 * @param direction Direction Direction facing
+	 */
+	public AnimatingSprite(GUIContext context, int width, 
+			Animation leftAnimation, Animation rightAnimation, 
+			Animation downAnimation, Animation upAnimation, 
+			Animation upperLeftAnimation, Animation upperRightAnimation, 
+			Animation lowerLeftAnimation, Animation lowerRightAnimation, 
+			Direction direction) {
+		super(context, width, width * leftAnimation.getHeight() / leftAnimation.getWidth());
+		
+		this.leftAnimation = leftAnimation;
+		this.rightAnimation = rightAnimation;
+		this.upAnimation = upAnimation;
+		this.downAnimation = downAnimation;
+		this.upperLeftAnimation = upperLeftAnimation;
+		this.upperRightAnimation = upperRightAnimation;
+		this.lowerLeftAnimation = lowerLeftAnimation;
+		this.lowerRightAnimation = lowerRightAnimation;
+		
+		leftAnimation.setAutoUpdate(false);
+		rightAnimation.setAutoUpdate(false);
+		upAnimation.setAutoUpdate(false);
+		downAnimation.setAutoUpdate(false);
+		upperLeftAnimation.setAutoUpdate(false);
+		upperRightAnimation.setAutoUpdate(false);
+		lowerLeftAnimation.setAutoUpdate(false);
+		lowerRightAnimation.setAutoUpdate(false);
+		
+		xDirection = Direction.FRONT;
+		currentAnimation = downAnimation;
+	}	
 	/**
 	 * Constructs an {@code AnimatingSprite} with a right and left animation.
 	 * @param context The GUI context
