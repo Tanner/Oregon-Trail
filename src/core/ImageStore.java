@@ -20,6 +20,7 @@ public class ImageStore {
 	private final String PATH_PEOPLE = PATH_GRAPHICS + "people/";
 	private final String PATH_BUILDINGS = PATH_GRAPHICS + "buildings/";
 	private final String PATH_HUNT = PATH_GRAPHICS + "hunt/";
+	private final String PATH_TRAIL = PATH_GRAPHICS + "trail/";
 
 	
 	public final Map<String, Image> IMAGES;
@@ -62,6 +63,15 @@ public class ImageStore {
 		IMAGES.put("CLOUD_A", new Image(PATH_BKGRND + "cloud_a.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("CLOUD_B", new Image(PATH_BKGRND + "cloud_b.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("CLOUD_C", new Image(PATH_BKGRND + "cloud_c.png", false, Image.FILTER_NEAREST));
+		
+		IMAGES.put("TRAIL_WAGON", new Image(PATH_TRAIL + "trailWagon.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("SMALL_WHEEL_1", new Image(PATH_TRAIL + "smallwheel1.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("SMALL_WHEEL_2", new Image(PATH_TRAIL + "smallwheel2.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("SMALL_WHEEL_3", new Image(PATH_TRAIL + "smallwheel3.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("BIG_WHEEL_1", new Image(PATH_TRAIL + "wheel1.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("BIG_WHEEL_2", new Image(PATH_TRAIL + "wheel2.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("BIG_WHEEL_3", new Image(PATH_TRAIL + "wheel3.png", false, Image.FILTER_NEAREST));
+		
 		
 		//images for hunt scene
 		IMAGES.put("HUNTER_LEFT", new Image(PATH_HUNT + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
