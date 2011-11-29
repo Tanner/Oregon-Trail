@@ -49,6 +49,7 @@ public class ImageStore {
 		IMAGES.put("TRAIL_MAP", new Image(PATH_BKGRND + "playerMap.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("DIRT_BACKGROUND", new Image(PATH_BKGRND + "dark_dirt.png"));
 		IMAGES.put("CAMP_ICON", new Image(PATH_ICONS + "fire.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("INVENTORY_ICON", new Image(PATH_ICONS + "pack.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("TRAIL_ICON", new Image(PATH_ICONS + "trail.png", false, Image.FILTER_NEAREST));
 		
 		IMAGES.put("GRASS", new Image(PATH_GROUND + "grass.png", false, Image.FILTER_NEAREST));

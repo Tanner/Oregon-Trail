@@ -34,7 +34,8 @@ public class HuntHUD extends HUD {
 	
 	private static final int INFO_WIDTH = 200;
 	
-	private Button menuButton;
+	private Button hudButton1;
+	private Button hudButton2;
 	
 	private Button inventoryButton;
 	private Button campButton;
@@ -63,7 +64,7 @@ public class HuntHUD extends HUD {
 		
 		add(huntPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 	
-		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
+		//Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 	/*	
 		timeLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
 		add(timeLabel, notificationLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.BOTTOMLEFT, MARGIN, - MARGIN / 2);
@@ -71,11 +72,7 @@ public class HuntHUD extends HUD {
 		dateLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
 		add(dateLabel, notificationLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.TOPLEFT, MARGIN, MARGIN / 2);
 	*/	
-		setBackgroundColor(Color.gray);
-		setBevelWidth(2);
-		setBevel(Component.BevelType.OUT);
-		setBottomBorderWidth(2);
-		setBorderColor(Color.black);
+
 	}
 
 	public Panel makeHuntPanel(int width, ComponentListener listener) {
@@ -86,25 +83,34 @@ public class HuntHUD extends HUD {
 		Label menuLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("HUNT_SCENE", "CAMP"));
 		
 		Sprite fireSprite = new Sprite(container, 48, ImageStore.get().getImage("CAMP_ICON"));
-/**		
-		menuButton = new Button(container, menuLabel.getWidth() + (2 * MARGIN), BUTTON_HEIGHT, menuLabel);
-		menuButton.setSprite(fireSprite);
-		menuButton.setShowLabel(false);
-		menuButton.addListener(listener);
-		panel.add(menuButton, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
+		Sprite inventorySprite = new Sprite(container, 48, ImageStore.get().getImage("INVENTORY_ICON"));
 		
-		menuButton.setTooltipEnabled(true);
-		menuButton.setTooltipMessage(ConstantStore.get("TRAIL_SCENE", "CAMP"));
+		hudButton1 = new Button(container, menuLabel.getWidth() + (2 * MARGIN), BUTTON_HEIGHT, menuLabel);
+		hudButton1.setSprite(fireSprite);
+		hudButton1.setShowLabel(false);
+		hudButton1.addListener(listener);
+		panel.add(hudButton1, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, MARGIN, MARGIN);
 		
-		int notificationWidth = width - menuButton.getWidth() -  MARGIN * 2;
+		hudButton1.setTooltipEnabled(true);
+		hudButton1.setTooltipMessage(ConstantStore.get("HUNT_SCENE", "CAMP"));
+		
+		int notificationWidth = width - hudButton1.getWidth() -  MARGIN * 2;
 		
 		notificationLabel = new Label(container, notificationWidth, BUTTON_HEIGHT, fieldFont, Color.white, "");
 		notificationLabel.setVerticalAlignment(VerticalAlignment.CENTER);
 		notificationLabel.setBackgroundColor(Color.black);
-		panel.add(notificationLabel, menuButton.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPLEFT, MARGIN, 0);
-	*/
+		panel.add(notificationLabel, hudButton1.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPLEFT, MARGIN, 0);
+
+		hudButton2 = new Button(container, menuLabel.getWidth() + (2 * MARGIN), BUTTON_HEIGHT, menuLabel);
+		hudButton2.setSprite(inventorySprite);
+		hudButton2.setShowLabel(false);
+		hudButton2.addListener(listener);
+		panel.add(hudButton2, notificationLabel.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPLEFT, MARGIN, 0);
 		
-		Button buttons[] = new Button[2];
+		hudButton2.setTooltipEnabled(true);
+		hudButton2.setTooltipMessage(ConstantStore.get("HUNT_SCENE", "INVENTORY"));
+		
+/*		Button buttons[] = new Button[2];
 
 		int buttonWidth = (container.getWidth() - MARGIN * 2 - MARGIN * (buttons.length - 1) - INFO_WIDTH - MARGIN) / buttons.length;
 		
@@ -125,7 +131,7 @@ public class HuntHUD extends HUD {
 				MARGIN,
 				MARGIN);
 		
-
+*/
 		return panel;
 	} 
 	
