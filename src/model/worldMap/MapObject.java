@@ -55,6 +55,9 @@ public abstract class MapObject implements Conditioned, Serializable {
 		MapObject.count = 0;
 	}
 
+	public void setQuality(Condition quality){		
+		this.quality = quality;
+	}
 	
 		
 	@Override

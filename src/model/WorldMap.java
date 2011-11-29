@@ -57,6 +57,8 @@ public class WorldMap implements Serializable {
 	private boolean devMode;
 	/**holds which location names have been used*/
 	private Map<ConstantStore.StateIdx,List<Boolean>> townNamesUsed;
+	/**random generator used throughout class*/
+	private Random mapRand;
 
 	/**
 	 * Makes a {@code WorldMap} object that tells the game where the party is and what's ahead of them
@@ -71,6 +73,8 @@ public class WorldMap implements Serializable {
 		if (this.devMode) {
 			this.numLocations = 3000;
 		}
+		//Random mapRand = new Random(54321);
+		this.mapRand = new Random();
 		this.mapNodes = new HashMap<Integer, List<LocationNode>>();
 		this.orphanNodes = new HashMap<Integer, List<LocationNode>>();
 		this.townNamesUsed = new HashMap <ConstantStore.StateIdx, List<Boolean>>();
@@ -119,7 +123,7 @@ public class WorldMap implements Serializable {
 	 * @param numExitTrails
 	 * @return
 	 */
-	private LocationNode generateLocationNode(Random mapRand, int curRank, int numExitTrails){
+	private LocationNode generateLocationNode(int curRank, int numExitTrails){
 		
 			//curRank = TESTRANK;
 		int tmpZ =  mapRand.nextInt(MAX_X / MAX_RANK) - (MAX_X / (2 * MAX_RANK));
@@ -155,7 +159,7 @@ public class WorldMap implements Serializable {
 			//number of exiting trails from this node - random between 1 and MAX_TRAILS_OUT
 		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
 		LocationNode tempNode = new LocationNode("tmp name - " + tmpX +" | " + tmpY , tmpX, tmpY, numExitTrails, curRank, mapRand.nextInt(MAX_LOC_QUAL), MAX_X, MAX_Y);
-		tempNode.setName(nameLocation(curRank, mapRand, tempNode));
+		tempNode.setName(nameLocation(curRank, tempNode));
 		return tempNode;
 	}
 	
@@ -182,7 +186,7 @@ public class WorldMap implements Serializable {
 	 * @return the name of this city
 	 */
 	
-	private String nameLocation(int curRank, Random mapRand, LocationNode node){
+	private String nameLocation(int curRank, LocationNode node){
 		//index of town_names structure corresponding to the town names of this zone
 //		int yVal = (int) node.getPlayerMapY();
 		ConstantStore.StateIdx rankIndex; 
@@ -356,8 +360,6 @@ public class WorldMap implements Serializable {
 		int[] numRankAra = new int[MAX_RANK];
 			//current node's rank as we're building the node list
 			//manufacture random object - make constant seeded now for testing purposes
-		//Random mapRand = new Random(54321);
-		Random mapRand = new Random();
 			//num of edges from current location - will be between 1 and MAX_TRAILS_OUT
 		int numExitTrails;
 		
@@ -375,7 +377,7 @@ public class WorldMap implements Serializable {
 		this.mapNodes.get(mapHead.getRank()).add(mapHead);
 		//need to build base set of nodes - must have at least 1 per rank to get from independence to portland
 		for (int i = 1; i < MAX_RANK; i++){
-			LocationNode tmp = generateLocationNode(mapRand, i, numExitTrails);
+			LocationNode tmp = generateLocationNode(i, numExitTrails);
 			this.mapNodes.get(i).add(tmp);
 		}//for loop to build initial path
 
@@ -387,7 +389,7 @@ public class WorldMap implements Serializable {
 			curRankIter = i % (MAX_RANK - 1) + 1;
 			curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter - 1 : curRankIter;
 			//number of trails out of location : 1 to MaxTrailsOut constant
-			LocationNode tmp = generateLocationNode(mapRand, curRank, numExitTrails);
+			LocationNode tmp = generateLocationNode(curRank, numExitTrails);
 			this.mapNodes.get(tmp.getRank()).add(tmp);
 		}//for all locations make a node
 		this.mapNodes.get(finalDestination.getRank()).add(finalDestination);
@@ -455,6 +457,7 @@ public class WorldMap implements Serializable {
 						}
 						trailDest.add(randDestNode.getID());
 						newTrail = new TrailEdge(randDestNode, node, dangerLevel );
+						randDestNode.setHasInTrail(true);
 						if (newTrail.getOrigin().getRank() != newTrail.getDestination().getRank()){
 							trailForward = true;
 						}
@@ -464,7 +467,12 @@ public class WorldMap implements Serializable {
 					
 				}//for each trail at location
 				if(node.getHasInTrail() == false){
+					//System.out.println("ORPHAN : " + node.getRank() + " | " + node.toString());
+					node.setQuality(new Condition(0,100,100));
 					this.orphanNodes.get(node.getRank()).add(node);
+				} else {
+					//System.out.println("NOT an ORPHAN : " + node.getRank() + " | " + node.toString());
+					
 				}
 			}//for each location at rank
 		}//for each rank
@@ -537,7 +545,6 @@ public class WorldMap implements Serializable {
 		newTrail = new TrailEdge(destNode, currLocationNode , 0 );
 
 		return newTrail;
-		
 	}
 	
 	/**
@@ -546,17 +553,24 @@ public class WorldMap implements Serializable {
 	 * is used in conjunction with the tracking skill (or other gameplay factors)
 	 * to give the player an opportunity to discover an inbound trail.
 	 * 
-	 * @return
+	 * @return a list with all the orphaned locations (no inboud trails) in the next rank from the current rank
 	 */
-	public ArrayList<LocationNode> getNextRankOrphanLocations(){
-		ArrayList<LocationNode> results = new ArrayList<LocationNode>();
-		
-		
-		
-		
-		return results;
-		
+	public List<LocationNode> getNextRankOrphanLocationList(){
+		List<LocationNode> results = new ArrayList<LocationNode>();
+		results = this.orphanNodes.get(currLocationNode.getRank()+1);
+		return results;	
 	}
+	
+	/**
+	 * returns a random location in the next rank that has no inbound trails
+	 * @return a random location in the next rank, eligible for a player-made inbound trail
+	 * 
+	 */
+	public LocationNode getNextRankOrphanLocation(){
+		int index = mapRand.nextInt(this.orphanNodes.get(currLocationNode.getRank()+1).size());
+		return this.orphanNodes.get(currLocationNode.getRank()+1).get(index);
+	}
+	
 	
 	/**
 	 * return the current, or most recent, trail traveled by the party

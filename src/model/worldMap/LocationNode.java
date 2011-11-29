@@ -144,7 +144,8 @@ public class LocationNode extends MapObject {
 	public void setTrails(int trails) {
 		this.trails = trails;
 	}
-
+	
+	
 	/**
 	 * adds a new, leaving, {@code TrailEdge} to this {@code LocationNode}
 	 * @param newTrail
