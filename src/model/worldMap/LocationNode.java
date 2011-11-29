@@ -38,7 +38,7 @@ public class LocationNode extends MapObject {
 	private int trails;
 	/**already part of the trail or not */
 	private boolean onTheTrail;
-	/**has an incoming trail - might not due to ranom nature of map generation*/
+	/**has an incoming trail - might not due to random nature of map generation*/
 	private boolean hasInTrail;
 	
 	private List<TrailEdge> outboundTrails;
@@ -65,7 +65,7 @@ public class LocationNode extends MapObject {
 		this.outboundTrails = new ArrayList<TrailEdge>(trails);
 		this.name = locationName;
 		this.rank = rank;
-		this.quality = new Condition((int) quality);
+		this.quality = new Condition(0, 100, (int) quality);
 		this.visible = false;
 		this.hasInTrail = false;
 		this.MAP_X_MAX = MAP_X_MAX;
@@ -116,6 +116,10 @@ public class LocationNode extends MapObject {
 	
 	public int getID(){
 		return this.ID;
+	}
+	
+	public boolean getHasInTrail(){
+		return this.hasInTrail;
 	}
 	
 	public void setOnTheTrail(boolean onTheTrail){
@@ -189,12 +193,6 @@ public class LocationNode extends MapObject {
 	public String toString(){
 		
 		return this.name + " Rank : " + this.rank + " (which has " + this.trails + " westward trails) ";
-	}
-	/**
-	 * @return the hasInTrail
-	 */
-	public boolean isHasInTrail() {
-		return hasInTrail;
 	}
 
 	/**

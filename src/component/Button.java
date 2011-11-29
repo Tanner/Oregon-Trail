@@ -58,6 +58,20 @@ public class Button extends Component implements Disableable {
 		
 		setLabel(label);
 	}
+	/**
+	 * Constructs a {@code Button} with a width, a height, and a {@code Label}.
+	 * @param context The GUI context
+	 * @param width The width
+	 * @param height The height
+	 * @param label A label
+	 */
+	public Button(GUIContext context, int width, int height, Color color) {
+		this(context, width, height);
+		
+		setLabel(label);
+		setBackgroundColor(color);
+		
+	}
 	
 	/**
 	 * Constructs a {@code Button} with a width, a height, a {@code Sprite},

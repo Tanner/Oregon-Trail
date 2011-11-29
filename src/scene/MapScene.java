@@ -46,7 +46,7 @@ public class MapScene extends Scene {
 		for (int i = 0; i <= worldMap.MAX_RANK; i++){
 			for(LocationNode location : worldMap.getMapNodes().get(i)) {
 				if ((location.isVisible()) || devMode){
-					locationButtons[location.getID()] = new Button(container, 10, 10);					
+					locationButtons[location.getID()] = new Button(container, 5 + (int)(location.getConditionPercentage() * 10) , 5 + (int)(location.getConditionPercentage() * 10), getLocColor(location));					
 					locationButtons[location.getID()].setTooltipEnabled(true);
 					locationButtons[location.getID()].setTooltipMessage(location.getName());
 					//if (!devMode) {
@@ -117,6 +117,18 @@ public class MapScene extends Scene {
 		//set the background image - the map picture;		
 		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("TRAIL_MAP")));
 		
+	}
+	
+	/**
+	 * will return a color based on the quality of this location
+	 * 
+	 * @param node the location in question
+	 * @return the color based on this location's quality
+	 */
+	private Color getLocColor(LocationNode node){
+		
+		
+		return Color.gray;
 	}
 	/* (non-Javadoc)
 	 * @see scene.Scene#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)

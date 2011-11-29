@@ -27,13 +27,12 @@ public class TrailEdge extends MapObject {
 	
 	/**
 	 * Make a trail edge that will connect two locationNodes
-	 * @param name
 	 * @param destination
 	 * @param origin
 	 * @param dangerLevel
 	 */
 	
-	public TrailEdge(String name, LocationNode destination, LocationNode origin, int dangerLevel){
+	public TrailEdge(LocationNode destination, LocationNode origin, int dangerLevel){
 		this.destination = destination;
 		this.origin = origin;
 		this.ID = TrailEdge.count++;

@@ -38,6 +38,8 @@ public class WorldMap implements Serializable {
 
 	/**make a map to hold the game map data (yo dawg), indexed by locationnode.rank, with each value being an arraylist of locationnodes.*/
 	private Map<Integer, List<LocationNode>> mapNodes;
+	/**holds orphaned nodes - locations without inbound trails*/
+	private Map<Integer, List<LocationNode>> orphanNodes;
 
 	/**points to starting city - references entire map*/
 	private LocationNode mapHead;
@@ -70,6 +72,7 @@ public class WorldMap implements Serializable {
 			this.numLocations = 3000;
 		}
 		this.mapNodes = new HashMap<Integer, List<LocationNode>>();
+		this.orphanNodes = new HashMap<Integer, List<LocationNode>>();
 		this.townNamesUsed = new HashMap <ConstantStore.StateIdx, List<Boolean>>();
 		List<Boolean> townNamesBool;
 		//build local structure that holds a true or false for every location node to see if the name has been used yet
@@ -347,6 +350,7 @@ public class WorldMap implements Serializable {
 			//initialize arraylists at each rank location
 		for (int i  = 0; i <= MAX_RANK; i++){
 			this.mapNodes.put(i, new ArrayList<LocationNode>());
+			this.orphanNodes.put(i, new ArrayList<LocationNode>());
 		}	
 			//temp array holding number of locations at each rank, indexed by rank
 		int[] numRankAra = new int[MAX_RANK];
@@ -427,7 +431,7 @@ public class WorldMap implements Serializable {
 					if (i == MAX_RANK - 1){
 						//System.out.println("i = " + i + " size = " + this.mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
 						node.setTrails(1);
-						newTrail = new TrailEdge("Trail to " + finalDestination.getName(), finalDestination, node, dangerLevel );
+						newTrail = new TrailEdge(finalDestination, node, dangerLevel );
 					} else {
 						if ((tNum == node.getTrails() - 1) && (!trailForward)) {
 							nextRank = node.getRank() + 1;
@@ -450,7 +454,7 @@ public class WorldMap implements Serializable {
 								}
 						}
 						trailDest.add(randDestNode.getID());
-						newTrail = new TrailEdge("Trail to " + randDestNode.getName(), randDestNode, node, dangerLevel );
+						newTrail = new TrailEdge(randDestNode, node, dangerLevel );
 						if (newTrail.getOrigin().getRank() != newTrail.getDestination().getRank()){
 							trailForward = true;
 						}
@@ -459,6 +463,9 @@ public class WorldMap implements Serializable {
 					node.addTrail(newTrail);
 					
 				}//for each trail at location
+				if(node.getHasInTrail() == false){
+					this.orphanNodes.get(node.getRank()).add(node);
+				}
 			}//for each location at rank
 		}//for each rank
 		//convert oregon city's coords to actual coords on our map
@@ -496,26 +503,6 @@ public class WorldMap implements Serializable {
 		return this.mapNodes;
 	}
 	
-//	/**
-//	 * this method will convert the internal coords of the map to the physical representation used by the player map.
-//	 *  replaced with method in locationNode
-//	 */
-//	private void convertToMapCoords(LocationNode node){
-//		double newX;
-//		double newY;
-//		
-//		newX = (node.MAP_XPOS + 60) * (920.0/this.MAX_X) ; 
-//		newY = (((-1 * node.MAP_YPOS)/1.4) + 320) + ((node.MAP_XPOS -600)/2.4);
-//		if (newX > 1050){
-//			newX = 1050;
-//		}
-//		if (newY > 565){
-//			newY = 565;
-//		}
-//		node.setPlayerMapX(newX);
-//		node.setPlayerMapY(newY);
-//	}
-//	
 	/** 
 	 * returns the currently set maximum rank value for this map
 	 * @return the constant max rank
@@ -538,6 +525,37 @@ public class WorldMap implements Serializable {
 	 */
 	public LocationNode getCurrLocationNode(){
 		return this.currLocationNode;	
+	}
+	
+	/**
+	 * will make an inbound trail to a particular location from the current location (town) and return it
+	 * upon command.  this trail will be set at easiest difficulty.
+	 * @param node the destination location
+	 */
+	public TrailEdge makePCInboundTrail(LocationNode destNode){
+		TrailEdge newTrail;
+		newTrail = new TrailEdge(destNode, currLocationNode , 0 );
+
+		return newTrail;
+		
+	}
+	
+	/**
+	 * returns an array list of locations in the next rank from the current rank
+	 * that have no trails going into them (i.e. are currently unreachable).  this
+	 * is used in conjunction with the tracking skill (or other gameplay factors)
+	 * to give the player an opportunity to discover an inbound trail.
+	 * 
+	 * @return
+	 */
+	public ArrayList<LocationNode> getNextRankOrphanLocations(){
+		ArrayList<LocationNode> results = new ArrayList<LocationNode>();
+		
+		
+		
+		
+		return results;
+		
 	}
 	
 	/**

@@ -71,8 +71,7 @@ public class ImageStore {
 		IMAGES.put("BIG_WHEEL_1", new Image(PATH_TRAIL + "wheel1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("BIG_WHEEL_2", new Image(PATH_TRAIL + "wheel2.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("BIG_WHEEL_3", new Image(PATH_TRAIL + "wheel3.png", false, Image.FILTER_NEAREST));
-		
-		
+				
 		//images for hunt scene
 		IMAGES.put("HUNTER_LEFT", new Image(PATH_HUNT + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_RIGHT", new Image(PATH_HUNT + "hunterRightFaceSide1.png", false, Image.FILTER_NEAREST));
