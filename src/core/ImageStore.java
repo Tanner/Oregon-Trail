@@ -60,6 +60,11 @@ public class ImageStore {
 		IMAGES.put("MAP_POINTER5", new Image(ConstantStore.PATH_ICONS + "mapPointer5.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("MAP_POINTER6", new Image(ConstantStore.PATH_ICONS + "mapPointer6.png", false, Image.FILTER_NEAREST));
 		
+		IMAGES.put("MAP_PARTY1", new Image(ConstantStore.PATH_ICONS + "partyMapRep1.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("MAP_PARTY2", new Image(ConstantStore.PATH_ICONS + "partyMapRep2.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("MAP_PARTY3", new Image(ConstantStore.PATH_ICONS + "partyMapRep3.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("MAP_PARTY4", new Image(ConstantStore.PATH_ICONS + "partyMapRep4.png", false, Image.FILTER_NEAREST));
+		
 		IMAGES.put("GRASS", new Image(ConstantStore.PATH_GROUND + "grass.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("TRAIL", new Image(ConstantStore.PATH_GROUND + "trail.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HILL_A", new Image(ConstantStore.PATH_BKGRND + "hill_a.png", false, Image.FILTER_NEAREST));
