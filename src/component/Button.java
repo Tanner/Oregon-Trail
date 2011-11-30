@@ -67,6 +67,9 @@ public class Button extends Component implements Disableable {
 	 */
 	public Button(GUIContext context, int width, int height, Color color) {
 		this(context, width, height);
+		buttonColor = color;
+		buttonActiveColor = color;
+		buttonDisabledColor = color;
 		
 		setLabel(label);
 		setBackgroundColor(color);

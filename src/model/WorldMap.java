@@ -90,7 +90,8 @@ public class WorldMap implements Serializable {
 		}
 		this.generateMap(this.numLocations);
 		this.currLocationNode = this.mapHead;
-		this.currTrail = null;
+		//initialize currTrail to be null trail at head of map, to guard against dopey trail gets
+		this.currTrail = new TrailEdge(mapHead, mapHead, 0);
 	}
 	
 	/**
@@ -409,8 +410,8 @@ public class WorldMap implements Serializable {
 		//always want at least 1 trail to move forward
 		boolean trailForward;
 
-		for (int i = 0; i < MAX_RANK; i++){
-			for(LocationNode node : this.mapNodes.get(i)){
+		for (int curRank = 0; curRank < MAX_RANK; curRank++){
+			for(LocationNode node : this.mapNodes.get(curRank)){
 				//manufacture proper coords for player map from x/y pos
 // - replaced with call in location node				convertToMapCoords(node);
 				//node.setName(reNameLocation(node, mapRand));
@@ -425,7 +426,7 @@ public class WorldMap implements Serializable {
 				//trailDest.add(node.getID());
 				
 				for (int tNum = 0; tNum < node.getTrails(); tNum++){
-					int nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i + 1) : i);
+					int nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (curRank + 1) : curRank);
 					if (nextRank == MAX_RANK){
 						nextRank = MAX_RANK - 1;
 					}
@@ -433,30 +434,38 @@ public class WorldMap implements Serializable {
 					this.numTrails++;
 					int dangerLevel = randGenTrailDanger(mapRand, node.getRank());
 					//if we're at final rank before finish, have all edges go to portland
-					if (i == MAX_RANK - 1){
+					if (curRank == MAX_RANK - 1){
 						//System.out.println("i = " + i + " size = " + this.mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
 						node.setTrails(1);
 						newTrail = new TrailEdge(finalDestination, node, dangerLevel );
+						finalDestination.setHasInTrail(true);
 					} else {
 						if ((tNum == node.getTrails() - 1) && (!trailForward)) {
 							nextRank = node.getRank() + 1;
+						}
+						
+						//fix bug where start location is being forced to have a trail to itself
+						if (nextRank == 0){
+							nextRank = 1;
 						}
 						//nexttown holds size of arraylist for locations - used as random source to determine where trails go
 						int nextTown = mapRand.nextInt(this.mapNodes.get(nextRank).size());
 						LocationNode randDestNode = this.mapNodes.get(nextRank).get(nextTown);
 						//attempt to minimize going to a location that's already on the map and in the same zone as where we
 						//currently are - minimize possibility of moving laterally repeatedly
+						System.out.println(randDestNode.toString());
 						if ((mapRand.nextInt(100) < 90) || (randDestNode.getID() == (node.getID()))){
 							while (trailDest.contains(randDestNode.getID())){
 								if ((tNum == node.getTrails() - 1) && (!trailForward)) {
 									//force rank to increase by 1 (i.e. go west 1 rank) if we're at the last trail in the list of trails and we haven't gone west yet
 									nextRank = node.getRank() + 1;
 								} else {
-									nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (i + 1) : i);
+									nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (curRank + 1) : curRank);
 								}
 								nextTown = mapRand.nextInt(this.mapNodes.get(nextRank).size());
 								randDestNode = this.mapNodes.get(nextRank).get(nextTown);
-								}
+									
+								}//while trailDest contains node id
 						}
 						trailDest.add(randDestNode.getID());
 						newTrail = new TrailEdge(randDestNode, node, dangerLevel );
@@ -481,7 +490,9 @@ public class WorldMap implements Serializable {
 		}//for each rank
 		//convert oregon city's coords to actual coords on our map
 // - replaced with call in location node	convertToMapCoords(this.mapNodes.get(finalDestination.getRank()).get(0));
-		
+		//set initial currTrail to be valid trail out of mapHead.
+		this.currTrail = this.mapHead.getOutBoundTrailByIndex(mapRand.nextInt(this.mapHead.getOutboundTrails().size()));
+
 		if (this.devMode) {
 			for (int i = 0; i <= MAX_RANK; i++){
 				System.out.println("Locations at rank " +  i + " : " + this.mapNodes.get(i).size());

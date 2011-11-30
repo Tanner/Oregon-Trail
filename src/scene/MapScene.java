@@ -2,6 +2,7 @@ package scene;
 
 import model.WorldMap;
 import model.worldMap.LocationNode;
+import model.worldMap.TrailEdge;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.AbstractComponent;
@@ -13,6 +14,7 @@ import component.Button;
 import component.Label;
 import component.Panel;
 import component.Positionable;
+import component.sprite.Sprite;
 
 import core.*;
 
@@ -26,7 +28,9 @@ public class MapScene extends Scene {
 	private Button returnToCamp;
 
 	private WorldMap worldMap;
-
+	private LocationNode currNode;
+	private TrailEdge currTrail;
+	
 	public MapScene(WorldMap worldMap) {
 		this.worldMap = worldMap;
 	}
@@ -56,7 +60,29 @@ public class MapScene extends Scene {
 				}//if location is visible, paint it.				
 			}
 		}
+		this.currNode = worldMap.getCurrLocationNode();
+		this.currTrail = worldMap.getCurrTrail();
+		
+		//System.out.println(currTrail.getConditionPercentage());
 
+		Sprite ptrSprite = new Sprite(container, 48, ImageStore.get().getImage("MAP_POINTER"));	
+		
+		//Button curLocMarker = new Button(container,10 , 10, Color.white);
+		int curLocX;
+		int curLocY;
+		if (currTrail.getConditionPercentage() < 1.0){//if current condition of trail is less than full, use current location on trail to calculate where to put pointer
+			curLocX = (int)currTrail.getCurrTrailLocationX();
+			curLocY = (int)currTrail.getCurrTrailLocationY();
+			//System.out.println("x : " + curLocX + " y : " + curLocY);
+			
+		} else {//we're in a city, modify the location of the pointer to reflect this
+			curLocX = (int)currNode.getPlayerMapX();
+			curLocY = (int)currNode.getPlayerMapY();
+		}
+		
+		playerMap.add(ptrSprite, playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, curLocX-24, curLocY-48 );
+		//playerMap.add(curLocMarker, playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, curLocX, curLocY );
+		
 		//the following paints nodes at the corners of the various territories, to help determine equatiosn that would more accurately reflect the 
 		//approriate terrority for a particular town, based on its generated location on the map, than the current (11/18/11) mechanism coded in worldmap.java
 		

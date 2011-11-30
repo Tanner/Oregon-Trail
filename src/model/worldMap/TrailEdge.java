@@ -210,4 +210,22 @@ public class TrailEdge extends MapObject {
 		return str;
 	}
 	
+	public double getCurrTrailLocationX(){
+		double result;
+		
+		//result = this.destination.getPlayerMapX() + ((this.origin.getPlayerMapX() - this.destination.getPlayerMapX()) * this.getDistanceToGo());
+		result = (Math.abs(this.origin.getPlayerMapX() - this.destination.getPlayerMapX()) * this.getConditionPercentage());
+		result += (this.origin.getPlayerMapX() > this.destination.getPlayerMapX()) ? (this.destination.getPlayerMapX()) : (this.origin.getPlayerMapX());
+		
+		return result;
+	}
+	
+	public double getCurrTrailLocationY(){
+		double result;
+		
+		result = (Math.abs(this.origin.getPlayerMapY() - this.destination.getPlayerMapY()) * this.getConditionPercentage());
+		result += (this.origin.getPlayerMapY() > this.destination.getPlayerMapY()) ? (this.destination.getPlayerMapY()) : (this.origin.getPlayerMapY());
+		return result;
+	}
+	
 }// class TrailEdge
