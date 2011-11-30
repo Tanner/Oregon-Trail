@@ -19,13 +19,13 @@ public class PartyComponent extends Component {
 	private final static int MARGIN = 10;
 	private final static int CONDITION_BAR_HEIGHT = 20;
 	
-	private List<PartyComponentDataSource> dataSources;
+	private List<PartyMemberDataSource> dataSources;
 	
 	private List<Label> names;
 	private List<ConditionBar> conditionBars;
 	private List<AnimatingSprite> sprites;
 	
-	public PartyComponent(GUIContext context, int width, int height, List<PartyComponentDataSource> dataSources) {
+	public PartyComponent(GUIContext context, int width, int height, List<PartyMemberDataSource> dataSources) {
 		super(context, width, height);
 		
 		this.dataSources = dataSources;

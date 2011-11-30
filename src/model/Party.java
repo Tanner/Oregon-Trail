@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import component.PartyComponentDataSource;
+import component.PartyMemberDataSource;
 
 import model.item.Animal;
 import model.item.ItemType;
@@ -221,8 +221,8 @@ public class Party implements Serializable {
 		return this.members;
 	}
 	
-	public List<PartyComponentDataSource> getPartyComponentDataSources() {
-		List<PartyComponentDataSource> dataSources = new ArrayList<PartyComponentDataSource>();
+	public List<PartyMemberDataSource> getPartyComponentDataSources() {
+		List<PartyMemberDataSource> dataSources = new ArrayList<PartyMemberDataSource>();
 		for (Person p : members) {
 			dataSources.add(p);
 		}

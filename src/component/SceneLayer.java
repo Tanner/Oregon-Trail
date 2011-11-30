@@ -1,9 +1,14 @@
 package component;
 
+import java.util.Iterator;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.GUIContext;
+
+import component.Positionable.ReferencePoint;
 
 /**
  * A scene layer which holds components.
@@ -79,5 +84,5 @@ public class SceneLayer extends Component {
 	 */
 	public boolean isVisible() {
 		return super.isVisible();
-	}
+	} 
 }

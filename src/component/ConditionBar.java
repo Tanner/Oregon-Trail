@@ -109,13 +109,18 @@ public class ConditionBar extends Component {
 	public void setCondition(Condition condition) {
 		this.condition = condition;
 		
-		update();
+		update(0);
+	}
+	
+	public void update() {
+		update(0);
 	}
 	
 	/**
 	 * Update the background bar and label.
 	 */
-	public void update() {
+	@Override
+	public void update(int delta) {
 		if (condition != null) {
 			double percentage = condition.getPercentage();
 			if (label != null) {
