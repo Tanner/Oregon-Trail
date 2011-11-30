@@ -2,6 +2,8 @@ package model.worldMap;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import core.ConstantStore;
 import model.Condition;
 
 
@@ -40,6 +42,7 @@ public class LocationNode extends MapObject {
 	private boolean onTheTrail;
 	/**has an incoming trail - might not due to random nature of map generation*/
 	private boolean hasInTrail;
+	/**all the outbound trails from this particular location*/
 	
 	private List<TrailEdge> outboundTrails;
 	

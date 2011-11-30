@@ -2,6 +2,8 @@ package model.worldMap;
 
 import java.io.Serializable;
 
+import core.ConstantStore;
+
 import model.Condition;
 import model.Conditioned;
 
@@ -16,6 +18,8 @@ public abstract class MapObject implements Conditioned, Serializable {
 	protected String name;
 	/** class-wide counter of nodes */
 	protected static int count;
+	/**the territory that this location resides in*/
+	private ConstantStore.StateIdx territory;
 	/**the nature of the environment in/around this MapObject - format needed*/
 	/**protected static -something- environment;
 	public MapObject(){
@@ -35,6 +39,14 @@ public abstract class MapObject implements Conditioned, Serializable {
 	}
 	public String getName(){
 		return this.name;
+	}
+	
+	public ConstantStore.StateIdx getTerritory(){
+		return this.territory;
+	}
+	
+	public void setTerritory(ConstantStore.StateIdx territory){
+		this.territory = territory;
 	}
 	
 	/**
