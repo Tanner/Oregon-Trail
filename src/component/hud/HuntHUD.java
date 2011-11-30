@@ -1,22 +1,22 @@
 
 package component.hud;
+/*
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-
+*/
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.Button;
-import component.Component;
+//import component.Component;
 import component.Label;
 import component.Panel;
 import component.Label.VerticalAlignment;
-import component.Positionable.ReferencePoint;
-import component.hud.TrailHUD.Mode;
+//import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
 
 import core.ConstantStore;
@@ -37,16 +37,14 @@ public class HuntHUD extends HUD {
 	private Button hudButton1;
 	private Button hudButton2;
 	
-	private Button inventoryButton;
-	private Button campButton;
-	
-	private Label timeLabel;
-	private Label dateLabel;
+
+//	private Label timeLabel;
+//	private Label dateLabel;
 	private Label notificationLabel;
 	
 	private Panel huntPanel;
 	
-	private Queue<String> notificationQueue;
+//	private Queue<String> notificationQueue;
 
 	/**
 	 * 
@@ -56,7 +54,7 @@ public class HuntHUD extends HUD {
 	public HuntHUD(GUIContext context, ComponentListener listener) {
 		super(context, context.getWidth(), HEIGHT);
 
-		notificationQueue = new LinkedList<String>();
+//		notificationQueue = new LinkedList<String>();
 		
 		int panelWidth = context.getWidth() - INFO_WIDTH - MARGIN * 2;
 		
@@ -136,17 +134,17 @@ public class HuntHUD extends HUD {
 	} 
 	
 	/**
-	 * Get the map button.
-	 * @return Map button
+	 * Get the camp button.
+	 * @return camp button
 	 */
 	public Button getCampButton() {
-		return campButton;
+		return hudButton1;
 	}
 	/**
-	 * Get the map button.
-	 * @return Map button
+	 * Get the inventory button.
+	 * @return inventory button
 	 */
 	public Button getInventoryButton() {
-		return inventoryButton;
+		return hudButton2;
 	}
 }

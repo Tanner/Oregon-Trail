@@ -119,6 +119,7 @@ public class MapScene extends Scene {
 		
 	}
 	
+	
 	/**
 	 * will return a color based on the quality of this location
 	 * 
@@ -126,7 +127,9 @@ public class MapScene extends Scene {
 	 * @return the color based on this location's quality
 	 */
 	private Color getLocColor(LocationNode node){
-		
+		if (!node.getHasInTrail()){
+			return Color.white;
+		}
 		
 		return Color.gray;
 	}

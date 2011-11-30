@@ -90,7 +90,7 @@ public class HuntScene extends Scene {
 		
 		//build background
 		
-		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/dark_dirt.png")));
+		backgroundLayer.add(new Panel(container, new Image(ConstantStore. PATH_BKGRND + "dark_dirt.png")));
 	}
 	
 	
@@ -290,7 +290,10 @@ public class HuntScene extends Scene {
 		if (component == hud.getCampButton()) {
 				SoundStore.get().setMusicVolume(.25f);
 				GameDirector.sharedSceneListener().sceneDidEnd(HuntScene.this);
-			}//if source==return2camp
+			}//if source==campButton
+		if (component == hud.getInventoryButton()){
+			GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, HuntScene.this, false);			
+		}
 			
 		}//component activated
 	}	
