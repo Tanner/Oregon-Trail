@@ -70,6 +70,7 @@ public class HuntScene extends Scene {
 		super.showHUD(hud);			
 		//Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
 		
+		
 		hunter = new AnimatingSprite(container,
 				48,
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
