@@ -291,10 +291,13 @@ public class SceneSelectorScene extends Scene {
 		Person partyLeader;
 		
 		partyLeader = new Person("Alice");
+		partyLeader.setIsMale(false);
 		people.add(partyLeader);
 		people.add(new Person("Bob"));
 		people.add(new Person("Carl"));
-		people.add(new Person("Diane"));
+		Person diane = new Person("Diane");
+		diane.setIsMale(false);
+		people.add(diane);
 				
 		for (Person person : people) {
 			ArrayList<Skill> personSkill = new ArrayList<Skill>();

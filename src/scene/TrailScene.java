@@ -21,6 +21,7 @@ import component.Label;
 import component.Label.Alignment;
 import component.Panel;
 import component.PartyComponent;
+import component.PartyMemberGroup;
 import component.Positionable.ReferencePoint;
 import component.SceneryFactory;
 import component.SegmentedControl;
@@ -72,7 +73,7 @@ public class TrailScene extends Scene {
 	
 	private AnimatingColor skyAnimatingColor;
 	
-	private PartyComponent partyComponent;
+	private List<PartyMemberGroup> partyMembers;
 	
 	private EncounterNotification currentEncounterNotification;
 	private Modal encounterModal;
@@ -151,8 +152,22 @@ public class TrailScene extends Scene {
 		
 		backgroundLayer.add(parallaxPanel);
 		
-		partyComponent = new PartyComponent(container, container.getWidth(), parallaxPanel.getHeight(), party.getPartyComponentDataSources());
-		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, PARTY_Y_OFFSET);
+		partyMembers = new ArrayList<PartyMemberGroup>();
+		for (int i = 0; i < party.getPartyComponentDataSources().size(); i++) {
+			partyMembers.add(new PartyMemberGroup(container, party.getPartyComponentDataSources().get(i)));
+		}
+		int partyMembersWidth = 0;
+		int partyMembersHeight = partyMembers.get(0).getHeight();
+		int partyMembersPadding = 10;
+		for (PartyMemberGroup pg : partyMembers) {
+			partyMembersWidth += pg.getWidth();
+			partyMembersWidth += partyMembersPadding;
+		}
+		partyMembersWidth -= partyMembersPadding;
+		mainLayer.addAsRow(partyMembers.iterator(), trail.getPosition(ReferencePoint.BOTTOMRIGHT), -partyMembersWidth - 15, -partyMembersHeight - 25, 10);
+		
+//		partyComponent = new PartyComponent(container, container.getWidth(), parallaxPanel.getHeight(), party.getPartyComponentDataSources());
+//		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, PARTY_Y_OFFSET);
 		
 		clickCounter = 0;
 		
@@ -387,8 +402,10 @@ public class TrailScene extends Scene {
 		@Override
 		public void update(GameContainer container, int delta) throws SlickException {
 			super.update(container, delta);
-			
-			partyComponent.update(delta, timeElapsed * party.getPace().getSpeed());
+						
+			for (PartyMemberGroup pg : partyMembers) {
+				pg.update(delta);
+			}
 			
 			if (isPaused()) {
 				return;

@@ -14,6 +14,8 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 
+import component.Positionable.ReferencePoint;
+
 import scene.Scene;
 
 /**
@@ -56,6 +58,7 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	
 	private boolean tooltipEnabled;
 	private String tooltipMessage;
+	private boolean shouldUpdateComponents;
 	
 	/**
 	 * Constructs a {@code Component} with a width and height.
@@ -189,9 +192,22 @@ public abstract class Component extends AbstractComponent implements Positionabl
 	 * @param delta Time since last update in milliseconds.
 	 */
 	public void update(int delta) {
+		if (shouldUpdateComponents()) {
+			for (Component c : components) {
+				c.update(delta);
+			}
+		}
 		return;
 	}
 	
+	public void setShouldUpdateComponents(boolean shouldUpdate) {
+		shouldUpdateComponents = shouldUpdate;
+	}
+	
+	private boolean shouldUpdateComponents() {
+		return shouldUpdateComponents;
+	}
+
 	/**
 	 * Sets the {@code Visible} parent.
 	 * @param visible New visible parent
@@ -305,6 +321,25 @@ public abstract class Component extends AbstractComponent implements Positionabl
 			
 			location.set(location.x, location.y + components[startIndex].getHeight() + ySpacing);
 			startIndex += cols;
+		}
+	}
+	
+	/**
+	 * Add a set of components in a row with given spacing.
+	 * @param components {@code Component}s to add
+	 * @param location Location to add the components row at
+	 * @param rows Number of rows to have
+	 * @param cols Number of cols to have
+	 * @param xOffset X Offset from the location
+	 * @param yOffset Y Offset from the location
+	 * @param xSpacing X Spacing between components in the row
+	 * @param ySpacing Y Spacing between components in the row
+	 */
+	public void addAsGrid(Component[][] components, Vector2f location, int xSpacing, int ySpacing) {
+		for (int r = 0; r < components.length; r++) {
+			addAsRow(Arrays.asList(components[r]).iterator(), location.copy(), 0, 0, xSpacing);
+			
+			location.set(location.x, location.y + components[r][0].getHeight() + ySpacing);
 		}
 	}
 	

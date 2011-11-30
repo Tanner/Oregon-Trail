@@ -13,6 +13,7 @@ import scene.SceneID;
 
 import component.*;
 import component.Label.Alignment;
+import component.Positionable.ReferencePoint;
 import core.*;
 
 /**
@@ -104,6 +105,12 @@ public class ComponentTestScene extends Scene {
 		
 		ConditionBar conditionBar = new ConditionBar(container, 200, 40, new Condition(0, 10, 0));
 		mainLayer.add(conditionBar, cb.getPosition(Positionable.ReferencePoint.TOPLEFT), Positionable.ReferencePoint.BOTTOMLEFT, 0, -PADDING);
+		
+		Label aLabel = new Label(container, fieldFont, Color.white, "This is a");
+		Label anotherLabel = new Label(container, fieldFont, Color.white, "group");
+		Component labels[][] = { { aLabel }, { anotherLabel } };
+		GridComponent aGroup = new GridComponent(container, labels, 5, 5);
+		mainLayer.add(aGroup, mainLayer.getPosition(ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.TOPRIGHT, 0, 0);
 		
 		backgroundLayer.add(new Panel(container, Color.blue));
 	}
