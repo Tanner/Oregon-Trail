@@ -18,6 +18,7 @@ import core.Logger.Level;
 /**
  * Party class that contains an array of persons that are members.
  */
+@SuppressWarnings("serial")
 public class Party implements Serializable {
 	
 	private final int MAX_ANIMALS = 5;

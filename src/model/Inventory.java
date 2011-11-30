@@ -13,6 +13,7 @@ import core.Logger;
 /**
  * Inventory with an list that holds all the arrayLists of items in the inventory.
  */
+@SuppressWarnings("serial")
 public class Inventory implements Serializable {
 	private final List<PriorityQueue<Item>> slots;
 	

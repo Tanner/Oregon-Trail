@@ -7,6 +7,7 @@ import core.Logger;
 /**
  * A condition with a min and max value and also a current value.
  */
+@SuppressWarnings("serial")
 public class Condition implements Serializable{
 
 	private double min, max, current;

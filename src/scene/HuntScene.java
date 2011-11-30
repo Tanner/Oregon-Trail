@@ -68,7 +68,7 @@ public class HuntScene extends Scene {
 		hud = new HuntHUD(container, new HUDListener());
 		//hud.setNotification(location.getName());
 		super.showHUD(hud);			
-		Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
+		//Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
 		
 		hunter = new AnimatingSprite(container,
 				48,

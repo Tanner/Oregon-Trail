@@ -591,7 +591,6 @@ public class WorldMap implements Serializable {
 				}//if node in territory
 			}//for each location
 		}//for each rank
-		
 	}//setVisiblebyArea method
 	
 	/**

@@ -226,7 +226,7 @@ public class PartyInventoryScene extends Scene {
 			binButton.setHideCount(true);
 			binButton.setDisabled(true);
 		} else {
-			String itemImagePath = "resources/graphics/icons/items/" + getBinItemType().toString().toLowerCase() + ".png";
+			String itemImagePath = ConstantStore.PATH_ITEMS + getBinItemType().toString().toLowerCase() + ".png";
 			Sprite sprite = null;
 			
 			if (new File(itemImagePath).exists()) {

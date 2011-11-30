@@ -3,7 +3,7 @@ package model.worldMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.ConstantStore;
+//import core.ConstantStore;
 import model.Condition;
 
 
@@ -218,6 +218,7 @@ public class LocationNode extends MapObject {
 		retVal = "Name : \t" + this.name + "\t| X pos : \t" + this.MAP_XPOS + " \t| Y pos : \t" + this.MAP_YPOS + "\n";
 //		retVal += "World Lat : \t" + this.WORLD_LATITUDE + "\t| World Long : " + this.WORLD_LONGITUDE + " \n";
 		retVal += "Map X : \t" + this.playerMapX + "\t| Map Y : " + this.playerMapY + " \n";
+		retVal += "Max X : \t" + this.MAP_X_MAX + "\t| Max Y : " + this.MAP_Y_MAX + " \n";
 		retVal += "Internal ID : \t" + this.ID + "\t| Total Nodes currently made : \t" + LocationNode.count + " \n";
 		retVal += "Location Quality : \t " +  this.quality + "\n";
 		retVal += "Rank : \t\t" + this.rank + "\t| Total Exit Trail Count : \t" + trails + " \n";

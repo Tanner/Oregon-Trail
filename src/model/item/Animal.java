@@ -8,6 +8,7 @@ import core.ConstantStore;
 
 import model.Item;
 
+@SuppressWarnings("serial")
 public class Animal extends Item implements PartyComponentDataSource {
 
 	private double moveFactor;

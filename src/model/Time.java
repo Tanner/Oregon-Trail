@@ -5,6 +5,7 @@ import java.util.Random;
 
 import core.SoundStore;
 
+@SuppressWarnings("serial")
 public class Time implements Serializable{
 
 	private int time, day, year;

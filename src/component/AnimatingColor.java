@@ -5,6 +5,7 @@ import org.newdawn.slick.Color;
 /**
  * A {@code Color} which animates (can be toggled) from one {@code Color} to another {@code Color}.
  */
+@SuppressWarnings("serial")
 public class AnimatingColor extends Color {
 	private Color oldColor;
 	private Color newColor;

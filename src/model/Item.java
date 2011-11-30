@@ -10,6 +10,7 @@ import model.item.ItemType;
  * name, description, and weight.  The only modifiable aspect
  * is weight.
  */
+@SuppressWarnings("serial")
 public class Item implements Conditioned, Comparable<Item>, Serializable{
 	
 	protected final Condition status;

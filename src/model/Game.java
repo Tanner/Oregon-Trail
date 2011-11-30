@@ -12,6 +12,7 @@ import core.Logger;
 /**
  * Holds all game data.
  */
+@SuppressWarnings("serial")
 public class Game implements Serializable{
 	private Player player;
 	

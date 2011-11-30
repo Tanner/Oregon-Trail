@@ -15,6 +15,7 @@ import core.Logger;
  * Person consists of a list of skills the person is proficient with as well
  * as their name, and what their profession is called.
  */
+@SuppressWarnings("serial")
 public class Person implements Conditioned, Inventoried, PartyComponentDataSource, Serializable {
 	private final Condition skillPoints;
 	
