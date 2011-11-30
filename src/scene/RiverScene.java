@@ -27,6 +27,7 @@ import component.parallax.ParallaxComponentLoop;
 import component.sprite.AnimatingSprite;
 import component.sprite.Sprite;
 import core.GameDirector;
+import core.ConstantStore;
 import core.SoundStore;
 
 /**
@@ -92,18 +93,18 @@ public class RiverScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		
-		bridge = new Sprite(container, new Image("resources/graphics/test/bridge.png"));
+		bridge = new Sprite(container, new Image(ConstantStore.PATH_RIVER + "bridge.png"));
 		mainLayer.add(bridge, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER, 100, 100);
 		
 		//Animating wagon sprites
 		Animation wagonAni = new Animation();
-		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver1.png"), 100);
-		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver2.png"), 100);
-		wagonAni.addFrame(new Image("resources/graphics/test/wagonriver3.png"), 100);
+		wagonAni.addFrame(new Image(ConstantStore.PATH_RIVER + "wagonriver1.png"), 100);
+		wagonAni.addFrame(new Image(ConstantStore.PATH_RIVER + "wagonriver2.png"), 100);
+		wagonAni.addFrame(new Image(ConstantStore.PATH_RIVER + "wagonriver3.png"), 100);
 		wagon = new AnimatingSprite(container, 50, wagonAni, AnimatingSprite.Direction.LEFT);
 		wagonAni = new Animation();
-		wagonAni.addFrame(new Image("resources/graphics/test/wagonwheels1.png"), 100);
-		wagonAni.addFrame(new Image("resources/graphics/test/wagonwheels2.png"), 100);
+		wagonAni.addFrame(new Image(ConstantStore.PATH_RIVER + "wagonwheels1.png"), 100);
+		wagonAni.addFrame(new Image(ConstantStore.PATH_RIVER + "wagonwheels2.png"), 100);
 		wagonWheels = new AnimatingSprite(container, 44, wagonAni, AnimatingSprite.Direction.LEFT);
 		mainLayer.add(wagon, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, -50, 120);
 		mainLayer.add(wagonWheels, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, -50, 120);
@@ -118,14 +119,14 @@ public class RiverScene extends Scene {
 		riverParallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		cloudParallaxPanel = new ParallaxPanel(container, container.getWidth(), container.getHeight());
 		ParallaxComponent.MAX_DISTANCE = 600;
-		ParallaxComponent water = new ParallaxComponentLoop(container, container.getWidth() + 1, new Image("resources/graphics/ground/water.png", false, Image.FILTER_LINEAR),1);
+		ParallaxComponent water = new ParallaxComponentLoop(container, container.getWidth() + 1, new Image(ConstantStore.PATH_GROUND + "water.png", false, Image.FILTER_LINEAR),1);
 		riverParallaxPanel.add(water, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		//Clouds
 		Image[] cloudImages = new Image[3];
-		cloudImages[0] = new Image("resources/graphics/backgrounds/cloud_a.png", false, Image.FILTER_NEAREST);
-		cloudImages[1] = new Image("resources/graphics/backgrounds/cloud_b.png", false, Image.FILTER_NEAREST);
-		cloudImages[2] = new Image("resources/graphics/backgrounds/cloud_c.png", false, Image.FILTER_NEAREST);
+		cloudImages[0] = new Image(ConstantStore.PATH_BKGRND + "cloud_a.png", false, Image.FILTER_NEAREST);
+		cloudImages[1] = new Image(ConstantStore.PATH_BKGRND + "cloud_b.png", false, Image.FILTER_NEAREST);
+		cloudImages[2] = new Image(ConstantStore.PATH_BKGRND + "cloud_c.png", false, Image.FILTER_NEAREST);
 		
 		for (int i = 0; i < NUM_CLOUDS; i++) {
 			int distance = CLOUD_DISTANCE + random.nextInt(CLOUD_DISTANCE_VARIANCE * 2) - CLOUD_DISTANCE_VARIANCE;
@@ -140,13 +141,13 @@ public class RiverScene extends Scene {
 		Panel backgroundColor = new Panel(container, new Color(0x579cdd));
 		backgroundLayer.add(backgroundColor, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		backgroundLayer.add(riverParallaxPanel, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 0, 200);
-		Sprite ground = new Sprite(container, container.getWidth() + 1, new Image("resources/graphics/ground/riveredge.png", false, Image.FILTER_NEAREST));
+		Sprite ground = new Sprite(container, container.getWidth() + 1, new Image(ConstantStore.PATH_GROUND + "riveredge.png", false, Image.FILTER_NEAREST));
 		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
-		Sprite mountain = new Sprite(container, 800, new Image("resources/graphics/backgrounds/hill_b.png", false, Image.FILTER_NEAREST));
+		Sprite mountain = new Sprite(container, 800, new Image(ConstantStore.PATH_BKGRND + "hill_b.png", false, Image.FILTER_NEAREST));
 		backgroundLayer.add(mountain, backgroundLayer.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPRIGHT, 0, 50);
-		mountain = new Sprite(container, 800, new Image("resources/graphics/backgrounds/hill_a.png", false, Image.FILTER_NEAREST));
+		mountain = new Sprite(container, 800, new Image(ConstantStore.PATH_BKGRND + "hill_a.png", false, Image.FILTER_NEAREST));
 		backgroundLayer.add(mountain, backgroundLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, 0, 50);
-		ground = new Sprite(container, container.getWidth() + 1, new Image("resources/graphics/ground/riveredgetop.png", false, Image.FILTER_NEAREST));
+		ground = new Sprite(container, container.getWidth() + 1, new Image(ConstantStore.PATH_GROUND + "riveredgetop.png", false, Image.FILTER_NEAREST));
 		backgroundLayer.add(ground, backgroundLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		backgroundLayer.add(cloudParallaxPanel, backgroundLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 	}

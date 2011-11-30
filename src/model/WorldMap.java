@@ -412,9 +412,7 @@ public class WorldMap implements Serializable {
 
 		for (int curRank = 0; curRank < MAX_RANK; curRank++){
 			for(LocationNode node : this.mapNodes.get(curRank)){
-				//manufacture proper coords for player map from x/y pos
-// - replaced with call in location node				convertToMapCoords(node);
-				//node.setName(reNameLocation(node, mapRand));
+
 				//node is of sufficient "quality" to show up on map regardless of having been visited or not
 				if (node.getCondition().getCurrent() / this.MAX_LOC_QUAL > .90){
 					node.setVisible(true);					
@@ -423,7 +421,6 @@ public class WorldMap implements Serializable {
 				trailDest = new ArrayList<Integer>();
 				trailForward = false;
 				//add current node to list of used destination ID's
-				//trailDest.add(node.getID());
 				
 				for (int tNum = 0; tNum < node.getTrails(); tNum++){
 					int nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (curRank + 1) : curRank);
@@ -453,7 +450,7 @@ public class WorldMap implements Serializable {
 						LocationNode randDestNode = this.mapNodes.get(nextRank).get(nextTown);
 						//attempt to minimize going to a location that's already on the map and in the same zone as where we
 						//currently are - minimize possibility of moving laterally repeatedly
-						System.out.println(randDestNode.toString());
+						//System.out.println(randDestNode.toString());
 						if ((mapRand.nextInt(100) < 90) || (randDestNode.getID() == (node.getID()))){
 							while (trailDest.contains(randDestNode.getID())){
 								if ((tNum == node.getTrails() - 1) && (!trailForward)) {

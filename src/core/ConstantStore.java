@@ -35,6 +35,9 @@ public final class ConstantStore {
 	public static final String PATH_HUNT = PATH_GRAPHICS + "hunt/";
 	public static final String PATH_TRAIL = PATH_GRAPHICS + "trail/";
 	public static final String PATH_ITEMS = PATH_GRAPHICS + "icons/items/";
+	public static final String PATH_TEST = PATH_GRAPHICS + "test/";
+	//needs to be changed - test?  meh
+	public static final String PATH_RIVER = PATH_GRAPHICS + "test/";
 
 	
 	public static enum StateIdx{

@@ -9,6 +9,8 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.Positionable.ReferencePoint;
+import component.sprite.AnimatingSprite;
 import component.MapComponent;
 import component.Button;
 import component.Label;
@@ -30,6 +32,7 @@ public class MapScene extends Scene {
 	private WorldMap worldMap;
 	private LocationNode currNode;
 	private TrailEdge currTrail;
+	private AnimatingSprite currLocPtr;
 	
 	public MapScene(WorldMap worldMap) {
 		this.worldMap = worldMap;
@@ -63,9 +66,22 @@ public class MapScene extends Scene {
 		this.currNode = worldMap.getCurrLocationNode();
 		this.currTrail = worldMap.getCurrTrail();
 		
-		//System.out.println(currTrail.getConditionPercentage());
 
-		Sprite ptrSprite = new Sprite(container, 48, ImageStore.get().getImage("MAP_POINTER"));	
+
+		//Animating the current pointer
+		Animation curPtr = new Animation();
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER6"), 100);
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER5"), 100);
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER4"), 100);
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER3"), 100);
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER2"), 100);
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER1"), 100);
+
+		currLocPtr = new AnimatingSprite(container, 48, curPtr, AnimatingSprite.Direction.LEFT);
+		
+		//mainLayer.add(currLocPtr, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, -50, 120);
+
+		//Sprite ptrSprite = new Sprite(container, 48, ImageStore.get().getImage("MAP_POINTER1"));	
 		
 		//Button curLocMarker = new Button(container,10 , 10, Color.white);
 		int curLocX;
@@ -80,7 +96,7 @@ public class MapScene extends Scene {
 			curLocY = (int)currNode.getPlayerMapY();
 		}
 		
-		playerMap.add(ptrSprite, playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, curLocX-24, curLocY-48 );
+		playerMap.add(currLocPtr, playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, curLocX-24, curLocY-48 );
 		//playerMap.add(curLocMarker, playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, curLocX, curLocY );
 		
 		//the following paints nodes at the corners of the various territories, to help determine equatiosn that would more accurately reflect the 
@@ -164,7 +180,7 @@ public class MapScene extends Scene {
 	 */
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		return;
+		this.currLocPtr.update(container, delta);
 	}
 
 	/* (non-Javadoc)
