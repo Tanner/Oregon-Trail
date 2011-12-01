@@ -108,7 +108,7 @@ public class SoundStore {
 	 * 
 	 */
 	public void playHuntMusic() {
-		playMusic(huntSong);
+		loopMusic(huntSong);
 	}
 	
 	/**

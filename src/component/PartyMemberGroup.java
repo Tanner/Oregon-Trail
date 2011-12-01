@@ -1,5 +1,7 @@
 package component;
 
+import java.util.Random;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
@@ -25,10 +27,21 @@ public class PartyMemberGroup extends GridComponent {
 
 	private static final Component[][] createComponents(GUIContext context, PartyMemberDataSource dataSource) {
 		Animation animation;
+		Random partyRand = new Random();
 		if (dataSource.isMale()) {
+			//probably want to do something better than random here, but at least it works :).
+			if (partyRand.nextBoolean()){
 			animation = new Animation(new Image[] {
 					ImageStore.get().getImage("HILLBILLY_RIGHT")
 			}, 1);
+			
+			} else {
+			animation = new Animation(new Image[] {
+					ImageStore.get().getImage("TRAPPER_RIGHT")
+			}, 1);
+				
+			
+			}
 		} else {
 			animation = new Animation(new Image[] {
 					ImageStore.get().getImage("MAIDEN_RIGHT")

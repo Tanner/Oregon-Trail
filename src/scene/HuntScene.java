@@ -126,9 +126,8 @@ public class HuntScene extends Scene {
 		} 
 			
 		mainLayer.update(delta);
-		
-		
-		
+
+
 	}
 
 	/**
@@ -137,8 +136,10 @@ public class HuntScene extends Scene {
 	 * @return whether the indicated movement has occurred
 	 */
 	private boolean moveUpperLeft(GameContainer container){
-		if (container.getInput().isKeyDown(Input.KEY_LEFT) 
-				&& (container.getInput().isKeyDown(Input.KEY_UP))){			
+		if ((container.getInput().isKeyDown(Input.KEY_LEFT) 
+			&& (container.getInput().isKeyDown(Input.KEY_UP))) 
+			|| (container.getInput().isKeyDown(Input.KEY_Q)) 
+			|| (container.getInput().isKeyDown(Input.KEY_W) && (container.getInput().isKeyDown(Input.KEY_A)))){			
 			return true;
 		} else {
 			return false;
@@ -151,8 +152,10 @@ public class HuntScene extends Scene {
 	 * @return whether the indicated movement has occurred
 	 */
 	private boolean moveLowerLeft(GameContainer container){
-		if (container.getInput().isKeyDown(Input.KEY_LEFT)  
-				&& (container.getInput().isKeyDown(Input.KEY_DOWN))){			
+		if ((container.getInput().isKeyDown(Input.KEY_LEFT)  
+			&& (container.getInput().isKeyDown(Input.KEY_DOWN)))
+			|| (container.getInput().isKeyDown(Input.KEY_Z)) 
+			|| (container.getInput().isKeyDown(Input.KEY_A) && (container.getInput().isKeyDown(Input.KEY_X)))){			
 			return true;
 		} else {
 			return false;
@@ -165,8 +168,10 @@ public class HuntScene extends Scene {
 	 * @return whether the indicated movement has occurred
 	 */
 	private boolean moveUpperRight(GameContainer container){
-		if (container.getInput().isKeyDown(Input.KEY_UP) 
-				&& (container.getInput().isKeyDown(Input.KEY_RIGHT))){			
+		if ((container.getInput().isKeyDown(Input.KEY_UP) 
+			&& (container.getInput().isKeyDown(Input.KEY_RIGHT)))
+			|| (container.getInput().isKeyDown(Input.KEY_E)) 
+			|| (container.getInput().isKeyDown(Input.KEY_D) && (container.getInput().isKeyDown(Input.KEY_W)))){			
 			return true;
 		} else {
 			return false;
@@ -179,8 +184,11 @@ public class HuntScene extends Scene {
 	 * @return whether the indicated movement has occurred
 	 */
 	private boolean moveLowerRight(GameContainer container){
-		if (container.getInput().isKeyDown(Input.KEY_RIGHT)
-				&& (container.getInput().isKeyDown(Input.KEY_DOWN))){			
+		if ((container.getInput().isKeyDown(Input.KEY_RIGHT)
+			&& (container.getInput().isKeyDown(Input.KEY_DOWN)))
+			|| (container.getInput().isKeyDown(Input.KEY_C)) 
+			|| (container.getInput().isKeyDown(Input.KEY_D) && (container.getInput().isKeyDown(Input.KEY_X)))){			
+
 			return true;
 		} else {
 			return false;
@@ -193,10 +201,14 @@ public class HuntScene extends Scene {
 	 * @return whether the indicated movement has occurred
 	 */
 	private boolean moveRight(GameContainer container){
-		if (!(container.getInput().isKeyDown(Input.KEY_LEFT)) 
+		if ((!(container.getInput().isKeyDown(Input.KEY_LEFT)) 
 				&& !(container.getInput().isKeyDown(Input.KEY_UP)) 
 				&& (container.getInput().isKeyDown(Input.KEY_RIGHT)) 
-				&& !(container.getInput().isKeyDown(Input.KEY_DOWN))){			
+				&& !(container.getInput().isKeyDown(Input.KEY_DOWN)))
+				|| ((container.getInput().isKeyDown(Input.KEY_D)) 
+				&& !(container.getInput().isKeyDown(Input.KEY_W))
+				&& !(container.getInput().isKeyDown(Input.KEY_X))
+				&& !(container.getInput().isKeyDown(Input.KEY_A))))	{			
 			return true;
 		} else {
 			return false;
@@ -209,10 +221,14 @@ public class HuntScene extends Scene {
 	 * @return whether the indicated movement has occurred
 	 */
 	private boolean moveLeft(GameContainer container){
-		if ((container.getInput().isKeyDown(Input.KEY_LEFT)) 
-				&& !(container.getInput().isKeyDown(Input.KEY_UP)) 
-				&& !(container.getInput().isKeyDown(Input.KEY_RIGHT)) 
-				&& !(container.getInput().isKeyDown(Input.KEY_DOWN))){			
+		if (((container.getInput().isKeyDown(Input.KEY_LEFT)) 
+			&& !(container.getInput().isKeyDown(Input.KEY_UP)) 
+			&& !(container.getInput().isKeyDown(Input.KEY_RIGHT)) 
+			&& !(container.getInput().isKeyDown(Input.KEY_DOWN)))			
+			|| (!(container.getInput().isKeyDown(Input.KEY_D)) 
+			&& !(container.getInput().isKeyDown(Input.KEY_W))
+			&& !(container.getInput().isKeyDown(Input.KEY_X))
+			&& (container.getInput().isKeyDown(Input.KEY_A))))	{			
 			return true;
 		} else {
 			return false;
@@ -225,10 +241,14 @@ public class HuntScene extends Scene {
 	 * @return whether the indicated movement has occurred
 	 */
 	private boolean moveDown(GameContainer container){
-		if (!(container.getInput().isKeyDown(Input.KEY_LEFT)) 
-				&& !(container.getInput().isKeyDown(Input.KEY_UP)) 
-				&& !(container.getInput().isKeyDown(Input.KEY_RIGHT)) 
-				&& (container.getInput().isKeyDown(Input.KEY_DOWN))){			
+		if ((!(container.getInput().isKeyDown(Input.KEY_LEFT)) 
+			&& !(container.getInput().isKeyDown(Input.KEY_UP)) 
+			&& !(container.getInput().isKeyDown(Input.KEY_RIGHT)) 
+			&& (container.getInput().isKeyDown(Input.KEY_DOWN)))
+			|| (!(container.getInput().isKeyDown(Input.KEY_D)) 
+			&& !(container.getInput().isKeyDown(Input.KEY_W))
+			&& (container.getInput().isKeyDown(Input.KEY_X))
+			&& !(container.getInput().isKeyDown(Input.KEY_A))))	{			
 			return true;
 		} else {
 			return false;
@@ -241,10 +261,15 @@ public class HuntScene extends Scene {
 	 * @return whether the indicated movement has occurred
 	 */
 	private boolean moveUp(GameContainer container){
-		if (!(container.getInput().isKeyDown(Input.KEY_LEFT)) 
+		if ((!(container.getInput().isKeyDown(Input.KEY_LEFT)) 
 				&& (container.getInput().isKeyDown(Input.KEY_UP)) 
 				&& !(container.getInput().isKeyDown(Input.KEY_RIGHT)) 
-				&& !(container.getInput().isKeyDown(Input.KEY_DOWN))){			
+				&& !(container.getInput().isKeyDown(Input.KEY_DOWN)))
+			|| (!(container.getInput().isKeyDown(Input.KEY_D)) 
+			&& (container.getInput().isKeyDown(Input.KEY_W))
+			&& !(container.getInput().isKeyDown(Input.KEY_X))
+			&& (container.getInput().isKeyDown(Input.KEY_A)))){			
+
 			return true;
 		} else {
 			return false;

@@ -369,7 +369,7 @@ public final class ConstantStore {
 		townNames2.add("Barnes");
 		townNames2.add("Blue Rapids");
 		townNames2.add("Casper");
-		townNames2.add("FairlWay");
+		townNames2.add("Fair Way");
 		townNames2.add("Fort Bridger");
 		townNames2.add("Fort Coon");
 		townNames2.add("Fort Laramie");

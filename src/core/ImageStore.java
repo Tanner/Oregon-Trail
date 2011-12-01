@@ -95,8 +95,8 @@ public class ImageStore {
 		IMAGES.put("HUNTER_LOWERLEFT", new Image(ConstantStore.PATH_HUNT + "hunterFront1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_LOWERRIGHT", new Image(ConstantStore.PATH_HUNT + "hunterBack1.png", false, Image.FILTER_NEAREST));
 
-		IMAGES.put("TRAPPER_RIGHT", new Image(ConstantStore.PATH_PEOPLE + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
-		IMAGES.put("TRAPPER_LEFT", new Image(ConstantStore.PATH_PEOPLE + "hunterRightFaceSide1.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("TRAPPER_LEFT", new Image(ConstantStore.PATH_PEOPLE + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("TRAPPER_RIGHT", new Image(ConstantStore.PATH_PEOPLE + "hunterRightFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("MAIDEN_LEFT", new Image(ConstantStore.PATH_PEOPLE + "maidenLeftFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("MAIDEN_RIGHT", new Image(ConstantStore.PATH_PEOPLE + "maidenRightFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HILLBILLY_LEFT", new Image(ConstantStore.PATH_PEOPLE + "hillbillyLeftFaceSide1.png", false, Image.FILTER_NEAREST));

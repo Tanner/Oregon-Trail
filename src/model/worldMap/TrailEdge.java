@@ -23,7 +23,8 @@ public class TrailEdge extends MapObject {
 	private static float totalTrailLength = 0;
 	/**unique id corresponding to this edge.*/
 	private final int ID;
-	
+	/**boolean whether the trail has been taken or not*/
+	private boolean taken;
 	
 	/**
 	 * Make a trail edge that will connect two locationNodes
@@ -48,7 +49,10 @@ public class TrailEdge extends MapObject {
 		this.quality = new Condition((int) this.length);
 		TrailEdge.totalTrailLength += this.length;
 		this.visible = false;
+		this.taken = false;
 	}
+
+
 
 	private float calcDistance(double destX, double origX, double destY, double origY){
 		float result = 0;
@@ -209,6 +213,22 @@ public class TrailEdge extends MapObject {
 		}
 		return str;
 	}
+	
+	/**
+	 * @return whether the trail is taken or not
+	 * 
+	 */
+	public boolean isTaken() {
+		return taken;
+	}
+
+	/**
+	 * @param taken the taken to set
+	 */
+	public void setTaken(boolean taken) {
+		this.taken = taken;
+	}
+	
 	
 	public double getCurrTrailLocationX(){
 		double result;

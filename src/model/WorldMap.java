@@ -413,10 +413,7 @@ public class WorldMap implements Serializable {
 		for (int curRank = 0; curRank < MAX_RANK; curRank++){
 			for(LocationNode node : this.mapNodes.get(curRank)){
 
-				//node is of sufficient "quality" to show up on map regardless of having been visited or not
-				if (node.getCondition().getCurrent() / this.MAX_LOC_QUAL > .90){
-					node.setVisible(true);					
-				}
+
 				//define array holding all destinations that have been used.
 				trailDest = new ArrayList<Integer>();
 				trailForward = false;
@@ -476,12 +473,16 @@ public class WorldMap implements Serializable {
 					
 				}//for each trail at location
 				if(node.getHasInTrail() == false){
-					//System.out.println("ORPHAN : " + node.getRank() + " | " + node.toString());
+					System.out.println("ORPHAN : " + node.getRank() + " | " + node.toString());
 					node.setQuality(new Condition(0,100,100));
 					this.orphanNodes.get(node.getRank()).add(node);
 				} else {
 					//System.out.println("NOT an ORPHAN : " + node.getRank() + " | " + node.toString());
 					
+				}
+				//node is of sufficient "quality" to show up on map regardless of having been visited or not
+				if (node.getConditionPercentage() > .9){
+					node.setVisible(true);					
 				}
 			}//for each location at rank
 		}//for each rank
@@ -643,6 +644,10 @@ public class WorldMap implements Serializable {
 	public void setCurrLocationNode(LocationNode currLocationNode){
 		this.currLocationNode = currLocationNode;
 		this.currLocationNode.setVisible(true);
+		if ((this.currTrail != null) && (this.currTrail.getConditionPercentage() < .01)){
+			this.currTrail.setTaken(true);
+		}
+
 		for(TrailEdge edge : currLocationNode.getOutboundTrails()){
 			edge.setVisible(true);
 			edge.getDestination().setVisible(true);

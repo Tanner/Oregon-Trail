@@ -38,26 +38,35 @@ public class MapComponent extends Component {
 	 * @param startY
 	 * @param endX
 	 * @param endY
+	 * @param node the Node this trail originated in
+	 * @param trail the trail we are painting
 	 */
-	private void drawIndividualTrail(GUIContext context, Graphics g, double startX, double startY, double endX, double endY, LocationNode node){
+	private void drawIndividualTrail(GUIContext context, Graphics g, double startX, double startY, double endX, double endY, LocationNode node, TrailEdge trail){
 		g.setLineWidth(3);
+		Color startColor;
+		Color endColor;
 		double colorMult = (node.getRank()/(1.0 * worldMap.getMaxRank()));
-		Color startColor = new Color((int) (100 * colorMult), (int)(50 * colorMult), (int)(30 * colorMult));
-		Color endColor = new Color((int) (255 * colorMult), (int)(128 * colorMult), (int)(64 * colorMult));
+		if (trail.isTaken()) {
+			startColor = new Color(0, 255, 255);
+			endColor = new Color(0,255,255);				
+		} else {
+			startColor = new Color((int) (100 * colorMult), (int)(50 * colorMult), (int)(30 * colorMult));
+			endColor = new Color((int) (255 * colorMult), (int)(128 * colorMult), (int)(64 * colorMult));			
+		}
 		g.drawGradientLine((float)startX + 5, (float)startY + 5, startColor, (float) endX + 5, (float) endY + 5, endColor);
 	}
 
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
 		super.render(context, g);
-		for (int j = 0; j <= worldMap.MAX_RANK; j++){
-			for(LocationNode node : worldMap.getMapNodes().get(j)) {
-				for (int i = 0; i < node.getTrails(); i++){
-					if ((node.getOutBoundTrailByIndex(i).isVisible()) || this.devMode)  {
-					drawIndividualTrail(context, g, node.getOutBoundTrailByIndex(i).getOrigin().getPlayerMapX(),
-						node.getOutBoundTrailByIndex(i).getOrigin().getPlayerMapY(),
-						node.getOutBoundTrailByIndex(i).getDestination().getPlayerMapX(),
-						node.getOutBoundTrailByIndex(i).getDestination().getPlayerMapY(), node);
+		for (int rank = 0; rank <= worldMap.MAX_RANK; rank++){
+			for(LocationNode node : worldMap.getMapNodes().get(rank)) {
+				for (int nodeTrail = 0; nodeTrail < node.getTrails(); nodeTrail++){
+					if ((node.getOutBoundTrailByIndex(nodeTrail).isVisible()) || this.devMode)  {
+					drawIndividualTrail(context, g, node.getOutBoundTrailByIndex(nodeTrail).getOrigin().getPlayerMapX(),
+						node.getOutBoundTrailByIndex(nodeTrail).getOrigin().getPlayerMapY(),
+						node.getOutBoundTrailByIndex(nodeTrail).getDestination().getPlayerMapX(),
+						node.getOutBoundTrailByIndex(nodeTrail).getDestination().getPlayerMapY(), node, node.getOutBoundTrailByIndex(nodeTrail));
 					}//if visible draw it
 				}//iTrails for
 			}//for location node in node lists
