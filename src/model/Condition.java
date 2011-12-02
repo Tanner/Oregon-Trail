@@ -19,10 +19,18 @@ public class Condition implements Serializable{
 	 * @param current Desired current value for the condition
 	 */
 	public Condition(double min, double max, double current) {
+	/*
+		
 		if (max < min) {
 			throw new IllegalArgumentException("Maximum value less than or equal to minimum value");
 		} else if (current < min || current > max) {
 			throw new IllegalArgumentException("Starting value not in min/max range");
+		}
+	*/
+		if (max < min) {
+			max = min;
+		} else if (current < min || current > max) {
+			current = (current < min) ? min : max;
 		}
 		
 		this.min = min;
