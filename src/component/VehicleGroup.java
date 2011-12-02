@@ -5,6 +5,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.sprite.AnimatingSprite;
+import component.sprite.Sprite;
+import component.sprite.WagonSprite;
 
 import core.FontStore;
 import core.ImageStore;
@@ -24,38 +26,7 @@ public class VehicleGroup extends GridComponent {
 	}
 
 	private static final Component[][] createComponents(GUIContext context, VehicleDataSource dataSource) {
-		Animation wagonAnimation = new Animation(new Image[] {
-				ImageStore.get().getImage("TRAIL_WAGON") 
-				}, 1);
-		Animation bigWheelAnimation = new Animation(new Image[] {
-				ImageStore.get().getImage("BIG_WHEEL_1"),
-				ImageStore.get().getImage("BIG_WHEEL_2"),
-				ImageStore.get().getImage("BIG_WHEEL_3")
-		}, 250);
-		Animation smallWheelAnimation = new Animation(new Image[] {
-				ImageStore.get().getImage("SMALL_WHEEL_1"),
-				ImageStore.get().getImage("SMALL_WHEEL_2"),
-				ImageStore.get().getImage("SMALL_WHEEL_3")
-		}, 250);
-		
-		AnimatingSprite wagonSprite = new AnimatingSprite(context,
-				wagonAnimation.getWidth() * 2,
-				wagonAnimation,
-				AnimatingSprite.Direction.LEFT);
-		wagonSprite.setShouldUpdateComponents(true);
-		AnimatingSprite bigWheelSprite = new AnimatingSprite(context,
-				bigWheelAnimation.getWidth() * 2,
-				bigWheelAnimation,
-				AnimatingSprite.Direction.LEFT);
-		AnimatingSprite smallWheelSprite = new AnimatingSprite(context,
-				smallWheelAnimation.getWidth() * 2,
-				smallWheelAnimation,
-				AnimatingSprite.Direction.LEFT);
-		
-		bigWheelAnimation.setAutoUpdate(true);
-		
-		wagonSprite.add(bigWheelSprite, wagonSprite.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, -5, 0);
-		wagonSprite.add(smallWheelSprite, wagonSprite.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 35, 0);		
+		WagonSprite wagonSprite = new WagonSprite(context);
 
 		int componentWidth = wagonSprite.getWidth();
 				
