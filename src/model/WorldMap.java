@@ -341,78 +341,16 @@ public class WorldMap implements Serializable {
 	}
 	
 	/**
-	 * Makes the random map, using the given number of nodes and edges, with a fun and fancy algorithm that first
-	 * makes all the nodes with a single edge linking them, and then adds connections until out of edges
-	 * 
-	 * @param numLocations number of locations this map will have - each can have between 1 and MAX_TRAILS_OUT trails leaving
-	 * @param numTrails number of trails linking locations - will be forced to be enough to at least link all locations
+	 * builds the trail out structure for each location - broken out of generateMap()
 	 */
-	private void generateMap(int numLocations){
-		//build a temporary list to hold the generated locations, from which to build the map by adding edges
-		
-			//initialize arraylists at each rank location
-		for (int i  = 0; i <= MAX_RANK; i++){
-			this.mapNodes.put(i, new ArrayList<LocationNode>());
-			this.orphanNodes.put(i, new ArrayList<LocationNode>());
-		}	
-			//temp array holding number of locations at each rank, indexed by rank
-		int[] numRankAra = new int[MAX_RANK];
-			//current node's rank as we're building the node list
-			//manufacture random object - make constant seeded now for testing purposes
-			//num of edges from current location - will be between 1 and MAX_TRAILS_OUT
-		int numExitTrails;
-		
-			//number of trails out of Independence : MaxTrailsOut constant
-			//build beginning and final locations
-		this.mapHead = new LocationNode("Independence, Missouri", MAX_X, 0, MAX_TRAILS_OUT, MAX_X, MAX_Y);
-		this.mapHead.setTerritory(ConstantStore.StateIdx.MISSOURI);
-		for (TrailEdge trail : mapHead.getOutboundTrails()){
-			trail.setTerritory(ConstantStore.StateIdx.MISSOURI);			
-		}
-		this.finalDestination = new LocationNode("Oregon City, Oregon", 0, 0, 0, MAX_RANK, 100, MAX_X, MAX_Y);
-		this.finalDestination.setVisible(true);
-		this.finalDestination.setTerritory(ConstantStore.StateIdx.OREGON);
-		//setting mapHead to be "on the trail" - don't want to loop back to home base as we initialize the map structure
-		this.mapHead.setOnTheTrail(true);
-		numRankAra[0] = 1;
-		numRankAra[MAX_RANK - 1] = 1;
-		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
-		
-		this.mapNodes.get(mapHead.getRank()).add(mapHead);
-		//need to build base set of nodes - must have at least 1 per rank to get from independence to portland
-		for (int i = 1; i < MAX_RANK; i++){
-			LocationNode tmp = generateLocationNode(i, numExitTrails);
-			this.mapNodes.get(i).add(tmp);
-		}//for loop to build initial path
-
-		//build rest of random map
-		for(int i = MAX_RANK; i < numLocations - 1; i++){
-			
-			int curRankIter;
-			int curRank ;
-			curRankIter = i % (MAX_RANK - 1) + 1;
-			curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter - 1 : curRankIter;
-			//number of trails out of location : 1 to MaxTrailsOut constant
-			LocationNode tmp = generateLocationNode(curRank, numExitTrails);
-			this.mapNodes.get(tmp.getRank()).add(tmp);
-		}//for all locations make a node
-		this.mapNodes.get(finalDestination.getRank()).add(finalDestination);
-
-		//as of here we have all the location nodes.  now need to build map.
-		//by adding edges.  an edge can only go from a location to one with equal or higher 
-		//rank.
-		//no need to check MAX_RANK - never any location with exit trails at MAX_RANK
-		
-		//trailDest is array of used destinations;
-		ArrayList<Integer> trailDest;
-		
+	private void buildTrailOuts(){
 		//trailForward says there's a trail in this set of trails that moves to the next rank 
 		//always want at least 1 trail to move forward
 		boolean trailForward;
+		ArrayList<Integer> trailDest;
 
 		for (int curRank = 0; curRank < MAX_RANK; curRank++){
 			for(LocationNode node : this.mapNodes.get(curRank)){
-
 
 				//define array holding all destinations that have been used.
 				trailDest = new ArrayList<Integer>();
@@ -486,8 +424,73 @@ public class WorldMap implements Serializable {
 				}
 			}//for each location at rank
 		}//for each rank
-		//convert oregon city's coords to actual coords on our map
-// - replaced with call in location node	convertToMapCoords(this.mapNodes.get(finalDestination.getRank()).get(0));
+	}//buildTrailOut method
+	
+	/**
+	 * Makes the random map, using the given number of nodes and edges, with a fun and fancy algorithm that first
+	 * makes all the nodes with a single edge linking them, and then adds connections until out of edges
+	 * 
+	 * @param numLocations number of locations this map will have - each can have between 1 and MAX_TRAILS_OUT trails leaving
+	 * @param numTrails number of trails linking locations - will be forced to be enough to at least link all locations
+	 */
+	private void generateMap(int numLocations){
+		//build a temporary list to hold the generated locations, from which to build the map by adding edges
+		
+			//initialize arraylists at each rank location
+		for (int i  = 0; i <= MAX_RANK; i++){
+			this.mapNodes.put(i, new ArrayList<LocationNode>());
+			this.orphanNodes.put(i, new ArrayList<LocationNode>());
+		}	
+			//temp array holding number of locations at each rank, indexed by rank
+		int[] numRankAra = new int[MAX_RANK];
+			//current node's rank as we're building the node list
+			//manufacture random object - make constant seeded now for testing purposes
+			//num of edges from current location - will be between 1 and MAX_TRAILS_OUT
+		int numExitTrails;
+		
+			//number of trails out of Independence : MaxTrailsOut constant
+			//build beginning and final locations
+		this.mapHead = new LocationNode("Independence, Missouri", MAX_X, 0, MAX_TRAILS_OUT, MAX_X, MAX_Y);
+		this.mapHead.setTerritory(ConstantStore.StateIdx.MISSOURI);
+		for (TrailEdge trail : mapHead.getOutboundTrails()){
+			trail.setTerritory(ConstantStore.StateIdx.MISSOURI);			
+		}
+		this.finalDestination = new LocationNode("Oregon City, Oregon", 0, 0, 0, MAX_RANK, 100, MAX_X, MAX_Y);
+		this.finalDestination.setVisible(true);
+		this.finalDestination.setTerritory(ConstantStore.StateIdx.OREGON);
+		//setting mapHead to be "on the trail" - don't want to loop back to home base as we initialize the map structure
+		this.mapHead.setOnTheTrail(true);
+		numRankAra[0] = 1;
+		numRankAra[MAX_RANK - 1] = 1;
+		numExitTrails = mapRand.nextInt(MAX_TRAILS_OUT + 1 - MIN_TRAILS_OUT) + MIN_TRAILS_OUT;
+		
+		this.mapNodes.get(mapHead.getRank()).add(mapHead);
+		//need to build base set of nodes - must have at least 1 per rank to get from independence to portland
+		for (int i = 1; i < MAX_RANK; i++){
+			LocationNode tmp = generateLocationNode(i, numExitTrails);
+			this.mapNodes.get(i).add(tmp);
+		}//for loop to build initial path
+
+		//build rest of random map
+		for(int i = MAX_RANK; i < numLocations - 1; i++){
+			
+			int curRankIter;
+			int curRank ;
+			curRankIter = i % (MAX_RANK - 1) + 1;
+			curRank = (mapRand.nextInt(RANK_WEIGHT) == 0) ? curRankIter - 1 : curRankIter;
+			//number of trails out of location : 1 to MaxTrailsOut constant
+			LocationNode tmp = generateLocationNode(curRank, numExitTrails);
+			this.mapNodes.get(tmp.getRank()).add(tmp);
+		}//for all locations make a node
+		this.mapNodes.get(finalDestination.getRank()).add(finalDestination);
+
+		//as of here we have all the location nodes.  now need to build map.
+		//by adding edges.  an edge can only go from a location to one with equal or higher 
+		//rank.
+		//no need to check MAX_RANK - never any location with exit trails at MAX_RANK
+		
+		//trailDest is array of used destinations;
+		buildTrailOuts();
 		//set initial currTrail to be valid trail out of mapHead.
 		this.currTrail = this.mapHead.getOutBoundTrailByIndex(mapRand.nextInt(this.mapHead.getOutboundTrails().size()));
 

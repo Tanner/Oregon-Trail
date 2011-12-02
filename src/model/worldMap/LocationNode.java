@@ -94,6 +94,16 @@ public class LocationNode extends MapObject {
 		this("Location " + LocationNode.count, xPos, yPos, 0, 90, trails, rank, quality,  MAP_X_MAX,  MAP_Y_MAX);
 	}
 	
+	public LocationNode(String locationName, int xPos, int yPos, int trails, int MAP_X_MAX, int MAP_Y_MAX){
+		//makes unique name for location, temporarily, until we can make them prettier.
+		//this constructor makes Independence
+		this(locationName, xPos, yPos, 0, 90, trails, 0, 100,  MAP_X_MAX,  MAP_Y_MAX);
+		
+	}
+
+	/**
+	 * converts the generated coords of this node to correspond to the displayed map's coordinates
+	 */
 	private void convertToMapCoords(){
 		double newX;
 		double newY;
@@ -108,13 +118,6 @@ public class LocationNode extends MapObject {
 		}
 		this.setPlayerMapX(newX);
 		this.setPlayerMapY(newY);
-	}
-
-	public LocationNode(String locationName, int xPos, int yPos, int trails, int MAP_X_MAX, int MAP_Y_MAX){
-		//makes unique name for location, temporarily, until we can make them prettier.
-		//this constructor makes Independence
-		this(locationName, xPos, yPos, 0, 90, trails, 0, 100,  MAP_X_MAX,  MAP_Y_MAX);
-		
 	}
 	
 	public int getID(){
@@ -156,6 +159,7 @@ public class LocationNode extends MapObject {
 	
 	public void addTrail(TrailEdge newTrail){
 		this.outboundTrails.add(newTrail);
+		newTrail.getDestination().setOnTheTrail(true);	
 	}
 	/**
 	 * gets the entire list of {@code outboundTrails}. Not preferred method of access - keep datastore hidden
