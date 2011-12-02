@@ -89,7 +89,7 @@ public class Inventory implements Serializable {
 	 * @return True if successful
 	 */
 	public boolean canGetItems(ItemType itemType, int numberOf) {
-		if(numberOf == 0) {
+		if(numberOf <= 0) {
 			return false;
 		}
 		

@@ -16,6 +16,7 @@ import core.Logger;
  * as their name, and what their profession is called.
  */
 
+@SuppressWarnings("serial")
 public class Person implements Conditioned, Inventoried, PartyMemberDataSource, Serializable {
 	private final Condition skillPoints;
 	

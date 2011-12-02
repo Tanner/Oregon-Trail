@@ -19,6 +19,12 @@ public class Condition implements Serializable{
 	 * @param current Desired current value for the condition
 	 */
 	public Condition(double min, double max, double current) {
+		if (max <= min) {
+			throw new IllegalArgumentException("Maximum value less than or equal to minimum value");
+		} else if (current < min || current > max) {
+			throw new IllegalArgumentException("Starting value not in min/max range");
+		}
+		
 		this.min = min;
 		this.max = max;
 		this.current = current;
@@ -65,16 +71,11 @@ public class Condition implements Serializable{
 	public void increase(double amount) {
 		if(amount <= 0) {
 			Logger.log("Not an increment", Logger.Level.ERROR);
-			return;
-		}
-		else if(current + amount > max) {
+		} else if(current + amount > max) {
 			current = max;
 			Logger.log("Increment exceeded max - set to max", Logger.Level.WARNING);
-			return;
-		}
-		else {
+		} else {
 			current += amount;
-			return;
 		}
 	}
 	

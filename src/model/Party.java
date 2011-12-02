@@ -21,7 +21,9 @@ import core.Logger.Level;
 @SuppressWarnings("serial")
 public class Party implements Serializable {
 	
-	private final int MAX_ANIMALS = 5;
+	private final static int MAX_ANIMALS = 5;
+	
+	private final static int MAX_SPEED = 5;
 	
 	private Person partyLeader;
 	
@@ -138,7 +140,8 @@ public class Party implements Serializable {
 		this.location = null;
 		this.time = time;
 		
-		final StringBuffer partyCreationLog = new StringBuffer(members.size() + 
+		final StringBuilder partyCreationLog = new StringBuilder();
+		partyCreationLog.append(members.size() + 
 				" members were created successfully: ");
 		for (Person person : party) {
 			this.money += person.getProfession().getMoney();
@@ -177,10 +180,7 @@ public class Party implements Serializable {
 			} else {
 				buyer.addItemsToInventory(items);
 			}
-				money -= cost;
-				return;
-		} else {
-			return;
+			money -= cost;
 		}
 	}
 	
@@ -314,7 +314,8 @@ public class Party implements Serializable {
 	
 	@Override
 	public String toString() {
-		final StringBuffer str = new StringBuffer("Members: ");
+		final StringBuilder str = new StringBuilder();
+		str.append("Members: ");
 		for (Person person : members) {
 			str.append(person.toString() + "; ");
 		}
@@ -525,8 +526,8 @@ public class Party implements Serializable {
 		for(Animal animal: getAnimals()) {
 			moveModifier += animal.getMoveFactor();
 		}
-		if (moveModifier / 10 > 5) {
-			return 5;
+		if (moveModifier / 10 > MAX_SPEED) {
+			return MAX_SPEED;
 		} else if (moveModifier / 10 < 1) {
 			return 1;
 		} else {
@@ -568,8 +569,9 @@ public class Party implements Serializable {
 			donator.getInventory().getPopulatedSlots();
 		
 		for (ItemType itemType : typeList) {
-			if (itemType.isFood() && firstFood == null) {
+			if (itemType.isFood()) {
 				firstFood = itemType;
+				break;
 			}
 		}
 		
@@ -674,21 +676,21 @@ public class Party implements Serializable {
 	 * @return A string representing a list of names, with proper formatting
 	 */
 	private String buildNameList(ArrayList<String> names) {
-		String nameList = "";
+		StringBuilder nameList = new StringBuilder();
 		if ( names.size() == 1 )
-			nameList += names.get(0);
+			nameList.append(names.get(0));
 		else if (names.size() == 2)
-			nameList += names.get(0) + " and " + names.get(1);
+			nameList.append(names.get(0) + " and " + names.get(1));
 		else if (names.size() > 2) {
 			for (int i = 0; i < names.size(); i++) {
 				if ( i == names.size() -1 )
-					nameList += "and ";
-				nameList += names.get(i);
+					nameList.append("and ");
+				nameList.append(names.get(i));
 				if ( i != names.size() - 1)
-					nameList += ", ";
+					nameList.append(", ");
 			}
 		}
-		return nameList;
+		return nameList.toString();
 	}
 	
 	/**
@@ -732,7 +734,7 @@ public class Party implements Serializable {
 	public boolean addAnimals(List<Animal> animals) {
 		boolean failedAdd = true;
 		for(Animal animal : animals) {
-			if(animals.size() < 5) {
+			if(animals.size() < MAX_ANIMALS) {
 				this.animals.add(animal);
 			} else {
 				failedAdd = false;
@@ -769,19 +771,24 @@ public class Party implements Serializable {
 		
 		boolean repairPossible = false;
 		Inventoried donator = null;
+		
+		GetToolLoop:
 		for(Person person : members) {
 			for(ItemType itemType : person.getInventory().getPopulatedSlots()) {
 				if(itemType.isTool()) {
 					repairPossible = true;
 					donator = person;
+					break GetToolLoop;
 				}
 			}
 		}	
+		GetVehicleTool:
 		if(!repairPossible) {
 			for(ItemType itemType : vehicle.getInventory().getPopulatedSlots()) {
 				if(itemType.isTool()) {
 					repairPossible = true;
 					donator = vehicle;
+					break GetVehicleTool;
 				}
 			}
 		}
@@ -798,8 +805,9 @@ public class Party implements Serializable {
 			donator.getInventory().getPopulatedSlots();
 		
 		for (ItemType itemType : typeList) {
-			if (itemType.isFood() && firstTool == null) {
+			if (itemType.isFood()) {
 				firstTool = itemType;
+				break;
 			}
 		}
 		
