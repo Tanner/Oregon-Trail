@@ -2,8 +2,6 @@ package model.worldMap;
 
 import static org.junit.Assert.*;
 
-import model.Condition;
-
 import org.junit.Test;
 
 public class LocationNodeTest {
