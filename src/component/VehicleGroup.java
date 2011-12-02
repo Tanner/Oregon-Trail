@@ -28,34 +28,34 @@ public class VehicleGroup extends GridComponent {
 				ImageStore.get().getImage("TRAIL_WAGON") 
 				}, 1);
 		Animation bigWheelAnimation = new Animation(new Image[] {
-				ImageStore.get().getImage("BIG_WHEEL_3"),
+				ImageStore.get().getImage("BIG_WHEEL_1"),
 				ImageStore.get().getImage("BIG_WHEEL_2"),
-				ImageStore.get().getImage("BIG_WHEEL_1")
+				ImageStore.get().getImage("BIG_WHEEL_3")
 		}, 250);
 		Animation smallWheelAnimation = new Animation(new Image[] {
-				ImageStore.get().getImage("SMALL_WHEEL_3"),
+				ImageStore.get().getImage("SMALL_WHEEL_1"),
 				ImageStore.get().getImage("SMALL_WHEEL_2"),
-				ImageStore.get().getImage("SMALL_WHEEL_1")
+				ImageStore.get().getImage("SMALL_WHEEL_3")
 		}, 250);
 		
 		AnimatingSprite wagonSprite = new AnimatingSprite(context,
 				wagonAnimation.getWidth() * 2,
 				wagonAnimation,
-				AnimatingSprite.Direction.RIGHT);
+				AnimatingSprite.Direction.LEFT);
 		wagonSprite.setShouldUpdateComponents(true);
 		AnimatingSprite bigWheelSprite = new AnimatingSprite(context,
 				bigWheelAnimation.getWidth() * 2,
 				bigWheelAnimation,
-				AnimatingSprite.Direction.RIGHT);
+				AnimatingSprite.Direction.LEFT);
 		AnimatingSprite smallWheelSprite = new AnimatingSprite(context,
 				smallWheelAnimation.getWidth() * 2,
 				smallWheelAnimation,
-				AnimatingSprite.Direction.RIGHT);
+				AnimatingSprite.Direction.LEFT);
 		
 		bigWheelAnimation.setAutoUpdate(true);
 		
-		wagonSprite.add(bigWheelSprite, wagonSprite.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, -45, 0);
-		wagonSprite.add(smallWheelSprite, wagonSprite.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 5, 0);		
+		wagonSprite.add(bigWheelSprite, wagonSprite.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, -5, 0);
+		wagonSprite.add(smallWheelSprite, wagonSprite.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 35, 0);		
 
 		int componentWidth = wagonSprite.getWidth();
 				
