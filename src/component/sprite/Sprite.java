@@ -33,12 +33,12 @@ public class Sprite extends Component {
 		if (!isVisible()) {
 			return;
 		}
-		
-		super.render(context, g);
-		
+				
 		if (image != null) {
 			image.draw(getX(), getY(), getWidth(), getHeight());
 		}
+		
+		super.render(context, g);
 	}
 	
 	public void setImage(Image image) {

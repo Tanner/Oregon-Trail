@@ -174,7 +174,7 @@ public class RiverScene extends Scene {
 				}
 			}
 			else {
-				wagon.update(container, delta);
+				wagon.update(delta);
 				if ( crossingRiver ) {
 					ani = !ani;
 					if (ani)

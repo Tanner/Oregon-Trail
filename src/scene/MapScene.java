@@ -232,8 +232,8 @@ public class MapScene extends Scene {
 	 */
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		this.currLocPtr.update(container, delta);
-		this.currLocParty.update(container, delta);
+		this.currLocPtr.update(delta);
+		this.currLocParty.update(delta);
 	}
 
 	/* (non-Javadoc)

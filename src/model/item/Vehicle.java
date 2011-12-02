@@ -2,6 +2,8 @@ package model.item;
 
 import java.util.List;
 
+import component.VehicleDataSource;
+
 import core.ConstantStore;
 
 import model.Condition;
@@ -13,7 +15,7 @@ import model.Item;
  * A vehicle is anything that is classified as a vehicle
  */
 @SuppressWarnings("serial")
-public class Vehicle extends Item implements Inventoried{
+public class Vehicle extends Item implements Inventoried, VehicleDataSource {
 
 	private final Inventory cargo;
 	

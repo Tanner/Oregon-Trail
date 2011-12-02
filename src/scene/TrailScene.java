@@ -26,6 +26,7 @@ import component.Positionable.ReferencePoint;
 import component.SceneryFactory;
 import component.SegmentedControl;
 import component.Toolbar;
+import component.VehicleGroup;
 import component.hud.TrailHUD;
 import component.modal.ChoiceModal;
 import component.modal.Modal;
@@ -74,6 +75,7 @@ public class TrailScene extends Scene {
 	private AnimatingColor skyAnimatingColor;
 	
 	private List<PartyMemberGroup> partyMembers;
+	private VehicleGroup vehicle;
 	
 	private EncounterNotification currentEncounterNotification;
 	private Modal encounterModal;
@@ -164,7 +166,12 @@ public class TrailScene extends Scene {
 			partyMembersWidth += partyMembersPadding;
 		}
 		partyMembersWidth -= partyMembersPadding;
-		mainLayer.addAsRow(partyMembers.iterator(), trail.getPosition(ReferencePoint.BOTTOMRIGHT), -partyMembersWidth - 15, -partyMembersHeight - 25, 10);
+		
+		vehicle = new VehicleGroup(container, party.getVehicle());
+		
+		mainLayer.addAsRow(partyMembers.iterator(), trail.getPosition(ReferencePoint.BOTTOMRIGHT), -partyMembersWidth - 15 - vehicle.getWidth(), -partyMembersHeight - 25, 10);
+		
+		mainLayer.add(vehicle, partyMembers.get(partyMembers.size() - 1).getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMLEFT);
 		
 //		partyComponent = new PartyComponent(container, container.getWidth(), parallaxPanel.getHeight(), party.getPartyComponentDataSources());
 //		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, PARTY_Y_OFFSET);
@@ -402,14 +409,15 @@ public class TrailScene extends Scene {
 		@Override
 		public void update(GameContainer container, int delta) throws SlickException {
 			super.update(container, delta);
-						
-			for (PartyMemberGroup pg : partyMembers) {
-				pg.update(delta);
-			}
 			
 			if (isPaused()) {
 				return;
 			}
+			
+			for (PartyMemberGroup pg : partyMembers) {
+				pg.update(delta);
+			}
+			vehicle.update(delta);
 			
 			if (!SoundStore.get().getPlayingSounds().contains("Steps")) {
 				SoundStore.get().playSound("Steps");

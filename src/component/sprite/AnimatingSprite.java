@@ -121,7 +121,9 @@ public class AnimatingSprite extends Sprite {
 	 * @param container Container displaying the component
 	 * @param delta Time since last update
 	 */
-	public void update(GameContainer container, int delta) {
+	public void update(int delta) {
+		super.update(delta);
+		
 		if (xDirection == Direction.LEFT) {
 			currentAnimation = leftAnimation;
 		} else {
@@ -136,12 +138,12 @@ public class AnimatingSprite extends Sprite {
 		if (!isVisible()) {
 			return;
 		}
-		
-		super.render(context, g);
-		
+				
 		if (currentAnimation != null) {
 			currentAnimation.draw(getX(), getY(), getWidth(), getHeight());
 		}
+		
+		super.render(context, g);
 	}
 	
 	/**
