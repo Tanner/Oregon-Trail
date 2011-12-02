@@ -24,11 +24,6 @@ public class Condition implements Serializable{
 		} else if (current < min || current > max) {
 			throw new IllegalArgumentException("Starting value not in min/max range");
 		}
-		if (max < min) {
-			max = min;
-		} else if (current < min || current > max) {
-			current = (current < min) ? min : max;
-		}
 		
 		this.min = min;
 		this.max = max;
