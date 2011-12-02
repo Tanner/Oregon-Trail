@@ -488,7 +488,7 @@ public class WorldMap implements Serializable {
 		//by adding edges.  an edge can only go from a location to one with equal or higher 
 		//rank.
 		//no need to check MAX_RANK - never any location with exit trails at MAX_RANK
-		
+		/*
 		//trailDest is array of used destinations;
 		//trailForward says there's a trail in this set of trails that moves to the next rank 
 		//always want at least 1 trail to move forward
@@ -571,9 +571,9 @@ public class WorldMap implements Serializable {
 				}
 			}//for each location at rank
 		}//for each rank
-
+		*/
 		
-		//buildTrailOuts();
+		buildTrailOuts();
 		//set initial currTrail to be valid trail out of mapHead.
 		this.currTrail = this.mapHead.getOutBoundTrailByIndex(mapRand.nextInt(this.mapHead.getOutboundTrails().size()));
 

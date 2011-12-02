@@ -10,6 +10,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 //import component.Positionable.ReferencePoint;
+
 import component.sprite.AnimatingSprite;
 import component.MapComponent;
 import component.Button;
@@ -34,6 +35,7 @@ public class MapScene extends Scene {
 	private TrailEdge currTrail;
 	private AnimatingSprite currLocPtr;
 	private AnimatingSprite currLocParty;
+	private Button[] locationButtons;
 	
 	public MapScene(WorldMap worldMap) {
 		this.worldMap = worldMap;
@@ -43,50 +45,43 @@ public class MapScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		boolean devMode = false;
-		boolean devTrail = false;
+		boolean devTrail = true;
 
 		MapComponent playerMap = new MapComponent(container, worldMap, devTrail);
+		
+		this.locationButtons = new Button[worldMap.getNumLocations()];
 
-		Button[] locationButtons = new Button[worldMap.getNumLocations()];
-
-		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
+		
 		//add to mapComponent
 		for (int i = 0; i <= worldMap.MAX_RANK; i++){
 			for(LocationNode location : worldMap.getMapNodes().get(i)) {
 				if ((location.isVisible()) || devMode){
-					locationButtons[location.getID()] = new Button(container, 5 + (int)(location.getConditionPercentage() * 7) , 5 + (int)(location.getConditionPercentage() * 7), getLocColor(location));					
+					locationButtons[location.getID()] = new Button(container, 8 + (int)(location.getConditionPercentage() * 5) , 8 + (int)(location.getConditionPercentage() * 5), getLocColor(location));					
 					locationButtons[location.getID()].setTooltipEnabled(true);
 					locationButtons[location.getID()].setTooltipMessage(location.getName());
 					//if (!devMode) {
-						playerMap.add(locationButtons[location.getID()], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) location.getPlayerMapX(), (int) location.getPlayerMapY());
+					playerMap.add(locationButtons[location.getID()], playerMap.getPosition(Positionable.ReferencePoint.TOPLEFT),Positionable.ReferencePoint.TOPLEFT, (int) location.getPlayerMapX(), (int) location.getPlayerMapY());
 					//}
 					locationButtons[location.getID()].addListener(new ButtonListener(location));
 				}//if location is visible, paint it.				
 			}
-		}
+		}//for each rank of world map
+		
+		
+		
+		
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
+
+		//city definition moved to mapComponent
+		
 		this.currNode = worldMap.getCurrLocationNode();
 		this.currTrail = worldMap.getCurrTrail();
 		
-
-
 		//Animating the current pointer
-		Animation curPtr = new Animation();
-		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER6"), 100);
-		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER5"), 100);
-		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER4"), 100);
-		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER3"), 100);
-		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER2"), 100);
-		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER1"), 100);
 
-		currLocPtr = new AnimatingSprite(container, 48, curPtr, AnimatingSprite.Direction.LEFT);
-	
-		Animation curParty = new Animation();
-		curParty.addFrame(ImageStore.get().getImage("MAP_PARTY1"), 200);
-		curParty.addFrame(ImageStore.get().getImage("MAP_PARTY2"), 200);
-		curParty.addFrame(ImageStore.get().getImage("MAP_PARTY3"), 200);
-		curParty.addFrame(ImageStore.get().getImage("MAP_PARTY4"), 200);
-		
-		currLocParty = new AnimatingSprite(container, 24, curParty, AnimatingSprite.Direction.LEFT);
+		currLocPtr = new AnimatingSprite(container, 48, addPointer(), AnimatingSprite.Direction.LEFT);
+
+		currLocParty = new AnimatingSprite(container, 24, addParty(), AnimatingSprite.Direction.LEFT);
 		
 		//mainLayer.add(currLocPtr, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, -50, 120);
 
@@ -111,7 +106,7 @@ public class MapScene extends Scene {
 		
 		//the following paints nodes at the corners of the various territories, to help determine equatiosn that would more accurately reflect the 
 		//approriate terrority for a particular town, based on its generated location on the map, than the current (11/18/11) mechanism coded in worldmap.java
-		
+/*		
 		int[][] coords = {
 				//missouri border
 				{ 910, 475}, { 940, 510}, { 1010, 490}, { 940, 560},
@@ -155,7 +150,7 @@ public class MapScene extends Scene {
 			}
 		}
 		//end territory corner painting
-		
+		*/
 		//add map component
 		
 		mainLayer.add(playerMap, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT,0,0);
@@ -171,7 +166,6 @@ public class MapScene extends Scene {
 		
 	}
 	
-	
 	/**
 	 * will return a color based on the quality of this location
 	 * 
@@ -182,11 +176,57 @@ public class MapScene extends Scene {
 		if (node.getHasInTrail() == false){
 			return Color.white;
 		} else {
-		
-		return Color.gray;
+			if (node.getConditionPercentage() < .10){
+				return new Color(0,0,0);
+			} else if (node.getConditionPercentage() < .30){
+				return new Color(255,255,0);
+			} else if (node.getConditionPercentage() < .50){
+				return new Color(255,200,0);
+			} else if (node.getConditionPercentage() < .70){
+				return new Color(255,150,0);
+			} else if (node.getConditionPercentage() < .90){
+				return new Color(255,100,0);
+			} else {
+				return new Color(255,0,0);
+			}
 		}
 	}
 	
+	public Button[] getLocationButtons(){
+		return this.locationButtons;
+	}
+			
+	/**
+	 * builds the animation object for the party representation over the pointer
+	 * @return the animation array for the party
+	 */
+
+	public Animation addParty()		{
+		Animation curParty = new Animation();
+		curParty.addFrame(ImageStore.get().getImage("MAP_PARTY1"), 200);
+		curParty.addFrame(ImageStore.get().getImage("MAP_PARTY2"), 200);
+		curParty.addFrame(ImageStore.get().getImage("MAP_PARTY3"), 200);
+		curParty.addFrame(ImageStore.get().getImage("MAP_PARTY4"), 200);
+		return curParty;
+	}
+	
+	/**
+	 * builds the animation array for the pointer to show the party location
+	 * @return the arrow pointing to current party location
+	 */
+	
+	public Animation addPointer(){
+		Animation curPtr = new Animation();
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER6"), 100);
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER5"), 100);
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER4"), 100);
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER3"), 100);
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER2"), 100);
+		curPtr.addFrame(ImageStore.get().getImage("MAP_POINTER1"), 100);
+		return curPtr;
+	}
+	
+		
 	/* (non-Javadoc)
 	 * @see scene.Scene#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
@@ -204,7 +244,6 @@ public class MapScene extends Scene {
 		return ID.ordinal();
 	}
 	
-
 	private class ButtonListener implements ComponentListener {
 		private LocationNode node;
 		public ButtonListener(LocationNode node){
@@ -220,9 +259,10 @@ public class MapScene extends Scene {
 				GameDirector.sharedSceneListener().sceneDidEnd(MapScene.this);
 			}//if source==return2camp
 			else {
+				// print out location-specific information to console
 				System.out.println("location : " + this.node.debugToString());
-			}
-		}//componentActivated		
+			}//componentActivated
+		}//if source check
 	}//button listener private class
 	
 	@Override

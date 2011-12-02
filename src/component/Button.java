@@ -59,11 +59,11 @@ public class Button extends Component implements Disableable {
 		setLabel(label);
 	}
 	/**
-	 * Constructs a {@code Button} with a width, a height, and a {@code Label}.
+	 * Constructs a {@code Button} with a width, a height, and a {@code Color}. these buttons are tailored for being used to represent cities on the map
 	 * @param context The GUI context
 	 * @param width The width
 	 * @param height The height
-	 * @param label A label
+	 * @param color a color for the button to be displayed
 	 */
 	public Button(GUIContext context, int width, int height, Color color) {
 		this(context, width, height);
@@ -73,6 +73,7 @@ public class Button extends Component implements Disableable {
 		
 		setLabel(label);
 		setBackgroundColor(color);
+		setBorderWidth(1);
 		
 	}
 	

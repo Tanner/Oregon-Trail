@@ -27,6 +27,7 @@ public class SceneDirector extends StateBasedGame {
 		super(name);
 		
 		scenes = new Stack<Scene>();
+		
 	}
 
 	/**
@@ -114,6 +115,7 @@ public class SceneDirector extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		this.container = container;
+		this.container.getFPS();
 		
 		SplashScene splash = new SplashScene();
 		scenes.add(splash);

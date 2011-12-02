@@ -20,7 +20,7 @@ import component.AnimatingColor;
 import component.Label;
 import component.Label.Alignment;
 import component.Panel;
-import component.PartyComponent;
+//import component.PartyComponent;
 import component.PartyMemberGroup;
 import component.Positionable.ReferencePoint;
 import component.SceneryFactory;
@@ -469,7 +469,8 @@ public class TrailScene extends Scene {
 			}
 		}
 	}
-	
+
+	/*
 	private class RiverState extends MovingState {
 		public void update(GameContainer container, int delta) throws SlickException {
 			super.update(container, delta);
@@ -477,6 +478,7 @@ public class TrailScene extends Scene {
 			
 		}
 	}
+	*/
 	
 	private class CampState extends TrailSceneState {
 		

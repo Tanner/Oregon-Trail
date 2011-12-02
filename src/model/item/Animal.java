@@ -3,12 +3,13 @@ package model.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import component.PartyMemberDataSource;
+//import component.PartyMemberDataSource;
 import core.ConstantStore;
 
 import model.Conditioned;
 import model.Item;
 
+@SuppressWarnings("serial")
 public class Animal extends Item implements Conditioned {
 	private double moveFactor;
 	

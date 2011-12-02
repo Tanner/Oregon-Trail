@@ -1,6 +1,6 @@
 package scene;
 
-import java.util.Random;
+//import java.util.Random;
 
 import model.Party;
 import model.Person;
@@ -18,7 +18,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.AnimatingColor;
-import component.Button;
+//import component.Button;
 import component.Panel;
 import component.Positionable.ReferencePoint;
 import component.SceneryFactory;

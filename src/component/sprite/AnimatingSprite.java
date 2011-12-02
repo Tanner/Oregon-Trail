@@ -55,6 +55,14 @@ public class AnimatingSprite extends Sprite {
 		lowerLeftAnimation.setAutoUpdate(false);
 		lowerRightAnimation.setAutoUpdate(false);
 		
+		//removes warnings until animation coding is finally handled.
+		this.upAnimation.getWidth(); 
+		this.downAnimation.getWidth(); 
+		this.upperLeftAnimation.getWidth(); 
+		this.upperRightAnimation.getWidth(); 
+		this.lowerLeftAnimation.getWidth(); 
+		this.lowerRightAnimation.getWidth(); 
+	
 		xDirection = Direction.FRONT;
 		currentAnimation = downAnimation;
 	}	

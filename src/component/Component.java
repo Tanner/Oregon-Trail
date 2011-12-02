@@ -14,7 +14,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 
-import component.Positionable.ReferencePoint;
+//import component.Positionable.ReferencePoint;
 
 import scene.Scene;
 

@@ -4,8 +4,8 @@ import model.Party;
 import model.Person;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
+//import org.newdawn.slick.Color;
+//import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -15,15 +15,15 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
-import component.Label;
+//import component.Label;
 import component.Panel;
-import component.Positionable;
+//import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.hud.HuntHUD;
 import component.sprite.AnimatingSprite;
 
 import core.ConstantStore;
-import core.FontStore;
+//import core.FontStore;
 import core.GameDirector;
 import core.ImageStore;
 import core.SoundStore;
@@ -40,7 +40,7 @@ public class HuntScene extends Scene {
 	//private Person hunter;
 	
 	//private Image ground;
-	private AnimatingSprite[] huntingParty;
+	//private AnimatingSprite[] huntingParty;
 	private AnimatingSprite hunter;
 	
 	/**
