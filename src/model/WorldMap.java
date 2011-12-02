@@ -435,6 +435,12 @@ public class WorldMap implements Serializable {
 	 */
 	private void generateMap(int numLocations){
 		//build a temporary list to hold the generated locations, from which to build the map by adding edges
+		int[] numRankAra = new int[MAX_RANK];
+		//current node's rank as we're building the node list
+		//manufacture random object - make constant seeded now for testing purposes
+		//num of edges from current location - will be between 1 and MAX_TRAILS_OUT
+		int numExitTrails;
+	
 		
 			//initialize arraylists at each rank location
 		for (int i  = 0; i <= MAX_RANK; i++){
@@ -442,12 +448,6 @@ public class WorldMap implements Serializable {
 			this.orphanNodes.put(i, new ArrayList<LocationNode>());
 		}	
 			//temp array holding number of locations at each rank, indexed by rank
-		int[] numRankAra = new int[MAX_RANK];
-			//current node's rank as we're building the node list
-			//manufacture random object - make constant seeded now for testing purposes
-			//num of edges from current location - will be between 1 and MAX_TRAILS_OUT
-		int numExitTrails;
-		
 			//number of trails out of Independence : MaxTrailsOut constant
 			//build beginning and final locations
 		this.mapHead = new LocationNode("Independence, Missouri", MAX_X, 0, MAX_TRAILS_OUT, MAX_X, MAX_Y);
@@ -490,7 +490,90 @@ public class WorldMap implements Serializable {
 		//no need to check MAX_RANK - never any location with exit trails at MAX_RANK
 		
 		//trailDest is array of used destinations;
-		buildTrailOuts();
+		//trailForward says there's a trail in this set of trails that moves to the next rank 
+		//always want at least 1 trail to move forward
+		boolean trailForward;
+		ArrayList<Integer> trailDest;
+
+		for (int curRank = 0; curRank < MAX_RANK; curRank++){
+			for(LocationNode node : this.mapNodes.get(curRank)){
+
+				//define array holding all destinations that have been used.
+				trailDest = new ArrayList<Integer>();
+				trailForward = false;
+				//add current node to list of used destination ID's
+				
+				for (int tNum = 0; tNum < node.getTrails(); tNum++){
+					int nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (curRank + 1) : curRank);
+					if (nextRank == MAX_RANK){
+						nextRank = MAX_RANK - 1;
+					}
+					TrailEdge newTrail;
+					this.numTrails++;
+					int dangerLevel = randGenTrailDanger(mapRand, node.getRank());
+					//if we're at final rank before finish, have all edges go to portland
+					if (curRank == MAX_RANK - 1){
+						//System.out.println("i = " + i + " size = " + this.mapNodes.get(nextRank).size() + " random index : " + finalDestination.getRank() + " | Town name : " + finalDestination.getLocationName());
+						node.setTrails(1);
+						newTrail = new TrailEdge(finalDestination, node, dangerLevel );
+						finalDestination.setHasInTrail(true);
+					} else {
+						if ((tNum == node.getTrails() - 1) && (!trailForward)) {
+							nextRank = node.getRank() + 1;
+						}
+						
+						//fix bug where start location is being forced to have a trail to itself
+						if (nextRank == 0){
+							nextRank = 1;
+						}
+						//nexttown holds size of arraylist for locations - used as random source to determine where trails go
+						int nextTown = mapRand.nextInt(this.mapNodes.get(nextRank).size());
+						LocationNode randDestNode = this.mapNodes.get(nextRank).get(nextTown);
+						//attempt to minimize going to a location that's already on the map and in the same zone as where we
+						//currently are - minimize possibility of moving laterally repeatedly
+						//System.out.println(randDestNode.toString());
+						if ((mapRand.nextInt(100) < 90) || (randDestNode.getID() == (node.getID()))){
+							while (trailDest.contains(randDestNode.getID())){
+								if ((tNum == node.getTrails() - 1) && (!trailForward)) {
+									//force rank to increase by 1 (i.e. go west 1 rank) if we're at the last trail in the list of trails and we haven't gone west yet
+									nextRank = node.getRank() + 1;
+								} else {
+									nextRank = ((mapRand.nextInt(RANK_WEIGHT) == 0) ? (curRank + 1) : curRank);
+								}
+								nextTown = mapRand.nextInt(this.mapNodes.get(nextRank).size());
+								randDestNode = this.mapNodes.get(nextRank).get(nextTown);
+									
+								}//while trailDest contains node id
+						}
+						trailDest.add(randDestNode.getID());
+
+						newTrail = new TrailEdge(randDestNode, node, dangerLevel );
+						randDestNode.setHasInTrail(true);
+						if (newTrail.getOrigin().getRank() != newTrail.getDestination().getRank()){
+							trailForward = true;
+						}
+					}
+					//add trail to this location's trail list
+					node.addTrail(newTrail);
+					
+				}//for each trail at location
+				if(node.getHasInTrail() == false){
+					System.out.println("ORPHAN : " + node.getRank() + " | " + node.toString());
+					node.setQuality(new Condition(0,100,100));
+					this.orphanNodes.get(node.getRank()).add(node);
+				} else {
+					//System.out.println("NOT an ORPHAN : " + node.getRank() + " | " + node.toString());
+					
+				}
+				//node is of sufficient "quality" to show up on map regardless of having been visited or not
+				if (node.getConditionPercentage() > .9){
+					node.setVisible(true);					
+				}
+			}//for each location at rank
+		}//for each rank
+
+		
+		//buildTrailOuts();
 		//set initial currTrail to be valid trail out of mapHead.
 		this.currTrail = this.mapHead.getOutBoundTrailByIndex(mapRand.nextInt(this.mapHead.getOutboundTrails().size()));
 

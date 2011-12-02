@@ -12,6 +12,7 @@ import org.newdawn.slick.gui.GUIContext;
 
 import component.sprite.AnimatingSprite;
 
+import core.ConstantStore;
 import core.FontStore;
 import core.FontStore.FontID;
 
@@ -39,7 +40,7 @@ public class PartyComponent extends Component {
 			try {
 				sprite = new AnimatingSprite(context,
 						80,
-						new Animation(new Image[] {new Image("resources/graphics/test/mario.png", false, Image.FILTER_NEAREST)}, 1),
+						new Animation(new Image[] {new Image(ConstantStore.PATH_TEST + "mario.png", false, Image.FILTER_NEAREST)}, 1),
 						AnimatingSprite.Direction.RIGHT);
 			} catch (SlickException e) {
 				e.printStackTrace();

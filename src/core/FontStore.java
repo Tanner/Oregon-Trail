@@ -2,7 +2,7 @@ package core;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import core.ConstantStore;
 import org.newdawn.slick.AngelCodeFont;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.SlickException;
@@ -42,9 +42,9 @@ public class FontStore {
 	 * @throws SlickException
 	 */
 	private void initialize() throws SlickException {
-		FONTS.put(FontID.H1.toString(), new AngelCodeFont("resources/fonts/04b03_h1.fnt", "resources/fonts/04b03_h1.png", false));
-		FONTS.put(FontID.H2.toString(), new AngelCodeFont("resources/fonts/04b03_h2.fnt", "resources/fonts/04b03_h2.png", false));
-		FONTS.put(FontID.FIELD.toString(), new AngelCodeFont("resources/fonts/04b03_field.fnt", "resources/fonts/04b03_field.png", false));
+		FONTS.put(FontID.H1.toString(), new AngelCodeFont(ConstantStore.PATH_FONTS + "04b03_h1.fnt", ConstantStore.PATH_FONTS + "04b03_h1.png", false));
+		FONTS.put(FontID.H2.toString(), new AngelCodeFont(ConstantStore.PATH_FONTS + "04b03_h2.fnt", ConstantStore.PATH_FONTS + "04b03_h2.png", false));
+		FONTS.put(FontID.FIELD.toString(), new AngelCodeFont(ConstantStore.PATH_FONTS + "04b03_field.fnt", ConstantStore.PATH_FONTS + "04b03_field.png", false));
 	}
 	
 	/**

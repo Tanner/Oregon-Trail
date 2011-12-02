@@ -26,7 +26,6 @@ public class SoundStore {
 	private Set<String> playingSounds = new HashSet<String>();
 	private List<String> townSongs = new ArrayList<String>();
 	
-	private String filePath = "resources/sounds/";
 	private String huntSong;
 	
 	/**
@@ -60,31 +59,31 @@ public class SoundStore {
 	 * @throws SlickException
 	 */
 	private void initialize() throws SlickException {
-		addToMusic("Crackling Fire", new Music(filePath + "crackling_fire.ogg"));
-		addToMusic("GBU", new Music(filePath + "GBU.ogg"));
-		addToMusic("River", new Music(filePath + "river.ogg"));
-		addToSounds("Smooth", new Sound(filePath + "smooth.ogg"));
-		addToSounds("Steps", new Sound(filePath + "steps.ogg"));
-		addToSounds("Click", new Sound(filePath + "click.ogg"));
-		addToSounds("ItemGet", new Sound(filePath + "itemGet.ogg"));
-		addToSounds("WolfHowl", new Sound(filePath + "wolfHowl.ogg"));
-		addToSounds("Rooster", new Sound(filePath + "rooster.ogg"));
-		addToSounds("Splash", new Sound(filePath + "splash.ogg"));
-		addToMusic("DayTheme", new Music(filePath + "walkingDaytimeMusic.ogg"));
-		addToMusic("NightTheme", new Music(filePath + "Creepy Wind.ogg"));
-		addToMusic("FFD", new Music(filePath + "FFD.ogg"));
-		addToMusic("MS", new Music(filePath + "MagnificentSeven.ogg"));
-		addToSounds("RK", new Sound(filePath + "RiverKwai.ogg"));
-		addToSounds("CowMoo", new Sound(filePath + "cowMoo.ogg"));
-		addToSounds("Donkey", new Sound(filePath + "Donkey.ogg"));
-		addToSounds("HorseWhinny", new Sound(filePath + "HorseWhinny.ogg"));
-		addToMusic("FarewellCheyenne", new Music(filePath + "FarewellCheyenne.ogg"));
-		addToMusic("HangEmHigh", new Music(filePath + "HangEmHigh.ogg"));
-		addToMusic("HowTheWest", new Music(filePath + "HowTheWest.ogg"));
-		addToMusic("JesseJames", new Music(filePath + "JesseJames.ogg"));
-		addToMusic("MyNameIsNobody", new Music(filePath + "MyNameIsNobody.ogg"));
-		addToMusic("WanderingTrail", new Music(filePath + "WanderingTrail.ogg"));
-		addToMusic("KnightsOfCydonia", new Music(filePath + "KnightsOfCydonia.ogg"));
+		addToMusic("Crackling Fire", new Music(ConstantStore.PATH_SOUND + "crackling_fire.ogg"));
+		addToMusic("GBU", new Music(ConstantStore.PATH_SOUND + "GBU.ogg"));
+		addToMusic("River", new Music(ConstantStore.PATH_SOUND + "river.ogg"));
+		addToSounds("Smooth", new Sound(ConstantStore.PATH_SOUND + "smooth.ogg"));
+		addToSounds("Steps", new Sound(ConstantStore.PATH_SOUND + "steps.ogg"));
+		addToSounds("Click", new Sound(ConstantStore.PATH_SOUND + "click.ogg"));
+		addToSounds("ItemGet", new Sound(ConstantStore.PATH_SOUND + "itemGet.ogg"));
+		addToSounds("WolfHowl", new Sound(ConstantStore.PATH_SOUND + "wolfHowl.ogg"));
+		addToSounds("Rooster", new Sound(ConstantStore.PATH_SOUND + "rooster.ogg"));
+		addToSounds("Splash", new Sound(ConstantStore.PATH_SOUND + "splash.ogg"));
+		addToMusic("DayTheme", new Music(ConstantStore.PATH_SOUND + "walkingDaytimeMusic.ogg"));
+		addToMusic("NightTheme", new Music(ConstantStore.PATH_SOUND + "Creepy Wind.ogg"));
+		addToMusic("FFD", new Music(ConstantStore.PATH_SOUND + "FFD.ogg"));
+		addToMusic("MS", new Music(ConstantStore.PATH_SOUND + "MagnificentSeven.ogg"));
+		addToSounds("RK", new Sound(ConstantStore.PATH_SOUND + "RiverKwai.ogg"));
+		addToSounds("CowMoo", new Sound(ConstantStore.PATH_SOUND + "cowMoo.ogg"));
+		addToSounds("Donkey", new Sound(ConstantStore.PATH_SOUND + "Donkey.ogg"));
+		addToSounds("HorseWhinny", new Sound(ConstantStore.PATH_SOUND + "HorseWhinny.ogg"));
+		addToMusic("FarewellCheyenne", new Music(ConstantStore.PATH_SOUND + "FarewellCheyenne.ogg"));
+		addToMusic("HangEmHigh", new Music(ConstantStore.PATH_SOUND + "HangEmHigh.ogg"));
+		addToMusic("HowTheWest", new Music(ConstantStore.PATH_SOUND + "HowTheWest.ogg"));
+		addToMusic("JesseJames", new Music(ConstantStore.PATH_SOUND + "JesseJames.ogg"));
+		addToMusic("MyNameIsNobody", new Music(ConstantStore.PATH_SOUND + "MyNameIsNobody.ogg"));
+		addToMusic("WanderingTrail", new Music(ConstantStore.PATH_SOUND + "WanderingTrail.ogg"));
+		addToMusic("KnightsOfCydonia", new Music(ConstantStore.PATH_SOUND + "KnightsOfCydonia.ogg"));
 		//addToMusic("KnightsOfCydonia", new Music(filePath + "HowTheWest.ogg"));
 		
 		townSongs.add("FarewellCheyenne");

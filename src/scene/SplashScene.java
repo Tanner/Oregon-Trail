@@ -12,6 +12,7 @@ import component.Positionable.ReferencePoint;
 import component.sprite.Sprite;
 
 import core.GameDirector;
+import core.ImageStore;
 
 /**
  * A Scene with a short animated introduction displaying the null && void team
@@ -45,11 +46,11 @@ public class SplashScene extends Scene {
 		blackPanel.setBackgroundColor(blackPanelAnimatingColor);
 		backgroundLayer.add(blackPanel, mainLayer.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.TOPRIGHT);
 		
-		nullLogo = new Sprite(container, new Image("resources/graphics/logo/null.png", false, Image.FILTER_NEAREST));
+		nullLogo = new Sprite(container, ImageStore.get().IMAGES.get("NULL")); //new Image(ConstantStore.PATH_LOGO + "null.png", false, Image.FILTER_NEAREST));
 		whitePanel.add(nullLogo, whitePanel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERRIGHT, -10, 0);
 		nullLogo.setVisible(false);
 		
-		voidLogo = new Sprite(container, new Image("resources/graphics/logo/void.png", false, Image.FILTER_NEAREST));
+		voidLogo = new Sprite(container, ImageStore.get().IMAGES.get("VOID"));  //new Image(ConstantStore.PATH_LOGO + "void.png", false, Image.FILTER_NEAREST));
 		blackPanel.add(voidLogo, whitePanel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, 10, 0);
 		voidLogo.setVisible(false);
 		

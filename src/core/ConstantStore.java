@@ -26,20 +26,24 @@ public final class ConstantStore {
 	 */
 	
 	public static final String PATH_GRAPHICS = "resources/graphics/";
-	public static final String PATH_BKGRND = PATH_GRAPHICS + "backgrounds/";
-	public static final String PATH_ANIMALS = PATH_GRAPHICS + "animals/";
-	public static final String PATH_ICONS = PATH_GRAPHICS + "icons/";
-	public static final String PATH_GROUND = PATH_GRAPHICS + "ground/";
-	public static final String PATH_PEOPLE = PATH_GRAPHICS + "people/";
-	public static final String PATH_BUILDINGS = PATH_GRAPHICS + "buildings/";
-	public static final String PATH_HUNT = PATH_GRAPHICS + "hunt/";
-	public static final String PATH_TRAIL = PATH_GRAPHICS + "trail/";
-	public static final String PATH_ITEMS = PATH_GRAPHICS + "icons/items/";
-	public static final String PATH_TEST = PATH_GRAPHICS + "test/";
-	//needs to be changed - test?  meh
-	public static final String PATH_RIVER = PATH_GRAPHICS + "test/";
-
 	
+	public static final String PATH_ANIMALS = PATH_GRAPHICS + "animals/";
+	public static final String PATH_BKGRND = PATH_GRAPHICS + "backgrounds/";
+	public static final String PATH_BUILDINGS = PATH_GRAPHICS + "buildings/";
+	public static final String PATH_FONTS = "resources/fonts/";
+	public static final String PATH_GROUND = PATH_GRAPHICS + "ground/";
+	public static final String PATH_HUNT = PATH_GRAPHICS + "hunt/";
+	public static final String PATH_ICONS = PATH_GRAPHICS + "icons/";
+	public static final String PATH_ITEMS = PATH_GRAPHICS + "icons/items/";
+	public static final String PATH_LOGO = PATH_GRAPHICS + "logo/";
+	public static final String PATH_PEOPLE = PATH_GRAPHICS + "people/";
+	public static final String PATH_RIVER = PATH_GRAPHICS + "river/";
+	public static final String PATH_SERIAL = "resources/serialized/";
+	public static final String PATH_SOUND = "resources/sounds/";
+	public static final String PATH_TEST = PATH_GRAPHICS + "test/";
+	public static final String PATH_TRAIL = PATH_GRAPHICS + "trail/";
+
+
 	public static enum StateIdx{
 		MISSOURI,
 		KANSAS_TERRITORY,

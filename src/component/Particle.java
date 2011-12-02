@@ -4,6 +4,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.particles.effects.FireEmitter;
+
+import core.ConstantStore;
 public class Particle extends Component {
 
 	private ParticleSystem system;
@@ -11,7 +13,7 @@ public class Particle extends Component {
 	
 	public Particle(GUIContext context, int deltaX, int deltaY, int distance) throws SlickException {
 		super(context, context.getWidth(), context.getHeight());
-		system = new ParticleSystem(new Image("resources/graphics/test/particle.tga", true));
+		system = new ParticleSystem(new Image(ConstantStore.PATH_TEST + "particle.tga", true));
 		this.deltaX = deltaX;
 		this.deltaY = deltaY;
 		this.distance = distance;

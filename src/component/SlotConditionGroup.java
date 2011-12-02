@@ -76,7 +76,7 @@ public class SlotConditionGroup extends ComponentConditionGroup<Counter> {
 		
 		this.item = item;
 		
-		String itemImagePath = "resources/graphics/icons/items/" + item.toString().toLowerCase() + ".png";
+		String itemImagePath = ConstantStore.PATH_ITEMS + item.toString().toLowerCase() + ".png";
 		Sprite sprite = null;
 		
 		if (new File(itemImagePath).exists()) {

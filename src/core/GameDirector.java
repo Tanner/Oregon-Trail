@@ -218,9 +218,9 @@ public class GameDirector implements SceneListener {
 	@Override
 	public void serialize(String saveName) {
 		try {
-			File newFile = new File("resources/serialized/" + saveName + ".ser");
+			File newFile = new File(ConstantStore.PATH_SERIAL + saveName + ".ser");
 			if(!newFile.exists()) {
-				new File("resources/serialized").mkdir();
+				new File(ConstantStore.PATH_SERIAL).mkdir();
 				newFile.createNewFile();
 			}
 			FileOutputStream fileOut = new FileOutputStream(newFile);
@@ -236,7 +236,7 @@ public class GameDirector implements SceneListener {
 	@Override
 	public Game deserialize(String saveName) {
 		try {
-			FileInputStream fileIn = new FileInputStream("resources/serialized/" + saveName + ".ser");
+			FileInputStream fileIn = new FileInputStream(ConstantStore.PATH_SERIAL + saveName + ".ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			game = (Game) in.readObject();
 			in.close();
@@ -271,7 +271,7 @@ public class GameDirector implements SceneListener {
 	public Modal getLoadSaveModal(boolean isLoad, Scene scene) {
 
 		List<String> fileList = new ArrayList<String>();
-		File file  = new File("resources/serialized/");
+		File file  = new File(ConstantStore.PATH_SERIAL);
 		if(file.exists()) {
 			for(String fileName : file.list()) {
 				fileList.add(fileName);

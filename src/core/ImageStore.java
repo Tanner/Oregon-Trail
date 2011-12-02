@@ -12,17 +12,7 @@ import org.newdawn.slick.SlickException;
  */
 public class ImageStore {	
 	private static ImageStore imageStore;
-/*	private final String PATH_GRAPHICS = "resources/graphics/";
-	private final String PATH_BKGRND = PATH_GRAPHICS + "backgrounds/";
-	private final String PATH_ANIMALS = PATH_GRAPHICS + "animals/";
-	private final String PATH_ICONS = PATH_GRAPHICS + "icons/";
-	private final String PATH_GROUND = PATH_GRAPHICS + "ground/";
-	private final String PATH_PEOPLE = PATH_GRAPHICS + "people/";
-	private final String PATH_BUILDINGS = PATH_GRAPHICS + "buildings/";
-	private final String PATH_HUNT = PATH_GRAPHICS + "hunt/";
-	private final String PATH_TRAIL = PATH_GRAPHICS + "trail/";
-*/
-	
+
 	public final Map<String, Image> IMAGES;
 	
 	/**
@@ -45,6 +35,9 @@ public class ImageStore {
 	 * @throws SlickException
 	 */
 	private void initialize() throws SlickException {
+		
+		IMAGES.put("NULL",  new Image(ConstantStore.PATH_LOGO + "null.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("VOID", new Image(ConstantStore.PATH_LOGO + "void.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("LOGO", new Image(ConstantStore.PATH_GRAPHICS + "logo.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("MAP_BACKGROUND", new Image(ConstantStore.PATH_BKGRND + "map.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("TRAIL_MAP", new Image(ConstantStore.PATH_BKGRND + "playerMap.png", false, Image.FILTER_NEAREST));
