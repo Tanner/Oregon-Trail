@@ -8,23 +8,23 @@ public class ConditionTest {
 
 	@Test
 	public void testInvalidCondition() {
-		try {
-			new Condition(0, 0);
-		} catch (IllegalArgumentException e) {
-			assertEquals("Maximum value less than or equal to minimum value", e.getMessage());
-		}
+		int exceptionThrownCount = 0;
 		
 		try {
 			new Condition(0, -1);
 		} catch (IllegalArgumentException e) {
-			assertEquals("Maximum value less than or equal to minimum value", e.getMessage());
+			assertEquals("Maximum value less than minimum value", e.getMessage());
+			exceptionThrownCount++;
 		}
 		
 		try {
 			new Condition(0, 5, 6);
 		} catch (IllegalArgumentException e) {
 			assertEquals("Starting value not in min/max range", e.getMessage());
+			exceptionThrownCount++;
 		}
+		
+		assertEquals(2, exceptionThrownCount);
 	}
 	
 	@Test
