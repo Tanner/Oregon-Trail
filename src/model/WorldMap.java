@@ -411,7 +411,7 @@ public class WorldMap implements Serializable {
 					
 				}//for each trail at location
 				if(node.getHasInTrail() == false){
-					System.out.println("ORPHAN : " + node.getRank() + " | " + node.toString());
+					//System.out.println("ORPHAN : " + node.getRank() + " | " + node.toString());
 					node.setQuality(new Condition(0,100,100));
 					this.orphanNodes.get(node.getRank()).add(node);
 				} else {
