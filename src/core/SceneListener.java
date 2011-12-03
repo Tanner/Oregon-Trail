@@ -5,6 +5,7 @@ package core;
 import component.modal.Modal;
 
 import model.Game;
+import core.ConstantStore;
 import scene.Scene;
 import scene.SceneID;
 
@@ -60,5 +61,10 @@ public interface SceneListener {
 	 * @return A modal for saving or loading a game
 	 */
 	public Modal getLoadSaveModal(boolean isLoad, Scene scene);
-
+	
+	/**
+	 * Updates the map when a map is purchased from the store.
+	 * @param map The 
+	 */
+	public void updateMap(ConstantStore.StateIdx state);
 }

@@ -16,7 +16,8 @@ public enum ItemType {
 	AXLE ("AXLE", false, false, false, true),
 	HORSE ("HORSE", false, false, true, false),
 	MULE ("MULE", false, false, true, false),
-	STRANGEMEAT ("STRANGE_MEAT", true, false, false, false);
+	STRANGEMEAT ("STRANGE_MEAT", true, false, false, false),
+	MAP ("MAP", false, false, false, false);
 	
 	private final String name;
 	private final String pluralName;

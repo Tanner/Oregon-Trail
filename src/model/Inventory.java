@@ -250,7 +250,8 @@ public class Inventory implements Serializable {
 			if (!item.getType().isAnimal() && 
 				item.getType() != ItemType.STRANGEMEAT && 
 				item.getType() != ItemType.WAGON &&
-				item.getType() != ItemType.SONIC ) 
+				item.getType() != ItemType.SONIC &&
+				item.getType() != ItemType.MAP) 
 			{
 				addItemToInventory(item);
 			}

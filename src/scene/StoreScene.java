@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import model.*;
 import model.item.*;
@@ -19,6 +20,7 @@ import component.modal.MessageModal;
 import component.modal.Modal;
 import component.sprite.Sprite;
 import core.*;
+import core.ConstantStore.StateIdx;
 
 /**
  * A scene that displays an inventory, and allows the user to
@@ -293,6 +295,22 @@ public class StoreScene extends Scene {
 		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
 		List<Inventoried> currentBuyers = party.canGetItem(currentItem, itemCount);
 		System.out.println(currentBuyers);
+		
+		//The player is buying a map
+		if(currentItem == ItemType.MAP) {
+			String errorText;
+			if(party.getMoney() > (int)(currentItem.getCost()*priceModifier)) {
+				Random random = new Random();
+				GameDirector.sharedSceneListener().updateMap(StateIdx.values()[random.nextInt(StateIdx.values().length)]);
+				party.setMoney(party.getMoney() - (int)(currentItem.getCost()*priceModifier));
+				return 1;
+			} else {
+				errorText = ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY");
+				failedBuyModal = new MessageModal(container, this, errorText);
+				return -1;
+			}
+		}
+		
 		
 		//The player doesn't have a wagon and is trying to buy one
 		if (currentItem == ItemType.WAGON && party.getVehicle() == null ) {

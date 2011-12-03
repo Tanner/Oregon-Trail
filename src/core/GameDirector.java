@@ -16,6 +16,7 @@ import org.newdawn.slick.state.transition.Transition;
 import component.SegmentedControl;
 import component.modal.ComponentModal;
 import component.modal.Modal;
+import core.ConstantStore.StateIdx;
 
 import scene.*;
 import scene.encounter.*;
@@ -311,6 +312,12 @@ public class GameDirector implements SceneListener {
 		}
 	}
 	
+
+	@Override
+	public void updateMap(StateIdx state) {
+		worldMap.setVisibleByArea(state);		
+	}
+	
 	/*----------------------
 	  Main
 	  ----------------------*/
@@ -323,5 +330,4 @@ public class GameDirector implements SceneListener {
 		GameDirector gameDirector = new GameDirector();
 		gameDirector.start();
 	}
-
 }

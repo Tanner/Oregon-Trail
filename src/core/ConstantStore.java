@@ -273,6 +273,13 @@ public final class ConstantStore {
 		itemMap.put("AXLE_REPAIR_FACTOR", "4");
 		itemMap.put("AXLE_NECESSARY_QUALITY", "60");
 		
+		itemMap.put("MAP_NAME", "Scout's Notes");
+		itemMap.put("MAP_PLURAL_NAME", "Scout's Notes");
+		itemMap.put("MAP_DESCRIPTION", "Some scouts notes.  May or may not reveal portions of the map.");
+		itemMap.put("MAP_WEIGHT", "0");
+		itemMap.put("MAP_COST", "0");
+		itemMap.put("MAP_NECESSARY_QUALITY", "50");
+		
 		literalMap.put("ITEMS", itemMap);
 		
 		// General
