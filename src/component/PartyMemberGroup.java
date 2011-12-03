@@ -18,6 +18,8 @@ public class PartyMemberGroup extends GridComponent {
 	private static final int CONDITION_BAR_HEIGHT = 20;
 	private static final double STEP_CHANCE = 0.01;
 	private static final int STEP_Y_DISPLACEMENT = 1;
+	/**need to use the trapper for every group, since trapper is only hunter toon*/
+	private static boolean useTrapper = false;
 
 	public PartyMemberGroup(GUIContext context, PartyMemberDataSource dataSource) {
 		super(context, createComponents(context, dataSource), X_SPACING, Y_SPACING);
@@ -28,8 +30,15 @@ public class PartyMemberGroup extends GridComponent {
 	private static final Component[][] createComponents(GUIContext context, PartyMemberDataSource dataSource) {
 		Animation animation;
 		Random partyRand = new Random();
+
 		if (dataSource.isMale()) {
-			//probably want to do something better than random here, but at least it works :).
+			//trapper needs to be in every group to use in hunt scene
+			if (!(PartyMemberGroup.useTrapper)){
+				animation = new Animation(new Image[] {
+						ImageStore.get().getImage("TRAPPER_RIGHT")
+				}, 1);
+				PartyMemberGroup.useTrapper = true;
+			}
 			if (partyRand.nextBoolean()){
 			animation = new Animation(new Image[] {
 					ImageStore.get().getImage("HILLBILLY_RIGHT")
