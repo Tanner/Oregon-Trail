@@ -10,9 +10,21 @@ import org.newdawn.slick.gui.GUIContext;
  */
 public class HuntingGroundsComponent extends Component {
 
+	/**the width of the hunt grounds panel*/
+	private static final int GRNDS_WIDTH = 4096;
+	/**the height of the hunt grounds panel*/
+	private static final int GRNDS_HEIGHT = 4096;
+
+	
+	
 	public HuntingGroundsComponent(GUIContext context, int width, int height) {
 		super(context, width, height);
-		// TODO Auto-generated constructor stub
+		
+	}
+	public HuntingGroundsComponent(GUIContext context) {
+		super(context, GRNDS_WIDTH, GRNDS_HEIGHT);
+		
+
 	}
 
 }
