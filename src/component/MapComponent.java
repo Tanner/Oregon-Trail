@@ -59,7 +59,6 @@ public class MapComponent extends Component {
 
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {
-		super.render(context,g);
 			for (int rank = 0; rank <= worldMap.MAX_RANK; rank++){
 				for(LocationNode node : worldMap.getMapNodes().get(rank)) {
 					for (int nodeTrail = 0; nodeTrail < node.getTrails(); nodeTrail++){
@@ -72,6 +71,8 @@ public class MapComponent extends Component {
 					}//iTrails for
 				}//for location node in node lists
 			}//for i <= maxrank
+			
+			super.render(context,g);
 	}
 	
 
