@@ -84,6 +84,9 @@ public class Game implements Serializable{
 		for(ItemType itemType : startItems) {
 			if(itemType.isFood()) {
 				numberOf = (random.nextInt(50) + 25)  /  ((location.getRank() / 4) + 1);
+			} else if (itemType.getName().equals(ItemType.MAP.getName()) || 
+					itemType.getName().equals(ItemType.WAGON.getName())) {
+				numberOf = 1;
 			} else {
 				numberOf = (random.nextInt(10) + 5) / ((location.getRank() / 4) + 1);
 			}
