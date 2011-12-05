@@ -30,10 +30,13 @@ public class LoadingScene extends Scene {
 	private int BAR_HEIGHT = 10;
 	
 	private Label loadLabel;
+	private Label errorLabel;
 	private Condition loadCondition;
 	private ConditionBar loadingBar;
 	
 	private DeferredResource nextResource;
+	
+	private String error;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -44,8 +47,13 @@ public class LoadingScene extends Scene {
 		
 		LoadingList.setDeferredLoading(true);
 
-		SoundStore.get();
-		ImageStore.get();
+		try {
+			SoundStore.get();
+			ImageStore.get();
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = e.getMessage();
+		}
 		
 		loadCondition = new Condition(0, LoadingList.get().getTotalResources(), 0); 
 		
@@ -57,6 +65,10 @@ public class LoadingScene extends Scene {
 		
 		loadLabel = new Label(container, container.getWidth(), field, Color.white, "Loading load scene...");
 		mainLayer.add(loadLabel, loadingBar.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
+		
+		errorLabel = new Label(container, container.getWidth(), field, Color.red, "Unknown Error");
+		errorLabel.setVisible(false);
+		mainLayer.add(errorLabel, loadLabel.getPosition(ReferencePoint.BOTTOMCENTER), ReferencePoint.TOPCENTER, 0, PADDING);
 	}
 	
 	@Override
@@ -77,17 +89,26 @@ public class LoadingScene extends Scene {
 
 			try {
 				nextResource.load();
-			} catch (IOException e) {
+			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
+				error = "Error: Attempted to load empty file";
+			} catch (Exception e) {
+				e.printStackTrace();
+				error = "Error: Confused by earlier Exceptions, bailing out";
 			}
 			
 			nextResource = null;
 		}
 		
-		if (LoadingList.get().getRemainingResources() > 0) {
-			nextResource = LoadingList.get().getNext();
-		} else {
-			GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, this, true);
+		if (error != null) {
+			errorLabel.setText(error);
+			errorLabel.setVisible(true);
+		} else {	
+			if (LoadingList.get().getRemainingResources() > 0) {
+				nextResource = LoadingList.get().getNext();
+			} else {
+				GameDirector.sharedSceneListener().requestScene(SceneID.MAINMENU, this, true);
+			}
 		}
 	}
 
