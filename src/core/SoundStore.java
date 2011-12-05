@@ -107,6 +107,7 @@ public class SoundStore {
 	 * 
 	 */
 	public void playHuntMusic() {
+		this.stopAllSound();
 		loopMusic(huntSong);
 	}
 	

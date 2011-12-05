@@ -1,7 +1,9 @@
 package scene;
 
+import model.HuntingMap;
 import model.Party;
 import model.Person;
+import model.WorldMap;
 
 import org.newdawn.slick.Animation;
 //import org.newdawn.slick.Color;
@@ -35,21 +37,25 @@ public class HuntScene extends Scene {
 	public static final SceneID ID = SceneID.HUNT;
 
 	private HuntHUD hud;
+	
+	private WorldMap worldMap;
 
 	//the member of the party engaged in the hunt
 	//private Person hunter;
 	
 	//private Image ground;
 	//private AnimatingSprite[] huntingParty;
-	private AnimatingSprite hunter;
+	private AnimatingSprite hunterSprite;
+	
+	private Person hunter;
 	
 	/**
 	 * Constructs a {@code HuntScene} with a {@code Person} who will be the hunter
 	 * @param hunter the single member of the party who is going to hunt.
 	 */
-	public HuntScene(Person hunter){
-		//this.hunter = hunter;
-		
+	public HuntScene(Person hunter, WorldMap worldMap){
+		this.hunter = hunter;
+		this.worldMap = worldMap;
 		
 	}
 	
@@ -69,9 +75,19 @@ public class HuntScene extends Scene {
 		//hud.setNotification(location.getName());
 		super.showHUD(hud);			
 		//Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
+		double [] dblArgs = new double[4];
+		int [] intArgs = new int[2];
 		
+		dblArgs[0] = 4800;
+		dblArgs[1] = 4800;
+		dblArgs[2] = 0;			//worldMap.getLocationNode.getX
+		dblArgs[3] = 0;		
 		
-		hunter = new AnimatingSprite(container,
+		intArgs[0] = 75;		//not currently used - chance that there's a terrain object
+		intArgs[1] = 75;		//chance that it's a tree vs a rock
+ 		HuntingMap huntLayout = new HuntingMap(dblArgs, intArgs, ConstantStore.Environments.PLAINS);
+		
+		hunterSprite = new AnimatingSprite(container,
 				48,
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
@@ -83,7 +99,7 @@ public class HuntScene extends Scene {
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERRIGHT")}, 250),
 				AnimatingSprite.Direction.RIGHT);
 		
-		mainLayer.add(hunter,
+		mainLayer.add(hunterSprite,
 				new Vector2f(mainLayer.getWidth()/2,mainLayer.getHeight()/2),
 				ReferencePoint.CENTERCENTER,
 				20,
