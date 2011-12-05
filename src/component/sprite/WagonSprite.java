@@ -6,7 +6,7 @@ import org.newdawn.slick.gui.GUIContext;
 import core.ImageStore;
 
 public class WagonSprite extends Sprite {
-	private static final int WHEEL_ROTATION_TIME = 75; 
+	private static final int WHEEL_ROTATION_TIME = 30; 
 	private static final int WHEEL_ROTATION_AMOUNT = -1;
 	
 	private Sprite bigWheelSprite;

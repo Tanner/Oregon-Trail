@@ -13,12 +13,9 @@ import component.Component;
  */
 public class Sprite extends Component {
 	private Image image;
-	private int rotation;
 	
 	public Sprite(GUIContext context, int width, int height) {
 		super(context, width, height);
-		
-		rotation = 0;
 	}
 	
 	public Sprite(GUIContext context, int width, Image image) {
@@ -57,17 +54,11 @@ public class Sprite extends Component {
 		return image.getResourceReference();
 	}
 
-	public int getRotation() {
-		return rotation;
+	public float getRotation() {
+		return image.getRotation();
 	}
-
-	public void setRotation(int rotation) {
-		this.rotation = rotation;
-		
-		image.rotate(rotation);
-	}
-
+	
 	public void rotate(int delta) {
-		setRotation((getRotation() + delta) % 360);
+		image.setRotation((getRotation() + delta));
 	}
 }
