@@ -3,7 +3,13 @@
  */
 package component;
 
+import java.util.Map;
+
+import model.HuntingMap;
+import model.huntingMap.TerrainObject;
+
 import org.newdawn.slick.gui.GUIContext;
+
 
 /**
  * builds the hunting grounds panel that will hold the terrain that the hunting minigame will occur upon
@@ -11,18 +17,33 @@ import org.newdawn.slick.gui.GUIContext;
 public class HuntingGroundsComponent extends Component {
 
 	/**the width of the hunt grounds panel*/
-	private static final int GRNDS_WIDTH = 4096;
+	private static int groundsWidth;
 	/**the height of the hunt grounds panel*/
-	private static final int GRNDS_HEIGHT = 4096;
-
+	private static int groundsHeight;
+	/** */
 	
 	
-	public HuntingGroundsComponent(GUIContext context, int width, int height) {
+	
+	public HuntingGroundsComponent(GUIContext context, int width, int height, HuntingMap huntLayout) {
 		super(context, width, height);
+		this.groundsHeight = height;
+		this.groundsWidth = width;
+	
+ 		Map<Integer, TerrainObject> tmpLayoutArray = huntLayout.getHuntingGroundsMap();
+
+ 		for (int i = 0; i < tmpLayoutArray.size(); i ++){
+ 			//System.out.printf("%d : %s | ",i, tmpLayoutArray.get(i).getImgName());
+ 			//build image for mapscene
+ 			
+ 			
+ 		}
+ 		
+		
+		
 		
 	}
 	public HuntingGroundsComponent(GUIContext context) {
-		super(context, GRNDS_WIDTH, GRNDS_HEIGHT);
+		super(context, groundsHeight, groundsHeight);
 		
 
 	}

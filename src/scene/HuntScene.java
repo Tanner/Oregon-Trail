@@ -1,9 +1,12 @@
 package scene;
 
+import java.util.Map;
+
 import model.HuntingMap;
 import model.Party;
 import model.Person;
 import model.WorldMap;
+import model.huntingMap.TerrainObject;
 
 import org.newdawn.slick.Animation;
 //import org.newdawn.slick.Color;
@@ -18,6 +21,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 //import component.Label;
+import component.HuntingGroundsComponent;
 import component.Panel;
 //import component.Positionable;
 import component.Positionable.ReferencePoint;
@@ -68,7 +72,7 @@ public class HuntScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-
+		SoundStore.get().stopAllSound();
 		SoundStore.get().playHuntMusic();
 		
 		hud = new HuntHUD(container, new HUDListener());
@@ -85,8 +89,12 @@ public class HuntScene extends Scene {
 		
 		intArgs[0] = 75;		//not currently used - chance that there's a terrain object
 		intArgs[1] = 75;		//chance that it's a tree vs a rock
- 		HuntingMap huntLayout = new HuntingMap(dblArgs, intArgs, ConstantStore.Environments.PLAINS);
 		
+ 		HuntingMap huntLayout = new HuntingMap(dblArgs, intArgs, ConstantStore.Environments.PLAINS);
+// 		Map<Integer, TerrainObject> tmpLayoutArray = huntLayout.getHuntingGroundsMap();
+ 		
+ 		HuntingGroundsComponent huntPanel = new HuntingGroundsComponent(container, 4800, 4800, huntLayout);
+  	
 		hunterSprite = new AnimatingSprite(container,
 				48,
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
@@ -118,11 +126,7 @@ public class HuntScene extends Scene {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
-		
-		if(SoundStore.get().getPlayingMusic() == null) {
-			SoundStore.get().playTownMusic();
-		}
-
+	
 		if (moveUpperLeft(container)){
 
 		} else if (moveLowerLeft(container)){

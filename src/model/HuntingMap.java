@@ -36,7 +36,7 @@ public class HuntingMap implements Serializable {
 	 * corner to lower right, up to down and then left to right, holds objects for each coord of map*/
 	private Map<Integer, TerrainObject> huntingGroundsMap;
 	/**random generator used for entire hunt map*/
-//	private Random huntMapRand;
+	private Random huntMapRand;
 	/**the value of the terrain at this coord - */
 	private char[][] terrainHere;
 	
@@ -69,12 +69,20 @@ public class HuntingMap implements Serializable {
 		
 		//set up test hand-build forrest
 		for (int i = 0; i < 36; i++)
-			terrainHere[i] = terrainGen(i);
-		for (int x = 36; x < terrainHere.length ; x++)
-		for (int y = 0; y < terrainHere[x].length ; y++){
-			terrainHere[x][y] = '9';				
+			terrainHere[i] = terrainGenX(i);
+		for (int x = 36; x < terrainHere.length ; x++) {
+			for (int y = 0; y < terrainHere[x].length ; y++){
+				terrainHere[x][y] = '9';				
+			}
 		}
-
+		/*
+		for (int x = 0; x < 100; x ++){
+			for (int y = 0; y < 100; y ++){
+				System.out.printf("%s |", terrainHere[x][y] );			
+			}
+			System.out.printf("\n");
+		}*/
+		
 		switch (environs) {
 
 		case FOREST :
@@ -95,7 +103,7 @@ public class HuntingMap implements Serializable {
 		
 		}//end switch
 		
-//		this.huntMapRand = new Random();
+		this.huntMapRand = new Random();
 		huntingGroundsMap = new HashMap<Integer, TerrainObject>();
 		this.generateMap();			
 	}
@@ -115,7 +123,7 @@ public class HuntingMap implements Serializable {
 		int mapWidth = (int) (this.MAP_WIDTH / 48.0);
 		int mapHeight = (int) (this.MAP_HEIGHT / 48.0);
 		
-		//leave space in call for aguments to pass to generate map
+		//leave space in call for arguments to pass to generate map
 		int[] altArgs = new int[1];
 		altArgs[0]=0;
 		
@@ -130,15 +138,14 @@ public class HuntingMap implements Serializable {
 					objMoveMod = .6;
 					objStopShot = .5;
 				}//if based on name extension
-				huntingGroundsMap.put(calcMapIdx(x,y), new TerrainObject(objName + nameExt, x,  y, this.bckGround, objMoveMod,  objStopShot));					
-				
+				huntingGroundsMap.put(calcMapIdx(x,y), new TerrainObject(objName + nameExt, x,  y, this.bckGround, objMoveMod,  objStopShot));								
 			}//for y
 		}//for x
 		
 		
 	}//generate map method
 
-	private char[] terrainGen(int idx){
+	private char[] terrainGenX(int idx){
 		if (idx == 0){
 			char[] terrainTemp = {'9','9','9','9','9','9','9','9','9','9','0','3','a','4','4','6','9','0','3','a','4','7','9','9','9',
 								'9','9','9','9','9','9','9','9','9','9','9','9','9','9','9','9','9','9','9','9','9','9','9','9','9',
@@ -362,14 +369,23 @@ public class HuntingMap implements Serializable {
 	 * calculates what extension should be used
 	 */
 	private String getExt(int x, int y, int[] args){
-		String retVal = "90";
+		
+		String retVal = Character.toString(terrainHere[x][y]) + ((huntMapRand.nextBoolean()) ? "1" : "0") ;
 		
 		
 		return retVal;
 	}
 	
+	
+	/**
+	 * @return the huntingGroundsMap
+	 */
+	public Map<Integer, TerrainObject> getHuntingGroundsMap() {
+		return huntingGroundsMap;
+	}
+
 	private int calcMapIdx(int x, int y){
-		int retVal = (x * (int)this.MAP_HEIGHT) + y;
+		int retVal = (x * (int)(this.MAP_HEIGHT/48.0)) + y;
 		return retVal;
 	}
 

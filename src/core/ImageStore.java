@@ -78,16 +78,22 @@ public class ImageStore {
 		IMAGES.put("BIG_WHEEL_3", new Image(ConstantStore.PATH_TRAIL + "wheel3.png", false, Image.FILTER_NEAREST));
 				
 		//images for hunt scene
+		//hunter
 		IMAGES.put("HUNTER_LEFT", new Image(ConstantStore.PATH_HUNT + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_RIGHT", new Image(ConstantStore.PATH_HUNT + "hunterRightFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_FRONT", new Image(ConstantStore.PATH_HUNT + "hunterFaceFront1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_BACK", new Image(ConstantStore.PATH_HUNT + "hunterFaceBack1.png", false, Image.FILTER_NEAREST));
-		//below need to be replaced with diagonal images once they're made
 		IMAGES.put("HUNTER_UPPERLEFT", new Image(ConstantStore.PATH_HUNT + "hunterLeftFaceBack1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_UPPERRIGHT", new Image(ConstantStore.PATH_HUNT + "hunterRightFaceBack1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_LOWERLEFT", new Image(ConstantStore.PATH_HUNT + "hunterLeftFaceFront1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_LOWERRIGHT", new Image(ConstantStore.PATH_HUNT + "hunterRightFaceFront1.png", false, Image.FILTER_NEAREST));
-
+		//terrain
+		IMAGES.put("HUNT_GRASS", new Image(ConstantStore.PATH_HUNTBKG + "grassBG.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("HUNT_SNOW", new Image(ConstantStore.PATH_HUNTBKG + "snowBG.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("HUNT_MOUNTAIN", new Image(ConstantStore.PATH_HUNTBKG + "mountainBG.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("HUNT_DESERT", new Image(ConstantStore.PATH_HUNTBKG + "desertBG.png", false, Image.FILTER_NEAREST));
+		
+		//trail people
 		IMAGES.put("TRAPPER_LEFT", new Image(ConstantStore.PATH_PEOPLE + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("TRAPPER_RIGHT", new Image(ConstantStore.PATH_PEOPLE + "hunterRightFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("MAIDEN_LEFT", new Image(ConstantStore.PATH_PEOPLE + "maidenLeftFaceSide1.png", false, Image.FILTER_NEAREST));
