@@ -29,15 +29,9 @@ public class HuntingGroundsComponent extends Component {
 		this.groundsHeight = height;
 		this.groundsWidth = width;
 	
- 		Map<Integer, TerrainObject> tmpLayoutArray = huntLayout.getHuntingGroundsMap();
+ 		//Map<Integer, TerrainObject> tmpLayoutArray = huntLayout.getHuntingGroundsMap();
 
- 		for (int i = 0; i < tmpLayoutArray.size(); i ++){
- 			//System.out.printf("%d : %s | ",i, tmpLayoutArray.get(i).getImgName());
- 			//build image for mapscene
  			
- 			
- 		}
- 		
 		
 		
 		
