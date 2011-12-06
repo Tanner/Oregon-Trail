@@ -35,7 +35,6 @@ public class ImageStore {
 	 * @throws SlickException
 	 */
 	private void initialize() throws SlickException {
-		
 		IMAGES.put("NULL",  new Image(ConstantStore.PATH_LOGO + "null.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("VOID", new Image(ConstantStore.PATH_LOGO + "void.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("LOGO", new Image(ConstantStore.PATH_GRAPHICS + "logo.png", false, Image.FILTER_NEAREST));

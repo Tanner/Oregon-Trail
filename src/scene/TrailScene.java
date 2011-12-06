@@ -167,11 +167,17 @@ public class TrailScene extends Scene {
 		}
 		partyMembersWidth -= partyMembersPadding;
 		
-		vehicle = new VehicleGroup(container, party.getVehicle());
+		int vehicleWidth = 0;
+		if (party.getVehicle() != null) {
+			vehicle = new VehicleGroup(container, party.getVehicle());
+			vehicleWidth = vehicle.getWidth();
+		}
 		
-		mainLayer.addAsRow(partyMembers.iterator(), trail.getPosition(ReferencePoint.BOTTOMRIGHT), -partyMembersWidth - 15 - vehicle.getWidth(), -partyMembersHeight - 25, 10);
+		mainLayer.addAsRow(partyMembers.iterator(), trail.getPosition(ReferencePoint.BOTTOMRIGHT), -partyMembersWidth - 15 - vehicleWidth, -partyMembersHeight - 25, 10);
 		
-		mainLayer.add(vehicle, partyMembers.get(partyMembers.size() - 1).getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMLEFT);
+		if (vehicle != null) {
+			mainLayer.add(vehicle, partyMembers.get(partyMembers.size() - 1).getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMLEFT);
+		}
 		
 //		partyComponent = new PartyComponent(container, container.getWidth(), parallaxPanel.getHeight(), party.getPartyComponentDataSources());
 //		mainLayer.add(partyComponent, mainLayer.getPosition(ReferencePoint.BOTTOMRIGHT), ReferencePoint.BOTTOMRIGHT, 0, PARTY_Y_OFFSET);
@@ -417,7 +423,10 @@ public class TrailScene extends Scene {
 			for (PartyMemberGroup pg : partyMembers) {
 				pg.update(delta);
 			}
-			vehicle.update(delta);
+			
+			if (vehicle != null) {
+				vehicle.update(delta);
+			}
 			
 			if (!SoundStore.get().getPlayingSounds().contains("Steps")) {
 				SoundStore.get().playSound("Steps");
