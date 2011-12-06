@@ -539,11 +539,14 @@ public class HuntScene extends Scene {
 			return types;
 		}
 		
-		public int[][] getTiles() {
-			int[][] tiles = new int[rows][cols];
+		public char[][] getTiles() {
+			char[][] tiles = new char[rows][cols];
 			for(int i = 0; i < rows; i++) {
 				for(int j = 0; j < cols; j++) {
-					tiles[i][j] = this.tiles[i][j].getIndex();
+					int index = this.tiles[i][j].getIndex();
+					//Deal with it!
+					tiles[i][j] = index == 10 ? 'a' : index == 11 ? 'b' : index == 12 ? 'c' : index == 13 ? 'd' : index == 14 ? 'e' :
+						index == 15 ? 'f' : (char)index;					
 				}
 			}
 			return tiles;
@@ -563,7 +566,9 @@ public class HuntScene extends Scene {
 		A, 
 		B, 
 		C, 
-		D;
+		D,
+		E,
+		F;
 		
 		//0 = empty, 1 = stone, 2 = tree
 		/*
@@ -575,7 +580,7 @@ public class HuntScene extends Scene {
 			//Right
 			if (direction == 2) {
 				//BottomHalf
-				if (current.equals(Tiles.BOTRIGHT) || current.equals(Tiles.BOTFULL) || current.equals(Tiles.B)) {
+				if (current.equals(Tiles.BOTRIGHT) || current.equals(Tiles.BOTFULL) || current.equals(Tiles.B) || current.equals(Tiles.F)) {
 					returnList.add(BOTFULL);
 					returnList.add(BOTLEFT);
 					returnList.add(A);
@@ -586,7 +591,7 @@ public class HuntScene extends Scene {
 					returnList.add(B);
 					returnList.add(D);
 				//TopHalf
-				} else if (current.equals(Tiles.TOPRIGHT) || current.equals(Tiles.TOPFULL) || current.equals(Tiles.D)){
+				} else if (current.equals(Tiles.TOPRIGHT) || current.equals(Tiles.TOPFULL) || current.equals(Tiles.D) || current.equals(Tiles.E)){
 					returnList.add(TOPFULL);
 					returnList.add(TOPLEFT);
 					returnList.add(C);
@@ -599,7 +604,7 @@ public class HuntScene extends Scene {
 				}
 				//Left
 			} else if (direction == 1) {
-				if (current.equals(Tiles.BOTLEFT) || current.equals(Tiles.BOTFULL) || current.equals(Tiles.A)) {
+				if (current.equals(Tiles.BOTLEFT) || current.equals(Tiles.BOTFULL) || current.equals(Tiles.A) || current.equals(Tiles.E)) {
 					returnList.add(BOTRIGHT);
 					returnList.add(BOTFULL);
 					returnList.add(B);
@@ -608,7 +613,7 @@ public class HuntScene extends Scene {
 					returnList.add(A);
 					returnList.add(C);
 					returnList.add(RIGHTFULL);
-				} else if (current.equals(Tiles.TOPLEFT) || current.equals(Tiles.TOPFULL) || current.equals(Tiles.C)){
+				} else if (current.equals(Tiles.TOPLEFT) || current.equals(Tiles.TOPFULL) || current.equals(Tiles.C) || current.equals(Tiles.F)){
 					returnList.add(TOPFULL);
 					returnList.add(TOPRIGHT);
 					returnList.add(D);
@@ -621,7 +626,7 @@ public class HuntScene extends Scene {
 			}
 				//Up
 			} else if (direction == 3) {
-				if (current.equals(Tiles.TOPRIGHT) || current.equals(Tiles.RIGHTFULL) || current.equals(Tiles.A)) {
+				if (current.equals(Tiles.TOPRIGHT) || current.equals(Tiles.RIGHTFULL) || current.equals(Tiles.A) || current.equals(Tiles.E)) {
 					returnList.add(RIGHTFULL);
 					returnList.add(BOTRIGHT);
 					returnList.add(C);
@@ -630,7 +635,7 @@ public class HuntScene extends Scene {
 					returnList.add(BOTFULL);
 					returnList.add(A);
 					returnList.add(B);
-				} else if (current.equals(Tiles.TOPLEFT) || current.equals(Tiles.LEFTFULL) || current.equals(Tiles.B)){
+				} else if (current.equals(Tiles.TOPLEFT) || current.equals(Tiles.LEFTFULL) || current.equals(Tiles.B) || current.equals(Tiles.F)){
 					returnList.add(BOTLEFT);
 					returnList.add(LEFTFULL);
 					returnList.add(D);
@@ -644,7 +649,7 @@ public class HuntScene extends Scene {
 				}
 				//Down
 			} else if (direction == 4) {
-				if (current.equals(Tiles.BOTRIGHT) || current.equals(Tiles.RIGHTFULL) || current.equals(Tiles.C)) {
+				if (current.equals(Tiles.BOTRIGHT) || current.equals(Tiles.RIGHTFULL) || current.equals(Tiles.C) || current.equals(Tiles.F)) {
 					returnList.add(RIGHTFULL);
 					returnList.add(TOPRIGHT);
 					returnList.add(A);
@@ -653,7 +658,7 @@ public class HuntScene extends Scene {
 					returnList.add(TOPFULL);
 					returnList.add(C);
 					returnList.add(D);
-				} else if (current.equals(Tiles.BOTLEFT) || current.equals(Tiles.LEFTFULL) || current.equals(Tiles.D)){
+				} else if (current.equals(Tiles.BOTLEFT) || current.equals(Tiles.LEFTFULL) || current.equals(Tiles.D) || current.equals(Tiles.E)){
 					returnList.add(TOPLEFT);
 					returnList.add(LEFTFULL);
 					returnList.add(B);
