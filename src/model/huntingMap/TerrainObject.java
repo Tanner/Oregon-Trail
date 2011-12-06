@@ -5,7 +5,7 @@ package model.huntingMap;
 
 import java.io.Serializable;
 
-import model.Condition;
+//import model.Condition;
 import core.ConstantStore;
 
 /**

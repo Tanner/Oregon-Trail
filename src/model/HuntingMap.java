@@ -5,9 +5,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import model.huntingMap.TerrainObject;
@@ -90,6 +88,8 @@ public class HuntingMap implements Serializable {
 		case SNOWY_MOUNTAINS :
 		case SNOWY_PLAINS :	this.bckGround = ConstantStore.bckGroundType.SNOW;
 							break;
+		default : this.bckGround = ConstantStore.bckGroundType.GRASS;
+						break;
 		
 		}//end switch
 		
@@ -99,27 +99,205 @@ public class HuntingMap implements Serializable {
 	}//constructor
 	
 	/**
+	 * @return the bckGround
+	 */
+	public ConstantStore.bckGroundType getBckGround() {
+		return bckGround;
+	}
+
+	/**
 	 * generates the map for this hunting instance by building terrain layouts randomly.
 	 */
 	private void generateMap(){
-		
-		//speed modification for moving through this terrain
-		double objMoveMod;
-		//chance shot is blocked each turn in this terrain
-		double objStopShot;
+		HuntTerrainGenerator mapGen = new HuntTerrainGenerator(this.mapYMax, this.mapXMax, this.MAP_DENSITY, this.MAP_STONY, huntMapRand, 
+																this.TILE_WIDTH, this.TILE_HEIGHT, this.bckGround);
+		this.huntingGroundsMap = mapGen.getHuntingGroundsMap();
+	}//generate map method
 
-		HuntTerrainGenerator mapGen = new HuntTerrainGenerator(this.mapYMax, this.mapXMax, this.MAP_DENSITY, this.MAP_STONY, huntMapRand);
+
+	/**
+	 * @return the huntingGroundsMap
+	 */
+	public TerrainObject[][] getHuntingGroundsMap() {
+		return huntingGroundsMap;
+	}
+
+	
+	/**
+	 * @return the tILE_WIDTH
+	 */
+	public double getTILE_WIDTH() {
+		return TILE_WIDTH;
+	}
+
+	/**
+	 * @return the tILE_HEIGHT
+	 */
+	public double getTILE_HEIGHT() {
+		return TILE_HEIGHT;
+	}
+
+	/**
+	 * @return the mAP_DENSITY
+	 */
+	public int getMAP_DENSITY() {
+		return MAP_DENSITY;
+	}
+
+	/**
+	 * @return the mAP_STONY
+	 */
+	public int getMAP_STONY() {
+		return MAP_STONY;
+	}
+
+	/**
+	 * @return the mAP_WIDTH
+	 */
+	public double getMAP_WIDTH() {
+		return MAP_WIDTH;
+	}
+
+	/**
+	 * @return the mAP_HEIGHT
+	 */
+	public double getMAP_HEIGHT() {
+		return MAP_HEIGHT;
+	}
+
+	/**
+	 * @return the mAP_X_LOC
+	 */
+	public double getMAP_X_LOC() {
+		return MAP_X_LOC;
+	}
+
+	/**
+	 * @return the mAP_Y_LOC
+	 */
+	public double getMAP_Y_LOC() {
+		return MAP_Y_LOC;
+	}
+
+
+	/**
+	 * george's wonder class 
+	 * that generates the terrain for the hunt map
+	 */
+	private class HuntTerrainGenerator {
+		//Rows and cols are final
+		private final int totalRows;
+		private final int totalCols;
 		
-		//leave space in call for arguments to pass to generate map
-		int[] altArgs = new int[1];
-		altArgs[0]=0;
-		//loop through possible positions of tiles on map as per mapgen construct
-		for (int row = 0; row < mapGen.getTiles().length; row++){
-			for (int col = 0; col < mapGen.getTiles()[row].length; col++){ 
-				//if type is 1 then rock, 2 then tree
-				String namePrefix = (mapGen.getTypes()[row][col] == 1) ? ("rock1") : ("tree1");
-				String nameExt = getExt(mapGen.getTiles()[row][col], namePrefix);
-				if (mapGen.getTiles()[row][col] == '9'){//9 is always empty tile, regardless of stone or tree
+		/**type to use when empty - can't be 0*/
+		private final int TYPE_EMPTY = 1;
+		/**width of tile used to paint map*/
+		private final double TILE_WIDTH;
+		/**height of tile used to paint map*/
+		private final double TILE_HEIGHT;
+		
+		
+		/** 2d array that holds each hunting grounds graphics object for the actual map*/
+		private TerrainObject[][] huntingGroundsMap;
+		/**holds random object from parent class - use 1 random object so can control generator by seeding if necessary*/
+		Random huntMapRand;
+		/**the background type that the map this generator populates has*/
+		ConstantStore.bckGroundType bckGround;
+		
+		private Tiles[][] tiles;
+		private int[][] types;
+		
+		/**
+		 * builds the huntTerrainGenerator
+		 * @param totalRows number of tiles in the y direction on the map
+		 * @param totalCols number of tiles in the x direction on the map
+		 * @param procChance chance that a particular tile will have terrain
+		 * @param stoneProc chance that a particular terrain block will be stone(impassable), as opposed to trees(passable but difficult)
+		 */
+		public HuntTerrainGenerator(int totalRows, int totalCols, int procChance, 
+									int stoneProc, Random huntMapRand, double tileWidth, 
+									double tileHeight, ConstantStore.bckGroundType bckGround) {
+			this.totalRows = totalRows;
+			this.totalCols = totalCols;
+			this.huntMapRand = huntMapRand;
+			this.TILE_WIDTH = tileWidth;
+			this.TILE_HEIGHT = tileHeight;
+			int currentType = 1;
+			
+			
+			tiles = new Tiles[this.totalRows][this.totalCols];
+			types = new int[this.totalRows][this.totalCols];
+			huntingGroundsMap = new TerrainObject[this.totalRows][this.totalCols];
+			
+			
+			//Set up the border of empty tiles around our map
+			for (int row = 0; row < this.totalRows; row++) {
+				tiles[row][0] = Tiles.EMPTY;
+				types[row][0] = 0;
+				tiles[row][totalCols-1] = Tiles.EMPTY;
+				types[row][totalCols-1] = TYPE_EMPTY;
+			}
+			for (int col = 0; col < this.totalCols; col++) {
+				tiles[0][col] = Tiles.EMPTY;
+				types[0][col] = 0;
+				tiles[totalRows-1][col] = Tiles.EMPTY;
+				types[totalRows-1][col] = TYPE_EMPTY;
+			}
+			//proc means we place an object
+			//If we proc, place a tile and make it the right type.
+			for (int row = 0; row < this.totalRows; row++) {
+				for (int col = 0; col < this.totalCols; col++) {
+					if (tiles[row][col] == null) {//check if this null tile gets some terrain
+						if (this.huntMapRand.nextInt(100) < procChance) {//if so figure out what kind and place it
+							currentType = (this.huntMapRand.nextInt(100) < stoneProc) ? 1 : 2;
+							placeTile(row, col, huntMapRand, currentType);
+						}
+					}
+				}
+			}//for i rows
+			
+			//Make all the null tiles empty
+			for(int row = 0; row < totalRows; row++) {
+				for(int col = 0; col < totalCols; col++) {
+					if (tiles[row][col] == null) {//if still no terrain, put default empty in place
+						  tiles[row][col] = Tiles.EMPTY;
+						  types[row][col] = TYPE_EMPTY;		//needs to be either 1 or 2 - originally had 0 in types, 
+						  							//but i am building tileset with the empties with both tree1 and rock1 sets having an empty tile  						
+					}//either gets terrain or it doesn't
+					
+					//build structure that holds terrain objects
+					huntingGroundsMap[row][col] = buildTerrainObject(row, col);
+
+				}//for col = cols
+			}//for row = rows
+			
+		}//huntTerrainGenerator constructor
+		
+		
+		/**
+		 * @return the huntingGroundsMap
+		 */
+		public TerrainObject[][] getHuntingGroundsMap() {
+			return this.huntingGroundsMap;
+		}
+
+		/**
+		 * build a terrain object, holding the relevant information about the terrain and its effect on hunt gameplay at a particular location
+		 * @param row the row in the map that this terrain object represents
+		 * @param col the col in the map that this terrain object represents
+		 * @return the completed terrain object
+		 */
+		
+		private TerrainObject buildTerrainObject(int row, int col){
+			
+			//speed modification for moving through this terrain
+			double objMoveMod;
+			//chance shot is blocked each turn in this terrain
+			double objStopShot;
+			//if type is 1 then rock, 2 then tree
+				String namePrefix = (types[row][col] == 1) ? ("rock1") : ("tree1");
+				String nameExt = getFileName(this.getSingleCharTile(row,col), namePrefix);
+				if (this.tiles[row][col] == Tiles.EMPTY){//9 is always empty tile, regardless of stone or tree
 					objMoveMod = 1;
 					objStopShot = 0;
 				}//nameExt not --
@@ -132,102 +310,22 @@ public class HuntingMap implements Serializable {
 						objStopShot = .5;
 					}//if either rock or stone
 				}//if based on name extension
-				huntingGroundsMap[row][col] = new TerrainObject(nameExt, objStopShot, objStopShot, bckGround, objStopShot, objStopShot);								
-			}//for y
-		}//for x
-	}//generate map method
-
-/**
- * builds the tile name from the generated data
- * @param prefix what tile, from 0 to f hex in chars
- * @param type what type of tile (atm either stone1 or tree1)
-
- * @return
- */
-	private String getExt(char prefix, String type){
+				return new TerrainObject(nameExt, row * this.TILE_WIDTH, col * this.TILE_HEIGHT, this.bckGround, objMoveMod, objStopShot);								
+		}//method buildTerrainObject
 		
-		String retVal = type + prefix + ((huntMapRand.nextBoolean()) ? "1" : "0") ;
-		return retVal;
-	}
-	
-	
-	/**
-	 * @return the huntingGroundsMap
-	 */
-	public TerrainObject[][] getHuntingGroundsMap() {
-		return huntingGroundsMap;
-	}
-
-	
-	/**
-	 * george's wonder class 
-	 * that generates the terrain for the hunt map
-	 */
-	private class HuntTerrainGenerator {
-		//Rows and cols are final
-		private final int totalRows;
-		private final int totalCols;
-//		private final static int treeProc = 100 - stoneProc;
-		
-		private Tiles[][] tiles;
-		private int[][] types;
 		
 		/**
-		 * builds the huntTerrainGenerator
-		 * @param totalRows number of tiles in the y direction on the map
-		 * @param totalCols number of tiles in the x direction on the map
-		 * @param procChance chance that a particular tile will have terrain
-		 * @param stoneProc chance that a particular terrain block will be stone(impassable), as opposed to trees(passable but difficult)
+		 * builds the tile name from the generated data
+		 * @param prefix what tile, from 0 to f hex in chars
+		 * @param type what type of tile (atm either stone1 or tree1)
+
+		 * @return a string holding the filename for the particular tile in question
 		 */
-		public HuntTerrainGenerator(int totalRows, int totalCols, int procChance, int stoneProc, Random huntMapRand) {
-			this.totalRows = totalRows;
-			this.totalCols = totalCols;
-			int currentType = 1;
-			tiles = new Tiles[this.totalRows][this.totalCols];
-			types = new int[this.totalRows][this.totalCols];
-			//Set up the border of empty tiles around our map
-			for(int row = 0; row < this.totalRows; row++) {
-				tiles[row][0] = Tiles.EMPTY;
-				types[row][0] = 0;
-				tiles[row][totalCols-1] = Tiles.EMPTY;
-				types[row][totalCols-1] = 0;
+			private String getFileName(String prefix, String type){	
+				String retVal = type + prefix + ((huntMapRand.nextBoolean()) ? "1" : "0") ;
+				return retVal;
 			}
-			for(int col = 0; col < this.totalCols; col++) {
-				tiles[0][col] = Tiles.EMPTY;
-				types[0][col] = 0;
-				tiles[totalRows-1][col] = Tiles.EMPTY;
-				types[totalRows-1][col] = 0;
-			}
-			//proc means we place an object
-			//If we proc, place a tile and make it the right type.
-			for(int row = 0; row < this.totalRows; row++) {
-				for(int col = 0; col < this.totalCols; col++) {
-					if(tiles[row][col] == null) {//check if this null tile gets some terrain
-						if (huntMapRand.nextInt(100) < procChance) {//if so figure out what kind and place it
-							currentType =  (huntMapRand.nextInt(100) < stoneProc) ? 1 : 2;
-							placeTile(row, col, huntMapRand, currentType);
-						} else {//if no terrain, put default empty in place
-							  tiles[row][col] = Tiles.EMPTY;
-							  types[row][col] = 1;		//needs to be either 1 or 2 - originally had 0 in types, 
-							  							//but i am building tileset with the empties with both tree1 and rock1 sets having an empty tile  						
-						}
-					}
-				}
-			}//for i rows
-			
-			//Make all the null tiles empty
-/*			for(int i = 0; i < totalRows; i++) {
-				for(int j = 0; j < totalCols; j++) {
-					if(tiles[i][j] == null) {
-					  tiles[i][j] = Tiles.EMPTY;
-					  types[i][j] = 0;
-					}//if tiles are null then tiles = empty const and the type at this location is 0 (empty)
-				}//for j = cols
-			}//for i = rows
-*/
-			
-		}//huntTerrainGenerator constructor
-		
+				
 		//Places a tile
 		private void placeTile(int row, int col, Random random, int currentType) {
 			if(tiles[row][col] == null) {
@@ -325,14 +423,14 @@ public class HuntingMap implements Serializable {
 				else {
 					tiles[row][col] = Tiles.EMPTY;
 
-					types[row][col] = 0;
+					types[row][col] = TYPE_EMPTY;
 				}
 //				System.out.println(tiles[row][col] + "\n");
 //				System.out.println(this.toString());
 				
 				//If we made an empty tile, we dont place anything nearby
 				if(tiles[row][col] == Tiles.EMPTY) {
-					types[row][col] = 0;
+					types[row][col] = TYPE_EMPTY;
 					return;
 				}
 				
@@ -374,26 +472,40 @@ public class HuntingMap implements Serializable {
 		}
 		
 		/**
+		 * returns the char equivalent of a single tile value
+		 * @param row the row location in the tile array
+		 * @param col the col location in the tile array
+		 * @return the character sought
+		 */
+		public String getSingleCharTile(int row, int col){
+			//Tiles tmp = this.tiles[row][col];
+			//System.out.println("" + row +"|" +col + "| ord : " + tmp.toString());
+			int index = this.tiles[row][col].getIndex();
+			//System.out.println("" + row +"|" +col +"|" +index + "|" + tmp.toString());
+			//converts index in array to be a character to be put in the2d char array of tiles
+			String charTile = (index == 10) ? "a" : 
+							(index == 11) ? "b" : 
+							(index == 12) ? "c" : 
+							(index == 13) ? "d" : 
+							(index == 14) ? "e" : 
+							(index == 15) ? "f" : Integer.toString(index);					
+			return charTile;
+		}
+		
+		/**
 		 * takes 2d array of tile ints and converts to required chars for map implementation
 		 * @return 2d array of generated tiles
 		 */
-		public char[][] getTiles() {
-			char[][] charTiles = new char[this.totalRows][this.totalCols];
+		public String[][] getCharTiles() {
+			String[][] charTiles = new String[this.totalRows][this.totalCols];
 			for(int row = 0; row < this.totalRows; row++) {
 				for(int col = 0; col < this.totalCols; col++) {
-					int index = this.tiles[row][col].getIndex();
-					//converts index in array to be a character to be put in the2d char array of tiles
-					charTiles[row][col] = (index == 10) ? 'a' : 
-									(index == 11) ? 'b' : 
-									(index == 12) ? 'c' : 
-									(index == 13) ? 'd' : 
-									(index == 14) ? 'e' : 
-									(index == 15) ? 'f' : (char)index;					
-				}
-			}
+					charTiles[row][col] = getSingleCharTile(row,col);
+				}//for col = 0 to tot
+			}//for row = 0 to tot
 			return charTiles;
-		}
-	}
+		}// method getCharTiles
+	}//class definition
 	
 	/**
 	 * structure representing the tile being added to the map
