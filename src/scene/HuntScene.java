@@ -350,6 +350,7 @@ public class HuntScene extends Scene {
 
 	//TODO: Call huntTerrainGenerator
 	public class HuntTerrainGenerator {
+		//Rows and cols are final
 		private final int rows;
 		private final int cols;
 //		private final static int treeProc = 100 - stoneProc;
@@ -363,6 +364,7 @@ public class HuntScene extends Scene {
 			int currentType = 1;
 			tiles = new Tiles[rows][cols];
 			types = new int[rows][cols];
+			//Set up the border of empty tiles around our map
 			for(int i = 0; i < rows; i++) {
 				tiles[i][0] = Tiles.EMPTY;
 				types[i][0] = 0;
@@ -375,6 +377,7 @@ public class HuntScene extends Scene {
 				tiles[rows-1][i] = Tiles.EMPTY;
 				types[rows-1][i] = 0;
 			}
+			//If we proc, place a tile and make it the right type.
 			Random random = new Random();
 			for(int i = 0; i < rows; i++) {
 				for(int j = 0; j < cols; j++) {
@@ -388,6 +391,7 @@ public class HuntScene extends Scene {
 				}
 			}
 			
+			//Make all the null tiles empty
 			for(int i = 0; i < rows; i++) {
 				for(int j = 0; j < cols; j++) {
 					if(tiles[i][j] == null) {
@@ -399,12 +403,14 @@ public class HuntScene extends Scene {
 			
 		}
 		
+		//Places a tile
 		private void placeTile(int row, int col, Random random, int currentType) {
 			if(tiles[row][col] == null) {
 				List<Tiles> possibleList = new ArrayList<Tiles>();
+				//At the beginning, the tile can be anything
 				for(Tiles tile : Tiles.values())
 					possibleList.add(tile);
-				
+				//Then, for each neighbor, go through and remove anything that they cant be next to
 				if(row != 0) {
 					Tiles finder = tiles[row - 1][col];
 					List<Tiles> helper = new ArrayList<Tiles>();
@@ -485,6 +491,7 @@ public class HuntScene extends Scene {
 					}
 				}
 				
+				//Choose a random of the type possible, and make it the right type
 				if(possibleList.size() != 0) {
 					tiles[row][col] = possibleList.get(random.nextInt(possibleList.size()));
 
@@ -498,11 +505,13 @@ public class HuntScene extends Scene {
 //				System.out.println(tiles[row][col] + "\n");
 //				System.out.println(this.toString());
 				
+				//If we made an empty tile, we dont place anything nearby
 				if(tiles[row][col] == Tiles.EMPTY) {
 					types[row][col] = 0;
 					return;
 				}
 				
+				//Otherwise, place something in all neighbors
 				if(row != 0)
 					placeTile(row - 1, col, random, currentType);
 				if(col != cols - 1)
