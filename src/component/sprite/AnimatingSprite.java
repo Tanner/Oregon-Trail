@@ -18,8 +18,12 @@ public class AnimatingSprite extends Sprite {
 	private Animation lowerLeftAnimation;
 	private Animation lowerRightAnimation;
 	private Animation currentAnimation;
+	/**whether this sprite has 8 directions of movement*/
+	private boolean isEightDirectional = false;
+	/**whether this sprite is currently animating or not*/
+	private boolean isMoving = false;
 	
-	public static enum Direction { LEFT, RIGHT, FRONT, BACK }
+	public static enum Direction { LEFT, RIGHT, FRONT, BACK, UPPER_LEFT, UPPER_RIGHT, LOWER_LEFT, LOWER_RIGHT }
 	private Direction xDirection = Direction.LEFT;
 
 	/**
@@ -62,6 +66,7 @@ public class AnimatingSprite extends Sprite {
 		this.upperRightAnimation.getWidth(); 
 		this.lowerLeftAnimation.getWidth(); 
 		this.lowerRightAnimation.getWidth(); 
+		this.isEightDirectional = true;
 	
 		xDirection = Direction.FRONT;
 		currentAnimation = downAnimation;
@@ -124,14 +129,76 @@ public class AnimatingSprite extends Sprite {
 	public void update(int delta) {
 		super.update(delta);
 		
-		if (xDirection == Direction.LEFT) {
-			currentAnimation = leftAnimation;
+		if (isEightDirectional){
+			//sprite has 8 directions of possible movement
+			switch (xDirection) {
+				case LEFT :
+					currentAnimation = leftAnimation;
+					break;
+				case RIGHT : 
+					currentAnimation = rightAnimation;
+					break;
+				case FRONT : 
+					currentAnimation = downAnimation;
+					break;
+				case BACK :
+					currentAnimation = upAnimation;
+					
+					break;
+				case UPPER_LEFT :
+					currentAnimation = upperLeftAnimation;
+					
+					break;
+				case UPPER_RIGHT :
+					currentAnimation = upperRightAnimation;
+					
+					break;
+				case LOWER_LEFT : 
+					currentAnimation = lowerLeftAnimation;
+					
+					break;
+				case LOWER_RIGHT : 
+					currentAnimation = lowerRightAnimation;
+					
+					break;
+				default :
+					currentAnimation = downAnimation;
+					break;		
+			}
+			
+//			if (isMoving){
+//				currentAnimation.setAutoUpdate(true);
+//			} else {
+//				currentAnimation.setAutoUpdate(false);	
+//			}
+			
+			
 		} else {
-			currentAnimation = rightAnimation;
+		//sprite does not have 8 directional animation
+			if (xDirection == Direction.LEFT) {
+				currentAnimation = leftAnimation;
+			} else {
+				currentAnimation = rightAnimation;
+			}
 		}
 		
 		currentAnimation.update(delta);
+	}//update method
+	
+
+	/**
+	 * @return the isMoving
+	 */
+	public boolean isMoving() {
+		return isMoving;
 	}
+	/**
+	 * @param isMoving the isMoving to set
+	 */
+	public void setMoving(boolean isMoving) {
+		this.isMoving = isMoving;
+	}
+
 	
 	@Override
 	public void render(GUIContext context, Graphics g) throws SlickException {

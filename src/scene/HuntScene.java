@@ -30,6 +30,7 @@ import component.TerrainComponent;
 import component.Positionable.ReferencePoint;
 import component.hud.HuntHUD;
 import component.sprite.AnimatingSprite;
+import component.sprite.AnimatingSprite.Direction;
 
 import core.ConstantStore;
 //import core.FontStore;
@@ -107,7 +108,7 @@ public class HuntScene extends Scene {
 		
  		TerrainObject[][] tmpLayoutArray = huntLayout.getHuntingGroundsMap();
  		
- 		Panel huntPanel = new Panel(container, (int)huntLayout.getMAP_WIDTH(), (int)huntLayout.getMAP_HEIGHT(), this.background);
+// 		Panel huntPanel = new Panel(container, (int)huntLayout.getMAP_WIDTH(), (int)huntLayout.getMAP_HEIGHT(), this.background);
  		
 // 		for (int row = 0; row < tmpLayoutArray.length; row++){
 // 			for (int col = 0; col < tmpLayoutArray[row].length; col++){
@@ -116,7 +117,7 @@ public class HuntScene extends Scene {
 // 			}//for col 0 to row array length		
 //  		}//for row 0 to array length
  		
- 		mainLayer.add(huntPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
+// 		mainLayer.add(huntPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
   	
 		hunterSprite = new AnimatingSprite(container,
 				48,
@@ -151,23 +152,51 @@ public class HuntScene extends Scene {
 
 	
 		if (moveUpperLeft(container)){
+			System.out.println("upperleft");
+			hunterSprite.setDirectionFacing(Direction.UPPER_LEFT);
+			hunterSprite.setMoving(true);
 
 		} else if (moveLowerLeft(container)){
+			System.out.println("lowerleft");
+			hunterSprite.setDirectionFacing(Direction.LOWER_LEFT);
+			hunterSprite.setMoving(true);
 
 		} else if (moveUpperRight(container)){
+			System.out.println("upperright");
+			hunterSprite.setDirectionFacing(Direction.UPPER_RIGHT);
+			hunterSprite.setMoving(true);
 
 		} else if (moveLowerRight(container)){
+			System.out.println("lowerright");
+			hunterSprite.setDirectionFacing(Direction.LOWER_RIGHT);
+			hunterSprite.setMoving(true);
 
 		} else if (moveLeft(container)){
+			System.out.println("left");
+			hunterSprite.setDirectionFacing(Direction.LEFT);
+			hunterSprite.setMoving(true);
 
 		} else if (moveUp(container)){
+			System.out.println("up");
+			hunterSprite.setDirectionFacing(Direction.BACK);
+			hunterSprite.setMoving(true);
 
 		} else if (moveRight(container)){
+			System.out.println("right");
+			hunterSprite.setDirectionFacing(Direction.RIGHT);
+			hunterSprite.setMoving(true);
 
 		} else if (moveDown(container)){
+			System.out.println("down");
+			hunterSprite.setDirectionFacing(Direction.FRONT);
+			hunterSprite.setMoving(true);
 
-		} 
-			
+		} else {
+			System.out.println("not moving");
+			hunterSprite.setMoving(false);
+		
+		}
+		hunterSprite.update(delta);
 		mainLayer.update(delta);
 
 
