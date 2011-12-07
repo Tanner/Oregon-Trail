@@ -2,6 +2,8 @@ package scene;
 
 //import java.util.Map;
 
+import java.util.Random;
+
 import model.HuntingMap;
 
 //import model.huntingMap.TerrainObject;
@@ -57,6 +59,8 @@ public class HuntScene extends Scene {
 	private AnimatingSprite hunterSprite;
 	/**the member of the party that is hunting - currently party leader*/
 	private Person hunter;
+	/**single random gen for entire scene*/
+	private Random huntSceneRand;
 	
 	/**
 	 * Constructs a {@code HuntScene} with a {@code Person} who will be the hunter
@@ -75,6 +79,7 @@ public class HuntScene extends Scene {
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		huntSceneRand = new Random();
 		super.init(container, game);
 		SoundStore.get().stopAllSound();
 		SoundStore.get().playHuntMusic();
@@ -219,16 +224,6 @@ public class HuntScene extends Scene {
 			//move map to left
 			movMapX = -1 * delta;
 			movMapY = 0;
-			//THIS DOES THE AMMO DECREASE
-			Item ammoBox = null;
-			if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO)) {
-				ammoBox = hunter.removeItemFromInventory(ItemType.AMMO, 1).get(0);
-			}			
-			if(ammoBox != null && ammoBox.getStatus().getCurrent() > 1) {
-				ammoBox.decreaseStatus(1);
-				hunter.addItemToInventory(ammoBox);
-			}
-			//END AMMO DECREASE
 
 		} else if (moveDown(container)){
 			hunterSprite.setDirectionFacing(Direction.FRONT);
@@ -252,6 +247,23 @@ public class HuntScene extends Scene {
 
 	}
 
+	/**
+	 * decrements ammo when a shot is fired
+	 */
+	private void decrementAmmo(){
+		//THIS DOES THE AMMO DECREASE
+		Item ammoBox = null;
+		if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO)) {
+			ammoBox = hunter.removeItemFromInventory(ItemType.AMMO, 1).get(0);
+		}			
+		if(ammoBox != null && ammoBox.getStatus().getCurrent() > 1) {
+			ammoBox.decreaseStatus(1);
+			hunter.addItemToInventory(ammoBox);
+		}
+		//END AMMO DECREASE
+
+	}
+	
 	/**
 	 * checks if the up and left keys are pressed simultaneously
 	 * @param container
@@ -399,6 +411,18 @@ public class HuntScene extends Scene {
 	}//move up direction
 	
 	
+	/**
+	 * determines whether a shot is colliding with anything
+	 * @param shotX - the destination x of the shot
+	 * @param shotY - the destination y of the shot
+	 * @return whether there was a target or not at the shot location
+	 */
+	private boolean determineCollsion(int shotX, int shotY){
+		boolean check = false;
+		//code to compare shotX,shotY to any animals or enemies on the visible area of the screen
+		return check;
+	}
+	
 	@Override
 	public void keyPressed(int key, char c) {
 		if (key == Input.KEY_SPACE) {
@@ -406,6 +430,34 @@ public class HuntScene extends Scene {
 		}
 	}
 	
+	@Override
+	public void mousePressed(int button, int mx, int my) {
+		if (!isVisible() || !isAcceptingInput()) {
+			return;
+		}
+		
+		super.mousePressed(button, mx, my);
+		SoundStore.get().playSound("Shot",(float).5);
+		
+		if (huntSceneRand.nextInt(10) < 4){
+			SoundStore.get().playSound("Ricochet");
+		}
+		
+		if (determineCollsion(mx,my)){//determine if there's been a hit
+			
+			
+		}
+		//regardless, decrement ammo
+		decrementAmmo();
+		
+		//this.mouseOver = getArea().contains(mx, my);
+	}
+	@Override
+	public void mouseReleased(int button, int mx, int my) {
+		SoundStore.get().playSound("GunCock");
+	
+	}
+
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {

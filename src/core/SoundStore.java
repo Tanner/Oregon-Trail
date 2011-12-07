@@ -64,6 +64,9 @@ public class SoundStore {
 		addToMusic("River", new Music(ConstantStore.PATH_SOUND + "river.ogg"));
 		addToSounds("Smooth", new Sound(ConstantStore.PATH_SOUND + "smooth.ogg"));
 		addToSounds("Steps", new Sound(ConstantStore.PATH_SOUND + "steps.ogg"));
+		addToSounds("Shot", new Sound(ConstantStore.PATH_SOUND + "Shotgun_Blast.ogg"));
+		addToSounds("Ricochet", new Sound(ConstantStore.PATH_SOUND + "Ricochet.ogg"));
+		addToSounds("GunCock", new Sound(ConstantStore.PATH_SOUND + "Shotgun_Cock.ogg"));
 		addToSounds("Click", new Sound(ConstantStore.PATH_SOUND + "click.ogg"));
 		addToSounds("ItemGet", new Sound(ConstantStore.PATH_SOUND + "itemGet.ogg"));
 		addToSounds("WolfHowl", new Sound(ConstantStore.PATH_SOUND + "wolfHowl.ogg"));
