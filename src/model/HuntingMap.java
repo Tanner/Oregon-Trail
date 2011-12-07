@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.newdawn.slick.GameContainer;
+
 import model.huntingMap.TerrainObject;
 
 import core.ConstantStore;
@@ -44,6 +46,8 @@ public class HuntingMap implements Serializable {
 	private TerrainObject[][] huntingGroundsMap;
 	/**random generator used for entire hunt map*/
 	private Random huntMapRand;
+	/**game context for making the terrain component*/
+	private GameContainer context;
 
 	
 	/**
@@ -59,11 +63,13 @@ public class HuntingMap implements Serializable {
 	 * @param mapDensity how dense with terrain this map is
 	 * @param environs the environment of this map -determines the background gif
 	 */
-	public HuntingMap(double[] dblMapStats, int[] intMapStats, ConstantStore.Environments environs) {
+	public HuntingMap(GameContainer context, double[] dblMapStats, int[] intMapStats, ConstantStore.Environments environs) {
 		this.MAP_WIDTH = dblMapStats[0];//in pixels
 		this.MAP_HEIGHT = dblMapStats[1];//in pixels
 		this.MAP_X_LOC = dblMapStats[2];
 		this.MAP_Y_LOC = dblMapStats[3];
+		
+		this.context = context;
 		
 		this.MAP_DENSITY = intMapStats[0];
 		this.MAP_STONY = intMapStats[1];
@@ -109,7 +115,7 @@ public class HuntingMap implements Serializable {
 	 * generates the map for this hunting instance by building terrain layouts randomly.
 	 */
 	private void generateMap(){
-		HuntTerrainGenerator mapGen = new HuntTerrainGenerator(this.mapYMax, this.mapXMax, this.MAP_DENSITY, this.MAP_STONY, huntMapRand, 
+		HuntTerrainGenerator mapGen = new HuntTerrainGenerator(this.context, this.mapYMax, this.mapXMax, this.MAP_DENSITY, this.MAP_STONY, huntMapRand, 
 																this.TILE_WIDTH, this.TILE_HEIGHT, this.bckGround);
 		this.huntingGroundsMap = mapGen.getHuntingGroundsMap();
 	}//generate map method
@@ -199,6 +205,9 @@ public class HuntingMap implements Serializable {
 		
 		/** 2d array that holds each hunting grounds graphics object for the actual map*/
 		private TerrainObject[][] huntingGroundsMap;
+//		/**2d array of the components intended to hold the sprite for the actual map - to be used with addasgrid*/
+//		private TerrainComponent[][] huntingGroundsComponents;
+	
 		/**holds random object from parent class - use 1 random object so can control generator by seeding if necessary*/
 		Random huntMapRand;
 		/**the background type that the map this generator populates has*/
@@ -214,7 +223,7 @@ public class HuntingMap implements Serializable {
 		 * @param procChance chance that a particular tile will have terrain
 		 * @param stoneProc chance that a particular terrain block will be stone(impassable), as opposed to trees(passable but difficult)
 		 */
-		public HuntTerrainGenerator(int totalRows, int totalCols, int procChance, 
+		public HuntTerrainGenerator(GameContainer context, int totalRows, int totalCols, int procChance, 
 									int stoneProc, Random huntMapRand, double tileWidth, 
 									double tileHeight, ConstantStore.bckGroundType bckGround) {
 			this.totalRows = totalRows;
@@ -228,7 +237,7 @@ public class HuntingMap implements Serializable {
 			tiles = new Tiles[this.totalRows][this.totalCols];
 			types = new int[this.totalRows][this.totalCols];
 			huntingGroundsMap = new TerrainObject[this.totalRows][this.totalCols];
-			
+//			huntingGroundsComponents = new TerrainComponent[this.totalRows][this.totalCols];
 			
 			//Set up the border of empty tiles around our map
 			for (int row = 0; row < this.totalRows; row++) {
@@ -267,6 +276,7 @@ public class HuntingMap implements Serializable {
 					
 					//build structure that holds terrain objects
 					huntingGroundsMap[row][col] = buildTerrainObject(row, col);
+//					huntingGroundsComponents[row][col] = buildTerrainComponents(context, huntingGroundsMap[row][col]);
 
 				}//for col = cols
 			}//for row = rows
@@ -280,7 +290,25 @@ public class HuntingMap implements Serializable {
 		public TerrainObject[][] getHuntingGroundsMap() {
 			return this.huntingGroundsMap;
 		}
-
+//		/**
+//		 * @return the huntingGroundsComponents
+//		 */
+//		public TerrainComponent[][] getHuntingGroundsComponents() {
+//			return this.huntingGroundsComponents;
+//		}
+//		
+//		/**
+//		 * builds the terrain component for this particular terrain object
+//		 * @param container the graphical context within which this object will be displayed
+//		 * @param sourceObject the TerrainObject this component will display
+//		 * @return the component
+//		 */
+//		private TerrainComponent buildTerrainComponents(GameContainer container, TerrainObject sourceObject){
+//			TerrainComponent retVal = new TerrainComponent(container, sourceObject);
+//			return retVal;	
+//		}
+		
+		
 		/**
 		 * build a terrain object, holding the relevant information about the terrain and its effect on hunt gameplay at a particular location
 		 * @param row the row in the map that this terrain object represents
@@ -507,6 +535,8 @@ public class HuntingMap implements Serializable {
 		}// method getCharTiles
 	}//class definition
 	
+
+
 	/**
 	 * structure representing the tile being added to the map
 	 */

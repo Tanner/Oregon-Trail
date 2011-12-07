@@ -6,9 +6,11 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.GUIContext;
 
-import core.ConstantStore;
 import core.ImageStore;
-
+/**
+ * this component is intended to hold a terrain sprite for display in the hunt scene.
+ * 
+ */
 public class TerrainComponent extends Component {
 	private Image dispImage;
 	private Image collideImage;
@@ -18,17 +20,17 @@ public class TerrainComponent extends Component {
 	private Panel dispPanel;
 	private Panel collidePanel;
 
-	public TerrainComponent(GUIContext context, TerrainObject sourceObject) throws SlickException{
+	public TerrainComponent(GUIContext context, TerrainObject sourceObject){
 		super(context, sourceObject.getImageX(), sourceObject.getImageY());
 		this.sourceObject = sourceObject;
 		//getting correct image from image store for this component
 		dispImage = ImageStore.get().IMAGES.get(this.sourceObject.getImageStoreName());
 		collideImage = ImageStore.get().IMAGES.get(this.sourceObject.getImageStoreShadName());
 		
-		Panel dispPanel = new Panel (context,dispImage);
-		Panel collidePanel = new Panel (context,collideImage);
+		this.dispPanel = new Panel (context,dispImage);
+		this.collidePanel = new Panel (context,collideImage);
 		
-		add(dispPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
+		add(this.dispPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		
 	}
 

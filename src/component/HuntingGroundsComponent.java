@@ -51,19 +51,11 @@ public class HuntingGroundsComponent extends Component {
 		}
 
 		
- 		TerrainObject[][] tmpLayoutArray = huntLayout.getHuntingGroundsMap();
+		
+ 		Panel huntPanel = new Panel(context, width, height);
  		
- 		Panel huntPanel = new Panel(context, width, height, background);
  		
- 		for (int row = 0; row < tmpLayoutArray.length; row++){
- 			for (int col = 0; col < tmpLayoutArray[row].length; col++){
- 	
- 				
- 				
- 				
- 				
- 			}//for col 0 to row array length		
-  		}//for row 0 to array length
+ 		
  		
  		add(huntPanel,getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
  			

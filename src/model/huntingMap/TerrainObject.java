@@ -8,6 +8,8 @@ import java.io.Serializable;
 //import model.Condition;
 import core.ConstantStore;
 
+
+
 /**
  * this represents an object on the hunt map.
  */
@@ -38,21 +40,6 @@ public class TerrainObject implements Serializable{
 	/**the string name of the imagestore image corresponding to this image's collision shadow*/
 	private String imageStoreShadName;
 	
-	
-	
-	/**
-	 * @return the imageX
-	 */
-	public int getImageX() {
-		return imageX;
-	}
-
-	/**
-	 * @return the imageY
-	 */
-	public int getImageY() {
-		return imageY;
-	}
 
 	/**
 	 * builds a terrain object
@@ -134,6 +121,21 @@ public class TerrainObject implements Serializable{
 	 */
 	public void setImgPathShadName(String imgShadName) {
 		this.imgPathShadName = imgShadName;
+	}
+
+	
+	/**
+	 * @return the imageX
+	 */
+	public int getImageX() {
+		return imageX;
+	}
+
+	/**
+	 * @return the imageY
+	 */
+	public int getImageY() {
+		return imageY;
 	}
 
 	/**

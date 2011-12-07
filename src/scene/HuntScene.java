@@ -23,6 +23,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 //import component.Label;
+import component.Component;
 import component.HuntingGroundsComponent;
 import component.Panel;
 import component.TerrainComponent;
@@ -82,15 +83,15 @@ public class HuntScene extends Scene {
 		double [] dblArgs = new double[4];
 		int [] intArgs = new int[2];
 		
-		dblArgs[0] = 4800;
-		dblArgs[1] = 4800;
-		dblArgs[2] = 0;			//worldMap.getLocationNode.getX
-		dblArgs[3] = 0;		
+		dblArgs[0] = 4800;	//map x dimension
+		dblArgs[1] = 4800;	//map y dimension
+		dblArgs[2] = 0;			//worldMap.getLocationNode.getX - these may be implemented someday.
+		dblArgs[3] = 0;			//worldMap.getLocationNode.gety
 		
-		intArgs[0] = 75;		//not currently used - chance that there's a terrain object
-		intArgs[1] = 75;		//chance that it's a tree vs a rock
+		intArgs[0] = 50;		// chance that there's a terrain object
+		intArgs[1] = 50;		//chance that it's a tree vs a rock
 		
- 		HuntingMap huntLayout = new HuntingMap(dblArgs, intArgs, ConstantStore.Environments.PLAINS);
+ 		HuntingMap huntLayout = new HuntingMap(container, dblArgs, intArgs, ConstantStore.Environments.PLAINS);
 		
 		switch (huntLayout.getBckGround()){
 			case GRASS : 	this.background = ImageStore.get().getImage("HUNT_GRASS");
@@ -108,8 +109,19 @@ public class HuntScene extends Scene {
 		
  		TerrainObject[][] tmpLayoutArray = huntLayout.getHuntingGroundsMap();
  		
-// 		Panel huntPanel = new Panel(container, (int)huntLayout.getMAP_WIDTH(), (int)huntLayout.getMAP_HEIGHT(), this.background);
+ 		Panel backgroundPanel = new Panel(container, this.background.getWidth() * 2,this.background.getHeight() * 2, this.background);
  		
+ 		Panel[] bkgroundAra = new Panel[361];
+ 		for (int i = 0; i < 361; i++){
+ 			bkgroundAra[i] = backgroundPanel;
+ 		}
+ 		
+		Panel huntPanel = new Panel(container, (int)huntLayout.getMAP_WIDTH(), (int)huntLayout.getMAP_HEIGHT());
+		
+		huntPanel.addAsGrid((Component[])bkgroundAra,huntPanel.getPosition(ReferencePoint.CENTERCENTER), 19,19, 256, 256, 0,0);
+		
+ 		
+ //		huntPanel.addAsGrid(huntLayout.getHuntingGroundsComponents(), huntPanel.getPosition(ReferencePoint.TOPLEFT), 0, 0);
 // 		for (int row = 0; row < tmpLayoutArray.length; row++){
 // 			for (int col = 0; col < tmpLayoutArray[row].length; col++){
 // 				huntPanel.add(new TerrainComponent(container, tmpLayoutArray[row][col]), huntPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, row * 48, col * 48);
@@ -117,7 +129,7 @@ public class HuntScene extends Scene {
 // 			}//for col 0 to row array length		
 //  		}//for row 0 to array length
  		
-// 		mainLayer.add(huntPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
+ 		mainLayer.add(huntPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
   	
 		hunterSprite = new AnimatingSprite(container,
 				48,
@@ -364,7 +376,7 @@ public class HuntScene extends Scene {
 			|| (!(container.getInput().isKeyDown(Input.KEY_D)) 
 			&& (container.getInput().isKeyDown(Input.KEY_W))
 			&& !(container.getInput().isKeyDown(Input.KEY_X))
-			&& (container.getInput().isKeyDown(Input.KEY_A)))){			
+			&& !(container.getInput().isKeyDown(Input.KEY_A)))){			
 
 			return true;
 		} else {
