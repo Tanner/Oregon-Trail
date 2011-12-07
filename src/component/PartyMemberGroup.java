@@ -19,39 +19,32 @@ public class PartyMemberGroup extends GridComponent {
 	private static final double STEP_CHANCE = 0.01;
 	private static final int STEP_Y_DISPLACEMENT = 1;
 	/**need to use the trapper for every group, since trapper is only hunter toon*/
-	private static boolean useTrapper = false;
 
 	public PartyMemberGroup(GUIContext context, PartyMemberDataSource dataSource) {
 		super(context, createComponents(context, dataSource), X_SPACING, Y_SPACING);
-		
 		this.setShouldUpdateComponents(true);
 	}
 
 	private static final Component[][] createComponents(GUIContext context, PartyMemberDataSource dataSource) {
 		Animation animation;
 		Random partyRand = new Random();
-
-		if (dataSource.isMale()) {
-			//trapper needs to be in every group to use in hunt scene
-			if (!(PartyMemberGroup.useTrapper)){
-				animation = new Animation(new Image[] {
-						ImageStore.get().getImage("TRAPPER_RIGHT")
-				}, 1);
-				PartyMemberGroup.useTrapper = true;
-			}
-			if (partyRand.nextBoolean()){
-			animation = new Animation(new Image[] {
-					ImageStore.get().getImage("HILLBILLY_RIGHT")
-			}, 1);
-			
-			} else {
+		//trapper needs to be in every group to use in hunt scene - leader is always trapper.  if leader is a girl, then she's just hairy
+		if (dataSource.isLeader()){
 			animation = new Animation(new Image[] {
 					ImageStore.get().getImage("TRAPPER_RIGHT")
 			}, 1);
+		} else if (dataSource.isMale()) { //male but not leader
+			if (partyRand.nextInt(10) < 7){//increase chance of hillbilly since trapper is going to be in party always
+				animation = new Animation(new Image[] {
+						ImageStore.get().getImage("HILLBILLY_RIGHT")
+				}, 1);
 				
-			
+			} else {
+				animation = new Animation(new Image[] {
+						ImageStore.get().getImage("TRAPPER_RIGHT")
+				}, 1);			
 			}
-		} else {
+		} else {//female, not leader
 			animation = new Animation(new Image[] {
 					ImageStore.get().getImage("MAIDEN_RIGHT")
 			}, 1);

@@ -134,6 +134,8 @@ public class Party implements Serializable {
 		}
 		
 		this.partyLeader = partyLeader;
+		//sets the person passed as the leader to actually be the leader, in case it was missed
+		this.partyLeader.setLeader(true);
 		this.money = 0;
 		this.currentPace = currentPace;
 		this.currentRations = currentRations;

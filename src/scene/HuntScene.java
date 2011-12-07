@@ -97,8 +97,8 @@ public class HuntScene extends Scene {
 		double [] dblArgs = new double[4];
 		int [] intArgs = new int[2];
 		
-		dblArgs[0] = 4800;	//map x dimension
-		dblArgs[1] = 4800;	//map y dimension
+		dblArgs[0] = 2400;	//map x dimension
+		dblArgs[1] = 2400;	//map y dimension
 		dblArgs[2] = 0;			//worldMap.getLocationNode.getX - these may be implemented someday.
 		dblArgs[3] = 0;			//worldMap.getLocationNode.gety
 		
@@ -186,10 +186,10 @@ public class HuntScene extends Scene {
 				AnimatingSprite.Direction.RIGHT);
 		cowSprite =  new PreyAnimatingSprite(container,
 //				48,
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_FRONT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_BACK")}, 250),
+				new Animation(cowAnimLeft, 250),
+				new Animation(cowAnimRight, 250),
+				new Animation(cowAnimFront, 250),
+				new Animation(cowAnimBack, 250),
 				AnimatingSprite.Direction.RIGHT);
 
 		hunterSprite = new HunterAnimatingSprite(container,
@@ -209,6 +209,17 @@ public class HuntScene extends Scene {
 				ReferencePoint.CENTERCENTER,
 				20,
 				25);
+		
+		mainLayer.add(pigSprite,
+				new Vector2f(mainLayer.getWidth()/2,mainLayer.getHeight()/2),
+				ReferencePoint.CENTERCENTER,
+				200,
+				250);
+		mainLayer.add(cowSprite,
+				new Vector2f(mainLayer.getWidth()/2,mainLayer.getHeight()/2),
+				ReferencePoint.CENTERCENTER,
+				-100,
+				-150);
 		
 		//build background
 		

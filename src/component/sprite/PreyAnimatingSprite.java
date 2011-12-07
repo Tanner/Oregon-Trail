@@ -26,8 +26,8 @@ public class PreyAnimatingSprite extends AnimatingSprite {
 		this.downAnimation.getWidth(); 
 		this.leftAnimation.getWidth(); 
 		this.rightAnimation.getWidth(); 
-		xDirection = Direction.FRONT;
-		currentAnimation = downAnimation;
+		xDirection = Direction.RIGHT;
+		currentAnimation = rightAnimation;
 	}//constructor
 	
 	/**

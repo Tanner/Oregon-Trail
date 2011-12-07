@@ -6,4 +6,5 @@ public interface PartyMemberDataSource extends Conditioned {
 	String getName();
 	boolean isDead();
 	boolean isMale();
+	boolean isLeader();
 }

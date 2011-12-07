@@ -26,6 +26,8 @@ public class Person implements Conditioned, Inventoried, PartyMemberDataSource, 
 	
 	private boolean isMale = true;
 	
+	private boolean isLeader = false;
+
 	private final List<Skill> skills = new ArrayList<Skill>();
 	
 	private String name;
@@ -311,6 +313,20 @@ public class Person implements Conditioned, Inventoried, PartyMemberDataSource, 
 	@Override
 	public double getMaxWeight() {
 		return MAX_INVENTORY_WEIGHT;
+	}
+	
+	/**
+	 * @return the isLeader
+	 */
+	public boolean isLeader() {
+		return isLeader;
+	}
+
+	/**
+	 * @param isLeader the isLeader to set
+	 */
+	public void setLeader(boolean isLeader) {
+		this.isLeader = isLeader;
 	}
 	
 	@Override
