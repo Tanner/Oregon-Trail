@@ -78,6 +78,7 @@ public class ImageStore {
 				
 		//images for hunt scene
 		//hunter
+		IMAGES.put("HUNT_RETICLE", new Image(ConstantStore.PATH_HUNT + "huntReticle.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_LEFT", new Image(ConstantStore.PATH_HUNT + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_RIGHT", new Image(ConstantStore.PATH_HUNT + "hunterRightFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_FRONT", new Image(ConstantStore.PATH_HUNT + "hunterFaceFront1.png", false, Image.FILTER_NEAREST));

@@ -67,7 +67,10 @@ public class HuntScene extends Scene {
 	private Person hunter;
 	/**single random gen for entire scene*/
 	private Random huntSceneRand;
-	
+	/**amount of available ammo this hunter has */
+	private int ammoCount = 0;
+	/**number of boxes of ammo this hunter has */
+	private int ammoBoxes = 0;
 	/**
 	 * Constructs a {@code HuntScene} with a {@code Person} who will be the hunter
 	 * @param hunter the single member of the party who is going to hunt.
@@ -90,6 +93,10 @@ public class HuntScene extends Scene {
 		SoundStore.get().stopAllSound();
 		SoundStore.get().playHuntMusic();
 		hud = new HuntHUD(container, new HUDListener());
+		if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO)){
+			this.ammoCount = (int) hunter.getInventory().getConditionOf(ItemType.AMMO).getCurrent();
+			this.ammoBoxes = (int) hunter.getInventory().getNumberOf(ItemType.AMMO) -1;
+		}
 		updateHUD();
 		//hud.setNotification(location.getName());
 		super.showHUD(hud);			
@@ -513,6 +520,8 @@ public class HuntScene extends Scene {
 		}
 		
 		super.mousePressed(button, mx, my);
+		//left button is button 0
+		if ((button == 0) && (this.ammoCount + this.ammoBoxes != 0)){
 		SoundStore.get().playSound("Shot",(float).5);
 		
 		if (huntSceneRand.nextInt(10) < 4){
@@ -527,6 +536,7 @@ public class HuntScene extends Scene {
 		decrementAmmo();
 		
 		//this.mouseOver = getArea().contains(mx, my);
+		}//if shot happened via mouse
 	}
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
@@ -537,6 +547,7 @@ public class HuntScene extends Scene {
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {
+			
 			
 
 		}
@@ -565,11 +576,8 @@ public class HuntScene extends Scene {
 	}	
 	
 	private void updateHUD() {
-		int ammoCount = 0;
-		if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO))
-			ammoCount = (int) hunter.getInventory().getConditionOf(ItemType.AMMO).getCurrent();
-		if(ammoCount != 0) {
-			hud.setNotification("Current ammo: " + ammoCount + " bullets and " + (hunter.getInventory().getNumberOf(ItemType.AMMO)-1) + " extra " + ((hunter.getInventory().getNumberOf(ItemType.AMMO)-1 == 1) ? "box" : "boxes") + ".");
+		if(this.ammoCount != 0) {
+			hud.setNotification("Current ammo: " + this.ammoCount + ((this.ammoCount == 1) ? "bullet and " :  "bullets and ") + (hunter.getInventory().getNumberOf(ItemType.AMMO)-1) + " extra " + ((hunter.getInventory().getNumberOf(ItemType.AMMO)-1 == 1) ? "box" : "boxes") + ".");
 		} else {
 			hud.setNotification("Current ammo: OUT OF AMMO");
 		}
