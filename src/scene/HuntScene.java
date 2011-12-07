@@ -5,10 +5,12 @@ package scene;
 import model.HuntingMap;
 
 //import model.huntingMap.TerrainObject;
+import model.Item;
 import model.Party;
 import model.Person;
 import model.WorldMap;
 import model.huntingMap.TerrainObject;
+import model.item.ItemType;
 
 import org.newdawn.slick.Animation;
 //import org.newdawn.slick.Color;
@@ -76,6 +78,7 @@ public class HuntScene extends Scene {
 		SoundStore.get().stopAllSound();
 		SoundStore.get().playHuntMusic();
 		hud = new HuntHUD(container, new HUDListener());
+		updateHUD();
 		//hud.setNotification(location.getName());
 		super.showHUD(hud);			
 		//Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
@@ -204,6 +207,16 @@ public class HuntScene extends Scene {
 			//move map to left
 			movMapX = -1 * delta;
 			movMapY = 0;
+			//THIS DOES THE AMMO DECREASE
+			Item ammoBox = null;
+			if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO)) {
+				ammoBox = hunter.removeItemFromInventory(ItemType.AMMO, 1).get(0);
+			}			
+			if(ammoBox != null && ammoBox.getStatus().getCurrent() > 1) {
+				ammoBox.decreaseStatus(1);
+				hunter.addItemToInventory(ammoBox);
+			}
+			//END AMMO DECREASE
 
 		} else if (moveDown(container)){
 			hunterSprite.setDirectionFacing(Direction.FRONT);
@@ -223,6 +236,7 @@ public class HuntScene extends Scene {
 		
 		hunterSprite.update(delta);
 		mainLayer.update(delta);
+		updateHUD();
 
 	}
 
@@ -375,7 +389,7 @@ public class HuntScene extends Scene {
 	
 	@Override
 	public void keyPressed(int key, char c) {
-		if (key == Input.KEY_ESCAPE) {
+		if (key == Input.KEY_SPACE) {
 			//GameDirector.sharedSceneListener().sceneDidEnd(this);
 		}
 	}
@@ -409,5 +423,16 @@ public class HuntScene extends Scene {
 			
 		}//component activated
 	}	
+	
+	private void updateHUD() {
+		int ammoCount = 0;
+		if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO))
+			ammoCount = (int) hunter.getInventory().getConditionOf(ItemType.AMMO).getCurrent();
+		if(ammoCount != 0) {
+			hud.setNotification("Current ammo: " + ammoCount + " bullets and " + (hunter.getInventory().getNumberOf(ItemType.AMMO)-1) + " extra " + ((hunter.getInventory().getNumberOf(ItemType.AMMO)-1 == 1) ? "box" : "boxes") + ".");
+		} else {
+			hud.setNotification("Current ammo: OUT OF AMMO");
+		}
+	}
 
 }//huntscene
