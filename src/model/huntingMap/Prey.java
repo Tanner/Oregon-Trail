@@ -68,6 +68,7 @@ public abstract class Prey {
 		if (((shotX > preySprite.getX()) && (shotX < preySprite.getX() + preySprite.getWidth())) 
 				&& ((shotX > preySprite.getX()) && (shotX < preySprite.getX() + preySprite.getWidth()))){
 			//we has a hit, result is true, decrement hitpoints
+			System.out.println("hit a creature : hitpoints went from :" + this.hitPoints + " to " + (this.hitPoints - 1));
 			result = true;
 			this.hitPoints--;
 			
@@ -100,4 +101,11 @@ public abstract class Prey {
 	}
 	
 	public abstract void movePrey();
+	
+	public int checkDead(){
+		if (this.hitPoints <= 0){
+			return this.MEAT;
+		}
+		return 0;
+	}
 }

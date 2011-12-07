@@ -20,6 +20,8 @@ public class PreyCow extends Prey {
 	public PreyCow(GameContainer container, StateBasedGame game, Random cowRand, int mapXWidth, int mapYHeight){
 		//cow gives 10 meat
 		super(cowMeat);
+		//takes 3 shots to kill a cow
+		this.hitPoints = 3;
  		Image[] cowAnimLeft = new Image[9];
  		Image[] cowAnimRight = new Image[9];
  		Image[] cowAnimFront = new Image[9];

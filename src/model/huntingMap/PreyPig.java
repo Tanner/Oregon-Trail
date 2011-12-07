@@ -23,6 +23,8 @@ public class PreyPig extends Prey {
 	public PreyPig(GameContainer container, StateBasedGame game, Random pigRand, int mapXWidth, int mapYHeight) {
 		//pig gives 5 meat
 		super(pigMeat);
+		//takes 2 shots to kill a pig
+		this.hitPoints = 2;
 		Image[] pigAnimLeft = new Image[6];
  		Image[] pigAnimRight = new Image[6];
  		Image[] pigAnimFront = new Image[6];
