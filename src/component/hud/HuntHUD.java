@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 */
+import java.util.LinkedList;
+import java.util.Queue;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.gui.ComponentListener;
@@ -146,5 +149,13 @@ public class HuntHUD extends HUD {
 	 */
 	public Button getInventoryButton() {
 		return hudButton2;
+	}
+	
+	/**
+	 * Adds a notification onto the queue.
+	 * @param message New message to show
+	 */
+	public void setNotification(String message) {
+		notificationLabel.setText(message);
 	}
 }

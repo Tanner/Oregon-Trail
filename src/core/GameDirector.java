@@ -165,6 +165,13 @@ public class GameDirector implements SceneListener {
 		} else if (lastScene instanceof PartyCreationScene) {
 			// Last scene was Party Creation Scene
 			game.getPlayer().getParty().setLocation(game.getWorldMap().getMapHead());
+		} else if (newScene instanceof PartyInventoryScene && lastScene instanceof HuntScene ) {
+			//Going to PIS from Hunt - we only want to show the hunter's inventory
+			Party currentParty = game.getPlayer().getParty();
+			List<Person> temporary = new ArrayList<Person>();
+			temporary.add(game.getPlayer().getParty().getPartyMembers().get(0));
+			Party hunterOnly = new Party(currentParty.getPace(), currentParty.getRations(), temporary.get(0), temporary, currentParty.getTime());
+			newScene = new PartyInventoryScene(hunterOnly);
 		}
 		
 		if (newScene != null) {
