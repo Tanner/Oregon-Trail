@@ -1,6 +1,7 @@
 package scene;
 
 import model.Party;
+import model.Person;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -21,11 +22,16 @@ public class TavernScene extends Scene {
 	
 	private final int MAX_PARTY_SIZE = 4;
 	
-	private SegmentedControl hireBoard;
-	private Button hireButton;
+	private Person[] person;
+	private Button[] personButton;
 	private Party party;
 	
 	public TavernScene(Party party) {
+		person = new Person[MAX_PARTY_SIZE];
+		personButton = new Button[MAX_PARTY_SIZE];
+		for (int i = 0; i < person.length; i++) {
+			//person[i] = Party.
+		}
 		this.party = party;
 	}
 	
@@ -36,10 +42,10 @@ public class TavernScene extends Scene {
 		int maxNewMembers = MAX_PARTY_SIZE - party.getPartyMembers().size();
 		System.out.println(maxNewMembers);
 		String[] names = {"Billy Joe Bob", "John Henry Jingle", "Washington George", "New Partymember", "Place Holder Jr."};
-		hireBoard = new SegmentedControl(container, 300, 400, 5, 1, 10, false, maxNewMembers, names);
-		hireButton = new Button(container, 280, 40, new Label(container, 300, fieldFont, Color.white, "Hire!"));
-		mainLayer.add(hireBoard, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
-		mainLayer.add(hireButton, hireBoard.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER);
+		//hireBoard = new SegmentedControl(container, 300, 400, 5, 1, 10, false, maxNewMembers, names);
+		//hireButton = new Button(container, 280, 40, new Label(container, 300, fieldFont, Color.white, "Hire!"));
+		//mainLayer.add(hireBoard, mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER);
+		//mainLayer.add(hireButton, hireBoard.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.TOPCENTER);
 	}
 	
 	@Override
