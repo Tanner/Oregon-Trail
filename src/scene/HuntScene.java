@@ -8,6 +8,7 @@ import model.HuntingMap;
 import model.Party;
 import model.Person;
 import model.WorldMap;
+import model.huntingMap.TerrainObject;
 
 import org.newdawn.slick.Animation;
 //import org.newdawn.slick.Color;
@@ -24,6 +25,7 @@ import org.newdawn.slick.state.StateBasedGame;
 //import component.Label;
 import component.HuntingGroundsComponent;
 import component.Panel;
+import component.TerrainComponent;
 //import component.Positionable;
 import component.Positionable.ReferencePoint;
 import component.hud.HuntHUD;
@@ -42,16 +44,14 @@ public class HuntScene extends Scene {
 	public static final SceneID ID = SceneID.HUNT;
 
 	private HuntHUD hud;
-	
+	/**the image to be tiled as the background of the hunt component*/
+	private Image background;
+	/**the world map, to be used to determine actual in-world location*/
 	private WorldMap worldMap;
 
-	//the member of the party engaged in the hunt
-	//private Person hunter;
-	
-	//private Image ground;
-	//private AnimatingSprite[] huntingParty;
+	/**the graphic representing the hunter*/
 	private AnimatingSprite hunterSprite;
-	
+	/**the member of the party that is hunting - currently party leader*/
 	private Person hunter;
 	
 	/**
@@ -60,13 +60,12 @@ public class HuntScene extends Scene {
 	 */
 	public HuntScene(Person hunter, WorldMap worldMap){
 		this.hunter = hunter;
-		this.worldMap = worldMap;
-		
+		this.worldMap = worldMap;		
 	}
 	
-	public HuntScene(Party party){
-		//grap a person from the party to be the hunter
-		//this.hunter = party.getPartyMembers().get(0);
+	public HuntScene(Party party, WorldMap worldMap){
+		this.hunter = party.getPartyMembers().get(0);
+		this.worldMap = worldMap;
 	}
 	
 	
@@ -75,7 +74,6 @@ public class HuntScene extends Scene {
 		super.init(container, game);
 		SoundStore.get().stopAllSound();
 		SoundStore.get().playHuntMusic();
-		
 		hud = new HuntHUD(container, new HUDListener());
 		//hud.setNotification(location.getName());
 		super.showHUD(hud);			
@@ -92,11 +90,34 @@ public class HuntScene extends Scene {
 		intArgs[1] = 75;		//chance that it's a tree vs a rock
 		
  		HuntingMap huntLayout = new HuntingMap(dblArgs, intArgs, ConstantStore.Environments.PLAINS);
-// 		Map<Integer, TerrainObject> tmpLayoutArray = huntLayout.getHuntingGroundsMap();
- 		
- 		HuntingGroundsComponent huntPanel = new HuntingGroundsComponent(container, 4800, 4800, huntLayout);
-		mainLayer.add(huntPanel);
 		
+		switch (huntLayout.getBckGround()){
+			case GRASS : 	this.background = ImageStore.get().getImage("HUNT_GRASS");
+							break;
+			case SNOW : 	this.background = ImageStore.get().getImage("HUNT_SNOW");
+							break;
+			case MOUNTAIN : this.background = ImageStore.get().getImage("HUNT_MOUNTAIN");
+							break;
+			case DESERT : 	this.background = ImageStore.get().getImage("HUNT_DESERT");
+							break;
+			default :		this.background = ImageStore.get().getImage("HUNT_GRASS");
+							break;
+		}
+
+		
+ 		TerrainObject[][] tmpLayoutArray = huntLayout.getHuntingGroundsMap();
+ 		
+ 		Panel huntPanel = new Panel(container, (int)huntLayout.getMAP_WIDTH(), (int)huntLayout.getMAP_HEIGHT(), this.background);
+ 		
+// 		for (int row = 0; row < tmpLayoutArray.length; row++){
+// 			for (int col = 0; col < tmpLayoutArray[row].length; col++){
+// 				huntPanel.add(new TerrainComponent(container, tmpLayoutArray[row][col]), huntPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, row * 48, col * 48);
+// 					
+// 			}//for col 0 to row array length		
+//  		}//for row 0 to array length
+ 		
+ 		mainLayer.add(huntPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
+  	
 		hunterSprite = new AnimatingSprite(container,
 				48,
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
@@ -117,7 +138,7 @@ public class HuntScene extends Scene {
 		
 		//build background
 		
-
+		backgroundLayer.add(new Panel(container, new Image(ConstantStore. PATH_BKGRND + "dark_dirt.png")));
 	}
 	
 	

@@ -15,8 +15,10 @@ import core.ConstantStore;
 public class TerrainObject implements Serializable{
 	/**name of the image used to represent this object*/
 	private String imgName;
+	/**name of the image used to represent this object*/
+	private String imgPathName;
 	/**name of the image to represent the collisionImage of this object*/
-	private String imgShadName;
+	private String imgPathShadName;
 	/**terrain type under this object*/
 	private ConstantStore.bckGroundType baseTerrain;
 	/**x coord of this object in hunting map*/
@@ -27,7 +29,31 @@ public class TerrainObject implements Serializable{
 	private double moveMod;
 	/**stops shots?*/
 	private double stopShotChance;
+	/**x size of image associated with this object*/
+	private final int imageX;
+	/**y size of image associated with this object*/
+	private final int imageY;
+	/**the string name of the imagestore image corresponding to this image*/
+	private String imageStoreName;
+	/**the string name of the imagestore image corresponding to this image's collision shadow*/
+	private String imageStoreShadName;
 	
+	
+	
+	/**
+	 * @return the imageX
+	 */
+	public int getImageX() {
+		return imageX;
+	}
+
+	/**
+	 * @return the imageY
+	 */
+	public int getImageY() {
+		return imageY;
+	}
+
 	/**
 	 * builds a terrain object
 	 * @param imgName the base file name for the image representing this object
@@ -37,9 +63,14 @@ public class TerrainObject implements Serializable{
 	 * @param moveMod movement modifier of this terrain object
 	 * @param the likelihood that this object will stop a shot
 	 */
-	public TerrainObject(String imgName, double objXCoord, double objYCoord, ConstantStore.bckGroundType baseTerrain, double moveMod, double stopShotChance) {
-		this.imgName = ConstantStore.PATH_HUNTTERRAIN + imgName + ".png";
-		this.imgShadName = ConstantStore.PATH_HUNTTERRAIN + imgName + "Shad.png";
+	public TerrainObject(String imgName, double objXCoord, double objYCoord, ConstantStore.bckGroundType baseTerrain, double moveMod, double stopShotChance, int imgXSize, int imgYSize) {
+		this.imageX = imgXSize;
+		this.imageY = imgYSize;
+		this.imgName = imgName;
+		this.imgPathName = ConstantStore.PATH_HUNTTERRAIN + imgName + ".png";
+		this.imgPathShadName = ConstantStore.PATH_HUNTTERRAIN + imgName + "Shad.png";
+		this.imageStoreName = "HUNT_" + imgName.toUpperCase();
+		this.imageStoreShadName = "HUNT_" + imgName.toUpperCase() + "SHAD";
 		this.objXCoord = objXCoord;
 		this.objYCoord = objYCoord;
 		this.baseTerrain = baseTerrain;
@@ -47,6 +78,21 @@ public class TerrainObject implements Serializable{
 		this.stopShotChance = stopShotChance;
 		
 	}//constructor
+	
+
+	/**
+	 * @return the imageStoreName
+	 */
+	public String getImageStoreName() {
+		return imageStoreName;
+	}
+
+	/**
+	 * @return the imageStoreShadName
+	 */
+	public String getImageStoreShadName() {
+		return imageStoreShadName;
+	}
 
 	/**
 	 * @return the imgName
@@ -63,17 +109,31 @@ public class TerrainObject implements Serializable{
 	}
 
 	/**
+	 * @return the imgName
+	 */
+	public String getImgPathName() {
+		return imgPathName;
+	}
+
+	/**
+	 * @param imgName the imgName to set
+	 */
+	public void setImgPathName(String imgPathName) {
+		this.imgPathName = imgPathName;
+	}
+
+	/**
 	 * @return the imgShadName
 	 */
 	public String getImgShadName() {
-		return imgShadName;
+		return imgPathShadName;
 	}
 
 	/**
 	 * @param imgShadName the imgShadName to set
 	 */
-	public void setImgShadName(String imgShadName) {
-		this.imgShadName = imgShadName;
+	public void setImgPathShadName(String imgShadName) {
+		this.imgPathShadName = imgShadName;
 	}
 
 	/**

@@ -86,11 +86,52 @@ public class ImageStore {
 		IMAGES.put("HUNTER_UPPERRIGHT", new Image(ConstantStore.PATH_HUNT + "hunterRightFaceBack1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_LOWERLEFT", new Image(ConstantStore.PATH_HUNT + "hunterLeftFaceFront1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_LOWERRIGHT", new Image(ConstantStore.PATH_HUNT + "hunterRightFaceFront1.png", false, Image.FILTER_NEAREST));
-		//terrain
+		//terrain background
 		IMAGES.put("HUNT_GRASS", new Image(ConstantStore.PATH_HUNTBKG + "grassBG.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNT_SNOW", new Image(ConstantStore.PATH_HUNTBKG + "snowBG.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNT_MOUNTAIN", new Image(ConstantStore.PATH_HUNTBKG + "mountainBG.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNT_DESERT", new Image(ConstantStore.PATH_HUNTBKG + "desertBG.png", false, Image.FILTER_NEAREST));
+		//terrain - images for trees and rocks, collision and display
+		for (int incr = 0; incr < 16 ; incr++){
+			String imageDir = (incr == 10) ? "a" : 
+					(incr == 11) ? "b" : 
+					(incr == 12) ? "c" : 
+					(incr == 13) ? "d" : 
+					(incr == 14) ? "e" : 
+					(incr == 15) ? "f" : Integer.toString(incr);					
+				
+			String identifier = "tree1";
+			String imageIndex = "HUNT_TREE1" + imageDir.toUpperCase() + "0";
+			String imageName = identifier + imageDir + "0.png";
+			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
+			imageIndex = "HUNT_TREE1" + imageDir.toUpperCase() + "1";
+			imageName = identifier + imageDir + "1.png";
+			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
+			
+			imageIndex = "HUNT_TREE1" + imageDir.toUpperCase() + "0SHAD";
+			imageName = identifier + imageDir + "0Shad.png";
+			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
+			imageIndex = "HUNT_TREE1" + imageDir.toUpperCase() + "1SHAD";
+			imageName = identifier + imageDir + "1Shad.png";
+			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
+			
+			identifier = "rock1";
+			imageIndex = "HUNT_ROCK1" + imageDir.toUpperCase() + "0";
+			imageName = identifier + imageDir + "0.png";
+			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
+			imageIndex = "HUNT_ROCK1" + imageDir.toUpperCase() + "1";
+			imageName = identifier + imageDir + "1.png";
+			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
+			
+			imageIndex = "HUNT_ROCK1" + imageDir.toUpperCase() + "0SHAD";
+			imageName = identifier + imageDir + "0Shad.png";
+			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
+			imageIndex = "HUNT_ROCK1" + imageDir.toUpperCase() + "1SHAD";
+			imageName = identifier + imageDir + "1Shad.png";
+			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));	
+		}
+
+		
 		
 		//trail people
 		IMAGES.put("TRAPPER_LEFT", new Image(ConstantStore.PATH_PEOPLE + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));

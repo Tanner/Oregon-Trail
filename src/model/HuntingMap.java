@@ -310,7 +310,7 @@ public class HuntingMap implements Serializable {
 						objStopShot = .5;
 					}//if either rock or stone
 				}//if based on name extension
-				return new TerrainObject(nameExt, row * this.TILE_WIDTH, col * this.TILE_HEIGHT, this.bckGround, objMoveMod, objStopShot);								
+				return new TerrainObject(nameExt, row * this.TILE_WIDTH, col * this.TILE_HEIGHT, this.bckGround, objMoveMod, objStopShot, (int) TILE_WIDTH, (int) TILE_HEIGHT);								
 		}//method buildTerrainObject
 		
 		

@@ -114,7 +114,7 @@ public class GameDirector implements SceneListener {
 			SoundStore.get().stop();
 			return new SceneSelectorScene(game);
 		case HUNT:
-			return new HuntScene(game.getPlayer().getParty());
+			return new HuntScene(game.getPlayer().getParty(), game.getWorldMap());
 		case TRAIL:
 			return new TrailScene(game.getPlayer().getParty(), new RandomEncounterTable(getEncounterList()));
 		case GAMEOVER:
