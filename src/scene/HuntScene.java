@@ -345,12 +345,14 @@ public class HuntScene extends Scene {
 	private void determineCollsion(int shotX, int shotY){
 		boolean aHit = false;
 		//to account for the bigger panel behind the window
+		int offsetX = huntPanel.getX();
+		int offsetY = huntPanel.getY();
 		shotX += (mapWidth/2) ;
 		shotY += (mapHeight/2);
 		
 		
 		int cow = preyCow.size() - 1;
-		System.out.println("Shot : " + shotX + " | " + shotY);
+		System.out.println("Shot : " + shotX + " | " + shotY + ", huntPanel x : " + offsetX + " | huntPanel y : " + offsetY);
 		while ((!aHit) && (cow >= 0)){
 			System.out.println("cow " + cow + " x/y : " + preyCow.get(cow).getxLocation() + " | "+ preyCow.get(cow).getyLocation()  );
 			if (preyCow.get(cow).inHitBox(shotX, shotY)) {
