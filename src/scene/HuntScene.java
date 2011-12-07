@@ -149,53 +149,78 @@ public class HuntScene extends Scene {
 	 */
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-
+		//amounts to move the map in each direction (either + or - delta if in 4 cardinal directions, or +/- .71 * delta for combinations
+		//in opposite direction to facing of toon - if player moves left, map moves to right.
+		//positive x moves map from left to right, positive y moves map down
+		int movMapX;
+		int movMapY;
 	
 		if (moveUpperLeft(container)){
-			System.out.println("upperleft");
 			hunterSprite.setDirectionFacing(Direction.UPPER_LEFT);
 			hunterSprite.setMoving(true);
+			//move map down and to right
+			movMapX = (int)(.71 * delta);
+			movMapY = (int)(.71 * delta);
+			
 
 		} else if (moveLowerLeft(container)){
-			System.out.println("lowerleft");
 			hunterSprite.setDirectionFacing(Direction.LOWER_LEFT);
 			hunterSprite.setMoving(true);
+			//move map up and to right
+			movMapX = (int)(.71 * delta);
+			movMapY = (int)(-.71 * delta);
 
 		} else if (moveUpperRight(container)){
-			System.out.println("upperright");
 			hunterSprite.setDirectionFacing(Direction.UPPER_RIGHT);
 			hunterSprite.setMoving(true);
+			//move map down and to left
+			movMapX = (int)(-.71 * delta);
+			movMapY = (int)(.71 * delta);
 
 		} else if (moveLowerRight(container)){
-			System.out.println("lowerright");
 			hunterSprite.setDirectionFacing(Direction.LOWER_RIGHT);
 			hunterSprite.setMoving(true);
+			//move map down and to left
+			movMapX = (int)(-.71 * delta);
+			movMapY = (int)(-.71 * delta);
 
 		} else if (moveLeft(container)){
-			System.out.println("left");
 			hunterSprite.setDirectionFacing(Direction.LEFT);
 			hunterSprite.setMoving(true);
+			//move map to right
+			movMapX = delta;
+			movMapY = 0;
 
 		} else if (moveUp(container)){
-			System.out.println("up");
 			hunterSprite.setDirectionFacing(Direction.BACK);
 			hunterSprite.setMoving(true);
+			//move map down
+			movMapX = 0;
+			movMapY = delta;			
 
 		} else if (moveRight(container)){
-			System.out.println("right");
 			hunterSprite.setDirectionFacing(Direction.RIGHT);
 			hunterSprite.setMoving(true);
+			//move map to left
+			movMapX = -1 * delta;
+			movMapY = 0;
 
 		} else if (moveDown(container)){
-			System.out.println("down");
 			hunterSprite.setDirectionFacing(Direction.FRONT);
 			hunterSprite.setMoving(true);
-
+			//move map up
+			movMapX = 0;
+			movMapY = -1 * delta;
+			
 		} else {
-			System.out.println("not moving");
 			hunterSprite.setMoving(false);
+			movMapX = 0;
+			movMapY = 0;
 		
 		}
+		
+		//here we would update map with new move data values
+		
 		hunterSprite.update(delta);
 		mainLayer.update(delta);
 
