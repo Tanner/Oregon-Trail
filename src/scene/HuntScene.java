@@ -88,7 +88,8 @@ public class HuntScene extends Scene {
 	
 	/**the pig or pigs in the hunt scene - may end up an array*/
 	private ArrayList<PreyPig> preyPig;
-	
+	/**the panel that holds the graphical objects*/
+	private Component huntPanel;
 
 	
 	
@@ -120,8 +121,10 @@ public class HuntScene extends Scene {
 		
 		hud = new HuntHUD(container, new HUDListener());
 		
-		reticle = new Sprite(container, ImageStore.get().IMAGES.get("HUNT_RETICLE").getWidth() * 2,ImageStore.get().IMAGES.get("HUNT_RETICLE").getHeight() * 2, ImageStore.get().IMAGES.get("HUNT_RETICLE"));
+		Image retImage = ImageStore.get().IMAGES.get("HUNT_RETICLE");
+		reticle = new Sprite(container, retImage.getWidth()*2, retImage.getHeight()*2, retImage);
 		
+		//container.setMouseCursor(retImage, retImage.getWidth()/2, retImage.getHeight()/2);
 		updateHUD();
 		//hud.setNotification(location.getName());
 		super.showHUD(hud);			
@@ -131,7 +134,7 @@ public class HuntScene extends Scene {
 		double worldMapX = 0;			//worldMap.getLocationNode.getX - these may be implemented someday. probably not
 		double worldMapY = 0;			//worldMap.getLocationNode.gety
 		
-		int terrainChance = 50;		// chance that there's a terrain object, out of 100
+		int terrainChance = 20;		// chance that there's a terrain object, out of 100
 		int rockChance = 50;		//chance that it's a tree vs a rock, out of 100
 		double [] dblArgs = {mapWidth, mapHeight, worldMapX, worldMapY};
 		int [] intArgs = {terrainChance, rockChance};
@@ -139,7 +142,7 @@ public class HuntScene extends Scene {
  		HuntingMap huntLayout = new HuntingMap(container, dblArgs, intArgs, ConstantStore.Environments.PLAINS);
 
 
- 		Component huntPanel = new HuntingGroundsComponent(container, (int)mapWidth, (int)mapHeight, huntLayout);
+ 		huntPanel = new HuntingGroundsComponent(container, (int)mapWidth, (int)mapHeight, huntLayout);
  		int numPrey = huntSceneRand.nextInt(MAXPREY)+1;
  		System.out.println(numPrey);
  		preyCow = new ArrayList<PreyCow>();
@@ -208,73 +211,74 @@ public class HuntScene extends Scene {
 	
 
 	private void updatePlayer(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		int movMapX;
-		int movMapY;
+		int moveMapX;
+		int moveMapY;
 	
 		if (moveUpperLeft(container)){
 			hunterSprite.setDirectionFacing(Direction.UPPER_LEFT);
 			hunterSprite.setMoving(true);
 			//move map down and to right
-			movMapX = (int)(.71 * delta);
-			movMapY = (int)(.71 * delta);
+			moveMapX = (int)(.71 * delta);
+			moveMapY = (int)(.71 * delta);
 			
 
 		} else if (moveLowerLeft(container)){
 			hunterSprite.setDirectionFacing(Direction.LOWER_LEFT);
 			hunterSprite.setMoving(true);
 			//move map up and to right
-			movMapX = (int)(.71 * delta);
-			movMapY = (int)(-.71 * delta);
+			moveMapX = (int)(.71 * delta);
+			moveMapY = (int)(-.71 * delta);
 
 		} else if (moveUpperRight(container)){
 			hunterSprite.setDirectionFacing(Direction.UPPER_RIGHT);
 			hunterSprite.setMoving(true);
 			//move map down and to left
-			movMapX = (int)(-.71 * delta);
-			movMapY = (int)(.71 * delta);
+			moveMapX = (int)(-.71 * delta);
+			moveMapY = (int)(.71 * delta);
 
 		} else if (moveLowerRight(container)){
 			hunterSprite.setDirectionFacing(Direction.LOWER_RIGHT);
 			hunterSprite.setMoving(true);
 			//move map down and to left
-			movMapX = (int)(-.71 * delta);
-			movMapY = (int)(-.71 * delta);
+			moveMapX = (int)(-.71 * delta);
+			moveMapY = (int)(-.71 * delta);
 
 		} else if (moveLeft(container)){
 			hunterSprite.setDirectionFacing(Direction.LEFT);
 			hunterSprite.setMoving(true);
 			//move map to right
-			movMapX = delta;
-			movMapY = 0;
+			moveMapX = delta;
+			moveMapY = 0;
 
 		} else if (moveUp(container)){
 			hunterSprite.setDirectionFacing(Direction.BACK);
 			hunterSprite.setMoving(true);
 			//move map down
-			movMapX = 0;
-			movMapY = delta;			
+			moveMapX = 0;
+			moveMapY = delta;			
 
 		} else if (moveRight(container)){
 			hunterSprite.setDirectionFacing(Direction.RIGHT);
 			hunterSprite.setMoving(true);
 			//move map to left
-			movMapX = -1 * delta;
-			movMapY = 0;
+			moveMapX = -1 * delta;
+			moveMapY = 0;
 
 		} else if (moveDown(container)){
 			hunterSprite.setDirectionFacing(Direction.FRONT);
 			hunterSprite.setMoving(true);
 			//move map up
-			movMapX = 0;
-			movMapY = -1 * delta;
+			moveMapX = 0;
+			moveMapY = -1 * delta;
 			
 		} else {
 			hunterSprite.setMoving(false);
-			movMapX = 0;
-			movMapY = 0;
+			moveMapX = 0;
+			moveMapY = 0;
 		
 		}
 		
+		this.huntPanel.setLocation(this.huntPanel.getX() + moveMapX, this.huntPanel.getY()+ moveMapY);
 		//here we would update map with new move data values
 		
 		//update hunter's ammo count
@@ -341,18 +345,18 @@ public class HuntScene extends Scene {
 	private void determineCollsion(int shotX, int shotY){
 		boolean aHit = false;
 		//to account for the bigger panel behind the window
-		shotX += mapWidth/2;
-		shotY += mapHeight/2;
+		shotX += (mapWidth/2) ;
+		shotY += (mapHeight/2);
 		
 		
 		int cow = preyCow.size() - 1;
 		System.out.println("Shot : " + shotX + " | " + shotY);
-		while ((!aHit) && (cow != 0)){
+		while ((!aHit) && (cow >= 0)){
 			System.out.println("cow " + cow + " x/y : " + preyCow.get(cow).getxLocation() + " | "+ preyCow.get(cow).getyLocation()  );
 			if (preyCow.get(cow).inHitBox(shotX, shotY)) {
 				int shotResult = preyCow.get(cow).checkDead();
 				aHit = true;
-				if (shotResult != 0){ //a hit! - get rid of cow, add meat of old cow to total
+				if (shotResult != 0){ //a kill! - get rid of cow, add meat of old cow to total
 					preyCow.get(cow).getPreySprite().setVisible(false);
 					preyCow.get(cow).getPreySprite().remove(preyCow.get(cow).getPreySprite());
 					preyCow.remove(cow);
@@ -360,18 +364,18 @@ public class HuntScene extends Scene {
 				}//if hitpoints are 0
 				cow--;
 			} else {//if not a hit
-			cow--;
+				cow--;
 			}
 		}//while through cows
 		
 		
 		int pig = preyPig.size() - 1;
-		while ((!aHit) && (pig != 0)){
+		while ((!aHit) && (pig >= 0)){
 			System.out.println("pig " + pig + " x/y : " + preyPig.get(pig).getxLocation() + " | "+ preyPig.get(pig).getyLocation()  );
 			if (preyPig.get(pig).inHitBox(shotX, shotY)) {
-				int shotResult = preyCow.get(pig).checkDead();
+				int shotResult = preyPig.get(pig).checkDead();
 				aHit = true;
-				if (shotResult != 0){ //a hit! - get rid of cow, add meat of old cow to total
+				if (shotResult != 0){ //a kill! - get rid of cow, add meat of old cow to total
 					preyPig.get(pig).getPreySprite().setVisible(false);
 					preyPig.get(pig).getPreySprite().remove(preyPig.get(pig).getPreySprite());
 					preyPig.remove(pig);

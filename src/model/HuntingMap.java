@@ -102,6 +102,7 @@ public class HuntingMap implements Serializable {
 		this.huntMapRand = new Random();
 		huntingGroundsMap = new TerrainObject[this.mapXMax][this.mapYMax];
 		this.generateMap();			
+		System.out.println(huntingGroundsMap.toString());
 	}//constructor
 	
 	/**
@@ -290,23 +291,6 @@ public class HuntingMap implements Serializable {
 		public TerrainObject[][] getHuntingGroundsMap() {
 			return this.huntingGroundsMap;
 		}
-//		/**
-//		 * @return the huntingGroundsComponents
-//		 */
-//		public TerrainComponent[][] getHuntingGroundsComponents() {
-//			return this.huntingGroundsComponents;
-//		}
-//		
-//		/**
-//		 * builds the terrain component for this particular terrain object
-//		 * @param container the graphical context within which this object will be displayed
-//		 * @param sourceObject the TerrainObject this component will display
-//		 * @return the component
-//		 */
-//		private TerrainComponent buildTerrainComponents(GameContainer container, TerrainObject sourceObject){
-//			TerrainComponent retVal = new TerrainComponent(container, sourceObject);
-//			return retVal;	
-//		}
 		
 		
 		/**

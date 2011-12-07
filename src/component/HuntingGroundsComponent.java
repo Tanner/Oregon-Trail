@@ -26,6 +26,9 @@ public class HuntingGroundsComponent extends Component {
 	/** the background to the panel */
 	private Image background;
 	
+	private Panel huntPanel;
+	
+	private Panel collisionPanel;
 	
 	
 	
@@ -51,13 +54,24 @@ public class HuntingGroundsComponent extends Component {
 		//make a sprite to hold the background image
 		Sprite backgroundPanel = new Sprite(container, this.background) ;
 			
-		Panel huntPanel = new Panel(container, width, height);
+		huntPanel = new Panel(container, width, height);
+		collisionPanel = new Panel(container, width, height);
 		
 		//add the 4 pictures required to make the background
 		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.TOPCENTER), ReferencePoint.TOPLEFT);
 		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.TOPLEFT);
 		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.TOPLEFT);
+		
+		for (int huntMapY = 0; huntMapY < huntLayout.getHuntingGroundsMap().length; huntMapY ++){
+			for (int huntMapX = 0; huntMapX < huntLayout.getHuntingGroundsMap()[0].length; huntMapX++){
+				Sprite tempImage = new Sprite(context,ImageStore.get().IMAGES.get(huntLayout.getHuntingGroundsMap()[huntMapX][huntMapY].getImageStoreName()));
+				Sprite tempShadImage = new Sprite(context,ImageStore.get().IMAGES.get(huntLayout.getHuntingGroundsMap()[huntMapX][huntMapY].getImageStoreShadName()));
+				huntPanel.add(tempImage, huntPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int) (huntMapX * huntLayout.getTILE_WIDTH()), (int)(huntMapY * huntLayout.getTILE_HEIGHT()));
+				collisionPanel.add(tempShadImage, collisionPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int) (huntMapX * huntLayout.getTILE_WIDTH()), (int)(huntMapY * huntLayout.getTILE_HEIGHT()));
+				
+			}//for huntmapy
+		}//for huntmapx
 		
  		
  		add(huntPanel,getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);

@@ -64,9 +64,14 @@ public abstract class Prey {
 	 */
 	public boolean inHitBox(double shotX, double shotY){
 		boolean result = false;
-		
-		if (((shotX > preySprite.getX()) && (shotX < preySprite.getX() + preySprite.getWidth())) 
-				&& ((shotX > preySprite.getX()) && (shotX < preySprite.getX() + preySprite.getWidth()))){
+		double preyLowX = this.xLocation;
+		double preyHighX = this.xLocation + preySprite.getWidth();
+		double preyLowY = this.yLocation;
+		double preyHighY = this.yLocation + preySprite.getHeight();
+		System.out.println("X :shot : " + shotX + " prey X box L -> H" + preyLowX + " | " + preyHighX );
+		System.out.println("Y :shot : " + shotY + " prey Y box L -> H" + preyLowY + " | " + preyHighY );
+		if (((shotX > preyLowX) && (shotX < preyHighX)) 
+				&& ((shotY > preyLowY) && (shotY < preyHighY))){
 			//we has a hit, result is true, decrement hitpoints
 			System.out.println("hit a creature : hitpoints went from :" + this.hitPoints + " to " + (this.hitPoints - 1));
 			result = true;
@@ -101,9 +106,19 @@ public abstract class Prey {
 	}
 	
 	public abstract void movePrey();
+	/**
+	 * prey has died, needs to leave the map
+	 */
+	public void sendToHeaven(){
+		//heaven?  negative? lol
+		this.xLocation = -1000;
+		this.yLocation = -1000;
+		
+	}
 	
 	public int checkDead(){
 		if (this.hitPoints <= 0){
+			sendToHeaven();
 			return this.MEAT;
 		}
 		return 0;
