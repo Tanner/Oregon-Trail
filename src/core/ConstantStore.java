@@ -42,6 +42,7 @@ public final class ConstantStore {
 	public static final String PATH_SOUND = "resources/sounds/";
 	public static final String PATH_HUNTTERRAIN = PATH_GRAPHICS + "hunt/terrain/";
 	public static final String PATH_HUNTBKG = PATH_GRAPHICS + "hunt/backgrounds/";
+	public static final String PATH_HUNTPREY = PATH_GRAPHICS + "hunt/prey/";
 	public static final String PATH_TEST = PATH_GRAPHICS + "test/";
 	public static final String PATH_TRAIL = PATH_GRAPHICS + "trail/";
 

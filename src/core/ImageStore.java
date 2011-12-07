@@ -86,6 +86,62 @@ public class ImageStore {
 		IMAGES.put("HUNTER_UPPERRIGHT", new Image(ConstantStore.PATH_HUNT + "hunterRightFaceBack1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_LOWERLEFT", new Image(ConstantStore.PATH_HUNT + "hunterLeftFaceFront1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNTER_LOWERRIGHT", new Image(ConstantStore.PATH_HUNT + "hunterRightFaceFront1.png", false, Image.FILTER_NEAREST));
+		//hunted prey
+		for (int incr = 1; incr < 7; incr ++){
+			String pigName = "pigBack" + incr + ".png";
+			String pigImgName = "HUNT_PIGBACK" + incr;
+			String cowName = "cowBack" + incr + ".png";
+			String cowImgName = "HUNT_COWBACK" + incr;
+			
+			IMAGES.put(pigImgName, new Image(ConstantStore.PATH_HUNTPREY + pigName, false, Image.FILTER_NEAREST));
+			IMAGES.put(cowImgName, new Image(ConstantStore.PATH_HUNTPREY + cowName, false, Image.FILTER_NEAREST));
+
+			pigName = "pigFront" + incr + ".png";
+			pigImgName = "HUNT_PIGFRONT" + incr;
+			cowName = "cowFront" + incr + ".png";
+			cowImgName = "HUNT_COWFRONT" + incr;
+			
+			IMAGES.put(pigImgName, new Image(ConstantStore.PATH_HUNTPREY + pigName, false, Image.FILTER_NEAREST));
+			IMAGES.put(cowImgName, new Image(ConstantStore.PATH_HUNTPREY + cowName, false, Image.FILTER_NEAREST));
+
+			pigName = "pigRight" + incr + ".png";
+			pigImgName = "HUNT_PIGRIGHT" + incr;
+			cowName = "cowRight" + incr + ".png";
+			cowImgName = "HUNT_COWRIGHT" + incr;
+			
+			IMAGES.put(pigImgName, new Image(ConstantStore.PATH_HUNTPREY + pigName, false, Image.FILTER_NEAREST));
+			IMAGES.put(cowImgName, new Image(ConstantStore.PATH_HUNTPREY + cowName, false, Image.FILTER_NEAREST));
+
+			pigName = "pigLeft" + incr + ".png";
+			pigImgName = "HUNT_PIGLEFT" + incr;
+			cowName = "cowLeft" + incr + ".png";
+			cowImgName = "HUNT_COWLEFT" + incr;
+			
+			IMAGES.put(pigImgName, new Image(ConstantStore.PATH_HUNTPREY + pigName, false, Image.FILTER_NEAREST));
+			IMAGES.put(cowImgName, new Image(ConstantStore.PATH_HUNTPREY + cowName, false, Image.FILTER_NEAREST));	
+		}
+		for (int incr = 7; incr < 10; incr ++){
+			String cowName = "cowBack" + incr + ".png";
+			String cowImgName = "HUNT_COWBACK" + incr;
+			
+			IMAGES.put(cowImgName, new Image(ConstantStore.PATH_HUNTPREY + cowName, false, Image.FILTER_NEAREST));
+
+			cowName = "cowFront" + incr + ".png";
+			cowImgName = "HUNT_COWFRONT" + incr;
+			
+			IMAGES.put(cowImgName, new Image(ConstantStore.PATH_HUNTPREY + cowName, false, Image.FILTER_NEAREST));
+
+			cowName = "cowRight" + incr + ".png";
+			cowImgName = "HUNT_COWRIGHT" + incr;
+			
+			IMAGES.put(cowImgName, new Image(ConstantStore.PATH_HUNTPREY + cowName, false, Image.FILTER_NEAREST));
+
+			cowName = "cowLeft" + incr + ".png";
+			cowImgName = "HUNT_COWLEFT" + incr;
+			
+			IMAGES.put(cowImgName, new Image(ConstantStore.PATH_HUNTPREY + cowName, false, Image.FILTER_NEAREST));	
+		}
+		
 		//terrain background
 		IMAGES.put("HUNT_GRASS", new Image(ConstantStore.PATH_HUNTBKG + "grassBG.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("HUNT_SNOW", new Image(ConstantStore.PATH_HUNTBKG + "snowBG.png", false, Image.FILTER_NEAREST));

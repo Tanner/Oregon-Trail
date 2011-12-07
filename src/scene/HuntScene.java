@@ -36,6 +36,8 @@ import component.Positionable.ReferencePoint;
 import component.hud.HuntHUD;
 import component.sprite.AnimatingSprite;
 import component.sprite.AnimatingSprite.Direction;
+import component.sprite.HunterAnimatingSprite;
+import component.sprite.PreyAnimatingSprite;
 
 import core.ConstantStore;
 //import core.FontStore;
@@ -57,6 +59,10 @@ public class HuntScene extends Scene {
 
 	/**the graphic representing the hunter*/
 	private AnimatingSprite hunterSprite;
+	/**the graphic representing the cow(s), if any exist on the screen*/
+	private AnimatingSprite cowSprite;
+	/**the graphic representing the hunter*/
+	private AnimatingSprite pigSprite;
 	/**the member of the party that is hunting - currently party leader*/
 	private Person hunter;
 	/**single random gen for entire scene*/
@@ -138,9 +144,56 @@ public class HuntScene extends Scene {
 //  		}//for row 0 to array length
  		
  		mainLayer.add(huntPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
-  	
-		hunterSprite = new AnimatingSprite(container,
-				48,
+ 		Image[] pigAnimLeft = new Image[6];
+ 		Image[] pigAnimRight = new Image[6];
+ 		Image[] pigAnimFront = new Image[6];
+ 		Image[] pigAnimBack = new Image[6];
+ 		
+ 		Image[] cowAnimLeft = new Image[9];
+ 		Image[] cowAnimRight = new Image[9];
+ 		Image[] cowAnimFront = new Image[9];
+ 		Image[] cowAnimBack = new Image[9];
+ 		
+ 		
+ 		//set up the animation arrays for the pig and the cow
+ 		for (int incr = 1; incr < 7; incr++){
+ 			
+ 	 		pigAnimLeft[incr - 1] = ImageStore.get().getImage("HUNT_PIGLEFT" + incr);
+ 	 		pigAnimRight[incr - 1] = ImageStore.get().getImage("HUNT_PIGRIGHT" + incr);
+ 	 		pigAnimFront[incr - 1] = ImageStore.get().getImage("HUNT_PIGFRONT" + incr);
+ 	 		pigAnimBack[incr - 1] = ImageStore.get().getImage("HUNT_PIGBACK" + incr);
+ 	 		
+ 	 		cowAnimLeft[incr - 1] = ImageStore.get().getImage("HUNT_COWLEFT" + incr);
+ 	 		cowAnimRight[incr - 1] = ImageStore.get().getImage("HUNT_COWRIGHT" + incr);
+ 	 		cowAnimFront[incr - 1] = ImageStore.get().getImage("HUNT_COWFRONT" + incr);
+ 	 		cowAnimBack[incr - 1] = ImageStore.get().getImage("HUNT_COWBACK" + incr);
+ 		}
+ 		
+ 		for (int incr = 7; incr < 10; incr ++) {
+ 	 		cowAnimLeft[incr - 1] = ImageStore.get().getImage("HUNT_COWLEFT" + incr);
+ 	 		cowAnimRight[incr - 1] = ImageStore.get().getImage("HUNT_COWRIGHT" + incr);
+ 	 		cowAnimFront[incr - 1] = ImageStore.get().getImage("HUNT_COWFRONT" + incr);
+ 	 		cowAnimBack[incr - 1] = ImageStore.get().getImage("HUNT_COWBACK" + incr);		
+ 		}
+	
+ 		
+		pigSprite =  new PreyAnimatingSprite(container,
+//				48,
+				new Animation(pigAnimLeft, 250),
+				new Animation(pigAnimRight, 250),
+				new Animation(pigAnimFront, 250),
+				new Animation(pigAnimBack, 250),
+				AnimatingSprite.Direction.RIGHT);
+		cowSprite =  new PreyAnimatingSprite(container,
+//				48,
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_FRONT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_BACK")}, 250),
+				AnimatingSprite.Direction.RIGHT);
+
+		hunterSprite = new HunterAnimatingSprite(container,
+			//	48,
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_FRONT")}, 250),
@@ -162,16 +215,16 @@ public class HuntScene extends Scene {
 		backgroundLayer.add(new Panel(container, new Image(ConstantStore. PATH_BKGRND + "dark_dirt.png")));
 	}
 	
-	
-	
-	/* (non-Javadoc)
-	 * @see scene.Scene#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	/**
+	 * update the player's toon to reflect input
+	 * @param container
+	 * @param game
+	 * @param delta
+	 * @throws SlickException
 	 */
-	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		//amounts to move the map in each direction (either + or - delta if in 4 cardinal directions, or +/- .71 * delta for combinations
-		//in opposite direction to facing of toon - if player moves left, map moves to right.
-		//positive x moves map from left to right, positive y moves map down
+	
+
+	private void updatePlayer(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		int movMapX;
 		int movMapY;
 	
@@ -242,6 +295,18 @@ public class HuntScene extends Scene {
 		//here we would update map with new move data values
 		
 		hunterSprite.update(delta);
+	}//update player method
+	
+	/* (non-Javadoc)
+	 * @see scene.Scene#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
+	 */
+	@Override
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		//amounts to move the map in each direction (either + or - delta if in 4 cardinal directions, or +/- .71 * delta for combinations
+		//in opposite direction to facing of toon - if player moves left, map moves to right.
+		//positive x moves map from left to right, positive y moves map down
+
+		this.updatePlayer(container, game, delta);
 		mainLayer.update(delta);
 		updateHUD();
 
