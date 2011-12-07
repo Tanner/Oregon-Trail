@@ -224,7 +224,6 @@ public class HuntScene extends Scene {
 		hunterSprite.update(delta);
 		mainLayer.update(delta);
 
-
 	}
 
 	/**
@@ -377,19 +376,7 @@ public class HuntScene extends Scene {
 	@Override
 	public void keyPressed(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
-			GameDirector.sharedSceneListener().sceneDidEnd(this);
-		}
-		if (key == Input.KEY_D){//pressed the right key
-			
-		}
-		if (key == Input.KEY_W){//pressed the forward key
-			
-		}
-		if (key == Input.KEY_A){//pressed the left key
-			
-		}
-		if (key == Input.KEY_S){//pressed the back key
-			
+			//GameDirector.sharedSceneListener().sceneDidEnd(this);
 		}
 	}
 	
@@ -400,6 +387,8 @@ public class HuntScene extends Scene {
 
 		}
 	}
+	
+
 	
 	
 	@Override
