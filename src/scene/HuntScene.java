@@ -153,17 +153,17 @@ public class HuntScene extends Scene {
 			huntPanel.add(preyPig.get(prey).getPreySprite(),
 					huntPanel.getPosition(ReferencePoint.TOPLEFT),
 					ReferencePoint.TOPLEFT,
-//					100 + prey,
-//					200 + prey);
 					preyPig.get(prey).getxLocation(),
 					preyPig.get(prey).getyLocation());
 			
 			System.out.println("loading the " + prey + "th cow at x= " + preyCow.get(prey).getxLocation() + " and y= " + preyCow.get(prey).getyLocation());
 			huntPanel.add(preyCow.get(prey).getPreySprite(),
-					huntPanel.getPosition(ReferencePoint.CENTERCENTER),
-					ReferencePoint.CENTERCENTER,
+					huntPanel.getPosition(ReferencePoint.TOPLEFT),
+					ReferencePoint.TOPLEFT,
 					preyCow.get(prey).getxLocation(),
 					preyCow.get(prey).getyLocation());
+
+			huntPanel.setVisible(true);
 
  		}
 

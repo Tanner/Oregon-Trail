@@ -61,10 +61,6 @@ public class HuntingGroundsComponent extends Component {
 		
  		
  		add(huntPanel,getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
- 		this.setVisible(true);
-		
-		
-		
 	}
 
 
