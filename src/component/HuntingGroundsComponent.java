@@ -12,6 +12,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.gui.GUIContext;
 
 import component.Positionable.ReferencePoint;
+import component.sprite.Sprite;
 
 import core.ConstantStore;
 import core.ImageStore;
@@ -22,40 +23,42 @@ import core.ImageStore;
  */
 public class HuntingGroundsComponent extends Component {
 
-	/**the width of the hunt grounds panel*/
-	private static int groundsWidth;
-	/**the height of the hunt grounds panel*/
-	private static int groundsHeight;
-	/** */
+	/** the background to the panel */
+	private Image background;
+	
 	
 	
 	
 	public HuntingGroundsComponent(GUIContext context, int width, int height, HuntingMap huntLayout) {
 		super(context, width, height);
-		this.groundsHeight = height;
-		this.groundsWidth = width;
-		
-		Image background;
-		
+		//pick correct background for this component
 		switch (huntLayout.getBckGround()){
-			case GRASS : 	background = ImageStore.get().getImage("HUNT_GRASS");
-							break;
-			case SNOW : 	background = ImageStore.get().getImage("HUNT_SNOW");
-							break;
-			case MOUNTAIN : background = ImageStore.get().getImage("HUNT_MOUNTAIN");
-							break;
-			case DESERT : 	background = ImageStore.get().getImage("HUNT_DESERT");
-							break;
-			default :		background = ImageStore.get().getImage("HUNT_GRASS");
-							break;
-		}
+		case GRASS : 	this.background = ImageStore.get().getImage("HUNT_GRASS");
+						break;
+		case SNOW : 	this.background = ImageStore.get().getImage("HUNT_SNOW");
+						break;
+		case MOUNTAIN : this.background = ImageStore.get().getImage("HUNT_MOUNTAIN");
+						break;
+		case DESERT : 	this.background = ImageStore.get().getImage("HUNT_DESERT");
+						break;
+		default :		this.background = ImageStore.get().getImage("HUNT_GRASS");
+						break;
+	}
 
+	//build the terrain layout
+		//TerrainObject[][] tmpLayoutArray = huntLayout.getHuntingGroundsMap();
 		
+		//make a sprite to hold the background image
+		Sprite backgroundPanel = new Sprite(container, this.background) ;
+			
+		Panel huntPanel = new Panel(container, width, height);
 		
- 		Panel huntPanel = new Panel(context, width, height);
- 		
- 		
- 		
+		//add the 4 pictures required to make the background
+		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
+		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.TOPCENTER), ReferencePoint.TOPLEFT);
+		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.TOPLEFT);
+		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.TOPLEFT);
+		
  		
  		add(huntPanel,getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
  			
@@ -63,10 +66,6 @@ public class HuntingGroundsComponent extends Component {
 		
 		
 	}
-	public HuntingGroundsComponent(GUIContext context) {
-		super(context, groundsHeight, groundsHeight);
-		
 
-	}
 
-}
+}//hunting grounds component

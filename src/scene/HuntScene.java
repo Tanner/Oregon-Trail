@@ -2,6 +2,7 @@ package scene;
 
 //import java.util.Map;
 
+import java.awt.Cursor;
 import java.util.Random;
 
 import model.HuntingMap;
@@ -11,6 +12,8 @@ import model.Item;
 import model.Party;
 import model.Person;
 import model.WorldMap;
+import model.huntingMap.PreyCow;
+import model.huntingMap.PreyPig;
 import model.huntingMap.TerrainObject;
 import model.item.ItemType;
 
@@ -38,6 +41,7 @@ import component.sprite.AnimatingSprite;
 import component.sprite.AnimatingSprite.Direction;
 import component.sprite.HunterAnimatingSprite;
 import component.sprite.PreyAnimatingSprite;
+import component.sprite.Sprite;
 
 import core.ConstantStore;
 //import core.FontStore;
@@ -56,13 +60,10 @@ public class HuntScene extends Scene {
 	private Image background;
 	/**the world map, to be used to determine actual in-world location*/
 	private WorldMap worldMap;
-
+	/**the reticle for the gun in the scene, moves with the mouse*/
+	private Sprite reticle;
 	/**the graphic representing the hunter*/
 	private AnimatingSprite hunterSprite;
-	/**the graphic representing the cow(s), if any exist on the screen*/
-	private AnimatingSprite cowSprite;
-	/**the graphic representing the hunter*/
-	private AnimatingSprite pigSprite;
 	/**the member of the party that is hunting - currently party leader*/
 	private Person hunter;
 	/**single random gen for entire scene*/
@@ -71,6 +72,18 @@ public class HuntScene extends Scene {
 	private int ammoCount = 0;
 	/**number of boxes of ammo this hunter has */
 	private int ammoBoxes = 0;
+	/**whether the gun has been cocked or not*/
+	private boolean gunCocked;
+	/**amount of meat acquired this hunt session*/
+	private int meat = 0;
+
+	/**the cow or cows in the hunt scene - may end up an array*/
+	private PreyCow[] preyCow;
+	
+	/**the pig or pigs in the hunt scene - may end up an array*/
+	private PreyPig[] preyPig;
+	
+	
 	/**
 	 * Constructs a {@code HuntScene} with a {@code Person} who will be the hunter
 	 * @param hunter the single member of the party who is going to hunt.
@@ -92,114 +105,54 @@ public class HuntScene extends Scene {
 		super.init(container, game);
 		SoundStore.get().stopAllSound();
 		SoundStore.get().playHuntMusic();
+		//gun starts cocked
+		//need to press right mouse button to cock gun, left to fire
+		gunCocked = true;
+		
 		hud = new HuntHUD(container, new HUDListener());
-		if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO)){
-			this.ammoCount = (int) hunter.getInventory().getConditionOf(ItemType.AMMO).getCurrent();
-			this.ammoBoxes = (int) hunter.getInventory().getNumberOf(ItemType.AMMO) -1;
-		}
+		
+		reticle = new Sprite(container, ImageStore.get().IMAGES.get("HUNT_RETICLE").getWidth() * 2,ImageStore.get().IMAGES.get("HUNT_RETICLE").getHeight() * 2, ImageStore.get().IMAGES.get("HUNT_RETICLE"));
+		
 		updateHUD();
 		//hud.setNotification(location.getName());
 		super.showHUD(hud);			
 		//Font h2 = FontStore.get().getFont(FontStore.FontID.H2);
-		double [] dblArgs = new double[4];
-		int [] intArgs = new int[2];
+		double mapWidth = 2400;		//map x dimension
+		double mapHeight = 2400;	//map y dimension
+		double worldMapX = 0;			//worldMap.getLocationNode.getX - these may be implemented someday. probably not
+		double worldMapY = 0;			//worldMap.getLocationNode.gety
 		
-		dblArgs[0] = 2400;	//map x dimension
-		dblArgs[1] = 2400;	//map y dimension
-		dblArgs[2] = 0;			//worldMap.getLocationNode.getX - these may be implemented someday.
-		dblArgs[3] = 0;			//worldMap.getLocationNode.gety
-		
-		intArgs[0] = 50;		// chance that there's a terrain object
-		intArgs[1] = 50;		//chance that it's a tree vs a rock
-		
+		int terrainChance = 50;		// chance that there's a terrain object, out of 100
+		int rockChance = 50;		//chance that it's a tree vs a rock, out of 100
+		double [] dblArgs = {mapWidth, mapHeight, worldMapX, worldMapY};
+		int [] intArgs = {terrainChance, rockChance};
+			
  		HuntingMap huntLayout = new HuntingMap(container, dblArgs, intArgs, ConstantStore.Environments.PLAINS);
-		
-		switch (huntLayout.getBckGround()){
-			case GRASS : 	this.background = ImageStore.get().getImage("HUNT_GRASS");
-							break;
-			case SNOW : 	this.background = ImageStore.get().getImage("HUNT_SNOW");
-							break;
-			case MOUNTAIN : this.background = ImageStore.get().getImage("HUNT_MOUNTAIN");
-							break;
-			case DESERT : 	this.background = ImageStore.get().getImage("HUNT_DESERT");
-							break;
-			default :		this.background = ImageStore.get().getImage("HUNT_GRASS");
-							break;
-		}
 
-		
- 		TerrainObject[][] tmpLayoutArray = huntLayout.getHuntingGroundsMap();
- 		
- 		Panel backgroundPanel = new Panel(container, this.background.getWidth() * 2,this.background.getHeight() * 2, this.background);
- 		
- 		Panel[] bkgroundAra = new Panel[361];
- 		for (int i = 0; i < 361; i++){
- 			bkgroundAra[i] = backgroundPanel;
- 		}
- 		
-		Panel huntPanel = new Panel(container, (int)huntLayout.getMAP_WIDTH(), (int)huntLayout.getMAP_HEIGHT());
-		
-		huntPanel.addAsGrid((Component[])bkgroundAra,huntPanel.getPosition(ReferencePoint.CENTERCENTER), 19,19, 256, 256, 0,0);
-		
- 		
- //		huntPanel.addAsGrid(huntLayout.getHuntingGroundsComponents(), huntPanel.getPosition(ReferencePoint.TOPLEFT), 0, 0);
-// 		for (int row = 0; row < tmpLayoutArray.length; row++){
-// 			for (int col = 0; col < tmpLayoutArray[row].length; col++){
-// 				huntPanel.add(new TerrainComponent(container, tmpLayoutArray[row][col]), huntPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, row * 48, col * 48);
-// 					
-// 			}//for col 0 to row array length		
-//  		}//for row 0 to array length
- 		
- 		mainLayer.add(huntPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
- 		Image[] pigAnimLeft = new Image[6];
- 		Image[] pigAnimRight = new Image[6];
- 		Image[] pigAnimFront = new Image[6];
- 		Image[] pigAnimBack = new Image[6];
- 		
- 		Image[] cowAnimLeft = new Image[9];
- 		Image[] cowAnimRight = new Image[9];
- 		Image[] cowAnimFront = new Image[9];
- 		Image[] cowAnimBack = new Image[9];
- 		
- 		
- 		//set up the animation arrays for the pig and the cow
- 		for (int incr = 1; incr < 7; incr++){
- 			
- 	 		pigAnimLeft[incr - 1] = ImageStore.get().getImage("HUNT_PIGLEFT" + incr);
- 	 		pigAnimRight[incr - 1] = ImageStore.get().getImage("HUNT_PIGRIGHT" + incr);
- 	 		pigAnimFront[incr - 1] = ImageStore.get().getImage("HUNT_PIGFRONT" + incr);
- 	 		pigAnimBack[incr - 1] = ImageStore.get().getImage("HUNT_PIGBACK" + incr);
- 	 		
- 	 		cowAnimLeft[incr - 1] = ImageStore.get().getImage("HUNT_COWLEFT" + incr);
- 	 		cowAnimRight[incr - 1] = ImageStore.get().getImage("HUNT_COWRIGHT" + incr);
- 	 		cowAnimFront[incr - 1] = ImageStore.get().getImage("HUNT_COWFRONT" + incr);
- 	 		cowAnimBack[incr - 1] = ImageStore.get().getImage("HUNT_COWBACK" + incr);
- 		}
- 		
- 		for (int incr = 7; incr < 10; incr ++) {
- 	 		cowAnimLeft[incr - 1] = ImageStore.get().getImage("HUNT_COWLEFT" + incr);
- 	 		cowAnimRight[incr - 1] = ImageStore.get().getImage("HUNT_COWRIGHT" + incr);
- 	 		cowAnimFront[incr - 1] = ImageStore.get().getImage("HUNT_COWFRONT" + incr);
- 	 		cowAnimBack[incr - 1] = ImageStore.get().getImage("HUNT_COWBACK" + incr);		
- 		}
-	
- 		
-		pigSprite =  new PreyAnimatingSprite(container,
-//				48,
-				new Animation(pigAnimLeft, 250),
-				new Animation(pigAnimRight, 250),
-				new Animation(pigAnimFront, 250),
-				new Animation(pigAnimBack, 250),
-				AnimatingSprite.Direction.RIGHT);
-		cowSprite =  new PreyAnimatingSprite(container,
-//				48,
-				new Animation(cowAnimLeft, 250),
-				new Animation(cowAnimRight, 250),
-				new Animation(cowAnimFront, 250),
-				new Animation(cowAnimBack, 250),
-				AnimatingSprite.Direction.RIGHT);
 
-		hunterSprite = new HunterAnimatingSprite(container,
+ 		Component huntPanel = new HuntingGroundsComponent(container, (int)mapWidth, (int)mapHeight, huntLayout);
+ 		preyCow = new PreyCow[20];
+ 		preyPig = new PreyPig[20];
+ 		
+ 		mainLayer.add(huntPanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int)(-1 * mapWidth/2), (int) (-1 * mapHeight/2));
+ 		//mainLayer.add(huntPanel, new Vector2f(), ReferencePoint.TOPLEFT, (int)((-1 * (mapWidth/2)) + mainLayer.getWidth()/2), (int)((-1 * (mapHeight/2)) + mainLayer.getHeight()/2));
+ 		for (int prey = 0; prey < 20; prey ++){
+			preyCow[prey] = new PreyCow(container, game, huntSceneRand, (int)mapWidth, (int)mapHeight);
+			preyPig[prey] = new PreyPig(container, game, huntSceneRand, (int)mapWidth, (int)mapHeight);
+			mainLayer.add(preyPig[prey].getPreySprite(),
+					mainLayer.getPosition(ReferencePoint.TOPLEFT),
+					ReferencePoint.TOPLEFT,
+					preyPig[prey].getxLocation(),
+					preyPig[prey].getyLocation());
+			
+			mainLayer.add(preyCow[prey].getPreySprite(),
+					mainLayer.getPosition(ReferencePoint.CENTERCENTER),
+					ReferencePoint.CENTERCENTER,
+					preyCow[prey].getxLocation(),
+					preyCow[prey].getyLocation());
+
+ 		}
+ 		hunterSprite = new HunterAnimatingSprite(container,
 			//	48,
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
@@ -212,25 +165,19 @@ public class HuntScene extends Scene {
 				AnimatingSprite.Direction.RIGHT);
 		
 		mainLayer.add(hunterSprite,
-				new Vector2f(mainLayer.getWidth()/2,mainLayer.getHeight()/2),
+				mainLayer.getPosition(ReferencePoint.CENTERCENTER),
 				ReferencePoint.CENTERCENTER,
 				20,
 				25);
-		
-		mainLayer.add(pigSprite,
-				new Vector2f(mainLayer.getWidth()/2,mainLayer.getHeight()/2),
+			
+		mainLayer.add(reticle,
+				mainLayer.getPosition(ReferencePoint.CENTERCENTER),
 				ReferencePoint.CENTERCENTER,
-				200,
-				250);
-		mainLayer.add(cowSprite,
-				new Vector2f(mainLayer.getWidth()/2,mainLayer.getHeight()/2),
-				ReferencePoint.CENTERCENTER,
-				-100,
-				-150);
-		
+				0,
+				0);
 		//build background
 		
-		backgroundLayer.add(new Panel(container, new Image(ConstantStore. PATH_BKGRND + "dark_dirt.png")));
+		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("HUNT_GRASS")));
 	}
 	
 	/**
@@ -312,6 +259,12 @@ public class HuntScene extends Scene {
 		
 		//here we would update map with new move data values
 		
+		//update hunter's ammo count
+		if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO)){
+			this.ammoCount = (int) hunter.getInventory().getConditionOf(ItemType.AMMO).getCurrent();
+			this.ammoBoxes = (int) hunter.getInventory().getNumberOf(ItemType.AMMO) -1;
+		}
+		
 		hunterSprite.update(delta);
 	}//update player method
 	
@@ -346,6 +299,111 @@ public class HuntScene extends Scene {
 		//END AMMO DECREASE
 
 	}
+	
+	
+	
+	/**
+	 * determines whether a shot is colliding with anything
+	 * @param shotX - the destination x of the shot
+	 * @param shotY - the destination y of the shot
+	 * @return whether there was a target or not at the shot location
+	 */
+	private boolean determineCollsion(int shotX, int shotY){
+		boolean check = false;
+		//code to compare shotX,shotY to any animals or enemies on the visible area of the screen
+		return check;
+	}
+	
+	@Override
+	public void keyPressed(int key, char c) {
+		if (key == Input.KEY_SPACE) {
+			//GameDirector.sharedSceneListener().sceneDidEnd(this);
+		}
+	}
+	
+	@Override
+	public void mousePressed(int button, int mx, int my) {
+		if (!isVisible() || !isAcceptingInput()) {
+			return;
+		}
+		
+		super.mousePressed(button, mx, my);
+		//left button is button 0 - fires bullet
+		//right button is button 1 - reloads and cocks gun
+		if (button == 0) {
+			if ((this.ammoCount + this.ammoBoxes != 0) && (this.gunCocked)){
+				
+				SoundStore.get().playSound("Shot",(float).5);
+				
+				if (huntSceneRand.nextInt(10) < 4){
+					SoundStore.get().playSound("Ricochet");
+				}
+				
+				if (determineCollsion(mx,my)){//determine if there's been a hit
+					
+					
+				}
+				//regardless, decrement ammo
+				decrementAmmo();
+				this.gunCocked = false;
+	
+			}//if shot happened via mouse
+			else {
+				SoundStore.get().playSound("Click",(float).3);			
+			}
+		}//if button == 0
+		else if (button ==1){
+			if (this.gunCocked){//cocking while loaded means bullet gone - oopsie
+				decrementAmmo();			
+			}
+			this.gunCocked = true;
+			SoundStore.get().playSound("GunCock"); 	
+			
+		}
+	}
+	@Override
+	public void mouseReleased(int button, int mx, int my) {
+
+	
+	}
+
+	@Override
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {		
+			reticle.setLocation(newx  - reticle.getWidth()/2, newy - reticle.getHeight()/2);
+
+		}
+	}
+	
+	
+	@Override
+	public int getID() {
+		return ID.ordinal();
+	}
+	
+	private class HUDListener implements ComponentListener {
+		@Override
+		public void componentActivated(AbstractComponent component) {
+		if (component == hud.getCampButton()) {
+				SoundStore.get().setMusicVolume(.25f);
+				GameDirector.sharedSceneListener().sceneDidEnd(HuntScene.this);
+			}//if source==campButton
+		if (component == hud.getInventoryButton()){
+			GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, HuntScene.this, false);			
+		}
+			
+		}//component activated
+	}	
+	
+	private void updateHUD() {
+		if(this.ammoCount != 0) {
+			hud.setNotification("Current ammo: " + this.ammoCount + ((this.ammoCount == 1) ? " bullet and " :  " bullets and ") + (hunter.getInventory().getNumberOf(ItemType.AMMO)-1) + " extra " + ((hunter.getInventory().getNumberOf(ItemType.AMMO)-1 == 1) ? "box" : "boxes") + ".");
+		} else {
+			hud.setNotification("Current ammo: OUT OF AMMO");
+		}
+	}
+	
+	
 	
 	/**
 	 * checks if the up and left keys are pressed simultaneously
@@ -492,95 +550,5 @@ public class HuntScene extends Scene {
 			return false;
 		}
 	}//move up direction
-	
-	
-	/**
-	 * determines whether a shot is colliding with anything
-	 * @param shotX - the destination x of the shot
-	 * @param shotY - the destination y of the shot
-	 * @return whether there was a target or not at the shot location
-	 */
-	private boolean determineCollsion(int shotX, int shotY){
-		boolean check = false;
-		//code to compare shotX,shotY to any animals or enemies on the visible area of the screen
-		return check;
-	}
-	
-	@Override
-	public void keyPressed(int key, char c) {
-		if (key == Input.KEY_SPACE) {
-			//GameDirector.sharedSceneListener().sceneDidEnd(this);
-		}
-	}
-	
-	@Override
-	public void mousePressed(int button, int mx, int my) {
-		if (!isVisible() || !isAcceptingInput()) {
-			return;
-		}
-		
-		super.mousePressed(button, mx, my);
-		//left button is button 0
-		if ((button == 0) && (this.ammoCount + this.ammoBoxes != 0)){
-		SoundStore.get().playSound("Shot",(float).5);
-		
-		if (huntSceneRand.nextInt(10) < 4){
-			SoundStore.get().playSound("Ricochet");
-		}
-		
-		if (determineCollsion(mx,my)){//determine if there's been a hit
-			
-			
-		}
-		//regardless, decrement ammo
-		decrementAmmo();
-		
-		//this.mouseOver = getArea().contains(mx, my);
-		}//if shot happened via mouse
-	}
-	@Override
-	public void mouseReleased(int button, int mx, int my) {
-		SoundStore.get().playSound("GunCock");
-	
-	}
-
-	@Override
-	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
-		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {
-			
-			
-
-		}
-	}
-	
-
-	
-	
-	@Override
-	public int getID() {
-		return ID.ordinal();
-	}
-	
-	private class HUDListener implements ComponentListener {
-		@Override
-		public void componentActivated(AbstractComponent component) {
-		if (component == hud.getCampButton()) {
-				SoundStore.get().setMusicVolume(.25f);
-				GameDirector.sharedSceneListener().sceneDidEnd(HuntScene.this);
-			}//if source==campButton
-		if (component == hud.getInventoryButton()){
-			GameDirector.sharedSceneListener().requestScene(SceneID.PARTYINVENTORY, HuntScene.this, false);			
-		}
-			
-		}//component activated
-	}	
-	
-	private void updateHUD() {
-		if(this.ammoCount != 0) {
-			hud.setNotification("Current ammo: " + this.ammoCount + ((this.ammoCount == 1) ? "bullet and " :  "bullets and ") + (hunter.getInventory().getNumberOf(ItemType.AMMO)-1) + " extra " + ((hunter.getInventory().getNumberOf(ItemType.AMMO)-1 == 1) ? "box" : "boxes") + ".");
-		} else {
-			hud.setNotification("Current ammo: OUT OF AMMO");
-		}
-	}
 
 }//huntscene

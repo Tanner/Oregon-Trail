@@ -25,6 +25,13 @@ public class Sprite extends Component {
 		
 		image.setCenterOfRotation(getWidth() / 2, getHeight() / 2);
 	}
+	public Sprite(GUIContext context, int width, int height, Image image) {
+		this(context, width, height);
+		
+		this.image = image;
+		
+		image.setCenterOfRotation(getWidth() / 2, getHeight() / 2);
+	}
 	
 	public Sprite(GUIContext context, Image image) {
 		this(context, image.getWidth(), image);

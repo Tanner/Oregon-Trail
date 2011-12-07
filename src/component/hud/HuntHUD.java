@@ -6,8 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 */
-import java.util.LinkedList;
-import java.util.Queue;
+
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -56,23 +55,13 @@ public class HuntHUD extends HUD {
 	 */
 	public HuntHUD(GUIContext context, ComponentListener listener) {
 		super(context, context.getWidth(), HEIGHT);
-
-//		notificationQueue = new LinkedList<String>();
-		
+	
 		int panelWidth = context.getWidth() - INFO_WIDTH - MARGIN * 2;
 		
 		huntPanel = makeHuntPanel(panelWidth, listener);
 		
 		add(huntPanel, getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
 	
-		//Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
-	/*	
-		timeLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
-		add(timeLabel, notificationLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.BOTTOMLEFT, MARGIN, - MARGIN / 2);
-		
-		dateLabel = new Label(context, INFO_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, "");
-		add(dateLabel, notificationLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.TOPLEFT, MARGIN, MARGIN / 2);
-	*/	
 
 	}
 
@@ -111,28 +100,6 @@ public class HuntHUD extends HUD {
 		hudButton2.setTooltipEnabled(true);
 		hudButton2.setTooltipMessage(ConstantStore.get("HUNT_SCENE", "INVENTORY"));
 		
-/*		Button buttons[] = new Button[2];
-
-		int buttonWidth = (container.getWidth() - MARGIN * 2 - MARGIN * (buttons.length - 1) - INFO_WIDTH - MARGIN) / buttons.length;
-		
-		Label inventoryLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("HUNT_SCENE", "INVENTORY"));
-		inventoryButton = new Button(container, buttonWidth, BUTTON_HEIGHT, inventoryLabel);
-		inventoryButton.addListener(listener);
-				
-		Label leaveLabel = new Label(container, buttonWidth, fieldFont, Color.white, ConstantStore.get("HUNT_SCENE", "CAMP"));
-		campButton = new Button(container, buttonWidth, BUTTON_HEIGHT, leaveLabel);
-		campButton.addListener(listener);
-				
-		buttons[0] = campButton;
-		buttons[1] = inventoryButton;
-		
-		panel.addAsRow(Arrays.asList(buttons).iterator(),
-				panel.getPosition(ReferencePoint.TOPLEFT),
-				MARGIN,
-				MARGIN,
-				MARGIN);
-		
-*/
 		return panel;
 	} 
 	
