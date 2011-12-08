@@ -4,6 +4,7 @@ package scene;
 
 import java.awt.Cursor;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import model.HuntingMap;
@@ -351,7 +352,7 @@ public class HuntScene extends Scene {
 	 * @param shotY - the destination y of the shot
 	 * @return whether there was a target or not at the shot location
 	 */
-	private void determineCollsion(int shotX, int shotY){
+	private void determineCollision(int shotX, int shotY){
 		boolean aHit = false;
 		//to account for the bigger panel behind the window
 		int offsetX = huntPanel.getX();
@@ -427,10 +428,15 @@ public class HuntScene extends Scene {
 					SoundStore.get().playSound("Ricochet");
 				}
 				
-				determineCollsion(mx,my);
+				determineCollision(mx,my);
 
 				//regardless, decrement ammo
 				decrementAmmo();
+				List<Item> meatList = new ArrayList<Item>();
+				for(int i = 0; i < meat; i++) {
+					meatList.add(new Item(ItemType.MEAT));
+				}
+				party.getVehicle().addItemsToInventory(meatList);
 				this.gunCocked = false;
 	
 			}//if shot happened via mouse
@@ -448,6 +454,7 @@ public class HuntScene extends Scene {
 			}
 			
 		}
+		
 	}
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
