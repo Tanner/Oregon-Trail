@@ -1,6 +1,7 @@
 package scene;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import model.Party;
@@ -36,16 +37,37 @@ public class TavernScene extends Scene {
 	private Party party;
 	private ChoiceModal modal;
 	
+	List<String> names = new ArrayList<String>();	
 	
 	public TavernScene(Party party) {
 		person = new Person[MAX_PARTY_SIZE];
 		personButton = new Button[MAX_PARTY_SIZE];
+		
+		names.add("Alice");
+		names.add("Bob");
+		names.add("Carlotta");
+		names.add("David");
+		names.add("Eli");
+		names.add("Frank");
+		names.add("Geoff");
+		names.add("Henry");
+
+		
 		for (int i = 0; i < person.length; i++) {
-			person[i] = makeRandomPerson();
+			person[i] = new Person(randomPersonName());
+			person[i].makeRandom();
 		}
 		this.party = party;
 	}
 	
+
+	private String randomPersonName() {
+		Random random = new Random();
+		String name = names.get(random.nextInt(names.size()));
+		names.remove(name);
+		return name;
+	}
+
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -75,33 +97,6 @@ public class TavernScene extends Scene {
 		sb.append("Profession: " + profession + "\n");
 		sb.append("Skills: " + skills);
 		return sb.toString();
-	}
-	
-	public Person makeRandomPerson() {
-		Person person = new Person("Bob");
-		Random random = new Random();
-		ArrayList<Skill> personSkill = new ArrayList<Skill>();
-		person.setProfession(Profession.values()[random.nextInt(Profession.values().length)]);
-
-		int skillPoints = 0;
-		
-		// Randomly assign some skills
-		Skill tempSkill = Skill.values()[random.nextInt(Skill.values().length)];
-		while (tempSkill != Skill.NONE && personSkill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120) {
-			if (!personSkill.contains(tempSkill)) {
-				personSkill.add(tempSkill);
-				skillPoints += tempSkill.getCost();
-			}
-			
-			tempSkill = Skill.values()[random.nextInt(Skill.values().length)];
-		}
-		
-		for (Skill skill : personSkill) {
-			person.addSkill(skill);
-		}
-		
-		person.getInventory().addRandomItems();
-		return person;
 	}
 	
 	@Override
