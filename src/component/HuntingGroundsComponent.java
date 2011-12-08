@@ -63,14 +63,17 @@ public class HuntingGroundsComponent extends Component {
 		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.TOPLEFT);
 		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.TOPLEFT);
 		
-		for (int huntMapY = 0; huntMapY < huntLayout.getHuntingGroundsMap().length; huntMapY ++){
-			for (int huntMapX = 0; huntMapX < huntLayout.getHuntingGroundsMap()[0].length; huntMapX++){
-				Sprite tempImage = new Sprite(context,ImageStore.get().IMAGES.get(huntLayout.getHuntingGroundsMap()[huntMapX][huntMapY].getImageStoreName()));
-				Sprite tempShadImage = new Sprite(context,ImageStore.get().IMAGES.get(huntLayout.getHuntingGroundsMap()[huntMapX][huntMapY].getImageStoreShadName()));
+		for (int huntMapX = 0; huntMapX < huntLayout.getHuntingGroundsMap().length; huntMapX ++){
+			for (int huntMapY = 0; huntMapY < huntLayout.getHuntingGroundsMap()[0].length; huntMapY++){
+				
+				System.out.printf("x%d y%d %s | ", huntMapX, huntMapY, huntLayout.getHuntingGroundsMap()[huntMapY][huntMapX].getImageStoreName() );
+				Sprite tempImage = new Sprite(context,ImageStore.get().IMAGES.get(huntLayout.getHuntingGroundsMap()[huntMapY][huntMapX].getImageStoreName()));
+				Sprite tempShadImage = new Sprite(context,ImageStore.get().IMAGES.get(huntLayout.getHuntingGroundsMap()[huntMapY][huntMapX].getImageStoreShadName()));
 				huntPanel.add(tempImage, huntPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int) (huntMapX * huntLayout.getTILE_WIDTH()), (int)(huntMapY * huntLayout.getTILE_HEIGHT()));
 				collisionPanel.add(tempShadImage, collisionPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int) (huntMapX * huntLayout.getTILE_WIDTH()), (int)(huntMapY * huntLayout.getTILE_HEIGHT()));
 				
 			}//for huntmapy
+			System.out.printf("\n");
 		}//for huntmapx
 		
  		
