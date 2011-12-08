@@ -350,8 +350,8 @@ public class HuntScene extends Scene {
 		//to account for the bigger panel behind the window
 		int offsetX = huntPanel.getX();
 		int offsetY = huntPanel.getY();
-		shotX += (mapWidth/2) ;
-		shotY += (mapHeight/2);
+		shotX += (-1 * huntPanel.getX());
+		shotY += (-1 * huntPanel.getY());
 		
 		
 		int cow = preyCow.size() - 1;
@@ -421,9 +421,8 @@ public class HuntScene extends Scene {
 					SoundStore.get().playSound("Ricochet");
 				}
 				
-				System.out.println("Meat before : " + this.meat );
 				determineCollsion(mx,my);
-				System.out.println("Meat after : " + this.meat );
+
 				//regardless, decrement ammo
 				decrementAmmo();
 				this.gunCocked = false;
