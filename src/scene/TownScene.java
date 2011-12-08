@@ -59,6 +59,7 @@ public class TownScene extends Scene {
 	private TownHUD hud;
 
 	private Sprite store;
+	private Sprite tavern;
 	
 	/**
 	 * Builds town scene
@@ -119,7 +120,9 @@ public class TownScene extends Scene {
 		mainLayer.add(parallaxPanel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
+		tavern = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
 		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 20, 40);
+		mainLayer.add(tavern, store.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, 20, 0);
 		
 		partyLeaderSprite = new AnimatingSprite(container,
 				96,
@@ -156,6 +159,9 @@ public class TownScene extends Scene {
 		if (partyLeaderSprite.getX() < store.getX() + store.getWidth()
 				&& partyLeaderSprite.getX() > store.getX()) {
 			hud.setNotification(ConstantStore.get("TOWN_SCENE", "ENTER_STORE_INSTRUCTION"));
+		} else if (partyLeaderSprite.getX() < tavern.getX() + tavern.getWidth()
+				&& partyLeaderSprite.getX() > tavern.getX()) {
+			hud.setNotification(ConstantStore.get("TOWN_SCENE", "ENTER_TAVERN_INSTRUCTION"));
 		} else {
 			hud.setNotification(location.getName());
 		}
@@ -200,10 +206,14 @@ public class TownScene extends Scene {
 	
 	@Override
 	public void keyReleased(int key, char c) {
-		if (key == Input.KEY_ENTER
-				&& partyLeaderSprite.getX() < store.getX() + store.getWidth()
+		if (key == Input.KEY_ENTER) {
+			if(partyLeaderSprite.getX() < store.getX() + store.getWidth()
 				&& partyLeaderSprite.getX() > store.getX()) {
-			GameDirector.sharedSceneListener().requestScene(SceneID.STORE, this, false);
+				GameDirector.sharedSceneListener().requestScene(SceneID.STORE, this, false);
+			} else if (partyLeaderSprite.getX() < tavern.getX() + tavern.getWidth()
+				&& partyLeaderSprite.getX() > tavern.getX()){
+				GameDirector.sharedSceneListener().requestScene(SceneID.TAVERN, this, false);
+			}	
 		}
 	}
 
