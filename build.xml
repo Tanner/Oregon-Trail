@@ -6,10 +6,11 @@
   <property name="classes.dir" value="${build.dir}/classes" />
   <property name="jar.dir"     value="${build.dir}/jar" />
   <property name="classname" value="core.GameDirector" />
+  <property name="lwjgl.dir" value="lwjgl-2.8.2" />
 
   <path id="classpath">
     <fileset dir="${lib.dir}" includes="jogg-0.0.7.jar,slick.jar,jorbis-0.0.17.jar" />
-    <fileset dir="${lib.dir}/lwjgl-2.7.1/jar/" includes="lwjgl.jar,lwjgl_util.jar" />
+    <fileset dir="${lib.dir}/${lwjgl.dir}/jar/" includes="lwjgl.jar,lwjgl_util.jar" />
   </path>
 
   <target name="clean">
@@ -32,7 +33,7 @@
         <path refid="classpath"/>
         <path location="${jar.dir}/${ant.project.name}.jar"/>
       </classpath>
-      <sysproperty key="java.library.path" value="${lib.dir}/lwjgl-2.7.1/native/macosx" />
+      <sysproperty key="java.library.path" value="${lib.dir}/${lwjgl.dir}/native/macosx" />
     </java>
   </target>
   
@@ -42,7 +43,7 @@
         <path refid="classpath"/>
         <path location="${jar.dir}/${ant.project.name}.jar"/>
       </classpath>
-      <sysproperty key="java.library.path" value="${lib.dir}/lwjgl-2.7.1/native/windows" />
+      <sysproperty key="java.library.path" value="${lib.dir}/${lwjgl.dir}/native/windows" />
     </java>
   </target>
   
@@ -52,7 +53,7 @@
         <path refid="classpath"/>
         <path location="${jar.dir}/${ant.project.name}.jar"/>
       </classpath>
-      <sysproperty key="java.library.path" value="${lib.dir}/lwjgl-2.7.1/native/linux" />
+      <sysproperty key="java.library.path" value="${lib.dir}/${lwjgl.dir}/native/linux" />
     </java>
   </target>
 </project>
