@@ -361,4 +361,29 @@ public class Person implements Conditioned, Inventoried, PartyMemberDataSource, 
 	public void setDead(boolean dead) {
 		this.dead = dead;
 	}
+
+	public void makeRandom() {
+		Random random = new Random();
+		ArrayList<Skill> personSkill = new ArrayList<Skill>();
+		this.setProfession(Profession.values()[random.nextInt(Profession.values().length)]);
+
+		int skillPoints = 0;
+		
+		// Randomly assign some skills
+		Skill tempSkill = Skill.values()[random.nextInt(Skill.values().length)];
+		while (tempSkill != Skill.NONE && personSkill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120) {
+			if (!personSkill.contains(tempSkill)) {
+				personSkill.add(tempSkill);
+				skillPoints += tempSkill.getCost();
+			}
+			
+			tempSkill = Skill.values()[random.nextInt(Skill.values().length)];
+		}
+		
+		for (Skill skill : personSkill) {
+			this.addSkill(skill);
+		}
+		
+		this.getInventory().addRandomItems();
+	}
 }
