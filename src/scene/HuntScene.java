@@ -135,7 +135,7 @@ public class HuntScene extends Scene {
 		double worldMapY = 0;			//worldMap.getLocationNode.gety
 		
 		int terrainChance = 20;		// chance that there's a terrain object, out of 100
-		int rockChance = 50;		//chance that it's a tree vs a rock, out of 100
+		int rockChance = 25;		//chance that it's a tree vs a rock, out of 100
 		double [] dblArgs = {mapWidth, mapHeight, worldMapX, worldMapY};
 		int [] intArgs = {terrainChance, rockChance};
 			
@@ -152,14 +152,14 @@ public class HuntScene extends Scene {
 			preyCow.add(prey,new PreyCow(container, game, huntSceneRand, (int)mapWidth, (int)mapHeight));
 			preyPig.add(prey,new PreyPig(container, game, huntSceneRand, (int)mapWidth, (int)mapHeight));
 			//displaying sprites
-			System.out.println("loading the " + prey + "th pig at x= " + preyPig.get(prey).getxLocation() + " and y= " + preyPig.get(prey).getyLocation());
+			//System.out.println("loading the " + prey + "th pig at x= " + preyPig.get(prey).getxLocation() + " and y= " + preyPig.get(prey).getyLocation());
 			huntPanel.add(preyPig.get(prey).getPreySprite(),
 					huntPanel.getPosition(ReferencePoint.TOPLEFT),
 					ReferencePoint.TOPLEFT,
 					preyPig.get(prey).getxLocation(),
 					preyPig.get(prey).getyLocation());
 			
-			System.out.println("loading the " + prey + "th cow at x= " + preyCow.get(prey).getxLocation() + " and y= " + preyCow.get(prey).getyLocation());
+			//System.out.println("loading the " + prey + "th cow at x= " + preyCow.get(prey).getxLocation() + " and y= " + preyCow.get(prey).getyLocation());
 			huntPanel.add(preyCow.get(prey).getPreySprite(),
 					huntPanel.getPosition(ReferencePoint.TOPLEFT),
 					ReferencePoint.TOPLEFT,
@@ -199,6 +199,7 @@ public class HuntScene extends Scene {
 		//build background
 		
 		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("HUNT_GRASS")));
+		//System.out.println(huntLayout.getHuntMap());
 	}
 	
 	/**

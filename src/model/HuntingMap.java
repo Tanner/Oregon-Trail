@@ -5,8 +5,10 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.newdawn.slick.GameContainer;
 
@@ -115,8 +117,9 @@ public class HuntingMap implements Serializable {
 	/**
 	 * generates the map for this hunting instance by building terrain layouts randomly.
 	 */
+	HuntTerrainGenerator mapGen;
 	private void generateMap(){
-		HuntTerrainGenerator mapGen = new HuntTerrainGenerator(this.context, this.mapYMax, this.mapXMax, this.MAP_DENSITY, this.MAP_STONY, huntMapRand, 
+		mapGen = new HuntTerrainGenerator(this.context, this.mapYMax, this.mapXMax, this.MAP_DENSITY, this.MAP_STONY, huntMapRand, 
 																this.TILE_WIDTH, this.TILE_HEIGHT, this.bckGround);
 		this.huntingGroundsMap = mapGen.getHuntingGroundsMap();
 	}//generate map method
@@ -253,6 +256,12 @@ public class HuntingMap implements Serializable {
 				tiles[totalRows-1][col] = Tiles.EMPTY;
 				types[totalRows-1][col] = TYPE_EMPTY;
 			}
+			for(int row = (totalRows + 7)/2; row < (totalRows + 27)/2; row++) {
+				for(int col = (totalCols + 12)/2; col < (totalCols + 32)/2; col++) {
+					tiles[row][col] = Tiles.EMPTY;
+					types[row][col] = TYPE_EMPTY;
+				}
+			}
 			//proc means we place an object
 			//If we proc, place a tile and make it the right type.
 			for (int row = 0; row < this.totalRows; row++) {
@@ -260,7 +269,7 @@ public class HuntingMap implements Serializable {
 					if (tiles[row][col] == null) {//check if this null tile gets some terrain
 						if (this.huntMapRand.nextInt(100) < procChance) {//if so figure out what kind and place it
 							currentType = (this.huntMapRand.nextInt(100) < stoneProc) ? 1 : 2;
-							placeTile(row, col, huntMapRand, currentType);
+							placeTile(row, col, huntMapRand, currentType, true);
 						}
 					}
 				}
@@ -339,103 +348,209 @@ public class HuntingMap implements Serializable {
 			}
 				
 		//Places a tile
-		private void placeTile(int row, int col, Random random, int currentType) {
+		private void placeTile(int row, int col, Random random, int currentType, boolean isFirst) {
 			if(tiles[row][col] == null) {
 				List<Tiles> possibleList = new ArrayList<Tiles>();
 				//At the beginning, the tile can be anything
 				for(Tiles tile : Tiles.values())
 					possibleList.add(tile);
+				//System.out.println(possibleList);
+				Tiles finder;
+				List<Tiles> helper = new ArrayList<Tiles>();
+				List<Tiles> pretendList = new ArrayList<Tiles>();
 				//Then, for each neighbor, go through and remove anything that they cant be next to
-				if(row != 0) {
-					Tiles finder = tiles[row - 1][col];
-					List<Tiles> helper = new ArrayList<Tiles>();
-					if(finder == null) {
-						for(Tiles tile : Tiles.values())
-							helper.add(tile);
-					} else {
-						helper = finder.getPossible(4);
-					}
-					List<Tiles> pretendList = new ArrayList<Tiles>();
-					for(Tiles tile : possibleList)
-						pretendList.add(tile);
-					
-					for (Tiles tile : pretendList) {
-						if (!helper.contains(tile)) {
-							possibleList.remove(tile);
-						}
-					}
-					
+				
+				finder = tiles[row - 1][col];
+				helper.clear();
+				if(finder == null) {
+					for(Tiles tile : Tiles.values())
+						helper.add(tile);
+				} else {
+					helper = finder.getPossible(4);
 				}
-				if(col != 0) {
-					Tiles finder = tiles[row][col - 1];
-					List<Tiles> helper = new ArrayList<Tiles>();
-					if(finder == null) {
-						for(Tiles tile : Tiles.values())
-							helper.add(tile);
-					} else {
-						helper = finder.getPossible(2);
-					}
-					List<Tiles> pretendList = new ArrayList<Tiles>();
-					for(Tiles tile : possibleList)
-						pretendList.add(tile);
-					
-					for (Tiles tile : pretendList) {
-						if (!helper.contains(tile)) {
-							possibleList.remove(tile);
-						}
+				//System.out.println(helper);
+				pretendList.clear();
+				for(Tiles tile : possibleList)
+					pretendList.add(tile);
+				
+				for (Tiles tile : pretendList) {
+					if (!helper.contains(tile)) {
+						possibleList.remove(tile);
 					}
 				}
-				if(col != this.totalCols - 1) {
-					Tiles finder = tiles[row][col + 1];
-					List<Tiles> helper = new ArrayList<Tiles>();
-					if(finder == null) {
-						for(Tiles tile : Tiles.values())
-							helper.add(tile);
-					} else {
-						helper = finder.getPossible(1);
+				//System.out.println(possibleList);
+				finder = tiles[row][col - 1];
+				helper.clear();
+				if(finder == null) {
+					for(Tiles tile : Tiles.values())
+						helper.add(tile);
+				} else {
+					helper = finder.getPossible(2);
+				}
+				pretendList.clear();
+				for(Tiles tile : possibleList)
+					pretendList.add(tile);
+				
+				for (Tiles tile : pretendList) {
+					if (!helper.contains(tile)) {
+						possibleList.remove(tile);
 					}
-					
-					List<Tiles> pretendList = new ArrayList<Tiles>();
-					for(Tiles tile : possibleList)
-						pretendList.add(tile);
-					
-					for (Tiles tile : pretendList) {
-						if (!helper.contains(tile)) {
-							possibleList.remove(tile);
-						}
+				}
+				finder = tiles[row][col + 1];
+				helper.clear();
+				if(finder == null) {
+					for(Tiles tile : Tiles.values())
+						helper.add(tile);
+				} else {
+					helper = finder.getPossible(1);
+				}
+				
+				pretendList.clear();
+				for(Tiles tile : possibleList)
+					pretendList.add(tile);
+				
+				for (Tiles tile : pretendList) {
+					if (!helper.contains(tile)) {
+						possibleList.remove(tile);
+					}
+				}
+								
+				finder = tiles[row + 1][col];
+				helper.clear();
+				if(finder == null) {
+					for(Tiles tile : Tiles.values())
+						helper.add(tile);
+				} else {
+					helper = finder.getPossible(3);
+				}
+				pretendList.clear();
+				for(Tiles tile : possibleList)
+					pretendList.add(tile);
+				
+				for (Tiles tile : pretendList) {
+					if (!helper.contains(tile)) {
+						possibleList.remove(tile);
 					}
 				}
 				
-				if(row != this.totalRows - 1) {
-					Tiles finder = tiles[row + 1][col];
-					List<Tiles> helper = new ArrayList<Tiles>();
-					if(finder == null) {
-						for(Tiles tile : Tiles.values())
-							helper.add(tile);
-					} else {
-						helper = finder.getPossible(3);
+				finder = tiles[row + 1][col + 1];
+				helper.clear();
+				if(finder == null) {
+					for(Tiles tile : Tiles.values())
+						helper.add(tile);
+				} else {
+					helper = finder.getPossible(5);
+				}
+				pretendList.clear();
+				for(Tiles tile : possibleList)
+					pretendList.add(tile);
+				
+				for (Tiles tile : pretendList) {
+					if (!helper.contains(tile)) {
+						possibleList.remove(tile);
 					}
-					List<Tiles> pretendList = new ArrayList<Tiles>();
-					for(Tiles tile : possibleList)
-						pretendList.add(tile);
-					
-					for (Tiles tile : pretendList) {
-						if (!helper.contains(tile)) {
-							possibleList.remove(tile);
-						}
+				}
+				
+				finder = tiles[row - 1][col - 1];
+				helper.clear();
+				if(finder == null) {
+					for(Tiles tile : Tiles.values())
+						helper.add(tile);
+				} else {
+					helper = finder.getPossible(8);
+				}
+				pretendList.clear();
+				for(Tiles tile : possibleList)
+					pretendList.add(tile);
+				
+				for (Tiles tile : pretendList) {
+					if (!helper.contains(tile)) {
+						possibleList.remove(tile);
+					}
+				}
+				
+				finder = tiles[row - 1][col + 1];
+				helper.clear();
+				if(finder == null) {
+					for(Tiles tile : Tiles.values())
+						helper.add(tile);
+				} else {
+					helper = finder.getPossible(7);
+				}
+				pretendList.clear();
+				for(Tiles tile : possibleList)
+					pretendList.add(tile);
+				
+				for (Tiles tile : pretendList) {
+					if (!helper.contains(tile)) {
+						possibleList.remove(tile);
+					}
+				}
+				
+				finder = tiles[row + 1][col -1];
+				helper.clear();
+				if(finder == null) {
+					for(Tiles tile : Tiles.values())
+						helper.add(tile);
+				} else {
+					helper = finder.getPossible(6);
+				}
+				pretendList.clear();
+				for(Tiles tile : possibleList)
+					pretendList.add(tile);
+				
+				for (Tiles tile : pretendList) {
+					if (!helper.contains(tile)) {
+						possibleList.remove(tile);
 					}
 				}
 				
 				//Choose a random of the type possible, and make it the right type
 				if(possibleList.size() != 0) {
-					tiles[row][col] = possibleList.get(random.nextInt(possibleList.size()));
-
-					types[row][col] = currentType;
+					/*List<Tiles> oneList = new ArrayList<Tiles>();
+					List<Tiles> twoList = new ArrayList<Tiles>();
+					List<Tiles> threeList = new ArrayList<Tiles>();
+					List<Tiles> fourList = new ArrayList<Tiles>();
+					
+					for(Tiles tile : possibleList) {
+						if (tile.getFilled().size() == 1) {
+							oneList.add(tile);
+						}
+						if (tile.getFilled().size() == 2) {
+							twoList.add(tile);
+						}
+						if (tile.getFilled().size() == 3) {
+							threeList.add(tile);
+						}
+						if (tile.getFilled().size() == 4) {
+							fourList.add(tile);
+						}
+					}
+					if (!oneList.isEmpty()) {
+						tiles[row][col] = oneList.get(random.nextInt(oneList.size()));
+					} else if (!twoList.isEmpty()){
+						tiles[row][col] = twoList.get(random.nextInt(twoList.size()));
+					} else if (!twoList.isEmpty()){
+						tiles[row][col] = threeList.get(random.nextInt(threeList.size()));
+					} else if (!twoList.isEmpty()){
+						tiles[row][col] = fourList.get(random.nextInt(fourList.size()));
+					} else if (possibleList.size() == 1 && possibleList.contains(Tiles.EMPTY)) {
+						tiles[row][col] = Tiles.EMPTY;
+					}*/
+					if(possibleList.contains(Tiles.EMPTY) && !isFirst) {
+						tiles[row][col] = Tiles.EMPTY;
+						types[row][col] = TYPE_EMPTY;
+					} else {
+						tiles[row][col] = possibleList.get(random.nextInt(possibleList.size()));
+						types[row][col] = currentType;
+					}
 				}
 				else {
 					tiles[row][col] = Tiles.EMPTY;
 
 					types[row][col] = TYPE_EMPTY;
+					
+					System.out.println(row + " " + col);
 				}
 //				System.out.println(tiles[row][col] + "\n");
 //				System.out.println(this.toString());
@@ -445,16 +560,13 @@ public class HuntingMap implements Serializable {
 					types[row][col] = TYPE_EMPTY;
 					return;
 				}
-				
+				//System.out.println(possibleList);
+				//System.out.println(tiles[row][col]);
 				//Otherwise, place something in all neighbors
-				if(row != 0)
-					placeTile(row - 1, col, random, currentType);
-				if(col != this.totalCols - 1)
-					placeTile(row, col + 1, random, currentType);
-				if(col != 0)
-					placeTile(row, col - 1, random, currentType);
-				if(row != this.totalRows - 1)
-					placeTile(row + 1, col, random, currentType);
+				placeTile(row - 1, col, random, currentType, false);
+				placeTile(row, col + 1, random, currentType, false);
+				placeTile(row, col - 1, random, currentType, false);
+				placeTile(row + 1, col, random, currentType, false);
 			}
 		}
 
@@ -519,38 +631,151 @@ public class HuntingMap implements Serializable {
 		}// method getCharTiles
 	}//class definition
 	
+	public String getHuntMap() {
+		return mapGen.toString();
+	}
+	
 
 
 	/**
 	 * structure representing the tile being added to the map
 	 */
 	private enum Tiles {
-		BOTRIGHT, 
-		BOTFULL, 
-		BOTLEFT, 
-		RIGHTFULL, 
-		FULL, 
-		LEFTFULL, 
-		TOPRIGHT, 
-		TOPFULL, 
-		TOPLEFT, 
-		EMPTY,
-		A, 
-		B, 
-		C, 
-		D,
-		E,
-		F;
+		BOTRIGHT (3), 
+		BOTFULL (2, 3), 
+		BOTLEFT (2), 
+		RIGHTFULL (1, 3), 
+		FULL (0, 1, 2, 3), 
+		LEFTFULL (0, 2), 
+		TOPRIGHT (1), 
+		TOPFULL (0, 1), 
+		TOPLEFT (0), 
+		EMPTY (),
+		A (1, 2, 3), 
+		B (0, 2, 3), 
+		C (0, 1, 3), 
+		D (0, 1, 2),
+		E (1, 2),
+		F (0, 3);
+		
+		private Set<Integer> filled = new HashSet<Integer>();
+		
+		private Tiles(int ... filled) {
+			for(int x : filled) {
+				this.filled.add(x);
+			}
+		}
+		
+		private Set<Integer> getFilled() {
+			return filled;
+		}
 		
 		//0 = empty, 1 = stone, 2 = tree
 		/*
-		 * 1 = left, 2 = right, 3 = up, 4 = down
+		 * 1 = left, 2 = right, 3 = up, 4 = down, 5 = diagUpLeft, 6 = diagUpRight, 7 = diagDownLeft, 8 = diagDownRight
 		 */
 		public List<Tiles> getPossible(int direction) {
-			Tiles current = this;
 			List<Tiles> returnList = new ArrayList<Tiles>();
+			Set<Integer> matching = new HashSet<Integer>();
+			Set<Integer> forbidden = new HashSet<Integer>();
 			//Right
-			if (direction == 2) {
+			switch (direction) {
+			case 1:
+				if (this.getFilled().contains(0)) {
+					matching.add(1);
+				} else {
+					forbidden.add(1);
+				}
+				if (this.getFilled().contains(2)) {
+					matching.add(3);
+				} else {
+					forbidden.add(3);
+				}
+				break;
+			case 2:
+				if (this.getFilled().contains(1)) {
+					matching.add(0);
+				} else {
+					forbidden.add(0);
+				}
+				if (this.getFilled().contains(3)) {
+					matching.add(2);
+				} else {
+					forbidden.add(2);
+				}
+				break;
+			case 3:
+				if (this.getFilled().contains(0)) {
+					matching.add(2);
+				} else {
+					forbidden.add(2);
+				}
+				if (this.getFilled().contains(1)) {
+					matching.add(3);
+				} else {
+					forbidden.add(3);
+				}
+				break;
+			case 4:
+				if (this.getFilled().contains(2)) {
+					matching.add(0);
+				} else {
+					forbidden.add(0);
+				}
+				if (this.getFilled().contains(3)) {
+					matching.add(1);
+				} else {
+					forbidden.add(1);
+				}
+				break;
+			case 5:
+				if (this.getFilled().contains(0)) {
+					matching.add(3);
+				} else {
+					forbidden.add(3);
+				}
+				break;
+			case 6:
+				if (this.getFilled().contains(1)) {
+					matching.add(2);
+				} else {
+					forbidden.add(2);
+				}
+				break;
+			case 7:
+				if (this.getFilled().contains(2)) {
+					matching.add(1);
+				} else {
+					forbidden.add(1);
+				}
+				break;
+			case 8:
+				if (this.getFilled().contains(3)) {
+					matching.add(0);
+				} else {
+					forbidden.add(0);
+				}
+				break;
+			}
+			
+			
+			for(Tiles tile : Tiles.values()) {
+				boolean canUse = true;
+				for(int needed : matching) {
+					if(!tile.getFilled().contains(needed)) {
+						canUse = false;
+					}
+				}
+				for(int nonono : forbidden) {
+					if(tile.getFilled().contains(nonono)) {
+						canUse = false;
+					}
+				}
+				if (canUse) {
+					returnList.add(tile);
+				}
+			}
+			/*if (direction == 2) {
 				//BottomHalf
 				if (current.equals(Tiles.BOTRIGHT) || current.equals(Tiles.BOTFULL) || current.equals(Tiles.B) || current.equals(Tiles.F)) {
 					returnList.add(BOTFULL);
@@ -641,7 +866,7 @@ public class HuntingMap implements Serializable {
 				} else {
 					returnList.add(EMPTY);
 				}
-			}
+			}*/
 			
 			return returnList;
 		}
