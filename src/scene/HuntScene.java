@@ -85,7 +85,8 @@ public class HuntScene extends Scene {
 	private double mapHeight;
 	/**the cow or cows in the hunt scene - may end up an array*/
 	private ArrayList<PreyCow> preyCow;
-	
+	/**the hunter's party*/
+	private Party party;
 	/**the pig or pigs in the hunt scene - may end up an array*/
 	private ArrayList<PreyPig> preyPig;
 	/**the panel that holds the graphical objects*/
@@ -97,12 +98,9 @@ public class HuntScene extends Scene {
 	 * Constructs a {@code HuntScene} with a {@code Person} who will be the hunter
 	 * @param hunter the single member of the party who is going to hunt.
 	 */
-	public HuntScene(Person hunter, WorldMap worldMap){
-		this.hunter = hunter;
-		this.worldMap = worldMap;		
-	}
 	
 	public HuntScene(Party party, WorldMap worldMap){
+		this.party = party;
 		this.hunter = party.getPartyMembers().get(0);
 		this.worldMap = worldMap;
 	}
