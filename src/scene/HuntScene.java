@@ -134,12 +134,12 @@ public class HuntScene extends Scene {
 		double worldMapX = 0;			//worldMap.getLocationNode.getX - these may be implemented someday. probably not
 		double worldMapY = 0;			//worldMap.getLocationNode.gety
 		
-		int terrainChance = 10;		// chance that there's a terrain object, out of 100
+		int terrainChance = 5;		// chance that there's a terrain object, out of 100
 		int rockChance = 50;		//chance that it's a tree vs a rock, out of 100
 		double [] dblArgs = {mapWidth, mapHeight, worldMapX, worldMapY};
 		int [] intArgs = {terrainChance, rockChance};
 			
- 		HuntingMap huntLayout = new HuntingMap(container, dblArgs, intArgs, ConstantStore.Environments.PLAINS);
+ 		HuntingMap huntLayout = new HuntingMap(container, dblArgs, intArgs, ConstantStore.Environments.SNOWY_FOREST);
 
 
  		huntPanel = new HuntingGroundsComponent(container, (int)mapWidth, (int)mapHeight, huntLayout);
@@ -187,9 +187,9 @@ public class HuntScene extends Scene {
 
  		mainLayer.add(hunterSprite,
 				mainLayer.getPosition(ReferencePoint.CENTERCENTER),
-				ReferencePoint.TOPLEFT,
-				20,
-				25);
+				ReferencePoint.CENTERCENTER,
+				0,
+				0);
  
 		hunterSprite.setVisible(true);
 
@@ -281,7 +281,7 @@ public class HuntScene extends Scene {
 		
 		}
 		
-		this.huntPanel.setLocation(this.huntPanel.getX() + moveMapX, this.huntPanel.getY()+ moveMapY);
+		this.huntPanel.moveToon(moveMapX, moveMapY, hunterSprite.getX(), hunterSprite.getY());
 		//here we would update map with new move data values
 		
 		//update hunter's ammo count
