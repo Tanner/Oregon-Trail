@@ -303,27 +303,7 @@ public class SceneSelectorScene extends Scene {
 		people.add(diane);
 				
 		for (Person person : people) {
-			ArrayList<Skill> personSkill = new ArrayList<Skill>();
-			person.setProfession(Profession.values()[random.nextInt(Profession.values().length)]);
-	
-			int skillPoints = 0;
-			
-			// Randomly assign some skills
-			Skill tempSkill = Skill.values()[random.nextInt(Skill.values().length)];
-			while (tempSkill != Skill.NONE && personSkill.size() < 3 && (skillPoints + tempSkill.getCost()) < 120) {
-				if (!personSkill.contains(tempSkill)) {
-					personSkill.add(tempSkill);
-					skillPoints += tempSkill.getCost();
-				}
-				
-				tempSkill = Skill.values()[random.nextInt(Skill.values().length)];
-			}
-			
-			for (Skill skill : personSkill) {
-				person.addSkill(skill);
-			}
-			
-			person.getInventory().addRandomItems();
+			person.makeRandom();
 			
 		}
 		
