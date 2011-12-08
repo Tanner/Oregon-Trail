@@ -113,7 +113,7 @@ public abstract class Prey {
 		//heaven?  negative? lol
 		this.xLocation = -10000;
 		this.yLocation = -10000;
-		
+		this.setShow(false);
 	}
 	
 	public int checkDead(){
@@ -122,5 +122,6 @@ public abstract class Prey {
 			return this.MEAT;
 		}
 		return 0;
-	}
+	}//checkDead method
+	
 }
