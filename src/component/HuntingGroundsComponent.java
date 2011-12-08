@@ -80,7 +80,7 @@ public class HuntingGroundsComponent extends Component {
 					collisionPanel.add(tempShadImage, collisionPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int) (huntMapX * huntLayout.getTILE_WIDTH()), (int)(huntMapY * huntLayout.getTILE_HEIGHT()));
 				}
 			}//for huntmapy
-			System.out.printf("\n");
+			//System.out.printf("\n");
 		}//for huntmapx
 		
 

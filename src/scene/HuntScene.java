@@ -4,6 +4,7 @@ package scene;
 
 import java.awt.Cursor;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import model.HuntingMap;
@@ -85,7 +86,8 @@ public class HuntScene extends Scene {
 	private double mapHeight;
 	/**the cow or cows in the hunt scene - may end up an array*/
 	private ArrayList<PreyCow> preyCow;
-	
+	/**the hunter's party*/
+	private Party party;
 	/**the pig or pigs in the hunt scene - may end up an array*/
 	private ArrayList<PreyPig> preyPig;
 	/**the panel that holds the graphical objects*/
@@ -97,12 +99,9 @@ public class HuntScene extends Scene {
 	 * Constructs a {@code HuntScene} with a {@code Person} who will be the hunter
 	 * @param hunter the single member of the party who is going to hunt.
 	 */
-	public HuntScene(Person hunter, WorldMap worldMap){
-		this.hunter = hunter;
-		this.worldMap = worldMap;		
-	}
 	
 	public HuntScene(Party party, WorldMap worldMap){
+		this.party = party;
 		this.hunter = party.getPartyMembers().get(0);
 		this.worldMap = worldMap;
 	}
@@ -286,15 +285,22 @@ public class HuntScene extends Scene {
 		this.huntPanel.moveToon(moveMapX, moveMapY, hunterSprite.getX(), hunterSprite.getY());
 		//here we would update map with new move data values
 		
-		//update hunter's ammo count
-		if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO)){
-			this.ammoCount = (int) hunter.getInventory().getConditionOf(ItemType.AMMO).getCurrent();
-			this.ammoBoxes = (int) hunter.getInventory().getNumberOf(ItemType.AMMO) -1;
-		}
+		updateAmmo();
 		
 		hunterSprite.update(delta);
 	}//update player method
 	
+	private void updateAmmo() {
+		//update hunter's ammo count
+		if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO)){
+			this.ammoCount = (int) hunter.getInventory().getConditionOf(ItemType.AMMO).getCurrent();
+			this.ammoBoxes = (int) hunter.getInventory().getNumberOf(ItemType.AMMO);
+		} else {
+			this.ammoCount = 0;
+			this.ammoBoxes = 0;
+		}
+	}
+
 	/* (non-Javadoc)
 	 * @see scene.Scene#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
@@ -336,7 +342,6 @@ public class HuntScene extends Scene {
 			hunter.addItemToInventory(ammoBox);
 		}
 		//END AMMO DECREASE
-
 	}
 	
 	
@@ -347,7 +352,7 @@ public class HuntScene extends Scene {
 	 * @param shotY - the destination y of the shot
 	 * @return whether there was a target or not at the shot location
 	 */
-	private void determineCollsion(int shotX, int shotY){
+	private void determineCollision(int shotX, int shotY){
 		boolean aHit = false;
 		//to account for the bigger panel behind the window
 		int offsetX = huntPanel.getX();
@@ -423,10 +428,15 @@ public class HuntScene extends Scene {
 					SoundStore.get().playSound("Ricochet");
 				}
 				
-				determineCollsion(mx,my);
+				determineCollision(mx,my);
 
 				//regardless, decrement ammo
 				decrementAmmo();
+				List<Item> meatList = new ArrayList<Item>();
+				for(int i = 0; i < meat; i++) {
+					meatList.add(new Item(ItemType.MEAT));
+				}
+				party.getVehicle().addItemsToInventory(meatList);
 				this.gunCocked = false;
 	
 			}//if shot happened via mouse
@@ -435,13 +445,16 @@ public class HuntScene extends Scene {
 			}
 		}//if button == 0
 		else if (button ==1){
-			if (this.gunCocked){//cocking while loaded means bullet gone - oopsie
-				decrementAmmo();			
+			if (this.ammoCount + this.ammoBoxes != 0) {
+				if (this.gunCocked){//cocking while loaded means bullet gone - oopsie
+					decrementAmmo();			
+				}
+				this.gunCocked = true;
+				SoundStore.get().playSound("GunCock");
 			}
-			this.gunCocked = true;
-			SoundStore.get().playSound("GunCock"); 	
 			
 		}
+		
 	}
 	@Override
 	public void mouseReleased(int button, int mx, int my) {
