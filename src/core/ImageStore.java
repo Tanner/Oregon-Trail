@@ -160,39 +160,39 @@ public class ImageStore {
 			String identifier = "tree1";
 			String imageIndex = "HUNT_TREE1" + imageDir.toUpperCase() + "0";
 			String imageName = identifier + imageDir + "0.png";
-			System.out.println("tree1 index : " + imageIndex + " fileName : " + imageName);
+			//System.out.println("tree1 index : " + imageIndex + " fileName : " + imageName);
 			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
 			imageIndex = "HUNT_TREE1" + imageDir.toUpperCase() + "1";
 			imageName = identifier + imageDir + "1.png";
-			System.out.println("tree1 index : " + imageIndex + " fileName : " + imageName);
+			//System.out.println("tree1 index : " + imageIndex + " fileName : " + imageName);
 			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
 			
 			imageIndex = "HUNT_TREE1" + imageDir.toUpperCase() + "0SHAD";
 			imageName = identifier + imageDir + "0Shad.png";
-			System.out.println("tree1 index : " + imageIndex + " fileName : " + imageName);
+			//System.out.println("tree1 index : " + imageIndex + " fileName : " + imageName);
 			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
 			imageIndex = "HUNT_TREE1" + imageDir.toUpperCase() + "1SHAD";
 			imageName = identifier + imageDir + "1Shad.png";
-			System.out.println("tree1 index : " + imageIndex + " fileName : " + imageName);
+			//System.out.println("tree1 index : " + imageIndex + " fileName : " + imageName);
 			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
 			
 			identifier = "rock1";
 			imageIndex = "HUNT_ROCK1" + imageDir.toUpperCase() + "0";
 			imageName = identifier + imageDir + "0.png";
-			System.out.println("rock1 index : " + imageIndex + " fileName : " + imageName);
+			//System.out.println("rock1 index : " + imageIndex + " fileName : " + imageName);
 			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
 			imageIndex = "HUNT_ROCK1" + imageDir.toUpperCase() + "1";
 			imageName = identifier + imageDir + "1.png";
-			System.out.println("rock1 index : " + imageIndex + " fileName : " + imageName);
+			//System.out.println("rock1 index : " + imageIndex + " fileName : " + imageName);
 			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
 			
 			imageIndex = "HUNT_ROCK1" + imageDir.toUpperCase() + "0SHAD";
 			imageName = identifier + imageDir + "0Shad.png";
-			System.out.println("rock1 index : " + imageIndex + " fileName : " + imageName);
+			//System.out.println("rock1 index : " + imageIndex + " fileName : " + imageName);
 			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));
 			imageIndex = "HUNT_ROCK1" + imageDir.toUpperCase() + "1SHAD";
 			imageName = identifier + imageDir + "1Shad.png";
-			System.out.println("rock1 index : " + imageIndex + " fileName : " + imageName);
+			//System.out.println("rock1 index : " + imageIndex + " fileName : " + imageName);
 			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));	
 		}
 

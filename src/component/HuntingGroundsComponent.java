@@ -26,7 +26,7 @@ public class HuntingGroundsComponent extends Component {
 	/** the background to the panel */
 	private Image background;
 	
-	private Panel huntPanel;
+	private Panel huntLocalPanel;
 	
 	private Panel collisionPanel;
 	
@@ -54,31 +54,53 @@ public class HuntingGroundsComponent extends Component {
 		//make a sprite to hold the background image
 		Sprite backgroundPanel = new Sprite(container, this.background) ;
 			
-		huntPanel = new Panel(container, width, height);
+		huntLocalPanel = new Panel(container, width, height);
 		collisionPanel = new Panel(container, width, height);
 		
 		//add the 4 pictures required to make the background
-		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
-		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.TOPCENTER), ReferencePoint.TOPLEFT);
-		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.TOPLEFT);
-		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.TOPLEFT);
+		huntLocalPanel.add(backgroundPanel,huntLocalPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
+		huntLocalPanel.add(backgroundPanel,huntLocalPanel.getPosition(ReferencePoint.TOPCENTER), ReferencePoint.TOPLEFT);
+		huntLocalPanel.add(backgroundPanel,huntLocalPanel.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.TOPLEFT);
+		huntLocalPanel.add(backgroundPanel,huntLocalPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.TOPLEFT);
 		
+		
+ 		add(huntLocalPanel,getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
+	}//constructor
+
+	public void displayTerrain(GUIContext context, HuntingMap huntLayout){
 		for (int huntMapX = 0; huntMapX < huntLayout.getHuntingGroundsMap().length; huntMapX ++){
 			for (int huntMapY = 0; huntMapY < huntLayout.getHuntingGroundsMap()[0].length; huntMapY++){
 				
-				System.out.printf("x%d y%d %s | ", huntMapX, huntMapY, huntLayout.getHuntingGroundsMap()[huntMapY][huntMapX].getImageStoreName() );
-				Sprite tempImage = new Sprite(context,ImageStore.get().IMAGES.get(huntLayout.getHuntingGroundsMap()[huntMapY][huntMapX].getImageStoreName()));
-				Sprite tempShadImage = new Sprite(context,ImageStore.get().IMAGES.get(huntLayout.getHuntingGroundsMap()[huntMapY][huntMapX].getImageStoreShadName()));
-				huntPanel.add(tempImage, huntPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int) (huntMapX * huntLayout.getTILE_WIDTH()), (int)(huntMapY * huntLayout.getTILE_HEIGHT()));
-				collisionPanel.add(tempShadImage, collisionPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int) (huntMapX * huntLayout.getTILE_WIDTH()), (int)(huntMapY * huntLayout.getTILE_HEIGHT()));
+				//System.out.printf("x%d y%d %s | ", huntMapX, huntMapY, huntLayout.getHuntingGroundsMap()[huntMapY][huntMapX].getImageStoreName() );
 				
+				if (!huntLayout.getHuntingGroundsMap()[huntMapY][huntMapX].getImageStoreName().contains("9")){
+					Sprite tempImage = new Sprite(context,ImageStore.get().IMAGES.get(huntLayout.getHuntingGroundsMap()[huntMapY][huntMapX].getImageStoreName()));
+					Sprite tempShadImage = new Sprite(context,ImageStore.get().IMAGES.get(huntLayout.getHuntingGroundsMap()[huntMapY][huntMapX].getImageStoreShadName()));
+					huntLocalPanel.add(tempImage, huntLocalPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int) (huntMapX * huntLayout.getTILE_WIDTH()), (int)(huntMapY * huntLayout.getTILE_HEIGHT()));
+					collisionPanel.add(tempShadImage, collisionPanel.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int) (huntMapX * huntLayout.getTILE_WIDTH()), (int)(huntMapY * huntLayout.getTILE_HEIGHT()));
+				}
 			}//for huntmapy
 			System.out.printf("\n");
 		}//for huntmapx
 		
- 		
- 		add(huntPanel,getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
+
 	}
+	
+	/**
+	 * if not colliding with anything, move toon appropriately
+	 * @param moveMapX the amount to move in the x direction
+	 * @param moveMapY the amount to move in the y direction
+	 * @param curX the location of the hunter x
+	 * @param curY the location of the hunter y
+	 */
 
+	public void moveToon(int moveMapX, int moveMapY, int curX, int curY) {
+		
+		System.out.println("hunter's position : " + curX  + " | " + curY + " hunt panel's location " + this.getX() + " | " + this.getY());
+		this.setLocation(this.getX() + moveMapX, this.getY()+ moveMapY);
 
+		
+	}
+	
+	
 }//hunting grounds component

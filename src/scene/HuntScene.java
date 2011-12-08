@@ -89,7 +89,7 @@ public class HuntScene extends Scene {
 	/**the pig or pigs in the hunt scene - may end up an array*/
 	private ArrayList<PreyPig> preyPig;
 	/**the panel that holds the graphical objects*/
-	private Component huntPanel;
+	private HuntingGroundsComponent huntPanel;
 
 	
 	
@@ -133,16 +133,30 @@ public class HuntScene extends Scene {
 		this.mapHeight = 2400;	//map y dimension
 		double worldMapX = 0;			//worldMap.getLocationNode.getX - these may be implemented someday. probably not
 		double worldMapY = 0;			//worldMap.getLocationNode.gety
-		
-		int terrainChance = 20;		// chance that there's a terrain object, out of 100
+
+		int terrainChance = 5;		// chance that there's a terrain object, out of 100
 		int rockChance = 25;		//chance that it's a tree vs a rock, out of 100
+
 		double [] dblArgs = {mapWidth, mapHeight, worldMapX, worldMapY};
 		int [] intArgs = {terrainChance, rockChance};
 			
- 		HuntingMap huntLayout = new HuntingMap(container, dblArgs, intArgs, ConstantStore.Environments.PLAINS);
+ 		HuntingMap huntLayout = new HuntingMap(container, dblArgs, intArgs, ConstantStore.Environments.SNOWY_FOREST);
 
 
  		huntPanel = new HuntingGroundsComponent(container, (int)mapWidth, (int)mapHeight, huntLayout);
+ 
+ 		hunterSprite = new HunterAnimatingSprite(container,
+			//	48,
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_FRONT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_BACK")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_UPPERLEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_UPPERRIGHT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERLEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERRIGHT")}, 250),
+				AnimatingSprite.Direction.RIGHT);
+				
  		int numPrey = huntSceneRand.nextInt(MAXPREY)+1;
  		System.out.println(numPrey);
  		preyCow = new ArrayList<PreyCow>();
@@ -169,27 +183,17 @@ public class HuntScene extends Scene {
 			huntPanel.setVisible(true);
 
  		}
+ 		huntPanel.displayTerrain(container, huntLayout);
+ 		mainLayer.add((Component)huntPanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int)(-1 * mapWidth/2), (int) (-1 * mapHeight/2));
 
- 		mainLayer.add(huntPanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int)(-1 * mapWidth/2), (int) (-1 * mapHeight/2));
- 		//mainLayer.add(huntPanel, new Vector2f(), ReferencePoint.TOPLEFT, (int)((-1 * (mapWidth/2)) + mainLayer.getWidth()/2), (int)((-1 * (mapHeight/2)) + mainLayer.getHeight()/2));
-	
- 		hunterSprite = new HunterAnimatingSprite(container,
-			//	48,
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_FRONT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_BACK")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_UPPERLEFT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_UPPERRIGHT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERLEFT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERRIGHT")}, 250),
-				AnimatingSprite.Direction.RIGHT);
-		
-		mainLayer.add(hunterSprite,
+ 		mainLayer.add(hunterSprite,
 				mainLayer.getPosition(ReferencePoint.CENTERCENTER),
 				ReferencePoint.CENTERCENTER,
-				20,
-				25);
+				0,
+				0);
+ 
+		hunterSprite.setVisible(true);
+
 			
 		mainLayer.add(reticle,
 				mainLayer.getPosition(ReferencePoint.CENTERCENTER),
@@ -279,7 +283,7 @@ public class HuntScene extends Scene {
 		
 		}
 		
-		this.huntPanel.setLocation(this.huntPanel.getX() + moveMapX, this.huntPanel.getY()+ moveMapY);
+		this.huntPanel.moveToon(moveMapX, moveMapY, hunterSprite.getX(), hunterSprite.getY());
 		//here we would update map with new move data values
 		
 		//update hunter's ammo count
@@ -348,8 +352,8 @@ public class HuntScene extends Scene {
 		//to account for the bigger panel behind the window
 		int offsetX = huntPanel.getX();
 		int offsetY = huntPanel.getY();
-		shotX += (mapWidth/2) ;
-		shotY += (mapHeight/2);
+		shotX += (-1 * huntPanel.getX());
+		shotY += (-1 * huntPanel.getY());
 		
 		
 		int cow = preyCow.size() - 1;
@@ -419,9 +423,8 @@ public class HuntScene extends Scene {
 					SoundStore.get().playSound("Ricochet");
 				}
 				
-				System.out.println("Meat before : " + this.meat );
 				determineCollsion(mx,my);
-				System.out.println("Meat after : " + this.meat );
+
 				//regardless, decrement ammo
 				decrementAmmo();
 				this.gunCocked = false;
@@ -450,7 +453,6 @@ public class HuntScene extends Scene {
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {		
 			reticle.setLocation(newx  - reticle.getWidth()/2, newy - reticle.getHeight()/2);
-
 		}
 	}
 	

@@ -139,7 +139,7 @@ public final class ConstantStore {
 		storeScene.put("CLEAR", "Clear");
 		storeScene.put("BUY", "Buy");
 		storeScene.put("PICK_RECEIVER", "Choose who will buy this item.");
-		storeScene.put("ERR_TOO_MANY_ANIMALS", "You can only carry up to 5 animals.");
+		storeScene.put("ERR_TOO_MANY_ANIMALS", "You can only purchase up to 6 animals.");
 		storeScene.put("ERR_TOO_MANY_WAGON", "Please buy a single wagon first.");
 		storeScene.put("ERR_NOT_ENOUGH_MONEY_FOR_WAGON", "You don't have enough money to buy a wagon.\nBetter prepare to make it on foot.");
 		storeScene.put("ERR_NOT_ENOUGH_MONEY", "You don't have enough money for this purchase.");
