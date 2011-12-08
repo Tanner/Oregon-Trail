@@ -68,8 +68,8 @@ public abstract class Prey {
 		double preyHighX = this.xLocation + preySprite.getWidth();
 		double preyLowY = this.yLocation;
 		double preyHighY = this.yLocation + preySprite.getHeight();
-		System.out.println("X :shot : " + shotX + " prey X box L -> H" + preyLowX + " | " + preyHighX );
-		System.out.println("Y :shot : " + shotY + " prey Y box L -> H" + preyLowY + " | " + preyHighY );
+		System.out.println("X :shot : " + shotX + " prey X box L -> H " + preyLowX + " | " + preyHighX );
+		System.out.println("Y :shot : " + shotY + " prey Y box L -> H " + preyLowY + " | " + preyHighY );
 		if (((shotX > preyLowX) && (shotX < preyHighX)) 
 				&& ((shotY > preyLowY) && (shotY < preyHighY))){
 			//we has a hit, result is true, decrement hitpoints
@@ -111,8 +111,8 @@ public abstract class Prey {
 	 */
 	public void sendToHeaven(){
 		//heaven?  negative? lol
-		this.xLocation = -1000;
-		this.yLocation = -1000;
+		this.xLocation = -10000;
+		this.yLocation = -10000;
 		
 	}
 	

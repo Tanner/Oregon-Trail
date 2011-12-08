@@ -89,7 +89,7 @@ public class HuntScene extends Scene {
 	/**the pig or pigs in the hunt scene - may end up an array*/
 	private ArrayList<PreyPig> preyPig;
 	/**the panel that holds the graphical objects*/
-	private Component huntPanel;
+	private HuntingGroundsComponent huntPanel;
 
 	
 	
@@ -134,7 +134,7 @@ public class HuntScene extends Scene {
 		double worldMapX = 0;			//worldMap.getLocationNode.getX - these may be implemented someday. probably not
 		double worldMapY = 0;			//worldMap.getLocationNode.gety
 		
-		int terrainChance = 20;		// chance that there's a terrain object, out of 100
+		int terrainChance = 10;		// chance that there's a terrain object, out of 100
 		int rockChance = 50;		//chance that it's a tree vs a rock, out of 100
 		double [] dblArgs = {mapWidth, mapHeight, worldMapX, worldMapY};
 		int [] intArgs = {terrainChance, rockChance};
@@ -143,6 +143,19 @@ public class HuntScene extends Scene {
 
 
  		huntPanel = new HuntingGroundsComponent(container, (int)mapWidth, (int)mapHeight, huntLayout);
+ 
+ 		hunterSprite = new HunterAnimatingSprite(container,
+			//	48,
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_FRONT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_BACK")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_UPPERLEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_UPPERRIGHT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERLEFT")}, 250),
+				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERRIGHT")}, 250),
+				AnimatingSprite.Direction.RIGHT);
+				
  		int numPrey = huntSceneRand.nextInt(MAXPREY)+1;
  		System.out.println(numPrey);
  		preyCow = new ArrayList<PreyCow>();
@@ -169,27 +182,17 @@ public class HuntScene extends Scene {
 			huntPanel.setVisible(true);
 
  		}
+ 		huntPanel.displayTerrain(container, huntLayout);
+ 		mainLayer.add((Component)huntPanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int)(-1 * mapWidth/2), (int) (-1 * mapHeight/2));
 
- 		mainLayer.add(huntPanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int)(-1 * mapWidth/2), (int) (-1 * mapHeight/2));
- 		//mainLayer.add(huntPanel, new Vector2f(), ReferencePoint.TOPLEFT, (int)((-1 * (mapWidth/2)) + mainLayer.getWidth()/2), (int)((-1 * (mapHeight/2)) + mainLayer.getHeight()/2));
-	
- 		hunterSprite = new HunterAnimatingSprite(container,
-			//	48,
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LEFT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_FRONT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_BACK")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_UPPERLEFT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_UPPERRIGHT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERLEFT")}, 250),
-				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERRIGHT")}, 250),
-				AnimatingSprite.Direction.RIGHT);
-		
-		mainLayer.add(hunterSprite,
+ 		mainLayer.add(hunterSprite,
 				mainLayer.getPosition(ReferencePoint.CENTERCENTER),
-				ReferencePoint.CENTERCENTER,
+				ReferencePoint.TOPLEFT,
 				20,
 				25);
+ 
+		hunterSprite.setVisible(true);
+
 			
 		mainLayer.add(reticle,
 				mainLayer.getPosition(ReferencePoint.CENTERCENTER),
@@ -449,7 +452,6 @@ public class HuntScene extends Scene {
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		if ( mainLayer.isVisible() && mainLayer.isAcceptingInput()) {		
 			reticle.setLocation(newx  - reticle.getWidth()/2, newy - reticle.getHeight()/2);
-
 		}
 	}
 	

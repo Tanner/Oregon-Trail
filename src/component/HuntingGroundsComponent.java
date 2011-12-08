@@ -63,6 +63,11 @@ public class HuntingGroundsComponent extends Component {
 		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.TOPLEFT);
 		huntPanel.add(backgroundPanel,huntPanel.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.TOPLEFT);
 		
+		
+ 		add(huntPanel,getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
+	}//constructor
+
+	public void displayTerrain(GUIContext context, HuntingMap huntLayout){
 		for (int huntMapX = 0; huntMapX < huntLayout.getHuntingGroundsMap().length; huntMapX ++){
 			for (int huntMapY = 0; huntMapY < huntLayout.getHuntingGroundsMap()[0].length; huntMapY++){
 				
@@ -76,9 +81,8 @@ public class HuntingGroundsComponent extends Component {
 			System.out.printf("\n");
 		}//for huntmapx
 		
- 		
- 		add(huntPanel,getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.CENTERCENTER);
+
 	}
-
-
+	
+	
 }//hunting grounds component
