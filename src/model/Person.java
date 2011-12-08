@@ -386,4 +386,21 @@ public class Person implements Conditioned, Inventoried, PartyMemberDataSource, 
 		
 		this.getInventory().addRandomItems();
 	}
+
+	public String getSkillsAsString() {
+		StringBuilder str = new StringBuilder();
+		boolean isFirst = true;
+		for(Skill skill : skills) {
+			if(skill != Skill.NONE) {
+				if(!isFirst) {
+					str.append(", ");
+				}
+				str.append(skill);
+				if(isFirst) {
+					isFirst = !isFirst;
+				}
+			}
+		}
+		return str.toString();
+	}
 }

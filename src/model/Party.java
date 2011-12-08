@@ -25,6 +25,8 @@ public class Party implements Serializable {
 	
 	private final static int MAX_SPEED = 5;
 	
+	private final int MAX_MEMBERS = 4;
+	
 	private Person partyLeader;
 	
 	private List<Person> members = new ArrayList<Person>();
@@ -221,6 +223,12 @@ public class Party implements Serializable {
 	 */
 	public List<Person> getPartyMembers() {
 		return this.members;
+	}
+	
+	public void addPartyMember(Person person) {
+		if(this.members.size() < this.MAX_MEMBERS) {
+			this.members.add(person);
+		}
 	}
 	
 	public List<PartyMemberDataSource> getPartyComponentDataSources() {
