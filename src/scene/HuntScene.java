@@ -286,15 +286,22 @@ public class HuntScene extends Scene {
 		this.huntPanel.moveToon(moveMapX, moveMapY, hunterSprite.getX(), hunterSprite.getY());
 		//here we would update map with new move data values
 		
-		//update hunter's ammo count
-		if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO)){
-			this.ammoCount = (int) hunter.getInventory().getConditionOf(ItemType.AMMO).getCurrent();
-			this.ammoBoxes = (int) hunter.getInventory().getNumberOf(ItemType.AMMO) -1;
-		}
+		updateAmmo();
 		
 		hunterSprite.update(delta);
 	}//update player method
 	
+	private void updateAmmo() {
+		//update hunter's ammo count
+		if(hunter.getInventory().getPopulatedSlots().contains(ItemType.AMMO)){
+			this.ammoCount = (int) hunter.getInventory().getConditionOf(ItemType.AMMO).getCurrent();
+			this.ammoBoxes = (int) hunter.getInventory().getNumberOf(ItemType.AMMO);
+		} else {
+			this.ammoCount = 0;
+			this.ammoBoxes = 0;
+		}
+	}
+
 	/* (non-Javadoc)
 	 * @see scene.Scene#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
 	 */
@@ -336,7 +343,6 @@ public class HuntScene extends Scene {
 			hunter.addItemToInventory(ammoBox);
 		}
 		//END AMMO DECREASE
-
 	}
 	
 	
@@ -435,11 +441,13 @@ public class HuntScene extends Scene {
 			}
 		}//if button == 0
 		else if (button ==1){
-			if (this.gunCocked){//cocking while loaded means bullet gone - oopsie
-				decrementAmmo();			
+			if (this.ammoCount + this.ammoBoxes != 0) {
+				if (this.gunCocked){//cocking while loaded means bullet gone - oopsie
+					decrementAmmo();			
+				}
+				this.gunCocked = true;
+				SoundStore.get().playSound("GunCock");
 			}
-			this.gunCocked = true;
-			SoundStore.get().playSound("GunCock"); 	
 			
 		}
 	}
