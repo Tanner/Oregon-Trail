@@ -26,7 +26,7 @@
     <jar basedir="${classes.dir}" destfile="${jar.dir}/${ant.project.name}.jar" />
   </target>
 
-  <target name="run-macosx">
+  <target name="run-macosx" depends="jar">
     <java fork="true" classname="${classname}">
       <classpath>
         <path refid="classpath"/>
@@ -36,7 +36,7 @@
     </java>
   </target>
   
-  <target name="run-windows">
+  <target name="run-windows" depends="jar">
     <java fork="true" classname="${classname}">
       <classpath>
         <path refid="classpath"/>
@@ -46,7 +46,7 @@
     </java>
   </target>
   
-  <target name="run-linux">
+  <target name="run-linux" depends="jar">
     <java fork="true" classname="${classname}">
       <classpath>
         <path refid="classpath"/>
