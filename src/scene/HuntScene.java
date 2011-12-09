@@ -310,19 +310,23 @@ public class HuntScene extends Scene {
 		//in opposite direction to facing of toon - if player moves left, map moves to right.
 		//positive x moves map from left to right, positive y moves map down
 		
+		this.updatePlayer(container, game, delta);
+		
 		//alternate between the cows and the pigs for updating
 		if (this.toggleCount == 0){
 			for(PreyCow cow : this.preyCow){
-				
+				cow.movePrey(delta);
+				cow.getPreySprite().update(delta);
 			}
 			this.toggleCount = 1;
 		} else {
 			for(PreyPig pig : this.preyPig){
-				
+				pig.movePrey(delta);
+				pig.getPreySprite().update(delta);
 			}			
 			this.toggleCount = 0;
 		}
-		this.updatePlayer(container, game, delta);
+		
 		mainLayer.update(delta);
 		updateHUD();
 

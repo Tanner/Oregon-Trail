@@ -53,7 +53,7 @@ public class PreyCow extends Prey {
 	 * will determine where the cow is going to move to next
 	 */
 	@Override
-	public void movePrey() {
+	public void movePrey(int delta) {
 		// TODO Auto-generated method stub
 		
 	}
