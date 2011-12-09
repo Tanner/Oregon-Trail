@@ -19,12 +19,13 @@ import core.ImageStore;
 public class PreyPig extends Prey {
 	//pig gives 5 meat
 	private final static int pigMeat = 5;
-	private int direction = new Random().nextInt(5);
+	private int direction;
 	private int timeMovingInCurrentDirection = 0;
 
 	public PreyPig(GameContainer container, StateBasedGame game, Random pigRand, int mapXWidth, int mapYHeight) {
 		//pig gives 5 meat
 		super(pigMeat);
+		direction = new Random().nextInt(5);
 		//takes 2 shots to kill a pig
 		this.hitPoints = 2;
 		Image[] pigAnimLeft = new Image[6];
@@ -55,6 +56,15 @@ public class PreyPig extends Prey {
  			
 	}//pig constructor
 	
+	
+	/**
+	 * @param direction the direction to set
+	 */
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+
+
 	public int getDirection() {
 		if(this.timeMovingInCurrentDirection < 50) {
 			this.timeMovingInCurrentDirection++;

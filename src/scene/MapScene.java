@@ -12,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 //import component.Positionable.ReferencePoint;
 
 import component.sprite.AnimatingSprite;
+import component.Label.Alignment;
 import component.MapComponent;
 import component.Button;
 import component.Label;
@@ -70,11 +71,6 @@ public class MapScene extends Scene {
 			}
 		}//for each rank of world map
 		
-		
-		
-		
-		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
-
 		//city definition moved to mapComponent
 		
 		this.currNode = worldMap.getCurrLocationNode();
@@ -155,9 +151,62 @@ public class MapScene extends Scene {
 		//end territory corner painting
 		*/
 		//add map component
-		
+		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
 		mainLayer.add(playerMap, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT,0,0);
 		
+		Label legend1 = new Label(container, PADDING * 6, fieldFont, Color.white, "Legend");
+		legend1.setAlignment(Alignment.LEFT);
+		
+		Button legendButWhite1 = new Button(container,13 , 13, Color.white);
+		Label lbllgndButWhite1 = new Label(container, PADDING * 15, fieldFont, Color.white, "Trailblaze to get here");
+		lbllgndButWhite1.setAlignment(Alignment.LEFT);
+	
+		mainLayer.add(legend1, mainLayer.getPosition(Positionable.ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.TOPRIGHT,-2 * legend1.getWidth(), 1 * legend1.getWidth()/4);
+		mainLayer.add(legendButWhite1,legend1.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPRIGHT,-PADDING/2, PADDING/2);
+		mainLayer.add(lbllgndButWhite1, legendButWhite1.getPosition(Positionable.ReferencePoint.CENTERRIGHT), Positionable.ReferencePoint.CENTERLEFT,2,0);
+
+		Button legendButBlck = new Button(container,8 , 8,new Color(0,0,0));
+		Label lbllgndButBlck = new Label(container, PADDING * 15, fieldFont, Color.white, "Ghost Town");
+		lbllgndButBlck.setAlignment(Alignment.LEFT);
+		
+		mainLayer.add(legendButBlck,legendButWhite1.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.TOPRIGHT,0, PADDING/2);
+		mainLayer.add(lbllgndButBlck, legendButBlck.getPosition(Positionable.ReferencePoint.CENTERRIGHT), Positionable.ReferencePoint.CENTERLEFT,PADDING,0);
+
+		Button legendButYel = new Button(container, 9, 9,new Color(255,255,0));
+		Label lbllgndButYel = new Label(container, PADDING * 15, fieldFont, Color.white, "Outpost");
+		lbllgndButYel.setAlignment(Alignment.LEFT);
+		
+		mainLayer.add(legendButYel,legendButBlck.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.TOPRIGHT,0, PADDING/2);
+		mainLayer.add(lbllgndButYel, legendButYel.getPosition(Positionable.ReferencePoint.CENTERRIGHT), Positionable.ReferencePoint.CENTERLEFT,PADDING,0);
+		
+		Button legendButOrg1 = new Button(container, 10, 10,new Color(255,200,0));
+		Label lbllgndButOrg1 = new Label(container, PADDING * 15, fieldFont, Color.white, "Village");
+		lbllgndButOrg1.setAlignment(Alignment.LEFT);
+		
+		mainLayer.add(legendButOrg1,legendButYel.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.TOPRIGHT,0, PADDING/2);
+		mainLayer.add(lbllgndButOrg1, legendButOrg1.getPosition(Positionable.ReferencePoint.CENTERRIGHT), Positionable.ReferencePoint.CENTERLEFT,PADDING,0);
+		
+		Button legendButOrg2 = new Button(container, 11, 11,new Color(255,150,0));
+		Label lbllgndButOrg2 = new Label(container, PADDING * 15, fieldFont, Color.white, "Town");
+		lbllgndButOrg2.setAlignment(Alignment.LEFT);
+		
+		mainLayer.add(legendButOrg2,legendButOrg1.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.TOPRIGHT,0, PADDING/2);
+		mainLayer.add(lbllgndButOrg2, legendButOrg2.getPosition(Positionable.ReferencePoint.CENTERRIGHT), Positionable.ReferencePoint.CENTERLEFT,PADDING,0);
+	
+		Button legendButOrg3 = new Button(container, 12, 12,new Color(255,100,0));
+		Label lbllgndButOrg3 = new Label(container, PADDING * 15, fieldFont, Color.white, "City");
+		lbllgndButOrg3.setAlignment(Alignment.LEFT);
+		
+		mainLayer.add(legendButOrg3,legendButOrg2.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.TOPRIGHT,0, PADDING/2);
+		mainLayer.add(lbllgndButOrg3, legendButOrg3.getPosition(Positionable.ReferencePoint.CENTERRIGHT), Positionable.ReferencePoint.CENTERLEFT,PADDING,0);
+		
+		Button legendButRed = new Button(container, 13, 13,new Color(255,0,0));
+		Label lbllgndButRed = new Label(container, PADDING * 15, fieldFont, Color.white, "Frontier Metropolis");
+		lbllgndButRed.setAlignment(Alignment.LEFT);
+		
+		mainLayer.add(legendButRed,legendButOrg3.getPosition(Positionable.ReferencePoint.BOTTOMRIGHT), Positionable.ReferencePoint.TOPRIGHT,0, PADDING/2);
+		mainLayer.add(lbllgndButRed, legendButRed.getPosition(Positionable.ReferencePoint.CENTERRIGHT), Positionable.ReferencePoint.CENTERLEFT,PADDING,0);
+	
 		//add return to camp button
 		returnToCamp = new Button(container, (container.getWidth() - PADDING * 4) / 4, REGULAR_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("MAP_SCENE", "RETURN_CAMP")));
 		returnToCamp.addListener(new ButtonListener());

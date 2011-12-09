@@ -354,9 +354,12 @@ public class HuntScene extends Scene {
 				} else if(direction == 4) {
 					moveMod = huntPanel.terrainCollision(cow.getxLocation() + cow.getPreySprite().getWidth()/2, cow.getyLocation() + cow.getPreySprite().getHeight());
 				}
-				if (moveMod != -1) {
+				if (moveMod > 0) {
 					cow.movePrey((int)(delta * moveMod) / 2);
 					cow.getPreySprite().update(delta);
+				} else {
+					
+					cow.setDirection((cow.getDirection() > 2) ? (cow.getDirection() -2) : (cow.getDirection() +2));
 				}
 			}
 			for(PreyPig pig : this.preyPig){
@@ -371,10 +374,13 @@ public class HuntScene extends Scene {
 				} else if(direction == 4) {
 					moveMod = huntPanel.terrainCollision(pig.getxLocation() + pig.getPreySprite().getWidth()/2, pig.getyLocation() + pig.getPreySprite().getHeight());
 				}
-				if (moveMod != -1) {
+				if (moveMod > 0 ) {
 					pig.movePrey((int)(delta * moveMod) / 2);
 					pig.getPreySprite().update(delta);
-				} 
+				} else {
+					
+					pig.setDirection((pig.getDirection() > 2) ? (pig.getDirection() -2) : (pig.getDirection() +2));
+				}
 			}
 		}
 		mainLayer.update(delta);
@@ -421,7 +427,7 @@ public class HuntScene extends Scene {
 			if (preyCow.get(cow).inHitBox(shotX, shotY)) {
 				int shotResult = preyCow.get(cow).checkDead();
 				aHit = true;
-				SoundStore.get().playSound("PigSqueal",(float).3);
+				SoundStore.get().playSound("CowSqueal", .75f);
 			
 				if (shotResult != 0){ //a kill! - get rid of cow, add meat of old cow to total
 					preyCow.get(cow).getPreySprite().setVisible(false);
@@ -442,7 +448,7 @@ public class HuntScene extends Scene {
 			if (preyPig.get(pig).inHitBox(shotX, shotY)) {
 				int shotResult = preyPig.get(pig).checkDead();
 				aHit = true;
-				SoundStore.get().playSound("PigSqueal",(float).3);
+				SoundStore.get().playSound("PigSqueal", .75f);
 				if (shotResult != 0){ //a kill! - get rid of cow, add meat of old cow to total
 					preyPig.get(pig).getPreySprite().setVisible(false);
 					preyPig.get(pig).getPreySprite().remove(preyPig.get(pig).getPreySprite());
@@ -478,7 +484,7 @@ public class HuntScene extends Scene {
 		if (button == 0) {
 			if ((this.ammoCount + this.ammoBoxes != 0) && (this.gunCocked)){
 				
-				SoundStore.get().playSound("Shot",(float).5);
+				SoundStore.get().playSound("Shot",(float).3);
 				
 				if (huntSceneRand.nextInt(10) < 4){
 					SoundStore.get().playSound("Ricochet");

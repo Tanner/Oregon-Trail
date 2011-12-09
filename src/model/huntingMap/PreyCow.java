@@ -16,7 +16,7 @@ public class PreyCow extends Prey {
 	
 		/**how much meat the cow gives*/
 	public final static int cowMeat = 10;
-	private int direction = new Random().nextInt(5);
+	private int direction;
 	private int timeMovingInCurrentDirection = 0;
 	
 	public PreyCow(GameContainer container, StateBasedGame game, Random cowRand, int mapXWidth, int mapYHeight){
@@ -24,7 +24,8 @@ public class PreyCow extends Prey {
 		super(cowMeat);
 		//takes 3 shots to kill a cow
 		this.hitPoints = 3;
- 		Image[] cowAnimLeft = new Image[9];
+		direction = new Random().nextInt(5);
+		Image[] cowAnimLeft = new Image[9];
  		Image[] cowAnimRight = new Image[9];
  		Image[] cowAnimFront = new Image[9];
  		Image[] cowAnimBack = new Image[9];
@@ -50,6 +51,15 @@ public class PreyCow extends Prey {
 		
 		movePrey(0);
 	}//prey cow constructor
+
+
+
+	/**
+	 * @param direction the direction to set
+	 */
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
 
 
 
