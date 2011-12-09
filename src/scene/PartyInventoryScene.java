@@ -62,6 +62,8 @@ public class PartyInventoryScene extends Scene {
 	private OwnerInventoryButtons playerInventoryButtons[];
 	private OwnerInventoryButtons vehicleInventoryButtons;
 	
+	private Label animalsLabel;
+	
 	private Button closeButton, transferButton, functionButton;
 	private Counter binButton;
 	
@@ -181,6 +183,10 @@ public class PartyInventoryScene extends Scene {
 		
 		int yOffset = (int) (closeButton.getPosition(ReferencePoint.TOPLEFT).getY() - mainLayer.getPosition(ReferencePoint.CENTERCENTER).getY()) - PADDING;
 		mainLayer.add(binButton, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.BOTTOMCENTER, 0, yOffset);
+		
+		animalsLabel = new Label(container, (int) (binButton.getPosition(ReferencePoint.TOPLEFT).getX() - 2 * PADDING), fieldFont, Color.white, "Animals: " + party.getAnimalsAsString());
+		animalsLabel.setAlignment(Alignment.LEFT);
+		mainLayer.add(animalsLabel, binButton.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERRIGHT, -PADDING, 0);
 		
 		int numberOfBinPockets = playerInventoryButtons.length;
 		numberOfBinPockets += vehicleInventoryButtons != null ? 1 : 0;

@@ -549,6 +549,22 @@ public class Party implements Serializable {
 	public List<Animal> getAnimals() {
 		return animals;
 	}
+	
+	public String getAnimalsAsString() {
+		StringBuilder str = new StringBuilder();
+		boolean isFirst = true;
+		for(Animal animal : animals) {
+			if (!isFirst) {
+				str.append(", ");
+			} else {
+				isFirst = !isFirst;
+			}
+			
+			str.append(animal);
+		}
+		
+		return str.toString();
+	}
 
 	/**
 	 * Heals the person by the designated amount.
