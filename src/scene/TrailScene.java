@@ -29,6 +29,7 @@ import component.Toolbar;
 import component.VehicleGroup;
 import component.hud.TrailHUD;
 import component.modal.ChoiceModal;
+import component.modal.MessageModal;
 import component.modal.Modal;
 import component.parallax.ParallaxPanel;
 import component.parallax.ParallaxComponent;
@@ -78,7 +79,7 @@ public class TrailScene extends Scene {
 	private VehicleGroup vehicle;
 	
 	private EncounterNotification currentEncounterNotification;
-	private Modal encounterModal;
+	private Modal encounterModal, noGunModal;
 	
 	/**
 	 * Construct a TrailScene with a {@code Party} and a {@code RandomEncounterTable}.
@@ -202,7 +203,8 @@ public class TrailScene extends Scene {
 				parallaxPanel.add(tree, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 0, yOffset);
 			}
 		}
-}
+		noGunModal = new MessageModal(container, this, "You can't hunt without a gun!");
+	}
 		
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -330,6 +332,11 @@ public class TrailScene extends Scene {
 	public void dismissModal(Modal modal, int button) {
 		super.dismissModal(modal, button);
 		SoundStore.get().stopAllSound();
+		
+		if (modal == noGunModal) {
+			return;
+		}
+		
 		if (button == modal.getCancelButtonIndex()) {
 			setState(new CampState());
 		}
@@ -523,7 +530,11 @@ public class TrailScene extends Scene {
 			} else if (component == hud.getMapButton()) {
 				GameDirector.sharedSceneListener().requestScene(SceneID.MAP, TrailScene.this, false);
 			} else if (component == hud.getHuntButton()) {
-				GameDirector.sharedSceneListener().requestScene(SceneID.HUNT, TrailScene.this, false);
+				if (party.getPartyMembers().get(0).getInventory().getNumberOf(ItemType.GUN) > 0) {
+					GameDirector.sharedSceneListener().requestScene(SceneID.HUNT, TrailScene.this, false);
+				} else {
+					showModal(noGunModal);
+				}
 			} else if (component == hud.getLeaveButton()) {
 				setState(new WalkingState());
 			}

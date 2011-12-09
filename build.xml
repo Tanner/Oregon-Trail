@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Oregon Trail" default="jar" basedir=".">
+  <property name="src.dir"     value="src" />
+  <property name="lib.dir"     value="lib" />
+  <property name="build.dir"   value="build" />
+  <property name="classes.dir" value="${build.dir}/classes" />
+  <property name="jar.dir"     value="${build.dir}/jar" />
+  <property name="classname" value="core.GameDirector" />
+  <property name="lwjgl.dir" value="lwjgl-2.8.2" />
+
+  <path id="classpath">
+    <fileset dir="${lib.dir}" includes="jogg-0.0.7.jar,slick.jar,jorbis-0.0.17.jar" />
+    <fileset dir="${lib.dir}/${lwjgl.dir}/jar/" includes="lwjgl.jar,lwjgl_util.jar" />
+  </path>
+
+  <target name="clean">
+    <delete dir="${build.dir}" />
+  </target>
+
+  <target name="compile" depends="clean">
+    <mkdir dir="${classes.dir}" />
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" verbose="true" />
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${jar.dir}" />
+    <jar basedir="${classes.dir}" destfile="${jar.dir}/${ant.project.name}.jar" />
+  </target>
+
+  <target name="run-macosx" depends="jar">
+    <java fork="true" classname="${classname}">
+      <classpath>
+        <path refid="classpath"/>
+        <path location="${jar.dir}/${ant.project.name}.jar"/>
+      </classpath>
+      <sysproperty key="java.library.path" value="${lib.dir}/${lwjgl.dir}/native/macosx" />
+    </java>
+  </target>
+  
+  <target name="run-windows" depends="jar">
+    <java fork="true" classname="${classname}">
+      <classpath>
+        <path refid="classpath"/>
+        <path location="${jar.dir}/${ant.project.name}.jar"/>
+      </classpath>
+      <sysproperty key="java.library.path" value="${lib.dir}/${lwjgl.dir}/native/windows" />
+    </java>
+  </target>
+  
+  <target name="run-linux" depends="jar">
+    <java fork="true" classname="${classname}">
+      <classpath>
+        <path refid="classpath"/>
+        <path location="${jar.dir}/${ant.project.name}.jar"/>
+      </classpath>
+      <sysproperty key="java.library.path" value="${lib.dir}/${lwjgl.dir}/native/linux" />
+    </java>
+  </target>
+</project>
