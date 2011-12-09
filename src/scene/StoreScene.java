@@ -170,10 +170,12 @@ public class StoreScene extends Scene {
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)  {
-		super.enter(container, game) ;
+		super.enter(container, game);
 			for (ItemType item : inv.getPopulatedSlots() ) {
-				storeInventory[getButtonIndex(item)].setMax(inv.getNumberOf(item));
-				storeInventory[getButtonIndex(item)].setCount(inv.getNumberOf(item));
+				if (getButtonIndex(item) != -1) {
+					storeInventory[getButtonIndex(item)].setMax(inv.getNumberOf(item));
+					storeInventory[getButtonIndex(item)].setCount(inv.getNumberOf(item));
+				}
 			}
 		updatePartyMoneyLabel();
 	}
