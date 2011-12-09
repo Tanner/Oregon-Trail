@@ -162,7 +162,7 @@ public class HuntScene extends Scene {
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_LOWERRIGHT")}, 250),
 				AnimatingSprite.Direction.RIGHT);
 				
- 		int numPrey = huntSceneRand.nextInt(MAXPREY)+1;
+ 		int numPrey = huntSceneRand.nextInt(MAXPREY)+3;
  		System.out.println(numPrey);
  		preyCow = new ArrayList<PreyCow>();
  		preyPig = new ArrayList<PreyPig>();

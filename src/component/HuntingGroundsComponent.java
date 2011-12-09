@@ -116,7 +116,7 @@ public class HuntingGroundsComponent extends Component {
 				edgeY += toonHeight/2;
 			}
 			if ((direction == 0) || (direction == 3) || (direction == 6)){//toon moving left - use toon width/2 subtracted from x location for collision	
-				edgeX -= toonWidth/2;
+				edgeX -= toonWidth;
 			}
 			if ((direction == 2) || (direction == 5) || (direction == 8)){//toon moving right - use toon width/2 added to x location for collision	
 				edgeX += toonWidth/2;			
@@ -127,7 +127,7 @@ public class HuntingGroundsComponent extends Component {
 			//pass appropriate edge to test to find movement modifier based on terrain
 			moveMod = terrainCollision(edgeX, edgeY);
 			if (moveMod < 0){
-				this.setLocation(-1200 + mainLayerWidth/2, -1200 + mainLayerHeight/2);
+				this.setLocation((int)(-1 * ((this.huntLayout.MAP_WIDTH) /2) + mainLayerWidth/2), (int)(-1 * (this.huntLayout.MAP_HEIGHT) + mainLayerHeight/2));
 			} else {
 				moveMapX *= moveMod;
 				moveMapY *= moveMod;

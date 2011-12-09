@@ -120,7 +120,7 @@ public class TownScene extends Scene {
 		mainLayer.add(parallaxPanel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
-		tavern = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
+		tavern = new Sprite(container, 400, ImageStore.get().getImage("SALOON_BUILDING"));
 		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 20, 40);
 		mainLayer.add(tavern, store.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, 20, 0);
 		
