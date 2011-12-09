@@ -95,8 +95,8 @@ public class HuntingGroundsComponent extends Component {
 		int toonWidth = hunterSprite.getWidth();
 		int toonX = hunterSprite.getX();
 		int toonY = hunterSprite.getY();
-		moveMapX *= .5;
-		moveMapY *= .5;
+//		moveMapX *= .5;
+//		moveMapY *= .5;
 		int toonAbsX = -1 * (this.getX() - (this.mainLayerWidth/2));//absolute position of toon relative to underlying panel's position within layer
 		int toonAbsY = -1 * (this.getY() - (this.mainLayerHeight/2));//absolute position of toon relative to underlying panel's position within layer
 		int edgeX = toonAbsX + 24;
