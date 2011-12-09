@@ -19,7 +19,7 @@ import core.ConstantStore;
 public class WorldMap implements Serializable {
 	
 	/**number of locations on map if none passed to constructor - needs to be static to pass to constructor*/
-	public final static int GEN_LOC = 80;  
+	public final static int GEN_LOC = 120;  
 	/**max quality for a location, which determines how big/populated/well known it is.*/
 	public final int  MAX_LOC_QUAL = 100;
 	/**weight of ranking assignment in random generator - 2 is 50 50 chance for same rank or next rank, higher numbers weight toward next rank*/
@@ -414,6 +414,7 @@ public class WorldMap implements Serializable {
 					//System.out.println("ORPHAN : " + node.getRank() + " | " + node.toString());
 					node.setQuality(new Condition(0,100,100));
 					this.orphanNodes.get(node.getRank()).add(node);
+					System.out.println(node.toString());
 				} else {
 					//System.out.println("NOT an ORPHAN : " + node.getRank() + " | " + node.toString());
 					
@@ -664,6 +665,7 @@ public class WorldMap implements Serializable {
 	 */
 	public LocationNode getNextRankOrphanLocation(){
 		int index = mapRand.nextInt(this.orphanNodes.get(currLocationNode.getRank()+1).size());
+		System.out.println("orphan index" + index);
 		return this.orphanNodes.get(currLocationNode.getRank()+1).get(index);
 	}
 	

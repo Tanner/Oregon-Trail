@@ -52,7 +52,7 @@ public class GameDirector implements SceneListener {
 		 //fontManager = new FontManager();
 
 		 sceneDirector = new SceneDirector("Oregon Trail");
-		 worldMap = new WorldMap();
+		 worldMap = new WorldMap(120);
 		 game = new Game(worldMap);
 	}
 	
