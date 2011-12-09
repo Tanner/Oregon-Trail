@@ -550,6 +550,16 @@ public class Party implements Serializable {
 		return animals;
 	}
 	
+	public int getNumberOfAnimal(ItemType type) {
+		int numberOf = 0;
+		for(Animal animal : animals) {
+			if(animal.getType().equals(type)) {
+				numberOf++;
+			}
+		}
+		return numberOf;
+	}
+	
 	public String getAnimalsAsString() {
 		StringBuilder str = new StringBuilder();
 		boolean isFirst = true;
