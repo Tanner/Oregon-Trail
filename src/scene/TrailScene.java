@@ -354,6 +354,7 @@ public class TrailScene extends Scene {
 	private void setState(TrailSceneState state) {
 		this.state = state;
 		state.init();
+		SoundStore.get().stopSound("Steps");
 	}
 	
 	private abstract class TrailSceneState {				

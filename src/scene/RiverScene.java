@@ -44,8 +44,8 @@ public class RiverScene extends Scene {
 	private final int CLOUD_DISTANCE = 300;
 	
 	private final int MAX_RIVER_DEPTH = 8;
-	private final int MAX_TOLL = 1000;
-	private final int MIN_TOLL = 100;
+//	private final int MAX_TOLL = 1000;
+//	private final int MIN_TOLL = 100;
 	private final int FORD_DANGER_DEPTH = 3;
 	private final int CAULK_DANGER_DEPTH = 4;
 	private final int RIVER_CROSS_TIME = 3000;
@@ -82,8 +82,9 @@ public class RiverScene extends Scene {
 	
 	public RiverScene(Party party) {
 		this.party = party;
-		riverDepth = (int) (Math.random() * MAX_RIVER_DEPTH) + 1;
-		tollPrice = (int) (Math.random() * MAX_TOLL - MIN_TOLL) + MIN_TOLL;
+		Random random = new Random();
+		riverDepth = random.nextInt(MAX_RIVER_DEPTH) + 1;
+		tollPrice = ((random.nextInt(20) + 1) * (party.getLocation().getRank() + 1));
 		haveWaited = false;
 		waiting = false;
 		crossTime = 0;

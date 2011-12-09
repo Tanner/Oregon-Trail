@@ -111,8 +111,8 @@ public class TavernScene extends Scene {
 		for (int i = 0; i < person.length; i++) {
 			personButton[i] = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, 300, fieldFont, Color.white, person[i].getName()));
 			mainLayer.add(personButton[i], mainLayer.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, (220)*(i - 2) + 110, -100);
-			Image icon = person[i].isMale() ? ImageStore.get().getImage("HILLBILLY_RIGHT") : ImageStore.get().getImage("MAIDEN_RIGHT");
-			mainLayer.add(new Sprite(container, 48, icon)
+			Image icon = person[i].isMale() ? ImageStore.get().getImage("HILLBILLY_LEFT") : ImageStore.get().getImage("MAIDEN_LEFT");
+			mainLayer.add(new Sprite(container, icon.getWidth()*2, icon)
 			, personButton[i].getPosition(ReferencePoint.TOPCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -10);
 			personButton[i].addListener(new ButtonListener(i));
 		}
