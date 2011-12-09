@@ -87,8 +87,8 @@ public class SoundStore {
 		addToMusic("MyNameIsNobody", new Music(ConstantStore.PATH_SOUND + "MyNameIsNobody.ogg"));
 		addToMusic("WanderingTrail", new Music(ConstantStore.PATH_SOUND + "WanderingTrail.ogg"));
 		addToMusic("KnightsOfCydonia", new Music(ConstantStore.PATH_SOUND + "KnightsOfCydonia.ogg"));
-		addToSounds("PigSqueal", new Sound(ConstantStore.PATH_SOUND + "pig_squeal"));
-		addToSounds("CowSqueal", new Sound(ConstantStore.PATH_SOUND + "cow_squeal"));
+		addToSounds("PigSqueal", new Sound(ConstantStore.PATH_SOUND + "pig_squeal.ogg"));
+		addToSounds("CowSqueal", new Sound(ConstantStore.PATH_SOUND + "cow_squeal.ogg"));
 		//addToMusic("KnightsOfCydonia", new Music(filePath + "HowTheWest.ogg"));
 		
 		townSongs.add("FarewellCheyenne");
