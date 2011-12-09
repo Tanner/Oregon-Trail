@@ -37,7 +37,7 @@ public class TavernScene extends Scene {
 	public static final SceneID ID = SceneID.TAVERN;
 	
 	private final int PADDING = 20;
-	private final int BUTTON_HEIGHT = 40;
+	private final int BUTTON_HEIGHT = 30;
 	private final int BUTTON_WIDTH = 200;
 	
 	private final int MAX_PARTY_SIZE = 4;
@@ -118,7 +118,7 @@ public class TavernScene extends Scene {
 		}
 		
 		tempLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "LEAVE"));
-		leaveButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
+		leaveButton = new Button(container, (container.getWidth() - PADDING * 4) / 4, BUTTON_HEIGHT, tempLabel);
 		leaveButton.addListener(new ButtonListener(-1));
 		mainLayer.add(leaveButton, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, PADDING, -PADDING);
 
