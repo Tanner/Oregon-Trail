@@ -115,8 +115,8 @@ public class TavernScene extends Scene {
 		leaveButton = new Button(container, 200, 40, tempLabel);
 		leaveButton.addListener(new ButtonListener(-1));
 		mainLayer.add(leaveButton, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 20, -20);
-		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/tavern.png")));
-		
+//		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/tavern.png")));
+//		
 	}
 	
 	public String generateDetails(Person person) {
