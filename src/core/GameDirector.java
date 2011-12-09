@@ -147,7 +147,9 @@ public class GameDirector implements SceneListener {
 		Transition outTransition = null;
 		Transition inTransition = null;
 		
-		SoundStore.get().stopSound("Steps");
+		if(id != SceneID.SPLASH && id != SceneID.LOADING) {
+			SoundStore.get().stopSound("Steps");
+		}
 		
 		if (game.getPlayer().getParty() != null && game.getPlayer().getParty().getLocation() != null) {
 			worldMap.setCurrLocationNode(game.getPlayer().getParty().getLocation());
