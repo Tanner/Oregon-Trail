@@ -12,6 +12,7 @@ import model.item.Vehicle;
 import model.worldMap.LocationNode;
 import model.worldMap.TrailEdge;
 
+import core.GameDirector;
 import core.Logger;
 import core.Logger.Level;
 

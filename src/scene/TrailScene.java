@@ -7,6 +7,7 @@ import java.util.Set;
 
 import model.Notification;
 import model.Party;
+import model.Person;
 import model.item.ItemType;
 
 import org.newdawn.slick.Color;
@@ -459,8 +460,15 @@ public class TrailScene extends Scene {
 			}
 			
 			List<Notification> notifications = party.walk();
+			boolean isLeaderAlive = false;
+			for(Person person : party.getPartyMembers()) {
+				if(person.isLeader()) {
+					isLeaderAlive = true;
+				}
+			}
+			
 			hud.updatePartyInformation(party.getTime().get12HourTime(), party.getTime().getDayMonthYear());
-			if (party.getPartyMembers().isEmpty()) {
+			if (party.getPartyMembers().isEmpty() || !isLeaderAlive) {
 				SoundStore.get().stopAllSound();
 				GameDirector.sharedSceneListener().requestScene(SceneID.GAMEOVER, TrailScene.this, true);
 			}

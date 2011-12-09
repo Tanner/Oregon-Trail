@@ -19,12 +19,12 @@ import core.ImageStore;
 public class PreyPig extends Prey {
 	//pig gives 5 meat
 	private final static int pigMeat = 5;
-	private GameContainer container;
+	private int direction = 1;
+	private int timeMovingInCurrentDirection = 0;
 
 	public PreyPig(GameContainer container, StateBasedGame game, Random pigRand, int mapXWidth, int mapYHeight) {
 		//pig gives 5 meat
 		super(pigMeat);
-		this.container = container;
 		//takes 2 shots to kill a pig
 		this.hitPoints = 2;
 		Image[] pigAnimLeft = new Image[6];
@@ -52,42 +52,60 @@ public class PreyPig extends Prey {
  			this.yLocation = pigRand.nextInt(mapYHeight/4) + mapYHeight/2; //focus location near center of hunt map
  			
 	}//pig constructor
+	
+	public int getDirection() {
+		if(this.timeMovingInCurrentDirection < 50) {
+			this.timeMovingInCurrentDirection++;
+		} else {
+			this.timeMovingInCurrentDirection = 0;
+			this.direction = new Random().nextInt(5);
+		}
 
+		return this.direction;
+	}
 
 	/**
 	 * will determine where the pig will move to next
 	 */
 	@Override
-	public void movePrey(int delta) {
-		switch(new Random().nextInt(5)) {
+	public int[] movePrey(int delta) {
+		switch(direction) {
 		case 1:
 			preySprite.setDirectionFacing(Direction.LEFT);
 			preySprite.setMoving(true);
 			//move map to right
 			preySprite.setLocation(preySprite.getX() - delta, preySprite.getY());
+			xLocation -= delta;
 			break;
 		case 2:
 			preySprite.setDirectionFacing(Direction.BACK);
 			preySprite.setMoving(true);
 			//move map down
-			this.yLocation -= delta;	
+			preySprite.setLocation(preySprite.getX(), preySprite.getY() - delta);
+			yLocation -= delta;
 			break;
 		case 3:
 			preySprite.setDirectionFacing(Direction.RIGHT);
 			preySprite.setMoving(true);
 			//move map to left
-			this.xLocation += delta;
+			preySprite.setLocation(preySprite.getX() + delta, preySprite.getY());
+			xLocation += delta;
 			break;
 		case 4:
 			preySprite.setDirectionFacing(Direction.FRONT);
 			preySprite.setMoving(true);
 			//move map up
+			preySprite.setLocation(preySprite.getX(), preySprite.getY() + delta);
 			yLocation += delta;
 			break;
 		case 0:
 			preySprite.setMoving(false);
 			break;
 		}
+		
+		int[] returnThis = {preySprite.getX(), preySprite.getY()};
+		return returnThis;
+		
 	}
 
 	

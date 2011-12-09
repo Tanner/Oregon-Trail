@@ -338,18 +338,45 @@ public class HuntScene extends Scene {
 		//positive x moves map from left to right, positive y moves map down
 		
 		this.updatePlayer(container, game, delta);
-		
-		if (moveCounter % 20 == 0){
+		double moveMod = 0;
+		if (moveCounter % 10 == 0){
 			for(PreyCow cow : this.preyCow){
-				cow.movePrey(delta);
-				cow.getPreySprite().update(delta);
+				//System.out.println(pig.getxLocation() + " " + pig.getyLocation());
+				int direction = cow.getDirection();
+				if(direction == 1) {
+					moveMod = huntPanel.terrainCollision(cow.getxLocation(), cow.getyLocation() + cow.getyLocation()/2);
+				} else if(direction == 2) {
+					moveMod = huntPanel.terrainCollision(cow.getxLocation() + cow.getPreySprite().getWidth()/2, cow.getyLocation());
+				} else if(direction == 3) {
+					moveMod = huntPanel.terrainCollision(cow.getxLocation() + cow.getPreySprite().getWidth(), cow.getyLocation() + cow.getPreySprite().getHeight()/2);
+				} else if(direction == 4) {
+					moveMod = huntPanel.terrainCollision(cow.getxLocation() + cow.getPreySprite().getWidth()/2, cow.getyLocation() + cow.getPreySprite().getHeight());
+				}
+				if (moveMod != -1) {
+					cow.movePrey((int)(delta * moveMod) / 10);
+					cow.getPreySprite().update(delta);
+				}
 			}
 			this.toggleCount = 1;
 		} else {
-			for(PreyPig pig : this.preyPig){
-				pig.movePrey(delta);
+			//for(PreyPig pig : this.preyPig){
+			PreyPig pig = preyPig.get(0);
+			//System.out.println(pig.getxLocation() + " " + pig.getyLocation());
+			int direction = pig.getDirection();
+			if(direction == 1) {
+				moveMod = huntPanel.terrainCollision(pig.getxLocation(), pig.getyLocation() + pig.getyLocation()/2);
+			} else if(direction == 2) {
+				moveMod = huntPanel.terrainCollision(pig.getxLocation() + pig.getPreySprite().getWidth()/2, pig.getyLocation());
+			} else if(direction == 3) {
+				moveMod = huntPanel.terrainCollision(pig.getxLocation() + pig.getPreySprite().getWidth(), pig.getyLocation() + pig.getPreySprite().getHeight()/2);
+			} else if(direction == 4) {
+				moveMod = huntPanel.terrainCollision(pig.getxLocation() + pig.getPreySprite().getWidth()/2, pig.getyLocation() + pig.getPreySprite().getHeight());
+			}
+			if (moveMod != -1) {
+				pig.movePrey((int)(delta * moveMod) / 10);
 				pig.getPreySprite().update(delta);
-			}			
+			}
+				
 			this.toggleCount = 0;
 		}
 		mainLayer.update(delta);

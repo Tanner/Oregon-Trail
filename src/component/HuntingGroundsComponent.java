@@ -147,8 +147,7 @@ public class HuntingGroundsComponent extends Component {
 	 * @param mobX the actor's X location
 	 * @param mobY the actor's Y location
 	 * @return the movement speed multiplicative modifier based on terrain - either .6 for trees or 0 for rocks (no movement)
-	 */
-	
+	 */	
 	public double terrainCollision(int mobX, int mobY){
 		double resMod = 1;
 		
