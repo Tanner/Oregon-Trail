@@ -48,6 +48,7 @@ public class PreyCow extends Prey {
 		this.xLocation = cowRand.nextInt(mapXWidth/4) + mapXWidth/2; //focus location near center of hunt map
 		this.yLocation = cowRand.nextInt(mapYHeight/4) + mapYHeight/2; //focus location near center of hunt map
 		
+		movePrey(0);
 	}//prey cow constructor
 
 

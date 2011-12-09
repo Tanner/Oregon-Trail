@@ -51,6 +51,8 @@ public class PreyPig extends Prey {
  			this.xLocation = pigRand.nextInt(mapXWidth/4) + mapXWidth/2; //focus location near center of hunt map
  			this.yLocation = pigRand.nextInt(mapYHeight/4) + mapYHeight/2; //focus location near center of hunt map
  			
+ 			movePrey(0);
+ 			
 	}//pig constructor
 	
 	public int getDirection() {
