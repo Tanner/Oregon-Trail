@@ -163,7 +163,7 @@ public class MapScene extends Scene {
 	
 		mainLayer.add(legend1, mainLayer.getPosition(Positionable.ReferencePoint.TOPRIGHT), Positionable.ReferencePoint.TOPRIGHT,-2 * legend1.getWidth(), 1 * legend1.getWidth()/4);
 		mainLayer.add(legendButWhite1,legend1.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.TOPRIGHT,-PADDING/2, PADDING/2);
-		mainLayer.add(lbllgndButWhite1, legendButWhite1.getPosition(Positionable.ReferencePoint.CENTERRIGHT), Positionable.ReferencePoint.CENTERLEFT,2,0);
+		mainLayer.add(lbllgndButWhite1, legendButWhite1.getPosition(Positionable.ReferencePoint.CENTERRIGHT), Positionable.ReferencePoint.CENTERLEFT,PADDING,0);
 
 		Button legendButBlck = new Button(container,8 , 8,new Color(0,0,0));
 		Label lbllgndButBlck = new Label(container, PADDING * 15, fieldFont, Color.white, "Ghost Town");
