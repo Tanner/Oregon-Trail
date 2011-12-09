@@ -93,6 +93,9 @@ public class Inventory implements Serializable {
 			return false;
 		}
 		
+		if (itemType.isAnimal())
+			return true;
+		
 		final double weight = itemType.getWeight() * numberOf;
 		if(getWeight() + weight > MAX_WEIGHT) {
 			Logger.log("Not enough weight capacity", Logger.Level.DEBUG);
