@@ -18,11 +18,15 @@ public class VehicleGroup extends GridComponent {
 	private static final int CONDITION_BAR_HEIGHT = 20;
 	private static final double STEP_CHANCE = 0.01;
 	private static final int STEP_Y_DISPLACEMENT = 1;
+	
+	private VehicleDataSource dataSource;
 
 	public VehicleGroup(GUIContext context, VehicleDataSource dataSource) {
 		super(context, createComponents(context, dataSource), X_SPACING, Y_SPACING);
 		
 		this.setShouldUpdateComponents(true);
+		
+		this.dataSource = dataSource;
 	}
 
 	private static final Component[][] createComponents(GUIContext context, VehicleDataSource dataSource) {
@@ -47,6 +51,10 @@ public class VehicleGroup extends GridComponent {
 	@Override
 	public void update(int delta) {
 		super.update(delta);
+		
+		if (dataSource.getCondition().getPercentage() == 0) {
+			setVisible(false);
+		}
 		
 		this.setTranslation(0, 0);
 		if (Math.random() < STEP_CHANCE) {
