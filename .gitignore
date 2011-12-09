@@ -39,3 +39,4 @@ javadoc/
 doc/
 
 resources/serialized/*
+build/
