@@ -19,7 +19,7 @@ import core.ImageStore;
 public class PreyPig extends Prey {
 	//pig gives 5 meat
 	private final static int pigMeat = 5;
-	private int direction = 1;
+	private int direction = new Random().nextInt(5);
 	private int timeMovingInCurrentDirection = 0;
 
 	public PreyPig(GameContainer container, StateBasedGame game, Random pigRand, int mapXWidth, int mapYHeight) {

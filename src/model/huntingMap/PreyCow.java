@@ -16,7 +16,7 @@ public class PreyCow extends Prey {
 	
 		/**how much meat the cow gives*/
 	public final static int cowMeat = 10;
-	private int direction = 1;
+	private int direction = new Random().nextInt(5);
 	private int timeMovingInCurrentDirection = 0;
 	
 	public PreyCow(GameContainer container, StateBasedGame game, Random cowRand, int mapXWidth, int mapYHeight){
