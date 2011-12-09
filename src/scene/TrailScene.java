@@ -427,6 +427,10 @@ public class TrailScene extends Scene {
 				pg.update(delta);
 			}
 			
+			if (vehicle != null) {
+				vehicle.update(delta);
+			}
+			
 			if (isPaused()) {
 				return;
 			}
