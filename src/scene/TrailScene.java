@@ -423,16 +423,30 @@ public class TrailScene extends Scene {
 		public void update(GameContainer container, int delta) throws SlickException {
 			super.update(container, delta);
 			
-			if (isPaused()) {
-				return;
-			}
-			
 			for (PartyMemberGroup pg : partyMembers) {
 				pg.update(delta);
 			}
 			
+			if (isPaused()) {
+				return;
+			}
+			
+			for (PartyMemberGroup pg : partyMembers) {				
+				pg.setTranslation(0, 0);
+				if (Math.random() < PartyMemberGroup.STEP_CHANCE) {
+					int upOrDown = Math.random() < 0.5 ? -1 : 1;
+					pg.setTranslation(0, upOrDown * PartyMemberGroup.STEP_Y_DISPLACEMENT);
+				}
+			}
+			
 			if (vehicle != null) {
 				vehicle.update(delta);
+				
+				vehicle.setTranslation(0, 0);
+				if (Math.random() < PartyMemberGroup.STEP_CHANCE) {
+					int upOrDown = Math.random() < 0.5 ? -1 : 1;
+					vehicle.setTranslation(0, upOrDown * PartyMemberGroup.STEP_Y_DISPLACEMENT);
+				}
 			}
 			
 			if (!SoundStore.get().getPlayingSounds().contains("Steps")) {
