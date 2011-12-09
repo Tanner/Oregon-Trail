@@ -163,7 +163,7 @@ public class HuntScene extends Scene {
 				AnimatingSprite.Direction.RIGHT);
 				
  		int numPrey = huntSceneRand.nextInt(MAXPREY)+3;
- 		System.out.println(numPrey);
+ 		//System.out.println(numPrey);
  		preyCow = new ArrayList<PreyCow>();
  		preyPig = new ArrayList<PreyPig>();
  		
@@ -474,7 +474,7 @@ public class HuntScene extends Scene {
 		super.mousePressed(button, mx, my);
 		//left button is button 0 - fires bullet
 		//right button is button 1 - reloads and cocks gun
-		System.out.println("mouse clicked");
+		//System.out.println("mouse clicked");
 		if (button == 0) {
 			if ((this.ammoCount + this.ammoBoxes != 0) && (this.gunCocked)){
 				
