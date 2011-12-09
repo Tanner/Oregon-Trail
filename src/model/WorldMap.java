@@ -639,7 +639,7 @@ public class WorldMap implements Serializable {
 	public TrailEdge makePCInboundTrail(LocationNode destNode){
 		TrailEdge newTrail;
 		newTrail = new TrailEdge(destNode, currLocationNode , 0 );
-
+		newTrail.setVisible(true);
 		return newTrail;
 	}
 	
