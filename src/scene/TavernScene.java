@@ -21,10 +21,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import component.Button;
 import component.Label;
+import component.Panel;
 import component.Positionable;
 import component.SegmentedControl;
 import component.Positionable.ReferencePoint;
 import component.modal.ChoiceModal;
+import component.modal.MessageModal;
 import component.modal.Modal;
 import component.sprite.Sprite;
 import core.ConstantStore;
@@ -43,9 +45,9 @@ public class TavernScene extends Scene {
 	private Person[] person;
 	private Button[] personButton;
 	private Party party;
-	private ChoiceModal modal;
+	private Modal modal, partyFullModal;
 	
-	private Person chosenOne;
+	private int chosenOne;
 	
 	private List<String> maleNames = new ArrayList<String>();
 	private List<String> femaleNames = new ArrayList<String>();
@@ -64,13 +66,14 @@ public class TavernScene extends Scene {
 		femaleNames.add("Francine");
 		maleNames.add("Geoff");
 		maleNames.add("Henry");
+		femaleNames.add("Irene");
 
 		
 		for (int i = 0; i < person.length; i++) {
 			String name = randomPersonName();
 			person[i] = new Person(name);
 			person[i].makeRandom();
-			if(name.equals("Carlotta") || name.equals("Elizabeth") || name.equals("Francine")) {
+			if(name.equals("Carlotta") || name.equals("Elizabeth") || name.equals("Francine") || name.equals("Irene")) {
 				person[i].setIsMale(false);
 			}
 		}
@@ -96,10 +99,12 @@ public class TavernScene extends Scene {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		Font fieldFont = FontStore.get().getFont(FontStore.FontID.FIELD);
-
+		
+		partyFullModal = new MessageModal(container, this, "Your party is full, so you can't recruit any more members!");
+		
 		for (int i = 0; i < person.length; i++) {
 			personButton[i] = new Button(container, 200, 40, new Label(container, 300, fieldFont, Color.white, person[i].getName()));
-			mainLayer.add(personButton[i], mainLayer.getPosition(ReferencePoint.CENTERCENTER), Positionable.ReferencePoint.CENTERCENTER, (220)*(i - 2) + 110, -20);
+			mainLayer.add(personButton[i], mainLayer.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, (220)*(i - 2) + 110, -100);
 			Image icon = person[i].isMale() ? ImageStore.get().getImage("HILLBILLY_RIGHT") : ImageStore.get().getImage("MAIDEN_RIGHT");
 			mainLayer.add(new Sprite(container, 48, icon)
 			, personButton[i].getPosition(ReferencePoint.TOPCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -10);
@@ -107,9 +112,10 @@ public class TavernScene extends Scene {
 		}
 		
 		tempLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "LEAVE"));
-		leaveButton = new Button(container, (container.getWidth() - PADDING * 4) / 4, REGULAR_BUTTON_HEIGHT, tempLabel);
+		leaveButton = new Button(container, 200, 40, tempLabel);
 		leaveButton.addListener(new ButtonListener(-1));
-		mainLayer.add(leaveButton, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, PADDING, -PADDING);
+		mainLayer.add(leaveButton, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 20, -20);
+		backgroundLayer.add(new Panel(container, new Image("resources/graphics/backgrounds/tavern.png")));
 		
 	}
 	
@@ -145,11 +151,15 @@ public class TavernScene extends Scene {
 			if(source.equals(leaveButton)) {
 				GameDirector.sharedSceneListener().sceneDidEnd(TavernScene.this);
 			} else {
-				chosenOne = person[ordinal];
-				modal = new ChoiceModal(container, TavernScene.this, generateDetails(person[ordinal]), 2);
-				modal.setButtonText(modal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
-				modal.setButtonText(modal.getCancelButtonIndex() + 1, ConstantStore.get("GENERAL", "CONFIRM"));
-				showModal(modal);
+				if (party.getPartyMembers().size() == MAX_PARTY_SIZE)
+					showModal(partyFullModal);
+				else {
+					chosenOne = ordinal;
+					modal = new ChoiceModal(container, TavernScene.this, generateDetails(person[ordinal]), 2);
+					modal.setButtonText(modal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
+					modal.setButtonText(modal.getCancelButtonIndex() + 1, ConstantStore.get("GENERAL", "CONFIRM"));
+					showModal(modal);
+				}
 			}
 		}
 	}
@@ -157,8 +167,11 @@ public class TavernScene extends Scene {
 	@Override
 	public void dismissModal(Modal modal, int button) {
 		super.dismissModal(modal, button);
+		if (modal == partyFullModal)
+			return;
 		if (button != modal.getCancelButtonIndex()) {
-			party.addPartyMember(chosenOne);
+			party.addPartyMember(person[chosenOne]);
+			personButton[chosenOne].setDisabled(true);
 		}
 	}
 }
