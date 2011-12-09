@@ -105,7 +105,7 @@ public class HuntingGroundsComponent extends Component {
 		
 		if (direction != 4){
 			double moveMod = 1;
-			System.out.println("before x:" + edgeX+ "|y:" + edgeY + " | toonX : " + toonX + " toonY : " + toonY);
+			//System.out.println("before x:" + edgeX+ "|y:" + edgeY + " | toonX : " + toonX + " toonY : " + toonY);
 			
 			//System.out.println(" hunt panel's location " + this.getX() + " | " + this.getY() + ": accurate toon X : " + toonAbsX + " Y : " + toonAbsY + " toon's direction : " + direction);
 		
@@ -122,7 +122,8 @@ public class HuntingGroundsComponent extends Component {
 				edgeX += toonWidth/2;			
 			}
 			
-			System.out.println("\tx:" + edgeX+ "|y:" + edgeY + " | toonX : " + toonX + " toonY : " + toonY);
+			
+			//System.out.println("\tx:" + edgeX+ "|y:" + edgeY + " | toonX : " + toonX + " toonY : " + toonY);
 			//pass appropriate edge to test to find movement modifier based on terrain
 			moveMod = terrainCollision(edgeX, edgeY);
 			if (moveMod < 0){
@@ -135,7 +136,7 @@ public class HuntingGroundsComponent extends Component {
 		}//if not 4	
 		else {
 			double tmp = terrainCollision(edgeX, edgeY);
-			if (tmp < 1){
+			if (tmp <= 0){
 				this.setLocation(this.getX() + 1, this.getY() + 1);
 			}
 		}

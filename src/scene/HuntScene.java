@@ -285,7 +285,7 @@ public class HuntScene extends Scene {
 			//move map down
 			moveMapX = 0;
 			moveMapY = delta;			
-			direction = 2;
+			direction = 1;
 
 		} else if (moveRight(container)){
 			hunterSprite.setDirectionFacing(Direction.RIGHT);

@@ -507,36 +507,6 @@ public class HuntingMap implements Serializable {
 				
 				//Choose a random of the type possible, and make it the right type
 				if(possibleList.size() != 0) {
-					/*List<Tiles> oneList = new ArrayList<Tiles>();
-					List<Tiles> twoList = new ArrayList<Tiles>();
-					List<Tiles> threeList = new ArrayList<Tiles>();
-					List<Tiles> fourList = new ArrayList<Tiles>();
-					
-					for(Tiles tile : possibleList) {
-						if (tile.getFilled().size() == 1) {
-							oneList.add(tile);
-						}
-						if (tile.getFilled().size() == 2) {
-							twoList.add(tile);
-						}
-						if (tile.getFilled().size() == 3) {
-							threeList.add(tile);
-						}
-						if (tile.getFilled().size() == 4) {
-							fourList.add(tile);
-						}
-					}
-					if (!oneList.isEmpty()) {
-						tiles[row][col] = oneList.get(random.nextInt(oneList.size()));
-					} else if (!twoList.isEmpty()){
-						tiles[row][col] = twoList.get(random.nextInt(twoList.size()));
-					} else if (!twoList.isEmpty()){
-						tiles[row][col] = threeList.get(random.nextInt(threeList.size()));
-					} else if (!twoList.isEmpty()){
-						tiles[row][col] = fourList.get(random.nextInt(fourList.size()));
-					} else if (possibleList.size() == 1 && possibleList.contains(Tiles.EMPTY)) {
-						tiles[row][col] = Tiles.EMPTY;
-					}*/
 					if(possibleList.contains(Tiles.EMPTY) && !isFirst) {
 						tiles[row][col] = Tiles.EMPTY;
 						types[row][col] = TYPE_EMPTY;
