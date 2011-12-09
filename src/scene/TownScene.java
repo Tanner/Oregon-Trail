@@ -2,8 +2,11 @@ package scene;
 
 //import java.util.Random;
 
+import java.util.Random;
+
 import model.Party;
 import model.Person;
+import model.Skill;
 import model.worldMap.LocationNode;
 import model.worldMap.TrailEdge;
 
@@ -60,7 +63,6 @@ public class TownScene extends Scene {
 
 	private Sprite store;
 	private Sprite tavern;
-	
 	/**
 	 * Builds town scene
 	 * @param party where/who the action is
@@ -79,11 +81,21 @@ public class TownScene extends Scene {
 				trails[i] = temp.getRoughLength() + " and to the " + temp.getRoughDirection() + ", " + temp.getDangerRating()  +  " \n" + temp.getName();
 			}
 			
-			trailChoiceModal = new ComponentModal<SegmentedControl>(container,
+			if(party.getSkills().contains(Skill.TRACKING)) {
+				trailChoiceModal = new ComponentModal<SegmentedControl>(container,
 					this,
 					ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
-					2,
+					3,
 					new SegmentedControl(container, 700, 300, 3, 1, 20, true, 1, trails));
+				trailChoiceModal.setButtonText(trailChoiceModal.getCancelButtonIndex() + 1, ConstantStore.get("TOWN_SCENE", "TRAILBLAZE"));
+			} else {
+				trailChoiceModal = new ComponentModal<SegmentedControl>(container,
+						this,
+						ConstantStore.get("TOWN_SCENE", "TRAIL_CHOICE"),
+						2,
+						new SegmentedControl(container, 700, 300, 3, 1, 20, true, 1, trails));
+			}
+			
 			trailChoiceModal.setButtonText(trailChoiceModal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
 		};
 	}
@@ -227,11 +239,23 @@ public class TownScene extends Scene {
 	public void dismissModal(Modal modal, int button) {
 		super.dismissModal(modal, button);
 		
-		if (modal == trailChoiceModal) {
-			if (button != modal.getCancelButtonIndex()) {
+		if (modal == trailChoiceModal && button != modal.getCancelButtonIndex()) {
+			if (button == modal.getCancelButtonIndex() + 1) {
+				if(party.getSkills().contains(Skill.TRACKING)) {
+					TrailEdge trail = GameDirector.sharedSceneListener().trailBlaze();
+					if (trail != null) {
+						party.setTrail(trail);
+					} else {
+						party.setTrail(location.getOutBoundTrailByIndex(new Random().nextInt(location.getOutboundTrails().size())));
+					}
+				} else {
+					party.setTrail(party.getLocation().getOutBoundTrailByIndex(trailChoiceModal.getComponent().getSelection()[0]));
+				}
+			} else  if (button == modal.getCancelButtonIndex() + 2) {
 				party.setTrail(party.getLocation().getOutBoundTrailByIndex(trailChoiceModal.getComponent().getSelection()[0]));
-				GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, TownScene.this, true);
 			}
+			
+			GameDirector.sharedSceneListener().requestScene(SceneID.TRAIL, TownScene.this, true);
 		}
 	}
 	

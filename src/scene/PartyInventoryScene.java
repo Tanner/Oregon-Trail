@@ -447,7 +447,11 @@ public class PartyInventoryScene extends Scene {
 					storeInventory.addItemsToInventory(items);
 					emptyBin();
 					
-					party.setMoney(party.getMoney() + items.size() * items.get(0).getCost());
+					if(items.get(0).getType() == ItemType.TRADEGOODS) {
+						party.setMoney(party.getMoney() + items.size() * items.get(0).getCost() * party.getLocation().getRank());
+					} else {
+						party.setMoney(party.getMoney() + items.size() * items.get(0).getCost());
+					}
 				} else if (extraButtonFunctionality == EXTRA_BUTTON_FUNC.DROP) {
 					if (getBinSize() <= 0) {
 						// Nothing in the bin, so we can't drop

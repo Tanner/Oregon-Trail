@@ -23,6 +23,7 @@ import scene.encounter.*;
 import scene.test.*;
 
 import model.*;
+import model.worldMap.TrailEdge;
 
 /**
  * Directs the logical functionality of the game. Sets everything in motion.
@@ -145,6 +146,8 @@ public class GameDirector implements SceneListener {
 	public void requestScene(SceneID id, Scene lastScene, boolean popLastScene) {
 		Transition outTransition = null;
 		Transition inTransition = null;
+		
+		SoundStore.get().stopSound("Steps");
 		
 		if (game.getPlayer().getParty() != null && game.getPlayer().getParty().getLocation() != null) {
 			worldMap.setCurrLocationNode(game.getPlayer().getParty().getLocation());
@@ -336,5 +339,13 @@ public class GameDirector implements SceneListener {
 		Logger.log("-----------------NEW GAME STARTED-----------------", Logger.Level.INFO);
 		GameDirector gameDirector = new GameDirector();
 		gameDirector.start();
+	}
+
+	@Override
+	public TrailEdge trailBlaze() {
+		if (worldMap.getNextRankOrphanLocationList().size() != 0) {
+			return worldMap.makePCInboundTrail(worldMap.getNextRankOrphanLocation());
+		}
+		return null;
 	}
 }
