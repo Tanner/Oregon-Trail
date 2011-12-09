@@ -161,7 +161,7 @@ public final class ConstantStore {
 		townScene.put("TRAIL_CHOICE", "Where do you wish to travel to next?");
 		townScene.put("TRAIL", "Trail");
 		townScene.put("ENTER_STORE_INSTRUCTION", "Press Enter to Go Inside Store");
-		townScene.put("ENTER_TAVERN_INSTRUCTION", "Press Enter to Go Inside Tavern");
+		townScene.put("ENTER_TAVERN_INSTRUCTION", "Press Enter to Go Inside Saloon");
 		townScene.put("CONTINUE_ON_TRAIL", "Continue on Trail");
 		literalMap.put("TOWN_SCENE", townScene);
 		// Hunt Scene
