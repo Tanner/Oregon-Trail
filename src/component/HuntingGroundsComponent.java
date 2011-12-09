@@ -127,7 +127,7 @@ public class HuntingGroundsComponent extends Component {
 			//pass appropriate edge to test to find movement modifier based on terrain
 			moveMod = terrainCollision(edgeX, edgeY);
 			if (moveMod < 0){
-				this.setLocation((int)(-1 * ((this.huntLayout.MAP_WIDTH) /2) + mainLayerWidth/2), (int)(-1 * (this.huntLayout.MAP_HEIGHT) + mainLayerHeight/2));
+				this.setLocation((int)((-1 * this.huntLayout.MAP_WIDTH)/2 + mainLayerWidth/2), (int)((-1 * this.huntLayout.MAP_HEIGHT)/2 + mainLayerHeight/2));
 			} else {
 				moveMapX *= moveMod;
 				moveMapY *= moveMod;

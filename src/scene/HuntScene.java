@@ -421,6 +421,8 @@ public class HuntScene extends Scene {
 			if (preyCow.get(cow).inHitBox(shotX, shotY)) {
 				int shotResult = preyCow.get(cow).checkDead();
 				aHit = true;
+				SoundStore.get().playSound("PigSqueal",(float).3);
+			
 				if (shotResult != 0){ //a kill! - get rid of cow, add meat of old cow to total
 					preyCow.get(cow).getPreySprite().setVisible(false);
 					preyCow.get(cow).getPreySprite().remove(preyCow.get(cow).getPreySprite());
@@ -440,6 +442,7 @@ public class HuntScene extends Scene {
 			if (preyPig.get(pig).inHitBox(shotX, shotY)) {
 				int shotResult = preyPig.get(pig).checkDead();
 				aHit = true;
+				SoundStore.get().playSound("PigSqueal",(float).3);
 				if (shotResult != 0){ //a kill! - get rid of cow, add meat of old cow to total
 					preyPig.get(pig).getPreySprite().setVisible(false);
 					preyPig.get(pig).getPreySprite().remove(preyPig.get(pig).getPreySprite());

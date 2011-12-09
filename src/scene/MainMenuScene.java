@@ -70,7 +70,7 @@ public class MainMenuScene extends Scene {
 	@Override
 	public void prepareToEnter() {
 		super.prepareToEnter();
-		File file = new File("resources/serialized/");
+		File file = new File(ConstantStore.PATH_SERIAL);
 		if(!file.exists() || !hasLoadableFiles(file)) {
 			loadEnabled = false;
 		} else {

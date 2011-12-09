@@ -197,7 +197,6 @@ public class ImageStore {
 		}
 
 		
-		
 		//trail people
 		IMAGES.put("TRAPPER_LEFT", new Image(ConstantStore.PATH_PEOPLE + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("TRAPPER_RIGHT", new Image(ConstantStore.PATH_PEOPLE + "hunterRightFaceSide1.png", false, Image.FILTER_NEAREST));
@@ -208,6 +207,8 @@ public class ImageStore {
 		
 		IMAGES.put("STORE_BUILDING", new Image(ConstantStore.PATH_BUILDINGS + "general-store.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("SALOON_BUILDING", new Image(ConstantStore.PATH_BUILDINGS + "tavern.png", false, Image.FILTER_NEAREST));
+		
+		IMAGES.put("SALOON_BACKGROUND", new Image(ConstantStore.PATH_BKGRND + "tavernBkg.png", false, Image.FILTER_NEAREST));
 	}
 	
 	/**
