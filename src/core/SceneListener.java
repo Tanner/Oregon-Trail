@@ -5,6 +5,7 @@ package core;
 import component.modal.Modal;
 
 import model.Game;
+import model.worldMap.TrailEdge;
 import core.ConstantStore;
 import scene.Scene;
 import scene.SceneID;
@@ -67,4 +68,6 @@ public interface SceneListener {
 	 * @param map The 
 	 */
 	public void updateMap(ConstantStore.StateIdx state);
+
+	public TrailEdge trailBlaze();
 }

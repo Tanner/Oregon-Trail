@@ -311,28 +311,7 @@ public class StoreScene extends Scene {
 				failedBuyModal = new MessageModal(container, this, errorText);
 				return -1;
 			}
-		}
-		
-		/*if (currentItem.isAnimal()) {
-			String errorText;
-			if (party.getMoney() < (int)(currentItem.getCost()*itemCount*priceModifier)) {
-				errorText = ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY");
-				failedBuyModal = new MessageModal(container, this, errorText);
-				return -1;
-			} else if ( itemCount + party.getAnimals().size() > 6 ) {
-				errorText = ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_ANIMALS");
-				failedBuyModal = new MessageModal(container, this, errorText);
-				return -1;
-			} else {
-				party.setMoney(party.getMoney() - (int)(currentItem.getCost()*itemCount*priceModifier));
-				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
-				party.buyItemForInventory(inv.removeItemFromInventory(currentItem, itemCount), );
-				updatePartyMoneyLabel();
-				return 1;
-			}
-				
-		}*/
-		
+		}	
 		
 		//The player doesn't have a wagon and is trying to buy one
 		if (currentItem == ItemType.WAGON && party.getVehicle() == null ) {
@@ -340,9 +319,8 @@ public class StoreScene extends Scene {
 				//The player tries to buy too many wagons
 				failedBuyModal = new MessageModal(container, this, ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_WAGON"));
 				return -1;
-			} else if ( party.getMoney() > (int)(currentItem.getCost()*priceModifier)) {
+			} else if ( party.getMoney() >= (int)(currentItem.getCost()*priceModifier)) {
 				//The player is able to buy the wagon
-				
 				party.setVehicle(new Wagon());
 				inv.removeItemFromInventory(currentItem, 1);
 				party.setMoney(party.getMoney() - (int)(ItemType.WAGON.getCost()*priceModifier));
@@ -357,10 +335,10 @@ public class StoreScene extends Scene {
 		} else if (currentBuyers.size() == 0) {
 			//Display modal if the user can not buy the currently selected item
 			String errorText;
-			if ( currentItem.isAnimal() && itemCount + party.getAnimals().size() > 6) {
-				errorText = ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_ANIMALS");
-			} else if (party.getMoney() < itemCount * (int)(currentItem.getCost()*priceModifier)) {
+			if (party.getMoney() < itemCount * (int)(currentItem.getCost()*priceModifier)) {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY");
+			} else if ( currentItem.isAnimal() && itemCount + party.getAnimals().size() > 6) {
+				errorText = ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_ANIMALS");
 			} else {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_CANT_CARRY");
 			}

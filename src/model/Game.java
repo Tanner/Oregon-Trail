@@ -78,6 +78,7 @@ public class Game implements Serializable{
 		//Items that wont show up in starting inventory
 		startItems.remove(ItemType.STRANGEMEAT);
 		startItems.remove(ItemType.SONIC);
+		startItems.remove(ItemType.TRADEGOODS);
 
 		//Now we fill in the stores inventory.
 		int numberOf;
@@ -93,6 +94,11 @@ public class Game implements Serializable{
 			
 			for(int i = 0; i < numberOf; i++) { 
 				storeInventory.addItemToInventory(new Item(itemType));
+			}
+		}
+		if(location.getRank() == 0) {
+			for(int i = 0; i < random.nextInt(50) + 50; i++) {
+				storeInventory.addItemToInventory(new Item(ItemType.TRADEGOODS));
 			}
 		}
 	}
