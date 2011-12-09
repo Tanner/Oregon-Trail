@@ -27,7 +27,10 @@ import core.*;
  */
 public class MapScene extends Scene {
 	public static final SceneID ID = SceneID.MAP;
-
+	
+	private final int PADDING = 20;
+	private final int REGULAR_BUTTON_HEIGHT = 30;
+	
 	private Button returnToCamp;
 
 	private WorldMap worldMap;
@@ -156,7 +159,7 @@ public class MapScene extends Scene {
 		mainLayer.add(playerMap, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT,0,0);
 		
 		//add return to camp button
-		returnToCamp = new Button(container, 240, 60, new Label(container, fieldFont, Color.white, ConstantStore.get("MAP_SCENE", "RETURN_CAMP")));
+		returnToCamp = new Button(container, (container.getWidth() - PADDING * 4) / 4, REGULAR_BUTTON_HEIGHT, new Label(container, fieldFont, Color.white, ConstantStore.get("MAP_SCENE", "RETURN_CAMP")));
 		returnToCamp.addListener(new ButtonListener());
 				
 		mainLayer.add(returnToCamp, mainLayer.getPosition(Positionable.ReferencePoint.BOTTOMLEFT), Positionable.ReferencePoint.BOTTOMLEFT, 20, -20);
