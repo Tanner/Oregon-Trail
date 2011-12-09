@@ -45,6 +45,10 @@ public class ImageStore {
 		IMAGES.put("INVENTORY_ICON", new Image(ConstantStore.PATH_ICONS + "pack.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("TRAIL_ICON", new Image(ConstantStore.PATH_ICONS + "trail.png", false, Image.FILTER_NEAREST));
 		
+		IMAGES.put("HORSE_ICON", new Image(ConstantStore.PATH_ITEMS + "horse.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("MULE_ICON", new Image(ConstantStore.PATH_ITEMS + "mule.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("OX_ICON", new Image(ConstantStore.PATH_ITEMS + "ox.png", false, Image.FILTER_NEAREST));
+		
 		IMAGES.put("MAP_POINTER1", new Image(ConstantStore.PATH_ICONS + "mapPointer1.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("MAP_POINTER2", new Image(ConstantStore.PATH_ICONS + "mapPointer2.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("MAP_POINTER3", new Image(ConstantStore.PATH_ICONS + "mapPointer3.png", false, Image.FILTER_NEAREST));

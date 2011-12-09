@@ -36,6 +36,7 @@ import component.sprite.Sprite;
 import core.ConstantStore;
 import core.FontStore;
 import core.GameDirector;
+import core.ImageStore;
 import core.Logger;
 
 /**
@@ -63,6 +64,15 @@ public class PartyInventoryScene extends Scene {
 	private OwnerInventoryButtons vehicleInventoryButtons;
 	
 	private Label animalsLabel;
+	
+	private Label horseLabel;
+	private Label oxLabel;
+	private Label muleLabel;
+
+	private Sprite horseSprite;
+	private Sprite oxSprite;
+	private Sprite muleSprite;
+
 	
 	private Button closeButton, transferButton, functionButton;
 	private Counter binButton;
@@ -185,11 +195,34 @@ public class PartyInventoryScene extends Scene {
 		mainLayer.add(binButton, mainLayer.getPosition(ReferencePoint.CENTERCENTER), ReferencePoint.BOTTOMCENTER, 0, yOffset);
 		
 		
-		animalsLabel = new Label(container, (int) (binButton.getPosition(ReferencePoint.TOPLEFT).getX() - 2 * PADDING), fieldFont, Color.white, "Animals: " + party.getAnimalsAsString());
+		//animalsLabel = new Label(container, (int) (binButton.getPosition(ReferencePoint.TOPLEFT).getX() - 2 * PADDING), fieldFont, Color.white, "Animals: " + party.getAnimalsAsString());
+		animalsLabel = new Label(container, (int) (binButton.getPosition(ReferencePoint.TOPLEFT).getX() - 2 * PADDING), fieldFont, Color.white, "Animals: ");
 		animalsLabel.setAlignment(Alignment.LEFT);
-		mainLayer.add(animalsLabel, binButton.getPosition(ReferencePoint.CENTERLEFT), ReferencePoint.CENTERRIGHT, -PADDING, 0);
+		mainLayer.add(animalsLabel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.CENTERLEFT, PADDING, -mainLayer.getHeight() + binButton.getY() + binButton.getHeight()/4);
 		
+		int numOfHorses = party.getNumberOfAnimals(ItemType.HORSE);
+		int numOfOxen = party.getNumberOfAnimals(ItemType.OX);
+		int numOfMule = party.getNumberOfAnimals(ItemType.MULE);
 		
+		horseSprite = new Sprite(container, ImageStore.get().getImage("HORSE_ICON").getWidth()*2, ImageStore.get().getImage("HORSE_ICON"));
+		oxSprite = new Sprite(container, ImageStore.get().getImage("OX_ICON").getWidth()*2, ImageStore.get().getImage("OX_ICON"));
+		muleSprite = new Sprite(container, ImageStore.get().getImage("MULE_ICON").getWidth()*2, ImageStore.get().getImage("MULE_ICON"));
+		
+		horseLabel = new Label(container, ImageStore.get().getImage("HORSE_ICON").getWidth()*2, fieldFont, Color.white, ": " + numOfHorses);
+		oxLabel = new Label(container, ImageStore.get().getImage("OX_ICON").getWidth()*2, fieldFont, Color.white, ": " + numOfOxen);
+		muleLabel = new Label(container, ImageStore.get().getImage("MULE_ICON").getWidth()*2, fieldFont, Color.white, ": " + numOfMule);
+		
+		horseLabel.setAlignment(Alignment.LEFT);
+		oxLabel.setAlignment(Alignment.LEFT);
+		muleLabel.setAlignment(Alignment.LEFT);
+		
+		mainLayer.add(horseSprite, animalsLabel.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.TOPLEFT, PADDING/2, 5);
+		mainLayer.add(horseLabel, horseSprite.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, PADDING/2, 0);	
+		mainLayer.add(oxSprite, horseLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, PADDING/2, 0);
+		mainLayer.add(oxLabel, oxSprite.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, PADDING/2, 0);
+		mainLayer.add(muleSprite, oxLabel.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, PADDING/2, 0);
+		mainLayer.add(muleLabel, muleSprite.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, PADDING/2, 0);
+
 		int numberOfBinPockets = playerInventoryButtons.length;
 		numberOfBinPockets += vehicleInventoryButtons != null ? 1 : 0;
 		binInventory = new Inventory[numberOfBinPockets];
