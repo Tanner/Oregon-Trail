@@ -208,6 +208,7 @@ public class ImageStore {
 		
 		IMAGES.put("STORE_BUILDING", new Image(ConstantStore.PATH_BUILDINGS + "general-store.png", false, Image.FILTER_NEAREST));
 		IMAGES.put("SALOON_BUILDING", new Image(ConstantStore.PATH_BUILDINGS + "saloon.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("TAVERN_BUILDING", new Image(ConstantStore.PATH_BUILDINGS + "tavern.png", false, Image.FILTER_NEAREST));
 	}
 	
 	/**

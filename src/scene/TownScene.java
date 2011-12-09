@@ -120,9 +120,10 @@ public class TownScene extends Scene {
 		mainLayer.add(parallaxPanel, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT);
 		
 		store = new Sprite(container, 400, ImageStore.get().getImage("STORE_BUILDING"));
+
 		tavern = new Sprite(container, 400, ImageStore.get().getImage("SALOON_BUILDING"));
-		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 20, 40);
-		mainLayer.add(tavern, store.getPosition(ReferencePoint.CENTERRIGHT), ReferencePoint.CENTERLEFT, 20, 0);
+		mainLayer.add(store, ground.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.BOTTOMLEFT, 20, 50);
+		mainLayer.add(tavern, ground.getPosition(ReferencePoint.TOPRIGHT), ReferencePoint.BOTTOMRIGHT, -20, 50);
 		
 		partyLeaderSprite = new AnimatingSprite(container,
 				96,
@@ -130,9 +131,9 @@ public class TownScene extends Scene {
 				new Animation(new Image[] {ImageStore.get().getImage("HUNTER_RIGHT")}, 250),
 				AnimatingSprite.Direction.RIGHT);
 		mainLayer.add(partyLeaderSprite,
-				new Vector2f(mainLayer.getWidth(), trail.getPosition(ReferencePoint.BOTTOMRIGHT).y),
-				ReferencePoint.BOTTOMRIGHT,
-				-20,
+				new Vector2f(mainLayer.getWidth() / 2, trail.getPosition(ReferencePoint.BOTTOMCENTER).y),
+				ReferencePoint.BOTTOMCENTER,
+				0,
 				-25);
 		
 		adjustSetting();
