@@ -199,7 +199,6 @@ public class ImageStore {
 			//System.out.println("rock1 index : " + imageIndex + " fileName : " + imageName);
 			IMAGES.put(imageIndex, new Image(ConstantStore.PATH_HUNTTERRAIN + imageName, false, Image.FILTER_NEAREST));	
 		}
-
 		
 		//trail people
 		IMAGES.put("TRAPPER_LEFT", new Image(ConstantStore.PATH_PEOPLE + "hunterLeftFaceSide1.png", false, Image.FILTER_NEAREST));
