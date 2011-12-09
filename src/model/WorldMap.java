@@ -456,6 +456,7 @@ public class WorldMap implements Serializable {
 		for (TrailEdge trail : mapHead.getOutboundTrails()){
 			trail.setTerritory(ConstantStore.StateIdx.MISSOURI);			
 		}
+		this.currLocationNode = this.mapHead;
 		this.finalDestination = new LocationNode("Oregon City, Oregon", 0, 0, 0, MAX_RANK, 100, MAX_X, MAX_Y);
 		this.finalDestination.setVisible(true);
 		this.finalDestination.setTerritory(ConstantStore.StateIdx.OREGON);
