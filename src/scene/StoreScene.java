@@ -303,6 +303,9 @@ public class StoreScene extends Scene {
 				Random random = new Random();
 				GameDirector.sharedSceneListener().updateMap(StateIdx.values()[random.nextInt(StateIdx.values().length)]);
 				party.setMoney(party.getMoney() - (int)(currentItem.getCost()*priceModifier));
+				inv.removeItemFromInventory(currentItem, itemCount);
+				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
+				updatePartyMoneyLabel();
 				return 1;
 			} else {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY");

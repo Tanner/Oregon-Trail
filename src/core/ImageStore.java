@@ -210,9 +210,9 @@ public class ImageStore {
 		IMAGES.put("HILLBILLY_RIGHT", new Image(ConstantStore.PATH_PEOPLE + "hillbillyRightFaceSide1.png", false, Image.FILTER_NEAREST));
 		
 		IMAGES.put("STORE_BUILDING", new Image(ConstantStore.PATH_BUILDINGS + "general-store.png", false, Image.FILTER_NEAREST));
-		IMAGES.put("SALOON_BUILDING", new Image(ConstantStore.PATH_BUILDINGS + "tavern.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("SALOON_BUILDING", new Image(ConstantStore.PATH_BUILDINGS + "saloon.png", false, Image.FILTER_NEAREST));
 		
-		//IMAGES.put("SALOON_BACKGROUND", new Image(ConstantStore.PATH_BKGRND + "tavernBkg.png", false, Image.FILTER_NEAREST));
+		IMAGES.put("SALOON_BACKGROUND", new Image(ConstantStore.PATH_BKGRND + "saloonBkg.png", false, Image.FILTER_NEAREST));
 	}
 	
 	/**
