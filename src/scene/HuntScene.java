@@ -386,14 +386,14 @@ public class HuntScene extends Scene {
 		//to account for the bigger panel behind the window
 		int offsetX = huntPanel.getX();
 		int offsetY = huntPanel.getY();
-		shotX += (-1 * huntPanel.getX());
-		shotY += (-1 * huntPanel.getY());
+		shotX += (-1 * offsetX);
+		shotY += (-1 * offsetY);
 		
 		
 		int cow = preyCow.size() - 1;
-		System.out.println("Shot : " + shotX + " | " + shotY + ", huntPanel x : " + offsetX + " | huntPanel y : " + offsetY);
+		//System.out.println("Shot : " + shotX + " | " + shotY + ", huntPanel x : " + offsetX + " | huntPanel y : " + offsetY);
 		while ((!aHit) && (cow >= 0)){
-			System.out.println("cow " + cow + " x/y : " + preyCow.get(cow).getxLocation() + " | "+ preyCow.get(cow).getyLocation()  );
+		//	System.out.println("cow " + cow + " x/y : " + preyCow.get(cow).getxLocation() + " | "+ preyCow.get(cow).getyLocation()  );
 			if (preyCow.get(cow).inHitBox(shotX, shotY)) {
 				int shotResult = preyCow.get(cow).checkDead();
 				aHit = true;
@@ -412,7 +412,7 @@ public class HuntScene extends Scene {
 		
 		int pig = preyPig.size() - 1;
 		while ((!aHit) && (pig >= 0)){
-			System.out.println("pig " + pig + " x/y : " + preyPig.get(pig).getxLocation() + " | "+ preyPig.get(pig).getyLocation()  );
+			//System.out.println("pig " + pig + " x/y : " + preyPig.get(pig).getxLocation() + " | "+ preyPig.get(pig).getyLocation()  );
 			if (preyPig.get(pig).inHitBox(shotX, shotY)) {
 				int shotResult = preyPig.get(pig).checkDead();
 				aHit = true;
