@@ -292,11 +292,11 @@ public final class ConstantStore {
 		itemMap.put("MAP_COST", "200");
 		itemMap.put("MAP_NECESSARY_QUALITY", "50");
 		
-		itemMap.put("TRADEGOODS", "Trade Goods");
+		itemMap.put("TRADEGOODS_NAME", "Trade Goods");
 		itemMap.put("TRADEGOODS_PLURAL_NAME", "Trade Goods");
 		itemMap.put("TRADEGOODS_DESCRIPTION", "Some goods to trade further ahead for a tidy profit");
 		itemMap.put("TRADEGOODS_WEIGHT", "5");
-		itemMap.put("TRADEGOODS_COST", "0");
+		itemMap.put("TRADEGOODS_COST", "100");
 		itemMap.put("TRADEGOODS_NECESSARY_QUALITY", "60");
 		
 		literalMap.put("ITEMS", itemMap);

@@ -81,6 +81,12 @@ public class Game implements Serializable{
 		startItems.remove(ItemType.TRADEGOODS);
 
 		//Now we fill in the stores inventory.
+		if(location.getRank() == 0) {
+			for(int i = 0; i < random.nextInt(50) + 50; i++) {
+				storeInventory.addItemToInventory(new Item(ItemType.TRADEGOODS));
+			}
+		}
+
 		int numberOf;
 		for(ItemType itemType : startItems) {
 			if(itemType.isFood()) {
@@ -96,10 +102,6 @@ public class Game implements Serializable{
 				storeInventory.addItemToInventory(new Item(itemType));
 			}
 		}
-		if(location.getRank() == 0) {
-			for(int i = 0; i < random.nextInt(50) + 50; i++) {
-				storeInventory.addItemToInventory(new Item(ItemType.TRADEGOODS));
-			}
-		}
+		
 	}
 }
