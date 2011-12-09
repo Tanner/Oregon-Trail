@@ -105,7 +105,7 @@ public class SceneSelectorScene extends Scene {
 	private void setUpSaveFiles() {
 
 		List<String> fileList = new ArrayList<String>();
-		File file  = new File("resources/serialized/");
+		File file  = new File(ConstantStore.PATH_SERIAL);
 		if(file.exists()) {
 			for(String fileName : file.list()) {
 				fileList.add(fileName);

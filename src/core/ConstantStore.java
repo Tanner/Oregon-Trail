@@ -287,7 +287,7 @@ public final class ConstantStore {
 		itemMap.put("MAP_PLURAL_NAME", "Scout's Notes");
 		itemMap.put("MAP_DESCRIPTION", "Some scouts notes.  May or may not reveal portions of the map.");
 		itemMap.put("MAP_WEIGHT", "0");
-		itemMap.put("MAP_COST", "0");
+		itemMap.put("MAP_COST", "200");
 		itemMap.put("MAP_NECESSARY_QUALITY", "50");
 		
 		literalMap.put("ITEMS", itemMap);

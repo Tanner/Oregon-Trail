@@ -19,7 +19,7 @@ import core.ImageStore;
 public class PreyPig extends Prey {
 	//pig gives 5 meat
 	private final static int pigMeat = 5;
-	private int direction = 1;
+	private int direction = new Random().nextInt(5);
 	private int timeMovingInCurrentDirection = 0;
 
 	public PreyPig(GameContainer container, StateBasedGame game, Random pigRand, int mapXWidth, int mapYHeight) {
@@ -50,6 +50,8 @@ public class PreyPig extends Prey {
   		
  			this.xLocation = pigRand.nextInt(mapXWidth/4) + mapXWidth/2; //focus location near center of hunt map
  			this.yLocation = pigRand.nextInt(mapYHeight/4) + mapYHeight/2; //focus location near center of hunt map
+ 			
+ 			movePrey(0);
  			
 	}//pig constructor
 	

@@ -16,7 +16,7 @@ public class PreyCow extends Prey {
 	
 		/**how much meat the cow gives*/
 	public final static int cowMeat = 10;
-	private int direction = 1;
+	private int direction = new Random().nextInt(5);
 	private int timeMovingInCurrentDirection = 0;
 	
 	public PreyCow(GameContainer container, StateBasedGame game, Random cowRand, int mapXWidth, int mapYHeight){
@@ -48,6 +48,7 @@ public class PreyCow extends Prey {
 		this.xLocation = cowRand.nextInt(mapXWidth/4) + mapXWidth/2; //focus location near center of hunt map
 		this.yLocation = cowRand.nextInt(mapYHeight/4) + mapYHeight/2; //focus location near center of hunt map
 		
+		movePrey(0);
 	}//prey cow constructor
 
 
