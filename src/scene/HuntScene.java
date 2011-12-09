@@ -56,7 +56,7 @@ public class HuntScene extends Scene {
 	public static final SceneID ID = SceneID.HUNT;
 	
 	/**maximum number of any particular prey creature in the hunt scene*/
-	private final int MAXPREY = 10;
+	private final int MAXPREY = 4;
 	/**the hud for this scene to hold important information and give access to camp and inventory*/
 	private HuntHUD hud;
 	/**a toggle-like int that will help manage a busy scene by alternating updates between mobs and player*/
@@ -337,9 +337,11 @@ public class HuntScene extends Scene {
 		//in opposite direction to facing of toon - if player moves left, map moves to right.
 		//positive x moves map from left to right, positive y moves map down
 		
-		this.updatePlayer(container, game, delta);
+		if(moveCounter % 3 == 0) {
+			this.updatePlayer(container, game, delta);
+		}
 		double moveMod = 0;
-		if (moveCounter % 10 == 0){
+		if (moveCounter % 5 == 0){
 			for(PreyCow cow : this.preyCow){
 				//System.out.println(pig.getxLocation() + " " + pig.getyLocation());
 				int direction = cow.getDirection();
@@ -353,31 +355,27 @@ public class HuntScene extends Scene {
 					moveMod = huntPanel.terrainCollision(cow.getxLocation() + cow.getPreySprite().getWidth()/2, cow.getyLocation() + cow.getPreySprite().getHeight());
 				}
 				if (moveMod != -1) {
-					cow.movePrey((int)(delta * moveMod) / 10);
+					cow.movePrey((int)(delta * moveMod) / 2);
 					cow.getPreySprite().update(delta);
 				}
 			}
-			this.toggleCount = 1;
-		} else {
-			//for(PreyPig pig : this.preyPig){
-			PreyPig pig = preyPig.get(0);
+			for(PreyPig pig : this.preyPig){
 			//System.out.println(pig.getxLocation() + " " + pig.getyLocation());
-			int direction = pig.getDirection();
-			if(direction == 1) {
-				moveMod = huntPanel.terrainCollision(pig.getxLocation(), pig.getyLocation() + pig.getyLocation()/2);
-			} else if(direction == 2) {
-				moveMod = huntPanel.terrainCollision(pig.getxLocation() + pig.getPreySprite().getWidth()/2, pig.getyLocation());
-			} else if(direction == 3) {
-				moveMod = huntPanel.terrainCollision(pig.getxLocation() + pig.getPreySprite().getWidth(), pig.getyLocation() + pig.getPreySprite().getHeight()/2);
-			} else if(direction == 4) {
-				moveMod = huntPanel.terrainCollision(pig.getxLocation() + pig.getPreySprite().getWidth()/2, pig.getyLocation() + pig.getPreySprite().getHeight());
+				int direction = pig.getDirection();
+				if(direction == 1) {
+					moveMod = huntPanel.terrainCollision(pig.getxLocation(), pig.getyLocation() + pig.getyLocation()/2);
+				} else if(direction == 2) {
+					moveMod = huntPanel.terrainCollision(pig.getxLocation() + pig.getPreySprite().getWidth()/2, pig.getyLocation());
+				} else if(direction == 3) {
+					moveMod = huntPanel.terrainCollision(pig.getxLocation() + pig.getPreySprite().getWidth(), pig.getyLocation() + pig.getPreySprite().getHeight()/2);
+				} else if(direction == 4) {
+					moveMod = huntPanel.terrainCollision(pig.getxLocation() + pig.getPreySprite().getWidth()/2, pig.getyLocation() + pig.getPreySprite().getHeight());
+				}
+				if (moveMod != -1) {
+					pig.movePrey((int)(delta * moveMod) / 2);
+					pig.getPreySprite().update(delta);
+				} 
 			}
-			if (moveMod != -1) {
-				pig.movePrey((int)(delta * moveMod) / 10);
-				pig.getPreySprite().update(delta);
-			}
-				
-			this.toggleCount = 0;
 		}
 		mainLayer.update(delta);
 		updateHUD();
@@ -420,7 +418,6 @@ public class HuntScene extends Scene {
 		int cow = preyCow.size() - 1;
 		//System.out.println("Shot : " + shotX + " | " + shotY + ", huntPanel x : " + offsetX + " | huntPanel y : " + offsetY);
 		while ((!aHit) && (cow >= 0)){
-		//	System.out.println("cow " + cow + " x/y : " + preyCow.get(cow).getxLocation() + " | "+ preyCow.get(cow).getyLocation()  );
 			if (preyCow.get(cow).inHitBox(shotX, shotY)) {
 				int shotResult = preyCow.get(cow).checkDead();
 				aHit = true;

@@ -104,7 +104,7 @@ public class HuntingMap implements Serializable {
 		this.huntMapRand = new Random();
 		huntingGroundsMap = new TerrainObject[this.mapXMax][this.mapYMax];
 		this.generateMap();			
-		System.out.println(huntingGroundsMap.toString());
+		//System.out.println(huntingGroundsMap.toString());
 	}//constructor
 	
 	/**
@@ -520,7 +520,7 @@ public class HuntingMap implements Serializable {
 
 					types[row][col] = TYPE_EMPTY;
 					
-					System.out.println(row + " " + col);
+					//System.out.println(row + " " + col);
 				}
 //				System.out.println(tiles[row][col] + "\n");
 //				System.out.println(this.toString());
