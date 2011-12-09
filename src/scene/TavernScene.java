@@ -6,10 +6,7 @@ import java.util.Random;
 
 import model.Party;
 import model.Person;
-import model.Profession;
-import model.Skill;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -23,7 +20,6 @@ import component.Button;
 import component.Label;
 import component.Panel;
 import component.Positionable;
-import component.SegmentedControl;
 import component.Positionable.ReferencePoint;
 import component.modal.ChoiceModal;
 import component.modal.MessageModal;
@@ -34,11 +30,15 @@ import core.FontStore;
 import core.GameDirector;
 import core.ImageStore;
 
+/**
+ * A scene to recruit new party members
+ */
 public class TavernScene extends Scene {
 	public static final SceneID ID = SceneID.TAVERN;
 	
 	private final int PADDING = 20;
-	private final int REGULAR_BUTTON_HEIGHT = 30;
+	private final int BUTTON_HEIGHT = 40;
+	private final int BUTTON_WIDTH = 200;
 	
 	private final int MAX_PARTY_SIZE = 4;
 	
@@ -58,6 +58,7 @@ public class TavernScene extends Scene {
 		person = new Person[MAX_PARTY_SIZE];
 		personButton = new Button[MAX_PARTY_SIZE];
 		
+		//Create some names for new party members
 		maleNames.add("Alfred");
 		maleNames.add("Bob");
 		femaleNames.add("Carlotta");
@@ -77,10 +78,15 @@ public class TavernScene extends Scene {
 				person[i].setIsMale(false);
 			}
 		}
+		
 		this.party = party;
 	}
 	
 
+	/**
+	 * Produces a random female or male name.
+	 * @return A random first name
+	 */
 	private String randomPersonName() {
 		Random random = new Random();
 		String name;
@@ -103,7 +109,7 @@ public class TavernScene extends Scene {
 		partyFullModal = new MessageModal(container, this, "Your party is full, so you can't recruit any more members!");
 		
 		for (int i = 0; i < person.length; i++) {
-			personButton[i] = new Button(container, 200, 40, new Label(container, 300, fieldFont, Color.white, person[i].getName()));
+			personButton[i] = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, new Label(container, 300, fieldFont, Color.white, person[i].getName()));
 			mainLayer.add(personButton[i], mainLayer.getPosition(ReferencePoint.BOTTOMCENTER), Positionable.ReferencePoint.BOTTOMCENTER, (220)*(i - 2) + 110, -100);
 			Image icon = person[i].isMale() ? ImageStore.get().getImage("HILLBILLY_RIGHT") : ImageStore.get().getImage("MAIDEN_RIGHT");
 			mainLayer.add(new Sprite(container, 48, icon)
@@ -112,14 +118,19 @@ public class TavernScene extends Scene {
 		}
 		
 		tempLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "LEAVE"));
-		leaveButton = new Button(container, 200, 40, tempLabel);
+		leaveButton = new Button(container, BUTTON_WIDTH, BUTTON_HEIGHT, tempLabel);
 		leaveButton.addListener(new ButtonListener(-1));
-		mainLayer.add(leaveButton, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 20, -20);
+		mainLayer.add(leaveButton, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, PADDING, -PADDING);
 
 		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("SALOON_BACKGROUND")));
 		
 	}
 	
+	/**
+	 * Generate a detailed message describing a person to popup in a modal.
+	 * @param person The person to generate a String from
+	 * @return A String representation of a person's details
+	 */
 	public String generateDetails(Person person) {
 		StringBuilder sb = new StringBuilder();
 		String skills = person.getSkillsAsString();

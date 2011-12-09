@@ -199,22 +199,19 @@ public class Party implements Serializable {
 		final List<Inventoried> ableList = new ArrayList<Inventoried>();
 		
 		if (itemType.getCost() * numberOf > money ||
-			itemType.isAnimal() && animals.size() + numberOf > MAX_ANIMALS ) {
+			(itemType.isAnimal() && animals.size() + numberOf > MAX_ANIMALS ) ) {
 			return ableList;
 		}
 		
-		if (itemType.isAnimal()) {
-			ableList.add(vehicle);
-		} else {
-			for (Person person : members) {
-				if (person.canGetItem(itemType, numberOf)) {
-					ableList.add(person);
-				}
-			}
-			if (vehicle != null && vehicle.canGetItem(itemType, numberOf)) {
-				ableList.add(vehicle);
+		for (Person person : members) {
+			if (person.canGetItem(itemType, numberOf)) {
+				ableList.add(person);
 			}
 		}
+		if (vehicle != null && vehicle.canGetItem(itemType, numberOf)) {
+			ableList.add(vehicle);
+		}
+		
 		return ableList;
 	}
 

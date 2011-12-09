@@ -294,9 +294,8 @@ public class StoreScene extends Scene {
 	private int makePurchase() {
 		int itemCount = storeInventory[getButtonIndex(currentItem)].getMax() - storeInventory[getButtonIndex(currentItem)].getCount();
 		List<Inventoried> currentBuyers = party.canGetItem(currentItem, itemCount);
-		System.out.println(currentBuyers);
 		
-		//The player is buying a map
+		//The player is buying a map or an animal
 		if(currentItem == ItemType.MAP) {
 			String errorText;
 			if(party.getMoney() > (int)(currentItem.getCost()*priceModifier)) {
@@ -313,6 +312,26 @@ public class StoreScene extends Scene {
 				return -1;
 			}
 		}
+		
+		/*if (currentItem.isAnimal()) {
+			String errorText;
+			if (party.getMoney() < (int)(currentItem.getCost()*itemCount*priceModifier)) {
+				errorText = ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY");
+				failedBuyModal = new MessageModal(container, this, errorText);
+				return -1;
+			} else if ( itemCount + party.getAnimals().size() > 6 ) {
+				errorText = ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_ANIMALS");
+				failedBuyModal = new MessageModal(container, this, errorText);
+				return -1;
+			} else {
+				party.setMoney(party.getMoney() - (int)(currentItem.getCost()*itemCount*priceModifier));
+				storeInventory[getButtonIndex(currentItem)].setMax(inv.getNumberOf(currentItem));
+				party.buyItemForInventory(inv.removeItemFromInventory(currentItem, itemCount), );
+				updatePartyMoneyLabel();
+				return 1;
+			}
+				
+		}*/
 		
 		
 		//The player doesn't have a wagon and is trying to buy one
@@ -338,7 +357,7 @@ public class StoreScene extends Scene {
 		} else if (currentBuyers.size() == 0) {
 			//Display modal if the user can not buy the currently selected item
 			String errorText;
-			if (currentItem.isAnimal() && party.getAnimals().size() + itemCount > 6) {
+			if ( currentItem.isAnimal() && itemCount + party.getAnimals().size() > 6) {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_TOO_MANY_ANIMALS");
 			} else if (party.getMoney() < itemCount * (int)(currentItem.getCost()*priceModifier)) {
 				errorText = ConstantStore.get("STORE_SCENE", "ERR_NOT_ENOUGH_MONEY");
@@ -439,7 +458,6 @@ public class StoreScene extends Scene {
 	 */
 	private class ButtonListener implements ComponentListener {
 		public void componentActivated(AbstractComponent source) {
-			System.out.println(party.getAnimals());
 			if (source == cancelButton) {
 				GameDirector.sharedSceneListener().sceneDidEnd(StoreScene.this);
 			} else if (source == inventoryButton) {
