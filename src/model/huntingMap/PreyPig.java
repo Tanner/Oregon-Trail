@@ -55,11 +55,6 @@ public class PreyPig extends Prey {
 	/**
 	 * will determine where the pig will move to next
 	 */
-	@Override
-	public void movePrey() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	
 }//pig class

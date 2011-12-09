@@ -56,6 +56,10 @@ public class Sprite extends Component {
 		image.setCenterOfRotation(getWidth() / 2, getHeight() / 2);
 	}
 	
+	public Image getImage(){
+		return this.image;
+	}
+	
 	@Override
 	public String toString() {
 		return image.getResourceReference();

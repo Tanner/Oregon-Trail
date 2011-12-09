@@ -49,14 +49,5 @@ public class PreyCow extends Prey {
 	}//prey cow constructor
 
 
-	/**
-	 * will determine where the cow is going to move to next
-	 */
-	@Override
-	public void movePrey() {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }

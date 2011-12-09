@@ -2,7 +2,6 @@ package scene;
 
 //import java.util.Map;
 
-import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -57,7 +56,7 @@ public class HuntScene extends Scene {
 	public static final SceneID ID = SceneID.HUNT;
 	
 	/**maximum number of any particular prey creature in the hunt scene*/
-	private final int MAXPREY = 20;
+	private final int MAXPREY = 10;
 	/**the hud for this scene to hold important information and give access to camp and inventory*/
 	private HuntHUD hud;
 	/**a toggle-like int that will help manage a busy scene by alternating updates between mobs and player*/
@@ -92,8 +91,12 @@ public class HuntScene extends Scene {
 	private ArrayList<PreyPig> preyPig;
 	/**the panel that holds the graphical objects*/
 	private HuntingGroundsComponent huntPanel;
-
-	
+	/**the background type of this scene based on environment*/
+	private ConstantStore.bckGroundType backgroundType;
+	/**the background image of this scene*/
+	private Image background;
+	/**a counter to determine actions like moving the hunter and the prey*/
+	private int moveCounter;
 	
 	/**
 	 * Constructs a {@code HuntScene} with a {@code Person} who will be the hunter
@@ -110,6 +113,8 @@ public class HuntScene extends Scene {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		toggleCount = 0;
+		//will be incremented every update, reset to 0 at certain size
+		moveCounter = 0;
 		huntSceneRand = new Random();
 		super.init(container, game);
 		SoundStore.get().stopAllSound();
@@ -123,7 +128,7 @@ public class HuntScene extends Scene {
 		Image retImage = ImageStore.get().IMAGES.get("HUNT_RETICLE");
 		reticle = new Sprite(container, retImage.getWidth()*2, retImage.getHeight()*2, retImage);
 		
-		//container.setMouseCursor(retImage, retImage.getWidth()/2, retImage.getHeight()/2);
+		//container.setMouseCursor(retImage, retImage.getWidth()*2, retImage.getHeight()*2);
 		updateHUD();
 		//hud.setNotification(location.getName());
 		super.showHUD(hud);			
@@ -139,10 +144,11 @@ public class HuntScene extends Scene {
 		double [] dblArgs = {mapWidth, mapHeight, worldMapX, worldMapY};
 		int [] intArgs = {terrainChance, rockChance};
 			
- 		HuntingMap huntLayout = new HuntingMap(container, dblArgs, intArgs, ConstantStore.Environments.SNOWY_FOREST);
+		//HuntingMap huntLayout = new HuntingMap(container, dblArgs, intArgs, ConstantStore.Environments.SNOWY_FOREST);
+		HuntingMap huntLayout = new HuntingMap(container, dblArgs, intArgs, ConstantStore.Environments.SNOWY_FOREST);
 
 
- 		huntPanel = new HuntingGroundsComponent(container, (int)mapWidth, (int)mapHeight, huntLayout);
+ 		huntPanel = new HuntingGroundsComponent(container, (int)mapWidth, (int)mapHeight, huntLayout, container.getWidth(), container.getHeight());
  
  		hunterSprite = new HunterAnimatingSprite(container,
 			//	48,
@@ -183,8 +189,8 @@ public class HuntScene extends Scene {
 
  		}
  		huntPanel.displayTerrain(container, huntLayout);
- 		mainLayer.add((Component)huntPanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int)(-1 * mapWidth/2), (int) (-1 * mapHeight/2));
-
+ 		mainLayer.add((Component)huntPanel, mainLayer.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT, (int)((-1 * mapWidth/2) + container.getWidth()/2), (int)((-1 * mapHeight/2) + container.getHeight()/2));
+ 	
  		mainLayer.add(hunterSprite,
 				mainLayer.getPosition(ReferencePoint.CENTERCENTER),
 				ReferencePoint.CENTERCENTER,
@@ -201,7 +207,20 @@ public class HuntScene extends Scene {
 				0);
 		//build background
 		
-		backgroundLayer.add(new Panel(container, ImageStore.get().getImage("HUNT_GRASS")));
+		switch (huntLayout.getBckGround()){
+		case GRASS : 	this.background = ImageStore.get().getImage("HUNT_GRASS");
+						break;
+		case SNOW : 	this.background = ImageStore.get().getImage("HUNT_SNOW");
+						break;
+		case MOUNTAIN : this.background = ImageStore.get().getImage("HUNT_MOUNTAIN");
+						break;
+		case DESERT : 	this.background = ImageStore.get().getImage("HUNT_DESERT");
+						break;
+		default :		this.background = ImageStore.get().getImage("HUNT_GRASS");
+						break;
+	}
+	
+		backgroundLayer.add(new Panel(container,this.background));
 		//System.out.println(huntLayout.getHuntMap());
 	}
 	
@@ -217,6 +236,7 @@ public class HuntScene extends Scene {
 	private void updatePlayer(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		int moveMapX;
 		int moveMapY;
+		int direction = 4; //direction we're moving in
 	
 		if (moveUpperLeft(container)){
 			hunterSprite.setDirectionFacing(Direction.UPPER_LEFT);
@@ -224,6 +244,7 @@ public class HuntScene extends Scene {
 			//move map down and to right
 			moveMapX = (int)(.71 * delta);
 			moveMapY = (int)(.71 * delta);
+			direction = 0;
 			
 
 		} else if (moveLowerLeft(container)){
@@ -232,6 +253,7 @@ public class HuntScene extends Scene {
 			//move map up and to right
 			moveMapX = (int)(.71 * delta);
 			moveMapY = (int)(-.71 * delta);
+			direction = 6;
 
 		} else if (moveUpperRight(container)){
 			hunterSprite.setDirectionFacing(Direction.UPPER_RIGHT);
@@ -239,6 +261,7 @@ public class HuntScene extends Scene {
 			//move map down and to left
 			moveMapX = (int)(-.71 * delta);
 			moveMapY = (int)(.71 * delta);
+			direction = 2;
 
 		} else if (moveLowerRight(container)){
 			hunterSprite.setDirectionFacing(Direction.LOWER_RIGHT);
@@ -246,6 +269,7 @@ public class HuntScene extends Scene {
 			//move map down and to left
 			moveMapX = (int)(-.71 * delta);
 			moveMapY = (int)(-.71 * delta);
+			direction = 8;
 
 		} else if (moveLeft(container)){
 			hunterSprite.setDirectionFacing(Direction.LEFT);
@@ -253,6 +277,7 @@ public class HuntScene extends Scene {
 			//move map to right
 			moveMapX = delta;
 			moveMapY = 0;
+			direction = 3;
 
 		} else if (moveUp(container)){
 			hunterSprite.setDirectionFacing(Direction.BACK);
@@ -260,6 +285,7 @@ public class HuntScene extends Scene {
 			//move map down
 			moveMapX = 0;
 			moveMapY = delta;			
+			direction = 2;
 
 		} else if (moveRight(container)){
 			hunterSprite.setDirectionFacing(Direction.RIGHT);
@@ -267,6 +293,7 @@ public class HuntScene extends Scene {
 			//move map to left
 			moveMapX = -1 * delta;
 			moveMapY = 0;
+			direction = 5;
 
 		} else if (moveDown(container)){
 			hunterSprite.setDirectionFacing(Direction.FRONT);
@@ -274,19 +301,19 @@ public class HuntScene extends Scene {
 			//move map up
 			moveMapX = 0;
 			moveMapY = -1 * delta;
+			direction = 7;
 			
 		} else {
 			hunterSprite.setMoving(false);
 			moveMapX = 0;
 			moveMapY = 0;
-		
+			direction = 4;
 		}
 		
-		this.huntPanel.moveToon(moveMapX, moveMapY, hunterSprite.getX(), hunterSprite.getY());
+		
+		this.huntPanel.moveToon(moveMapX, moveMapY, hunterSprite, direction);
 		//here we would update map with new move data values
-		
 		updateAmmo();
-		
 		hunterSprite.update(delta);
 	}//update player method
 	
@@ -311,7 +338,7 @@ public class HuntScene extends Scene {
 		//positive x moves map from left to right, positive y moves map down
 		
 		//alternate between the cows and the pigs for updating
-		if (this.toggleCount == 0){
+/*		if (moveCounter % 20 == 0){
 			for(PreyCow cow : this.preyCow){
 				
 			}
@@ -322,10 +349,13 @@ public class HuntScene extends Scene {
 			}			
 			this.toggleCount = 0;
 		}
+	*/	
 		this.updatePlayer(container, game, delta);
 		mainLayer.update(delta);
 		updateHUD();
-
+		//clear moveCounter before it gets too big
+		moveCounter = (moveCounter > (Integer.MAX_VALUE/2)) ?  (0) : (moveCounter + 1); 
+			
 	}
 
 	/**
@@ -343,8 +373,6 @@ public class HuntScene extends Scene {
 		}
 		//END AMMO DECREASE
 	}
-	
-	
 	
 	/**
 	 * determines whether a shot is colliding with anything - returns after first hit
@@ -429,13 +457,13 @@ public class HuntScene extends Scene {
 				}
 				
 				determineCollision(mx,my);
-
 				//regardless, decrement ammo
-				decrementAmmo();
 				List<Item> meatList = new ArrayList<Item>();
-				for(int i = 0; i < meat; i++) {
+				for(int i = 0; i < this.meat; i++) {
 					meatList.add(new Item(ItemType.MEAT));
 				}
+				this.meat = 0;
+				decrementAmmo();
 				party.getVehicle().addItemsToInventory(meatList);
 				this.gunCocked = false;
 	

@@ -8,7 +8,7 @@ public abstract class Prey {
 	/**the graphic representing the prey*/
 	protected AnimatingSprite preySprite;
 		
-	/**whether or not the pig should be shown*/
+	/**whether or not the prey should be shown*/
 	protected boolean show;
 	
 	/**how much meat the prey gives*/
@@ -105,7 +105,12 @@ public abstract class Prey {
 		this.yLocation = yLocation;
 	}
 	
-	public abstract void movePrey();
+	public void movePrey(int direction){
+		
+	
+	}
+	
+	
 	/**
 	 * prey has died, needs to leave the map
 	 */
@@ -123,5 +128,5 @@ public abstract class Prey {
 		}
 		return 0;
 	}//checkDead method
-	
+
 }

@@ -256,8 +256,8 @@ public class HuntingMap implements Serializable {
 				tiles[totalRows-1][col] = Tiles.EMPTY;
 				types[totalRows-1][col] = TYPE_EMPTY;
 			}
-			for(int row = (totalRows + 7)/2; row < (totalRows + 27)/2; row++) {
-				for(int col = (totalCols + 12)/2; col < (totalCols + 32)/2; col++) {
+			for(int row = (totalRows-5)/2; row < (totalRows+5)/2; row++) {
+				for(int col = (totalCols-4)/2; col < (totalCols+4)/2; col++) {
 					tiles[row][col] = Tiles.EMPTY;
 					types[row][col] = TYPE_EMPTY;
 				}
@@ -672,7 +672,15 @@ public class HuntingMap implements Serializable {
 		
 		//0 = empty, 1 = stone, 2 = tree
 		/*
-		 * 1 = left, 2 = right, 3 = up, 4 = down, 5 = diagUpLeft, 6 = diagUpRight, 7 = diagDownLeft, 8 = diagDownRight
+		 * switch on direction : 1 = left, 2 = right, 3 = up, 4 = down, 5 = diagUpLeft, 6 = diagUpRight, 7 = diagDownLeft, 8 = diagDownRight
+		 * 
+		 * determines next tile based on whether or not a particular corner of a tile has an overlapping graphic or not
+		 * map out a tile  with upper left 0, upper right 1, lower left 2, lower right 3
+		 * 
+		 * if a tile has a graphic in 0, all adjacent tiles need graphic to match this
+		 * 
+		 * @param direction the direction a particular tile is looking to go
+		 * 
 		 */
 		public List<Tiles> getPossible(int direction) {
 			List<Tiles> returnList = new ArrayList<Tiles>();
@@ -775,99 +783,7 @@ public class HuntingMap implements Serializable {
 					returnList.add(tile);
 				}
 			}
-			/*if (direction == 2) {
-				//BottomHalf
-				if (current.equals(Tiles.BOTRIGHT) || current.equals(Tiles.BOTFULL) || current.equals(Tiles.B) || current.equals(Tiles.F)) {
-					returnList.add(BOTFULL);
-					returnList.add(BOTLEFT);
-					returnList.add(A);
-				//Full
-				} else if (current.equals(Tiles.RIGHTFULL) || current.equals(Tiles.FULL) || current.equals(Tiles.C) || current.equals(Tiles.A)) {
-					returnList.add(FULL);
-					returnList.add(LEFTFULL);
-					returnList.add(B);
-					returnList.add(D);
-				//TopHalf
-				} else if (current.equals(Tiles.TOPRIGHT) || current.equals(Tiles.TOPFULL) || current.equals(Tiles.D) || current.equals(Tiles.E)){
-					returnList.add(TOPFULL);
-					returnList.add(TOPLEFT);
-					returnList.add(C);
-				} else if (current.equals(Tiles.EMPTY)) {
-					returnList.add(RIGHTFULL);
-					returnList.add(TOPRIGHT);
-					returnList.add(BOTRIGHT);
-				} else {
-					returnList.add(EMPTY);
-				}
-				//Left
-			} else if (direction == 1) {
-				if (current.equals(Tiles.BOTLEFT) || current.equals(Tiles.BOTFULL) || current.equals(Tiles.A) || current.equals(Tiles.E)) {
-					returnList.add(BOTRIGHT);
-					returnList.add(BOTFULL);
-					returnList.add(B);
-				} else if (current.equals(Tiles.LEFTFULL) || current.equals(Tiles.FULL) || current.equals(Tiles.B) || current.equals(Tiles.D)) {
-					returnList.add(FULL);
-					returnList.add(A);
-					returnList.add(C);
-					returnList.add(RIGHTFULL);
-				} else if (current.equals(Tiles.TOPLEFT) || current.equals(Tiles.TOPFULL) || current.equals(Tiles.C) || current.equals(Tiles.F)){
-					returnList.add(TOPFULL);
-					returnList.add(TOPRIGHT);
-					returnList.add(D);
-				} else if (current.equals(Tiles.EMPTY)) {
-					returnList.add(TOPLEFT);
-					returnList.add(BOTLEFT);
-					returnList.add(LEFTFULL);
-				} else {
-					returnList.add(EMPTY);
-			}
-				//Up
-			} else if (direction == 3) {
-				if (current.equals(Tiles.TOPRIGHT) || current.equals(Tiles.RIGHTFULL) || current.equals(Tiles.A) || current.equals(Tiles.E)) {
-					returnList.add(RIGHTFULL);
-					returnList.add(BOTRIGHT);
-					returnList.add(C);
-				} else if (current.equals(Tiles.TOPFULL) || current.equals(Tiles.FULL) || current.equals(Tiles.C) || current.equals(Tiles.D)) {
-					returnList.add(FULL);
-					returnList.add(BOTFULL);
-					returnList.add(A);
-					returnList.add(B);
-				} else if (current.equals(Tiles.TOPLEFT) || current.equals(Tiles.LEFTFULL) || current.equals(Tiles.B) || current.equals(Tiles.F)){
-					returnList.add(BOTLEFT);
-					returnList.add(LEFTFULL);
-					returnList.add(D);
-				} else if (current.equals(Tiles.EMPTY)) {
-					returnList.add(TOPFULL);
-					returnList.add(TOPRIGHT);
-					returnList.add(TOPLEFT);
-				} else {
-					returnList.add(EMPTY);
-					
-				}
-				//Down
-			} else if (direction == 4) {
-				if (current.equals(Tiles.BOTRIGHT) || current.equals(Tiles.RIGHTFULL) || current.equals(Tiles.C) || current.equals(Tiles.F)) {
-					returnList.add(RIGHTFULL);
-					returnList.add(TOPRIGHT);
-					returnList.add(A);
-				} else if (current.equals(Tiles.BOTFULL) || current.equals(Tiles.FULL) || current.equals(Tiles.A) || current.equals(Tiles.B)) {
-					returnList.add(FULL);
-					returnList.add(TOPFULL);
-					returnList.add(C);
-					returnList.add(D);
-				} else if (current.equals(Tiles.BOTLEFT) || current.equals(Tiles.LEFTFULL) || current.equals(Tiles.D) || current.equals(Tiles.E)){
-					returnList.add(TOPLEFT);
-					returnList.add(LEFTFULL);
-					returnList.add(B);
-				} else if (current.equals(Tiles.EMPTY)) {
-					returnList.add(BOTLEFT);
-					returnList.add(BOTRIGHT);
-					returnList.add(BOTFULL);
-				} else {
-					returnList.add(EMPTY);
-				}
-			}*/
-			
+						
 			return returnList;
 		}
 		
