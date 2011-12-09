@@ -30,7 +30,7 @@ public class PartyMemberGroup extends GridComponent {
 
 	private static final Component[][] createComponents(GUIContext context, PartyMemberDataSource dataSource) {
 		Animation animation;
-		Random partyRand = new Random();
+		Random partyRand = new Random(dataSource.hashCode());
 		//trapper needs to be in every group to use in hunt scene - leader is always trapper.  if leader is a girl, then she's just hairy
 		if (dataSource.isLeader()){
 			animation = new Animation(new Image[] {
