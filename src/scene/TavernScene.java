@@ -45,20 +45,23 @@ public class TavernScene extends Scene {
 	
 	private Person chosenOne;
 	
-	List<String> names = new ArrayList<String>();	
+	private List<String> maleNames = new ArrayList<String>();
+	private List<String> femaleNames = new ArrayList<String>();
+	private Label tempLabel;
+	private Button leaveButton;
 	
 	public TavernScene(Party party) {
 		person = new Person[MAX_PARTY_SIZE];
 		personButton = new Button[MAX_PARTY_SIZE];
 		
-		names.add("Alfred");
-		names.add("Bob");
-		names.add("Carlotta");
-		names.add("David");
-		names.add("Elizabeth");
-		names.add("Francine");
-		names.add("Geoff");
-		names.add("Henry");
+		maleNames.add("Alfred");
+		maleNames.add("Bob");
+		femaleNames.add("Carlotta");
+		maleNames.add("David");
+		femaleNames.add("Elizabeth");
+		femaleNames.add("Francine");
+		maleNames.add("Geoff");
+		maleNames.add("Henry");
 
 		
 		for (int i = 0; i < person.length; i++) {
@@ -75,8 +78,14 @@ public class TavernScene extends Scene {
 
 	private String randomPersonName() {
 		Random random = new Random();
-		String name = names.get(random.nextInt(names.size()));
-		names.remove(name);
+		String name;
+		if(random.nextBoolean()) {
+			name = maleNames.get(random.nextInt(maleNames.size()));
+			maleNames.remove(name);
+		} else {
+			name = femaleNames.get(random.nextInt(femaleNames.size()));
+			femaleNames.remove(name);
+		}
 		return name;
 	}
 
@@ -94,6 +103,12 @@ public class TavernScene extends Scene {
 			, personButton[i].getPosition(ReferencePoint.TOPCENTER), Positionable.ReferencePoint.BOTTOMCENTER, 0, -10);
 			personButton[i].addListener(new ButtonListener(i));
 		}
+		
+		tempLabel = new Label(container, fieldFont, Color.white, ConstantStore.get("GENERAL", "LEAVE"));
+		leaveButton = new Button(container, (container.getWidth()) / 4, 30, tempLabel);
+		leaveButton.addListener(new ButtonListener(-1));
+		mainLayer.add(leaveButton, mainLayer.getPosition(ReferencePoint.BOTTOMLEFT), ReferencePoint.BOTTOMLEFT, 10, -20);
+		
 	}
 	
 	public String generateDetails(Person person) {
@@ -125,16 +140,15 @@ public class TavernScene extends Scene {
 		}
 		
 		public void componentActivated(AbstractComponent source) {
-			for(int i = 0; i < personButton.length; i++) {
-				if(source.equals(personButton[i])) {
-					chosenOne = person[i];
-					break;
-				}
+			if(source.equals(leaveButton)) {
+				GameDirector.sharedSceneListener().sceneDidEnd(TavernScene.this);
+			} else {
+				chosenOne = person[ordinal];
+				modal = new ChoiceModal(container, TavernScene.this, generateDetails(person[ordinal]), 2);
+				modal.setButtonText(modal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
+				modal.setButtonText(modal.getCancelButtonIndex() + 1, ConstantStore.get("GENERAL", "CONFIRM"));
+				showModal(modal);
 			}
-			modal = new ChoiceModal(container, TavernScene.this, generateDetails(person[ordinal]), 2);
-			modal.setButtonText(modal.getCancelButtonIndex(), ConstantStore.get("GENERAL", "CANCEL"));
-			modal.setButtonText(modal.getCancelButtonIndex() + 1, ConstantStore.get("GENERAL", "CONFIRM"));
-			showModal(modal);
 		}
 	}
 	

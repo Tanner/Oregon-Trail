@@ -104,12 +104,8 @@ public abstract class Prey {
 	public void setyLocation(int yLocation) {
 		this.yLocation = yLocation;
 	}
-	
-	public void movePrey(int direction){
-		
-	
-	}
-	
+
+	public abstract void movePrey(int delta);
 	
 	/**
 	 * prey has died, needs to leave the map
