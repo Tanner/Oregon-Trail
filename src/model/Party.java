@@ -22,7 +22,7 @@ import core.Logger.Level;
 @SuppressWarnings("serial")
 public class Party implements Serializable {
 	
-	private final static int MAX_ANIMALS = 5;
+	private final static int MAX_ANIMALS = 6;
 	
 	private final static int MAX_SPEED = 5;
 	
