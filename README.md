@@ -1,5 +1,8 @@
 # Oregon Trail - CS 2340 Project - Professor Waters, Fall 2011
 
+## Screenshots
+You can view screenshots of the game in the [screenshots](/screenshots) directory.
+
 ## Run with ANT
 1. Install Apache ANT
 2. Open Oregon-Trail directory in a console
