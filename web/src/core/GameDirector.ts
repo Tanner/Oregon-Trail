@@ -40,6 +40,11 @@ export class GameDirector {
 
     this.worldMap = new WorldMap(120);
     this.game = new Game(this.worldMap);
+
+    // Expose requestScene to scenes via window
+    (window as any).__requestScene = (id: SceneID, lastScene: Scene | null, replace: boolean) => {
+      this.requestScene(id, lastScene, replace);
+    };
   }
 
   start(): void {
