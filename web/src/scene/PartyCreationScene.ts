@@ -367,10 +367,12 @@ export class PartyCreationScene extends Scene {
 
     if (this.peopleData[index].profession !== null) {
       const starterSkill = getProfessionStartingSkill(this.peopleData[index].profession!);
-      const skills = Object.values(Skill).filter(s => s !== Skill.NONE) as Exclude<Skill, Skill.NONE>[];
-      const starterIndex = skills.indexOf(starterSkill);
-      if (starterIndex !== -1) {
-        this.skillSegmentedControl.setPermanent([starterIndex]);
+      if (starterSkill !== Skill.NONE) {
+        const skills = Object.values(Skill).filter(s => s !== Skill.NONE) as Exclude<Skill, Skill.NONE>[];
+        const starterIndex = skills.indexOf(starterSkill as Exclude<Skill, Skill.NONE>);
+        if (starterIndex !== -1) {
+          this.skillSegmentedControl.setPermanent([starterIndex]);
+        }
       }
     }
 

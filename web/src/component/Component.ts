@@ -62,7 +62,7 @@ export abstract class Component implements Visible {
   private shouldUpdateComponents: boolean = false;
   private acceptingInput: boolean = true;
   private hasFocusFlag: boolean = false;
-  protected listeners: Array<() => void> = [];
+  protected componentListeners: Array<() => void> = [];
 
   constructor(width: number, height: number) {
     this.origin = { x: 0, y: 0 };
@@ -549,18 +549,18 @@ export abstract class Component implements Visible {
   }
 
   addListener(listener: () => void): void {
-    this.listeners.push(listener);
+    this.componentListeners.push(listener);
   }
 
   removeListener(listener: () => void): void {
-    const index = this.listeners.indexOf(listener);
+    const index = this.componentListeners.indexOf(listener);
     if (index > -1) {
-      this.listeners.splice(index, 1);
+      this.componentListeners.splice(index, 1);
     }
   }
 
   protected notifyListeners(): void {
-    for (const listener of this.listeners) {
+    for (const listener of this.componentListeners) {
       listener();
     }
   }
