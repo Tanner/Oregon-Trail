@@ -2,6 +2,7 @@ import { SceneDirector } from './SceneDirector';
 import { InputManager } from './InputManager';
 import { SplashScene } from '../scene/SplashScene';
 import { LoadingScene } from '../scene/LoadingScene';
+import { MainMenuScene } from '../scene/MainMenuScene';
 
 export class GameDirector {
   private canvas: HTMLCanvasElement;
@@ -32,7 +33,10 @@ export class GameDirector {
     const splashScene = new SplashScene(this.canvas.width, this.canvas.height, () => {
       this.sceneDirector.pushScene(
         new LoadingScene(this.canvas.width, this.canvas.height, () => {
-          console.log('Loading complete - ready for MainMenuScene');
+          this.sceneDirector.pushScene(
+            new MainMenuScene(this.canvas.width, this.canvas.height),
+            true
+          );
         }),
         true
       );
