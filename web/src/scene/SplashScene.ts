@@ -47,8 +47,8 @@ export class SplashScene extends Scene {
     this.backgroundLayer.add(this.blackPanel);
     this.blackPanel.setPosition({ x: canvasWidth / 2, y: 0 }, ReferencePoint.TOPLEFT);
 
-    const nullImage = ImageStore.getImage('NULL');
-    this.nullLogo = new Sprite(nullImage.width, nullImage.height, nullImage);
+    // Create sprites without images - will be loaded in prepareToEnter
+    this.nullLogo = new Sprite(100, 100);
     this.whitePanel.add(
       this.nullLogo,
       this.whitePanel.getPosition(ReferencePoint.CENTERRIGHT),
@@ -58,8 +58,7 @@ export class SplashScene extends Scene {
     );
     this.nullLogo.setVisible(false);
 
-    const voidImage = ImageStore.getImage('VOID');
-    this.voidLogo = new Sprite(voidImage.width, voidImage.height, voidImage);
+    this.voidLogo = new Sprite(100, 100);
     this.blackPanel.add(
       this.voidLogo,
       this.blackPanel.getPosition(ReferencePoint.CENTERLEFT),
@@ -68,6 +67,17 @@ export class SplashScene extends Scene {
       0
     );
     this.voidLogo.setVisible(false);
+  }
+
+  override prepareToEnter(): void {
+    super.prepareToEnter();
+
+    // Load images after ImageStore is initialized
+    const nullImage = ImageStore.getImage('NULL');
+    this.nullLogo.setImage(nullImage);
+
+    const voidImage = ImageStore.getImage('VOID');
+    this.voidLogo.setImage(voidImage);
   }
 
   override update(delta: number): void {
