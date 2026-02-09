@@ -7,6 +7,7 @@ import { PartyCreationScene } from '../scene/PartyCreationScene';
 import { MapScene } from '../scene/MapScene';
 import { GameOverScene } from '../scene/GameOverScene';
 import { VictoryScene } from '../scene/VictoryScene';
+import { OptionsScene } from '../scene/OptionsScene';
 import { Scene } from '../scene/Scene';
 import { SceneID } from '../scene/SceneID';
 import { Game } from '../model/Game';
@@ -128,9 +129,15 @@ export class GameDirector {
         console.log('RiverScene requested but not yet implemented');
         return null;
       case SceneID.OPTIONS:
-        // OptionsScene not yet implemented - placeholder
-        console.log('OptionsScene requested but not yet implemented');
-        return null;
+        const optionsScene = new OptionsScene(this.canvas.width, this.canvas.height);
+        optionsScene.setOnMainMenu(() => this.resetToMainMenu());
+        optionsScene.setOnBack(() => {
+          const currentScene = this.sceneDirector.getCurrentScene();
+          if (currentScene) {
+            currentScene.exit();
+          }
+        });
+        return optionsScene;
       case SceneID.TAVERN:
         // TavernScene not yet implemented - placeholder
         console.log('TavernScene requested but not yet implemented');
@@ -202,13 +209,53 @@ export class GameDirector {
     this.game = new Game(this.game.getWorldMap());
   }
 
-  // Save/load stubs for Phase 4
-  serialize(_saveName: string): void {
-    console.log('Save functionality not yet implemented - Phase 4');
+  /**
+   * Save the current game state to localStorage
+   */
+  serialize(saveName: string): void {
+    try {
+      const saveData = {
+        game: this.game.toJSON(),
+        worldMap: {
+          currLocation: this.worldMap.getCurrLocationNode().getID(),
+          currTrail: this.worldMap.getCurrTrail()?.getID() || null
+        },
+        timestamp: Date.now()
+      };
+      localStorage.setItem(`oregon-trail-save-${saveName}`, JSON.stringify(saveData));
+      console.log(`Game saved: ${saveName}`);
+    } catch (error) {
+      console.error('Failed to save game:', error);
+    }
   }
 
-  deserialize(_saveName: string): Game | null {
-    console.log('Load functionality not yet implemented - Phase 4');
-    return null;
+  /**
+   * Load game state from localStorage
+   */
+  deserialize(saveName: string): Game | null {
+    try {
+      const data = localStorage.getItem(`oregon-trail-save-${saveName}`);
+      if (!data) {
+        console.log(`No save data found for: ${saveName}`);
+        return null;
+      }
+
+      const saveData = JSON.parse(data);
+      this.game = Game.fromJSON(saveData.game, this.worldMap);
+
+      // Restore world map state
+      if (saveData.worldMap.currLocation) {
+        const location = this.worldMap.getLocationByID(saveData.worldMap.currLocation);
+        if (location) {
+          this.worldMap.setCurrLocationNode(location);
+        }
+      }
+
+      console.log(`Game loaded: ${saveName}`);
+      return this.game;
+    } catch (error) {
+      console.error('Failed to load game:', error);
+      return null;
+    }
   }
 }
