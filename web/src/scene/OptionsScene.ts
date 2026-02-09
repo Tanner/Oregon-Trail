@@ -1,4 +1,5 @@
-import { Scene, SceneID } from './Scene';
+import { Scene } from './Scene';
+import { SceneID } from './SceneID';
 import { Panel } from '../component/Panel';
 import { Label, Alignment } from '../component/Label';
 import { Button } from '../component/Button';
@@ -8,7 +9,7 @@ import { ComponentModal } from '../component/modal/ComponentModal';
 import { Color } from '../core/Color';
 import { FontStore, FontID } from '../core/FontStore';
 import { SoundStore } from '../core/SoundStore';
-import { ReferencePoint } from '../component/Positionable';
+import { ReferencePoint } from '../component/Component';
 
 /**
  * Options scene with volume controls and save/load functionality
