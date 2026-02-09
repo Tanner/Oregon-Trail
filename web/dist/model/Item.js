@@ -2,7 +2,7 @@ import { Condition } from "./Condition";
 import { getItemTypeName, getItemTypeDescription, getItemTypeCost, getItemTypeWeight, } from "./ItemType";
 export class Item {
     constructor(type) {
-        this.status = new Condition(100);
+        this.status = new Condition(0, 100);
         this.type = type;
         this.isStackable = true;
     }

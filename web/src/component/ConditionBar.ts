@@ -79,7 +79,7 @@ export class ConditionBar extends Component {
     this.update(0);
   }
 
-  override update(delta: number): void {
+  override update(_delta: number): void {
     if (this.condition !== null) {
       const percentage = this.condition.getPercentage();
       if (this.label !== null) {
@@ -131,12 +131,11 @@ export class ConditionBar extends Component {
 
 class ConditionPanel extends Component {
   private percentage: number = 0;
-  private panelBackgroundColor: Color;
   private parentBar: ConditionBar;
 
   constructor(width: number, height: number, color: Color, parentBar: ConditionBar) {
     super(width, height);
-    this.panelBackgroundColor = color;
+    this.setBackgroundColor(color);
     this.parentBar = parentBar;
     this.setBackgroundColor(color);
   }

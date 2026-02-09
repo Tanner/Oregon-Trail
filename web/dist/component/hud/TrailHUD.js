@@ -39,7 +39,9 @@ export class TrailHUD extends HUD {
         const panel = new Panel(width, HUD.HEIGHT);
         const fieldFont = FontStore.getFont(FontID.FIELD);
         const menuLabel = Label.withTextWidth(fieldFont, Color.white, getLiteral('TRAIL_SCENE', 'CAMP'));
-        const fireSprite = new Sprite(48, ImageStore.getImage('CAMP_ICON'));
+        const campImage = ImageStore.getImage('CAMP_ICON');
+        const fireSprite = new Sprite(48);
+        fireSprite.setImage(campImage);
         this.menuButton = new Button(menuLabel.getWidth() + 2 * TrailHUD.MARGIN, TrailHUD.BUTTON_HEIGHT, menuLabel);
         this.menuButton.setSprite(fireSprite);
         this.menuButton.setShowLabel(false);

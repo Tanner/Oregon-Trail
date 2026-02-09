@@ -1,7 +1,7 @@
 import { Component, ReferencePoint } from '../Component';
 import { Panel } from '../Panel';
 import { Label } from '../Label';
-import { Button, ButtonClickListener } from '../Button';
+import { Button } from '../Button';
 import { Color } from '../../core/Color';
 import { COLORS, get as getLiteral } from '../../core/ConstantStore';
 import { FontStore, FontID } from '../../core/FontStore';
@@ -27,7 +27,7 @@ export abstract class Modal extends Component {
     width: number,
     height: number,
     listener: ModalListener,
-    message: string,
+    _message: string,
     buttonCount: number
   ) {
     super(width, height);

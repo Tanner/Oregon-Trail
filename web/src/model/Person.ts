@@ -29,7 +29,7 @@ export class Person {
   constructor(name: string) {
     this.name = name;
     this.skillPoints = new Condition(0, Person.BASE_SKILL_POINTS, 0);
-    this.health = new Condition(100);
+    this.health = new Condition(0, 100);
     this.dead = false;
     this.isMale = true;
     this.isLeader = false;

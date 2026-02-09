@@ -50,7 +50,7 @@ export class ConditionBar extends Component {
     updateBar() {
         this.update(0);
     }
-    update(delta) {
+    update(_delta) {
         if (this.condition !== null) {
             const percentage = this.condition.getPercentage();
             if (this.label !== null) {
@@ -93,7 +93,7 @@ class ConditionPanel extends Component {
     constructor(width, height, color, parentBar) {
         super(width, height);
         this.percentage = 0;
-        this.panelBackgroundColor = color;
+        this.setBackgroundColor(color);
         this.parentBar = parentBar;
         this.setBackgroundColor(color);
     }

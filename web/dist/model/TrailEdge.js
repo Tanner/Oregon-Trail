@@ -16,7 +16,7 @@ export class TrailEdge extends MapObject {
         if (this.length < TrailEdge.shortestTrail) {
             TrailEdge.shortestTrail = this.length;
         }
-        this.quality = new Condition(this.length);
+        this.quality = new Condition(0, this.length);
         TrailEdge.totalTrailLength += this.length;
         this.visible = false;
     }

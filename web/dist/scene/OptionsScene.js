@@ -85,8 +85,7 @@ export class OptionsScene extends Scene {
             currentY += component.getHeight() + OptionsScene.PADDING;
         }
         // Create save modal (5 save slots)
-        const saveChoices = ['Game 1', 'Game 2', 'Game 3', 'Game 4', 'Game 5'];
-        const saveControl = new SegmentedControl(600, 150, 2, 3, 20, true, 1, saveChoices);
+        const saveControl = new SegmentedControl(600, 150, 2, 3, 20, true, 1, 'Game 1', 'Game 2', 'Game 3', 'Game 4', 'Game 5');
         this.saveModal = new ComponentModal('Select a save slot:', 1, saveControl);
     }
     dismissModal(modal, button) {

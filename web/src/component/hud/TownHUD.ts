@@ -3,7 +3,7 @@ import { Panel } from '../Panel';
 import { Button, ButtonClickListener } from '../Button';
 import { Label, VerticalAlignment } from '../Label';
 import { Sprite } from '../Sprite';
-import { Component, BevelType, ReferencePoint } from '../Component';
+import { BevelType, ReferencePoint } from '../Component';
 import { Color } from '../../core/Color';
 import { FontStore, FontID } from '../../core/FontStore';
 import { ImageStore } from '../../core/ImageStore';
@@ -30,7 +30,9 @@ export class TownHUD extends HUD {
 
     const menuLabel = Label.withTextWidth(fieldFont, Color.white, getLiteral('TOWN_SCENE', 'TRAIL'));
 
-    const trailSprite = new Sprite(48, undefined, ImageStore.getImage('TRAIL_ICON'));
+    const trailImage = ImageStore.getImage('TRAIL_ICON');
+    const trailSprite = new Sprite(48);
+    trailSprite.setImage(trailImage);
 
     this.trailButton = new Button(
       menuLabel.getWidth() + 2 * TownHUD.MARGIN,

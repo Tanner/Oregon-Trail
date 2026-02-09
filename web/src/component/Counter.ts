@@ -145,7 +145,7 @@ class CountingButton extends Button {
     this.counter = counter;
   }
 
-  override mousePressed(button: number, mx: number, my: number): void {
+  override mousePressed(_button: number, _mx: number, _my: number): void {
     if (!this.isVisible() || !this.isAcceptingInput()) {
       return;
     }
@@ -155,7 +155,7 @@ class CountingButton extends Button {
     }
   }
 
-  override mouseReleased(button: number, mx: number, my: number): void {
+  override mouseReleased(button: number, _mx: number, _my: number): void {
     if (!this.isVisible()) {
       return;
     }

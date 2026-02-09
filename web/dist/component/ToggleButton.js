@@ -4,7 +4,7 @@ export class ToggleButton extends Button {
         super(width, height, label);
         this.disableAutoToggle = false;
     }
-    mousePressed(button, mx, my) {
+    mousePressed(button, _mx, _my) {
         if (!this.isVisible() || !this.isAcceptingInput()) {
             return;
         }
@@ -17,7 +17,7 @@ export class ToggleButton extends Button {
             }
         }
     }
-    mouseReleased(button, mx, my) {
+    mouseReleased(button, _mx, _my) {
         if (!this.isVisible()) {
             return;
         }

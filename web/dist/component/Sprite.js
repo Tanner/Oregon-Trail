@@ -1,8 +1,6 @@
 import { Component } from './Component';
 export class Sprite extends Component {
     constructor(width, height, image) {
-        this.image = null;
-        this.rotation = 0;
         if (image && !height) {
             const aspectRatio = image.height / image.width;
             super(width, Math.floor(width * aspectRatio));
@@ -13,9 +11,8 @@ export class Sprite extends Component {
         else {
             super(width, width);
         }
-        if (image) {
-            this.image = image;
-        }
+        this.image = image || null;
+        this.rotation = 0;
     }
     render(ctx) {
         if (!this.isVisible()) {

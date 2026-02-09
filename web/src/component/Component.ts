@@ -265,7 +265,7 @@ export abstract class Component implements Visible {
   addAsGrid(
     components: Component[],
     location: Vector2f,
-    rows: number,
+    _rows: number,
     cols: number,
     xOffset: number,
     yOffset: number,
@@ -478,7 +478,7 @@ export abstract class Component implements Visible {
     return this.visibleParent;
   }
 
-  mouseMoved(oldx: number, oldy: number, newx: number, newy: number): void {
+  mouseMoved(_oldx: number, _oldy: number, newx: number, newy: number): void {
     if (!this.isVisible() || !this.isAcceptingInput()) {
       return;
     }
@@ -490,7 +490,7 @@ export abstract class Component implements Visible {
     }
   }
 
-  mousePressed(button: number, mx: number, my: number): void {
+  mousePressed(_button: number, mx: number, my: number): void {
     if (!this.isVisible() || !this.isAcceptingInput()) {
       return;
     }
@@ -498,7 +498,7 @@ export abstract class Component implements Visible {
     this.mouseOver = this.containsPoint(mx, my);
   }
 
-  mouseReleased(button: number, mx: number, my: number): void {
+  mouseReleased(_button: number, mx: number, my: number): void {
     if (!this.isVisible() || !this.isAcceptingInput()) {
       return;
     }
@@ -565,7 +565,7 @@ export abstract class Component implements Visible {
     }
   }
 
-  keyReleased(key: string, char: string): void {
+  keyReleased(_key: string, _char: string): void {
     // Override in subclasses
   }
 }

@@ -16,7 +16,9 @@ export class TownHUD extends HUD {
         const panel = new Panel(panelWidth, HUD.HEIGHT);
         const fieldFont = FontStore.getFont(FontID.FIELD);
         const menuLabel = Label.withTextWidth(fieldFont, Color.white, getLiteral('TOWN_SCENE', 'TRAIL'));
-        const trailSprite = new Sprite(48, ImageStore.getImage('TRAIL_ICON'));
+        const trailImage = ImageStore.getImage('TRAIL_ICON');
+        const trailSprite = new Sprite(48);
+        trailSprite.setImage(trailImage);
         this.trailButton = new Button(menuLabel.getWidth() + 2 * TownHUD.MARGIN, TownHUD.BUTTON_HEIGHT, menuLabel);
         this.trailButton.setSprite(trailSprite);
         this.trailButton.setShowLabel(false);

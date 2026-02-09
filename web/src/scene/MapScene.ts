@@ -65,8 +65,8 @@ export class MapScene extends Scene {
           button.setTooltipEnabled(true);
           button.setTooltipMessage(location.getName());
 
-          playerMap.add(button);
-          button.setPosition(
+          playerMap.add(
+            button,
             { x: location.getPlayerMapX(), y: location.getPlayerMapY() },
             ReferencePoint.TOPLEFT
           );
@@ -93,14 +93,14 @@ export class MapScene extends Scene {
       curLocY = Math.floor(this.currNode.getPlayerMapY());
     }
 
-    playerMap.add(this.currLocPtr);
-    this.currLocPtr.setPosition(
+    playerMap.add(
+      this.currLocPtr,
       { x: curLocX - 18, y: curLocY - 48 },
       ReferencePoint.TOPLEFT
     );
 
-    playerMap.add(this.currLocParty);
-    this.currLocParty.setPosition(
+    playerMap.add(
+      this.currLocParty,
       { x: curLocX - 6, y: curLocY - 75 },
       ReferencePoint.TOPLEFT
     );

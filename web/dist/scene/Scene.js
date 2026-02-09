@@ -89,7 +89,7 @@ export class Scene {
         this.modalLayer.setAcceptingInput(true);
         this.modalLayer.setVisible(true);
     }
-    dismissModal(modal, button) {
+    dismissModal(modal, _button) {
         this.resume();
         this.modalLayer.setVisible(false);
         this.modalLayer.setAcceptingInput(false);
@@ -160,10 +160,10 @@ export class Scene {
         this.lastMouseX = x;
         this.lastMouseY = y;
     }
-    keyPressed(key, code) {
+    keyPressed(_key, _code) {
         // Subclasses can override for scene-specific key handling
     }
-    keyReleased(key, code) {
+    keyReleased(_key, _code) {
         // Subclasses can override for scene-specific key handling
     }
     pause() {

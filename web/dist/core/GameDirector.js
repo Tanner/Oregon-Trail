@@ -106,9 +106,9 @@ export class GameDirector {
                 const optionsScene = new OptionsScene(this.canvas.width, this.canvas.height);
                 optionsScene.setOnMainMenu(() => this.resetToMainMenu());
                 optionsScene.setOnBack(() => {
-                    const currentScene = this.sceneDirector.getCurrentScene();
+                    const currentScene = this.sceneDirector.currentScene();
                     if (currentScene) {
-                        currentScene.exit();
+                        currentScene.leave();
                     }
                 });
                 return optionsScene;
@@ -171,52 +171,13 @@ export class GameDirector {
         }
         this.game = new Game(this.game.getWorldMap());
     }
-    /**
-     * Save the current game state to localStorage
-     */
-    serialize(saveName) {
-        try {
-            const saveData = {
-                game: this.game.toJSON(),
-                worldMap: {
-                    currLocation: this.worldMap.getCurrLocationNode().getID(),
-                    currTrail: this.worldMap.getCurrTrail()?.getID() || null
-                },
-                timestamp: Date.now()
-            };
-            localStorage.setItem(`oregon-trail-save-${saveName}`, JSON.stringify(saveData));
-            console.log(`Game saved: ${saveName}`);
-        }
-        catch (error) {
-            console.error('Failed to save game:', error);
-        }
+    // Save/load stubs for Phase 4
+    serialize(_saveName) {
+        console.log('Save functionality not yet implemented - Phase 4');
     }
-    /**
-     * Load game state from localStorage
-     */
-    deserialize(saveName) {
-        try {
-            const data = localStorage.getItem(`oregon-trail-save-${saveName}`);
-            if (!data) {
-                console.log(`No save data found for: ${saveName}`);
-                return null;
-            }
-            const saveData = JSON.parse(data);
-            this.game = Game.fromJSON(saveData.game, this.worldMap);
-            // Restore world map state
-            if (saveData.worldMap.currLocation) {
-                const location = this.worldMap.getLocationByID(saveData.worldMap.currLocation);
-                if (location) {
-                    this.worldMap.setCurrLocationNode(location);
-                }
-            }
-            console.log(`Game loaded: ${saveName}`);
-            return this.game;
-        }
-        catch (error) {
-            console.error('Failed to load game:', error);
-            return null;
-        }
+    deserialize(_saveName) {
+        console.log('Load functionality not yet implemented - Phase 4');
+        return null;
     }
 }
 //# sourceMappingURL=GameDirector.js.map

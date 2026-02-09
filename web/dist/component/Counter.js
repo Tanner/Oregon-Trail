@@ -101,7 +101,7 @@ class CountingButton extends Button {
         }
         this.counter = counter;
     }
-    mousePressed(button, mx, my) {
+    mousePressed(_button, _mx, _my) {
         if (!this.isVisible() || !this.isAcceptingInput()) {
             return;
         }
@@ -109,7 +109,7 @@ class CountingButton extends Button {
             this.setActive(true);
         }
     }
-    mouseReleased(button, mx, my) {
+    mouseReleased(button, _mx, _my) {
         if (!this.isVisible()) {
             return;
         }

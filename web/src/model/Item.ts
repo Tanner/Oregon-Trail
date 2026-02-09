@@ -13,7 +13,7 @@ export class Item {
   private readonly type: ItemType;
 
   constructor(type: ItemType) {
-    this.status = new Condition(100);
+    this.status = new Condition(0, 100);
     this.type = type;
     this.isStackable = true;
   }

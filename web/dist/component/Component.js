@@ -161,7 +161,7 @@ export class Component {
             }
         }
     }
-    addAsGrid(components, location, rows, cols, xOffset, yOffset, xSpacing, ySpacing) {
+    addAsGrid(components, location, _rows, cols, xOffset, yOffset, xSpacing, ySpacing) {
         let startIndex = 0;
         let currentY = location.y;
         while (startIndex < components.length) {
@@ -334,7 +334,7 @@ export class Component {
     getVisibleParent() {
         return this.visibleParent;
     }
-    mouseMoved(oldx, oldy, newx, newy) {
+    mouseMoved(_oldx, _oldy, newx, newy) {
         if (!this.isVisible() || !this.isAcceptingInput()) {
             return;
         }
@@ -343,13 +343,13 @@ export class Component {
             // TODO: Scene.showTooltip(newx, newy, this, tooltipMessage);
         }
     }
-    mousePressed(button, mx, my) {
+    mousePressed(_button, mx, my) {
         if (!this.isVisible() || !this.isAcceptingInput()) {
             return;
         }
         this.mouseOver = this.containsPoint(mx, my);
     }
-    mouseReleased(button, mx, my) {
+    mouseReleased(_button, mx, my) {
         if (!this.isVisible() || !this.isAcceptingInput()) {
             return;
         }
@@ -404,7 +404,7 @@ export class Component {
             listener();
         }
     }
-    keyReleased(key, char) {
+    keyReleased(_key, _char) {
         // Override in subclasses
     }
 }

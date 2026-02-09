@@ -43,8 +43,7 @@ export class MapScene extends Scene {
                     const button = new Button(buttonSize, buttonSize, this.getLocColor(location));
                     button.setTooltipEnabled(true);
                     button.setTooltipMessage(location.getName());
-                    playerMap.add(button);
-                    button.setPosition({ x: location.getPlayerMapX(), y: location.getPlayerMapY() }, ReferencePoint.TOPLEFT);
+                    playerMap.add(button, { x: location.getPlayerMapX(), y: location.getPlayerMapY() }, ReferencePoint.TOPLEFT);
                     button.addListener(() => {
                         console.log(`Clicked location: ${location.debugToString()}`);
                     });
@@ -63,10 +62,8 @@ export class MapScene extends Scene {
             curLocX = Math.floor(this.currNode.getPlayerMapX());
             curLocY = Math.floor(this.currNode.getPlayerMapY());
         }
-        playerMap.add(this.currLocPtr);
-        this.currLocPtr.setPosition({ x: curLocX - 18, y: curLocY - 48 }, ReferencePoint.TOPLEFT);
-        playerMap.add(this.currLocParty);
-        this.currLocParty.setPosition({ x: curLocX - 6, y: curLocY - 75 }, ReferencePoint.TOPLEFT);
+        playerMap.add(this.currLocPtr, { x: curLocX - 18, y: curLocY - 48 }, ReferencePoint.TOPLEFT);
+        playerMap.add(this.currLocParty, { x: curLocX - 6, y: curLocY - 75 }, ReferencePoint.TOPLEFT);
         const fieldFont = FontStore.getFont(FontID.FIELD);
         this.mainLayer.add(playerMap);
         this.setupLegend(fieldFont, containerWidth);

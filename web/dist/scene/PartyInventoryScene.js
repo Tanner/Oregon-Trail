@@ -38,7 +38,8 @@ export class PartyInventoryScene extends Scene {
         this.dropButton = new Button(150, PartyInventoryScene.BUTTON_HEIGHT, Label.withTextWidth(fieldFont, Color.white, 'Drop'));
         this.dropButton.addClickListener(() => this.onDrop());
         this.dropButton.layout();
-        this.binCounter = new Counter(200, 40, fieldFont, Color.white, 'Bin', 0);
+        const binLabel = Label.withTextWidth(fieldFont, Color.white, 'Bin');
+        this.binCounter = new Counter(200, 40, binLabel);
         this.layoutInventory(canvasWidth, canvasHeight);
     }
     layoutInventory(canvasWidth, canvasHeight) {
@@ -64,8 +65,7 @@ export class PartyInventoryScene extends Scene {
         if (animals.length > 0) {
             const animalPanel = new Panel(canvasWidth - PartyInventoryScene.PADDING * 2, 60);
             const animalLabel = new Label(200, fieldFont.getLineHeight(), fieldFont, Color.white, 'Animals:');
-            animalPanel.add(animalLabel);
-            animalLabel.setPosition({ x: 10, y: 10 }, ReferencePoint.TOPLEFT);
+            animalPanel.add(animalLabel, { x: 10, y: 10 }, ReferencePoint.TOPLEFT);
             let animalX = 100;
             const horseCount = animals.filter(a => a.getType().toString() === 'HORSE').length;
             const oxCount = animals.filter(a => a.getType().toString() === 'OX').length;
@@ -73,31 +73,24 @@ export class PartyInventoryScene extends Scene {
             if (horseCount > 0) {
                 const horseSprite = new Sprite(24, undefined, ImageStore.getImage('HORSE_ICON'));
                 const horseLabel = new Label(50, fieldFont.getLineHeight(), fieldFont, Color.white, `x${horseCount}`);
-                animalPanel.add(horseSprite);
-                animalPanel.add(horseLabel);
-                horseSprite.setPosition({ x: animalX, y: 20 }, ReferencePoint.TOPLEFT, 0, 0);
-                horseLabel.setPosition({ x: animalX + 30, y: 25 }, ReferencePoint.TOPLEFT, 0, 0);
+                animalPanel.add(horseSprite, { x: animalX, y: 20 }, ReferencePoint.TOPLEFT, 0, 0);
+                animalPanel.add(horseLabel, { x: animalX + 30, y: 25 }, ReferencePoint.TOPLEFT, 0, 0);
                 animalX += 80;
             }
             if (oxCount > 0) {
                 const oxSprite = new Sprite(24, undefined, ImageStore.getImage('OX_ICON'));
                 const oxLabel = new Label(50, fieldFont.getLineHeight(), fieldFont, Color.white, `x${oxCount}`);
-                animalPanel.add(oxSprite);
-                animalPanel.add(oxLabel);
-                oxSprite.setPosition({ x: animalX, y: 20 }, ReferencePoint.TOPLEFT, 0, 0);
-                oxLabel.setPosition({ x: animalX + 30, y: 25 }, ReferencePoint.TOPLEFT, 0, 0);
+                animalPanel.add(oxSprite, { x: animalX, y: 20 }, ReferencePoint.TOPLEFT, 0, 0);
+                animalPanel.add(oxLabel, { x: animalX + 30, y: 25 }, ReferencePoint.TOPLEFT, 0, 0);
                 animalX += 80;
             }
             if (muleCount > 0) {
                 const muleSprite = new Sprite(24, undefined, ImageStore.getImage('MULE_ICON'));
                 const muleLabel = new Label(50, fieldFont.getLineHeight(), fieldFont, Color.white, `x${muleCount}`);
-                animalPanel.add(muleSprite);
-                animalPanel.add(muleLabel);
-                muleSprite.setPosition({ x: animalX, y: 20 }, ReferencePoint.TOPLEFT, 0, 0);
-                muleLabel.setPosition({ x: animalX + 30, y: 25 }, ReferencePoint.TOPLEFT, 0, 0);
+                animalPanel.add(muleSprite, { x: animalX, y: 20 }, ReferencePoint.TOPLEFT, 0, 0);
+                animalPanel.add(muleLabel, { x: animalX + 30, y: 25 }, ReferencePoint.TOPLEFT, 0, 0);
             }
-            this.mainLayer.add(animalPanel);
-            animalPanel.setPosition({ x: PartyInventoryScene.PADDING, y: yOffset }, ReferencePoint.TOPLEFT);
+            this.mainLayer.add(animalPanel, { x: PartyInventoryScene.PADDING, y: yOffset }, ReferencePoint.TOPLEFT);
         }
         this.mainLayer.add(this.binCounter);
         this.binCounter.setPosition({ x: canvasWidth - PartyInventoryScene.PADDING, y: canvasHeight - PartyInventoryScene.PADDING }, ReferencePoint.BOTTOMRIGHT);

@@ -1,8 +1,8 @@
 import { Component } from './Component';
 
 export class Sprite extends Component {
-  private image: HTMLImageElement | null = null;
-  private rotation: number = 0;
+  private image: HTMLImageElement | null;
+  private rotation: number;
 
   constructor(width: number, height?: number, image?: HTMLImageElement) {
     if (image && !height) {
@@ -14,9 +14,8 @@ export class Sprite extends Component {
       super(width, width);
     }
 
-    if (image) {
-      this.image = image;
-    }
+    this.image = image || null;
+    this.rotation = 0;
   }
 
   override render(ctx: CanvasRenderingContext2D): void {

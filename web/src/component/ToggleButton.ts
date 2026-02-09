@@ -8,7 +8,7 @@ export class ToggleButton extends Button {
     super(width, height, label);
   }
 
-  override mousePressed(button: number, mx: number, my: number): void {
+  override mousePressed(button: number, _mx: number, _my: number): void {
     if (!this.isVisible() || !this.isAcceptingInput()) {
       return;
     }
@@ -22,7 +22,7 @@ export class ToggleButton extends Button {
     }
   }
 
-  override mouseReleased(button: number, mx: number, my: number): void {
+  override mouseReleased(button: number, _mx: number, _my: number): void {
     if (!this.isVisible()) {
       return;
     }

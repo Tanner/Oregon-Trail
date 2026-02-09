@@ -3,7 +3,7 @@ import { Panel } from '../Panel';
 import { Button, ButtonClickListener } from '../Button';
 import { Label, VerticalAlignment } from '../Label';
 import { Sprite } from '../Sprite';
-import { Component, BevelType, ReferencePoint } from '../Component';
+import { BevelType, ReferencePoint } from '../Component';
 import { Color } from '../../core/Color';
 import { FontStore, FontID } from '../../core/FontStore';
 import { ImageStore } from '../../core/ImageStore';
@@ -100,7 +100,9 @@ export class TrailHUD extends HUD {
       getLiteral('TRAIL_SCENE', 'CAMP')
     );
 
-    const fireSprite = new Sprite(48, undefined, ImageStore.getImage('CAMP_ICON'));
+    const campImage = ImageStore.getImage('CAMP_ICON');
+    const fireSprite = new Sprite(48);
+    fireSprite.setImage(campImage);
 
     this.menuButton = new Button(
       menuLabel.getWidth() + 2 * TrailHUD.MARGIN,

@@ -60,7 +60,7 @@ export class WorldMap {
         tempNode.setName(this.nameLocation(curRank, tempNode));
         return tempNode;
     }
-    nameLocation(curRank, node) {
+    nameLocation(_curRank, node) {
         const rankIndex = this.determineTerritory(node);
         node.setTerritory(rankIndex);
         const townList = TOWN_NAMES.get(rankIndex);
@@ -142,7 +142,7 @@ export class WorldMap {
             this.mapNodes.set(i, []);
             this.orphanNodes.set(i, []);
         }
-        this.mapHead = new LocationNode("Independence, Missouri", this.MAX_X, 0, this.MAX_TRAILS_OUT, this.MAX_X, this.MAX_Y);
+        this.mapHead = new LocationNode("Independence, Missouri", this.MAX_X, 0, 0, 0, this.MAX_TRAILS_OUT, 0, 100, this.MAX_X, this.MAX_Y);
         this.mapHead.setTerritory(StateIdx.MISSOURI);
         this.mapHead.setOnTheTrail(true);
         this.mapNodes.get(0).push(this.mapHead);
@@ -290,7 +290,6 @@ export class WorldMap {
         this.currTrail = currTrail;
     }
     makePCInboundTrail(destNode) {
-        const currRank = this.currLocationNode.getRank();
         const dangerLevel = Math.floor(Math.random() * this.MAX_DANGER);
         const newTrail = new TrailEdge(destNode, this.currLocationNode, dangerLevel);
         this.currLocationNode.addTrail(newTrail);

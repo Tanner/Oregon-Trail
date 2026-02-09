@@ -6,7 +6,7 @@ import { Color } from '../../core/Color';
 import { COLORS, get as getLiteral } from '../../core/ConstantStore';
 import { FontStore, FontID } from '../../core/FontStore';
 export class Modal extends Component {
-    constructor(width, height, listener, message, buttonCount) {
+    constructor(width, height, listener, _message, buttonCount) {
         super(width, height);
         this.cancelButtonIndex = -1;
         this.listener = listener;
@@ -36,6 +36,12 @@ export class Modal extends Component {
     setCancelButtonIndex(i) {
         this.cancelButtonIndex = i;
     }
+    getButtons() {
+        return this.buttons;
+    }
+    getListener() {
+        return this.listener;
+    }
     keyReleased(key) {
         if (!this.isVisible() || !this.isAcceptingInput()) {
             return;
@@ -54,13 +60,14 @@ class ButtonListener {
     }
     onClick(source) {
         let buttonIndex = -1;
-        for (let i = 0; i < this.modal.buttons.length; i++) {
-            if (this.modal.buttons[i] === source) {
+        const buttons = this.modal.getButtons();
+        for (let i = 0; i < buttons.length; i++) {
+            if (buttons[i] === source) {
                 buttonIndex = i;
                 break;
             }
         }
-        this.modal.listener.dismissModal(this.modal, buttonIndex);
+        this.modal.getListener().dismissModal(this.modal, buttonIndex);
     }
 }
 //# sourceMappingURL=Modal.js.map

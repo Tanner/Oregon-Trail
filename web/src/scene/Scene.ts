@@ -117,7 +117,7 @@ export abstract class Scene implements Visible, ModalListener {
     this.modalLayer.setVisible(true);
   }
 
-  dismissModal(modal: Component, button: number): void {
+  dismissModal(modal: Component, _button: number): void {
     this.resume();
     this.modalLayer.setVisible(false);
     this.modalLayer.setAcceptingInput(false);
@@ -196,11 +196,11 @@ export abstract class Scene implements Visible, ModalListener {
     this.lastMouseY = y;
   }
 
-  keyPressed(key: string, code: string): void {
+  keyPressed(_key: string, _code: string): void {
     // Subclasses can override for scene-specific key handling
   }
 
-  keyReleased(key: string, code: string): void {
+  keyReleased(_key: string, _code: string): void {
     // Subclasses can override for scene-specific key handling
   }
 
