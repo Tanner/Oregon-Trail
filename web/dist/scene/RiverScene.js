@@ -56,7 +56,7 @@ export class RiverScene extends Scene {
                 Math.floor(Math.random() * RiverScene.CLOUD_OFFSET_VARIANCE * 2) -
                 RiverScene.CLOUD_OFFSET_VARIANCE;
             const cloud = new ParallaxComponent(this.canvasWidth, cloudImage, distance);
-            this.cloudParallaxPanel.add(cloud);
+            this.cloudParallaxPanel.addParallaxComponent(cloud);
             cloud.setPosition({ x: 0, y: offset }, ReferencePoint.TOPLEFT);
         }
         this.backgroundLayer.add(this.cloudParallaxPanel);
@@ -74,7 +74,7 @@ export class RiverScene extends Scene {
         // River parallax (water)
         this.riverParallaxPanel = new ParallaxPanel(this.canvasWidth, this.canvasHeight);
         const water = new ParallaxComponentLoop(this.canvasWidth + 1, ImageStore.getImage('WATER'), 1);
-        this.riverParallaxPanel.add(water);
+        this.riverParallaxPanel.addParallaxComponent(water);
         water.setPosition({ x: 0, y: this.canvasHeight - 200 }, ReferencePoint.BOTTOMLEFT);
         this.backgroundLayer.add(this.riverParallaxPanel);
         // River edge
@@ -198,7 +198,6 @@ export class RiverScene extends Scene {
      * Create the modal with crossing choices
      */
     makeChoiceModal() {
-        const choices = ['Ford the river', 'Caulk your wagon', 'Pay the toll', 'Wait for an hour'];
         const disabled = [];
         if (this.party.getMoney() < this.tollPrice) {
             disabled.push(2);

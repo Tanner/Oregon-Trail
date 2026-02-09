@@ -1,6 +1,6 @@
 import { Party } from "../../model/Party";
 import { Notification } from "../../model/Notification";
-import { ItemType, getItemTypeName } from "../../model/ItemType";
+import { getItemTypeName } from "../../model/ItemType";
 import { Encounter } from "./Encounter";
 import { EncounterNotification } from "./EncounterNotification";
 import { EncounterID } from "./EncounterID";

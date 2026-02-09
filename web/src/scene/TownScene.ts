@@ -230,7 +230,7 @@ export class TownScene extends Scene {
     }
   }
 
-  override keyReleased(key: string, code: string): void {
+  override keyReleased(key: string): void {
     if (key === 'Enter') {
       const leaderX = this.partyLeaderSprite.getX();
       const storeX = this.store.getX();
