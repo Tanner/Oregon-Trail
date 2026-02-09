@@ -92,7 +92,7 @@ export class WorldMap {
     return tempNode;
   }
 
-  private nameLocation(curRank: number, node: LocationNode): string {
+  private nameLocation(_curRank: number, node: LocationNode): string {
     const rankIndex = this.determineTerritory(node);
     node.setTerritory(rankIndex);
 
@@ -170,8 +170,15 @@ export class WorldMap {
 
     this.mapHead = new LocationNode(
       "Independence, Missouri",
-      this.MAX_X, 0, this.MAX_TRAILS_OUT,
-      this.MAX_X, this.MAX_Y
+      this.MAX_X,
+      0,
+      0,
+      0,
+      this.MAX_TRAILS_OUT,
+      0,
+      100,
+      this.MAX_X,
+      this.MAX_Y
     );
     this.mapHead.setTerritory(StateIdx.MISSOURI);
     this.mapHead.setOnTheTrail(true);
@@ -358,7 +365,6 @@ export class WorldMap {
   }
 
   makePCInboundTrail(destNode: LocationNode): void {
-    const currRank = this.currLocationNode.getRank();
     const dangerLevel = Math.floor(Math.random() * this.MAX_DANGER);
     const newTrail = new TrailEdge(destNode, this.currLocationNode, dangerLevel);
     this.currLocationNode.addTrail(newTrail);
