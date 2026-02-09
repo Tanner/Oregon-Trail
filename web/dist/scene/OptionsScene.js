@@ -49,8 +49,8 @@ export class OptionsScene extends Scene {
         });
         // Volume panel combining label and counter
         const volumePanel = new Panel(OptionsScene.BUTTON_WIDTH, volumeLabel.getHeight() + this.volumeCounter.getHeight());
-        volumePanel.add(volumeLabel, { x: 0, y: 0 }, ReferencePoint.TOPLEFT);
-        volumePanel.add(this.volumeCounter, { x: 0, y: volumeLabel.getHeight() }, ReferencePoint.TOPLEFT);
+        volumePanel.add(volumeLabel, { x: 0, y: 0 }, ReferencePoint.TOPLEFT, 0, 0);
+        volumePanel.add(this.volumeCounter, { x: 0, y: volumeLabel.getHeight() }, ReferencePoint.TOPLEFT, 0, 0);
         // Save button
         const saveLabel = new Label(OptionsScene.BUTTON_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, 'Save');
         this.saveButton = new Button(OptionsScene.BUTTON_WIDTH, OptionsScene.BUTTON_HEIGHT, saveLabel);

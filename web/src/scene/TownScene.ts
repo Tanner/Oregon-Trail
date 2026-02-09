@@ -15,7 +15,6 @@ import { ComponentModal } from '../component/modal/ComponentModal';
 import { SegmentedControl } from '../component/SegmentedControl';
 import { Party } from '../model/Party';
 import { LocationNode } from '../model/LocationNode';
-import { TrailEdge } from '../model/TrailEdge';
 import { Skill } from '../model/Skill';
 import { get as getLiteral } from '../core/ConstantStore';
 
@@ -70,45 +69,45 @@ export class TownScene extends Scene {
     this.groundY = TownScene.CANVAS_HEIGHT - groundHeight;
     const ground = new ParallaxComponentLoop(
       TownScene.CANVAS_WIDTH,
-      groundHeight,
-      ImageStore.getImage('GRASS')
+      ImageStore.getImage('GRASS'),
+      0.5
     );
-    parallaxPanel.addParallaxComponent(ground, 0.5);
+    parallaxPanel.addParallaxComponent(ground);
     ground.setPosition({ x: 0, y: this.groundY }, ReferencePoint.TOPLEFT);
 
     const trailHeight = 50;
     const trail = new ParallaxComponentLoop(
       TownScene.CANVAS_WIDTH,
-      trailHeight,
-      ImageStore.getImage('TRAIL')
+      ImageStore.getImage('TRAIL'),
+      0.5
     );
-    parallaxPanel.addParallaxComponent(trail, 0.5);
+    parallaxPanel.addParallaxComponent(trail);
     trail.setPosition({ x: 0, y: this.groundY + 80 }, ReferencePoint.TOPLEFT);
 
     const hillB = new ParallaxComponentLoop(
       TownScene.CANVAS_WIDTH,
-      200,
-      ImageStore.getImage('HILL_B')
+      ImageStore.getImage('HILL_B'),
+      0.7
     );
-    parallaxPanel.addParallaxComponent(hillB, 0.7);
+    parallaxPanel.addParallaxComponent(hillB);
     hillB.setPosition({ x: 0, y: this.groundY - 120 }, ReferencePoint.TOPLEFT);
 
     const hillA = new ParallaxComponentLoop(
       TownScene.CANVAS_WIDTH,
-      200,
-      ImageStore.getImage('HILL_A')
+      ImageStore.getImage('HILL_A'),
+      0.8
     );
-    parallaxPanel.addParallaxComponent(hillA, 0.8);
+    parallaxPanel.addParallaxComponent(hillA);
     hillA.setPosition({ x: 0, y: this.groundY - 100 }, ReferencePoint.TOPLEFT);
 
     this.mainLayer.add(parallaxPanel);
     parallaxPanel.setPosition({ x: 0, y: 0 }, ReferencePoint.TOPLEFT);
 
-    this.store = new Sprite(400, ImageStore.getImage('STORE_BUILDING'));
+    this.store = new Sprite(400, undefined, ImageStore.getImage('STORE_BUILDING'));
     this.mainLayer.add(this.store);
     this.store.setPosition({ x: 20, y: this.groundY + 50 }, ReferencePoint.BOTTOMLEFT);
 
-    this.tavern = new Sprite(400, ImageStore.getImage('SALOON_BUILDING'));
+    this.tavern = new Sprite(400, undefined, ImageStore.getImage('SALOON_BUILDING'));
     this.mainLayer.add(this.tavern);
     this.tavern.setPosition({ x: TownScene.CANVAS_WIDTH - 20, y: this.groundY + 50 }, ReferencePoint.BOTTOMRIGHT);
 

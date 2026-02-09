@@ -27,7 +27,7 @@ export class TownScene extends Scene {
     }
     init() {
         SoundStore.playTownMusic();
-        this.hud = new TownHUD(TownScene.CANVAS_WIDTH, (source) => {
+        this.hud = new TownHUD(TownScene.CANVAS_WIDTH, () => {
             if (this.trailChoiceModal) {
                 this.showModal(this.trailChoiceModal);
             }
@@ -44,18 +44,18 @@ export class TownScene extends Scene {
         parallaxPanel.setMaxDistance(1);
         const groundHeight = 100;
         this.groundY = TownScene.CANVAS_HEIGHT - groundHeight;
-        const ground = new ParallaxComponentLoop(TownScene.CANVAS_WIDTH, groundHeight, ImageStore.getImage('GRASS'), 0.5);
-        parallaxPanel.addParallaxComponent(ground);
+        const ground = new ParallaxComponentLoop(TownScene.CANVAS_WIDTH, groundHeight, ImageStore.getImage('GRASS'));
+        parallaxPanel.addParallaxComponent(ground, 0.5);
         ground.setPosition({ x: 0, y: this.groundY }, ReferencePoint.TOPLEFT);
         const trailHeight = 50;
-        const trail = new ParallaxComponentLoop(TownScene.CANVAS_WIDTH, trailHeight, ImageStore.getImage('TRAIL'), 0.5);
-        parallaxPanel.addParallaxComponent(trail);
+        const trail = new ParallaxComponentLoop(TownScene.CANVAS_WIDTH, trailHeight, ImageStore.getImage('TRAIL'));
+        parallaxPanel.addParallaxComponent(trail, 0.5);
         trail.setPosition({ x: 0, y: this.groundY + 80 }, ReferencePoint.TOPLEFT);
-        const hillB = new ParallaxComponentLoop(TownScene.CANVAS_WIDTH, 200, ImageStore.getImage('HILL_B'), 0.7);
-        parallaxPanel.addParallaxComponent(hillB);
+        const hillB = new ParallaxComponentLoop(TownScene.CANVAS_WIDTH, 200, ImageStore.getImage('HILL_B'));
+        parallaxPanel.addParallaxComponent(hillB, 0.7);
         hillB.setPosition({ x: 0, y: this.groundY - 120 }, ReferencePoint.TOPLEFT);
-        const hillA = new ParallaxComponentLoop(TownScene.CANVAS_WIDTH, 200, ImageStore.getImage('HILL_A'), 0.8);
-        parallaxPanel.addParallaxComponent(hillA);
+        const hillA = new ParallaxComponentLoop(TownScene.CANVAS_WIDTH, 200, ImageStore.getImage('HILL_A'));
+        parallaxPanel.addParallaxComponent(hillA, 0.8);
         hillA.setPosition({ x: 0, y: this.groundY - 100 }, ReferencePoint.TOPLEFT);
         this.mainLayer.add(parallaxPanel);
         parallaxPanel.setPosition({ x: 0, y: 0 }, ReferencePoint.TOPLEFT);
