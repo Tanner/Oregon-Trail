@@ -1,4 +1,4 @@
-import { ConstantStore } from "../core/ConstantStore";
+import { get } from "../core/ConstantStore";
 
 export enum ItemType {
   APPLE = "APPLE",
@@ -40,22 +40,22 @@ const buildItemTypeData = (
   isAnimal: boolean,
   isTool: boolean,
 ): ItemTypeData => {
-  const name = ConstantStore.get("ITEMS", `${type}_NAME`);
-  const pluralName = ConstantStore.get("ITEMS", `${type}_PLURAL_NAME`);
-  const description = ConstantStore.get("ITEMS", `${type}_DESCRIPTION`);
-  const cost = parseInt(ConstantStore.get("ITEMS", `${type}_COST`), 10);
-  const weight = parseFloat(ConstantStore.get("ITEMS", `${type}_WEIGHT`));
+  const name = get("ITEMS", `${type}_NAME`);
+  const pluralName = get("ITEMS", `${type}_PLURAL_NAME`);
+  const description = get("ITEMS", `${type}_DESCRIPTION`);
+  const cost = parseInt(get("ITEMS", `${type}_COST`), 10);
+  const weight = parseFloat(get("ITEMS", `${type}_WEIGHT`));
 
   let factor = 0;
   if (isFood) {
-    const factorStr = ConstantStore.get("ITEMS", `${type}_FOOD_FACTOR`);
+    const factorStr = get("ITEMS", `${type}_FOOD_FACTOR`);
     factor = factorStr ? parseInt(factorStr, 10) : 0;
   } else if (isTool) {
-    const factorStr = ConstantStore.get("ITEMS", `${type}_REPAIR_FACTOR`);
+    const factorStr = get("ITEMS", `${type}_REPAIR_FACTOR`);
     factor = factorStr ? parseInt(factorStr, 10) : 0;
   }
 
-  const necessaryQualityStr = ConstantStore.get(
+  const necessaryQualityStr = get(
     "ITEMS",
     `${type}_NECESSARY_QUALITY`,
   );

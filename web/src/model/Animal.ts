@@ -1,6 +1,6 @@
 import { Item } from "./Item";
 import { ItemType, getItemTypeWeight } from "./ItemType";
-import { ConstantStore } from "../core/ConstantStore";
+import { get } from "../core/ConstantStore";
 
 export class Animal extends Item {
   private moveFactor: number;
@@ -8,7 +8,7 @@ export class Animal extends Item {
 
   constructor(type: ItemType) {
     super(type);
-    const moveFactorStr = ConstantStore.get("ITEMS", `${type}_MOVE_FACTOR`);
+    const moveFactorStr = get("ITEMS", `${type}_MOVE_FACTOR`);
     this.moveFactor = moveFactorStr ? parseFloat(moveFactorStr) : 0;
     this.dead = false;
   }
