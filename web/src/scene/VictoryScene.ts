@@ -18,7 +18,7 @@ export class VictoryScene extends Scene {
     background.setPosition({ x: 0, y: 0 }, ReferencePoint.TOPLEFT);
 
     const h1Font = FontStore.getFont(FontID.H1);
-    const victoryLabel = new Label("Victory!", h1Font, Color.green, canvasWidth);
+    const victoryLabel = new Label(canvasWidth, h1Font.getLineHeight(), h1Font, Color.green, "Victory!");
     this.mainLayer.add(victoryLabel);
     victoryLabel.setPosition(
       { x: canvasWidth / 2, y: canvasHeight / 2 },

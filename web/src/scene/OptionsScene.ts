@@ -18,7 +18,6 @@ export class OptionsScene extends Scene {
   private static readonly BUTTON_WIDTH = 250;
   private static readonly BUTTON_HEIGHT = 50;
   private static readonly PADDING = 20;
-  private static readonly SOUND_INCREMENT = 10;
 
   private canvasWidth: number;
   private canvasHeight: number;
@@ -104,13 +103,8 @@ export class OptionsScene extends Scene {
       OptionsScene.BUTTON_WIDTH,
       volumeLabel.getHeight() + this.volumeCounter.getHeight()
     );
-    volumePanel.add(volumeLabel);
-    volumeLabel.setPosition({ x: 0, y: 0 }, ReferencePoint.TOPLEFT);
-    volumePanel.add(this.volumeCounter);
-    this.volumeCounter.setPosition(
-      { x: 0, y: volumeLabel.getHeight() },
-      ReferencePoint.TOPLEFT
-    );
+    volumePanel.add(volumeLabel, { x: 0, y: 0 }, ReferencePoint.TOPLEFT);
+    volumePanel.add(this.volumeCounter, { x: 0, y: volumeLabel.getHeight() }, ReferencePoint.TOPLEFT);
 
     // Save button
     const saveLabel = new Label(
@@ -186,7 +180,14 @@ export class OptionsScene extends Scene {
 
     // Create save modal (5 save slots)
     const saveControl = new SegmentedControl(600, 150, 2, 3, 20, true, 1, 'Game 1', 'Game 2', 'Game 3', 'Game 4', 'Game 5');
-    this.saveModal = new ComponentModal('Select a save slot:', 1, saveControl);
+    this.saveModal = new ComponentModal(
+      this.canvasWidth,
+      this.canvasHeight,
+      this,
+      'Select a save slot:',
+      1,
+      saveControl
+    );
   }
 
   override dismissModal(modal: Component, button: number): void {

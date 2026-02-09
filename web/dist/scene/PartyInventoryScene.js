@@ -90,7 +90,8 @@ export class PartyInventoryScene extends Scene {
                 animalPanel.add(muleSprite, { x: animalX, y: 20 }, ReferencePoint.TOPLEFT, 0, 0);
                 animalPanel.add(muleLabel, { x: animalX + 30, y: 25 }, ReferencePoint.TOPLEFT, 0, 0);
             }
-            this.mainLayer.add(animalPanel, { x: PartyInventoryScene.PADDING, y: yOffset }, ReferencePoint.TOPLEFT);
+            this.mainLayer.add(animalPanel);
+            animalPanel.setPosition({ x: PartyInventoryScene.PADDING, y: yOffset }, ReferencePoint.TOPLEFT);
         }
         this.mainLayer.add(this.binCounter);
         this.binCounter.setPosition({ x: canvasWidth - PartyInventoryScene.PADDING, y: canvasHeight - PartyInventoryScene.PADDING }, ReferencePoint.BOTTOMRIGHT);
@@ -105,33 +106,27 @@ export class PartyInventoryScene extends Scene {
         const panel = new Panel(width, 100);
         const fieldFont = FontStore.getFont(FontID.FIELD);
         const nameLabel = new Label(200, fieldFont.getLineHeight(), fieldFont, Color.white, person.getName());
-        panel.add(nameLabel);
-        nameLabel.setPosition({ x: 10, y: 10 }, ReferencePoint.TOPLEFT);
+        panel.add(nameLabel, { x: 10, y: 10 }, ReferencePoint.TOPLEFT);
         const healthBar = new ConditionBar(150, 20, person.getHealth());
-        panel.add(healthBar);
-        healthBar.setPosition({ x: 10, y: 35 }, ReferencePoint.TOPLEFT);
+        panel.add(healthBar, { x: 10, y: 35 }, ReferencePoint.TOPLEFT);
         const weight = person.getInventory().getWeight();
-        const capacity = person.getInventory().getWeightCapacity();
+        const capacity = person.getInventory().getMaxWeight();
         const weightLabel = new Label(200, fieldFont.getLineHeight(), fieldFont, Color.white, `${weight}/${capacity} lbs`);
-        panel.add(weightLabel);
-        weightLabel.setPosition({ x: 10, y: 60 }, ReferencePoint.TOPLEFT);
+        panel.add(weightLabel, { x: 10, y: 60 }, ReferencePoint.TOPLEFT);
         return panel;
     }
     createVehiclePanel(vehicle, width) {
         const panel = new Panel(width, 100);
         const fieldFont = FontStore.getFont(FontID.FIELD);
         const nameLabel = new Label(200, fieldFont.getLineHeight(), fieldFont, Color.white, 'Wagon');
-        panel.add(nameLabel);
-        nameLabel.setPosition({ x: 10, y: 10 }, ReferencePoint.TOPLEFT);
+        panel.add(nameLabel, { x: 10, y: 10 }, ReferencePoint.TOPLEFT);
         const condition = vehicle.getCondition();
         const conditionBar = new ConditionBar(150, 20, condition);
-        panel.add(conditionBar);
-        conditionBar.setPosition({ x: 10, y: 35 }, ReferencePoint.TOPLEFT);
+        panel.add(conditionBar, { x: 10, y: 35 }, ReferencePoint.TOPLEFT);
         const weight = vehicle.getInventory().getWeight();
-        const capacity = vehicle.getInventory().getWeightCapacity();
+        const capacity = vehicle.getInventory().getMaxWeight();
         const weightLabel = new Label(200, fieldFont.getLineHeight(), fieldFont, Color.white, `${weight}/${capacity} lbs`);
-        panel.add(weightLabel);
-        weightLabel.setPosition({ x: 10, y: 60 }, ReferencePoint.TOPLEFT);
+        panel.add(weightLabel, { x: 10, y: 60 }, ReferencePoint.TOPLEFT);
         return panel;
     }
     onClose() {

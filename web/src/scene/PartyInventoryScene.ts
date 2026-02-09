@@ -139,29 +139,30 @@ export class PartyInventoryScene extends Scene {
         animalPanel.add(muleLabel, { x: animalX + 30, y: 25 }, ReferencePoint.TOPLEFT, 0, 0);
       }
 
-      this.mainLayer.add(animalPanel, { x: PartyInventoryScene.PADDING, y: yOffset }, ReferencePoint.TOPLEFT);
+      this.mainLayer.add(animalPanel);
+      animalPanel.setPosition({ x: PartyInventoryScene.PADDING, y: yOffset }, ReferencePoint.TOPLEFT);
     }
 
-    this.mainLayer.add(
-      this.binCounter,
+    this.mainLayer.add(this.binCounter);
+    this.binCounter.setPosition(
       { x: canvasWidth - PartyInventoryScene.PADDING, y: canvasHeight - PartyInventoryScene.PADDING },
       ReferencePoint.BOTTOMRIGHT
     );
 
-    this.mainLayer.add(
-      this.closeButton,
+    this.mainLayer.add(this.closeButton);
+    this.closeButton.setPosition(
       { x: PartyInventoryScene.PADDING, y: canvasHeight - PartyInventoryScene.PADDING },
       ReferencePoint.BOTTOMLEFT
     );
 
-    this.mainLayer.add(
-      this.transferButton,
+    this.mainLayer.add(this.transferButton);
+    this.transferButton.setPosition(
       { x: this.closeButton.getX() + this.closeButton.getWidth() + PartyInventoryScene.PADDING, y: canvasHeight - PartyInventoryScene.PADDING },
       ReferencePoint.BOTTOMLEFT
     );
 
-    this.mainLayer.add(
-      this.dropButton,
+    this.mainLayer.add(this.dropButton);
+    this.dropButton.setPosition(
       { x: this.transferButton.getX() + this.transferButton.getWidth() + PartyInventoryScene.PADDING, y: canvasHeight - PartyInventoryScene.PADDING },
       ReferencePoint.BOTTOMLEFT
     );

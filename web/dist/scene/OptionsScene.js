@@ -49,10 +49,8 @@ export class OptionsScene extends Scene {
         });
         // Volume panel combining label and counter
         const volumePanel = new Panel(OptionsScene.BUTTON_WIDTH, volumeLabel.getHeight() + this.volumeCounter.getHeight());
-        volumePanel.add(volumeLabel);
-        volumeLabel.setPosition({ x: 0, y: 0 }, ReferencePoint.TOPLEFT);
-        volumePanel.add(this.volumeCounter);
-        this.volumeCounter.setPosition({ x: 0, y: volumeLabel.getHeight() }, ReferencePoint.TOPLEFT);
+        volumePanel.add(volumeLabel, { x: 0, y: 0 }, ReferencePoint.TOPLEFT);
+        volumePanel.add(this.volumeCounter, { x: 0, y: volumeLabel.getHeight() }, ReferencePoint.TOPLEFT);
         // Save button
         const saveLabel = new Label(OptionsScene.BUTTON_WIDTH, fieldFont.getLineHeight(), fieldFont, Color.white, 'Save');
         this.saveButton = new Button(OptionsScene.BUTTON_WIDTH, OptionsScene.BUTTON_HEIGHT, saveLabel);
@@ -86,7 +84,7 @@ export class OptionsScene extends Scene {
         }
         // Create save modal (5 save slots)
         const saveControl = new SegmentedControl(600, 150, 2, 3, 20, true, 1, 'Game 1', 'Game 2', 'Game 3', 'Game 4', 'Game 5');
-        this.saveModal = new ComponentModal('Select a save slot:', 1, saveControl);
+        this.saveModal = new ComponentModal(this.canvasWidth, this.canvasHeight, this, 'Select a save slot:', 1, saveControl);
     }
     dismissModal(modal, button) {
         super.dismissModal(modal, button);
@@ -151,5 +149,4 @@ export class OptionsScene extends Scene {
 OptionsScene.BUTTON_WIDTH = 250;
 OptionsScene.BUTTON_HEIGHT = 50;
 OptionsScene.PADDING = 20;
-OptionsScene.SOUND_INCREMENT = 10;
 //# sourceMappingURL=OptionsScene.js.map
