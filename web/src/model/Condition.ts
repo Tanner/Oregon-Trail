@@ -8,19 +8,21 @@ export class Condition {
       throw new Error("Maximum value less than minimum value");
     }
 
-    const initialCurrent = current !== undefined ? current : max;
-
-    if (initialCurrent < min || initialCurrent > max) {
-      throw new Error("Starting value not in min/max range");
-    }
-
     this.min = min;
     this.max = max;
-    this.current = initialCurrent;
+    this.current = current !== undefined ? current : max;
+
+    if (this.current < min || this.current > max) {
+      throw new Error("Starting value not in min/max range");
+    }
   }
 
   getCurrent(): number {
     return this.current;
+  }
+
+  getPercentage(): number {
+    return (this.current - this.min) / (this.max - this.min);
   }
 
   getMin(): number {
@@ -29,10 +31,6 @@ export class Condition {
 
   getMax(): number {
     return this.max;
-  }
-
-  getPercentage(): number {
-    return (this.current - this.min) / (this.max - this.min);
   }
 
   increase(amount: number): void {
