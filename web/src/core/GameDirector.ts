@@ -46,19 +46,15 @@ export class GameDirector {
     if (this.running) return;
     this.running = true;
 
-    const splashScene = new SplashScene(this.canvas.width, this.canvas.height, () => {
+    // Skip splash, go straight to loading
+    const loadingScene = new LoadingScene(this.canvas.width, this.canvas.height, () => {
       this.sceneDirector.pushScene(
-        new LoadingScene(this.canvas.width, this.canvas.height, () => {
-          this.sceneDirector.pushScene(
-            new MainMenuScene(this.canvas.width, this.canvas.height),
-            true
-          );
-        }),
+        new MainMenuScene(this.canvas.width, this.canvas.height),
         true
       );
     });
 
-    this.sceneDirector.pushScene(splashScene, false);
+    this.sceneDirector.pushScene(loadingScene, false);
     this.lastTimestamp = performance.now();
     this.gameLoop(this.lastTimestamp);
   }
