@@ -80,15 +80,15 @@ export class MainMenuScene extends Scene {
   }
 
   private onNewGame(): void {
-    console.log('New Game clicked - PartyCreationScene not yet implemented');
+    this.requestScene(SceneID.PARTYCREATION, false);
   }
 
   private onLoad(): void {
-    console.log('Load clicked');
+    console.log('Load game not yet implemented');
   }
 
   private onOptions(): void {
-    console.log('Options clicked');
+    this.requestScene(SceneID.OPTIONS, false);
   }
 
   override enter(): void {

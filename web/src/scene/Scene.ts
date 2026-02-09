@@ -69,6 +69,10 @@ class SceneLayer implements Visible {
   }
 }
 
+export interface SceneDelegate {
+  requestScene(id: SceneID, lastScene: Scene | null, replace: boolean): void;
+}
+
 export abstract class Scene implements Visible, ModalListener {
   protected backgroundLayer: SceneLayer;
   protected mainLayer: SceneLayer;
@@ -79,6 +83,7 @@ export abstract class Scene implements Visible, ModalListener {
   private paused: boolean = false;
   private lastMouseX: number = 0;
   private lastMouseY: number = 0;
+  private sceneDelegate: SceneDelegate | null = null;
 
   constructor() {
     this.backgroundLayer = new SceneLayer();
@@ -237,5 +242,15 @@ export abstract class Scene implements Visible, ModalListener {
 
   getLayers(): SceneLayer[] {
     return [this.backgroundLayer, this.mainLayer, this.hudLayer, this.modalLayer];
+  }
+
+  setSceneDelegate(delegate: SceneDelegate | null): void {
+    this.sceneDelegate = delegate;
+  }
+
+  protected requestScene(id: SceneID, replace: boolean = false): void {
+    if (this.sceneDelegate) {
+      this.sceneDelegate.requestScene(id, this, replace);
+    }
   }
 }
