@@ -8,6 +8,7 @@ import { ReferencePoint } from '../component/Component';
 import { Color } from '../core/Color';
 import { FontStore, FontID } from '../core/FontStore';
 import { ImageStore } from '../core/ImageStore';
+import { SoundStore } from '../core/SoundStore';
 
 export class MainMenuScene extends Scene {
   private static readonly BUTTON_WIDTH = 230;
@@ -88,6 +89,17 @@ export class MainMenuScene extends Scene {
 
   private onOptions(): void {
     console.log('Options clicked');
+  }
+
+  override enter(): void {
+    super.enter();
+    SoundStore.setVolume(0.5);
+    SoundStore.loopMusic('GBU');
+  }
+
+  override leave(): void {
+    super.leave();
+    SoundStore.stopMusic();
   }
 
   getID(): SceneID {
