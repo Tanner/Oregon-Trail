@@ -8,7 +8,7 @@ import { AnimatingColor } from '../core/AnimatingColor';
 import { ImageStore } from '../core/ImageStore';
 import { SoundStore } from '../core/SoundStore';
 import { TownHUD } from '../component/hud/TownHUD';
-import { AnimatingSprite, Direction } from '../component/sprite/AnimatingSprite';
+import { AnimatingSprite } from '../component/sprite/AnimatingSprite';
 import { ParallaxPanel } from '../component/parallax/ParallaxPanel';
 import { ParallaxComponentLoop } from '../component/parallax/ParallaxComponentLoop';
 import { ComponentModal } from '../component/modal/ComponentModal';
@@ -75,7 +75,6 @@ export class TownScene extends Scene {
     parallaxPanel.addParallaxComponent(ground);
     ground.setPosition({ x: 0, y: this.groundY }, ReferencePoint.TOPLEFT);
 
-    const trailHeight = 50;
     const trail = new ParallaxComponentLoop(
       TownScene.CANVAS_WIDTH,
       ImageStore.getImage('TRAIL'),
@@ -111,13 +110,10 @@ export class TownScene extends Scene {
     this.mainLayer.add(this.tavern);
     this.tavern.setPosition({ x: TownScene.CANVAS_WIDTH - 20, y: this.groundY + 50 }, ReferencePoint.BOTTOMRIGHT);
 
-    this.partyLeaderSprite = new AnimatingSprite(
-      96,
-      [ImageStore.getImage('HUNTER_LEFT')],
-      [ImageStore.getImage('HUNTER_RIGHT')],
-      Direction.RIGHT,
-      250
-    );
+    this.partyLeaderSprite = new AnimatingSprite(96, 96);
+    this.partyLeaderSprite.addAnimation('left', [ImageStore.getImage('HUNTER_LEFT')], 250);
+    this.partyLeaderSprite.addAnimation('right', [ImageStore.getImage('HUNTER_RIGHT')], 250);
+    this.partyLeaderSprite.setAnimation('right');
     this.mainLayer.add(this.partyLeaderSprite);
     this.partyLeaderSprite.setPosition(
       { x: TownScene.CANVAS_WIDTH / 2, y: trail.getPosition(ReferencePoint.BOTTOMCENTER).y - 25 },
@@ -136,10 +132,14 @@ export class TownScene extends Scene {
       const hasTracking = this.party.getSkills().includes(Skill.TRACKING);
       const buttonCount = hasTracking ? 3 : 2;
 
+      const segControl = new SegmentedControl(700, 30, 1, trails.length, 0, false, 1, ...trails);
       this.trailChoiceModal = new ComponentModal<SegmentedControl>(
+        TownScene.CANVAS_WIDTH,
+        TownScene.CANVAS_HEIGHT,
+        this,
         getLiteral('TOWN_SCENE', 'TRAIL_CHOICE'),
         buttonCount,
-        new SegmentedControl(700, 300, 3, 1, true, 1, trails)
+        segControl
       );
 
       if (hasTracking) {
