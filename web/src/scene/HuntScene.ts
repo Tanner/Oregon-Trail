@@ -17,7 +17,6 @@ export class HuntScene extends Scene {
   private static readonly BULLETS_PER_BOX = 20;
   private static readonly MAX_PREY = 6;
 
-  private party: Party;
   private huntingGrounds: HuntingGroundsComponent;
   private hunter: HunterAnimatingSprite;
   private prey: PreyAnimatingSprite[] = [];
@@ -36,9 +35,8 @@ export class HuntScene extends Scene {
   private hunterWorldX: number = 1200;
   private hunterWorldY: number = 1200;
 
-  constructor(canvasWidth: number, canvasHeight: number, party: Party) {
+  constructor(canvasWidth: number, _canvasHeight: number, _party: Party) {
     super();
-    this.party = party;
 
     this.huntingGrounds = new HuntingGroundsComponent(TerrainType.GRASS);
     this.hunter = new HunterAnimatingSprite(48);

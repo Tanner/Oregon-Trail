@@ -151,7 +151,7 @@ export class TownScene extends Scene {
             this.adjustSetting();
         }
     }
-    keyReleased(key, code) {
+    keyReleased(key) {
         if (key === 'Enter') {
             const leaderX = this.partyLeaderSprite.getX();
             const storeX = this.store.getX();
