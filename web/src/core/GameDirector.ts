@@ -8,14 +8,14 @@ import { MapScene } from '../scene/MapScene';
 import { GameOverScene } from '../scene/GameOverScene';
 import { VictoryScene } from '../scene/VictoryScene';
 import { OptionsScene } from '../scene/OptionsScene';
-import { Scene } from '../scene/Scene';
+import { Scene, SceneDelegate } from '../scene/Scene';
 import { SceneID } from '../scene/SceneID';
 import { Game } from '../model/Game';
 import { WorldMap } from '../model/WorldMap';
 import { FadeOutTransition, FadeInTransition, RotateTransition } from './Transition';
 import { Color } from './Color';
 
-export class GameDirector {
+export class GameDirector implements SceneDelegate {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private sceneDirector: SceneDirector;
@@ -85,71 +85,84 @@ export class GameDirector {
   }
 
   private sceneForSceneID(id: SceneID, _lastScene?: Scene): Scene | null {
+    let scene: Scene | null = null;
+
     switch (id) {
       case SceneID.SPLASH:
-        return new SplashScene(this.canvas.width, this.canvas.height, () => {
+        scene = new SplashScene(this.canvas.width, this.canvas.height, () => {
           this.requestScene(SceneID.LOADING, null, true);
         });
+        break;
       case SceneID.LOADING:
-        return new LoadingScene(this.canvas.width, this.canvas.height, () => {
+        scene = new LoadingScene(this.canvas.width, this.canvas.height, () => {
           this.requestScene(SceneID.MAINMENU, null, true);
         });
+        break;
       case SceneID.MAINMENU:
-        return new MainMenuScene(this.canvas.width, this.canvas.height);
+        scene = new MainMenuScene(this.canvas.width, this.canvas.height);
+        break;
       case SceneID.PARTYCREATION:
-        return new PartyCreationScene(this.canvas.width, this.canvas.height);
+        scene = new PartyCreationScene(this.canvas.width, this.canvas.height);
+        break;
       case SceneID.TOWN:
         this.game.resetStoreInventory(this.worldMap.getCurrLocationNode());
         // TownScene not yet implemented - placeholder
         console.log('TownScene requested but not yet implemented');
-        return null;
+        break;
       case SceneID.STORE:
         // StoreScene not yet implemented - placeholder
         console.log('StoreScene requested but not yet implemented');
-        return null;
+        break;
       case SceneID.PARTYINVENTORY:
         // PartyInventoryScene not yet implemented - placeholder
         console.log('PartyInventoryScene requested but not yet implemented');
-        return null;
+        break;
       case SceneID.HUNT:
         // HuntScene not yet implemented - placeholder
         console.log('HuntScene requested but not yet implemented');
-        return null;
+        break;
       case SceneID.TRAIL:
         // TrailScene in progress - placeholder
         console.log('TrailScene requested but not yet implemented');
-        return null;
+        break;
       case SceneID.GAMEOVER:
-        return new GameOverScene(this.canvas.width, this.canvas.height);
+        scene = new GameOverScene(this.canvas.width, this.canvas.height);
+        break;
       case SceneID.VICTORY:
-        return new VictoryScene(this.canvas.width, this.canvas.height);
+        scene = new VictoryScene(this.canvas.width, this.canvas.height);
+        break;
       case SceneID.MAP:
-        return new MapScene(this.game.getWorldMap());
+        scene = new MapScene(this.game.getWorldMap());
+        break;
       case SceneID.RIVER:
         // RiverScene not yet implemented - placeholder
         console.log('RiverScene requested but not yet implemented');
-        return null;
+        break;
       case SceneID.OPTIONS:
-        const optionsScene = new OptionsScene(this.canvas.width, this.canvas.height);
-        optionsScene.setOnMainMenu(() => this.resetToMainMenu());
-        optionsScene.setOnBack(() => {
+        scene = new OptionsScene(this.canvas.width, this.canvas.height);
+        (scene as OptionsScene).setOnMainMenu(() => this.resetToMainMenu());
+        (scene as OptionsScene).setOnBack(() => {
           const currentScene = this.sceneDirector.currentScene();
           if (currentScene) {
             currentScene.leave();
           }
         });
-        return optionsScene;
+        break;
       case SceneID.TAVERN:
         // TavernScene not yet implemented - placeholder
         console.log('TavernScene requested but not yet implemented');
-        return null;
+        break;
       case SceneID.SCENESELECTOR:
         // SceneSelectorScene not yet implemented - placeholder
         console.log('SceneSelectorScene requested but not yet implemented');
-        return null;
-      default:
-        return null;
+        break;
     }
+
+    if (scene) {
+      scene.setSceneDelegate(this);
+    }
+
+    return scene;
   }
 
   requestScene(id: SceneID | null, lastScene: Scene | null, popLastScene: boolean): void {
