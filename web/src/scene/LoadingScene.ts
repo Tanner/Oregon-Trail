@@ -6,6 +6,7 @@ import { ReferencePoint } from '../component/Component';
 import { Color } from '../core/Color';
 import { FontStore, FontID } from '../core/FontStore';
 import { ImageStore } from '../core/ImageStore';
+import { SoundStore } from '../core/SoundStore';
 
 class LoadingCondition implements Condition {
   private current: number = 0;
@@ -105,7 +106,15 @@ export class LoadingScene extends Scene {
     try {
       this.loadLabel.setText('Loading images...');
       await ImageStore.initialize((loaded, total) => {
-        const percentage = (loaded / total) * 100;
+        const percentage = (loaded / total) * 50;
+        this.loadCondition = new LoadingCondition(100);
+        this.loadCondition.increase(percentage);
+        this.loadingBar.setCondition(this.loadCondition);
+      });
+
+      this.loadLabel.setText('Loading sounds...');
+      await SoundStore.initialize((loaded, total) => {
+        const percentage = 50 + (loaded / total) * 50;
         this.loadCondition = new LoadingCondition(100);
         this.loadCondition.increase(percentage);
         this.loadingBar.setCondition(this.loadCondition);
