@@ -26,7 +26,6 @@ export class OptionsScene extends Scene {
         this.onBack = callback;
     }
     init() {
-        super.init();
         // Black background
         const background = new Panel(this.canvasWidth, this.canvasHeight, Color.black);
         this.backgroundLayer.add(background);
@@ -90,9 +89,9 @@ export class OptionsScene extends Scene {
         const saveControl = new SegmentedControl(600, 150, 2, 3, 20, true, 1, saveChoices);
         this.saveModal = new ComponentModal('Select a save slot:', 1, saveControl);
     }
-    dismissModal(button) {
-        super.dismissModal(button);
-        const currentModal = this.modalLayer.getComponents()[0];
+    dismissModal(modal, button) {
+        super.dismissModal(modal, button);
+        const currentModal = modal;
         if (currentModal === this.saveModal && button === 0) {
             const selection = this.saveModal.getComponent().getSelection();
             if (selection.length > 0) {

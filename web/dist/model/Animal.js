@@ -1,10 +1,10 @@
 import { Item } from "./Item";
 import { ItemType, getItemTypeWeight } from "./ItemType";
-import { get } from "../core/ConstantStore";
+import * as ConstantStore from "../core/ConstantStore";
 export class Animal extends Item {
     constructor(type) {
         super(type);
-        const moveFactorStr = get("ITEMS", `${type}_MOVE_FACTOR`);
+        const moveFactorStr = ConstantStore.get("ITEMS", `${type}_MOVE_FACTOR`);
         this.moveFactor = moveFactorStr ? parseFloat(moveFactorStr) : 0;
         this.dead = false;
     }

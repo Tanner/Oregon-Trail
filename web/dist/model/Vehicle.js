@@ -1,11 +1,11 @@
 import { Item } from "./Item";
 import { Inventory } from "./Inventory";
-import { get } from "../core/ConstantStore";
+import * as ConstantStore from "../core/ConstantStore";
 export class Vehicle extends Item {
     constructor(type) {
         super(type);
-        this.MAX_INVENTORY_SIZE = parseInt(get("ITEMS", `${type}_MAX_INV_SIZE`), 10);
-        this.MAX_INVENTORY_WEIGHT = parseFloat(get("ITEMS", `${type}_MAX_INV_WEIGHT`));
+        this.MAX_INVENTORY_SIZE = parseInt(ConstantStore.get("ITEMS", `${type}_MAX_INV_SIZE`), 10);
+        this.MAX_INVENTORY_WEIGHT = parseFloat(ConstantStore.get("ITEMS", `${type}_MAX_INV_WEIGHT`));
         this.cargo = new Inventory(this.MAX_INVENTORY_SIZE, this.MAX_INVENTORY_WEIGHT);
     }
     getStatus() {

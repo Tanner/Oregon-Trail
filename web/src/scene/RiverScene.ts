@@ -1,11 +1,11 @@
-import { Scene, SceneID } from './Scene';
+import { Scene } from './Scene';
+import { SceneID } from './SceneID';
 import { Party } from '../model/Party';
-import { Person } from '../model/Person';
 import { Panel } from '../component/Panel';
 import { Color } from '../core/Color';
 import { ImageStore } from '../core/ImageStore';
 import { SoundStore } from '../core/SoundStore';
-import { Sprite } from '../component/sprite/Sprite';
+import { Sprite } from '../component/Sprite';
 import { AnimatingSprite } from '../component/sprite/AnimatingSprite';
 import { ParallaxPanel } from '../component/parallax/ParallaxPanel';
 import { ParallaxComponent } from '../component/parallax/ParallaxComponent';
@@ -13,7 +13,8 @@ import { ParallaxComponentLoop } from '../component/parallax/ParallaxComponentLo
 import { ComponentModal } from '../component/modal/ComponentModal';
 import { MessageModal } from '../component/modal/MessageModal';
 import { SegmentedControl } from '../component/SegmentedControl';
-import { ReferencePoint } from '../component/Positionable';
+import { ReferencePoint } from '../component/Component';
+import { Component } from '../component/Component';
 
 /**
  * River crossing scene where the player chooses how to cross:
@@ -68,8 +69,7 @@ export class RiverScene extends Scene {
     this.tollPrice = (Math.floor(Math.random() * 20) + 1) * (party.getLocation().getRank() + 1);
   }
 
-  override init(): void {
-    super.init();
+  init(): void {
 
     // Sky background
     const skyColor = new Color(0x57 / 255, 0x9c / 255, 0xdd / 255);
@@ -100,38 +100,33 @@ export class RiverScene extends Scene {
     this.backgroundLayer.add(this.cloudParallaxPanel);
 
     // Hills
-    const hillB = new Sprite(ImageStore.getImage('HILL_B'));
-    hillB.setSize(800, hillB.getHeight());
+    const hillB = new Sprite(800, undefined, ImageStore.getImage('HILL_B'));
     this.backgroundLayer.add(hillB);
     hillB.setPosition({ x: this.canvasWidth, y: 50 }, ReferencePoint.TOPRIGHT);
 
-    const hillA = new Sprite(ImageStore.getImage('HILL_A'));
-    hillA.setSize(800, hillA.getHeight());
+    const hillA = new Sprite(800, undefined, ImageStore.getImage('HILL_A'));
     this.backgroundLayer.add(hillA);
     hillA.setPosition({ x: 0, y: 50 }, ReferencePoint.TOPLEFT);
 
     // River edge top
-    const riverEdgeTop = new Sprite(ImageStore.getImage('RIVER_EDGE_TOP'));
-    riverEdgeTop.setSize(this.canvasWidth + 1, riverEdgeTop.getHeight());
+    const riverEdgeTop = new Sprite(this.canvasWidth + 1, undefined, ImageStore.getImage('RIVER_EDGE_TOP'));
     this.backgroundLayer.add(riverEdgeTop);
     riverEdgeTop.setPosition({ x: 0, y: 0 }, ReferencePoint.TOPLEFT);
 
     // River parallax (water)
     this.riverParallaxPanel = new ParallaxPanel(this.canvasWidth, this.canvasHeight);
-    const water = new ParallaxComponentLoop(ImageStore.getImage('WATER'), 1);
-    water.setSize(this.canvasWidth + 1, water.getHeight());
+    const water = new ParallaxComponentLoop(this.canvasWidth + 1, ImageStore.getImage('WATER'), 1);
     this.riverParallaxPanel.add(water);
     water.setPosition({ x: 0, y: this.canvasHeight - 200 }, ReferencePoint.BOTTOMLEFT);
     this.backgroundLayer.add(this.riverParallaxPanel);
 
     // River edge
-    const riverEdge = new Sprite(ImageStore.getImage('RIVER_EDGE'));
-    riverEdge.setSize(this.canvasWidth + 1, riverEdge.getHeight());
+    const riverEdge = new Sprite(this.canvasWidth + 1, undefined, ImageStore.getImage('RIVER_EDGE'));
     this.backgroundLayer.add(riverEdge);
     riverEdge.setPosition({ x: 0, y: this.canvasHeight }, ReferencePoint.BOTTOMLEFT);
 
     // Bridge
-    this.bridge = new Sprite(ImageStore.getImage('BRIDGE'));
+    this.bridge = new Sprite(200, undefined, ImageStore.getImage('BRIDGE'));
     this.mainLayer.add(this.bridge);
     this.bridge.setPosition(
       { x: this.canvasWidth / 2, y: this.canvasHeight / 2 },
@@ -250,10 +245,10 @@ export class RiverScene extends Scene {
     }
   }
 
-  override dismissModal(button: number): void {
-    super.dismissModal(button);
+  override dismissModal(modal: Component, button: number): void {
+    super.dismissModal(modal, button);
 
-    const currentModal = this.modalLayer.getComponents()[0];
+    const currentModal = modal;
 
     if (currentModal === this.crossingChoicesModal) {
       const choice = this.crossingChoicesModal.getComponent().getSelection();

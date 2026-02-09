@@ -10,7 +10,7 @@ export class Panel extends Component {
         }
         else if (backgroundColorOrImage instanceof HTMLImageElement) {
             this.backgroundImage = backgroundColorOrImage;
-            const sprite = new Sprite(width, backgroundColorOrImage);
+            const sprite = new Sprite(width, height, backgroundColorOrImage);
             this.add(sprite, this.getPosition(ReferencePoint.TOPLEFT), ReferencePoint.TOPLEFT);
         }
     }

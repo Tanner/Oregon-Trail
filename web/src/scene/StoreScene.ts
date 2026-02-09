@@ -7,11 +7,9 @@ import { Counter } from '../component/Counter';
 import { ReferencePoint } from '../component/Component';
 import { Color } from '../core/Color';
 import { FontStore, FontID } from '../core/FontStore';
-import { ImageStore } from '../core/ImageStore';
 import { get as getLiteral } from '../core/ConstantStore';
 import { Party } from '../model/Party';
 import { Inventory } from '../model/Inventory';
-import { Item } from '../model/Item';
 import { ItemType, getItemTypeName, getItemTypeCost, getItemTypeWeight } from '../model/ItemType';
 
 export class StoreScene extends Scene {

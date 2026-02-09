@@ -9,7 +9,7 @@ import { ComponentModal } from '../component/modal/ComponentModal';
 import { Color } from '../core/Color';
 import { FontStore, FontID } from '../core/FontStore';
 import { SoundStore } from '../core/SoundStore';
-import { ReferencePoint } from '../component/Component';
+import { Component, ReferencePoint } from '../component/Component';
 
 /**
  * Options scene with volume controls and save/load functionality
@@ -47,8 +47,7 @@ export class OptionsScene extends Scene {
     this.onBack = callback;
   }
 
-  override init(): void {
-    super.init();
+  init(): void {
 
     // Black background
     const background = new Panel(this.canvasWidth, this.canvasHeight, Color.black);
@@ -186,15 +185,14 @@ export class OptionsScene extends Scene {
     }
 
     // Create save modal (5 save slots)
-    const saveChoices = ['Game 1', 'Game 2', 'Game 3', 'Game 4', 'Game 5'];
-    const saveControl = new SegmentedControl(600, 150, 2, 3, 20, true, 1, saveChoices);
+    const saveControl = new SegmentedControl(600, 150, 2, 3, 20, true, 1, 'Game 1', 'Game 2', 'Game 3', 'Game 4', 'Game 5');
     this.saveModal = new ComponentModal('Select a save slot:', 1, saveControl);
   }
 
-  override dismissModal(button: number): void {
-    super.dismissModal(button);
+  override dismissModal(modal: Component, button: number): void {
+    super.dismissModal(modal, button);
 
-    const currentModal = this.modalLayer.getComponents()[0];
+    const currentModal = modal;
 
     if (currentModal === this.saveModal && button === 0) {
       const selection = this.saveModal.getComponent().getSelection();

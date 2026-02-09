@@ -100,7 +100,7 @@ export class TrailHUD extends HUD {
       getLiteral('TRAIL_SCENE', 'CAMP')
     );
 
-    const fireSprite = new Sprite(48, ImageStore.getImage('CAMP_ICON'));
+    const fireSprite = new Sprite(48, undefined, ImageStore.getImage('CAMP_ICON'));
 
     this.menuButton = new Button(
       menuLabel.getWidth() + 2 * TrailHUD.MARGIN,

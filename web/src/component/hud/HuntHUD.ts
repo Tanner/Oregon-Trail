@@ -25,8 +25,8 @@ export class HuntHUD extends HUD {
       Color.white,
       'Ammo: 0 bullets, 0 boxes'
     );
-    this.add(this.ammoLabel);
-    this.ammoLabel.setPosition(
+    this.add(
+      this.ammoLabel,
       { x: HuntHUD.MARGIN, y: HUD.HEIGHT / 2 },
       ReferencePoint.CENTERLEFT,
       0,
@@ -49,16 +49,16 @@ export class HuntHUD extends HUD {
     this.inventoryButton.addClickListener(onInventory);
     this.inventoryButton.layout();
 
-    this.add(this.campButton);
-    this.campButton.setPosition(
+    this.add(
+      this.campButton,
       { x: width - HuntHUD.MARGIN - 100, y: HUD.HEIGHT / 2 },
       ReferencePoint.CENTERRIGHT,
       0,
       0
     );
 
-    this.add(this.inventoryButton);
-    this.inventoryButton.setPosition(
+    this.add(
+      this.inventoryButton,
       { x: this.campButton.getX() - HuntHUD.MARGIN, y: HUD.HEIGHT / 2 },
       ReferencePoint.CENTERRIGHT,
       0,

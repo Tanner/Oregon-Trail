@@ -8,14 +8,14 @@ export class Sprite extends Component {
     if (image && !height) {
       const aspectRatio = image.height / image.width;
       super(width, Math.floor(width * aspectRatio));
-      this.image = image;
     } else if (height !== undefined) {
       super(width, height);
-      if (image) {
-        this.image = image;
-      }
     } else {
       super(width, width);
+    }
+
+    if (image) {
+      this.image = image;
     }
   }
 

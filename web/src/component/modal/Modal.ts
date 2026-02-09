@@ -75,6 +75,14 @@ export abstract class Modal extends Component {
     this.cancelButtonIndex = i;
   }
 
+  getButtons(): Button[] {
+    return this.buttons;
+  }
+
+  getListener(): ModalListener {
+    return this.listener;
+  }
+
   keyReleased(key: string): void {
     if (!this.isVisible() || !this.isAcceptingInput()) {
       return;
@@ -95,13 +103,14 @@ class ButtonListener {
 
   onClick(source: Button): void {
     let buttonIndex = -1;
-    for (let i = 0; i < this.modal.buttons.length; i++) {
-      if (this.modal.buttons[i] === source) {
+    const buttons = this.modal.getButtons();
+    for (let i = 0; i < buttons.length; i++) {
+      if (buttons[i] === source) {
         buttonIndex = i;
         break;
       }
     }
 
-    this.modal.listener.dismissModal(this.modal, buttonIndex);
+    this.modal.getListener().dismissModal(this.modal, buttonIndex);
   }
 }

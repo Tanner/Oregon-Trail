@@ -1,4 +1,4 @@
-import { get } from "../core/ConstantStore";
+import * as ConstantStore from "../core/ConstantStore";
 export var ItemType;
 (function (ItemType) {
     ItemType["APPLE"] = "APPLE";
@@ -19,21 +19,21 @@ export var ItemType;
     ItemType["TRADEGOODS"] = "TRADEGOODS";
 })(ItemType || (ItemType = {}));
 const buildItemTypeData = (type, isFood, isPlant, isAnimal, isTool) => {
-    const name = get("ITEMS", `${type}_NAME`);
-    const pluralName = get("ITEMS", `${type}_PLURAL_NAME`);
-    const description = get("ITEMS", `${type}_DESCRIPTION`);
-    const cost = parseInt(get("ITEMS", `${type}_COST`), 10);
-    const weight = parseFloat(get("ITEMS", `${type}_WEIGHT`));
+    const name = ConstantStore.get("ITEMS", `${type}_NAME`);
+    const pluralName = ConstantStore.get("ITEMS", `${type}_PLURAL_NAME`);
+    const description = ConstantStore.get("ITEMS", `${type}_DESCRIPTION`);
+    const cost = parseInt(ConstantStore.get("ITEMS", `${type}_COST`), 10);
+    const weight = parseFloat(ConstantStore.get("ITEMS", `${type}_WEIGHT`));
     let factor = 0;
     if (isFood) {
-        const factorStr = get("ITEMS", `${type}_FOOD_FACTOR`);
+        const factorStr = ConstantStore.get("ITEMS", `${type}_FOOD_FACTOR`);
         factor = factorStr ? parseInt(factorStr, 10) : 0;
     }
     else if (isTool) {
-        const factorStr = get("ITEMS", `${type}_REPAIR_FACTOR`);
+        const factorStr = ConstantStore.get("ITEMS", `${type}_REPAIR_FACTOR`);
         factor = factorStr ? parseInt(factorStr, 10) : 0;
     }
-    const necessaryQualityStr = get("ITEMS", `${type}_NECESSARY_QUALITY`);
+    const necessaryQualityStr = ConstantStore.get("ITEMS", `${type}_NECESSARY_QUALITY`);
     const necessaryQuality = necessaryQualityStr
         ? parseInt(necessaryQualityStr, 10)
         : 0;
