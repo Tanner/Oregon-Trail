@@ -36,6 +36,7 @@ export class OptionsScene extends Scene {
     super();
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
+    this.init();
   }
 
   setOnMainMenu(callback: () => void): void {
@@ -46,7 +47,7 @@ export class OptionsScene extends Scene {
     this.onBack = callback;
   }
 
-  init(): void {
+  private init(): void {
 
     // Black background
     const background = new Panel(this.canvasWidth, this.canvasHeight, Color.black);

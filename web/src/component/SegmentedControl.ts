@@ -46,7 +46,7 @@ export class SegmentedControl extends Component {
     this.colWidth = Math.floor((width - (cols + 1) * margin) / cols);
 
     for (let i = 0; i < this.STATES; i++) {
-      const current = Label.withTextWidth(this.font, this.color, labels[i]);
+      const current = new Label(this.colWidth, this.rowHeight, this.font, this.color, labels[i]);
 
       this.buttons[i] = new ToggleButton(this.colWidth, this.rowHeight, current);
       this.buttons[i].setDisableAutoToggle(true);

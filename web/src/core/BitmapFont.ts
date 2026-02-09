@@ -79,7 +79,7 @@ export class BitmapFont {
           ctx.drawImage(
             this.texture,
             charInfo.x, charInfo.y, charInfo.width, charInfo.height,
-            currentX + charInfo.xoffset, y + charInfo.yoffset, charInfo.width, charInfo.height
+            Math.floor(currentX + charInfo.xoffset), Math.floor(y + charInfo.yoffset), charInfo.width, charInfo.height
           );
         }
         currentX += charInfo.xadvance;

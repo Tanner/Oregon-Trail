@@ -106,7 +106,7 @@ export class PartyCreationScene extends Scene {
     });
 
     this.professionSegmentedControl = new SegmentedControl(
-      800, 200, 5, 5, 5, true, 1, ...professionLabels
+      900, 250, 5, 5, 8, true, 1, ...professionLabels
     );
     this.professionSegmentedControl.setTooltips(professionTooltips);
   }
@@ -116,7 +116,7 @@ export class PartyCreationScene extends Scene {
     const skillLabels = skills.map(s => getSkillName(s));
 
     this.skillSegmentedControl = new SegmentedControl(
-      800, 200, 5, 3, 5, true, PartyCreationScene.NUM_SKILLS, ...skillLabels
+      900, 250, 5, 3, 8, true, PartyCreationScene.NUM_SKILLS, ...skillLabels
     );
   }
 
@@ -318,8 +318,8 @@ export class PartyCreationScene extends Scene {
   }
 
   override keyReleased(key: string, code: string): void {
-    super.keyReleased(key, code);
-
+    // Handle scene-specific logic BEFORE propagating to components
+    // This prevents child components from changing state (like removing focus) before we check it
     for (let i = 0; i < PartyCreationScene.NUM_PEOPLE; i++) {
       if (this.personNameTextFields[i].hasFocus() && key === 'Enter') {
         const name = this.personNameTextFields[i].getText();
@@ -330,6 +330,9 @@ export class PartyCreationScene extends Scene {
         }
       }
     }
+
+    // Propagate to child components AFTER scene handling
+    super.keyReleased(key, code);
   }
 
   override mouseReleased(button: number, x: number, y: number): void {
@@ -440,17 +443,17 @@ export class PartyCreationScene extends Scene {
     const validPeople = this.peopleData.filter(p => p.person !== null);
 
     if (validPeople.length === 0) {
-      console.log('Validation failed: No party members');
+      console.warn('Validation failed: No party members created');
       return;
     }
 
     for (const personData of validPeople) {
       if (personData.profession === null) {
-        console.log('Validation failed: Member without profession');
+        console.warn('Validation failed: Party member without profession');
         return;
       }
       if (personData.skills.length < PartyCreationScene.NUM_SKILLS) {
-        console.log('Validation failed: Member without all skills');
+        console.warn(`Validation failed: Party member needs ${PartyCreationScene.NUM_SKILLS} skills`);
         return;
       }
     }
@@ -458,7 +461,7 @@ export class PartyCreationScene extends Scene {
     const names = validPeople.map(p => p.name);
     const uniqueNames = new Set(names);
     if (names.length !== uniqueNames.size) {
-      console.log('Validation failed: Duplicate names');
+      console.warn('Validation failed: Duplicate party member names');
       return;
     }
 
@@ -481,15 +484,17 @@ export class PartyCreationScene extends Scene {
 
     const party = new Party(pace, rations, leader, people, time);
 
-    console.log('Party created successfully:', {
-      pace,
-      rations,
-      leader: leader.getName(),
-      members: people.map(p => p.getName()),
-      money: party.getMoney()
-    });
+    // Set party on player
+    const game = (window as any).__getGame();
+    if (game) {
+      game.getPlayer().setParty(party);
+    } else {
+      console.error('Failed to get Game instance');
+      return;
+    }
 
-    console.log('TODO: Set party on Player and transition to TownScene');
+    // Transition to TownScene
+    this.requestScene(SceneID.TOWN, false);
   }
 
   getID(): SceneID {

@@ -170,10 +170,12 @@ export abstract class Scene implements Visible, ModalListener {
   }
 
   mouseReleased(button: number, x: number, y: number): void {
+    console.log(`Scene.mouseReleased called at (${x}, ${y})`);
     const layers = [this.modalLayer, this.hudLayer, this.mainLayer, this.backgroundLayer];
     for (const layer of layers) {
       if (layer.isAcceptingInput()) {
         const components = layer.getComponents();
+        console.log(`Scene layer has ${components.length} components`);
         for (let i = components.length - 1; i >= 0; i--) {
           const component = components[i];
           if (component.isVisible() && component.isAcceptingInput()) {
@@ -205,8 +207,19 @@ export abstract class Scene implements Visible, ModalListener {
     // Subclasses can override for scene-specific key handling
   }
 
-  keyReleased(_key: string, _code: string): void {
-    // Subclasses can override for scene-specific key handling
+  keyReleased(key: string, code: string): void {
+    const layers = [this.modalLayer, this.hudLayer, this.mainLayer, this.backgroundLayer];
+    for (const layer of layers) {
+      if (layer.isAcceptingInput()) {
+        const components = layer.getComponents();
+        for (let i = components.length - 1; i >= 0; i--) {
+          const component = components[i];
+          if (component.isVisible() && component.isAcceptingInput()) {
+            component.keyReleased(key, code);
+          }
+        }
+      }
+    }
   }
 
   private pause(): void {

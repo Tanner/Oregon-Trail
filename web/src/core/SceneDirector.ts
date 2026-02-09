@@ -218,12 +218,16 @@ export class SceneDirector implements InputDelegate {
   }
 
   mouseReleased(button: number, x: number, y: number): void {
+    console.log(`SceneDirector.mouseReleased - transitioning: ${this.transitionState !== null}`);
     if (this.transitionState) {
+      console.log('SceneDirector blocked by transition state');
       return;
     }
     const scene = this.currentScene();
     if (scene) {
       scene.mouseReleased(button, x, y);
+    } else {
+      console.log('SceneDirector has no current scene');
     }
   }
 

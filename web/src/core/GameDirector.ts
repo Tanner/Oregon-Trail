@@ -8,6 +8,13 @@ import { MapScene } from '../scene/MapScene';
 import { GameOverScene } from '../scene/GameOverScene';
 import { VictoryScene } from '../scene/VictoryScene';
 import { OptionsScene } from '../scene/OptionsScene';
+import { TownScene } from '../scene/TownScene';
+import { StoreScene } from '../scene/StoreScene';
+import { PartyInventoryScene } from '../scene/PartyInventoryScene';
+import { HuntScene } from '../scene/HuntScene';
+import { TrailScene } from '../scene/TrailScene';
+import { RiverScene } from '../scene/RiverScene';
+import { TavernScene } from '../scene/TavernScene';
 import { Scene, SceneDelegate } from '../scene/Scene';
 import { SceneID } from '../scene/SceneID';
 import { Game } from '../model/Game';
@@ -41,10 +48,11 @@ export class GameDirector implements SceneDelegate {
     this.worldMap = new WorldMap(120);
     this.game = new Game(this.worldMap);
 
-    // Expose requestScene to scenes via window
+    // Expose requestScene and game to scenes via window
     (window as any).__requestScene = (id: SceneID, lastScene: Scene | null, replace: boolean) => {
       this.requestScene(id, lastScene, replace);
     };
+    (window as any).__getGame = () => this.game;
   }
 
   start(): void {
@@ -106,24 +114,55 @@ export class GameDirector implements SceneDelegate {
         break;
       case SceneID.TOWN:
         this.game.resetStoreInventory(this.worldMap.getCurrLocationNode());
-        // TownScene not yet implemented - placeholder
-        console.log('TownScene requested but not yet implemented');
+        const party = this.game.getPlayer().getParty();
+        const location = this.worldMap.getCurrLocationNode();
+        if (party) {
+          scene = new TownScene(party, location);
+        } else {
+          console.error('Cannot create TownScene: No party set on player');
+        }
         break;
       case SceneID.STORE:
-        // StoreScene not yet implemented - placeholder
-        console.log('StoreScene requested but not yet implemented');
+        {
+          const party = this.game.getPlayer().getParty();
+          const storeInventory = this.game.getStoreInventory();
+          const priceModifier = 1.0; // TODO: Calculate based on location
+          if (party) {
+            scene = new StoreScene(party, storeInventory, priceModifier);
+          } else {
+            console.error('Cannot create StoreScene: No party set on player');
+          }
+        }
         break;
       case SceneID.PARTYINVENTORY:
-        // PartyInventoryScene not yet implemented - placeholder
-        console.log('PartyInventoryScene requested but not yet implemented');
+        {
+          const party = this.game.getPlayer().getParty();
+          if (party) {
+            scene = new PartyInventoryScene(this.canvas.width, this.canvas.height, party);
+          } else {
+            console.error('Cannot create PartyInventoryScene: No party set on player');
+          }
+        }
         break;
       case SceneID.HUNT:
-        // HuntScene not yet implemented - placeholder
-        console.log('HuntScene requested but not yet implemented');
+        {
+          const party = this.game.getPlayer().getParty();
+          if (party) {
+            scene = new HuntScene(this.canvas.width, this.canvas.height, party);
+          } else {
+            console.error('Cannot create HuntScene: No party set on player');
+          }
+        }
         break;
       case SceneID.TRAIL:
-        // TrailScene in progress - placeholder
-        console.log('TrailScene requested but not yet implemented');
+        {
+          const party = this.game.getPlayer().getParty();
+          if (party) {
+            scene = new TrailScene(this.canvas.width, this.canvas.height, party);
+          } else {
+            console.error('Cannot create TrailScene: No party set on player');
+          }
+        }
         break;
       case SceneID.GAMEOVER:
         scene = new GameOverScene(this.canvas.width, this.canvas.height);
@@ -135,8 +174,14 @@ export class GameDirector implements SceneDelegate {
         scene = new MapScene(this.game.getWorldMap());
         break;
       case SceneID.RIVER:
-        // RiverScene not yet implemented - placeholder
-        console.log('RiverScene requested but not yet implemented');
+        {
+          const party = this.game.getPlayer().getParty();
+          if (party) {
+            scene = new RiverScene(party, this.canvas.width, this.canvas.height);
+          } else {
+            console.error('Cannot create RiverScene: No party set on player');
+          }
+        }
         break;
       case SceneID.OPTIONS:
         scene = new OptionsScene(this.canvas.width, this.canvas.height);
@@ -149,12 +194,17 @@ export class GameDirector implements SceneDelegate {
         });
         break;
       case SceneID.TAVERN:
-        // TavernScene not yet implemented - placeholder
-        console.log('TavernScene requested but not yet implemented');
+        {
+          const party = this.game.getPlayer().getParty();
+          if (party) {
+            scene = new TavernScene(this.canvas.width, this.canvas.height, party);
+          } else {
+            console.error('Cannot create TavernScene: No party set on player');
+          }
+        }
         break;
       case SceneID.SCENESELECTOR:
-        // SceneSelectorScene not yet implemented - placeholder
-        console.log('SceneSelectorScene requested but not yet implemented');
+        console.log('SceneSelectorScene not implemented - not a standard scene');
         break;
     }
 

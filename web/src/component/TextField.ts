@@ -57,7 +57,7 @@ export class TextField extends Component implements Disableable {
     super.render(ctx);
   }
 
-  override keyReleased(key: string, char: string): void {
+  override keyReleased(key: string, _char: string): void {
     if (this.hasFocus()) {
       if (this.isEmpty()) {
         this.label.setText('');
@@ -67,8 +67,8 @@ export class TextField extends Component implements Disableable {
         this.setFocus(false);
       } else if (key === 'Backspace' && this.label.getText().length >= 1) {
         this.label.setText(this.label.getText().substring(0, this.label.getText().length - 1));
-      } else if (this.isAcceptedCharacter(char) && this.label.getFontWidth() < this.label.getWidth() - 1) {
-        this.label.setText(this.label.getText() + char);
+      } else if (this.isAcceptedCharacter(key) && this.label.getFontWidth() < this.label.getWidth() - 1) {
+        this.label.setText(this.label.getText() + key);
       }
     }
   }

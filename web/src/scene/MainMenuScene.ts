@@ -84,7 +84,7 @@ export class MainMenuScene extends Scene {
   }
 
   private onLoad(): void {
-    console.log('Load game not yet implemented');
+    console.warn('Load game not yet implemented');
   }
 
   private onOptions(): void {

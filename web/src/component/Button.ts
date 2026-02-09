@@ -150,25 +150,37 @@ export class Button extends Component implements Disableable {
   }
 
   override mousePressed(button: number, mx: number, my: number): void {
+    console.log(`Button.mousePressed called - visible: ${this.isVisible()}, acceptingInput: ${this.isAcceptingInput()}, text: ${this.getText()}`);
+
     if (!this.isVisible() || !this.isAcceptingInput()) {
+      console.log('Button.mousePressed early return due to visibility or input acceptance');
       return;
     }
 
     super.mousePressed(button, mx, my);
 
+    console.log(`Button.mousePressed - button: ${button}, isMouseOver: ${this.isMouseOver()}, disabled: ${this.disabled}`);
+
     if (button === 0 && this.isMouseOver() && !this.disabled) {
+      console.log('Button setting active to true');
       this.setActive(true);
     }
   }
 
   override mouseReleased(button: number, mx: number, my: number): void {
+    console.log(`Button.mouseReleased called - visible: ${this.isVisible()}, acceptingInput: ${this.isAcceptingInput()}, text: ${this.getText()}, pos: (${this.getX()}, ${this.getY()}), size: ${this.getWidth()}x${this.getHeight()}, click: (${mx}, ${my})`);
+
     if (!this.isVisible() || !this.isAcceptingInput()) {
+      console.log('Button.mouseReleased early return due to visibility or input acceptance');
       return;
     }
 
     super.mouseReleased(button, mx, my);
 
+    console.log(`Button.mouseReleased - button: ${button}, isMouseOver: ${this.isMouseOver()}, disabled: ${this.disabled}, active: ${this.active}`);
+
     if (button === 0 && this.isMouseOver() && !this.disabled && this.active) {
+      console.log('Button click conditions met, notifying listeners');
       this.notifyListeners();
     }
 

@@ -73,14 +73,14 @@ export class Label extends Component {
 
     for (let i = 0; i < this.lines.length; i++) {
       const line = this.lines[i];
-      const lineY = startY + this.font.getLineHeight() * i;
+      const lineY = Math.floor(startY + this.font.getLineHeight() * i);
 
       if (this.alignment === Alignment.CENTER) {
         const lineWidth = this.font.getWidth(line);
-        const lineX = this.getX() + 1 + (this.getWidth() - lineWidth) / 2;
+        const lineX = Math.floor(this.getX() + 1 + (this.getWidth() - lineWidth) / 2);
         this.font.drawText(ctx, line, lineX, lineY);
       } else if (this.alignment === Alignment.LEFT) {
-        this.font.drawText(ctx, line, this.getX(), lineY);
+        this.font.drawText(ctx, line, Math.floor(this.getX()), lineY);
       }
     }
 

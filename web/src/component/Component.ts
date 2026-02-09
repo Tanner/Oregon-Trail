@@ -478,7 +478,7 @@ export abstract class Component implements Visible {
     return this.visibleParent;
   }
 
-  mouseMoved(_oldx: number, _oldy: number, newx: number, newy: number): void {
+  mouseMoved(oldx: number, oldy: number, newx: number, newy: number): void {
     if (!this.isVisible() || !this.isAcceptingInput()) {
       return;
     }
@@ -488,22 +488,45 @@ export abstract class Component implements Visible {
     if (this.isMouseOver() && this.tooltipEnabled) {
       // TODO: Scene.showTooltip(newx, newy, this, tooltipMessage);
     }
+
+    for (let i = this.components.length - 1; i >= 0; i--) {
+      const component = this.components[i];
+      if (component.isVisible() && component.isAcceptingInput()) {
+        component.mouseMoved(oldx, oldy, newx, newy);
+      }
+    }
   }
 
-  mousePressed(_button: number, mx: number, my: number): void {
+  mousePressed(button: number, mx: number, my: number): void {
     if (!this.isVisible() || !this.isAcceptingInput()) {
       return;
     }
 
     this.mouseOver = this.containsPoint(mx, my);
+
+    for (let i = this.components.length - 1; i >= 0; i--) {
+      const component = this.components[i];
+      if (component.isVisible() && component.isAcceptingInput()) {
+        component.mousePressed(button, mx, my);
+      }
+    }
   }
 
-  mouseReleased(_button: number, mx: number, my: number): void {
+  mouseReleased(button: number, mx: number, my: number): void {
     if (!this.isVisible() || !this.isAcceptingInput()) {
       return;
     }
 
     this.mouseOver = this.containsPoint(mx, my);
+
+    console.log(`Component.mouseReleased - propagating to ${this.components.length} child components`);
+
+    for (let i = this.components.length - 1; i >= 0; i--) {
+      const component = this.components[i];
+      if (component.isVisible() && component.isAcceptingInput()) {
+        component.mouseReleased(button, mx, my);
+      }
+    }
   }
 
   isMouseOver(): boolean {
@@ -565,7 +588,11 @@ export abstract class Component implements Visible {
     }
   }
 
-  keyReleased(_key: string, _char: string): void {
-    // Override in subclasses
+  keyReleased(key: string, char: string): void {
+    for (const component of this.components) {
+      if (component.isVisible() && component.isAcceptingInput()) {
+        component.keyReleased(key, char);
+      }
+    }
   }
 }

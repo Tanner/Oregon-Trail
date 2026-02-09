@@ -43,6 +43,7 @@ export class ComponentModal<T extends Component> extends Modal {
     );
 
     this.createButtons();
+    this.setButtonText(0, 'Cancel');
 
     this.panel.add(
       this.messageLabel,
