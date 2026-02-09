@@ -1,7 +1,5 @@
 import { Party } from "../../model/Party";
 import { Notification } from "../../model/Notification";
-import { Person } from "../../model/Person";
-import { Vehicle } from "../../model/Vehicle";
 import { ItemType, getItemTypeName } from "../../model/ItemType";
 import { Encounter } from "./Encounter";
 import { EncounterNotification } from "./EncounterNotification";
