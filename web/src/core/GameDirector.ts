@@ -53,10 +53,10 @@ export class GameDirector implements SceneDelegate {
 
     // Skip splash, go straight to loading
     const loadingScene = new LoadingScene(this.canvas.width, this.canvas.height, () => {
-      this.sceneDirector.pushScene(
-        new MainMenuScene(this.canvas.width, this.canvas.height),
-        true
-      );
+      const mainMenuScene = this.sceneForSceneID(SceneID.MAINMENU);
+      if (mainMenuScene) {
+        this.sceneDirector.pushScene(mainMenuScene, true);
+      }
     });
 
     this.sceneDirector.pushScene(loadingScene, false);
