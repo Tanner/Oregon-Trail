@@ -66,7 +66,8 @@ export class RiverScene extends Scene {
     this.canvasHeight = canvasHeight;
 
     this.riverDepth = Math.floor(Math.random() * RiverScene.MAX_RIVER_DEPTH) + 1;
-    this.tollPrice = (Math.floor(Math.random() * 20) + 1) * (party.getLocation().getRank() + 1);
+    const location = party.getLocation();
+    this.tollPrice = (Math.floor(Math.random() * 20) + 1) * ((location?.getRank() ?? 0) + 1);
   }
 
   init(): void {
@@ -93,7 +94,7 @@ export class RiverScene extends Scene {
         Math.floor(Math.random() * RiverScene.CLOUD_OFFSET_VARIANCE * 2) -
         RiverScene.CLOUD_OFFSET_VARIANCE;
 
-      const cloud = new ParallaxComponent(cloudImage, distance, true);
+      const cloud = new ParallaxComponent(this.canvasWidth, cloudImage, distance);
       this.cloudParallaxPanel.add(cloud);
       cloud.setPosition({ x: 0, y: offset }, ReferencePoint.TOPLEFT);
     }
@@ -141,8 +142,9 @@ export class RiverScene extends Scene {
       ImageStore.getImage('WAGON_RIVER_2'),
       ImageStore.getImage('WAGON_RIVER_3')
     ];
-    this.wagon = new AnimatingSprite(wagonFrames, 100, 'left');
-    this.wagon.setSpeed(50);
+    this.wagon = new AnimatingSprite(100, 80);
+    this.wagon.addAnimation('default', wagonFrames, 100);
+    this.wagon.setAnimation('default');
     this.mainLayer.add(this.wagon);
     this.wagon.setPosition(
       { x: this.canvasWidth / 2, y: this.canvasHeight / 2 },
@@ -157,8 +159,9 @@ export class RiverScene extends Scene {
       ImageStore.getImage('WAGON_WHEELS_1'),
       ImageStore.getImage('WAGON_WHEELS_2')
     ];
-    this.wagonWheels = new AnimatingSprite(wheelFrames, 100, 'left');
-    this.wagonWheels.setSpeed(44);
+    this.wagonWheels = new AnimatingSprite(100, 80);
+    this.wagonWheels.addAnimation('default', wheelFrames, 100);
+    this.wagonWheels.setAnimation('default');
     this.mainLayer.add(this.wagonWheels);
     this.wagonWheels.setPosition(
       { x: this.canvasWidth / 2, y: this.canvasHeight / 2 },
@@ -182,17 +185,9 @@ export class RiverScene extends Scene {
   override update(delta: number): void {
     super.update(delta);
 
-    // Update parallax
-    for (const component of this.riverParallaxPanel.getComponents()) {
-      if (component instanceof ParallaxComponent) {
-        component.update(delta);
-      }
-    }
-    for (const component of this.cloudParallaxPanel.getComponents()) {
-      if (component instanceof ParallaxComponent) {
-        component.update(delta);
-      }
-    }
+    // Update parallax (ParallaxPanel handles this automatically)
+    this.riverParallaxPanel.update(delta);
+    this.cloudParallaxPanel.update(delta);
 
     if (!this.isPaused()) {
       this.crossTime += delta;
@@ -262,7 +257,7 @@ export class RiverScene extends Scene {
       }
     } else if (currentModal === this.successModal) {
       SoundStore.stopMusic();
-      this.exit();
+      this.leave();
     }
   }
 
@@ -292,7 +287,10 @@ export class RiverScene extends Scene {
       20,
       true,
       1,
-      choices
+      'Ford the river',
+      'Caulk your wagon',
+      'Pay the toll',
+      'Wait for an hour'
     );
 
     if (disabled.length > 0) {
@@ -301,7 +299,7 @@ export class RiverScene extends Scene {
 
     const message = `You've come to a river. It is ${this.riverDepth} ${this.riverDepth === 1 ? 'foot' : 'feet'} deep.\nThere is a bridge with a $${this.tollPrice} toll, and you have $${this.party.getMoney()}.\nWhat do you want to do?`;
 
-    this.crossingChoicesModal = new ComponentModal(message, 1, control);
+    this.crossingChoicesModal = new ComponentModal(600, 400, this, message, 1, control);
   }
 
   /**
@@ -313,11 +311,17 @@ export class RiverScene extends Scene {
     if (this.riverDepth >= RiverScene.FORD_DANGER_DEPTH && Math.random() > 0.5) {
       const deaths = this.damage();
       this.successModal = new MessageModal(
+        600,
+        300,
+        this,
         `Oh no! Why would you ford a ${this.riverDepth} foot deep river? Your party was damaged` +
         (deaths === '' ? ', but at least no one died!' : ` and you lost ${deaths}.`)
       );
     } else {
       this.successModal = new MessageModal(
+        600,
+        300,
+        this,
         'You successfully forded the river! Your party sighs in relief'
       );
     }
@@ -334,11 +338,17 @@ export class RiverScene extends Scene {
     if (this.riverDepth >= RiverScene.CAULK_DANGER_DEPTH && Math.random() > 0.5) {
       const deaths = this.damage();
       this.successModal = new MessageModal(
+        600,
+        300,
+        this,
         "Oh no! Your caulk didn't hold up and water leaked into your wagon. Your party was damaged" +
         (deaths === '' ? ', but at least no one died!' : ` and you lost ${deaths}.`)
       );
     } else {
       this.successModal = new MessageModal(
+        600,
+        300,
+        this,
         'Water started seeping into your wagon just as you reached the shore, but you make it! ' +
         'You dump the water out of your boots, take a big swill of whiskey, and get back on the trail.'
       );
@@ -366,6 +376,9 @@ export class RiverScene extends Scene {
     SoundStore.playSound('RK');
 
     this.successModal = new MessageModal(
+      600,
+      300,
+      this,
       'Your party decided to take the easy way out and pay the bridge toll. Your party members thank you.'
     );
 
